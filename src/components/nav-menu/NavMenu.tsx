@@ -11,6 +11,7 @@ function NavMenu(props: NavMenuProps) {
                 <nav>
                     <Link to="/user-cards">User cards</Link>
                     <Link to="/custom-list">Custom list</Link>
+                    <Link to="/homework">HomeworkMetodist</Link>
                 </nav>
             }
             {
@@ -18,6 +19,7 @@ function NavMenu(props: NavMenuProps) {
                 <nav>
                     <Link to="/user-cards">Link 3</Link>
                     <Link to="/custom-list">Link 4</Link>
+                    <Link to="/homework">HomeworkTeacher</Link>
                 </nav>
             }
         </div>

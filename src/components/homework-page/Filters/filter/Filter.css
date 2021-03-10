@@ -1,0 +1,36 @@
+.multiselect {
+    width: 200px;
+  }
+  
+  .selectBox{
+    position: relative;
+  }
+  
+  .selectBox select {
+    width: 100%;
+    font-weight: bold;
+  }
+  
+  .overSelect {
+    position: relative;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+  }
+  
+.listItems {
+    border: 1px #dadada solid;
+    background-color: #f6ffff;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .listItems.hidden{
+    display: none;
+  }
+  
+  #checkboxes p {
+    display: block;
+  }
+  
