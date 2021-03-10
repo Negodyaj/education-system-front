@@ -2,8 +2,8 @@
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
+.app-logo {
+  width: 50%;
   pointer-events: none;
 }
 
@@ -35,4 +35,40 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+header {
+    display: flex;
+    height: 100px;
+    border-bottom: 2px solid salmon;
+}
+
+.logo-container,
+aside {
+    flex-grow: 0;
+    flex-shrink: 0;
+    width: 350px;
+    border-right: 2px solid salmon;
+}
+
+aside,
+main {
+    padding-top: 30px;
+}
+
+main {
+    flex-grow: 1;
+}
+
+.header-user-actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    flex-grow: 1;
+    padding: 0 20px;
+}
+
+.main-content {
+    display: flex;
+    height: calc(100vh - 100px);
 }
