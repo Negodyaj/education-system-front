@@ -67,7 +67,7 @@ function App() {
                                 <CustomList />
                             </Route>
                             <Route path="/homework">
-                                <HomeworkPage/>
+                                <HomeworkPage roleId={roleId}/>
                             </Route>
                         </Switch>
                         :

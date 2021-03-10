@@ -23,7 +23,7 @@ function DrawHomework(attributes:HomeworkAttributes) {
             <button type="button" className="btn btn-success btn-danger appoint">назначить</button>
         </div>
         <div className="col">
-            <button type="button" className="btn btn-primary" id="check-answer">проверить ответы</button>
+            <button type="button" className="btn btn-primary" id="check-answer">проверить</button>
         </div>
         <div className="col">
             теги
