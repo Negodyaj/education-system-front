@@ -1,13 +1,34 @@
-import React from 'react';
+import React, { useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import CustomList from './components/custom-list/CustomList';
 import Cards from './Cards';
 import { Link, Switch, Route } from 'react-router-dom';
 import LoginForm from './components/login-form/LoginForm';
+import NavMenu from './components/nav-menu/NavMenu';
 
 function App() {
-    const isLoggedIn: boolean = true;
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [roleId, setRoleId] = useState(0);
+
+    const users = [
+        { login: 'test', password: 'test', roleId: 1 },
+        { login: 'student', password: 'qwerty', roleId: 2 },
+        { login: 'manager', password: '11111', roleId: 3 },
+    ];
+
+    const loginHandler = (email: string, password: string) => {
+        const securityEntries = users.filter(item => item.login === email && item.password === password);
+        if (securityEntries.length) {
+            const entry = securityEntries[0];
+            setIsLoggedIn(true);
+            setRoleId(entry.roleId);
+        }
+    }
+
+    const logOut = () => {
+        setIsLoggedIn(false);
+    }
 
     return (
         <div className="App">
@@ -17,7 +38,7 @@ function App() {
                 </div>
                 <div className="header-user-actions">
                     {
-                        isLoggedIn && <button>Log out</button>
+                        isLoggedIn && <button onClick={logOut}>Log out</button>
                     }
                 </div>
             </header>
@@ -25,15 +46,13 @@ function App() {
                 <aside>
                     {
                         isLoggedIn ?
-                            <nav>
-                                <Link to="/user-cards">User cards</Link>
-                                <Link to="/custom-list">Custom list</Link>
-                            </nav>
+                            <NavMenu roleId={roleId} />
                             :
                             <h2>Залогиньтесь!</h2>
                     }
                 </aside>
                 <main>
+                    { isLoggedIn && <div>Your role is {roleId}</div>}
                     {
                         isLoggedIn ? 
                         <Switch>
@@ -48,7 +67,7 @@ function App() {
                             </Route>
                         </Switch>
                         :
-                        <LoginForm />
+                        <LoginForm onLoginClick={loginHandler} />
                     }
                 </main>
             </div>
