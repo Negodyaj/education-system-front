@@ -5,7 +5,7 @@ import './HomeworkRow.css';
 interface HomeworkRowProps{
     Course:string;
     Group:string;
-    Themes:string[];
+    Themes?:string[];
     HomeworkObject:Homework;
     onDeleteClick: (isModalHidden: string) => void;
 }
@@ -32,7 +32,7 @@ function DrawHomework(attributes:HomeworkRowProps) {
             {attributes.Group}
         </div>
         <div className="col">
-            {attributes.Themes.map(theme=>(theme+" "))}
+            {attributes.Themes?.map(theme=>(theme+" "))}
         </div>
         <div className="col">
             <button type="button" className={"btn btn-success " + (appointStatus) +" appoint"} onClick={appointOnClickHandler}>{appointButtonText}</button>

@@ -3,5 +3,7 @@ import { Answer } from "./Answer";
 export interface Homework{
     Id:number;
     Themes:string[];
-    Answers: Answer[];
+    Message?:string;
+    IsAnswerRequired?:boolean;
+    Answers?: Answer[];
 }

@@ -60,6 +60,11 @@ const model: HomeworkPageModel = {
           Id: 500,
           Themes: ["ASP.NET Core"],
           Answers: []
+        },
+        {
+          Id: 500,
+          Themes: [],
+          Answers: []
         }]
       }]
     }, {
@@ -122,7 +127,7 @@ function HomeworkPage(props: HomeworkPageProps) {
           (<HomeworkRow
             Course={course.CourseName}
             Group={group.GroupName}
-            Themes={homework.Themes}
+            Themes={homework.Themes.length?homework.Themes:["без темы"]}
             HomeworkObject={homework}
             onDeleteClick={deleteHomeworkHandler}></HomeworkRow>))))
       }
