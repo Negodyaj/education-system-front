@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import "./NavMenu.css"
 interface NavMenuProps {
     roleId: number
 }
@@ -20,6 +21,10 @@ function NavMenu(props: NavMenuProps) {
                         <button> Мои группы </button></Link>
                     <Link to="/courses-list">
                         <button> Мои курсы </button></Link>
+                    <Link to="/">
+                        <button> Мои новости </button></Link>
+                    <Link to="homework-list">
+                        <button> Мои Домашки </button></Link>
                 </nav>
             }
             

@@ -8,6 +8,8 @@ import LoginForm from './components/login-form/LoginForm';
 import NavMenu from './components/nav-menu/NavMenu';
 import CoursesList from './components/coursesList/CoursesList';
 import GroupList from './components/groupList/GroupList';
+import NewsList from './components/news-list/NewsList';
+import HomeworkList from './components/homework-list/HomeworkList';
 
 function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -59,7 +61,7 @@ function App() {
                         isLoggedIn ? 
                         <Switch>
                             <Route exact path="/">
-                                <h1>Choose your destiny</h1>
+                                <NewsList/>
                             </Route>
                             <Route path="/user-cards">
                                 <Cards />
@@ -73,6 +75,10 @@ function App() {
                             <Route path="/courses-list">
                              <CoursesList />  
                             </Route>
+                            <Route path="/homework-list">
+                             <HomeworkList />  
+                            </Route>
+                            
                         </Switch>
                         :
                         <LoginForm onLoginClick={loginHandler} />
