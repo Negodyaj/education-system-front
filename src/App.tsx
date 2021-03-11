@@ -11,12 +11,14 @@ import HomeworkPage from './components/homework-page/homework-page';
 function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [roleId, setRoleId] = useState(0);
-    
+
 
     const users = [
         { login: 'test', password: 'test', roleId: 1 },
         { login: 'student', password: 'qwerty', roleId: 2 },
         { login: 'manager', password: '11111', roleId: 3 },
+        { login: 'metodist', password: 'metodist', roleId: 4 },
+        { login: 'teacher', password: 'teacher', roleId: 5 }
     ];
 
     const loginHandler = (email: string, password: string) => {
@@ -28,7 +30,7 @@ function App() {
         }
     }
 
-    
+
 
     const logOut = () => {
         setIsLoggedIn(false);
@@ -56,25 +58,25 @@ function App() {
                     }
                 </aside>
                 <main>
-                    { isLoggedIn && <div>Your role is {roleId}</div>}
+                    {isLoggedIn && <div>Your role is {roleId}</div>}
                     {
-                        isLoggedIn ? 
-                        <Switch>
-                            <Route exact path="/">
-                                <h1>Choose your destiny</h1>
-                            </Route>
-                            <Route path="/user-cards">
-                                <Cards />
-                            </Route>
-                            <Route path="/custom-list">
-                                <CustomList />
-                            </Route>
-                            <Route path="/homework">
-                                <HomeworkPage roleId={roleId}/>
-                            </Route>
-                        </Switch>
-                        :
-                        <LoginForm onLoginClick={loginHandler} />
+                        isLoggedIn ?
+                            <Switch>
+                                <Route exact path="/">
+                                    <h1>Choose your destiny</h1>
+                                </Route>
+                                <Route path="/user-cards">
+                                    <Cards />
+                                </Route>
+                                <Route path="/custom-list">
+                                    <CustomList />
+                                </Route>
+                                <Route path="/homework">
+                                    <HomeworkPage roleId={roleId} />
+                                </Route>
+                            </Switch>
+                            :
+                            <LoginForm onLoginClick={loginHandler} />
                     }
                 </main>
             </div>

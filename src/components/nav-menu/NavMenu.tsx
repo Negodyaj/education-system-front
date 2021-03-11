@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import './NavMenu.css'; 
 interface NavMenuProps {
     roleId: number
 }
@@ -15,11 +16,15 @@ function NavMenu(props: NavMenuProps) {
                 </nav>
             }
             {
-                props.roleId === 2 &&
+                props.roleId === 4 &&
                 <nav>
-                    <Link to="/user-cards">Link 3</Link>
-                    <Link to="/custom-list">Link 4</Link>
-                    <Link to="/homework">HomeworkTeacher</Link>
+                    <Link to="/homework">Homeworks</Link>
+                </nav>
+            }
+            {
+                props.roleId === 5 &&
+                <nav>
+                    <Link to="/homework">Homeworks</Link>
                 </nav>
             }
         </div>

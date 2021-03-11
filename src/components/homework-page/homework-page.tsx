@@ -8,6 +8,7 @@ import Filters from "./Filters/Filters";
 import HomeworkRow from "./HomeworkRow/HomeworkRow";
 import './homework-page.css';
 import DeleteHomeworkModal from './delete-homework-modal/delete-homework-modal';
+import { isPropertySignature } from "typescript";
 
 const model: HomeworkPageModel = {
   Courses: [
@@ -120,14 +121,15 @@ function HomeworkPage(props: HomeworkPageProps) {
 
   return (
     <div className="container">
-      <Filters filterParameters={filterParameters}></Filters>
+      <Filters RoleId={props.roleId} filterParameters={filterParameters}></Filters>
       {model.Courses.map(course =>
         course.Groups.map(group =>
           group.Homeworks.map(homework =>
           (<HomeworkRow
+            RoleId={props.roleId}
             Course={course.CourseName}
             Group={group.GroupName}
-            Themes={homework.Themes.length?homework.Themes:["без темы"]}
+            Themes={homework.Themes.length ? homework.Themes : ["без темы"]}
             HomeworkObject={homework}
             onDeleteClick={deleteHomeworkHandler}></HomeworkRow>))))
       }
