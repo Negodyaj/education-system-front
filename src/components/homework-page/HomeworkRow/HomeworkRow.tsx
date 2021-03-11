@@ -2,16 +2,19 @@ import { useState } from 'react';
 import { Homework } from '../../../interfaces/Homework';
 import './HomeworkRow.css';
 
-interface HomeworkAttributes{
+interface HomeworkRowProps{
     Course:string;
     Group:string;
     Themes:string[];
     HomeworkObject:Homework;
+    onDeleteClick: (isModalHidden: boolean) => void;
 }
 
 
-
-function DrawHomework(attributes:HomeworkAttributes) {
+function DrawHomework(attributes:HomeworkRowProps) {
+    const onDeleteClick = () =>{
+        attributes.onDeleteClick(false);
+    }
     const [appointStatus, setAppointStatus] = useState("btn-danger");
     const [appointButtonText, setAppointButtonText] = useState("назначить");
     const appointOnClickHandler = () => {
@@ -41,7 +44,7 @@ function DrawHomework(attributes:HomeworkAttributes) {
             теги
         </div>
         <div className="col">
-            <button className="delete-button">удалить</button>
+            <button className="delete-button" onClick={onDeleteClick}>удалить</button>
         </div></div>)
 }
 
