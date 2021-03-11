@@ -1,5 +1,7 @@
+import './delete-homework-modal.css';
+
 function DeleteHomeworkModal(){
-    return(<div>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Cumque debitis officiis quos dolorem corporis consectetur consequuntur magni eum dolorum nisi quam culpa vitae libero voluptatibus, eligendi quidem. Doloremque, eos animi?</div>)
+    return(<div className="delete-homework-modal-bg"></div>)
 }
 
 export default DeleteHomeworkModal;
