@@ -11,6 +11,7 @@ import HomeworkPage from './components/homework-page/homework-page';
 function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [roleId, setRoleId] = useState(0);
+    const [IsModalHidden, setIsModalHidden] = useState(true);
 
     const users = [
         { login: 'test', password: 'test', roleId: 1 },

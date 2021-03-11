@@ -6,6 +6,7 @@ import { ThemeFilter } from "../../classes/ThemeFilter";
 import { HomeworkPageModel } from "../../interfaces/HomeworkPageModel";
 import Filters from "./Filters/Filters";
 import DrawHomework from "./HomeworkRow/HomeworkRow";
+import './homework-page.css';
 
 const model: HomeworkPageModel = {
     Courses: [
