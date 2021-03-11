@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Homework } from '../../../interfaces/Homework';
 import './HomeworkRow.css';
 
@@ -8,7 +9,18 @@ interface HomeworkAttributes{
     HomeworkObject:Homework;
 }
 
+
+
 function DrawHomework(attributes:HomeworkAttributes) {
+    const [appointStatus, setAppointStatus] = useState("btn-danger");
+    const [appointButtonText, setAppointButtonText] = useState("назначить");
+    const appointOnClickHandler = () => {
+        if (appointStatus===""){
+        setAppointStatus("btn-danger");
+        setAppointButtonText("назначить")}
+        else {setAppointStatus("");
+        setAppointButtonText("назначено");}
+    } 
     return (<div className="row align-items-start table-row">
         <div className="col">
             {attributes.Course}
@@ -20,7 +32,7 @@ function DrawHomework(attributes:HomeworkAttributes) {
             {attributes.Themes.map(theme=>(theme+" "))}
         </div>
         <div className="col">
-            <button type="button" className="btn btn-success btn-danger appoint">назначить</button>
+            <button type="button" className={"btn btn-success " + (appointStatus) +" appoint"} onClick={appointOnClickHandler}>{appointButtonText}</button>
         </div>
         <div className="col">
             <button type="button" className="btn btn-primary" id="check-answer">проверить</button>
