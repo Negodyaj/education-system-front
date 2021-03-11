@@ -7,13 +7,13 @@ interface HomeworkRowProps{
     Group:string;
     Themes:string[];
     HomeworkObject:Homework;
-    onDeleteClick: (isModalHidden: boolean) => void;
+    onDeleteClick: (isModalHidden: string) => void;
 }
 
 
 function DrawHomework(attributes:HomeworkRowProps) {
     const onDeleteClick = () =>{
-        attributes.onDeleteClick(true);
+        attributes.onDeleteClick("visible");
     }
     const [appointStatus, setAppointStatus] = useState("btn-danger");
     const [appointButtonText, setAppointButtonText] = useState("назначить");

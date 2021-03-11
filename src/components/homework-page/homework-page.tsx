@@ -92,10 +92,15 @@ function HomeworkPage(props: HomeworkPageProps) {
     new ThemeFilter(themesInFilterParameters),
   ];
 
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const deleteHomeworkHandler = (isModalVisible: boolean) => {
+  const [isModalVisible, setIsModalVisible] = useState("");
+  const deleteHomeworkHandler = (isModalVisible: string) => {
     setIsModalVisible(isModalVisible);
   }
+
+  const CloseModalHandler = () => {
+    setIsModalVisible("");
+  }
+
   return (
     <div className="container">
       <Filters filterParameters={filterParameters}></Filters>
@@ -109,7 +114,7 @@ function HomeworkPage(props: HomeworkPageProps) {
             HomeworkObject={homework}
             onDeleteClick={deleteHomeworkHandler}></HomeworkRow>))))
       }
-      {isModalVisible && <DeleteHomeworkModal></DeleteHomeworkModal>}
+      <DeleteHomeworkModal IsVisible={isModalVisible} CloseModalHandler={CloseModalHandler}></DeleteHomeworkModal>
     </div>
   );
 }
