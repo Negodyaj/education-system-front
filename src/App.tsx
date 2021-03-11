@@ -44,7 +44,7 @@ function App() {
                 </div>
                 <div className="header-user-actions">
                     {
-                        isLoggedIn && <button onClick={logOut}>Log out</button>
+                        isLoggedIn && <Link to="/"><button onClick={logOut}>Log out</button></Link>
                     }
                 </div>
             </header>
