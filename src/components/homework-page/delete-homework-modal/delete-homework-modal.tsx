@@ -2,7 +2,7 @@ import { MouseEventHandler, useState } from 'react';
 import './delete-homework-modal.css';
 
 interface DeleteHomeworkModalProps {
-    IsVisible: string;
+    Visibility: string;
     CloseModalHandler: () => void;
 }
 
@@ -20,8 +20,8 @@ function DeleteHomeworkModal(props: DeleteHomeworkModalProps) {
 
     return (
 
-        < div className={"delete-homework-modal-bg " + (props.IsVisible)} onClick={CloseModalHandler}>
-            <div className={"delete-homework-modal " + (props.IsVisible) + " table-row"} onClick={StopPropagation}>
+        < div className={"delete-homework-modal-bg " + (props.Visibility)} onClick={CloseModalHandler}>
+            <div className={"delete-homework-modal " + (props.Visibility) + " table-row"} onClick={StopPropagation}>
                 <div className="delete-homework-modal-header">
                     <div className="delete-homework-modal-header-close-btn" onClick={CloseModalHandler}>+</div>
                 </div>

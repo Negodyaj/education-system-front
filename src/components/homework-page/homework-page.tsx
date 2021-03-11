@@ -46,19 +46,31 @@ const model: HomeworkPageModel = {
       CourseName: "Front-end",
       Groups: [{
         GroupName: "дневная",
-        Homeworks: []
+        Homeworks: [{
+          Id: 18,
+          Themes: ["Спецификации ES"],
+          Answers: []
+        }]
       }]
     }, {
       CourseName: "Back-end",
       Groups: [{
         GroupName: "вечерняя",
-        Homeworks: []
+        Homeworks: [{
+          Id: 500,
+          Themes: ["ASP.NET Core"],
+          Answers: []
+        }]
       }]
     }, {
       CourseName: "Mobile dev",
       Groups: [{
         GroupName: "вечерняя",
-        Homeworks: []
+        Homeworks: [{
+          Id: 50,
+          Themes: ["Основы Kotlin"],
+          Answers: []
+        }]
       }]
     }]
 };
@@ -92,13 +104,13 @@ function HomeworkPage(props: HomeworkPageProps) {
     new ThemeFilter(themesInFilterParameters),
   ];
 
-  const [isModalVisible, setIsModalVisible] = useState("");
-  const deleteHomeworkHandler = (isModalVisible: string) => {
-    setIsModalVisible(isModalVisible);
+  const [visibility, setVisibility] = useState("");
+  const deleteHomeworkHandler = (visibility: string) => {
+    setVisibility(visibility);
   }
 
   const CloseModalHandler = () => {
-    setIsModalVisible("");
+    setVisibility("");
   }
 
   return (
@@ -114,7 +126,7 @@ function HomeworkPage(props: HomeworkPageProps) {
             HomeworkObject={homework}
             onDeleteClick={deleteHomeworkHandler}></HomeworkRow>))))
       }
-      <DeleteHomeworkModal IsVisible={isModalVisible} CloseModalHandler={CloseModalHandler}></DeleteHomeworkModal>
+      <DeleteHomeworkModal Visibility={visibility} CloseModalHandler={CloseModalHandler}></DeleteHomeworkModal>
     </div>
   );
 }

@@ -19,15 +19,32 @@
     bottom: 0;
   }
   
-.listItems {
+.list-items {
     border: 1px #dadada solid;
     background-color: #f6ffff;
     display: flex;
     flex-direction: column;
   }
 
-  .listItems.hidden{
+  .list-items.hidden{
     display: none;
+  }
+
+  .list-items input{
+    margin-left: 4px;
+  }
+
+  .list-items-footer{
+    display:flex;
+    justify-content: center;
+  }
+
+  .apply-filter-btn{
+    width:120px;
+    height: 19px;
+    padding: -5px;
+    font-size: 10px;
+    margin-bottom: 4px;
   }
   
   #checkboxes p {

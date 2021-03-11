@@ -11,25 +11,29 @@ interface FilterToRender {
 function DrawFilter(attributes: FilterToRender) {
     const [listVisibility, setListVisibility] = useState("hidden");
 
-    const showCheckBoxes = () => {
-        if (listVisibility=="hidden"){
-        setListVisibility("");}
+    const toggleCheckBoxes = () => {
+        if (listVisibility == "hidden") {
+            setListVisibility("");
+        }
         else setListVisibility("hidden");
     }
     return (
         <div className="col">
             <div className="multiselect">
-                <div className="selectBox" onClick={showCheckBoxes}>
+                <div className="selectBox" onClick={toggleCheckBoxes}>
                     <select >
                         <option>{attributes.filterToRender.FilterType}</option>
                     </select>
                     <div className="overSelect"></div>
                 </div>
-                <div className={"listItems " + (listVisibility)}>{
+                <div className={"list-items " + (listVisibility)}>{
                     attributes.filterToRender.Content.map(item => (
-                        <label><input type="checkbox" />{item}</label>
+                        <label><input type="checkbox" />{" "+item}</label>
                     ))
                 }
+                    <div className="list-items-footer">
+                        <button className="apply-filter-btn btn-success" onClick={toggleCheckBoxes}>применить</button>
+                    </div>
                 </div>
             </div>
         </div>

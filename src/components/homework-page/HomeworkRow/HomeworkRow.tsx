@@ -24,7 +24,7 @@ function DrawHomework(attributes:HomeworkRowProps) {
         else {setAppointStatus("");
         setAppointButtonText("назначено");}
     } 
-    return (<div className="row align-items-start table-row">
+    return (<div className="row align-items-start table-row" id={attributes.HomeworkObject.Id.toString()}>
         <div className="col">
             {attributes.Course}
         </div>
@@ -38,7 +38,7 @@ function DrawHomework(attributes:HomeworkRowProps) {
             <button type="button" className={"btn btn-success " + (appointStatus) +" appoint"} onClick={appointOnClickHandler}>{appointButtonText}</button>
         </div>
         <div className="col">
-            <button type="button" className="btn btn-primary" id="check-answer">проверить</button>
+            <button type="button" className="btn btn-primary" id="check-answer">редактировать</button>
         </div>
         <div className="col">
             теги
