@@ -6,6 +6,8 @@ import Cards from './Cards';
 import { Link, Switch, Route } from 'react-router-dom';
 import LoginForm from './components/login-form/LoginForm';
 import NavMenu from './components/nav-menu/NavMenu';
+import CoursesList from './components/coursesList/CoursesList';
+import GroupList from './components/groupList/GroupList';
 
 function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -52,7 +54,7 @@ function App() {
                     }
                 </aside>
                 <main>
-                    { isLoggedIn && <div>Your role is {roleId}</div>}
+                    
                     {
                         isLoggedIn ? 
                         <Switch>
@@ -64,6 +66,12 @@ function App() {
                             </Route>
                             <Route path="/custom-list">
                                 <CustomList />
+                            </Route>
+                            <Route path="/groups-list">
+                            <GroupList />
+                            </Route>
+                            <Route path="/courses-list">
+                             <CoursesList />  
                             </Route>
                         </Switch>
                         :

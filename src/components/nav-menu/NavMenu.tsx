@@ -16,10 +16,13 @@ function NavMenu(props: NavMenuProps) {
             {
                 props.roleId === 2 &&
                 <nav>
-                    <Link to="/user-cards">Link 3</Link>
-                    <Link to="/custom-list">Link 4</Link>
+                    <Link to="/groups-list" >
+                        <button> Мои группы </button></Link>
+                    <Link to="/courses-list">
+                        <button> Мои курсы </button></Link>
                 </nav>
             }
+            
         </div>
     )
 }
