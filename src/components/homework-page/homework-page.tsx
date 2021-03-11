@@ -7,6 +7,7 @@ import { HomeworkPageModel } from "../../interfaces/HomeworkPageModel";
 import Filters from "./Filters/Filters";
 import HomeworkRow from "./HomeworkRow/HomeworkRow";
 import './homework-page.css';
+import DeleteHomeworkModal from './delete-homework-modal/delete-homework-modal';
 
 const model: HomeworkPageModel = {
   Courses: [
@@ -91,9 +92,9 @@ function HomeworkPage(props: HomeworkPageProps) {
     new ThemeFilter(themesInFilterParameters),
   ];
 
-  const [IsModalHidden, setIsModalHidden] = useState(true);
-  const deleteHomeworkHandler = (isModalHidden: boolean) => {
-    setIsModalHidden(isModalHidden);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const deleteHomeworkHandler = (isModalVisible: boolean) => {
+    setIsModalVisible(isModalVisible);
   }
   return (
     <div className="container">
@@ -107,8 +108,8 @@ function HomeworkPage(props: HomeworkPageProps) {
             Themes={homework.Themes}
             HomeworkObject={homework}
             onDeleteClick={deleteHomeworkHandler}></HomeworkRow>))))
-
       }
+      {isModalVisible && <DeleteHomeworkModal></DeleteHomeworkModal>}
     </div>
   );
 }

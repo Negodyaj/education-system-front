@@ -13,7 +13,7 @@ interface HomeworkRowProps{
 
 function DrawHomework(attributes:HomeworkRowProps) {
     const onDeleteClick = () =>{
-        attributes.onDeleteClick(false);
+        attributes.onDeleteClick(true);
     }
     const [appointStatus, setAppointStatus] = useState("btn-danger");
     const [appointButtonText, setAppointButtonText] = useState("назначить");
