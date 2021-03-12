@@ -1,0 +1,57 @@
+.delete-homework-modal-bg{
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.6);
+    transition: all 0.2s ease;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.delete-homework-modal-bg.visible{
+    pointer-events: all;
+    opacity: 1;
+}
+
+.delete-homework-modal{
+    width: 300px;
+    background-color: rgb(255, 255, 255);
+    display: flex;
+    flex-direction: column;
+    padding:0 10px 10px 10px;
+    margin:200px auto;
+    position: relative;
+    top:-100vh;
+    transition: all 0.2s cubic-bezier(0.38, 0.03, 0.7, 1.22);
+}
+
+.delete-homework-modal.visible{
+    top:0px;
+}
+
+.delete-homework-modal-header{
+    display: flex;
+    flex-direction: row-reverse;
+    
+}
+.delete-homework-modal-header-close-btn{
+    transform: rotate(45deg);
+    cursor: pointer;
+}
+.delete-homework-modal-main{
+    margin-bottom: 10px;
+}
+.delete-homework-modal-footer{
+    display: flex;
+    justify-content: space-between;
+}
+
+.delete-homework-modal-footer button{
+    width:70px;
+    height: 22px;
+    padding: 0px;
+    font-size: 12px;
+    margin: 4px;
+}

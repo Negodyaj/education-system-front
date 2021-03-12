@@ -28,7 +28,18 @@ function NavMenu(props: NavMenuProps) {
                         <button> Мои Домашки </button></NavLink>
                 </nav>
             }
-            
+            {
+                props.roleId === 4 &&
+                <nav> 
+                    <Link to="/homework">Homeworks</Link>
+                </nav>
+            }
+            {
+                props.roleId === 5 &&
+                <nav>
+                    <Link to="/homework">Homeworks</Link>
+                </nav>
+            }
         </div>
     )
 }

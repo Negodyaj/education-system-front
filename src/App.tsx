@@ -6,6 +6,7 @@ import Cards from './Cards';
 import { Link, Switch, Route, useHistory } from 'react-router-dom';
 import LoginForm from './components/login-form/LoginForm';
 import NavMenu from './components/nav-menu/NavMenu';
+import HomeworkPage from './components/homework-page/HomeworkPage';
 import CoursesList from './components/courses-list/CoursesList';
 import GroupList from './components/group-list/GroupList';
 import NewsList from './components/news-list/NewsList';
@@ -16,10 +17,13 @@ function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [roleId, setRoleId] = useState(0);
 
+
     const users = [
         { login: 'test', password: 'test', roleId: 1 },
         { login: 'student', password: 'qwerty', roleId: 2 },
         { login: 'manager', password: '11111', roleId: 3 },
+        { login: 'metodist', password: 'metodist', roleId: 4 },
+        { login: 'teacher', password: 'teacher', roleId: 5 }
     ];
 
     const loginHandler = (email: string, password: string) => {
@@ -30,6 +34,8 @@ function App() {
             setRoleId(entry.roleId);
         }
     }
+
+
 
     const logOut = () => {
         setIsLoggedIn(false);
@@ -58,32 +64,36 @@ function App() {
                     }
                 </aside>
                 <main>
-                    
+
                     {
-                        isLoggedIn ? 
-                        <Switch>
-                            <Route exact path="/">
-                                <NewsList/>
-                            </Route>
-                            <Route path="/user-cards">
-                                <Cards />
-                            </Route>
-                            <Route path="/custom-list">
-                                <CustomList />
-                            </Route>
-                            <Route path="/groups-list">
-                            <GroupList />
-                            </Route>
-                            <Route path="/courses-list">
-                             <CoursesList />  
-                            </Route>
-                            <Route path="/homework-list">
-                             <HomeworkList />  
-                            </Route>
-                            
-                        </Switch>
-                        :
-                        <LoginForm onLoginClick={loginHandler} />
+                        isLoggedIn ?
+                            <Switch>
+                                <Route exact path="/">
+                                    {
+                                        roleId===2 && <NewsList />
+                                    }
+                                </Route>
+                                <Route path="/user-cards">
+                                    <Cards />
+                                </Route>
+                                <Route path="/custom-list">
+                                    <CustomList />
+                                </Route>
+                                <Route path="/groups-list">
+                                    <GroupList />
+                                </Route>
+                                <Route path="/courses-list">
+                                    <CoursesList />
+                                </Route>
+                                <Route path="/homework-list">
+                                    <HomeworkList />
+                                </Route>
+                                <Route path="/homework">
+                                    <HomeworkPage roleId={roleId} />
+                                </Route>
+                            </Switch>
+                            :
+                            <LoginForm onLoginClick={loginHandler} />
                     }
                 </main>
             </div>
