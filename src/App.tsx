@@ -3,15 +3,16 @@ import logo from './logo.svg';
 import './App.css';
 import CustomList from './components/custom-list/CustomList';
 import Cards from './Cards';
-import { Link, Switch, Route } from 'react-router-dom';
+import { Link, Switch, Route, useHistory } from 'react-router-dom';
 import LoginForm from './components/login-form/LoginForm';
 import NavMenu from './components/nav-menu/NavMenu';
-import CoursesList from './components/coursesList/CoursesList';
-import GroupList from './components/groupList/GroupList';
+import CoursesList from './components/courses-list/CoursesList';
+import GroupList from './components/group-list/GroupList';
 import NewsList from './components/news-list/NewsList';
 import HomeworkList from './components/homework-list/HomeworkList';
 
 function App() {
+    const history = useHistory();
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [roleId, setRoleId] = useState(0);
 
@@ -32,6 +33,7 @@ function App() {
 
     const logOut = () => {
         setIsLoggedIn(false);
+        history.push("/");
     }
 
     return (
