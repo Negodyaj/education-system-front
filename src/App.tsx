@@ -3,12 +3,17 @@ import logo from './logo.svg';
 import './App.css';
 import CustomList from './components/custom-list/CustomList';
 import Cards from './Cards';
-import { Link, Switch, Route } from 'react-router-dom';
+import { Link, Switch, Route, useHistory } from 'react-router-dom';
 import LoginForm from './components/login-form/LoginForm';
 import NavMenu from './components/nav-menu/NavMenu';
 import HomeworkPage from './components/homework-page/HomeworkPage';
+import CoursesList from './components/courses-list/CoursesList';
+import GroupList from './components/group-list/GroupList';
+import NewsList from './components/news-list/NewsList';
+import HomeworkList from './components/homework-list/HomeworkList';
 
 function App() {
+    const history = useHistory();
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [roleId, setRoleId] = useState(0);
 
@@ -34,6 +39,7 @@ function App() {
 
     const logOut = () => {
         setIsLoggedIn(false);
+        history.push("/");
     }
 
     return (
@@ -58,19 +64,28 @@ function App() {
                     }
                 </aside>
                 <main>
-                    {isLoggedIn && <div>Your role is {roleId}</div>}
+                    
                     {
-                        isLoggedIn ?
-                            <Switch>
-                                <Route exact path="/">
-                                    <h1>Choose your destiny</h1>
-                                </Route>
-                                <Route path="/user-cards">
-                                    <Cards />
-                                </Route>
-                                <Route path="/custom-list">
-                                    <CustomList />
-                                </Route>
+                        isLoggedIn ? 
+                        <Switch>
+                            <Route exact path="/">
+                                <NewsList/>
+                            </Route>
+                            <Route path="/user-cards">
+                                <Cards />
+                            </Route>
+                            <Route path="/custom-list">
+                                <CustomList />
+                            </Route>
+                            <Route path="/groups-list">
+                            <GroupList />
+                            </Route>
+                            <Route path="/courses-list">
+                             <CoursesList />  
+                            </Route>
+                            <Route path="/homework-list">
+                             <HomeworkList />  
+                            </Route>
                                 <Route path="/homework">
                                     <HomeworkPage roleId={roleId} />
                                 </Route>

@@ -1,5 +1,6 @@
-import { Link } from 'react-router-dom';
-import './NavMenu.css'; 
+import React from 'react';
+import { Link, NavLink } from 'react-router-dom';
+import "./NavMenu.css"
 interface NavMenuProps {
     roleId: number
 }
@@ -18,6 +19,14 @@ function NavMenu(props: NavMenuProps) {
             {
                 props.roleId === 4 &&
                 <nav>
+                    <NavLink exact activeClassName="active" to="/">
+                        <button> Мои новости </button></NavLink>
+                    <NavLink activeClassName="active" to="/groups-list" >
+                        <button> Мои группы </button></NavLink>
+                    <NavLink activeClassName="active" to="/courses-list">
+                        <button> Мои курсы </button></NavLink>
+                    <NavLink activeClassName="active" to="homework-list">
+                        <button> Мои Домашки </button></NavLink>
                     <Link to="/homework">Homeworks</Link>
                 </nav>
             }
