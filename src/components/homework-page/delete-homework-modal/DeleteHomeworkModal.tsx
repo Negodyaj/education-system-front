@@ -1,5 +1,5 @@
 import { MouseEventHandler, useState } from 'react';
-import './delete-homework-modal.css';
+import './DeleteHomeworkModal.css';
 
 interface DeleteHomeworkModalProps {
     Visibility: string;

@@ -1,11 +1,11 @@
 export interface Answer{
-    AnswerId:number;
-    AnswerStatus:string;
-    StudentId:number;
-    StudentFirstName:string;
-    StudentSecondName:string;
-    TestScreenshotURL:string;
-    GITURL:string;
+    answerId:number;
+    answerStatus:string;
+    studentId:number;
+    studentFirstName:string;
+    studentSecondName:string;
+    testScreenshotURL:string;
+    giturl:string;
     //Chat:Chat;
 
 }

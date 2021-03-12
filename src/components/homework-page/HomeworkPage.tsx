@@ -6,76 +6,76 @@ import { ThemeFilter } from "../../classes/ThemeFilter";
 import { HomeworkPageModel } from "../../interfaces/HomeworkPageModel";
 import Filters from "./Filters/Filters";
 import HomeworkRow from "./HomeworkRow/HomeworkRow";
-import './homework-page.css';
-import DeleteHomeworkModal from './delete-homework-modal/delete-homework-modal';
+import './HomeworkPage.css';
+import DeleteHomeworkModal from './delete-homework-modal/DeleteHomeworkModal';
 import { isPropertySignature } from "typescript";
 
 const model: HomeworkPageModel = {
-  Courses: [
+  courses: [
     {
-      CourseName: "C# Base",
-      Groups: [{
-        GroupName: "дневная",
-        Homeworks: [{
-          Id: 0,
-          Themes: ["введение в ООП"],
-          Answers: []
+      courseName: "C# Base",
+      groups: [{
+        groupName: "дневная",
+        homeworks: [{
+          id: 0,
+          themes: ["введение в ООП"],
+          answers: []
         }]
       }, {
-        GroupName: "вечерняя",
-        Homeworks: [{
-          Id: 1,
-          Themes: ["циклы"],
-          Answers: []
+        groupName: "вечерняя",
+        homeworks: [{
+          id: 1,
+          themes: ["циклы"],
+          answers: []
         }]
       }]
     }, {
-      CourseName: "Java Base",
-      Groups: [{
-        GroupName: "дневная",
-        Homeworks: [{
-          Id: 2,
-          Themes: ["введение в ООП"],
-          Answers: []
+      courseName: "Java Base",
+      groups: [{
+        groupName: "дневная",
+        homeworks: [{
+          id: 2,
+          themes: ["введение в ООП"],
+          answers: []
         }, {
-          Id: 3,
-          Themes: ["unit-тесты", "циклы"],
-          Answers: []
+          id: 3,
+          themes: ["unit-тесты", "циклы"],
+          answers: []
         }]
       }]
     }, {
-      CourseName: "Front-end",
-      Groups: [{
-        GroupName: "дневная",
-        Homeworks: [{
-          Id: 18,
-          Themes: ["Спецификации ES"],
-          Answers: []
+      courseName: "Front-end",
+      groups: [{
+        groupName: "дневная",
+        homeworks: [{
+          id: 18,
+          themes: ["Спецификации ES"],
+          answers: []
         }]
       }]
     }, {
-      CourseName: "Back-end",
-      Groups: [{
-        GroupName: "вечерняя",
-        Homeworks: [{
-          Id: 500,
-          Themes: ["ASP.NET Core"],
-          Answers: []
+      courseName: "Back-end",
+      groups: [{
+        groupName: "вечерняя",
+        homeworks: [{
+          id: 500,
+          themes: ["ASP.NET Core"],
+          answers: []
         },
         {
-          Id: 500,
-          Themes: [],
-          Answers: []
+          id: 500,
+          themes: [],
+          answers: []
         }]
       }]
     }, {
-      CourseName: "Mobile dev",
-      Groups: [{
-        GroupName: "вечерняя",
-        Homeworks: [{
-          Id: 50,
-          Themes: ["Основы Kotlin"],
-          Answers: []
+      courseName: "Mobile dev",
+      groups: [{
+        groupName: "вечерняя",
+        homeworks: [{
+          id: 50,
+          themes: ["Основы Kotlin"],
+          answers: []
         }]
       }]
     }]
@@ -90,12 +90,12 @@ function HomeworkPage(props: HomeworkPageProps) {
   const groupsInFilterParameters: string[] = [];
   const themesInFilterParameters: string[] = [];
 
-  model.Courses.map(course => {
-    coursesInFilterParameters.push(course.CourseName);
-    course.Groups.map(group => {
-      groupsInFilterParameters.push(course.CourseName + " " + group.GroupName);
-      group.Homeworks.map(homework => {
-        homework.Themes.map(theme => {
+  model.courses.map(course => {
+    coursesInFilterParameters.push(course.courseName);
+    course.groups.map(group => {
+      groupsInFilterParameters.push(course.courseName + " " + group.groupName);
+      group.homeworks.map(homework => {
+        homework.themes.map(theme => {
           if (themesInFilterParameters.indexOf(theme) == -1) {
             themesInFilterParameters.push(theme);
           }
@@ -122,15 +122,15 @@ function HomeworkPage(props: HomeworkPageProps) {
   return (
     <div className="container">
       <Filters RoleId={props.roleId} filterParameters={filterParameters}></Filters>
-      {model.Courses.map(course =>
-        course.Groups.map(group =>
-          group.Homeworks.map(homework =>
+      {model.courses.map(course =>
+        course.groups.map(group =>
+          group.homeworks.map(homework =>
           (<HomeworkRow
-            key={homework.Id}
+            key={homework.id}
             RoleId={props.roleId}
-            Course={course.CourseName}
-            Group={group.GroupName}
-            Themes={homework.Themes.length ? homework.Themes : ["без темы"]}
+            Course={course.courseName}
+            Group={group.groupName}
+            Themes={homework.themes.length ? homework.themes : ["без темы"]}
             HomeworkObject={homework}
             onDeleteClick={deleteHomeworkHandler}></HomeworkRow>))))
       }

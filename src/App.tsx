@@ -6,7 +6,7 @@ import Cards from './Cards';
 import { Link, Switch, Route } from 'react-router-dom';
 import LoginForm from './components/login-form/LoginForm';
 import NavMenu from './components/nav-menu/NavMenu';
-import HomeworkPage from './components/homework-page/homework-page';
+import HomeworkPage from './components/homework-page/HomeworkPage';
 
 function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);

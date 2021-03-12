@@ -1,9 +1,9 @@
 import { Answer } from "./Answer";
 
 export interface Homework{
-    Id:number;
-    Themes:string[];
-    Message?:string;
-    IsAnswerRequired?:boolean;
-    Answers?: Answer[];
+    id:number;
+    themes:string[];
+    message?:string;
+    isAnswerRequired?:boolean;
+    answers?: Answer[];
 }
