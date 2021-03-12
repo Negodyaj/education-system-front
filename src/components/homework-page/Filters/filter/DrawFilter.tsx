@@ -12,7 +12,7 @@ function DrawFilter(attributes: FilterToRender) {
     const [listVisibility, setListVisibility] = useState("hidden");
 
     const toggleCheckBoxes = () => {
-        if (listVisibility == "hidden") {
+        if (listVisibility === "hidden") {
             setListVisibility("");
         }
         else setListVisibility("hidden");

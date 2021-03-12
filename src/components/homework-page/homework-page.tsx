@@ -106,13 +106,13 @@ function HomeworkPage(props: HomeworkPageProps) {
 
   const filterParameters: FilterParameter[] = [
     new CourseFilter(coursesInFilterParameters),
-    new GroupFilter(groupsInFilterParameters),
+    new GroupFilter(groupsInFilterParameters),//проверка по роли
     new ThemeFilter(themesInFilterParameters),
   ];
 
   const [visibility, setVisibility] = useState("");
-  const deleteHomeworkHandler = (visibility: string) => {
-    setVisibility(visibility);
+  const deleteHomeworkHandler = () => {
+    setVisibility("visible");
   }
 
   const CloseModalHandler = () => {
@@ -126,6 +126,7 @@ function HomeworkPage(props: HomeworkPageProps) {
         course.Groups.map(group =>
           group.Homeworks.map(homework =>
           (<HomeworkRow
+            key={homework.Id}
             RoleId={props.roleId}
             Course={course.CourseName}
             Group={group.GroupName}

@@ -1,5 +1,5 @@
 import { Course } from "./Course";
 
 export interface HomeworkPageModel{
-    Courses:Course[]
+    Courses:Course[]//camel
 }
