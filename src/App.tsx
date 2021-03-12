@@ -50,7 +50,7 @@ function App() {
                 </div>
                 <div className="header-user-actions">
                     {
-                        isLoggedIn && <Link to="/"><button onClick={logOut}>Log out</button></Link>
+                        isLoggedIn && <button onClick={logOut}>Log out</button>
                     }
                 </div>
             </header>
@@ -64,28 +64,30 @@ function App() {
                     }
                 </aside>
                 <main>
-                    
+
                     {
-                        isLoggedIn ? 
-                        <Switch>
-                            <Route exact path="/">
-                                <NewsList/>
-                            </Route>
-                            <Route path="/user-cards">
-                                <Cards />
-                            </Route>
-                            <Route path="/custom-list">
-                                <CustomList />
-                            </Route>
-                            <Route path="/groups-list">
-                            <GroupList />
-                            </Route>
-                            <Route path="/courses-list">
-                             <CoursesList />  
-                            </Route>
-                            <Route path="/homework-list">
-                             <HomeworkList />  
-                            </Route>
+                        isLoggedIn ?
+                            <Switch>
+                                <Route exact path="/">
+                                    {
+                                        roleId===2 && <NewsList />
+                                    }
+                                </Route>
+                                <Route path="/user-cards">
+                                    <Cards />
+                                </Route>
+                                <Route path="/custom-list">
+                                    <CustomList />
+                                </Route>
+                                <Route path="/groups-list">
+                                    <GroupList />
+                                </Route>
+                                <Route path="/courses-list">
+                                    <CoursesList />
+                                </Route>
+                                <Route path="/homework-list">
+                                    <HomeworkList />
+                                </Route>
                                 <Route path="/homework">
                                     <HomeworkPage roleId={roleId} />
                                 </Route>

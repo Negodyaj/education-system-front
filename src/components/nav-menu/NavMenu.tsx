@@ -13,11 +13,10 @@ function NavMenu(props: NavMenuProps) {
                 <nav>
                     <Link to="/user-cards">User cards</Link>
                     <Link to="/custom-list">Custom list</Link>
-                    <Link to="/homework">HomeworkMetodist</Link>
                 </nav>
             }
             {
-                props.roleId === 4 &&
+                props.roleId === 2 &&
                 <nav>
                     <NavLink exact activeClassName="active" to="/">
                         <button> Мои новости </button></NavLink>
@@ -27,6 +26,11 @@ function NavMenu(props: NavMenuProps) {
                         <button> Мои курсы </button></NavLink>
                     <NavLink activeClassName="active" to="homework-list">
                         <button> Мои Домашки </button></NavLink>
+                </nav>
+            }
+            {
+                props.roleId === 4 &&
+                <nav> 
                     <Link to="/homework">Homeworks</Link>
                 </nav>
             }
