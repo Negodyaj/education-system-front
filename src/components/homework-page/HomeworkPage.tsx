@@ -106,8 +106,8 @@ function HomeworkPage(props: HomeworkPageProps) {
 
   const filterParameters: FilterParameter[] = [
     new CourseFilter(coursesInFilterParameters),
-    new GroupFilter(groupsInFilterParameters),//проверка по роли
-    new ThemeFilter(themesInFilterParameters),
+    new GroupFilter(groupsInFilterParameters),
+    new ThemeFilter(themesInFilterParameters)
   ];
 
   const [visibility, setVisibility] = useState("");
@@ -121,7 +121,11 @@ function HomeworkPage(props: HomeworkPageProps) {
 
   return (
     <div className="container">
-      <Filters RoleId={props.roleId} filterParameters={filterParameters}></Filters>
+      <Filters
+        filterParameters={(() => {
+          props.roleId != 5 && filterParameters.splice(1, 1)
+          return filterParameters
+        })()}></Filters>
       {model.courses.map(course =>
         course.groups.map(group =>
           group.homeworks.map(homework =>
