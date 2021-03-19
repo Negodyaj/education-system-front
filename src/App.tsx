@@ -11,6 +11,7 @@ import CoursesList from './components/courses-list/CoursesList';
 import GroupList from './components/group-list/GroupList';
 import NewsList from './components/news-list/NewsList';
 import HomeworkList from './components/homework-list/HomeworkList';
+import NotificationContainer from './shared/notification/NotificationContainer'
 
 function App() {
     const history = useHistory();
@@ -70,7 +71,10 @@ function App() {
                             <Switch>
                                 <Route exact path="/">
                                     {
-                                        roleId===2 && <NewsList />
+                                        roleId===2 && <div>
+                                            <NotificationContainer/>
+                                            <NewsList />
+                                        </div>
                                     }
                                 </Route>
                                 <Route path="/user-cards">
