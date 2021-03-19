@@ -1,0 +1,35 @@
+.notification {
+    display: flex;
+    justify-content: space-between;
+    min-height: 100px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.notification span{
+    width: 360px;
+    align-self: center;
+}
+
+.notification button {
+    height: 50px;
+    background: none;
+    color: red;
+    padding: 0;
+    font-size: 30px;
+}
+
+.info-notification {
+    border: 2px solid blue;
+    background: lightblue;
+}
+
+.success-notification {
+    border: 2px solid green;
+    background: lightgreen;
+}
+
+.error-notification {
+    border: 2px solid red;
+    background: lightpink;
+}
