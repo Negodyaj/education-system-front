@@ -11,6 +11,7 @@ import CoursesList from './components/courses-list/CoursesList';
 import GroupList from './components/group-list/GroupList';
 import NewsList from './components/news-list/NewsList';
 import HomeworkList from './components/homework-list/HomeworkList';
+import NotificationContainer from './shared/notification/NotificationContainer'
 import UserPage from './components/user-page/UserPage';
 import Calendar from './components/date-picker/DatePicker';
 
@@ -72,7 +73,10 @@ function App() {
                             <Switch>
                                 <Route exact path="/">
                                     {
-                                        roleId===2 && <NewsList />
+                                        roleId===2 && <div>
+                                            <NotificationContainer/>
+                                            <NewsList />
+                                        </div>
                                     }
                                 </Route>
                                 <Route path="/user-cards">
