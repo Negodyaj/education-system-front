@@ -13,6 +13,7 @@ import NewsList from './components/news-list/NewsList';
 import HomeworkList from './components/homework-list/HomeworkList';
 import UserPage from './components/user-page/UserPage';
 import Calendar from './components/date-picker/DatePicker';
+import MultiSelect from './components/multi-select/MultiSelect';
 
 function App() {
     const history = useHistory();
@@ -100,6 +101,7 @@ function App() {
                     
                 </main>
             </div>
+            <MultiSelect />
         </div>
     );
 }
