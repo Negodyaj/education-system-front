@@ -12,6 +12,7 @@ import GroupList from './components/group-list/GroupList';
 import NewsList from './components/news-list/NewsList';
 import HomeworkList from './components/homework-list/HomeworkList';
 import UserPage from './components/user-page/UserPage';
+import Calendar from './components/date-picker/DatePicker';
 
 function App() {
     const history = useHistory();
@@ -96,6 +97,7 @@ function App() {
                             :
                             <LoginForm onLoginClick={loginHandler} />
                     }
+                    
                 </main>
             </div>
         </div>
