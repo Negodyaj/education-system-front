@@ -11,11 +11,12 @@ import CoursesList from './components/courses-list/CoursesList';
 import GroupList from './components/group-list/GroupList';
 import NewsList from './components/news-list/NewsList';
 import HomeworkList from './components/homework-list/HomeworkList';
+import UserPage from './components/user-page/UserPage';
 
 function App() {
     const history = useHistory();
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [roleId, setRoleId] = useState(0);
+    const [isLoggedIn, setIsLoggedIn] = useState(true);
+    const [roleId, setRoleId] = useState(3);
 
 
     const users = [
@@ -64,6 +65,7 @@ function App() {
                     }
                 </aside>
                 <main>
+                    <UserPage></UserPage>
 
                     {
                         isLoggedIn ?
