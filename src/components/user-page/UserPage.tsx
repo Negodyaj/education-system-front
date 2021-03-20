@@ -1,16 +1,31 @@
+
+import { User } from '../interfaces/User';
+import UserList from './user-list/UserList';
 import './UserPage.css'
 
-function UserPage(){
+interface UserPageProps{
+    roleId:number;
+}
 
-    const users = [
+function UserPage(props: UserPageProps){
+
+    const users:User[] = [
         {
+            id:430,
             name: "Гай Юлий",
             secondName:"Цезарь",
             birthDate:"12/07/-0100",
             login:"Lorem",
             password:"cesar",
+            roleId:[
+                1,
+                2
+            ],
+            groupId:4,
+            groupName: "C# Base дневная"
         },
         {
+            id:40,
             name: "Марк Аврелий",
             secondName: "Антонин",
             birthDate:"26/04/0121",
@@ -20,19 +35,27 @@ function UserPage(){
                 1,
                 2
             ],
-            groupId:1
+            groupId:4,
+            groupName: "C# Base дневная"
             },
         {
-            name: "Гай Юлий",
-            secondName:"Цезарь",
+            id:30,
+            name: "Тит Элий Адриан",
+            secondName:"Антонин",
             birthDate:"12/07/-0100",
             login:"ipsum",
             password:"cesar",
-
+            roleId:[
+                1,
+                2
+            ],
+            groupId:4,
+            groupName: "C# Base дневная"
         },
         {
-            name: "Марк Аврелий",
-            secondName: "Антонин",
+            id:4,
+            name: "Публий Элий Траян",
+            secondName: "Адриан",
             birthDate:"26/04/0121",
             login:"dolor",
             password:"cesar",
@@ -40,13 +63,14 @@ function UserPage(){
                 1,
                 2
             ],
-            groupId:1
+            groupId:4,
+            groupName: "C# Base дневная"
         },
     ]
     
     return(
         <div className="user-page">
-            страница пользователей
+            <UserList users={users}></UserList>
         </div>
     )
 }
