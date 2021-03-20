@@ -1,6 +1,10 @@
 import './UserPage.css'
 
-function UserPage(){
+interface UserPageProps{
+    roleId:number;
+}
+
+function UserPage(props: UserPageProps){
 
     const users = [
         {

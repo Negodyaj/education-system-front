@@ -29,9 +29,9 @@ function NavMenu(props: NavMenuProps) {
                 </nav>
             }
             {
-                props.roleId === 4 &&
+                (props.roleId === 3 || props.roleId===4) &&
                 <nav> 
-                    <Link to="/homework">Homeworks</Link>
+                    <Link to="/user-page">Users</Link>
                 </nav>
             }
             {
