@@ -32,12 +32,14 @@ function NavMenu(props: NavMenuProps) {
                 props.roleId === 4 &&
                 <nav> 
                     <Link to="/homework">Homeworks</Link>
+                    <Link to="/user-page">Users</Link>
                 </nav>
             }
             {
                 props.roleId === 5 &&
                 <nav>
                     <Link to="/homework">Homeworks</Link>
+                    <Link to="/user-page">Users</Link>
                 </nav>
             }
         </div>

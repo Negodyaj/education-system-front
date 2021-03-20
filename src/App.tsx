@@ -25,8 +25,9 @@ function App() {
         { login: 'test', password: 'test', roleId: 1 },
         { login: 'student', password: 'qwerty', roleId: 2 },
         { login: 'manager', password: '11111', roleId: 3 },
-        { login: 'metodist', password: 'metodist', roleId: 4 },
-        { login: 'teacher', password: 'teacher', roleId: 5 }
+        {login:'admin', password: 'admin', roleId: 4},
+        { login: 'methodist', password: 'methodist', roleId: 5 },
+        { login: 'teacher', password: 'teacher', roleId: 6 }
     ];
 
     const loginHandler = (email: string, password: string) => {
@@ -79,12 +80,12 @@ function App() {
                                         </div>
                                     }
                                 </Route>
-                                <Route path="/user-cards">
-                                    <Cards />
-                                </Route>
-                                <Route path="/custom-list">
-                                    <CustomList />
-                                </Route>
+                                {
+                                    roleId===3 || roleId===4 &&
+                                    <Route path="/user-page">
+                                        <UserPage roleId={roleId}></UserPage>
+                                    </Route>
+                                }
                                 <Route path="/groups-list">
                                     <GroupList />
                                 </Route>
