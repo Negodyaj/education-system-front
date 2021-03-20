@@ -1,13 +1,14 @@
 import './Notification.css'
+import { ReactComponent as XIcon } from '../images/x-icon.svg'
 
-interface Notification {
+interface NotificationProps {
     type: string;
     text: string;
     isDismissible: boolean;
 }
 
-function Notification(props: Notification) {
-    return(
+function Notification(props: NotificationProps) {
+    return (
         <div className={`notification 
         ${props.type === "information" ? "info-notification" : ""}
         ${props.type === "success" ? "success-notification" : ""}
@@ -15,7 +16,10 @@ function Notification(props: Notification) {
         `}>
             <span>{props.text}</span>
             {
-                props.isDismissible && <button className="close-btn">x</button>
+                props.isDismissible &&
+                <button className="close-btn">
+                    <XIcon/>
+                </button>
             }
         </div>
     )
