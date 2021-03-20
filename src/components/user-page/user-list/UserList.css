@@ -1,0 +1,17 @@
+.user-list{
+    margin-left: 5px;
+}
+
+.user-list-item{
+    display: grid;
+    grid-template-columns: 160px 160px 90px 70px 190px 160px 60px 140px;
+}
+
+.user-list-item .column{
+    display: flex;
+    justify-content: start;
+}
+
+.user-list-item button{
+    margin:0 4px;
+}
