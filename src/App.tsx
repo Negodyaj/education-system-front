@@ -12,8 +12,8 @@ import GroupList from './components/group-list/GroupList';
 import NewsList from './components/news-list/NewsList';
 import HomeworkList from './components/homework-list/HomeworkList';
 import UserPage from './components/user-page/UserPage';
-import Calendar from './components/date-picker/DatePicker';
-import MultiSelect from './components/multi-select/MultiSelect';
+import DatePickerComponent from './components/date-picker/DatePickerComponent';
+import CustomMultiSelect from './components/multi-select/CustomMultiSelect';
 
 function App() {
     const history = useHistory();
@@ -38,7 +38,15 @@ function App() {
         }
     }
 
-
+    // const rolesList = [
+    //     { value: 'Преподаватель', label: 'Преподаватель' },
+    //     { value: 'Студент', label: 'Студент' },
+    //     { value: 'Администратор', label: 'Администратор' },
+    //     { value: 'Методист', label: 'Методист' },
+    //     { value: 'Тьютор', label: 'Тьютор' },
+    //     { value: 'Менеджер', label: 'Менеджер' }
+    // ]
+    
 
     const logOut = () => {
         setIsLoggedIn(false);
@@ -101,7 +109,6 @@ function App() {
                     
                 </main>
             </div>
-            <MultiSelect />
         </div>
     );
 }
