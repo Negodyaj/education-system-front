@@ -11,7 +11,7 @@ import CoursesList from './components/courses-list/CoursesList';
 import GroupList from './components/group-list/GroupList';
 import NewsList from './components/news-list/NewsList';
 import HomeworkList from './components/homework-list/HomeworkList';
-import NotificationContainer from './shared/notification/NotificationContainer'
+import NotificationContainer from './shared/components/notification/NotificationContainer'
 import UserPage from './components/user-page/UserPage';
 import DatePickerComponent from './components/date-picker/DatePickerComponent';
 import CustomMultiSelect from './components/multi-select/CustomMultiSelect';
