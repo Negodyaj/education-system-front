@@ -21,7 +21,7 @@ function Notification(props: NotificationProps) {
     const dismiss = () => {
         if (props.notificationData.isDismissible) {
             setIsHidden(true);
-            setTimeout(() => props.deleteNotification(props.notificationData), 700)
+            setTimeout(() => props.deleteNotification(props.notificationData), 500)
         }
     }
 
