@@ -78,9 +78,11 @@ function UserEditForm(props: UserEditFormProps) {
 
     const onSaveClick = () => {
 
-        newUser.id === null && (() => {
+        newUser.id === undefined && (newUser.id=(() => {
             return Math.round(Math.random() * 100)
-        })();
+        })());
+
+        console.log(newUser);
 
         props.onSaveClick(newUser)
         props.onCancelClick(false);

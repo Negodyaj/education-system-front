@@ -55,6 +55,12 @@ function UserPage(props: UserPageProps) {
             role: [{
                 roleId: 1,
                 roleName: "студент"
+            }, {
+                roleId: 1,
+                roleName: "студент"
+            }, {
+                roleId: 1,
+                roleName: "студент"
             }],
             email: "boss@myempire.com",
             groupId: 4,
@@ -88,6 +94,8 @@ function UserPage(props: UserPageProps) {
     const ids:(number|undefined)[] =  Array.from(usersState, user => user.id);
     
     const onEditClick = (editedUserId?: number) => {
+
+        alert(editedUserId);
 
         if (editedUserId===null) return;
 
