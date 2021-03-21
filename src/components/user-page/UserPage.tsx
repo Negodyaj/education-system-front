@@ -1,6 +1,8 @@
 
+import React, { useState } from 'react';
 import { User } from '../interfaces/User';
 import UserList from './user-list/UserList';
+import UserEditForm from './UserEditForm/UserEditForm';
 import './UserPage.css'
 
 interface UserPageProps{
@@ -68,9 +70,23 @@ function UserPage(props: UserPageProps){
         },
     ]
     
-    return(
+
+    const [isEditModeOn, setIsEditModeOn] = useState(false);
+
+
+    const renderUserList = () => {
+        return <UserList users={users} onEditClick={setIsEditModeOn}></UserList>
+    }
+
+    const renderUserEditForm = () => {
+        return <UserEditForm onCancelClick={setIsEditModeOn}></UserEditForm>
+    }
+
+    return (
         <div className="user-page">
-            <UserList users={users}></UserList>
+            {
+                isEditModeOn ? renderUserEditForm() : renderUserList()
+            }
         </div>
     )
 }
