@@ -4,9 +4,14 @@ import './UserList.css';
 
 interface UserListProps {
     users: User[];
+    onEditClick:(mode:boolean)=>void;
 }
 
 function UserList(props: UserListProps) {
+
+    const onEditClick = () => {
+        props.onEditClick(true);
+    }
 
     return (
         <div className="user-list">
@@ -31,7 +36,7 @@ function UserList(props: UserListProps) {
                         </div>
                         <div className="column">{u.groupName}</div>
                         <div className="column">{u.birthDate}</div>
-                        <button>ред.</button>
+                        <button onClick={onEditClick}>ред.</button>
                         <button>удал.</button>
                         <button>$</button>
                     </div>))
