@@ -35,7 +35,7 @@ function NavMenu(props: NavMenuProps) {
                 </nav>
             }
             {
-                props.roleId === 5 &&
+                (props.roleId === 5  || props.roleId === 6) &&
                 <nav>
                     <Link to="/homework">Homeworks</Link>
                 </nav>

@@ -123,7 +123,7 @@ function HomeworkPage(props: HomeworkPageProps) {
     <div className="container">
       <Filters
         filterParameters={(() => {
-          props.roleId != 5 && filterParameters.splice(1, 1)
+          props.roleId != 6 && filterParameters.splice(1, 1)
           return filterParameters
         })()}></Filters>
       {model.courses.map(course =>
