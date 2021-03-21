@@ -5,6 +5,7 @@
     border-radius: 5px;
     margin-bottom: 10px;
     padding: 5px;
+    transition: all 1s ease;
 }
 
 .notification span{
@@ -49,4 +50,8 @@
     border: 2px solid red;
     background: lightpink;
     color: darkred;
+}
+
+.hidden {
+    opacity: 0;
 }
