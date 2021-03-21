@@ -16,6 +16,7 @@ interface UserEditFormProps {
 }
 
 function UserEditForm(props: UserEditFormProps) {
+    const [id, setId] = useState<number|undefined>(props.user?.id);
     const [name, setName] = useState<string | undefined>(props.user?.name);
     const [secondName, setSecondName] = useState<string | undefined>(props.user?.secondName);
     const [birthDate, setBirthDate] = useState<string | undefined>(props.user?.birthDate);
@@ -27,9 +28,7 @@ function UserEditForm(props: UserEditFormProps) {
     const [groupName, setGroupName] = useState<string | undefined>(props.user?.groupName);
 
     const newUser: User = {
-        id: (() => {
-            return Math.random()
-        })(),
+        id: id,
         name: name,
         secondName: secondName,
         birthDate: birthDate,
@@ -78,6 +77,11 @@ function UserEditForm(props: UserEditFormProps) {
     }
 
     const onSaveClick = () => {
+
+        newUser.id === null && (() => {
+            return Math.round(Math.random() * 100)
+        })();
+
         props.onSaveClick(newUser)
         props.onCancelClick(false);
     }
