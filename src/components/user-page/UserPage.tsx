@@ -40,7 +40,7 @@ function UserPage(props: UserPageProps){
             },
         {
             id:30,
-            name: "Тит Элий Адриан",
+            name: "Тит Элий Адриан сверхпредрассредоточенный",
             secondName:"Антонин",
             birthDate:"12/07/-0100",
             login:"ipsum",
