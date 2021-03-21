@@ -1,5 +1,5 @@
 import './Notification.css'
-import { ReactComponent as XIcon } from '../images/x-icon.svg'
+import { ReactComponent as XIcon } from '../../images/x-icon.svg'
 
 interface NotificationProps {
     type: string;
