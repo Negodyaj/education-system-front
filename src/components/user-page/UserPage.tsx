@@ -105,8 +105,12 @@ function UserPage(props: UserPageProps) {
     }
 
     const onSaveClick = (newUser:User) => {
-        usersState.push(newUser);
-        console.log(usersState);
+
+        let i:number = ids.indexOf(newUser.id);
+
+        if (i === -1) usersState.push(newUser);
+        else usersState[i]=newUser;
+        
         setUsersState(usersState.concat());
     }
 
