@@ -1,85 +1,117 @@
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { User } from '../interfaces/User';
 import UserList from './user-list/UserList';
 import UserEditForm from './UserEditForm/UserEditForm';
 import './UserPage.css'
 
-interface UserPageProps{
-    roleId:number;
+interface UserPageProps {
+    roleId: number;
 }
 
-function UserPage(props: UserPageProps){
+function UserPage(props: UserPageProps) {
 
-    const users:User[] = [
+    const users: User[] = [
         {
-            id:430,
+            id: 430,
             name: "Гай Юлий",
-            secondName:"Цезарь",
-            birthDate:"12/07/-0100",
-            login:"Lorem",
-            password:"cesar",
-            roleId:[
-                1,
-                2
-            ],
-            groupId:4,
+            secondName: "Цезарь",
+            birthDate: "12/07/-0100",
+            login: "Lorem",
+            password: "cesar",
+            phone: "+7 987 654 32 10",
+            role: [{
+                roleId: 1,
+                roleName: "студент"
+            }],
+            email: "boss@myempire.com",
+            groupId: 4,
             groupName: "C# Base дневная"
         },
         {
-            id:40,
+            id: 40,
             name: "Марк Аврелий",
             secondName: "Антонин",
-            birthDate:"26/04/0121",
-            login:"ave",
-            password:"cesar",
-            roleId:[
-                1,
-                2
-            ],
-            groupId:4,
-            groupName: "C# Base дневная"
-            },
-        {
-            id:30,
-            name: "Тит Элий Адриан сверхпредрассредоточенный",
-            secondName:"Антонин",
-            birthDate:"12/07/-0100",
-            login:"ipsum",
-            password:"cesar",
-            roleId:[
-                1,
-                2
-            ],
-            groupId:4,
+            birthDate: "26/04/0121",
+            login: "ave",
+            password: "cesar",
+            phone: "+7 897 012 345 67 89",
+            role: [{
+                roleId: 1,
+                roleName: "студент"
+            }],
+            email: "boss@myempire.com",
+            groupId: 4,
             groupName: "C# Base дневная"
         },
         {
-            id:4,
+            id: 30,
+            name: "Тит Элий Адриан сверхпредрассредоточенный",
+            secondName: "Антонин",
+            birthDate: "12/07/-0100",
+            login: "ipsum",
+            password: "cesar",
+            phone: "+7 999 887 23 05",
+            role: [{
+                roleId: 1,
+                roleName: "студент"
+            }],
+            email: "boss@myempire.com",
+            groupId: 4,
+            groupName: "C# Base дневная"
+        },
+        {
+            id: 4,
             name: "Публий Элий Траян",
             secondName: "Адриан",
-            birthDate:"26/04/0121",
-            login:"dolor",
-            password:"cesar",
-            roleId:[
-                1,
-                2
-            ],
-            groupId:4,
+            birthDate: "26/04/0121",
+            login: "dolor",
+            password: "cesar",
+            phone: "+7 902 089 97 42",
+            role: [{
+                roleId: 1,
+                roleName: "студент"
+            }],
+            email: "boss@myempire.com",
+            groupId: 4,
             groupName: "C# Base дневная"
         },
-    ]
+    ];
+
     
-
+    const [usersState, setUsersState] = useState(users.concat());
+    
     const [isEditModeOn, setIsEditModeOn] = useState(false);
+    
+    const [editedUser, setEditedUser] = useState<User | null>(null);
+    
+    const ids:(number|undefined)[] =  Array.from(usersState, user => user.id);
+    
+    const onEditClick = (editedUserId?: number) => {
 
+        if (editedUserId===null) return;
+
+        setIsEditModeOn(true);
+
+        setEditedUser(
+            usersState.filter((user) => {
+                return user.id == editedUserId
+            })[0]
+        )
+    }
 
     const renderUserList = () => {
-        return <UserList users={users} onEditClick={setIsEditModeOn}></UserList>
+        return <UserList users={usersState} onEditClick={onEditClick}></UserList>
+    }
+
+    const onSaveClick = (newUser:User) => {
+        usersState.push(newUser);
+        console.log(usersState);
+        setUsersState(usersState.concat());
     }
 
     const renderUserEditForm = () => {
-        return <UserEditForm onCancelClick={setIsEditModeOn}></UserEditForm>
+        return <UserEditForm user={editedUser} ids={ids} onCancelClick={setIsEditModeOn} onSaveClick={onSaveClick}></UserEditForm>
     }
 
     return (
