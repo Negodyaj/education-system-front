@@ -19,31 +19,28 @@ function NotificationContainer() {
             setNonDismissibleNotifications(newState);
     }
     
-    const deleteNotification = (index: number) => {
-        const newState = dismissibleNotifications.slice();
-        newState.splice(index, 1);
+    const deleteNotification = (dismissedNotification: NotificationData) => {
+        const newState = dismissibleNotifications.filter(notification => notification != dismissedNotification)
         setDismissibleNotifications(newState);
     }
 
     return (
         <div className="notification-container">
             <div className="non-dismissible-notifications">
-                {nonDismissibleNotifications.map((notification, index) => {
+                {nonDismissibleNotifications.map(notification => {
                     return (
                         <Notification 
                         key={notification.text}
-                        index={index}
                         notificationData={notification} 
                         deleteNotification={deleteNotification}/>
                     )
                 })}
             </div>
             <div className="dismissible-notifications">
-            {dismissibleNotifications.map((notification, index) => {
+            {dismissibleNotifications.map(notification => {
                     return (
                         <Notification 
                         key={notification.text} 
-                        index={index}
                         notificationData={notification}
                         deleteNotification={deleteNotification}/>
                     )

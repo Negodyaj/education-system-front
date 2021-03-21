@@ -5,7 +5,7 @@
     border-radius: 5px;
     margin-bottom: 10px;
     padding: 5px;
-    transition: all 1s ease;
+    transition: all 0.7s ease;
 }
 
 .notification span{

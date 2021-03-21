@@ -5,8 +5,7 @@ import NotificationData from '../../interfaces/NotificationData';
 
 interface NotificationProps {
     notificationData: NotificationData;
-    index: number;
-    deleteNotification: (i: number) => void;
+    deleteNotification: (notificationData: NotificationData) => void;
 }
 
 function Notification(props: NotificationProps) {
@@ -14,6 +13,17 @@ function Notification(props: NotificationProps) {
     useEffect(() => {
         setIsHidden(false);
     }, [])
+
+    // useEffect(() => {
+    //     setTimeout(dismiss, 3000);
+    // }, [])
+
+    const dismiss = () => {
+        if (props.notificationData.isDismissible) {
+            setIsHidden(true);
+            setTimeout(() => props.deleteNotification(props.notificationData), 700)
+        }
+    }
 
     return (
         <div className={`notification 
@@ -25,7 +35,7 @@ function Notification(props: NotificationProps) {
             <span>{props.notificationData.text}</span>
             {
                 props.notificationData.isDismissible &&
-                <button onClick={() => props.deleteNotification(props.index)} className="close-btn">
+                <button onClick={ dismiss } className="close-btn">
                     <XIcon/>
                 </button>
             }
