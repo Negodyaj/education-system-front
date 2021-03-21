@@ -34,7 +34,7 @@ function NotificationContainer() {
                         key={notification.text}
                         index={index}
                         notificationData={notification} 
-                        onClickHandler={deleteNotification}/>
+                        deleteNotification={deleteNotification}/>
                     )
                 })}
             </div>
@@ -45,7 +45,7 @@ function NotificationContainer() {
                         key={notification.text} 
                         index={index}
                         notificationData={notification}
-                        onClickHandler={deleteNotification}/>
+                        deleteNotification={deleteNotification}/>
                     )
                 })}
             </div>

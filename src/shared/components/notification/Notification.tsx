@@ -6,7 +6,7 @@ import NotificationData from '../../interfaces/NotificationData';
 interface NotificationProps {
     notificationData: NotificationData;
     index: number;
-    onClickHandler: (i: number) => void;
+    deleteNotification: (i: number) => void;
 }
 
 function Notification(props: NotificationProps) {
@@ -25,7 +25,7 @@ function Notification(props: NotificationProps) {
             <span>{props.notificationData.text}</span>
             {
                 props.notificationData.isDismissible &&
-                <button onClick={() => props.onClickHandler(props.index)} className="close-btn">
+                <button onClick={() => props.deleteNotification(props.index)} className="close-btn">
                     <XIcon/>
                 </button>
             }
