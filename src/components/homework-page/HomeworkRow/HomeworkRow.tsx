@@ -17,7 +17,7 @@ function DrawHomework(props: HomeworkRowProps) {
     let blueButtonText: string = "редактировать";
 
 
-    if (props.RoleId === 5) {
+    if (props.RoleId === 6) {
         blueButtonText = "проверить";
     }
 
@@ -40,7 +40,7 @@ function DrawHomework(props: HomeworkRowProps) {
         <div className="row align-items-start table-row">
             <div className="col">{props.Course}</div>
             {
-                props.RoleId == 5 && <div className="col">{props.Group}</div>
+                props.RoleId == 6 && <div className="col">{props.Group}</div>
             }
             <div className="col">
             {
@@ -48,7 +48,7 @@ function DrawHomework(props: HomeworkRowProps) {
             }
             </div>
             {
-                props.RoleId == 5 &&
+                props.RoleId == 6 &&
                     <div className="col">
                         <button
                             type="button"
