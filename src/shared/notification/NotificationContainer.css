@@ -1,8 +1,8 @@
 .notification-container {
-    border: 1px solid black;
     width: 400px;
     min-height: 100px;
     position: fixed;
     z-index: 1;
     right: 10px;
+    top: 110px;
 }

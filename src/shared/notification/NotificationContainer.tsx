@@ -1,3 +1,4 @@
+import Notification from './Notification';
 import './NotificationContainer.css';
 
 function NotificationContainer() {
@@ -29,13 +30,23 @@ function NotificationContainer() {
     
     return (
         <div className="notification-container">
-            <div className="non-dismissible-notifications"></div>
-            <div className="dismissible-notifications"></div>
+            <div className="non-dismissible-notifications">
+                {nonDismissibleNotifications.map(notification => {
+                    return (
+                        <Notification {...notification}/>
+                    )
+                })}
+            </div>
+            <div className="dismissible-notifications">
+            {dismissibleNotifications.map(notification => {
+                    return (
+                        <Notification {...notification}/>
+                    )
+                })}
+            </div>
         </div>
     )
 
 }
-
-
 
 export default NotificationContainer;

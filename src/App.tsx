@@ -83,10 +83,7 @@ function App() {
                             <Switch>
                                 <Route exact path="/">
                                     {
-                                        roleId === 2 && <div>
-                                            <NotificationContainer />
-                                            <NewsList />
-                                        </div>
+                                        roleId===2 && <NewsList />
                                     }
                                 </Route>
                                 {
@@ -111,7 +108,9 @@ function App() {
                             :
                             <LoginForm onLoginClick={loginHandler} />
                     }
-
+                    {
+                        isLoggedIn ? roleId === 2 && <NotificationContainer/> : <></>
+                    }
                 </main>
             </div>
         </div>
