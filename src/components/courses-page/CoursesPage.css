@@ -38,25 +38,25 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 100px;
+    width: 85px;
     height: 40px;
 }
 
 .button-update {
-
-
- 
+    background-image: url('../../img/edit.png');
+    background-size: contain;
     width: 40px;
     height: 40px;
     outline: none;
     border: none;
-
 }
 
 .button-delete {
+    background-image: url('../../img/delete.png');
+    background-size: contain;
 
-    width: 40px;
-    height: 40px;
+    width: 35px;
+    height: 35px;
     outline: none;
     border: none;
 }
