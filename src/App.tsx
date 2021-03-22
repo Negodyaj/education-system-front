@@ -113,7 +113,6 @@ function App() {
                     }
                 </main>
             </div>
-            <DatePickerComponent />
         </div>
     );
 }
