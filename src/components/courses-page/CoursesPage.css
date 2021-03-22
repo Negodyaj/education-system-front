@@ -1,0 +1,63 @@
+.course-container {
+    width: max-content;
+    margin: 0 auto;
+}
+
+.course-create {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 50px;
+}
+
+.button-create {
+    height: 40px;
+    outline: none;
+    border: 2px solid rgb(41, 3, 253);
+    border-radius: 5px;
+}
+
+.courses-list {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    width: 900px;
+}
+
+.course {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 10px;
+    height: 60px;
+    border: 2px solid rgb(41, 3, 253);
+    border-radius: 5px;
+    font-size: 20px;
+}
+
+.course-update-delete {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100px;
+    height: 40px;
+}
+
+.button-update {
+
+
+ 
+    width: 40px;
+    height: 40px;
+    outline: none;
+    border: none;
+
+}
+
+.button-delete {
+
+    width: 40px;
+    height: 40px;
+    outline: none;
+    border: none;
+}
+
