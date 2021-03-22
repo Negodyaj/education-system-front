@@ -91,9 +91,10 @@ function UserEditForm(props: UserEditFormProps) {
         props.onCancelClick(false);
     }
 
-    const onFormChange = () => {
+    const onFormChange:ChangeEventHandler<HTMLDivElement> = (e) => {
+        e.stopPropagation();
         console.log('------')
-        setIsDisabled(!(Object.values(newUser).reduce((isEmpty, prop, index) => {
+        setIsDisabled((Object.values(newUser).reduce((isEmpty, prop, index) => {
             if (prop !== undefined) {
                 if (prop === null) {
                     console.log(index + ' null')
