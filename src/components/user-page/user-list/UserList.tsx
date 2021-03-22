@@ -36,7 +36,7 @@ function UserList(props: UserListProps) {
                             }
                         </div>
                         <div className="column">{u.groupName}</div>
-                        <div className="column">{u.birthDate}</div>
+                        <div className="column">{u.birthDate?.toLocaleString('ru')}</div>
                         <button onClick={()=>onEditClick(u.id)}>ред.</button>
                         <button>удал.</button>
                         <button>$</button>
