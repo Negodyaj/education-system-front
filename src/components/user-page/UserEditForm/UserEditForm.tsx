@@ -17,7 +17,7 @@ interface UserEditFormProps {
 }
 
 function UserEditForm(props: UserEditFormProps) {
-    const [id, setId] = useState<number|undefined>(props.user?.id);
+    const [id, setId] = useState<number | undefined>(props.user?.id);
     const [name, setName] = useState<string | undefined>(props.user?.name);
     const [secondName, setSecondName] = useState<string | undefined>(props.user?.secondName);
     const [birthDate, setBirthDate] = useState<Date | null>(props.user?.birthDate ?? null);
@@ -27,6 +27,7 @@ function UserEditForm(props: UserEditFormProps) {
     const [phone, setPhone] = useState<string | undefined>(props.user?.phone);
     const [email, setEmail] = useState<string | undefined>(props.user?.email);
     const [groupName, setGroupName] = useState<string | undefined>(props.user?.groupName);
+    const [isDisabled, setIsDisabled] = useState(true);
 
     const newUser: User = {
         id: id,
@@ -49,7 +50,7 @@ function UserEditForm(props: UserEditFormProps) {
         setSecondName(e.target.value);
     }
 
-    const birthDateOnChange = (date:Date) => {
+    const birthDateOnChange = (date: Date) => {
         setBirthDate(date);
     }
 
@@ -78,12 +79,9 @@ function UserEditForm(props: UserEditFormProps) {
     }
 
     const onSaveClick = () => {
-
-        newUser.id === undefined && (newUser.id=(() => {
+        newUser.id === undefined && (newUser.id = (() => {
             return Math.round(Math.random() * 100)
         })());
-
-        console.log(newUser);
 
         props.onSaveClick(newUser)
         props.onCancelClick(false);
@@ -93,8 +91,30 @@ function UserEditForm(props: UserEditFormProps) {
         props.onCancelClick(false);
     }
 
+    const onFormChange = () => {
+        console.log('------')
+        setIsDisabled(!(Object.values(newUser).reduce((isEmpty, prop, index) => {
+            if (prop !== undefined) {
+                if (prop === null) {
+                    console.log(index + ' null')
+                }
+                else if (prop.length === 0) {
+                    console.log(index + ' empty string')
+                }
+                else {
+                    console.log(index +' '+ prop)
+                    return false;
+                }
+            } else {
+                console.log(index + ' undefined')
+            }
+            return isEmpty
+        }, true)));
+        console.log(isDisabled);
+    }
+
     return (
-        <div className="user-edit-form">
+        <div className="user-edit-form" onChange={onFormChange}>
             <div className="user-list-item">
                 <label className="column">Имя</label>
                 <input type="text" className="column" value={name} onChange={nameOnChange} />
@@ -106,7 +126,7 @@ function UserEditForm(props: UserEditFormProps) {
             <div className="user-list-item">
                 <label className="column">Дата рождения</label>
                 <DatePickerComponent date={props.user?.birthDate ?? null} onDateChange={birthDateOnChange} />
-                </div>
+            </div>
             <div className="user-list-item">
                 <label className="column">Логин</label>
                 <input type="text" className="column" value={login} onChange={loginOnChange} />
@@ -136,7 +156,7 @@ function UserEditForm(props: UserEditFormProps) {
                     <button className="column" onClick={onCancelClick}>отмена</button>
                 </div>
                 <div className="column">
-                    <button className="column" onClick={onSaveClick}>сохранить</button>
+                    <button className="column" onClick={onSaveClick} disabled={isDisabled}>сохранить</button>
                 </div>
             </div>
         </div>
