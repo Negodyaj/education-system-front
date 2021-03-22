@@ -13,7 +13,7 @@ import NewsList from './components/news-list/NewsList';
 import HomeworkList from './components/homework-list/HomeworkList';
 import NotificationContainer from './shared/components/notification/NotificationContainer'
 import UserPage from './components/user-page/UserPage';
-import DatePickerComponent from './components/date-picker/DatePickerComponent';
+import DatePickerComponent from './shared/components/date-picker/DatePickerComponent';
 import CustomMultiSelect from './components/multi-select/CustomMultiSelect';
 
 function App() {
@@ -113,6 +113,7 @@ function App() {
                     }
                 </main>
             </div>
+            <DatePickerComponent />
         </div>
     );
 }
