@@ -1,20 +1,21 @@
-import { MouseEventHandler } from "react";
+
 import { User } from "../../interfaces/User";
-import './UserList.css';
+import '../UserPage.css';
 
 interface UserListProps {
     users: User[];
-    onEditClick:(mode:boolean)=>void;
+    onEditClick:(editedUserId?:number)=>void;
 }
 
 function UserList(props: UserListProps) {
 
-    const onEditClick = () => {
-        props.onEditClick(true);
+    const onEditClick = (editedUserId?:number) => {
+        props.onEditClick(editedUserId);
     }
 
     return (
         <div className="user-list">
+            <button onClick={()=>onEditClick()}>добавить пользователя</button>
             <div className="user-list-head">
                 <div className="column"><span title="А-Я">фамилия</span></div>
                 <div className="column"><span title="А-Я">имя</span></div>
@@ -31,12 +32,12 @@ function UserList(props: UserListProps) {
                         <div className="column">{u.login}</div>
                         <div className="column">
                             {
-                                u.roleId.map(r => (<span>{r}</span>))
+                                u.role?.map(r => (<span>{r.roleName}</span>))
                             }
                         </div>
                         <div className="column">{u.groupName}</div>
-                        <div className="column">{u.birthDate}</div>
-                        <button onClick={onEditClick}>ред.</button>
+                        <div className="column">{u.birthDate?.toLocaleString('ru')}</div>
+                        <button onClick={()=>onEditClick(u.id)}>ред.</button>
                         <button>удал.</button>
                         <button>$</button>
                     </div>))
