@@ -27,7 +27,21 @@ function UserEditForm(props: UserEditFormProps) {
     const [phone, setPhone] = useState<string | undefined>(props.user?.phone);
     const [email, setEmail] = useState<string | undefined>(props.user?.email);
     const [groupName, setGroupName] = useState<string | undefined>(props.user?.groupName);
-    const [isDisabled, setIsDisabled] = useState(true);
+    //const [isDisabled, setIsDisabled] = useState(true);
+
+    const isDisabled =
+        (name === undefined || name === '')
+        &&
+        (secondName === undefined || secondName === '')
+        &&
+        (login === undefined || login === '')
+        &&
+        (password === undefined || password === '')
+        &&
+        (phone === undefined || phone === '')
+        &&
+        (email === undefined || email === '')
+        ;
 
     const newUser: User = {
         id: id,
@@ -91,31 +105,33 @@ function UserEditForm(props: UserEditFormProps) {
         props.onCancelClick(false);
     }
 
-    const onFormChange:ChangeEventHandler<HTMLDivElement> = (e) => {
-        e.stopPropagation();
-        console.log('------')
-        setIsDisabled((Object.values(newUser).reduce((isEmpty, prop, index) => {
-            if (prop !== undefined) {
-                if (prop === null) {
-                    console.log(index + ' null')
-                }
-                else if (prop.length === 0) {
-                    console.log(index + ' empty string')
-                }
-                else {
-                    console.log(index +' '+ prop)
-                    return false;
-                }
-            } else {
-                console.log(index + ' undefined')
-            }
-            return isEmpty
-        }, true)));
-        console.log(isDisabled);
-    }
+    // const onFormChange:ChangeEventHandler<HTMLDivElement> = (e) => {
+    //     e.stopPropagation();
+    //     console.log(Object.values(newUser))
+    //     setIsDisabled((Object.values(newUser).reduce((isEmpty, prop, index) => {
+    //         if (prop !== undefined) {
+    //             if (prop === null) {
+    //                 console.log(index + ' null')
+    //             }
+    //             else if (prop.length === 0) {
+    //                 console.log(index + ' empty string')
+    //             }
+    //             else {
+    //                 console.log(index +' '+ prop)
+    //                 return false;
+    //             }
+    //         } else {
+    //             console.log(index + ' undefined')
+    //         }
+    //         return isEmpty
+    //     }, true)));
+    //     console.log(isDisabled);
+    // }
 
     return (
-        <div className="user-edit-form" onChange={onFormChange}>
+        <div className="user-edit-form" /*onChange={onFormChange}*/>
+            {console.log('-------')}
+            {console.log(birthDate)}
             <div className="user-list-item">
                 <label className="column">Имя</label>
                 <input type="text" className="column" value={name} onChange={nameOnChange} />
@@ -157,7 +173,7 @@ function UserEditForm(props: UserEditFormProps) {
                     <button className="column" onClick={onCancelClick}>отмена</button>
                 </div>
                 <div className="column">
-                    <button className="column" onClick={onSaveClick} disabled={isDisabled}>сохранить</button>
+                    <button className="column" onClick={onSaveClick} disabled={isDisabled} title='введённых данных недостаточно для создания нового пользователя'>сохранить</button>
                 </div>
             </div>
         </div>
