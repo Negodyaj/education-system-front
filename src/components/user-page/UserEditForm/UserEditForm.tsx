@@ -43,12 +43,8 @@ function UserEditForm(props: UserEditFormProps) {
         groupName: groupName
     }
     const isDisabled = (Object.values(newUser).reduce((isEmpty, prop) => {
-        if (prop !== undefined) {
-            if (prop !== null) {
-                if (prop !== ''){
-                    return false;
-                }
-            }   
+        if (prop) {
+            return false; 
         }
         return isEmpty
     }, true))
