@@ -29,19 +29,6 @@ function UserEditForm(props: UserEditFormProps) {
     const [groupName, setGroupName] = useState<string | undefined>(props.user?.groupName);
     //const [isDisabled, setIsDisabled] = useState(true);
 
-    const isDisabled =
-        (name === undefined || name === '')
-        &&
-        (secondName === undefined || secondName === '')
-        &&
-        (login === undefined || login === '')
-        &&
-        (password === undefined || password === '')
-        &&
-        (phone === undefined || phone === '')
-        &&
-        (email === undefined || email === '')
-        ;
 
     const newUser: User = {
         id: id,
@@ -55,6 +42,17 @@ function UserEditForm(props: UserEditFormProps) {
         email: email,
         groupName: groupName
     }
+    const isDisabled = (Object.values(newUser).reduce((isEmpty, prop) => {
+        if (prop !== undefined) {
+            if (prop !== null) {
+                if (prop !== ''){
+                    return false;
+                }
+            }   
+        }
+        return isEmpty
+    }, true))
+
 
     const nameOnChange: ChangeEventHandler<HTMLInputElement> = (e) => {
         setName(e.target.value);
@@ -104,29 +102,6 @@ function UserEditForm(props: UserEditFormProps) {
     const onCancelClick = () => {
         props.onCancelClick(false);
     }
-
-    // const onFormChange:ChangeEventHandler<HTMLDivElement> = (e) => {
-    //     e.stopPropagation();
-    //     console.log(Object.values(newUser))
-    //     setIsDisabled((Object.values(newUser).reduce((isEmpty, prop, index) => {
-    //         if (prop !== undefined) {
-    //             if (prop === null) {
-    //                 console.log(index + ' null')
-    //             }
-    //             else if (prop.length === 0) {
-    //                 console.log(index + ' empty string')
-    //             }
-    //             else {
-    //                 console.log(index +' '+ prop)
-    //                 return false;
-    //             }
-    //         } else {
-    //             console.log(index + ' undefined')
-    //         }
-    //         return isEmpty
-    //     }, true)));
-    //     console.log(isDisabled);
-    // }
 
     return (
         <div className="user-edit-form" /*onChange={onFormChange}*/>
