@@ -7,6 +7,7 @@ import { ChangeEventHandler, EventHandler, useState } from 'react';
 import { idText, isDoStatement } from 'typescript';
 import { Role } from '../../interfaces/Role';
 import { exists } from 'node:fs';
+import DatePickerComponent from '../../../shared/components/date-picker/DatePickerComponent';
 
 interface UserEditFormProps {
     user: User | null;
@@ -19,7 +20,7 @@ function UserEditForm(props: UserEditFormProps) {
     const [id, setId] = useState<number|undefined>(props.user?.id);
     const [name, setName] = useState<string | undefined>(props.user?.name);
     const [secondName, setSecondName] = useState<string | undefined>(props.user?.secondName);
-    const [birthDate, setBirthDate] = useState<string | undefined>(props.user?.birthDate);
+    const [birthDate, setBirthDate] = useState<Date | null>(props.user?.birthDate ?? null);
     const [login, setLogin] = useState<string | undefined>(props.user?.login);
     // const [role, setRole] = useState<Role[]|undefined>(props.user?.role);
     const [password, setPassword] = useState<string | undefined>(props.user?.password);
@@ -48,8 +49,8 @@ function UserEditForm(props: UserEditFormProps) {
         setSecondName(e.target.value);
     }
 
-    const birthDateOnChange: ChangeEventHandler<HTMLInputElement> = (e) => {
-        setBirthDate(e.target.value);
+    const birthDateOnChange = (date:Date) => {
+        setBirthDate(date);
     }
 
     const loginOnChange: ChangeEventHandler<HTMLInputElement> = (e) => {
@@ -104,8 +105,8 @@ function UserEditForm(props: UserEditFormProps) {
             </div>
             <div className="user-list-item">
                 <label className="column">Дата рождения</label>
-                <input type="text" className="column" value={birthDate} onChange={birthDateOnChange} />
-            </div>
+                <DatePickerComponent date={props.user?.birthDate ?? null} onDateChange={birthDateOnChange} />
+                </div>
             <div className="user-list-item">
                 <label className="column">Логин</label>
                 <input type="text" className="column" value={login} onChange={loginOnChange} />

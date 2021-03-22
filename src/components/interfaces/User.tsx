@@ -4,7 +4,7 @@ export interface User{
     id?:number;
     name?: string;
     secondName?: string;
-    birthDate?: string;
+    birthDate: Date | null;
     login?: string;
     role?:Role[];
     password?: string;
