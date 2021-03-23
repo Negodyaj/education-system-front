@@ -17,7 +17,7 @@ interface UserEditFormProps {
 }
 
 function UserEditForm(props: UserEditFormProps) {
-    const [id, setId] = useState<number|undefined>(props.user?.id);
+    const [id, setId] = useState<number | undefined>(props.user?.id);
     const [name, setName] = useState<string | undefined>(props.user?.name);
     const [secondName, setSecondName] = useState<string | undefined>(props.user?.secondName);
     const [birthDate, setBirthDate] = useState<Date | null>(props.user?.birthDate ?? null);
@@ -27,6 +27,8 @@ function UserEditForm(props: UserEditFormProps) {
     const [phone, setPhone] = useState<string | undefined>(props.user?.phone);
     const [email, setEmail] = useState<string | undefined>(props.user?.email);
     const [groupName, setGroupName] = useState<string | undefined>(props.user?.groupName);
+    //const [isDisabled, setIsDisabled] = useState(true);
+
 
     const newUser: User = {
         id: id,
@@ -40,6 +42,13 @@ function UserEditForm(props: UserEditFormProps) {
         email: email,
         groupName: groupName
     }
+    const isDisabled = (Object.values(newUser).reduce((isEmpty, prop) => {
+        if (prop) {
+            return false; 
+        }
+        return isEmpty
+    }, true))
+
 
     const nameOnChange: ChangeEventHandler<HTMLInputElement> = (e) => {
         setName(e.target.value);
@@ -49,7 +58,7 @@ function UserEditForm(props: UserEditFormProps) {
         setSecondName(e.target.value);
     }
 
-    const birthDateOnChange = (date:Date) => {
+    const birthDateOnChange = (date: Date) => {
         setBirthDate(date);
     }
 
@@ -78,10 +87,9 @@ function UserEditForm(props: UserEditFormProps) {
     }
 
     const onSaveClick = () => {
-
-        newUser.id === null && (() => {
+        newUser.id === undefined && (newUser.id = (() => {
             return Math.round(Math.random() * 100)
-        })();
+        })());
 
         props.onSaveClick(newUser)
         props.onCancelClick(false);
@@ -92,7 +100,9 @@ function UserEditForm(props: UserEditFormProps) {
     }
 
     return (
-        <div className="user-edit-form">
+        <div className="user-edit-form" /*onChange={onFormChange}*/>
+            {console.log('-------')}
+            {console.log(birthDate)}
             <div className="user-list-item">
                 <label className="column">Имя</label>
                 <input type="text" className="column" value={name} onChange={nameOnChange} />
@@ -104,7 +114,7 @@ function UserEditForm(props: UserEditFormProps) {
             <div className="user-list-item">
                 <label className="column">Дата рождения</label>
                 <DatePickerComponent date={props.user?.birthDate ?? null} onDateChange={birthDateOnChange} />
-                </div>
+            </div>
             <div className="user-list-item">
                 <label className="column">Логин</label>
                 <input type="text" className="column" value={login} onChange={loginOnChange} />
@@ -134,7 +144,7 @@ function UserEditForm(props: UserEditFormProps) {
                     <button className="column" onClick={onCancelClick}>отмена</button>
                 </div>
                 <div className="column">
-                    <button className="column" onClick={onSaveClick}>сохранить</button>
+                    <button className="column" onClick={onSaveClick} disabled={isDisabled} title='введённых данных недостаточно для создания нового пользователя'>сохранить</button>
                 </div>
             </div>
         </div>
