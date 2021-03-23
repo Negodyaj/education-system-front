@@ -32,7 +32,7 @@ function UserList(props: UserListProps) {
                         <div className="column">{u.login}</div>
                         <div className="column">
                             {
-                                u.role?.map(r => (<div>{r.roleName}</div>))
+                                u.role?.map(r => (<div>{r.label}</div>))
                             }
                         </div>
                         <div className="column">{u.groupName}</div>

@@ -8,10 +8,10 @@ import { idText, isDoStatement } from 'typescript';
 import { Role } from '../../interfaces/Role';
 import { exists } from 'node:fs';
 import DatePickerComponent from '../../../shared/components/date-picker/DatePickerComponent';
+import { Roles } from '../../../shared/components/roles/Roles';
 
 interface UserEditFormProps {
     user: User | null;
-    ids: (number | undefined)[];
     onCancelClick: (mode: boolean) => void;
     onSaveClick: (newUser: User) => void;
 }
@@ -22,7 +22,7 @@ function UserEditForm(props: UserEditFormProps) {
     const [secondName, setSecondName] = useState<string | undefined>(props.user?.secondName);
     const [birthDate, setBirthDate] = useState<Date | null>(props.user?.birthDate ?? null);
     const [login, setLogin] = useState<string | undefined>(props.user?.login);
-    // const [role, setRole] = useState<Role[]|undefined>(props.user?.role);
+    const [roleMultiselect, setRoleMultiselect] = useState(props.user?.role??null);
     const [password, setPassword] = useState<string | undefined>(props.user?.password);
     const [phone, setPhone] = useState<string | undefined>(props.user?.phone);
     const [email, setEmail] = useState<string | undefined>(props.user?.email);
@@ -36,7 +36,7 @@ function UserEditForm(props: UserEditFormProps) {
         secondName: secondName,
         birthDate: birthDate,
         login: login,
-        // role: role,
+        role: roleMultiselect as Role[],
         password: password,
         phone: phone,
         email: email,
@@ -66,9 +66,9 @@ function UserEditForm(props: UserEditFormProps) {
         setLogin(e.target.value);
     }
 
-    // const roleOnChange: ChangeEventHandler<HTMLInputElement> = (e) => {
-    //     setRole(e.target.value);
-    // }
+    const roleOnChange = (options:object[]) => {
+        setRoleMultiselect(options as Role[]);
+    }
 
     const passwordOnChange: ChangeEventHandler<HTMLInputElement> = (e) => {
         setPassword(e.target.value);
@@ -137,7 +137,7 @@ function UserEditForm(props: UserEditFormProps) {
             </div>
             <div className="user-list-item">
                 <label className="column">Список ролей</label>
-                <CustomMultiSelect selectType={"multi"} options={props.user?.role as Object[]} ></CustomMultiSelect>
+                <CustomMultiSelect selectType={"multi"} userOptions={roleMultiselect as Object[]} options={Roles as Object[]}onSelect={roleOnChange}></CustomMultiSelect>
             </div>
             <div className="user-list-item">
                 <div className="column">
