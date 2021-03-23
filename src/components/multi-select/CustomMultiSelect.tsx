@@ -1,5 +1,6 @@
-import { useState } from 'react'
-import Select from 'react-select'
+import { ChangeEventHandler, SetStateAction, useState } from 'react'
+import Select, { OptionsType } from 'react-select'
+import { Role } from '../interfaces/Role';
 
 interface SelectProps {
   selectType?: string;
@@ -16,8 +17,8 @@ function CustomMultiSelect(props: SelectProps) {
     <Select options={props.userOptions} />
   )
 
-    const onSelect = () =>{
-      setUserOptions(userOptions);
+    const onSelect = (selectedOptions: OptionsType<object>) =>{
+      setUserOptions(selectedOptions as object[]);
       props.onSelect(userOptions);
     }
 
