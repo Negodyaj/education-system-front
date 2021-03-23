@@ -21,7 +21,7 @@ function UserPage(props: UserPageProps) {
             password: "cesar",
             phone: "+7 987 654 32 10",
             role: [{
-                value: 1,
+                value: 2,
                 label: "студент"
             }],
             email: "boss@myempire.com",
@@ -37,7 +37,7 @@ function UserPage(props: UserPageProps) {
             password: "cesar",
             phone: "+7 897 012 345 67 89",
             role: [{
-                value: 1,
+                value: 2,
                 label: "студент"
             }],
             email: "boss@myempire.com",
@@ -53,14 +53,14 @@ function UserPage(props: UserPageProps) {
             password: "cesar",
             phone: "+7 999 887 23 05",
             role: [{
-                value: 1,
+                value: 2,
                 label: "студент"
             }, {
-                value: 1,
-                label: "студент"
+                value: 3,
+                label: "менеджер"
             }, {
-                value: 1,
-                label: "студент"
+                value: 4,
+                label: "администратор"
             }],
             email: "boss@myempire.com",
             groupId: 4,
@@ -75,7 +75,7 @@ function UserPage(props: UserPageProps) {
             password: "cesar",
             phone: "+7 902 089 97 42",
             role: [{
-                value: 50,
+                value: 2,
                 label: "студент"
             }],
             email: "boss@myempire.com",
