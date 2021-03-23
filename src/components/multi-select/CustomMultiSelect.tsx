@@ -10,16 +10,14 @@ interface SelectProps {
 }
 
 function CustomMultiSelect(props: SelectProps) {
-  //const [userOptions, setUserOptions] = useState(props.userOptions);
-
-  const SingleSelect = () => (
-    <Select options={props.userOptions} />
-  )
 
   const onSelect = (selectedOptions: OptionsType<object>) => {
     props.onSelect(selectedOptions);
   }
 
+  const SingleSelect = () => (
+    <Select options={props.userOptions} />
+  )
   const MultiSelect = () => (
     <Select
       isMulti

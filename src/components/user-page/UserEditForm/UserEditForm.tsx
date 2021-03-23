@@ -28,8 +28,6 @@ function UserEditForm(props: UserEditFormProps) {
     const [phone, setPhone] = useState<string | undefined>(props.user?.phone);
     const [email, setEmail] = useState<string | undefined>(props.user?.email);
     const [groupName, setGroupName] = useState<string | undefined>(props.user?.groupName);
-    //const [isDisabled, setIsDisabled] = useState(true);
-
 
     const newUser: User = {
         id: id,
@@ -43,6 +41,7 @@ function UserEditForm(props: UserEditFormProps) {
         email: email,
         groupName: groupName
     }
+
     const isDisabled = (Object.values(newUser).reduce((isEmpty, prop) => {
         if (prop) {
             return false;
@@ -50,39 +49,30 @@ function UserEditForm(props: UserEditFormProps) {
         return isEmpty
     }, true))
 
-
     const nameOnChange: ChangeEventHandler<HTMLInputElement> = (e) => {
         setName(e.target.value);
     }
-
     const secondNameOnChange: ChangeEventHandler<HTMLInputElement> = (e) => {
         setSecondName(e.target.value);
     }
-
     const birthDateOnChange = (date: Date) => {
         setBirthDate(date);
     }
-
     const loginOnChange: ChangeEventHandler<HTMLInputElement> = (e) => {
         setLogin(e.target.value);
     }
-
     const roleOnChange = (options: OptionsType<object>) => {
         setRoleMultiselect(options as Role[]);
     }
-
     const passwordOnChange: ChangeEventHandler<HTMLInputElement> = (e) => {
         setPassword(e.target.value);
     }
-
     const phoneOnChange: ChangeEventHandler<HTMLInputElement> = (e) => {
         setPhone(e.target.value);
     }
-
     const emailOnChange: ChangeEventHandler<HTMLInputElement> = (e) => {
         setEmail(e.target.value);
     }
-
     const groupNameOnChange: ChangeEventHandler<HTMLInputElement> = (e) => {
         setGroupName(e.target.value);
     }
@@ -91,11 +81,9 @@ function UserEditForm(props: UserEditFormProps) {
         newUser.id === undefined && (newUser.id = (() => {
             return Math.round(Math.random() * 100)
         })());
-
         props.onSaveClick(newUser)
         props.onCancelClick(false);
     }
-
     const onCancelClick = () => {
         props.onCancelClick(false);
     }

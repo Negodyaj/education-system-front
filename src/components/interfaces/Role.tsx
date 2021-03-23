@@ -1,4 +1,4 @@
-export interface Role{
-    value:number;
-    label:string;
+export interface Role {
+    value: number;
+    label: string;
 }

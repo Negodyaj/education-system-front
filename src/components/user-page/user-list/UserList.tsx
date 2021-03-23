@@ -4,18 +4,18 @@ import '../UserPage.css';
 
 interface UserListProps {
     users: User[];
-    onEditClick:(editedUserId?:number)=>void;
+    onEditClick: (editedUserId?: number) => void;
 }
 
 function UserList(props: UserListProps) {
 
-    const onEditClick = (editedUserId?:number) => {
+    const onEditClick = (editedUserId?: number) => {
         props.onEditClick(editedUserId);
     }
 
     return (
         <div className="user-list">
-            <button onClick={()=>onEditClick()}>добавить пользователя</button>
+            <button onClick={() => onEditClick()}>добавить пользователя</button>
             <div className="user-list-head">
                 <div className="column"><span title="А-Я">фамилия</span></div>
                 <div className="column"><span title="А-Я">имя</span></div>
@@ -27,17 +27,17 @@ function UserList(props: UserListProps) {
             {
                 props.users.map(u => (
                     <div className="user-list-item" key={u.id}>
-                        <div className="column" lang="ru">{u.secondName}</div>
-                        <div className="column">{u.name}</div>
+                        <div className="column break-word" lang="ru">{u.secondName}</div>
+                        <div className="column break-word">{u.name}</div>
                         <div className="column">{u.login}</div>
-                        <div className="column">
+                        <div className="column multiline">
                             {
                                 u.role?.map(r => (<div>{r.label}</div>))
                             }
                         </div>
                         <div className="column">{u.groupName}</div>
                         <div className="column">{u.birthDate?.toLocaleString('ru')}</div>
-                        <button onClick={()=>onEditClick(u.id)}>ред.</button>
+                        <button onClick={() => onEditClick(u.id)}>ред.</button>
                         <button>удал.</button>
                         <button>$</button>
                     </div>))
