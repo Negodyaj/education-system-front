@@ -3,21 +3,21 @@ import { Role } from "../../../components/interfaces/Role";
 export const Roles: Role[] = [
     {
         value: 1,
-        label: 'test'
+        label: 'тестовая роль'
     }, {
         value: 2,
-        label: 'student'
+        label: 'студент'
     }, {
         value: 3,
-        label: 'manager'
+        label: 'менеджер'
     }, {
         value: 4,
-        label: 'admin'
+        label: 'администратор'
     }, {
         value: 5,
-        label: 'methodist'
+        label: 'методист'
     }, {
         value: 6,
-        label: 'teacher'
+        label: 'преподаватель'
     }
 ]
