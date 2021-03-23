@@ -1,0 +1,29 @@
+.course-update {
+    display: grid;
+    grid-template-columns: 300px 500px;
+
+}
+
+.theme-course, .program-course {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.new-theme {
+    width: 250px;
+    height: 40px;
+    border: 2px solid black;
+}
+
+.program-course-header {
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+.theme {
+    width: 450px;
+    height: 40px;
+    border: 2px solid black;
+}

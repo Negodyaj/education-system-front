@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { Link, Route } from 'react-router-dom';
+import CourseEdition from './course-edition/CourseEdition';
 import './CoursesPage.css';
 import ModalWindowDelete from './modal-window/ModalWindowDelete';
 
@@ -39,7 +41,9 @@ function CoursesPage(props: CoursesPageProps) {
     return(
         <div className="course-container">
             <div className="course-create">
-                <button className='button-create'>Добавить курс</button>
+                <Link to="/course-edition">
+                    <button className='button-create'>Добавить курс</button>
+                </Link>
             </div>
             <div className="courses-list">
                 {
@@ -53,6 +57,13 @@ function CoursesPage(props: CoursesPageProps) {
                         </div>
                     ))
                 }
+            </div>
+            <div className="course-create">
+                <Route path="/course-edition">
+                    <div className="select-users">
+                        <CourseEdition />
+                    </div>
+                </Route>
             </div>
             { isModalDelete && <ModalWindowDelete onClickDelete={onDeleteHandler}/>}
         </div>

@@ -38,6 +38,7 @@ function NavMenu(props: NavMenuProps) {
                 (props.roleId === 5  || props.roleId === 6) &&
                 <nav>
                     <Link to="/homework">Homeworks</Link>
+                    <Link to="/courses-page">Страница курсов</Link>
                 </nav>
             }
         </div>

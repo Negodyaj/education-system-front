@@ -16,6 +16,7 @@ import UserPage from './components/user-page/UserPage';
 import DatePickerComponent from './shared/components/date-picker/DatePickerComponent';
 import CustomMultiSelect from './components/multi-select/CustomMultiSelect';
 import CoursesPage from './components/courses-page/CoursesPage';
+import CourseEdition from './components/courses-page/course-edition/CourseEdition';
 
 function App() {
     const history = useHistory();
@@ -99,7 +100,9 @@ function App() {
                                         <CoursesPage roleId={roleId}></CoursesPage>
                                     </Route>
                                 }
-
+                                <Route path="/course-edition">
+                                    <CourseEdition />
+                                </Route>
                                 <Route path="/groups-list">
                                     <GroupList />
                                 </Route>
