@@ -5,11 +5,12 @@ import '../UserPage.css';
 import { User } from '../../interfaces/User';
 import { ChangeEventHandler, EventHandler, useState } from 'react';
 import { idText, isDoStatement } from 'typescript';
-import { Role } from '../../interfaces/Role';
+import { SelectItem } from '../../interfaces/SelectItem';
 import { exists } from 'node:fs';
 import DatePickerComponent from '../../../shared/components/date-picker/DatePickerComponent';
 import { Roles } from '../../../shared/components/roles/Roles';
 import { OptionsType } from 'react-select';
+import { convertEntitiesToSelectItems } from '../../../shared/converters/EntityToSelectItem';
 
 interface UserEditFormProps {
     user: User | null;
@@ -35,7 +36,7 @@ function UserEditForm(props: UserEditFormProps) {
         secondName: secondName,
         birthDate: birthDate,
         login: login,
-        role: roleMultiselect as Role[],
+        role: roleMultiselect as SelectItem[],
         password: password,
         phone: phone,
         email: email,
@@ -62,7 +63,7 @@ function UserEditForm(props: UserEditFormProps) {
         setLogin(e.target.value);
     }
     const roleOnChange = (options: OptionsType<object>) => {
-        setRoleMultiselect(options as Role[]);
+        setRoleMultiselect(options as SelectItem[]);
     }
     const passwordOnChange: ChangeEventHandler<HTMLInputElement> = (e) => {
         setPassword(e.target.value);
@@ -129,7 +130,7 @@ function UserEditForm(props: UserEditFormProps) {
                 <CustomMultiSelect
                     selectType={"multi"}
                     userOptions={roleMultiselect as OptionsType<object>}
-                    options={Roles as OptionsType<object>}
+                    options={convertEntitiesToSelectItems(Roles)}
                     onSelect={roleOnChange}></CustomMultiSelect>
             </div>
             <div className="user-list-item">

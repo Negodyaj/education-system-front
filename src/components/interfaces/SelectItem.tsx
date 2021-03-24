@@ -1,4 +1,4 @@
-export interface Role {
+export interface SelectItem {
     value: number;
     label: string;
 }

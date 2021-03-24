@@ -1,11 +1,11 @@
 import { ChangeEventHandler, SetStateAction, useState } from 'react'
 import Select, { ActionMeta, OptionsType, SelectOptionActionMeta } from 'react-select'
-import { Role } from '../interfaces/Role';
+import { SelectItem } from '../interfaces/SelectItem';
 
 interface SelectProps {
   selectType?: string;
   userOptions: OptionsType<object>;
-  options: OptionsType<object>;
+  options: SelectItem[];
   onSelect: (items: OptionsType<object>) => void;
 }
 
