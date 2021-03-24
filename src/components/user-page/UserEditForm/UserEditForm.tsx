@@ -8,10 +8,11 @@ import { idText, isDoStatement } from 'typescript';
 import { Role } from '../../interfaces/Role';
 import { exists } from 'node:fs';
 import DatePickerComponent from '../../../shared/components/date-picker/DatePickerComponent';
+import { Roles } from '../../../shared/components/roles/Roles';
+import { OptionsType } from 'react-select';
 
 interface UserEditFormProps {
     user: User | null;
-    ids: (number | undefined)[];
     onCancelClick: (mode: boolean) => void;
     onSaveClick: (newUser: User) => void;
 }
@@ -22,13 +23,11 @@ function UserEditForm(props: UserEditFormProps) {
     const [secondName, setSecondName] = useState<string | undefined>(props.user?.secondName);
     const [birthDate, setBirthDate] = useState<Date | null>(props.user?.birthDate ?? null);
     const [login, setLogin] = useState<string | undefined>(props.user?.login);
-    // const [role, setRole] = useState<Role[]|undefined>(props.user?.role);
+    const [roleMultiselect, setRoleMultiselect] = useState(props.user?.role ?? null);
     const [password, setPassword] = useState<string | undefined>(props.user?.password);
     const [phone, setPhone] = useState<string | undefined>(props.user?.phone);
     const [email, setEmail] = useState<string | undefined>(props.user?.email);
     const [groupName, setGroupName] = useState<string | undefined>(props.user?.groupName);
-    //const [isDisabled, setIsDisabled] = useState(true);
-
 
     const newUser: User = {
         id: id,
@@ -36,52 +35,44 @@ function UserEditForm(props: UserEditFormProps) {
         secondName: secondName,
         birthDate: birthDate,
         login: login,
-        // role: role,
+        role: roleMultiselect as Role[],
         password: password,
         phone: phone,
         email: email,
         groupName: groupName
     }
+
     const isDisabled = (Object.values(newUser).reduce((isEmpty, prop) => {
         if (prop) {
-            return false; 
+            return false;
         }
         return isEmpty
     }, true))
 
-
     const nameOnChange: ChangeEventHandler<HTMLInputElement> = (e) => {
         setName(e.target.value);
     }
-
     const secondNameOnChange: ChangeEventHandler<HTMLInputElement> = (e) => {
         setSecondName(e.target.value);
     }
-
     const birthDateOnChange = (date: Date) => {
         setBirthDate(date);
     }
-
     const loginOnChange: ChangeEventHandler<HTMLInputElement> = (e) => {
         setLogin(e.target.value);
     }
-
-    // const roleOnChange: ChangeEventHandler<HTMLInputElement> = (e) => {
-    //     setRole(e.target.value);
-    // }
-
+    const roleOnChange = (options: OptionsType<object>) => {
+        setRoleMultiselect(options as Role[]);
+    }
     const passwordOnChange: ChangeEventHandler<HTMLInputElement> = (e) => {
         setPassword(e.target.value);
     }
-
     const phoneOnChange: ChangeEventHandler<HTMLInputElement> = (e) => {
         setPhone(e.target.value);
     }
-
     const emailOnChange: ChangeEventHandler<HTMLInputElement> = (e) => {
         setEmail(e.target.value);
     }
-
     const groupNameOnChange: ChangeEventHandler<HTMLInputElement> = (e) => {
         setGroupName(e.target.value);
     }
@@ -90,11 +81,9 @@ function UserEditForm(props: UserEditFormProps) {
         newUser.id === undefined && (newUser.id = (() => {
             return Math.round(Math.random() * 100)
         })());
-
         props.onSaveClick(newUser)
         props.onCancelClick(false);
     }
-
     const onCancelClick = () => {
         props.onCancelClick(false);
     }
@@ -137,7 +126,11 @@ function UserEditForm(props: UserEditFormProps) {
             </div>
             <div className="user-list-item">
                 <label className="column">Список ролей</label>
-                <CustomMultiSelect selectType={"multi"} options={props.user?.role as Object[]} ></CustomMultiSelect>
+                <CustomMultiSelect
+                    selectType={"multi"}
+                    userOptions={roleMultiselect as OptionsType<object>}
+                    options={Roles as OptionsType<object>}
+                    onSelect={roleOnChange}></CustomMultiSelect>
             </div>
             <div className="user-list-item">
                 <div className="column">

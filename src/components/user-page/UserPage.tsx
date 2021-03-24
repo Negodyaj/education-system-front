@@ -21,8 +21,8 @@ function UserPage(props: UserPageProps) {
             password: "cesar",
             phone: "+7 987 654 32 10",
             role: [{
-                roleId: 1,
-                roleName: "студент"
+                value: 2,
+                label: "студент"
             }],
             email: "boss@myempire.com",
             groupId: 4,
@@ -32,13 +32,13 @@ function UserPage(props: UserPageProps) {
             id: 40,
             name: "Марк Аврелий",
             secondName: "Антонин",
-            birthDate:  new Date(),
+            birthDate: new Date(),
             login: "ave",
             password: "cesar",
             phone: "+7 897 012 345 67 89",
             role: [{
-                roleId: 1,
-                roleName: "студент"
+                value: 2,
+                label: "студент"
             }],
             email: "boss@myempire.com",
             groupId: 4,
@@ -48,19 +48,19 @@ function UserPage(props: UserPageProps) {
             id: 30,
             name: "Тит Элий Адриан сверхпредрассредоточенный",
             secondName: "Антонин",
-            birthDate:  new Date(),
+            birthDate: new Date(),
             login: "ipsum",
             password: "cesar",
             phone: "+7 999 887 23 05",
             role: [{
-                roleId: 1,
-                roleName: "студент"
+                value: 2,
+                label: "студент"
             }, {
-                roleId: 1,
-                roleName: "студент"
+                value: 3,
+                label: "менеджер"
             }, {
-                roleId: 1,
-                roleName: "студент"
+                value: 4,
+                label: "администратор"
             }],
             email: "boss@myempire.com",
             groupId: 4,
@@ -70,13 +70,13 @@ function UserPage(props: UserPageProps) {
             id: 4,
             name: "Публий Элий Траян",
             secondName: "Адриан",
-            birthDate:  new Date(),
+            birthDate: new Date(),
             login: "dolor",
             password: "cesar",
             phone: "+7 902 089 97 42",
             role: [{
-                roleId: 1,
-                roleName: "студент"
+                value: 2,
+                label: "студент"
             }],
             email: "boss@myempire.com",
             groupId: 4,
@@ -84,46 +84,35 @@ function UserPage(props: UserPageProps) {
         },
     ];
 
-    
-    const [usersState, setUsersState] = useState(users.concat());
-    
+    const [usersState, setUsersState] = useState(users);
     const [isEditModeOn, setIsEditModeOn] = useState(false);
-    
     const [editedUser, setEditedUser] = useState<User | null>(null);
-    
-    const ids:(number|undefined)[] =  Array.from(usersState, user => user.id);
-    
+    const ids: (number | undefined)[] = Array.from(usersState, user => user.id);
+
     const onEditClick = (editedUserId?: number) => {
-
-        alert(editedUserId);
-
-        if (editedUserId===null) return;
-
+        if (editedUserId === null) return;
         setIsEditModeOn(true);
-
         setEditedUser(
             usersState.filter((user) => {
                 return user.id == editedUserId
             })[0]
         )
     }
+    const onSaveClick = (newUser: User) => {
+        let i: number = ids.indexOf(newUser.id);
+        if (i === -1) {
+            usersState.push(newUser);
+        } else {
+            usersState[i] = newUser;
+        }
+        setUsersState(usersState);
+    }
 
     const renderUserList = () => {
         return <UserList users={usersState} onEditClick={onEditClick}></UserList>
     }
-
-    const onSaveClick = (newUser:User) => {
-
-        let i:number = ids.indexOf(newUser.id);
-
-        if (i === -1) usersState.push(newUser);
-        else usersState[i]=newUser;
-        
-        setUsersState(usersState.concat());
-    }
-
     const renderUserEditForm = () => {
-        return <UserEditForm user={editedUser} ids={ids} onCancelClick={setIsEditModeOn} onSaveClick={onSaveClick}></UserEditForm>
+        return <UserEditForm user={editedUser} onCancelClick={setIsEditModeOn} onSaveClick={onSaveClick}></UserEditForm>
     }
 
     return (
