@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { User } from '../interfaces/User';
 import UserList from './user-list/UserList';
 import UserEditForm from './UserEditForm/UserEditForm';
@@ -8,6 +8,7 @@ import './UserPage.css'
 interface UserPageProps {
     roleId: number;
 }
+
 
 function UserPage(props: UserPageProps) {
 
@@ -85,9 +86,22 @@ function UserPage(props: UserPageProps) {
     ];
 
     const [usersState, setUsersState] = useState(users);
+    const [fakeUsers, setFakeUsers] = useState<User[]>([]);
+    const [fakeUsersCopy, setFakeUsersCopy] = useState<User[]>([]);
+    const [temp, setTemp] = useState(0);
     const [isEditModeOn, setIsEditModeOn] = useState(false);
     const [editedUser, setEditedUser] = useState<User | null>(null);
     const ids: (number | undefined)[] = Array.from(usersState, user => user.id);
+
+    const getUsers = () => {
+        fetch('https://80.78.240.16:7070/api/user')
+            .then(response => response.json())
+            .then(data => setFakeUsers(data));
+    }
+
+    useEffect(() => {
+        getUsers();
+    }, [fakeUsersCopy]);
 
     const onEditClick = (editedUserId?: number) => {
         if (editedUserId === null) return;
@@ -108,6 +122,30 @@ function UserPage(props: UserPageProps) {
         setUsersState(usersState);
     }
 
+    const onClick = () => {
+        setTemp(temp + 1);
+        const newArr = fakeUsers.slice(0, fakeUsers.length - 1);
+        // fetch('https://80.78.240.16:7070/api/user/42', {method: 'DELETE'})
+        //.then(response => response.json())
+        //.then(data => { const newArr = fakeUsers.filter(item => item.id !== 42); setFakeUsersCopy(newArr); }) 
+        //.catch(error => showNotification(...))       
+    }
+
+    const addUser = (user: User) => {
+        fetch('https://80.78.240.16:7070/api/user', {
+            method: 'POST', 
+            body: JSON.stringify({name: 'Vasya', birthDate: '11.11.2011'})
+        })
+            .then(response => response.json())
+            .then(addedUser => {
+                // add user to fakeUsers array
+                const newArr = fakeUsers.slice();
+                newArr.push(addedUser);
+                setFakeUsersCopy(newArr);
+            })
+            .catch( error => console.log(error) )
+    }
+
     const renderUserList = () => {
         return <UserList users={usersState} onEditClick={onEditClick}></UserList>
     }
@@ -117,6 +155,13 @@ function UserPage(props: UserPageProps) {
 
     return (
         <div className="user-page">
+            {temp}
+            <button onClick={onClick}>Delete last user</button>
+
+            {
+                fakeUsers.map(user => <div>{user.id} {user.name}</div>)
+            }
+
             {
                 isEditModeOn ? renderUserEditForm() : renderUserList()
             }

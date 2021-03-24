@@ -10,6 +10,7 @@ import { exists } from 'node:fs';
 import DatePickerComponent from '../../../shared/components/date-picker/DatePickerComponent';
 import { Roles } from '../../../shared/components/roles/Roles';
 import { OptionsType } from 'react-select';
+import { convertEntitiesToSelectItems } from '../../../shared/converters/entityToSelectItem';
 
 interface UserEditFormProps {
     user: User | null;
@@ -129,7 +130,7 @@ function UserEditForm(props: UserEditFormProps) {
                 <CustomMultiSelect
                     selectType={"multi"}
                     userOptions={roleMultiselect as OptionsType<object>}
-                    options={Roles as OptionsType<object>}
+                    options={convertEntitiesToSelectItems(Roles)}
                     onSelect={roleOnChange}></CustomMultiSelect>
             </div>
             <div className="user-list-item">

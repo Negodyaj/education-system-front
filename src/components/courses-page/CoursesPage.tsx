@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import './CoursesPage.css';
 import ModalWindowDelete from './modal-window/ModalWindowDelete';
 
-
 interface CoursesPageProps {
     roleId: number;
 }

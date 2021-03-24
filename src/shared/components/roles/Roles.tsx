@@ -1,23 +1,24 @@
-import { Role } from "../../../components/interfaces/Role";
+import { DictionaryEntity } from "../../../interfaces/DictionaryEntity";
+import { SelectItem } from "../../../interfaces/SelectItem";
 
-export const Roles: Role[] = [
+export const Roles: DictionaryEntity[] = [
     {
-        value: 1,
-        label: 'тестовая роль'
+        id: 1,
+        name: 'тестовая роль'
     }, {
-        value: 2,
-        label: 'студент'
+        id: 2,
+        name: 'студент'
     }, {
-        value: 3,
-        label: 'менеджер'
+        id: 3,
+        name: 'менеджер'
     }, {
-        value: 4,
-        label: 'администратор'
+        id: 4,
+        name: 'администратор'
     }, {
-        value: 5,
-        label: 'методист'
+        id: 5,
+        name: 'методист'
     }, {
-        value: 6,
-        label: 'преподаватель'
+        id: 6,
+        name: 'преподаватель'
     }
 ]
