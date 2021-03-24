@@ -5,7 +5,7 @@ import { SelectItem } from '../interfaces/SelectItem';
 interface SelectProps {
   selectType?: string;
   userOptions: OptionsType<object>;
-  options: OptionsType<object>;
+  options: SelectItem[];
   onSelect: (items: OptionsType<object>) => void;
 }
 
