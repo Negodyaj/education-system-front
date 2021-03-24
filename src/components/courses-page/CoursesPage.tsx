@@ -8,12 +8,9 @@ import ModalWindowDelete from './modal-window/ModalWindowDelete';
 interface CoursesPageProps {
     roleId: number;
 }
-let idCourseDelete = 0;
-let idCoursesDelete: number[] = [];
-
 
 function CoursesPage(props: CoursesPageProps) {
-    
+
     const courses = [ 
         { id: 1, name: 'C# base' }, 
         { id: 2, name: 'Backend' }, 
@@ -21,18 +18,26 @@ function CoursesPage(props: CoursesPageProps) {
         { id: 4, name: 'Mobile development' } 
     ];
 
+    let idCoursesDeleteForState: number[] = [];
+
     const [isModalDelete, setIsModalDelete] = useState(false);
     const [coursesList, setCoursesList] = useState(courses);
+    const [idCourseDelete, setIdCourseDelete] = useState(0);
+    const [idCoursesDelete, setIdCoursesDelete] = useState(idCoursesDeleteForState);
 
     const openModal = (id: number) => {
         setIsModalDelete(true);
-        idCourseDelete = id;
+        setIdCourseDelete(id);
     }
 
     const onDeleteHandler = (num: number) => {
         setIsModalDelete(false);
         if (num === 1) {
-            idCoursesDelete.push(idCourseDelete);
+            idCoursesDeleteForState.push(idCourseDelete);
+            for(let i of idCoursesDeleteForState) {
+                console.log(i);
+            }
+            setIdCoursesDelete(idCoursesDeleteForState);
             setCoursesList(courses.filter((item) => !(idCoursesDelete.includes(item.id))));
         }
     }
