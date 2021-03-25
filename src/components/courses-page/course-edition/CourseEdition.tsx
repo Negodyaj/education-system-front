@@ -1,5 +1,6 @@
 import './CourseEdition.css';
 import { useState } from 'react';
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 const CourseEdition = () => {
     
@@ -16,14 +17,24 @@ const CourseEdition = () => {
     ];
 
   return (
-    <div className="course-container">
+    <div className="course-edition-container">
       <div className='course-update'>
-        <div className='theme-course'>
+        <div className='new-themes-course'>
+            <div className="new-themes-header">Темы для курса</div>
+            <div className="new-themes-container">
             {
                 newThemes.map((item) => (
-                    <div className="new-theme">{item.name}</div>
+                    <div className="new-theme">
+                        <div className="new-theme-name">{item.name}</div>
+                        <div className="new-theme-add">
+                            <button className="button-add-theme">
+                                <FontAwesomeIcon icon="plus" />
+                            </button>
+                        </div>
+                    </div>
                 ))
             }
+            </div>
         </div>
         <div className="program-course-container">
             <div className="program-course-header">Программа курса</div>

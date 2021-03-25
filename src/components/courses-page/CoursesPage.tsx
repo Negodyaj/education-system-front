@@ -4,6 +4,7 @@ import CourseEdition from './course-edition/CourseEdition';
 import './CoursesPage.css';
 import ModalWindowDelete from './modal-window/ModalWindowDelete';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import InputNameCourse from './InputNameCourse';
 
 
 interface CoursesPageProps {
@@ -27,6 +28,7 @@ function CoursesPage(props: CoursesPageProps) {
     const [coursesList, setCoursesList] = useState(courses);
     const [idCourseDelete, setIdCourseDelete] = useState(0);
     const [idCoursesDelete, setIdCoursesDelete] = useState(idCoursesDeleteForState);
+    const [isOpenPopUp, setIsOpenPopUp] = useState(false);
 
     const openModal = (id: number) => {
         setIsModalDelete(true);
@@ -47,13 +49,16 @@ function CoursesPage(props: CoursesPageProps) {
         }
     }
 
+    const createCourseHandler = () => {
+        setIsOpenPopUp(true);
+    }
+
 
     return(
         <div className="course-container">
             <div className="course-create">
-                <Link to="/course-edition">
-                    <button className='button-create'>Добавить курс</button>
-                </Link>
+                { isOpenPopUp && <InputNameCourse />}
+                <button onClick={createCourseHandler} className='button-create'>Добавить курс</button> 
             </div>
             <div className="courses-list">
                 {
@@ -61,9 +66,13 @@ function CoursesPage(props: CoursesPageProps) {
                         <div key={item.id} className="course">
                             <div className="course-name">{item.name}</div>
                             <div className="course-update-delete">
-                                <button className='button-update'></button>
+                                <Link to="/course-edition">
+                                    <button className='button-update'>
+                                        <FontAwesomeIcon icon="edit" />
+                                    </button>
+                                </Link>
                                 <button onClick={() => openModal(item.id)} className='button-delete'>
-                                    <FontAwesomeIcon icon="times" />
+                                    <FontAwesomeIcon icon="trash-alt" />
                                 </button>
                             </div>
                         </div>

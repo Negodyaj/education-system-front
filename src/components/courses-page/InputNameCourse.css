@@ -1,0 +1,21 @@
+.input-course-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    background-color: white;
+    height: 40px;
+    outline: none;
+    border: 2px solid rgb(41, 3, 253);
+    border-radius: 5px;
+}
+
+.course-name {
+    width: 700px;
+    height: 36px;
+    border: none;
+}
+
+.create-new-course {
+    width: 40px;
+    height: 36px;
+    border: none;
+}

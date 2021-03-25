@@ -10,6 +10,7 @@
 }
 
 .button-create {
+    background-color: white;
     height: 40px;
     outline: none;
     border: 2px solid rgb(41, 3, 253);
@@ -43,7 +44,7 @@
 }
 
 .button-update {
-    background-image: url('../../img/edit.png');
+    background-color: white;
     background-size: contain;
     width: 40px;
     height: 40px;
@@ -52,11 +53,10 @@
 }
 
 .button-delete {
-
+    background-color: white;
     background-size: contain;
-
-    width: 35px;
-    height: 35px;
+    width: 40px;
+    height: 40px;
     outline: none;
     border: none;
 }

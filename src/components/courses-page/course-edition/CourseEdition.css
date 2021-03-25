@@ -1,10 +1,24 @@
+.course-edition-container {
+    display: flex;
+}
+
 .course-update {
     display: grid;
-    grid-template-columns: 300px 500px;
+    grid-template-columns: 1fr 1fr;
 
 }
 
-.theme-course, .program-course {
+.new-themes-course {
+
+    
+}
+
+.new-themes-header, .program-course-header {
+    font-size: 25px;
+    margin-bottom: 20px;
+}
+
+.new-themes-container, .program-course {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -12,18 +26,34 @@
 }
 
 .new-theme {
-    width: 250px;
-    height: 40px;
-    border: 2px solid black;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px;
+    width: 350px;
+    height: 50px;
+    border: 2px solid rgb(41, 3, 253);
+    border-radius: 5px;
+    font-size: 20px;
 }
 
-.program-course-header {
-    font-size: 20px;
-    margin-bottom: 20px;
+.button-add-theme {
+    background-color: white;
+    background-size: contain;
+    width: 32px;
+    height: 32px;
+    outline: none;
+    border: none;
 }
 
 .theme {
-    width: 450px;
-    height: 40px;
-    border: 2px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 600px;
+    height: 50px;
+    border: 2px solid rgb(41, 3, 253);
+    border-radius: 5px;
+    font-size: 20px;
 }
+
