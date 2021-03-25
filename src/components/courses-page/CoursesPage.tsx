@@ -11,6 +11,7 @@ interface CoursesPageProps {
 
 function CoursesPage(props: CoursesPageProps) {
 
+    
     const courses = [ 
         { id: 1, name: 'C# base' }, 
         { id: 2, name: 'Backend' }, 
@@ -18,6 +19,7 @@ function CoursesPage(props: CoursesPageProps) {
         { id: 4, name: 'Mobile development' } 
     ];
 
+    let filterId: number [];
     let idCoursesDeleteForState: number[] = [];
 
     const [isModalDelete, setIsModalDelete] = useState(false);
@@ -27,17 +29,19 @@ function CoursesPage(props: CoursesPageProps) {
 
     const openModal = (id: number) => {
         setIsModalDelete(true);
-        setIdCourseDelete(id);
+        let idCourse = id;
+        setIdCourseDelete(idCourse);
     }
 
     const onDeleteHandler = (num: number) => {
         setIsModalDelete(false);
         if (num === 1) {
-            idCoursesDeleteForState.push(idCourseDelete);
-            for(let i of idCoursesDeleteForState) {
+            filterId = idCoursesDelete;
+            filterId.push(idCourseDelete);
+            for(let i of filterId) {
                 console.log(i);
             }
-            setIdCoursesDelete(idCoursesDeleteForState);
+            setIdCoursesDelete(filterId);
             setCoursesList(courses.filter((item) => !(idCoursesDelete.includes(item.id))));
         }
     }
