@@ -1,34 +1,41 @@
-import Select from 'react-select'
+import { ChangeEventHandler, SetStateAction, useState } from 'react'
+import Select, { ActionMeta, OptionsType, SelectOptionActionMeta } from 'react-select'
+import { SelectItem } from '../interfaces/SelectItem';
 
 interface SelectProps {
-  selectType?: string,
-  options: object[]
+  selectType?: string;
+  userOptions: OptionsType<object>;
+  options: SelectItem[];
+  onSelect: (items: OptionsType<object>) => void;
 }
 
 function CustomMultiSelect(props: SelectProps) {
 
-    
-    const SingleSelect = () => (
-      <Select options={props.options} />
-    )
-      
-    
-    const MultiSelect = () => (
-      <Select
-        isMulti
-        name="Role"
-        options={props.options}
-        className="basic-multi-select"
-        classNamePrefix="select"
-      />
-    )
-    return(
-      <div>
-        {
-          props.selectType === 'multi' ? <MultiSelect /> : <SingleSelect />
-        }
-      </div>
-    )
+  const onSelect = (selectedOptions: OptionsType<object>) => {
+    props.onSelect(selectedOptions);
+  }
+
+  const SingleSelect = () => (
+    <Select options={props.userOptions} />
+  )
+  const MultiSelect = () => (
+    <Select
+      isMulti
+      name="Role"
+      options={props.options}
+      value={props.userOptions}
+      className="basic-multi-select"
+      classNamePrefix="select"
+      onChange={onSelect}
+    />
+  )
+  return (
+    <div>
+      {
+        props.selectType === 'multi' ? MultiSelect() : SingleSelect()
+      }
+    </div>
+  )
 }
 
 export default CustomMultiSelect;

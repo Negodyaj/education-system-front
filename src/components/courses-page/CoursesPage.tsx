@@ -3,6 +3,7 @@ import { Link, Route } from 'react-router-dom';
 import CourseEdition from './course-edition/CourseEdition';
 import './CoursesPage.css';
 import ModalWindowDelete from './modal-window/ModalWindowDelete';
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 
 interface CoursesPageProps {
@@ -61,7 +62,9 @@ function CoursesPage(props: CoursesPageProps) {
                             <div className="course-name">{item.name}</div>
                             <div className="course-update-delete">
                                 <button className='button-update'></button>
-                                <button onClick={() => openModal(item.id)} className='button-delete'></button>
+                                <button onClick={() => openModal(item.id)} className='button-delete'>
+                                    <FontAwesomeIcon icon="times" />
+                                </button>
                             </div>
                         </div>
                     ))

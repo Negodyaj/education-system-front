@@ -17,6 +17,7 @@ import DatePickerComponent from './shared/components/date-picker/DatePickerCompo
 import CustomMultiSelect from './components/multi-select/CustomMultiSelect';
 import CoursesPage from './components/courses-page/CoursesPage';
 import CourseEdition from './components/courses-page/course-edition/CourseEdition';
+import "./shared/fontawesome/FontawesomeIcons"; 
 
 function App() {
     const history = useHistory();
