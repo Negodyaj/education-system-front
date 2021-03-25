@@ -1,16 +1,28 @@
 
+import { Roles } from "../../../shared/components/roles/Roles";
 import { User } from "../../interfaces/User";
 import '../UserPage.css';
 
 interface UserListProps {
+    roleId: number;
     users: User[];
-    onEditClick: (editedUserId?: number) => void;
+    onEditClick: (userToEditId?: number) => void;
 }
 
 function UserList(props: UserListProps) {
 
-    const onEditClick = (editedUserId?: number) => {
-        props.onEditClick(editedUserId);
+    const elementsDefinedByRole = {
+        paymentButton: () => {
+            return (
+                props.roleId === Roles.filter(role => { return role.name === "менеджер" })[0].id
+                &&
+                <button>$</button>
+            )
+        }
+    }
+
+    const onEditClick = (userToEditId?: number) => {
+        props.onEditClick(userToEditId);
     }
 
     return (
@@ -36,10 +48,12 @@ function UserList(props: UserListProps) {
                             }
                         </div>
                         <div className="column">{u.groupName}</div>
-                        <div className="column">{u.birthDate?.toLocaleString('ru')}</div>
+                        <div className="column">{u.birthDate?.toLocaleDateString('ru')}</div>
                         <button onClick={() => onEditClick(u.id)}>ред.</button>
                         <button>удал.</button>
-                        <button>$</button>
+                        {
+                            elementsDefinedByRole.paymentButton()
+                        }
                     </div>))
             }
         </div>

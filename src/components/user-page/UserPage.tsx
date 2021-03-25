@@ -1,5 +1,6 @@
 
 import { useState } from 'react';
+import { Roles } from '../../shared/components/roles/Roles';
 import { User } from '../interfaces/User';
 import UserList from './user-list/UserList';
 import UserEditForm from './UserEditForm/UserEditForm';
@@ -84,35 +85,45 @@ function UserPage(props: UserPageProps) {
         },
     ];
 
-    const [usersState, setUsersState] = useState(users);
+    const [usersInState, setUsersInState] = useState(users);
     const [isEditModeOn, setIsEditModeOn] = useState(false);
-    const [editedUser, setEditedUser] = useState<User | null>(null);
-    const ids: (number | undefined)[] = Array.from(usersState, user => user.id);
+    const [userToEdit, setUserToEdit] = useState<User | null>(null);
+    const ids: (number | undefined)[] = Array.from(usersInState, user => user.id);
 
-    const onEditClick = (editedUserId?: number) => {
-        if (editedUserId === null) return;
+    const elementsDefinedByRole = {
+        paymentButton: () => {
+            return (
+                props.roleId === Roles.filter(role => { return role.name === "менеджер" })[0].id
+                &&
+                <button>$</button>
+            )
+        }
+    }
+
+    const onEditClick = (userToEditId?: number) => {
+        if (userToEditId === null) return;
         setIsEditModeOn(true);
-        setEditedUser(
-            usersState.filter((user) => {
-                return user.id == editedUserId
+        setUserToEdit(
+            usersInState.filter((user) => {
+                return user.id == userToEditId
             })[0]
         )
     }
     const onSaveClick = (newUser: User) => {
         let i: number = ids.indexOf(newUser.id);
         if (i === -1) {
-            usersState.push(newUser);
+            usersInState.push(newUser);
         } else {
-            usersState[i] = newUser;
+            usersInState[i] = newUser;
         }
-        setUsersState(usersState);
+        setUsersInState(usersInState);
     }
 
     const renderUserList = () => {
-        return <UserList users={usersState} onEditClick={onEditClick}></UserList>
+        return <UserList roleId={props.roleId} users={usersInState} onEditClick={onEditClick}></UserList>
     }
     const renderUserEditForm = () => {
-        return <UserEditForm user={editedUser} onCancelClick={setIsEditModeOn} onSaveClick={onSaveClick}></UserEditForm>
+        return <UserEditForm user={userToEdit} onCancelClick={setIsEditModeOn} onSaveClick={onSaveClick}></UserEditForm>
     }
 
     return (
