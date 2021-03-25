@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, Route } from 'react-router-dom';
 import CourseEdition from './course-edition/CourseEdition';
 import './CoursesPage.css';
@@ -14,7 +14,7 @@ interface CoursesPageProps {
 function CoursesPage(props: CoursesPageProps) {
 
     
-    const courses = [ 
+    let courses = [ 
         { id: 1, name: 'C# base' }, 
         { id: 2, name: 'Backend' }, 
         { id: 3, name: 'Frontend' },
@@ -23,6 +23,7 @@ function CoursesPage(props: CoursesPageProps) {
 
     let filterId: number [];
     let idCoursesDeleteForState: number[] = [];
+    let newCoursesList = [];
 
     const [isModalDelete, setIsModalDelete] = useState(false);
     const [coursesList, setCoursesList] = useState(courses);
@@ -53,11 +54,24 @@ function CoursesPage(props: CoursesPageProps) {
         setIsOpenPopUp(true);
     }
 
-
+    const addNewCourse = (name: string) => {
+        newCoursesList = courses;
+        let newCourse = { id: coursesList.length + 1, name: name };
+        console.log(newCourse);
+        newCoursesList.push(newCourse);
+        for (let i of newCoursesList) {
+            console.log(i);
+        }
+        setCoursesList(newCoursesList);
+        setIsOpenPopUp(false);
+    }
+ 
     return(
         <div className="course-container">
             <div className="course-create">
-                { isOpenPopUp && <InputNameCourse />}
+                {
+                    isOpenPopUp ? <InputNameCourse onClick={addNewCourse} /> : <div></div>
+                }
                 <button onClick={createCourseHandler} className='button-create'>Добавить курс</button> 
             </div>
             <div className="courses-list">

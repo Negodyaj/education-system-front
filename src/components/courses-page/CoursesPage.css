@@ -1,11 +1,12 @@
 .course-container {
-    width: max-content;
+    width: 900px;
     margin: 0 auto;
 }
 
 .course-create {
-    display: flex;
-    justify-content: flex-end;
+    display: grid;
+    grid-template-columns: 760px 1fr;;
+    gap: 7px;
     margin-bottom: 50px;
 }
 
@@ -15,6 +16,7 @@
     outline: none;
     border: 2px solid rgb(41, 3, 253);
     border-radius: 5px;
+    width: max-content;
 }
 
 .courses-list {
