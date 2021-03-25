@@ -51,12 +51,12 @@ function UserEditForm(props: UserEditFormProps) {
         return isEmpty
     }, true))
 
-    // useEffect(
-    //     () => {
-    //         setRoleMultiselect(newUser.role)
-    //     },
-    //     [newUser.role]
-    // )
+    useEffect(
+        () => {
+            setRoleMultiselect(newUser.role)
+        },
+        [newUser.role]
+    )
 
     const [elementsDefinedByRole, setElementsDefinedByRole] = useState({
         roleSelector: () => {
