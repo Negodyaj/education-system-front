@@ -16,6 +16,7 @@ import UserPage from './components/user-page/UserPage';
 import DatePickerComponent from './shared/components/date-picker/DatePickerComponent';
 import CustomMultiSelect from './components/multi-select/CustomMultiSelect';
 import CoursesPage from './components/courses-page/CoursesPage';
+import "./shared/fontawesome/FontawesomeIcons"; 
 
 function App() {
     const history = useHistory();
