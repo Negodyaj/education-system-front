@@ -90,16 +90,6 @@ function UserPage(props: UserPageProps) {
     const [userToEdit, setUserToEdit] = useState<User | null>(null);
     const ids: (number | undefined)[] = Array.from(usersInState, user => user.id);
 
-    const elementsDefinedByRole = {
-        paymentButton: () => {
-            return (
-                props.roleId === Roles.filter(role => { return role.name === "менеджер" })[0].id
-                &&
-                <button>$</button>
-            )
-        }
-    }
-
     const onEditClick = (userToEditId?: number) => {
         if (userToEditId === null) return;
         setIsEditModeOn(true);
@@ -120,10 +110,17 @@ function UserPage(props: UserPageProps) {
     }
 
     const renderUserList = () => {
-        return <UserList roleId={props.roleId} users={usersInState} onEditClick={onEditClick}></UserList>
+        return <UserList
+            roleId={props.roleId}
+            users={usersInState}
+            onEditClick={onEditClick}></UserList>
     }
     const renderUserEditForm = () => {
-        return <UserEditForm user={userToEdit} onCancelClick={setIsEditModeOn} onSaveClick={onSaveClick}></UserEditForm>
+        return <UserEditForm
+            roleId={props.roleId}
+            user={userToEdit}
+            onCancelClick={setIsEditModeOn}
+            onSaveClick={onSaveClick}></UserEditForm>
     }
 
     return (
