@@ -11,10 +11,14 @@ interface CoursesPageProps {
     roleId: number;
 }
 
+interface Course {
+    id: number;
+    name: string;
+}
+
 function CoursesPage(props: CoursesPageProps) {
 
-    
-    let courses = [ 
+    let courses: Course[] = [ 
         { id: 1, name: 'C# base' }, 
         { id: 2, name: 'Backend' }, 
         { id: 3, name: 'Frontend' },
@@ -23,7 +27,8 @@ function CoursesPage(props: CoursesPageProps) {
 
     let filterId: number [];
     let idCoursesDeleteForState: number[] = [];
-    let newCoursesList = [];
+    let newCourse = {} as Course;
+    let newCoursesList: Course[] = [];
 
     const [isModalDelete, setIsModalDelete] = useState(false);
     const [coursesList, setCoursesList] = useState(courses);
@@ -55,13 +60,9 @@ function CoursesPage(props: CoursesPageProps) {
     }
 
     const addNewCourse = (name: string) => {
-        newCoursesList = courses;
-        let newCourse = { id: coursesList.length + 1, name: name };
-        console.log(newCourse);
+        newCourse = { id: coursesList.length + 1, name: name };
+        newCoursesList = coursesList;
         newCoursesList.push(newCourse);
-        for (let i of newCoursesList) {
-            console.log(i);
-        }
         setCoursesList(newCoursesList);
         setIsOpenPopUp(false);
     }
