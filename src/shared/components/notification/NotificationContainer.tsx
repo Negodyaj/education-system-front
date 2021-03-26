@@ -9,18 +9,16 @@ function NotificationContainer() {
     const [dismissibleNotifications, setDismissibleNotifications] = useState<NotificationData[]>([]);
     const [nonDismissibleNotifications, setNonDismissibleNotifications] = useState<NotificationData[]>([]);
 
-    const generateNotification = (isDismissible: boolean) => {
-        const newNotification = generateTestNotification(isDismissible);
-        const newState = isDismissible ? 
-            [newNotification, ...dismissibleNotifications] :
-            [newNotification, ...nonDismissibleNotifications]
-        isDismissible ? 
-            setDismissibleNotifications(newState) : 
-            setNonDismissibleNotifications(newState);
+    const sendNewNotification = (newNotification: NotificationData) => {
+        if (newNotification.isDismissible) {
+            setDismissibleNotifications([newNotification, ...dismissibleNotifications]);
+        } else {
+            setNonDismissibleNotifications([newNotification, ...nonDismissibleNotifications]);
+        }
     }
-    
+
     const deleteNotification = (dismissedNotification: NotificationData) => {
-        const newState = dismissibleNotifications.filter(notification => notification != dismissedNotification)
+        const newState = dismissibleNotifications.filter(notification => notification != dismissedNotification);
         setDismissibleNotifications(newState);
     }
 
@@ -29,26 +27,26 @@ function NotificationContainer() {
             <div className="non-dismissible-notifications">
                 {nonDismissibleNotifications.map(notification => {
                     return (
-                        <Notification 
-                        key={notification.text}
-                        notificationData={notification} 
-                        deleteNotification={deleteNotification}/>
+                        <Notification
+                            key={notification.text}
+                            notificationData={notification}
+                            deleteNotification={deleteNotification} />
                     )
                 })}
             </div>
             <div className="dismissible-notifications">
-            {dismissibleNotifications.map(notification => {
+                {dismissibleNotifications.map(notification => {
                     return (
-                        <Notification 
-                        key={notification.text} 
-                        notificationData={notification}
-                        deleteNotification={deleteNotification}/>
+                        <Notification
+                            key={notification.text}
+                            notificationData={notification}
+                            deleteNotification={deleteNotification} />
                     )
                 })}
             </div>
             <div className="test-button-container">
-                <button onClick={() => generateNotification(true)}>dismissibleNotification</button>
-                <button onClick={() => generateNotification(false)}>nonDismissibleNotification</button>
+                <button onClick={() => sendNewNotification(generateTestNotification(true))}>dismissibleNotification</button>
+                <button onClick={() => sendNewNotification(generateTestNotification(false))}>nonDismissibleNotification</button>
             </div>
         </div>
     )
