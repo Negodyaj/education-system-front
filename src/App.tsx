@@ -11,10 +11,12 @@ import CoursesList from './components/courses-list/CoursesList';
 import GroupList from './components/group-list/GroupList';
 import NewsList from './components/news-list/NewsList';
 import HomeworkList from './components/homework-list/HomeworkList';
-import NotificationContainer from './shared/notification/NotificationContainer'
+import NotificationContainer from './shared/components/notification/NotificationContainer'
 import UserPage from './components/user-page/UserPage';
-import DatePickerComponent from './components/date-picker/DatePickerComponent';
+import DatePickerComponent from './shared/components/date-picker/DatePickerComponent';
 import CustomMultiSelect from './components/multi-select/CustomMultiSelect';
+import CoursesPage from './components/courses-page/CoursesPage';
+import "./shared/fontawesome/FontawesomeIcons"; 
 
 function App() {
     const history = useHistory();
@@ -92,6 +94,13 @@ function App() {
                                         <UserPage roleId={roleId}></UserPage>
                                     </Route>
                                 }
+                                {
+                                    roleId === 6 &&
+                                    <Route path="/courses-page">
+                                        <CoursesPage roleId={roleId}></CoursesPage>
+                                    </Route>
+                                }
+
                                 <Route path="/groups-list">
                                     <GroupList />
                                 </Route>

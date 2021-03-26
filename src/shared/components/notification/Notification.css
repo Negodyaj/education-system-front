@@ -4,7 +4,8 @@
     min-height: 80px;
     border-radius: 5px;
     margin-bottom: 10px;
-    padding: 5px;
+    transition: all 0.5s ease, border 0.1s linear;
+    overflow: hidden;
 }
 
 .notification span{
@@ -49,4 +50,13 @@
     border: 2px solid red;
     background: lightpink;
     color: darkred;
+}
+
+.hidden {
+    opacity: 0;
+    height: 0;
+    min-height: 0;
+    padding: 0;
+    margin: 0;
+    border: 0;
 }

@@ -2,4 +2,45 @@
     width: 100%;
     height:100%;
     margin: 0 auto;
+    text-align: left;
 }
+
+.user-list{
+    margin-left: 5px;
+}
+
+.user-list-head{
+    font-weight: 500;
+}
+
+.user-list-head .column span{
+    cursor: pointer;
+}
+
+.user-list-item, .user-list-head{
+    display: grid;
+    grid-template-columns: 160px 160px 90px 125px 158px 137px 60px 60px 60px;
+    margin-top: 2px;
+}
+
+.user-list-item .column, .user-list-head .column{
+    display: flex;
+    justify-content: start;
+    text-align: left;
+    padding: 10px;
+}
+
+.break-word{
+    word-wrap: break-word;
+    word-break: break-all;
+}
+
+.multiline{
+    display: flex;
+    flex-direction: column;
+}
+
+.user-list-item button{
+    margin:0 4px;
+    height: 38px;
+}   
