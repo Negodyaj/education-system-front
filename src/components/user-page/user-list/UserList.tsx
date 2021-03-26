@@ -1,4 +1,5 @@
 
+import { useEffect, useState } from "react";
 import { Roles } from "../../../shared/components/roles/Roles";
 import { User } from "../../interfaces/User";
 import '../UserPage.css';
@@ -10,6 +11,11 @@ interface UserListProps {
 }
 
 function UserList(props: UserListProps) {
+    const [signInvertor, setSignInvertor] = useState(2);
+
+    useEffect(() => {
+        signInvertor < 3 && secondNameSortDefaultAndOnclick()
+    })
 
     const elementsDefinedByRole = {
         paymentButton: () => {
@@ -25,11 +31,25 @@ function UserList(props: UserListProps) {
         props.onEditClick(userToEditId);
     }
 
+    const secondNameSortDefaultAndOnclick = () => props.users.sort((a, b) => {
+        setSignInvertor(signInvertor + 1)
+        if (a.secondName !== undefined && b.secondName !== undefined) {
+            if (b.secondName > a.secondName) {
+                return Math.pow(-1, signInvertor - 1);
+            }
+            if (b.secondName < a.secondName) {
+                return Math.pow(-1, signInvertor);
+            }
+        }
+        return 0;
+    })
+
+
     return (
         <div className="user-list">
             <button onClick={() => onEditClick()}>добавить пользователя</button>
             <div className="user-list-head">
-                <div className="column"><span title="А-Я">фамилия</span></div>
+                <div className="column"><span title="А-Я" onClick={secondNameSortDefaultAndOnclick}>фамилия</span></div>
                 <div className="column"><span title="А-Я">имя</span></div>
                 <div className="column"><span title="А-Я">логин</span></div>
                 <div className="column"><span title="А-Я">роль</span></div>
