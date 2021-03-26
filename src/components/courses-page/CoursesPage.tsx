@@ -5,25 +5,14 @@ import './CoursesPage.css';
 import ModalWindowDelete from './modal-window/ModalWindowDelete';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import InputNameCourse from './InputNameCourse';
+import { courses, Course } from '../../shared/courses/Courses';
 
 
 interface CoursesPageProps {
     roleId: number;
 }
 
-interface Course {
-    id: number;
-    name: string;
-}
-
 function CoursesPage(props: CoursesPageProps) {
-
-    let courses: Course[] = [ 
-        { id: 1, name: 'C# base' }, 
-        { id: 2, name: 'Backend' }, 
-        { id: 3, name: 'Frontend' },
-        { id: 4, name: 'Mobile development' } 
-    ];
 
     let filterId: number [];
     let idCoursesDeleteForState: number[] = [];
@@ -51,7 +40,7 @@ function CoursesPage(props: CoursesPageProps) {
                 console.log(i);
             }
             setIdCoursesDelete(filterId);
-            setCoursesList(courses.filter((item) => !(idCoursesDelete.includes(item.id))));
+            setCoursesList(coursesList.filter((item) => !(idCoursesDelete.includes(item.id))));
         }
     }
 
@@ -81,7 +70,7 @@ function CoursesPage(props: CoursesPageProps) {
                         <div key={item.id} className="course">
                             <div className="course-name">{item.name}</div>
                             <div className="course-update-delete">
-                                <Link to="/course-edition">
+                                <Link to={"/course-edition/" + item.id}>
                                     <button className='button-update'>
                                         <FontAwesomeIcon icon="edit" />
                                     </button>
@@ -93,13 +82,6 @@ function CoursesPage(props: CoursesPageProps) {
                         </div>
                     ))
                 }
-            </div>
-            <div className="course-create">
-                <Route path="/course-edition">
-                    <div className="select-users">
-                        <CourseEdition />
-                    </div>
-                </Route>
             </div>
             { isModalDelete && <ModalWindowDelete onClickDelete={onDeleteHandler}/>}
         </div>

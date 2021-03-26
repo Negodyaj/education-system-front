@@ -1,8 +1,13 @@
 import './CourseEdition.css';
 import { useState } from 'react';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import { Course } from '../../../shared/courses/Courses';
 
-const CourseEdition = () => {
+interface CourseProps{
+    coursesList: Course[]
+}
+
+const CourseEdition = (props: CourseProps) => {
     
     const newThemes = [ 
         { id: 1, name: 'HTML' }, 
@@ -11,12 +16,9 @@ const CourseEdition = () => {
         { id: 4, name: 'React' } 
     ];
 
-    const themesCourse = [ 
-        { id: 1, name: 'TypeScript' }, 
-        { id: 2, name: 'Props' }, 
-    ];
 
-  return (
+
+    return (
     <div className="course-edition-container">
       <div className='course-update'>
         <div className='new-themes-course'>
@@ -40,15 +42,15 @@ const CourseEdition = () => {
             <div className="program-course-header">Программа курса</div>
             <div className="program-course">
                 {
-                    themesCourse.map((item) => (
-                        <div className="theme">{item.name}</div>
+                    props.coursesList.map((item) => (
+                        <div className="theme">{item.theme}</div>
                     ))
                 }
             </div>
         </div>
       </div>
     </div>
-  )
+    )
 }
 
 export default CourseEdition;

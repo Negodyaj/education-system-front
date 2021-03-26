@@ -18,6 +18,7 @@ import CustomMultiSelect from './components/multi-select/CustomMultiSelect';
 import CoursesPage from './components/courses-page/CoursesPage';
 import CourseEdition from './components/courses-page/course-edition/CourseEdition';
 import "./shared/fontawesome/FontawesomeIcons"; 
+import { courses } from './shared/courses/Courses';
 
 function App() {
     const history = useHistory();
@@ -102,7 +103,7 @@ function App() {
                                     </Route>
                                 }
                                 <Route path="/course-edition">
-                                    <CourseEdition />
+                                    <CourseEdition coursesList={courses} />
                                 </Route>
                                 <Route path="/groups-list">
                                     <GroupList />
