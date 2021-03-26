@@ -1,6 +1,8 @@
 
 import { useState } from 'react';
+import { Role } from '../../enums/role';
 import { Roles } from '../../shared/components/roles/Roles';
+import { dictionary } from '../../shared/converters/enumToDictionaryEntity';
 import { User } from '../interfaces/User';
 import UserList from './user-list/UserList';
 import UserEditForm from './UserEditForm/UserEditForm';
@@ -22,8 +24,8 @@ function UserPage(props: UserPageProps) {
             password: "cesar",
             phone: "+7 987 654 32 10",
             role: [{
-                value: 2,
-                label: "студент"
+                value: Role.Student,
+                label: dictionary[Role[Role.Student]]
             }],
             email: "boss@myempire.com",
             groupId: 4,
@@ -38,8 +40,8 @@ function UserPage(props: UserPageProps) {
             password: "cesar",
             phone: "+7 897 012 345 67 89",
             role: [{
-                value: 2,
-                label: "студент"
+                value: Role.Student,
+                label: dictionary[Role[Role.Student]]
             }],
             email: "boss@myempire.com",
             groupId: 4,
@@ -54,14 +56,14 @@ function UserPage(props: UserPageProps) {
             password: "cesar",
             phone: "+7 999 887 23 05",
             role: [{
-                value: 2,
-                label: "студент"
+                value: Role.Student,
+                label: dictionary[Role[Role.Student]]
             }, {
-                value: 3,
-                label: "менеджер"
+                value: Role.Manager,
+                label: dictionary[Role[Role.Manager]]
             }, {
-                value: 4,
-                label: "администратор"
+                value: Role.Admin,
+                label: dictionary[Role[Role.Admin]]
             }],
             email: "boss@myempire.com",
             groupId: 4,
@@ -76,8 +78,8 @@ function UserPage(props: UserPageProps) {
             password: "cesar",
             phone: "+7 902 089 97 42",
             role: [{
-                value: 2,
-                label: "студент"
+                value: Role.Student,
+                label: dictionary[Role[Role.Student]]
             }],
             email: "boss@myempire.com",
             groupId: 4,
@@ -85,7 +87,7 @@ function UserPage(props: UserPageProps) {
         },
     ];
 
-    const [usersInState, setUsersInState] = useState(users);
+    const [usersInState, setUsersInState] = useState([...users]);
     const [isEditModeOn, setIsEditModeOn] = useState(false);
     const [userToEdit, setUserToEdit] = useState<User | null>(null);
     const ids: (number | undefined)[] = Array.from(usersInState, user => user.id);

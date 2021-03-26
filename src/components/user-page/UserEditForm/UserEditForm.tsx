@@ -8,7 +8,9 @@ import { SelectItem } from '../../interfaces/SelectItem';
 import DatePickerComponent from '../../../shared/components/date-picker/DatePickerComponent';
 import { Roles } from '../../../shared/components/roles/Roles';
 import { OptionsType } from 'react-select';
-import { convertEntitiesToSelectItems, convertEntityToSelectItem } from '../../../shared/converters/EntityToSelectItem';
+import { convertEntitiesToSelectItems } from '../../../shared/converters/entityToSelectItem';
+import { convertEnumToDictionary, dictionary, getDictionary } from '../../../shared/converters/enumToDictionaryEntity';
+import { Role } from '../../../enums/role';
 
 interface UserEditFormProps {
     roleId: number;
@@ -50,22 +52,24 @@ function UserEditForm(props: UserEditFormProps) {
     }, true))
 
     const elementsDefinedByRole = {
+
+
         roleSelector: () => {
-            if (props.roleId === Roles.filter(role => { return role.name === "администратор" })[0].id) {
+            if (props.roleId === Role.Admin) {
                 return (
                     <div className="user-list-item">
                         <label className="column">Список ролей</label>
                         <CustomMultiSelect
                             selectType={"multi"}
                             userOptions={roleMultiselect as OptionsType<object>}
-                            options={convertEntitiesToSelectItems(Roles)}
+                            options={convertEntitiesToSelectItems(getDictionary(convertEnumToDictionary(Role)))}
                             onSelect={roleOnChange}></CustomMultiSelect>
                     </div>)
             } else {
-                newUser.role =
-                    convertEntitiesToSelectItems(
-                        Roles.filter(role => { return role.name === "студент" })
-                    )
+                newUser.role = [{
+                    value: Role.Student,
+                    label: dictionary[Role[Role.Student]]
+                }]
             }
         }
     }

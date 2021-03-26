@@ -17,6 +17,7 @@ import DatePickerComponent from './shared/components/date-picker/DatePickerCompo
 import CustomMultiSelect from './components/multi-select/CustomMultiSelect';
 import CoursesPage from './components/courses-page/CoursesPage';
 import "./shared/fontawesome/FontawesomeIcons"; 
+import { Role } from './enums/role';
 
 function App() {
     const history = useHistory();
@@ -25,12 +26,12 @@ function App() {
 
 
     const users = [
-        { login: 'test', password: 'test', roleId: 1 },
-        { login: 'student', password: 'qwerty', roleId: 2 },
-        { login: 'manager', password: 'manager', roleId: 3 },
-        { login: 'admin', password: 'admin', roleId: 4 },
-        { login: 'methodist', password: 'methodist', roleId: 5 },
-        { login: 'teacher', password: 'teacher', roleId: 6 }
+        { login: 'test', password: 'test', roleId: 500 },
+        { login: 'student', password: 'qwerty', roleId: Role.Student },
+        { login: 'manager', password: 'manager', roleId: Role.Manager },
+        { login: 'admin', password: 'admin', roleId: Role.Admin },
+        { login: 'methodist', password: 'methodist', roleId: Role.Methodist },
+        { login: 'teacher', password: 'teacher', roleId: Role.Teacher }
     ];
 
     const loginHandler = (email: string, password: string) => {
@@ -39,19 +40,10 @@ function App() {
             const entry = securityEntries[0];
             setIsLoggedIn(true);
             setRoleId(entry.roleId);
+            console.log(roleId);
         }
     }
-
-    // const rolesList = [
-    //     { value: 'Преподаватель', label: 'Преподаватель' },
-    //     { value: 'Студент', label: 'Студент' },
-    //     { value: 'Администратор', label: 'Администратор' },
-    //     { value: 'Методист', label: 'Методист' },
-    //     { value: 'Тьютор', label: 'Тьютор' },
-    //     { value: 'Менеджер', label: 'Менеджер' }
-    // ]
     
-
     const logOut = () => {
         setIsLoggedIn(false);
         history.push("/");
@@ -85,17 +77,17 @@ function App() {
                             <Switch>
                                 <Route exact path="/">
                                     {
-                                        roleId===2 && <NewsList />
+                                        roleId===Role.Student && <NewsList />
                                     }
                                 </Route>
                                 {
-                                    (roleId === 3 || roleId === 4) &&
+                                    (roleId === Role.Manager || roleId === Role.Admin) &&
                                     <Route path="/user-page">
                                         <UserPage roleId={roleId}></UserPage>
                                     </Route>
                                 }
                                 {
-                                    roleId === 6 &&
+                                    roleId === Role.Teacher &&
                                     <Route path="/courses-page">
                                         <CoursesPage roleId={roleId}></CoursesPage>
                                     </Route>
