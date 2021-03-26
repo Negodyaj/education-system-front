@@ -8,9 +8,9 @@ import { SelectItem } from '../../interfaces/SelectItem';
 import DatePickerComponent from '../../../shared/components/date-picker/DatePickerComponent';
 import { Roles } from '../../../shared/components/roles/Roles';
 import { OptionsType } from 'react-select';
-import { convertEntitiesToSelectItems } from '../../../shared/converters/entityToSelectItem';
 import { convertEnumToDictionary, dictionary, getDictionary } from '../../../shared/converters/enumToDictionaryEntity';
 import { Role } from '../../../enums/role';
+import { convertEntitiesToSelectItems } from '../../../shared/converters/EntityToSelectItem';
 
 interface UserEditFormProps {
     roleId: number;
