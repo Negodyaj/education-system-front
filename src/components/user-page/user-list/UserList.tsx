@@ -1,6 +1,8 @@
 
 import { useEffect, useState } from "react";
+import { Role } from "../../../enums/role";
 import { Roles } from "../../../shared/components/roles/Roles";
+import { convertEnumToDictionary, getDictionary } from "../../../shared/converters/enumToDictionaryEntity";
 import { User } from "../../interfaces/User";
 import '../UserPage.css';
 
@@ -11,16 +13,14 @@ interface UserListProps {
 }
 
 function UserList(props: UserListProps) {
-    const [signInvertor, setSignInvertor] = useState(2);
 
-    useEffect(() => {
-        signInvertor < 3 && secondNameSortDefaultAndOnclick()
-    })
+    const [signInvertor, setSignInvertor] = useState(2);
+    const [usersToShow, setUsersToShow] = useState([...props.users]);
 
     const elementsDefinedByRole = {
         paymentButton: () => {
             return (
-                props.roleId === Roles.filter(role => { return role.name === "менеджер" })[0].id
+                props.roleId === Role.Manager
                 &&
                 <button>$</button>
             )
@@ -31,19 +31,24 @@ function UserList(props: UserListProps) {
         props.onEditClick(userToEditId);
     }
 
-    const secondNameSortDefaultAndOnclick = () => props.users.sort((a, b) => {
-        setSignInvertor(signInvertor + 1)
-        if (a.secondName !== undefined && b.secondName !== undefined) {
-            if (b.secondName > a.secondName) {
-                return Math.pow(-1, signInvertor - 1);
+    const secondNameSortDefaultAndOnclick = () => {
+        setUsersToShow([...usersToShow.sort((a, b) => {
+            if (a.secondName !== undefined && b.secondName !== undefined) {
+                if (b.secondName > a.secondName) {
+                    return Math.pow(-1, signInvertor - 1);
+                }
+                if (b.secondName < a.secondName) {
+                    return Math.pow(-1, signInvertor);
+                }
             }
-            if (b.secondName < a.secondName) {
-                return Math.pow(-1, signInvertor);
-            }
-        }
-        return 0;
-    })
+            return 0;
+        })])
+        setSignInvertor(signInvertor + 1);
+    }
 
+    if (signInvertor < 3) {
+        secondNameSortDefaultAndOnclick();
+    }
 
     return (
         <div className="user-list">
@@ -57,7 +62,7 @@ function UserList(props: UserListProps) {
                 <div className="column"><span title="0-9">дата рождения</span></div>
             </div>
             {
-                props.users.map(u => (
+                usersToShow.map(u => (
                     <div className="user-list-item" key={u.id}>
                         <div className="column break-word" lang="ru">{u.secondName}</div>
                         <div className="column break-word">{u.name}</div>
