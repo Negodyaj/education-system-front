@@ -3,7 +3,7 @@ import CustomMultiSelect from '../../multi-select/CustomMultiSelect';
 import './UserEditForm.css'
 import '../UserPage.css';
 import { User } from '../../interfaces/User';
-import { ChangeEventHandler, EventHandler, FormEventHandler, useEffect, useState } from 'react';
+import { ChangeEventHandler, EventHandler, FormEvent, FormEventHandler, useEffect, useState } from 'react';
 import { SelectItem } from '../../interfaces/SelectItem';
 import DatePickerComponent from '../../../shared/components/date-picker/DatePickerComponent';
 import { Roles } from '../../../shared/components/roles/Roles';
@@ -103,7 +103,8 @@ function UserEditForm(props: UserEditFormProps) {
         setGroupName(e.target.value);
     }
 
-    const onSaveClick: FormEventHandler = (e) => {
+    const onSaveButtonClick: FormEventHandler = (e) => {
+        e.preventDefault();
         newUser.id === undefined && (newUser.id = (() => {
             return Math.round(Math.random() * 100)
         })());
@@ -114,13 +115,13 @@ function UserEditForm(props: UserEditFormProps) {
         props.onCancelClick(false);
     }
 
-    const checkValidityThenSubmit = () => {
+    const checkValidity = () => {
         setWasValidated('was-validated');
     }
 
     return (
         <div className={"user-edit-form needs-validation " + wasValidated}>
-            <form onSubmit={onSaveClick}>
+            <form onSubmit={onSaveButtonClick}>
                 <div className="user-list-item">
                     <label className="column">Имя</label>
                     <input type="text" className="column" value={name} onChange={nameOnChange} required />
@@ -155,6 +156,7 @@ function UserEditForm(props: UserEditFormProps) {
                 <div className="user-list-item">
                     <label className="column">Почта</label>
                     <input type="email" className="column" value={email} onChange={emailOnChange} required />
+                    <div className="bad-feedback">Введите e-mail</div>
                 </div>
                 {
                     elementsDefinedByRole.roleSelector()
@@ -163,12 +165,12 @@ function UserEditForm(props: UserEditFormProps) {
                     <div className="column">
                         <button className="column" onClick={onCancelClick}>отмена</button>
                     </div>
-                    <div className="column">
+                    <div className="column save-button">
                         <button
-                            className="column"
+                            className="column save-button"
                             type={"submit"}
                             disabled={isDisabled}
-                            onClick={checkValidityThenSubmit}>сохранить</button>
+                            onClick={checkValidity}>сохранить</button>
                     </div>
                 </div>
             </form>
