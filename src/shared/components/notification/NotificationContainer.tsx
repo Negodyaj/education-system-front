@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import NotificationData from '../../interfaces/NotificationData';
 import Notification from './Notification';
 import './NotificationContainer.css';
@@ -17,9 +16,8 @@ function NotificationContainer(props: NotificationContainerProps) {
                 {props.nonDismissibleNotifications.map(notification => {
                     return (
                         <Notification
-                            key={notification.date}
-                            notificationData={notification}
-                            deleteNotification={props.deleteNotification} />
+                            key={notification.timestamp}
+                            notificationData={notification}/>
                     )
                 })}
             </div>
@@ -27,7 +25,7 @@ function NotificationContainer(props: NotificationContainerProps) {
                 {props.dismissibleNotifications.map(notification => {
                     return (
                         <Notification
-                            key={notification.date}
+                            key={notification.timestamp}
                             notificationData={notification}
                             deleteNotification={props.deleteNotification} />
                     )

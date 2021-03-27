@@ -2,7 +2,7 @@ interface NotificationData {
     type: string;
     text: string;
     isDismissible: boolean;
-    date: number;
+    timestamp: number;
 }
 
 export default NotificationData;
