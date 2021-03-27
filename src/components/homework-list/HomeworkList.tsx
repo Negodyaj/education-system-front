@@ -11,7 +11,7 @@ function HomeworkList(props: HomeworkListProps) {
             type: "information",
             text: "test",
             isDismissible: true,
-            date: Date.now(),
+            timestamp: Date.now(),
         }
         props.sendNotification(notification);
     }
