@@ -32,6 +32,7 @@ function UserEditForm(props: UserEditFormProps) {
     const [groupName, setGroupName] = useState<string | undefined>(props.user?.groupName);
 
     const [wasValidated, setWasValidated] = useState('');
+    const [validationMessageVisibility, setValidationMessageVisibility] = useState('hidden');
 
     const newUser: User = {
         id: id,
@@ -54,8 +55,6 @@ function UserEditForm(props: UserEditFormProps) {
     }, true))
 
     const elementsDefinedByRole = {
-
-
         roleSelector: () => {
             if (props.roleId === Role.Admin) {
                 return (
@@ -110,7 +109,6 @@ function UserEditForm(props: UserEditFormProps) {
         })());
         props.onSaveClick(newUser)
         props.onCancelClick(false);
-        checkValidityThenSubmit();
     }
     const onCancelClick = () => {
         props.onCancelClick(false);
@@ -126,10 +124,12 @@ function UserEditForm(props: UserEditFormProps) {
                 <div className="user-list-item">
                     <label className="column">Имя</label>
                     <input type="text" className="column" value={name} onChange={nameOnChange} required />
+                    <div className="bad-feedback">Введите имя</div>
                 </div>
                 <div className="user-list-item">
                     <label className="column">Фамилия</label>
-                    <input type="text" className="column" value={secondName} onChange={secondNameOnChange} required/>
+                    <input type="text" className="column" value={secondName} onChange={secondNameOnChange} required />
+                    <div className="bad-feedback">Ввведите фамилию</div>
                 </div>
                 <div className="user-list-item">
                     <label className="column">Дата рождения</label>
@@ -145,7 +145,8 @@ function UserEditForm(props: UserEditFormProps) {
                 </div>
                 <div className="user-list-item">
                     <label className="column">Телефон</label>
-                    <input type="text" className="column" value={phone} onChange={phoneOnChange} required/>
+                    <input type="text" className="column" value={phone} onChange={phoneOnChange} required />
+                    <div className="bad-feedback">Введите номер телефона</div>
                 </div>
                 <div className="user-list-item">
                     <label className="column">Аватар</label>
@@ -153,7 +154,7 @@ function UserEditForm(props: UserEditFormProps) {
                 </div>
                 <div className="user-list-item">
                     <label className="column">Почта</label>
-                    <input type="text" className="column" value={email} onChange={emailOnChange} />
+                    <input type="email" className="column" value={email} onChange={emailOnChange} required />
                 </div>
                 {
                     elementsDefinedByRole.roleSelector()
@@ -163,7 +164,11 @@ function UserEditForm(props: UserEditFormProps) {
                         <button className="column" onClick={onCancelClick}>отмена</button>
                     </div>
                     <div className="column">
-                        <button className="column" type={"submit"} disabled={isDisabled}>сохранить</button>
+                        <button
+                            className="column"
+                            type={"submit"}
+                            disabled={isDisabled}
+                            onClick={checkValidityThenSubmit}>сохранить</button>
                     </div>
                 </div>
             </form>
