@@ -1,7 +1,6 @@
 
 import { useEffect, useState } from 'react';
 import { Role } from '../../enums/role';
-import { Roles } from '../../shared/components/roles/Roles';
 import { dictionary } from '../../shared/converters/enumToDictionaryEntity';
 import { User } from '../interfaces/User';
 import UserList from './user-list/UserList';

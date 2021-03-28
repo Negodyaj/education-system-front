@@ -3,14 +3,14 @@ import CustomMultiSelect from '../../multi-select/CustomMultiSelect';
 import './UserEditForm.css'
 import '../UserPage.css';
 import { User } from '../../interfaces/User';
-import { ChangeEvent, ChangeEventHandler, EventHandler, FormEvent, FormEventHandler, useEffect, useState } from 'react';
+import { ChangeEvent, ChangeEventHandler, FormEventHandler, useState } from 'react';
 import { SelectItem } from '../../interfaces/SelectItem';
 import DatePickerComponent from '../../../shared/components/date-picker/DatePickerComponent';
-import { Roles } from '../../../shared/components/roles/Roles';
 import { OptionsType } from 'react-select';
 import { convertEntitiesToSelectItems } from '../../../shared/converters/entityToSelectItem';
-import { convertEnumToDictionary, dictionary, getDictionary } from '../../../shared/converters/enumToDictionaryEntity';
+import { convertEnumToDictionary, dictionary, getRussianDictionary } from '../../../shared/converters/enumToDictionaryEntity';
 import { Role } from '../../../enums/role';
+import { validateNameAndSecondName } from '../../../shared/validators/nameAndSecondNameValidator';
 
 interface UserEditFormProps {
     roleId: number;
@@ -32,7 +32,6 @@ function UserEditForm(props: UserEditFormProps) {
     const [groupName, setGroupName] = useState<string | undefined>(props.user?.groupName);
 
     const [wasValidated, setWasValidated] = useState('');
-    const [validationMessageVisibility, setValidationMessageVisibility] = useState('hidden');
 
     const newUser: User = {
         id: id,
@@ -63,7 +62,7 @@ function UserEditForm(props: UserEditFormProps) {
                         <CustomMultiSelect
                             selectType={"multi"}
                             userOptions={roleMultiselect as OptionsType<object>}
-                            options={convertEntitiesToSelectItems(getDictionary(convertEnumToDictionary(Role)))}
+                            options={convertEntitiesToSelectItems(getRussianDictionary(convertEnumToDictionary(Role)))}
                             onSelect={roleOnChange}></CustomMultiSelect>
                     </div>)
             } else {
@@ -74,17 +73,7 @@ function UserEditForm(props: UserEditFormProps) {
             }
         }
     }
-
-
-    const validateNameAndSecondName = (e: ChangeEvent<HTMLInputElement>) => {
-        if (/[0-9]/.test(e.target.value)) {
-            e.target.setCustomValidity('Это поле может содержать только буквенные символы');
-        } else {
-            e.target.setCustomValidity('');
-        }
-        return e.target.value.trimStart().trimEnd();
-    }
-
+    
     const nameOnChange: ChangeEventHandler<HTMLInputElement> = (e) => {
         setName(validateNameAndSecondName(e));
     }
