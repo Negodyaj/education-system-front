@@ -42,8 +42,8 @@ const CourseEdition = (props: CourseProps) => {
             <div className="program-course-header">Программа курса</div>
             <div className="program-course">
                 {
-                    props.coursesList.map((item) => (
-                        <div className="theme">{item.theme}</div>
+                    props.coursesList[0].themes?.map((theme) => (
+                        <div className="theme">{theme}</div>
                     ))
                 }
             </div>

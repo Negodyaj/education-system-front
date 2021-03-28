@@ -10,7 +10,8 @@
 
 }
 
-.course-name {
+.input-course-text {
+    width: 100%;
     border: none;
     padding-left: 10px;
 }
