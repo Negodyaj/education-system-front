@@ -7,7 +7,7 @@ export const convertEnumToDictionary = (enumArg: any): DictionaryEntity[] => {
         .map(key => ({ id: enumArg[key], name: key } as DictionaryEntity));
 }
 
-export const getDictionary = (entities: DictionaryEntity[]): DictionaryEntity[] =>
+export const getRussianDictionary = (entities: DictionaryEntity[]): DictionaryEntity[] =>
     entities.map(entity => {
         return {
             id: entity.id,
