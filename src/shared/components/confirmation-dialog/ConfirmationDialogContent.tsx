@@ -1,17 +1,27 @@
 import { ConfirmationDialogProps } from "./ConfirmationDialog";
 
 function ConfirmationDialogContent (props: ConfirmationDialogProps) {
+    const confirm = () => {
+        props.callback(true);
+        props.setIsActive(false);
+    }
+
+    const decline = () => {
+        props.callback(false);
+        props.setIsActive(false);
+    }
+
     return (
         <div className = "confirmation-dialog-content">
             <div className="confirmation-dialog-header">
-                <h2>Title</h2>
+                <h2>{props.title ?? "Вы уверены?"}</h2>
             </div>
             <div className="confirmation-dialog-body">
-                <span>text</span>
+                <span>{props.message ?? ""}</span>
             </div>
             <div className="confirmation-dialog-footer">
-                <button>да</button>
-                <button onClick={() => props.setIsActive(false)}>нет</button>
+                <button onClick={confirm}>{props.confirmLabel ?? "да"}</button>
+                <button onClick={decline}>{props.declineLabel ?? "нет"}</button>
             </div>            
         </div>
     )

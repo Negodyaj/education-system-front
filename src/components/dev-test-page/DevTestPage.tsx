@@ -23,7 +23,10 @@ function DevTestPage (props: DevTestPageProps) {
                 <button onClick={() => {setDialogActive(true)}}>Show dialog</button> 
             </div>
 
-            <ConfirmationDialog isActive={dialogActive} setIsActive={setDialogActive}/>
+            <ConfirmationDialog 
+                isActive={dialogActive} 
+                setIsActive={setDialogActive}
+                callback={(flag)=>{console.log(flag)}}/>
         </div>
     )
 }
