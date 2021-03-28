@@ -3,7 +3,7 @@ import CustomMultiSelect from '../../multi-select/CustomMultiSelect';
 import './UserEditForm.css'
 import '../UserPage.css';
 import { User } from '../../interfaces/User';
-import { ChangeEventHandler, EventHandler, FormEvent, FormEventHandler, useEffect, useState } from 'react';
+import { ChangeEvent, ChangeEventHandler, EventHandler, FormEvent, FormEventHandler, useEffect, useState } from 'react';
 import { SelectItem } from '../../interfaces/SelectItem';
 import DatePickerComponent from '../../../shared/components/date-picker/DatePickerComponent';
 import { Roles } from '../../../shared/components/roles/Roles';
@@ -75,11 +75,21 @@ function UserEditForm(props: UserEditFormProps) {
         }
     }
 
+
+    const validateNameAndSecondName = (e: ChangeEvent<HTMLInputElement>) => {
+        if (/[0-9]/.test(e.target.value)) {
+            e.target.setCustomValidity('Это поле может содержать только буквенные символы');
+        } else {
+            e.target.setCustomValidity('');
+        }
+        return e.target.value.trimStart().trimEnd();
+    }
+
     const nameOnChange: ChangeEventHandler<HTMLInputElement> = (e) => {
-        setName(e.target.value);
+        setName(validateNameAndSecondName(e));
     }
     const secondNameOnChange: ChangeEventHandler<HTMLInputElement> = (e) => {
-        setSecondName(e.target.value);
+        setSecondName(validateNameAndSecondName(e));
     }
     const birthDateOnChange = (date: Date) => {
         setBirthDate(date);
@@ -138,7 +148,7 @@ function UserEditForm(props: UserEditFormProps) {
                 </div>
                 <div className="user-list-item">
                     <label className="column">Логин</label>
-                    <input type="text" className="column" value={login} onChange={loginOnChange} />
+                    <input type="text" className="column" value={login} onChange={loginOnChange} min={5} />
                 </div>
                 <div className="user-list-item">
                     <label className="column">Пароль</label>
