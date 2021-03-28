@@ -21,5 +21,6 @@ export const dictionary: { [key: string]: string } = {
     [Role[Role.Methodist]]: "Методист",
     [Role[Role.Student]]: "Студент",
     [Role[Role.Teacher]]: "Преподаватель",
-    [Role[Role.Tutor]]: "Тьютор"
+    [Role[Role.Tutor]]: "Тьютор",
+    [Role[Role.Test]]: "Тестовая роль"
 }

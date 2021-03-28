@@ -40,7 +40,7 @@ function App() {
     }
 
     const users = [
-        { login: 'test', password: 'test', roleId: 500 },
+        { login: 'test', password: 'test', roleId: Role.Test },
         { login: 'student', password: 'qwerty', roleId: Role.Student },
         { login: 'manager', password: 'manager', roleId: Role.Manager },
         { login: 'admin', password: 'admin', roleId: Role.Admin },
@@ -125,7 +125,8 @@ function App() {
                     }
                     {
                         isLoggedIn ? roleId === 2 && <NotificationContainer 
-                            dismissibleNotifications={dismissibleNotifications} 
+
+                        dismissibleNotifications={dismissibleNotifications} 
                             nonDismissibleNotifications={nonDismissibleNotifications}
                             deleteNotification={deleteNotification}/> : <></>
                     }
