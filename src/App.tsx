@@ -18,12 +18,26 @@ import CustomMultiSelect from './components/multi-select/CustomMultiSelect';
 import CoursesPage from './components/courses-page/CoursesPage';
 import "./shared/fontawesome/FontawesomeIcons"; 
 import { Role } from './enums/role';
+import NotificationData from './shared/interfaces/NotificationData';
 
 function App() {
     const history = useHistory();
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [roleId, setRoleId] = useState(0);
+    const [dismissibleNotifications, setDismissibleNotifications] = useState<NotificationData[]>([]);
+    const [nonDismissibleNotifications, setNonDismissibleNotifications] = useState<NotificationData[]>([]);
 
+    const sendNewNotification = (newNotification: NotificationData) => {
+        if (newNotification.isDismissible) {
+            setDismissibleNotifications([newNotification, ...dismissibleNotifications]);
+        } else {
+            setNonDismissibleNotifications([newNotification, ...nonDismissibleNotifications]);
+        }
+    }
+    const deleteNotification = (dismissedNotification: NotificationData) => {
+        const newState = dismissibleNotifications.filter(notification => notification != dismissedNotification);
+        setDismissibleNotifications(newState);
+    }
 
     const users = [
         { login: 'test', password: 'test', roleId: 500 },
@@ -100,7 +114,7 @@ function App() {
                                     <CoursesList />
                                 </Route>
                                 <Route path="/homework-list">
-                                    <HomeworkList />
+                                    <HomeworkList sendNotification={sendNewNotification}/>
                                 </Route>
                                 <Route path="/homework">
                                     <HomeworkPage roleId={roleId} />
@@ -110,7 +124,10 @@ function App() {
                             <LoginForm onLoginClick={loginHandler} />
                     }
                     {
-                        isLoggedIn ? roleId === 2 && <NotificationContainer/> : <></>
+                        isLoggedIn ? roleId === 2 && <NotificationContainer 
+                            dismissibleNotifications={dismissibleNotifications} 
+                            nonDismissibleNotifications={nonDismissibleNotifications}
+                            deleteNotification={deleteNotification}/> : <></>
                     }
                 </main>
             </div>

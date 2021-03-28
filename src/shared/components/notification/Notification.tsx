@@ -5,7 +5,7 @@ import NotificationData from '../../interfaces/NotificationData';
 
 interface NotificationProps {
     notificationData: NotificationData;
-    deleteNotification: (notificationData: NotificationData) => void;
+    deleteNotification?: (notificationData: NotificationData) => void;
 }
 
 function Notification(props: NotificationProps) {
@@ -21,7 +21,10 @@ function Notification(props: NotificationProps) {
     const dismiss = () => {
         if (props.notificationData.isDismissible) {
             setIsHidden(true);
-            setTimeout(() => props.deleteNotification(props.notificationData), 500)
+            setTimeout(() => {
+                if(props.deleteNotification)
+                    props.deleteNotification(props.notificationData)
+            }, 500)
         }
     }
 
