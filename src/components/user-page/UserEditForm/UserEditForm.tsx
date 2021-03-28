@@ -7,7 +7,7 @@ import { ChangeEventHandler, FormEventHandler, useState } from 'react';
 import { SelectItem } from '../../interfaces/SelectItem';
 import DatePickerComponent from '../../../shared/components/date-picker/DatePickerComponent';
 import { OptionsType } from 'react-select';
-import { convertEntitiesToSelectItems } from '../../../shared/converters/EntityToSelectItem';
+import { convertEntitiesToSelectItems } from '../../../shared/converters/entityToSelectItem';
 import { convertEnumToDictionary, dictionary, getRussianDictionary } from '../../../shared/converters/enumToDictionaryEntity';
 import { Role } from '../../../enums/role';
 import { validateName } from '../../../shared/validators/nameValidator';

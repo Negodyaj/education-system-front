@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react';
 import { Role } from '../../enums/role';
 import { dictionary } from '../../shared/converters/enumToDictionaryEntity';
+import NotificationData from '../../shared/interfaces/NotificationData';
 import { User } from '../interfaces/User';
 import UserList from './user-list/UserList';
 import UserEditForm from './UserEditForm/UserEditForm';
@@ -9,6 +10,7 @@ import './UserPage.css'
 
 interface UserPageProps {
     roleId: number;
+    sendNotification: (newNotification: NotificationData) => void;
 }
 
 function UserPage(props: UserPageProps) {
@@ -104,9 +106,11 @@ function UserPage(props: UserPageProps) {
     const [isEditModeOn, setIsEditModeOn] = useState(false);
     const [userToEdit, setUserToEdit] = useState<User | null>(null);
     const ids: (number | undefined)[] = Array.from(usersInState, user => user.id);
+    const stringChanged = "изменён";
+    const stringAdded = 'добавлен';
+    let actionInNotification = stringChanged;
 
     const onEditClick = (userToEditId?: number) => {
-        if (userToEditId === null) return;
         setIsEditModeOn(true);
         setUserToEdit(
             usersInState.filter((user) => {
@@ -118,10 +122,18 @@ function UserPage(props: UserPageProps) {
         let i: number = ids.indexOf(newUser.id);
         if (i === -1) {
             usersInState.push(newUser);
+            actionInNotification = stringAdded;
         } else {
             usersInState[i] = newUser;
+            actionInNotification = stringChanged;
         }
         setUsersInState(usersInState);
+        props.sendNotification({
+            type: "success",
+            text: "пользователь " + newUser.name + " " + newUser.secondName + " успешно " + actionInNotification,
+            isDismissible: true,
+            timestamp: Date.now()
+        })
     }
 
     const renderUserList = () => {
