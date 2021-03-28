@@ -1,4 +1,6 @@
-function ConfirmationDialogContent () {
+import { ConfirmationDialogProps } from "./ConfirmationDialog";
+
+function ConfirmationDialogContent (props: ConfirmationDialogProps) {
     return (
         <div className = "confirmation-dialog-content">
             <div className="confirmation-dialog-header">
@@ -9,7 +11,7 @@ function ConfirmationDialogContent () {
             </div>
             <div className="confirmation-dialog-footer">
                 <button>да</button>
-                <button>нет</button>
+                <button onClick={() => props.setIsActive(false)}>нет</button>
             </div>            
         </div>
     )
