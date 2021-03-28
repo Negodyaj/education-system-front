@@ -4,5 +4,6 @@ export enum Role {
     "Teacher",
     "Tutor",
     "Methodist",
-    "Manager"
+    "Manager",
+    "Test",
 }
