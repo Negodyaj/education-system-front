@@ -87,7 +87,7 @@ function UserPage(props: UserPageProps) {
     ];
 
     const url = 'https://80.78.240.16:7070/api/User';
-    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoidm9sb2R5YTIyIiwiaWQiOiIxIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoi0JDQtNC80LjQvdC40YHRgtGA0LDRgtC-0YAiLCJuYmYiOjE2MTY4Nzg2ODUsImV4cCI6MTYxNzA1MTQ4NSwiaXNzIjoiRWR1Y2F0aW9uU3lzdGVtLkFwaSIsImF1ZCI6IkRldkVkdWNhdGlvbiJ9.WF-xY1DS6VXWvgTTqdYfKP4T5gJ0g-tbPe4CL7DQcuM';
+    const token = 'eyJhbGciOiJIUzM4NCIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiQkciLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiLQodGC0YPQtNC10L3RgiIsIm5iZiI6MTYxNDcxMDc2MSwiZXhwIjoxNjE0NzE0MzYxLCJpc3MiOiJEZXZFZCIsImF1ZCI6IkNsaWVudCJ9.IxpSXCT-NINmfO-R9tjDwQdzlsOrvuwtRz3Jdm5CWEtjuh3l5nflJ974ORJ52RbV';
 
     fetch(url, {
         headers: {
