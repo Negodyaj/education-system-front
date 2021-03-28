@@ -1,6 +1,20 @@
-function DevTestPage () {
+import { generateTestNotification } from "../../shared/components/notification/generateTestNotification";
+import NotificationData from "../../shared/interfaces/NotificationData";
+
+interface DevTestPageProps {
+    sendNotification: (newNotification: NotificationData) => void;
+}
+
+function DevTestPage (props: DevTestPageProps) {
     return (
-        <h1>(dev) test-page</h1>
+        <div>
+            <h1>(dev) test-page</h1>
+
+            <button onClick={() => props.sendNotification(generateTestNotification(true))}>
+                Test dismissable notification</button>
+            <button onClick={() => props.sendNotification(generateTestNotification(false))}>
+                Test non-dismissable notification</button>
+        </div>
     )
 }
 

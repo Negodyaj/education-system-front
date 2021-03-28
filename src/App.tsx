@@ -88,7 +88,7 @@ function App() {
                             <Switch>
                                 <Route exact path="/">
                                     {
-                                        roleId===Role.Test && <DevTestPage />
+                                        roleId===Role.Test && <DevTestPage sendNotification={sendNewNotification}/>
                                     }
                                 </Route>
                                 {
@@ -111,9 +111,8 @@ function App() {
                             <LoginForm onLoginClick={loginHandler} />
                     }
                     {
-                        isLoggedIn ? roleId === 2 && <NotificationContainer 
-
-                        dismissibleNotifications={dismissibleNotifications} 
+                        isLoggedIn ? <NotificationContainer 
+                            dismissibleNotifications={dismissibleNotifications} 
                             nonDismissibleNotifications={nonDismissibleNotifications}
                             deleteNotification={deleteNotification}/> : <></>
                     }
