@@ -1,3 +1,4 @@
+import ConfirmationDialog from "../../shared/components/confirmation-dialog/ConfirmationDialog";
 import { generateTestNotification } from "../../shared/components/notification/generateTestNotification";
 import NotificationData from "../../shared/interfaces/NotificationData";
 
@@ -14,6 +15,8 @@ function DevTestPage (props: DevTestPageProps) {
                 Test dismissable notification</button>
             <button onClick={() => props.sendNotification(generateTestNotification(false))}>
                 Test non-dismissable notification</button>
+
+            <ConfirmationDialog/>
         </div>
     )
 }
