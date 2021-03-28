@@ -3,14 +3,15 @@ import CustomMultiSelect from '../../multi-select/CustomMultiSelect';
 import './UserEditForm.css'
 import '../UserPage.css';
 import { User } from '../../interfaces/User';
-import { ChangeEvent, ChangeEventHandler, FormEventHandler, useState } from 'react';
+import { ChangeEventHandler, FormEventHandler, useState } from 'react';
 import { SelectItem } from '../../interfaces/SelectItem';
 import DatePickerComponent from '../../../shared/components/date-picker/DatePickerComponent';
 import { OptionsType } from 'react-select';
 import { convertEntitiesToSelectItems } from '../../../shared/converters/entityToSelectItem';
 import { convertEnumToDictionary, dictionary, getRussianDictionary } from '../../../shared/converters/enumToDictionaryEntity';
 import { Role } from '../../../enums/role';
-import { validateNameAndSecondName } from '../../../shared/validators/nameAndSecondNameValidator';
+import { validateName } from '../../../shared/validators/nameValidator';
+import { validateTopLevelDomain } from '../../../shared/validators/topLevelDomainValidator';
 
 interface UserEditFormProps {
     roleId: number;
@@ -75,10 +76,10 @@ function UserEditForm(props: UserEditFormProps) {
     }
     
     const nameOnChange: ChangeEventHandler<HTMLInputElement> = (e) => {
-        setName(validateNameAndSecondName(e));
+        setName(validateName(e));
     }
     const secondNameOnChange: ChangeEventHandler<HTMLInputElement> = (e) => {
-        setSecondName(validateNameAndSecondName(e));
+        setSecondName(validateName(e));
     }
     const birthDateOnChange = (date: Date) => {
         setBirthDate(date);
@@ -96,7 +97,7 @@ function UserEditForm(props: UserEditFormProps) {
         setPhone(e.target.value);
     }
     const emailOnChange: ChangeEventHandler<HTMLInputElement> = (e) => {
-        setEmail(e.target.value);
+        setEmail(validateTopLevelDomain(e));
     }
     const groupNameOnChange: ChangeEventHandler<HTMLInputElement> = (e) => {
         setGroupName(e.target.value);
@@ -113,7 +114,6 @@ function UserEditForm(props: UserEditFormProps) {
     const onCancelClick = () => {
         props.onCancelClick(false);
     }
-
     const checkValidity = () => {
         setWasValidated('was-validated');
     }
@@ -137,7 +137,7 @@ function UserEditForm(props: UserEditFormProps) {
                 </div>
                 <div className="user-list-item">
                     <label className="column">Логин</label>
-                    <input type="text" className="column" value={login} onChange={loginOnChange} min={5} />
+                    <input type="text" className="column" value={login} onChange={loginOnChange}/>
                 </div>
                 <div className="user-list-item">
                     <label className="column">Пароль</label>
