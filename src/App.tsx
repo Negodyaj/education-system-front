@@ -7,10 +7,6 @@ import { Link, Switch, Route, useHistory } from 'react-router-dom';
 import LoginForm from './components/login-form/LoginForm';
 import NavMenu from './components/nav-menu/NavMenu';
 import HomeworkPage from './components/homework-page/HomeworkPage';
-import CoursesList from './components/courses-list/CoursesList';
-import GroupList from './components/group-list/GroupList';
-import NewsList from './components/news-list/NewsList';
-import HomeworkList from './components/homework-list/HomeworkList';
 import NotificationContainer from './shared/components/notification/NotificationContainer'
 import UserPage from './components/user-page/UserPage';
 import DatePickerComponent from './shared/components/date-picker/DatePickerComponent';
@@ -19,6 +15,7 @@ import CoursesPage from './components/courses-page/CoursesPage';
 import "./shared/fontawesome/FontawesomeIcons"; 
 import { Role } from './enums/role';
 import NotificationData from './shared/interfaces/NotificationData';
+import DevTestPage from './components/dev-test-page/DevTestPage'
 
 function App() {
     const history = useHistory();
@@ -91,7 +88,7 @@ function App() {
                             <Switch>
                                 <Route exact path="/">
                                     {
-                                        roleId===Role.Student && <NewsList />
+                                        roleId===Role.Test && <DevTestPage />
                                     }
                                 </Route>
                                 {
@@ -106,16 +103,6 @@ function App() {
                                         <CoursesPage roleId={roleId}></CoursesPage>
                                     </Route>
                                 }
-
-                                <Route path="/groups-list">
-                                    <GroupList />
-                                </Route>
-                                <Route path="/courses-list">
-                                    <CoursesList />
-                                </Route>
-                                <Route path="/homework-list">
-                                    <HomeworkList sendNotification={sendNewNotification}/>
-                                </Route>
                                 <Route path="/homework">
                                     <HomeworkPage roleId={roleId} />
                                 </Route>
