@@ -15,6 +15,7 @@ function DevTestPage (props: DevTestPageProps) {
         if (decision) {
             setCounter(counter+1);
         }
+        setDialogActive(false);
     }
 
     return (
@@ -33,7 +34,6 @@ function DevTestPage (props: DevTestPageProps) {
 
             <ConfirmationDialog 
                 isActive={dialogActive} 
-                setIsActive={setDialogActive}
                 title={'Увеличить счетчик на 1?'}
                 message={`Новое значение: ${counter+1}`}
                 callback={counterCallback}/>

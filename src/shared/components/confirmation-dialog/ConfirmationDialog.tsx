@@ -4,7 +4,6 @@ import ConfirmationDialogContent from "./ConfirmationDialogContent";
 
 export interface ConfirmationDialogProps {
     isActive: boolean;
-    setIsActive: (isActive: boolean) => void;
     title?: string;
     message?: string;
     confirmLabel?: string;

@@ -3,12 +3,10 @@ import { ConfirmationDialogProps } from "./ConfirmationDialog";
 function ConfirmationDialogContent (props: ConfirmationDialogProps) {
     const confirm = () => {
         props.callback(true);
-        props.setIsActive(false);
     }
 
     const decline = () => {
         props.callback(false);
-        props.setIsActive(false);
     }
 
     return (
