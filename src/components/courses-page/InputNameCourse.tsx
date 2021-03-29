@@ -8,7 +8,7 @@ interface InputNameCourseProps{
 
 function InputNameCourse(props: InputNameCourseProps) {
 
-    let textInput = React.createRef<HTMLInputElement>()
+    let textInput = React.createRef<HTMLInputElement>();
 
     const showInput = () => {
         props.onClick('' + textInput.current?.value);

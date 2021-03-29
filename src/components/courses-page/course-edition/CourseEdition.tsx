@@ -1,22 +1,52 @@
 import './CourseEdition.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import { Course } from '../../../shared/courses/Courses';
+import { Themes } from '../../../shared/themes/Themes';
+import { threadId } from 'node:worker_threads';
 
-interface CourseProps{
-    coursesList: Course[]
+interface CourseEditionProps{
+    coursesList: Course[];
+    themesList: Themes[];
 }
 
-const CourseEdition = (props: CourseProps) => {
+function CourseEdition(props: CourseEditionProps) {
     
-    const newThemes = [ 
-        { id: 1, name: 'HTML' }, 
-        { id: 2, name: 'CSS' }, 
-        { id: 3, name: 'JS' },
-        { id: 4, name: 'React' } 
-    ];
+    let newThemeCourse = {} as Themes;
+    let currentCourse: Themes[] = [];
 
+    const [themesCourse, setThemesCourse] = useState(props.coursesList[0].themes);
 
+    const addNewThemeInProgramCourse = (nameTheme: string) => {
+        let count = 0;
+        for(let theme of themesCourse) {
+            if(theme.name === nameTheme) {
+                count++;
+            }
+        }
+        if (count === 0) {
+            newThemeCourse = {id: themesCourse.length + 1, name: nameTheme};
+            currentCourse = themesCourse;
+            currentCourse.push(newThemeCourse);
+            for(let i of currentCourse) {
+                console.log(i);
+            }
+            setThemesCourse(currentCourse);
+        }
+    }
+
+    const deleteThemeFromCourse = (themeId: number) => {
+        currentCourse = themesCourse;
+        currentCourse.splice(themeId - 1, 1);
+        for(let i of currentCourse) {
+            console.log(i);
+        }
+        setThemesCourse(currentCourse);
+    }
+
+    /*useEffect(() => {
+        setThemesCourse(currentCourse);
+    }, [themesCourse]);*/
 
     return (
     <div className="course-edition-container">
@@ -25,11 +55,11 @@ const CourseEdition = (props: CourseProps) => {
             <div className="new-themes-header">Темы для курса</div>
             <div className="new-themes-container">
             {
-                newThemes.map((item) => (
+                 props.themesList.map((item) => (
                     <div className="new-theme">
                         <div className="new-theme-name">{item.name}</div>
                         <div className="new-theme-add">
-                            <button className="button-add-theme">
+                            <button onClick={() => addNewThemeInProgramCourse(item.name)} className="button-add-theme">
                                 <FontAwesomeIcon icon="plus" />
                             </button>
                         </div>
@@ -42,8 +72,15 @@ const CourseEdition = (props: CourseProps) => {
             <div className="program-course-header">Программа курса</div>
             <div className="program-course">
                 {
-                    props.coursesList[0].themes?.map((theme) => (
-                        <div className="theme">{theme}</div>
+                    themesCourse.map((theme) => (
+                        <div key={theme.id} className="theme">
+                            <div className="theme-name">{theme.name}</div>
+                            <div className="theme-delete">
+                                <button onClick={() => deleteThemeFromCourse(theme.id)} className='button-theme-delete'>
+                                    <FontAwesomeIcon icon="minus" />
+                                </button>
+                            </div>
+                        </div>
                     ))
                 }
             </div>

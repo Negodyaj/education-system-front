@@ -19,6 +19,7 @@ import CoursesPage from './components/courses-page/CoursesPage';
 import CourseEdition from './components/courses-page/course-edition/CourseEdition';
 import "./shared/fontawesome/FontawesomeIcons"; 
 import { courses } from './shared/courses/Courses';
+import { themes } from './shared/themes/Themes';
 
 function App() {
     const history = useHistory();
@@ -103,7 +104,7 @@ function App() {
                                     </Route>
                                 }
                                 <Route path="/course-edition">
-                                    <CourseEdition coursesList={courses} />
+                                    <CourseEdition coursesList={courses} themesList={themes}/>
                                 </Route>
                                 <Route path="/groups-list">
                                     <GroupList />

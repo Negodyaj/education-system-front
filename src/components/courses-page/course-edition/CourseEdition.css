@@ -46,14 +46,46 @@
     border: none;
 }
 
+.button-add-theme:focus {
+    border: none;
+    outline: none;
+}
+
+
 .theme {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    display: grid;
+    grid-template-columns: 90% 10%;
     width: 600px;
     height: 50px;
     border: 2px solid rgb(41, 3, 253);
     border-radius: 5px;
     font-size: 20px;
+}
+
+.theme-name {
+    display: flex;
+    justify-content: flex-start;
+    padding-left: 10px;
+    align-items: center;
+}
+
+.theme-delete {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+} 
+
+.button-theme-delete {
+    background-color: white;
+    background-size: contain;
+    width: 40px;
+    height: 40px;
+    outline: none;
+    border: none;
+}
+
+.button-theme-delete:focus {
+    border: none;
+    outline: none;
 }
 
