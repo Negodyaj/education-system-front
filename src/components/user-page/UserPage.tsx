@@ -30,7 +30,7 @@ function UserPage(props: UserPageProps) {
             email: "boss@myempire.com",
             groupId: 4,
             groupName: "C# Base дневная",
-            userPic:"https:/via.placeholder.com/100x100"
+            userPic:"https://placebear.com/640/360"
         },
         {
             id: 40,
@@ -47,7 +47,7 @@ function UserPage(props: UserPageProps) {
             email: "boss@myempire.com",
             groupId: 4,
             groupName: "C# Base дневная",
-            userPic:"https:/via.placeholder.com/100x100"
+            userPic:"https://placebear.com/640/360"
         },
         {
             id: 30,
@@ -87,7 +87,7 @@ function UserPage(props: UserPageProps) {
             email: "boss@myempire.com",
             groupId: 4,
             groupName: "C# Base дневная",
-            userPic:"https:/via.placeholder.com/100x100"
+            userPic:"https://placebear.com/640/360"
         },
     ];
 

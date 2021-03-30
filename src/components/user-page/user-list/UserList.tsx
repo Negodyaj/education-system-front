@@ -1,5 +1,6 @@
 
-import { useEffect, useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React, { useEffect, useState } from "react";
 import { Role } from "../../../enums/role";
 import { Roles } from "../../../shared/components/roles/Roles";
 import { convertEnumToDictionary, getDictionary } from "../../../shared/converters/enumToDictionaryEntity";
@@ -52,8 +53,10 @@ function UserList(props: UserListProps) {
 
     return (
         <div className="user-list">
-            <div className="column">
-                <button className="button-style" onClick={() => onEditClick()}>добавить</button>
+            <div className="column-head">
+                <button className="button-style" onClick={() => onEditClick()}>
+                <FontAwesomeIcon icon="plus" />
+                </button>
             </div>
             <div className="user-list-head">
                 <div className="column"> </div>
@@ -79,8 +82,12 @@ function UserList(props: UserListProps) {
                         </div>
                         <div className="column">{u.groupName}</div>
                         <div className="column">
-                            <button className="button-style" onClick={() => onEditClick(u.id)}>ред.</button>
-                            <button className="button-style">удал.</button>
+                            <button className="button-style" onClick={() => onEditClick(u.id)}>
+                            <FontAwesomeIcon icon="edit" />
+                            </button>
+                            <button className="button-style">
+                            <FontAwesomeIcon icon="trash" />
+                            </button>
 
                             {
                                 elementsDefinedByRole.paymentButton()
