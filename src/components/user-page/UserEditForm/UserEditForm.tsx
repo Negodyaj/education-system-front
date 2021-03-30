@@ -7,7 +7,7 @@ import { ChangeEventHandler, FormEventHandler, useState } from 'react';
 import { SelectItem } from '../../interfaces/SelectItem';
 import DatePickerComponent from '../../../shared/components/date-picker/DatePickerComponent';
 import { OptionsType } from 'react-select';
-import { convertEntitiesToSelectItems } from '../../../shared/converters/EntityToSelectItem';
+import { convertEntitiesToSelectItems } from '../../../shared/converters/entityToSelectItem';
 import { convertEnumToDictionary, dictionary, getRussianDictionary } from '../../../shared/converters/enumToDictionaryEntity';
 import { Role } from '../../../enums/role';
 import { validateName } from '../../../shared/validators/nameValidator';
@@ -21,23 +21,24 @@ interface UserEditFormProps {
 }
 
 function UserEditForm(props: UserEditFormProps) {
+
     const id = useState<number | undefined>(props.user?.id)[0];
-    const [name, setName] = useState<string | undefined>(props.user?.name);
-    const [secondName, setSecondName] = useState<string | undefined>(props.user?.secondName);
-    const [birthDate, setBirthDate] = useState<Date | null>(props.user?.birthDate ?? null);
+    const [name, setName] = useState<string | undefined>(props.user?.firstName);
+    const [secondName, setSecondName] = useState<string | undefined>(props.user?.lastName);
+    const [birthDate, setBirthDate] = useState<string | undefined>(props.user?.birthDate ?? undefined);
     const [login, setLogin] = useState<string | undefined>(props.user?.login);
     const [roleMultiselect, setRoleMultiselect] = useState(props.user?.role ?? undefined);
     const [password, setPassword] = useState<string | undefined>(props.user?.password);
     const [phone, setPhone] = useState<string | undefined>(props.user?.phone);
     const [email, setEmail] = useState<string | undefined>(props.user?.email);
     const [groupName, setGroupName] = useState<string | undefined>(props.user?.groupName);
-
+    
     const [wasValidated, setWasValidated] = useState('');
 
     const newUser: User = {
         id: id,
-        name: name,
-        secondName: secondName,
+        firstName: name,
+        lastName: secondName,
         birthDate: birthDate,
         login: login,
         role: roleMultiselect as SelectItem[],
@@ -82,7 +83,7 @@ function UserEditForm(props: UserEditFormProps) {
         setSecondName(validateName(e));
     }
     const birthDateOnChange = (date: Date) => {
-        setBirthDate(date);
+        setBirthDate(date.toString());
     }
     const loginOnChange: ChangeEventHandler<HTMLInputElement> = (e) => {
         setLogin(e.target.value);
@@ -133,7 +134,7 @@ function UserEditForm(props: UserEditFormProps) {
                 </div>
                 <div className="user-list-item">
                     <label className="column">Дата рождения</label>
-                    <DatePickerComponent date={props.user?.birthDate ?? null} onDateChange={birthDateOnChange} />
+                    <DatePickerComponent date={birthDate} onDateChange={birthDateOnChange} />
                 </div>
                 <div className="user-list-item">
                     <label className="column">Логин</label>
