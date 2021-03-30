@@ -9,6 +9,14 @@ interface DevTestPageProps {
 
 function DevTestPage (props: DevTestPageProps) {
     const [dialogActive, setDialogActive] = useState(false);
+    const [counter, setCounter] = useState(0);
+
+    const counterCallback = (decision: boolean) => {
+        if (decision) {
+            setCounter(counter+1);
+        }
+        setDialogActive(false);
+    }
 
     return (
         <div>
@@ -20,10 +28,15 @@ function DevTestPage (props: DevTestPageProps) {
                 Test non-dismissable notification</button>
 
             <div>
-                <button onClick={() => {setDialogActive(true)}}>Show dialog</button> 
+                <span>{counter}</span>
+                <button onClick={() => {setDialogActive(true)}}>+1</button> 
             </div>
 
-            <ConfirmationDialog isActive={dialogActive} setIsActive={setDialogActive}/>
+            <ConfirmationDialog 
+                isActive={dialogActive} 
+                title={'Увеличить счетчик на 1?'}
+                message={`Новое значение: ${counter+1}`}
+                callback={counterCallback}/>
         </div>
     )
 }
