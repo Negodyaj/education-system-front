@@ -5,7 +5,7 @@ import { dictionary } from '../../shared/converters/enumToDictionaryEntity';
 import NotificationData from '../../shared/interfaces/NotificationData';
 import { User } from '../interfaces/User';
 import UserList from './user-list/UserList';
-//import UserEditForm from './UserEditForm/UserEditForm';
+import UserEditForm from './UserEditForm/UserEditForm';
 import './UserPage.css'
 
 interface UserPageProps {
@@ -81,12 +81,11 @@ function UserPage(props: UserPageProps) {
             onEditClick={onEditClick}></UserList>
     }
     const renderUserEditForm = () => {
-        return <div></div>
-        // <UserEditForm
-        //     roleId={props.roleId}
-        //     user={userToEdit}
-        //     onCancelClick={setIsEditModeOn}
-        //     onSaveClick={onSaveClick}></UserEditForm>
+        return <UserEditForm
+            roleId={props.roleId}
+            user={userToEdit}
+            onCancelClick={setIsEditModeOn}
+            onSaveClick={onSaveClick}></UserEditForm>
     }
 
     return (
