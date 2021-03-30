@@ -21,6 +21,7 @@ interface UserEditFormProps {
 }
 
 function UserEditForm(props: UserEditFormProps) {
+
     const id = useState<number | undefined>(props.user?.id)[0];
     const [name, setName] = useState<string | undefined>(props.user?.firstName);
     const [secondName, setSecondName] = useState<string | undefined>(props.user?.lastName);
@@ -31,7 +32,7 @@ function UserEditForm(props: UserEditFormProps) {
     const [phone, setPhone] = useState<string | undefined>(props.user?.phone);
     const [email, setEmail] = useState<string | undefined>(props.user?.email);
     const [groupName, setGroupName] = useState<string | undefined>(props.user?.groupName);
-
+    
     const [wasValidated, setWasValidated] = useState('');
 
     const newUser: User = {
@@ -133,7 +134,7 @@ function UserEditForm(props: UserEditFormProps) {
                 </div>
                 <div className="user-list-item">
                     <label className="column">Дата рождения</label>
-                    <DatePickerComponent date={new Date(birthDate as string) ?? null} onDateChange={birthDateOnChange} />
+                    <DatePickerComponent date={birthDate} onDateChange={birthDateOnChange} />
                 </div>
                 <div className="user-list-item">
                     <label className="column">Логин</label>

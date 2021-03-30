@@ -43,6 +43,7 @@ function UserPage(props: UserPageProps) {
                 setIsFetching(false);
             })
     }
+
     useEffect(() => {
         getUsers();
     }, []);
@@ -56,21 +57,46 @@ function UserPage(props: UserPageProps) {
         )
     }
     const onSaveClick = (newUser: User) => {
-        let i: number = ids.indexOf(newUser.id);
-        if (i === -1) {
-            usersInState.push(newUser);
-            actionInNotification = stringAdded;
-        } else {
-            usersInState[i] = newUser;
-            actionInNotification = stringChanged;
+        setIsFetching(true);
+
+        fetch('https://80.78.240.16:7070/api/User/register', {
+            method: "POST",
+            headers: {
+                'Accept': 'application/json',
+                'Authorization': 'Bearer ' + token,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                firstName: newUser.firstName,
+                lastName: newUser.lastName,
+                birthDate: newUser.birthDate,
+                login: newUser.login,
+                password: newUser.password,
+                phone: newUser.phone,
+                userPic: newUser.userPic,
+                email: newUser.email,
+                roleIds: [
+                    Role.Student
+                ]
+
+            })
         }
-        setUsersInState(usersInState);
-        props.sendNotification({
-            type: "success",
-            text: "пользователь " + newUser.firstName + " " + newUser.lastName + " успешно " + actionInNotification,
-            isDismissible: true,
-            timestamp: Date.now()
-        })
+        )
+        .then(data => data.json())
+        .then(data => setIsFetching(false));
+        
+
+        //actionInNotification = stringAdded;
+
+        //actionInNotification = stringChanged;
+
+        //setUsersInState(usersInState);
+        // props.sendNotification({
+        //     type: "success",
+        //     text: "пользователь " + newUser.firstName + " " + newUser.lastName + " успешно " + actionInNotification,
+        //     isDismissible: true,
+        //     timestamp: Date.now()
+        // })
     }
 
     const renderUserList = () => {
@@ -91,16 +117,9 @@ function UserPage(props: UserPageProps) {
     return (
         <div className="user-page">
             {
-                isFetching
-                    ?
-                    <div>loading</div>
-                    : (
-                        isEditModeOn
-                            ?
-                            renderUserEditForm()
-                            :
-                            renderUserList()
-                    )
+                isFetching ? <div>loading</div> : (
+                    isEditModeOn ? renderUserEditForm() : renderUserList()
+                )
             }
         </div>
     )
