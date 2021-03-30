@@ -16,8 +16,8 @@ function UserPage(props: UserPageProps) {
     const users: User[] = [
         {
             id: 430,
-            name: "Гай Юлий",
-            secondName: "Цезарь",
+            name: "Петр",
+            secondName: "Водкин",
             birthDate: new Date(0, 1, 1),
             login: "Lorem",
             password: "cesar",
@@ -28,12 +28,13 @@ function UserPage(props: UserPageProps) {
             }],
             email: "boss@myempire.com",
             groupId: 4,
-            groupName: "C# Base дневная"
+            groupName: "C# Base дневная",
+            userPic:"https://placebear.com/640/360"
         },
         {
             id: 40,
-            name: "Марк Аврелий",
-            secondName: "Антонин",
+            name: "Игорь",
+            secondName: "Селедкин",
             birthDate: new Date(3, 2, 2),
             login: "ave",
             password: "cesar",
@@ -44,12 +45,13 @@ function UserPage(props: UserPageProps) {
             }],
             email: "boss@myempire.com",
             groupId: 4,
-            groupName: "C# Base дневная"
+            groupName: "C# Base дневная",
+            userPic:"https://placebear.com/640/360"
         },
         {
             id: 30,
-            name: "Тит Элий Адриан сверхпредрассредоточенный",
-            secondName: "Антонин",
+            name: "Антон",
+            secondName: "Огурцов",
             birthDate: new Date(103, 2, 21),
             login: "ipsum",
             password: "cesar",
@@ -66,12 +68,13 @@ function UserPage(props: UserPageProps) {
             }],
             email: "boss@myempire.com",
             groupId: 4,
-            groupName: "C# Base дневная"
+            groupName: "C# Base дневная",
+            userPic:"https://placebear.com/640/360"
         },
         {
             id: 4,
-            name: "Публий Элий Траян",
-            secondName: "Адриан",
+            name: "Иван",
+            secondName: "Молодцов",
             birthDate: new Date(1993, 2, 21),
             login: "dolor",
             password: "cesar",
@@ -82,7 +85,8 @@ function UserPage(props: UserPageProps) {
             }],
             email: "boss@myempire.com",
             groupId: 4,
-            groupName: "C# Base дневная"
+            groupName: "C# Base дневная",
+            userPic:"https://placebear.com/640/360"
         },
     ];
 
