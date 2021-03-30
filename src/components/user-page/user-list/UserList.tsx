@@ -13,8 +13,22 @@ interface UserListProps {
 
 function UserList(props: UserListProps) {
 
-    const [signInvertor, setSignInvertor] = useState(2);
-    const [usersToShow, setUsersToShow] = useState([...props.users]);
+    const lastNameAlphabetSort = (a: User, b: User) => {
+        if (a.lastName !== undefined && b.lastName !== undefined) {
+            if (b.lastName > a.lastName) {
+                return Math.pow(-1, signInvertor - 1);
+            }
+            if (b.lastName < a.lastName) {
+                return Math.pow(-1, signInvertor);
+            }
+        }
+        return 0;
+    }
+
+    const [signInvertor, setSignInvertor] = useState(1);
+    const [usersToShow, setUsersToShow] = useState([...props.users].sort((a, b) => {
+        return lastNameAlphabetSort(a, b);
+    }));
 
     const elementsDefinedByRole = {
         paymentButton: () => {
@@ -30,39 +44,27 @@ function UserList(props: UserListProps) {
         props.onEditClick(userToEditId);
     }
 
-    const secondNameSortDefaultAndOnclick = () => {
+    const lastNameColumnOnClick = () => {
         setUsersToShow([...usersToShow.sort((a, b) => {
-            if (a.secondName !== undefined && b.secondName !== undefined) {
-                if (b.secondName > a.secondName) {
-                    return Math.pow(-1, signInvertor - 1);
-                }
-                if (b.secondName < a.secondName) {
-                    return Math.pow(-1, signInvertor);
-                }
-            }
-            return 0;
+            return lastNameAlphabetSort(a, b);
         })])
         setSignInvertor(signInvertor + 1);
-    }
-
-    if (signInvertor < 3) {
-        secondNameSortDefaultAndOnclick();
     }
 
     return (
         <div className="user-list">
             <div className="column-head">
                 <button className="button-style" onClick={() => onEditClick()}>
-                <FontAwesomeIcon icon="plus" />
+                    <FontAwesomeIcon icon="plus" />
                 </button>
             </div>
             <div className="user-list-head">
                 <div className="column"> </div>
-                <div className="column"><span title="А-Я" onClick={secondNameSortDefaultAndOnclick}>Фамилия</span></div>
-                <div className="column"><span title="А-Я">Имя</span></div>
-                <div className="column"><span title="А-Я">Логин</span></div>
-                <div className="column"><span title="А-Я">Роль</span></div>
-                <div className="column"><span title="А-Я">Группа</span></div>
+                <div className="column"><span title="А-Я" onClick={lastNameColumnOnClick}>фамилия</span></div>
+                <div className="column"><span title="А-Я">имя</span></div>
+                <div className="column"><span title="А-Я">логин</span></div>
+                <div className="column"><span title="А-Я">роль</span></div>
+                <div className="column"><span title="А-Я">группа</span></div>
             </div>
             {
                 usersToShow.map(u => (
@@ -70,8 +72,8 @@ function UserList(props: UserListProps) {
                         <div className="column">
                             <img className="user-photo" src={u.userPic} alt="userpic" />
                         </div>
-                        <div className="column break-word" lang="ru">{u.secondName}</div>
-                        <div className="column break-word">{u.name}</div>
+                        <div className="column break-word" lang="ru">{u.lastName}</div>
+                        <div className="column break-word">{u.firstName}</div>
                         <div className="column">{u.login}</div>
                         <div className="column multiline">
                             {
@@ -81,10 +83,10 @@ function UserList(props: UserListProps) {
                         <div className="column">{u.groupName}</div>
                         <div className="column">
                             <button className="button-style" onClick={() => onEditClick(u.id)}>
-                            <FontAwesomeIcon icon="edit" />
+                                <FontAwesomeIcon icon="edit" />
                             </button>
                             <button className="button-style">
-                            <FontAwesomeIcon icon="trash" />
+                                <FontAwesomeIcon icon="trash" />
                             </button>
 
                             {
