@@ -1,9 +1,9 @@
 import './CourseEdition.css';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import { Course, courses } from '../../../shared/courses/Courses';
+import { Course } from '../../../shared/courses/Courses';
 import { Themes } from '../../../shared/themes/Themes';
-import { threadId } from 'node:worker_threads';
+
 
 interface CourseEditionProps{
     coursesList: Course[];
@@ -13,26 +13,15 @@ interface CourseEditionProps{
 
 function CourseEdition(props: CourseEditionProps) {
 
-    /*let themesVariant: AllThemes[] = [];
-
-    for(let i in props.themesList) {
-        themesVariant[i].id = 1;
-        themesVariant[i].name = props.themesList[i].name;
-        themesVariant[i].check = false;
-    }*/
-    
     let newThemeCourse = {} as Themes;
     let currentCourse: Themes[] = [];
-    let x = 0;
     let indexCourse = Number(props.idCourse.slice(-1)) - 1;
-
     let allThemesCourses: Themes[][] = [];
 
     for(let i = 0; i < props.coursesList.length; i++) {
         allThemesCourses.push(props.themesList);
     }
 
-    const [y, setY] = useState(x);
     const [themesCourse, setThemesCourse] = useState(props.coursesList[indexCourse].themes);
     const [allThemes, setAllThemes] = useState(allThemesCourses[indexCourse]);
     
@@ -44,26 +33,15 @@ function CourseEdition(props: CourseEditionProps) {
             }
         }
         if (count === 0) {
-            let idTheme = allThemes.indexOf(item);
-            allThemes[idTheme].check = true;
-            setAllThemes(allThemes);
+            let indexTheme = allThemes.indexOf(item);
+            allThemes[indexTheme].check = true;
+            setAllThemes([...allThemes]);
             newThemeCourse = {id: themesCourse.length + 1, name: item.name, check: true};
             currentCourse = themesCourse;
             currentCourse.push(newThemeCourse);
-            //setThemesCourse(currentCourse);
-            x = y;
-            ++x;
-            setY(x);
-            for(let item of allThemesCourses) {
-                console.log(item);
-            }
-        
+            setThemesCourse([...currentCourse]);
         }
     }
-
-    /*useEffect(() => {
-       
-    }, [x])*/
 
     const deleteThemeFromCourse = (theme: Themes) => {
         let index = -1;
@@ -74,14 +52,11 @@ function CourseEdition(props: CourseEditionProps) {
         }
         if(index >= 0) {
             allThemes[index].check = false;
-            setAllThemes(allThemes);
+            setAllThemes([...allThemes]);
         } 
         currentCourse = themesCourse;
         currentCourse.splice(themesCourse.indexOf(theme), 1);
-        x = y;
-        ++x;
-        setY(x);
-        //setThemesCourse(currentCourse);
+        setThemesCourse([...currentCourse]);
     }
 
     return (
