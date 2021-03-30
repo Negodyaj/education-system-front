@@ -1,7 +1,6 @@
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Role } from '../../enums/role';
-import { Roles } from '../../shared/components/roles/Roles';
 import { dictionary } from '../../shared/converters/enumToDictionaryEntity';
 import { User } from '../interfaces/User';
 import UserList from './user-list/UserList';
@@ -90,6 +89,20 @@ function UserPage(props: UserPageProps) {
             userPic:"https://placebear.com/640/360"
         },
     ];
+
+    const url = 'https://80.78.240.16:7070/api/User';
+    const token = 'eyJhbGciOiJIUzM4NCIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiQkciLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiLQodGC0YPQtNC10L3RgiIsIm5iZiI6MTYxNDcxMDc2MSwiZXhwIjoxNjE0NzE0MzYxLCJpc3MiOiJEZXZFZCIsImF1ZCI6IkNsaWVudCJ9.IxpSXCT-NINmfO-R9tjDwQdzlsOrvuwtRz3Jdm5CWEtjuh3l5nflJ974ORJ52RbV';
+
+    fetch(url, {
+        headers: {
+            'Accept': 'application/json',
+            'Authorization': 'Bearer ' + token,
+            'Content-Type': 'application/json'
+        }
+    })
+        .then(response => response.json())
+        .then(data => console.log(data))
+
 
     const [usersInState, setUsersInState] = useState([...users]);
     const [isEditModeOn, setIsEditModeOn] = useState(false);

@@ -2,8 +2,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
 import { Role } from "../../../enums/role";
-import { Roles } from "../../../shared/components/roles/Roles";
-import { convertEnumToDictionary, getDictionary } from "../../../shared/converters/enumToDictionaryEntity";
 import { User } from "../../interfaces/User";
 import '../UserPage.css';
 

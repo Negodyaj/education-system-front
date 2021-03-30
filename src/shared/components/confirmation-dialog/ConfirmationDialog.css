@@ -1,0 +1,44 @@
+.confirmation-dialog {
+    transition: all 0.3s ease;
+    opacity: 1;
+}
+.confirmation-dialog.hidden {
+    opacity: 0;
+}
+
+.confirmation-dialog-overlay {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    opacity: 0.3;
+    background-color: grey;
+}
+
+.confirmation-dialog-content {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 500px;
+    height: 300px;
+    padding: 10px;
+    text-align: left;
+    background: white;
+}
+
+.confirmation-dialog-header{
+    height: 50px;
+}
+
+.confirmation-dialog-body{
+    height: 180px;
+}
+
+.confirmation-dialog-footer{
+    height: 50px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
