@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Role } from "../../../enums/role";
 import { User } from "../../interfaces/User";
 import '../UserPage.css';
@@ -11,7 +11,6 @@ interface UserListProps {
 }
 
 function UserList(props: UserListProps) {
-
     const [signInvertor, setSignInvertor] = useState(2);
     const [usersToShow, setUsersToShow] = useState([...props.users]);
 
@@ -31,11 +30,11 @@ function UserList(props: UserListProps) {
 
     const secondNameSortDefaultAndOnclick = () => {
         setUsersToShow([...usersToShow.sort((a, b) => {
-            if (a.secondName !== undefined && b.secondName !== undefined) {
-                if (b.secondName > a.secondName) {
+            if (a.lastName !== undefined && b.lastName !== undefined) {
+                if (b.lastName > a.lastName) {
                     return Math.pow(-1, signInvertor - 1);
                 }
-                if (b.secondName < a.secondName) {
+                if (b.lastName < a.lastName) {
                     return Math.pow(-1, signInvertor);
                 }
             }
@@ -50,6 +49,12 @@ function UserList(props: UserListProps) {
 
     return (
         <div className="user-list">
+            {
+                console.log('list render')
+            }
+            {
+                console.log(usersToShow)
+            }
             <button onClick={() => onEditClick()}>добавить пользователя</button>
             <div className="user-list-head">
                 <div className="column"><span title="А-Я" onClick={secondNameSortDefaultAndOnclick}>фамилия</span></div>
@@ -62,16 +67,18 @@ function UserList(props: UserListProps) {
             {
                 usersToShow.map(u => (
                     <div className="user-list-item" key={u.id}>
-                        <div className="column break-word" lang="ru">{u.secondName}</div>
-                        <div className="column break-word">{u.name}</div>
+                        <div className="column break-word" lang="ru">{u.lastName}</div>
+                        <div className="column break-word">{u.firstName}</div>
                         <div className="column">{u.login}</div>
                         <div className="column multiline">
                             {
-                                u.role?.map(r => (<div>{r.label}</div>))
+                                //u.role?.map(r => (<div>{r.label}</div>))
                             }
                         </div>
-                        <div className="column">{u.groupName}</div>
-                        <div className="column">{u.birthDate?.toLocaleDateString('ru')}</div>
+                        <div className="column">{
+                            //u.groupName
+                        }</div>
+                        <div className="column">{u.birthDate}</div>
                         <button onClick={() => onEditClick(u.id)}>ред.</button>
                         <button>удал.</button>
                         {
