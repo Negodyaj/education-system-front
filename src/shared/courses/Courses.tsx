@@ -10,21 +10,45 @@ export let courses: Course[] = [
   {
       id: 1,
       name: 'C# base',
-      themes: []
+      themes: [
+        {
+          id: 1,
+          name: 'C# base',
+          check: false
+        }
+      ]
   },
   {
       id: 2,
       name: 'Backend',
-      themes: []
+      themes: [
+        {
+          id: 1,
+          name: 'Backend',
+          check: false
+        }
+      ]
   },
   {
       id: 3,
       name: 'Frontend',
-      themes: []
+      themes: [
+        {
+          id: 1,
+          name: 'Frontend',
+          check: false
+        }
+      ]
   },
   {
       id: 4,
       name: 'Mobile development',
-      themes: []
+      themes: [
+        {
+          id: 1,
+          name: 'Mobile development',
+          check: false
+        }
+      ]
   }
 ];

@@ -1,31 +1,41 @@
 import './CourseEdition.css';
 import { useEffect, useState } from 'react';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import { Course } from '../../../shared/courses/Courses';
+import { Course, courses } from '../../../shared/courses/Courses';
 import { Themes } from '../../../shared/themes/Themes';
 import { threadId } from 'node:worker_threads';
 
 interface CourseEditionProps{
     coursesList: Course[];
     themesList: Themes[];
+    idCourse: string;
 }
 
 function CourseEdition(props: CourseEditionProps) {
+
+    /*let themesVariant: AllThemes[] = [];
+
+    for(let i in props.themesList) {
+        themesVariant[i].id = 1;
+        themesVariant[i].name = props.themesList[i].name;
+        themesVariant[i].check = false;
+    }*/
     
     let newThemeCourse = {} as Themes;
     let currentCourse: Themes[] = [];
+    let x = 0;
+    let indexCourse = Number(props.idCourse.slice(-1)) - 1;
 
-    let arrTheme: Boolean[] = [];
-    let checkTheme: Boolean[] = [];
+    let allThemesCourses: Themes[][] = [];
 
-    for(let i in props.themesList) {
-        arrTheme[i] = false;
+    for(let i = 0; i < props.coursesList.length; i++) {
+        allThemesCourses.push(props.themesList);
     }
 
-    const [themesCourse, setThemesCourse] = useState(props.coursesList[0].themes);
+    const [y, setY] = useState(x);
+    const [themesCourse, setThemesCourse] = useState(props.coursesList[indexCourse].themes);
+    const [allThemes, setAllThemes] = useState(allThemesCourses[indexCourse]);
     
-    const [isCheckButtonPlus, setIsCheckButtonPlus] = useState(arrTheme);
-
     const addNewThemeInProgramCourse = (item: Themes) => {
         let count = 0;
         for(let theme of themesCourse) {
@@ -34,37 +44,44 @@ function CourseEdition(props: CourseEditionProps) {
             }
         }
         if (count === 0) {
-            newThemeCourse = {id: themesCourse.length + 1, name: item.name};
+            let idTheme = allThemes.indexOf(item);
+            allThemes[idTheme].check = true;
+            setAllThemes(allThemes);
+            newThemeCourse = {id: themesCourse.length + 1, name: item.name, check: true};
             currentCourse = themesCourse;
             currentCourse.push(newThemeCourse);
-            /*for(let i of currentCourse) {
-                console.log(i);
-            }*/
-            setThemesCourse(currentCourse);
-            checkTheme = isCheckButtonPlus;
-            checkTheme[props.themesList.indexOf(item)] = true;
-            setIsCheckButtonPlus(checkTheme);
-            /*for(let x of isCheckButtonPlus) {
-                console.log(x);
-            }*/
+            //setThemesCourse(currentCourse);
+            x = y;
+            ++x;
+            setY(x);
+            for(let item of allThemesCourses) {
+                console.log(item);
+            }
+        
         }
     }
 
-    const deleteThemeFromCourse = (themeId: number) => {
+    /*useEffect(() => {
+       
+    }, [x])*/
+
+    const deleteThemeFromCourse = (theme: Themes) => {
         let index = -1;
-        for(let i in themesCourse) {
-            if(themesCourse[i].id === themeId) {
-                index = Number(i);
+        for(let item of allThemes) {
+            if(theme.name === item.name) {
+                index = allThemes.indexOf(item);
             }
         }
-        if(index !== -1) {
-            currentCourse = themesCourse;
-            currentCourse.splice(index, 1);
-            /*for(let i of currentCourse) {
-                console.log(i);
-            }*/
-            setThemesCourse(currentCourse);
-        }
+        if(index >= 0) {
+            allThemes[index].check = false;
+            setAllThemes(allThemes);
+        } 
+        currentCourse = themesCourse;
+        currentCourse.splice(themesCourse.indexOf(theme), 1);
+        x = y;
+        ++x;
+        setY(x);
+        //setThemesCourse(currentCourse);
     }
 
     return (
@@ -74,13 +91,13 @@ function CourseEdition(props: CourseEditionProps) {
             <div className="new-themes-header">Темы для курса</div>
             <div className="new-themes-container">
             {
-                 props.themesList.map((item) => (
+                 allThemes.map((item) => (
                     <div className="new-theme">
                         <div className="new-theme-name">{item.name}</div>
                         <div className="new-theme-add">
                             <button onClick={() => addNewThemeInProgramCourse(item)} className="button-add-theme">
                                 {
-                                    isCheckButtonPlus ? <FontAwesomeIcon icon="check" /> : <FontAwesomeIcon icon="plus" />
+                                    item.check ? <FontAwesomeIcon icon="check" /> : <FontAwesomeIcon icon="plus" />
                                 }
                             </button>
                         </div>
@@ -97,7 +114,7 @@ function CourseEdition(props: CourseEditionProps) {
                         <div className="theme">
                             <div className="theme-name">{theme.name}</div>
                             <div className="theme-delete">
-                                <button onClick={() => deleteThemeFromCourse(theme.id)} className='button-theme-delete'>
+                                <button onClick={() => deleteThemeFromCourse(theme)} className='button-theme-delete'>
                                     <FontAwesomeIcon icon="minus" />
                                 </button>
                             </div>

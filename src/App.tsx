@@ -103,8 +103,9 @@ function App() {
                                         <CoursesPage roleId={roleId}></CoursesPage>
                                     </Route>
                                 }
-                                <Route path="/course-edition">
-                                    <CourseEdition coursesList={courses} themesList={themes}/>
+                                <Route path="/course-edition/:id" render={({ location, history }) => (
+                                    <CourseEdition coursesList={courses} themesList={themes} idCourse={location.pathname} />
+                                )}>
                                 </Route>
                                 <Route path="/groups-list">
                                     <GroupList />
