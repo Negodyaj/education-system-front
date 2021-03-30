@@ -55,7 +55,7 @@ function UserList(props: UserListProps) {
         <div className="user-list">
             <div className="column-head">
                 <button className="button-style" onClick={() => onEditClick()}>
-                <FontAwesomeIcon icon="plus" />
+                    <FontAwesomeIcon icon="plus" />
                 </button>
             </div>
             <div className="user-list-head">
@@ -83,10 +83,10 @@ function UserList(props: UserListProps) {
                         <div className="column">{u.groupName}</div>
                         <div className="column">
                             <button className="button-style" onClick={() => onEditClick(u.id)}>
-                            <FontAwesomeIcon icon="edit" />
+                                <FontAwesomeIcon icon="edit" />
                             </button>
                             <button className="button-style">
-                            <FontAwesomeIcon icon="trash" />
+                                <FontAwesomeIcon icon="trash" />
                             </button>
 
                             {
