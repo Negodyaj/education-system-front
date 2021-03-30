@@ -37,6 +37,11 @@
     font-size: 20px;
 }
 
+.true{
+    background-color: rgba(197, 244, 186, 0.26);
+    border: 2px solid rgb(89, 133, 78);
+}
+
 .button-add-theme {
     background-color: white;
     background-size: contain;

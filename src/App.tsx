@@ -110,7 +110,7 @@ function App() {
                                     <CourseEdition coursesList={courses} themesList={themes} idCourse={location.pathname} />
                                 )}>
                                 </Route>
-                                <Route path="/groups-list">
+                                {/* <Route path="/groups-list">
                                     <GroupList />
                                 </Route>
                                 <Route path="/courses-list">
@@ -118,7 +118,7 @@ function App() {
                                 </Route>
                                 <Route path="/homework-list">
                                     <HomeworkList />
-                                </Route>
+                                </Route> */}
                                 <Route path="/homework">
                                     <HomeworkPage roleId={roleId} />
                                 </Route>
