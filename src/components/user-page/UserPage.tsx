@@ -57,10 +57,23 @@ function UserPage(props: UserPageProps) {
         )
     }
     const onSaveClick = (newUser: User) => {
+        let method: string;
+        let registerOrUpdateAction: string;
         setIsFetching(true);
+        if (newUser.id === undefined) {
+            method = "POST";
+            registerOrUpdateAction = "register";
+            actionInNotification = stringAdded;
+        } else {
+            method = "PUT";
+            registerOrUpdateAction = newUser.id.toString();
+            actionInNotification = stringChanged;
+        }
 
-        fetch('https://80.78.240.16:7070/api/User/register', {
-            method: "POST",
+
+
+        fetch('https://80.78.240.16:7070/api/User/' + registerOrUpdateAction, {
+            method: method,
             headers: {
                 'Accept': 'application/json',
                 'Authorization': 'Bearer ' + token,
@@ -71,36 +84,27 @@ function UserPage(props: UserPageProps) {
                 lastName: newUser.lastName,
                 birthDate: newUser.birthDate,
                 login: newUser.login,
-                password: newUser.password,
                 phone: newUser.phone,
-                userPic: newUser.userPic,
+                password: "qwe!@#",
+                userPic: "http://via.placeholder.com/150/54176f",
                 email: newUser.email,
-                roleIds: [
-                    Role.Student
-                ]
-
+                roleIds: newUser.role?.map(role => role.value)
             })
         }
         )
-        .then(data => data.json())
-        .then(data => setIsFetching(false));
-        
+            .then(response => getUsers())
 
-        //actionInNotification = stringAdded;
+        props.sendNotification({
+            type: "success",
+            text: "пользователь " + newUser.firstName + " " + newUser.lastName + " успешно " + actionInNotification,
+            isDismissible: true,
+            timestamp: Date.now()
+        })
 
-        //actionInNotification = stringChanged;
-
-        //setUsersInState(usersInState);
-        // props.sendNotification({
-        //     type: "success",
-        //     text: "пользователь " + newUser.firstName + " " + newUser.lastName + " успешно " + actionInNotification,
-        //     isDismissible: true,
-        //     timestamp: Date.now()
-        // })
     }
 
     const renderUserList = () => {
-
+        console.log(usersInState[0].birthDate)
         return <UserList
             roleId={props.roleId}
             users={usersInState}
@@ -116,6 +120,7 @@ function UserPage(props: UserPageProps) {
 
     return (
         <div className="user-page">
+
             {
                 isFetching ? <div>loading</div> : (
                     isEditModeOn ? renderUserEditForm() : renderUserList()

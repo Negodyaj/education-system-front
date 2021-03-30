@@ -83,7 +83,7 @@ function UserEditForm(props: UserEditFormProps) {
         setSecondName(validateName(e));
     }
     const birthDateOnChange = (date: Date) => {
-        setBirthDate(date.toString());
+        setBirthDate(date.toLocaleDateString());
     }
     const loginOnChange: ChangeEventHandler<HTMLInputElement> = (e) => {
         setLogin(e.target.value);
@@ -106,9 +106,7 @@ function UserEditForm(props: UserEditFormProps) {
 
     const onSaveButtonClick: FormEventHandler = (e) => {
         e.preventDefault();
-        newUser.id === undefined && (newUser.id = (() => {
-            return Math.round(Math.random() * 100)
-        })());
+        
         props.onSaveClick(newUser)
         props.onCancelClick(false);
     }
