@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
+import { Role } from '../../enums/role';
 import "./NavMenu.css"
 interface NavMenuProps {
     roleId: number
@@ -9,14 +10,7 @@ function NavMenu(props: NavMenuProps) {
     return (
         <div className="menu-container">
             {
-                props.roleId === 1 &&
-                <nav>
-                    <Link to="/user-cards">User cards</Link>
-                    <Link to="/custom-list">Custom list</Link>
-                </nav>
-            }
-            {
-                props.roleId === 2 &&
+                props.roleId === Role.Student &&
                 <nav>
                     <NavLink exact activeClassName="active" to="/">
                         <button> Мои новости </button></NavLink>
@@ -29,13 +23,13 @@ function NavMenu(props: NavMenuProps) {
                 </nav>
             }
             {
-                (props.roleId === 3 || props.roleId===4) &&
+                (props.roleId === Role.Admin || props.roleId=== Role.Manager) &&
                 <nav> 
                     <Link to="/user-page">Users</Link>
                 </nav>
             }
             {
-                (props.roleId === 5  || props.roleId === 6) &&
+                (props.roleId === Role.Teacher  || props.roleId === Role.Methodist) &&
                 <nav>
                     <Link to="/homework">Homeworks</Link>
                     <Link to="/courses-page">Страница курсов</Link>

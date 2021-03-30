@@ -7,10 +7,6 @@ import { Link, Switch, Route, useHistory } from 'react-router-dom';
 import LoginForm from './components/login-form/LoginForm';
 import NavMenu from './components/nav-menu/NavMenu';
 import HomeworkPage from './components/homework-page/HomeworkPage';
-import CoursesList from './components/courses-list/CoursesList';
-import GroupList from './components/group-list/GroupList';
-import NewsList from './components/news-list/NewsList';
-import HomeworkList from './components/homework-list/HomeworkList';
 import NotificationContainer from './shared/components/notification/NotificationContainer'
 import UserPage from './components/user-page/UserPage';
 import DatePickerComponent from './shared/components/date-picker/DatePickerComponent';
@@ -20,20 +16,36 @@ import CourseEdition from './components/courses-page/course-edition/CourseEditio
 import "./shared/fontawesome/FontawesomeIcons"; 
 import { courses } from './shared/courses/Courses';
 import { themes } from './shared/themes/Themes';
+import { Role } from './enums/role';
+import NotificationData from './shared/interfaces/NotificationData';
+import DevTestPage from './components/dev-test-page/DevTestPage'
 
 function App() {
     const history = useHistory();
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [roleId, setRoleId] = useState(0);
+    const [dismissibleNotifications, setDismissibleNotifications] = useState<NotificationData[]>([]);
+    const [nonDismissibleNotifications, setNonDismissibleNotifications] = useState<NotificationData[]>([]);
 
+    const sendNewNotification = (newNotification: NotificationData) => {
+        if (newNotification.isDismissible) {
+            setDismissibleNotifications([newNotification, ...dismissibleNotifications]);
+        } else {
+            setNonDismissibleNotifications([newNotification, ...nonDismissibleNotifications]);
+        }
+    }
+    const deleteNotification = (dismissedNotification: NotificationData) => {
+        const newState = dismissibleNotifications.filter(notification => notification != dismissedNotification);
+        setDismissibleNotifications(newState);
+    }
 
     const users = [
-        { login: 'test', password: 'test', roleId: 1 },
-        { login: 'student', password: 'qwerty', roleId: 2 },
-        { login: 'manager', password: 'manager', roleId: 3 },
-        { login: 'admin', password: 'admin', roleId: 4 },
-        { login: 'methodist', password: 'methodist', roleId: 5 },
-        { login: 'teacher', password: 'teacher', roleId: 6 }
+        { login: 'test', password: 'test', roleId: Role.Test },
+        { login: 'student', password: 'qwerty', roleId: Role.Student },
+        { login: 'manager', password: 'manager', roleId: Role.Manager },
+        { login: 'admin', password: 'admin', roleId: Role.Admin },
+        { login: 'methodist', password: 'methodist', roleId: Role.Methodist },
+        { login: 'teacher', password: 'teacher', roleId: Role.Teacher }
     ];
 
     const loginHandler = (email: string, password: string) => {
@@ -42,19 +54,10 @@ function App() {
             const entry = securityEntries[0];
             setIsLoggedIn(true);
             setRoleId(entry.roleId);
+            console.log(roleId);
         }
     }
-
-    // const rolesList = [
-    //     { value: 'Преподаватель', label: 'Преподаватель' },
-    //     { value: 'Студент', label: 'Студент' },
-    //     { value: 'Администратор', label: 'Администратор' },
-    //     { value: 'Методист', label: 'Методист' },
-    //     { value: 'Тьютор', label: 'Тьютор' },
-    //     { value: 'Менеджер', label: 'Менеджер' }
-    // ]
     
-
     const logOut = () => {
         setIsLoggedIn(false);
         history.push("/");
@@ -88,17 +91,17 @@ function App() {
                             <Switch>
                                 <Route exact path="/">
                                     {
-                                        roleId===2 && <NewsList />
+                                        roleId===Role.Test && <DevTestPage sendNotification={sendNewNotification}/>
                                     }
                                 </Route>
                                 {
-                                    (roleId === 3 || roleId === 4) &&
+                                    (roleId === Role.Manager || roleId === Role.Admin) &&
                                     <Route path="/user-page">
                                         <UserPage roleId={roleId}></UserPage>
                                     </Route>
                                 }
                                 {
-                                    roleId === 6 &&
+                                    roleId === Role.Teacher &&
                                     <Route path="/courses-page">
                                         <CoursesPage roleId={roleId}></CoursesPage>
                                     </Route>
@@ -124,7 +127,10 @@ function App() {
                             <LoginForm onLoginClick={loginHandler} />
                     }
                     {
-                        isLoggedIn ? roleId === 2 && <NotificationContainer/> : <></>
+                        isLoggedIn ? <NotificationContainer 
+                            dismissibleNotifications={dismissibleNotifications} 
+                            nonDismissibleNotifications={nonDismissibleNotifications}
+                            deleteNotification={deleteNotification}/> : <></>
                     }
                 </main>
             </div>

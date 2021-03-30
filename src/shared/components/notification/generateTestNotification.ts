@@ -20,5 +20,6 @@ export function generateTestNotification(isDismissible: boolean): NotificationDa
         type: type,
         text: `${type}: ${Math.floor(Math.random() * 1000000)}`,
         isDismissible: isDismissible,
+        timestamp: Date.now(),
     }
 }
