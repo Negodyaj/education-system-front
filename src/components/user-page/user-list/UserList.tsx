@@ -57,11 +57,11 @@ function UserList(props: UserListProps) {
             </div>
             <div className="user-list-head">
                 <div className="column"> </div>
-                <div className="column"><span title="А-Я" onClick={secondNameSortDefaultAndOnclick}>фамилия</span></div>
-                <div className="column"><span title="А-Я">имя</span></div>
-                <div className="column"><span title="А-Я">логин</span></div>
-                <div className="column"><span title="А-Я">роль</span></div>
-                <div className="column"><span title="А-Я">группа</span></div>
+                <div className="column"><span title="А-Я" onClick={secondNameSortDefaultAndOnclick}>Фамилия</span></div>
+                <div className="column"><span title="А-Я">Имя</span></div>
+                <div className="column"><span title="А-Я">Логин</span></div>
+                <div className="column"><span title="А-Я">Роль</span></div>
+                <div className="column"><span title="А-Я">Группа</span></div>
             </div>
             {
                 usersToShow.map(u => (
