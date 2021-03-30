@@ -52,18 +52,23 @@ function UserList(props: UserListProps) {
 
     return (
         <div className="user-list">
-            <button onClick={() => onEditClick()}>добавить пользователя</button>
+            <div className="column">
+                <button className="button-style" onClick={() => onEditClick()}>добавить</button>
+            </div>
             <div className="user-list-head">
+                <div className="column"> </div>
                 <div className="column"><span title="А-Я" onClick={secondNameSortDefaultAndOnclick}>фамилия</span></div>
                 <div className="column"><span title="А-Я">имя</span></div>
                 <div className="column"><span title="А-Я">логин</span></div>
                 <div className="column"><span title="А-Я">роль</span></div>
                 <div className="column"><span title="А-Я">группа</span></div>
-                <div className="column"><span title="0-9">дата рождения</span></div>
             </div>
             {
                 usersToShow.map(u => (
                     <div className="user-list-item" key={u.id}>
+                        <div className="column">
+                            <img className="user-photo" src={u.userPic} alt="userpic" />
+                        </div>
                         <div className="column break-word" lang="ru">{u.secondName}</div>
                         <div className="column break-word">{u.name}</div>
                         <div className="column">{u.login}</div>
@@ -73,12 +78,14 @@ function UserList(props: UserListProps) {
                             }
                         </div>
                         <div className="column">{u.groupName}</div>
-                        <div className="column">{u.birthDate?.toLocaleDateString('ru')}</div>
-                        <button onClick={() => onEditClick(u.id)}>ред.</button>
-                        <button>удал.</button>
-                        {
-                            elementsDefinedByRole.paymentButton()
-                        }
+                        <div className="column">
+                            <button className="button-style" onClick={() => onEditClick(u.id)}>ред.</button>
+                            <button className="button-style">удал.</button>
+
+                            {
+                                elementsDefinedByRole.paymentButton()
+                            }
+                        </div>
                     </div>))
             }
         </div>

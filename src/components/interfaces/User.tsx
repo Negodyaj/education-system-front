@@ -12,4 +12,5 @@ export interface User {
     email?: string;
     groupId?: number;
     groupName?: string;
+    userPic?: string;
 }

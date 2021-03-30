@@ -10,7 +10,8 @@
 }
 
 .user-list-head{
-    font-weight: 500;
+    font-weight: 600;
+    font-size: 14px;
 }
 
 .user-list-head .column span{
@@ -19,15 +20,44 @@
 
 .user-list-item, .user-list-head{
     display: grid;
-    grid-template-columns: 160px 160px 90px 125px 158px 137px 60px 60px 60px;
-    margin-top: 2px;
-}
-
-.user-list-item .column, .user-list-head .column{
-    display: flex;
-    justify-content: start;
+    grid-template-columns: 5vw 15vw 10vw 10vw 10vw 15vw 15vw;
+    grid-template-rows: 50px;
+    margin: 2px;
+    border-bottom: 1px solid rgba(39, 45, 59, 0.15);
     text-align: left;
     padding: 10px;
+    font-size: 14px;
+    line-height: 50px;
+}
+
+
+.column{
+    display: flex;
+    margin: 0 10px;
+}
+
+.column button{
+    justify-content: flex-end;
+}
+
+.user-photo{
+    width: 30px;
+    height: 30px;
+    border-radius: 25px;
+}
+
+.button-style{
+    height: 40px;
+    width: 140px;
+    background-color: #00CCF2;
+    color: #FFFF;
+    font-size: 16px;
+    font-weight: 700;
+    margin: 8px;
+    border-radius: 25px;
+    border: none;
+    line-height: 20px;
+    text-align: center;
 }
 
 .break-word{
@@ -40,7 +70,3 @@
     flex-direction: column;
 }
 
-.user-list-item button{
-    margin:0 4px;
-    height: 38px;
-}   
