@@ -1,5 +1,5 @@
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Role } from "../../../enums/role";
 import { User } from "../../interfaces/User";
 import '../UserPage.css';
@@ -11,8 +11,23 @@ interface UserListProps {
 }
 
 function UserList(props: UserListProps) {
-    const [signInvertor, setSignInvertor] = useState(2);
-    const [usersToShow, setUsersToShow] = useState([...props.users]);
+
+    const lastNameAlphabetSort = (a: User, b: User) => {
+        if (a.lastName !== undefined && b.lastName !== undefined) {
+            if (b.lastName > a.lastName) {
+                return Math.pow(-1, signInvertor - 1);
+            }
+            if (b.lastName < a.lastName) {
+                return Math.pow(-1, signInvertor);
+            }
+        }
+        return 0;
+    }
+
+    const [signInvertor, setSignInvertor] = useState(1);
+    const [usersToShow, setUsersToShow] = useState([...props.users].sort((a, b) => {
+        return lastNameAlphabetSort(a, b);
+    }));
 
     const elementsDefinedByRole = {
         paymentButton: () => {
@@ -28,36 +43,21 @@ function UserList(props: UserListProps) {
         props.onEditClick(userToEditId);
     }
 
-    const secondNameSortDefaultAndOnclick = () => {
+    const lastNameColumnOnClick = () => {
         setUsersToShow([...usersToShow.sort((a, b) => {
-            if (a.lastName !== undefined && b.lastName !== undefined) {
-                if (b.lastName > a.lastName) {
-                    return Math.pow(-1, signInvertor - 1);
-                }
-                if (b.lastName < a.lastName) {
-                    return Math.pow(-1, signInvertor);
-                }
-            }
-            return 0;
+            return lastNameAlphabetSort(a, b);
         })])
         setSignInvertor(signInvertor + 1);
-    }
-
-    if (signInvertor < 3) {
-        secondNameSortDefaultAndOnclick();
     }
 
     return (
         <div className="user-list">
             {
-                console.log('list render')
-            }
-            {
-                console.log(usersToShow)
+                console.log('render userList')
             }
             <button onClick={() => onEditClick()}>добавить пользователя</button>
             <div className="user-list-head">
-                <div className="column"><span title="А-Я" onClick={secondNameSortDefaultAndOnclick}>фамилия</span></div>
+                <div className="column"><span title="А-Я" onClick={lastNameColumnOnClick}>фамилия</span></div>
                 <div className="column"><span title="А-Я">имя</span></div>
                 <div className="column"><span title="А-Я">логин</span></div>
                 <div className="column"><span title="А-Я">роль</span></div>
