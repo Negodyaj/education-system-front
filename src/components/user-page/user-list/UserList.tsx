@@ -21,7 +21,9 @@ function UserList(props: UserListProps) {
             return (
                 props.roleId === Role.Manager
                 &&
-                <button>$</button>
+                <button className="button-style">
+                    <FontAwesomeIcon icon="money-bill" />
+                </button>
             )
         }
     }
@@ -52,6 +54,7 @@ function UserList(props: UserListProps) {
     return (
         <div className="user-list">
             <div className="column-head">
+                <h4>Пользователи</h4>
                 <button className="button-style" onClick={() => onEditClick()}>
                 <FontAwesomeIcon icon="plus" />
                 </button>
