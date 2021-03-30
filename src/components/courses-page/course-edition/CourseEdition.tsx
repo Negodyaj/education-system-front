@@ -15,38 +15,57 @@ function CourseEdition(props: CourseEditionProps) {
     let newThemeCourse = {} as Themes;
     let currentCourse: Themes[] = [];
 
-    const [themesCourse, setThemesCourse] = useState(props.coursesList[0].themes);
+    let arrTheme: Boolean[] = [];
+    let checkTheme: Boolean[] = [];
 
-    const addNewThemeInProgramCourse = (nameTheme: string) => {
+    for(let i in props.themesList) {
+        arrTheme[i] = false;
+    }
+
+    const [themesCourse, setThemesCourse] = useState(props.coursesList[0].themes);
+    
+    const [isCheckButtonPlus, setIsCheckButtonPlus] = useState(arrTheme);
+
+    const addNewThemeInProgramCourse = (item: Themes) => {
         let count = 0;
         for(let theme of themesCourse) {
-            if(theme.name === nameTheme) {
+            if(theme.name === item.name) {
                 count++;
             }
         }
         if (count === 0) {
-            newThemeCourse = {id: themesCourse.length + 1, name: nameTheme};
+            newThemeCourse = {id: themesCourse.length + 1, name: item.name};
             currentCourse = themesCourse;
             currentCourse.push(newThemeCourse);
-            for(let i of currentCourse) {
+            /*for(let i of currentCourse) {
                 console.log(i);
-            }
+            }*/
             setThemesCourse(currentCourse);
+            checkTheme = isCheckButtonPlus;
+            checkTheme[props.themesList.indexOf(item)] = true;
+            setIsCheckButtonPlus(checkTheme);
+            /*for(let x of isCheckButtonPlus) {
+                console.log(x);
+            }*/
         }
     }
 
     const deleteThemeFromCourse = (themeId: number) => {
-        currentCourse = themesCourse;
-        currentCourse.splice(themeId - 1, 1);
-        for(let i of currentCourse) {
-            console.log(i);
+        let index = -1;
+        for(let i in themesCourse) {
+            if(themesCourse[i].id === themeId) {
+                index = Number(i);
+            }
         }
-        setThemesCourse(currentCourse);
+        if(index !== -1) {
+            currentCourse = themesCourse;
+            currentCourse.splice(index, 1);
+            /*for(let i of currentCourse) {
+                console.log(i);
+            }*/
+            setThemesCourse(currentCourse);
+        }
     }
-
-    /*useEffect(() => {
-        setThemesCourse(currentCourse);
-    }, [themesCourse]);*/
 
     return (
     <div className="course-edition-container">
@@ -59,8 +78,10 @@ function CourseEdition(props: CourseEditionProps) {
                     <div className="new-theme">
                         <div className="new-theme-name">{item.name}</div>
                         <div className="new-theme-add">
-                            <button onClick={() => addNewThemeInProgramCourse(item.name)} className="button-add-theme">
-                                <FontAwesomeIcon icon="plus" />
+                            <button onClick={() => addNewThemeInProgramCourse(item)} className="button-add-theme">
+                                {
+                                    isCheckButtonPlus ? <FontAwesomeIcon icon="check" /> : <FontAwesomeIcon icon="plus" />
+                                }
                             </button>
                         </div>
                     </div>
@@ -73,7 +94,7 @@ function CourseEdition(props: CourseEditionProps) {
             <div className="program-course">
                 {
                     themesCourse.map((theme) => (
-                        <div key={theme.id} className="theme">
+                        <div className="theme">
                             <div className="theme-name">{theme.name}</div>
                             <div className="theme-delete">
                                 <button onClick={() => deleteThemeFromCourse(theme.id)} className='button-theme-delete'>

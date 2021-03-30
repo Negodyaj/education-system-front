@@ -51,11 +51,14 @@
     outline: none;
 }
 
+.program-course {
+    width: 600px;
+}
 
 .theme {
     display: grid;
     grid-template-columns: 90% 10%;
-    width: 600px;
+    width: inherit;
     height: 50px;
     border: 2px solid rgb(41, 3, 253);
     border-radius: 5px;
