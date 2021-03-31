@@ -1,4 +1,5 @@
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useEffect, useState } from 'react';
 import { Role } from '../../enums/role';
 import { dictionary } from '../../shared/converters/enumToDictionaryEntity';
@@ -90,7 +91,7 @@ function UserPage(props: UserPageProps) {
                 login: newUser.login,
                 phone: newUser.phone,
                 password: "qwe!@#",
-                userPic: "http://via.placeholder.com/150/54176f",
+                userPic: newUser.userPic,
                 email: newUser.email,
                 roleIds: newUser.role?.map(role => role.value)
             })
@@ -98,7 +99,6 @@ function UserPage(props: UserPageProps) {
         )
             .then(response => {
                 return response.json();
-
             })
             .then(data => {
                 !data.Code ? getUpdatedUsers(newUser) : (() => {
@@ -110,7 +110,7 @@ function UserPage(props: UserPageProps) {
                     });
                     getUsers();
                 }
-                )()
+                )();
             })
     }
 
@@ -131,9 +131,11 @@ function UserPage(props: UserPageProps) {
 
     return (
         <div className="user-page">
-
             {
-                isFetching ? <div>loading</div> : (
+                isFetching ?
+                <div>
+                    <FontAwesomeIcon icon="spinner" />
+                </div> : (
                     isEditModeOn ? renderUserEditForm() : renderUserList()
                 )
             }
