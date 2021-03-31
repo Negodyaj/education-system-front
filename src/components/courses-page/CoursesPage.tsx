@@ -48,11 +48,13 @@ function CoursesPage(props: CoursesPageProps) {
     }
 
     const addNewCourse = (name: string) => {
-        newCourse = { id: coursesList.length + 1, name: name, themes: [] };
-        newCoursesList = coursesList;
-        newCoursesList.push(newCourse);
-        setCoursesList(newCoursesList);
-        setIsOpenInput(false);
+        if(name !== '') {
+            newCourse = { id: coursesList.length + 1, name: name, themes: [] };
+            newCoursesList = coursesList;
+            newCoursesList.push(newCourse);
+            setCoursesList(newCoursesList);
+            setIsOpenPopUp(false);
+        }
     }
  
     return(
