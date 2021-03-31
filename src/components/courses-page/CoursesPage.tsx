@@ -13,6 +13,21 @@ interface CoursesPageProps {
 }
 
 function CoursesPage(props: CoursesPageProps) {
+
+    /*const url = ... ;
+    const token = ... ;
+    const dataToSend = ... ;
+
+    fetch(url, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Authorization': 'Bearer ' + token,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(dataToSend)
+        })*/
+
     let filterId: number [];
     let idCoursesDeleteForState: number[] = [];
     let newCourse = {} as Course;
@@ -53,7 +68,7 @@ function CoursesPage(props: CoursesPageProps) {
             newCoursesList = coursesList;
             newCoursesList.push(newCourse);
             setCoursesList(newCoursesList);
-            setIsOpenPopUp(false);
+            setIsOpenInput(false);
         }
     }
  
