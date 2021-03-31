@@ -1,8 +1,9 @@
 import './CourseEdition.css';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import { Course } from '../../../shared/courses/Courses';
 import { Themes } from '../../../shared/themes/Themes';
+import AddCourse from './course-themes/AddCourse';
 
 
 interface CourseEditionProps{
@@ -64,11 +65,21 @@ function CourseEdition(props: CourseEditionProps) {
         setThemesCourse([...currentCourse]);
     }
 
+    const onThemeChange = () =>{
+
+    }
+
+    const [isModal, setModal] = useState(false)
+    const onClose = () => setModal(false)
+
     return (
     <div className="course-edition-container">
       <div className='course-update'>
         <div className='new-themes-course'>
             <div className="new-themes-header">Темы для курса</div>
+            <button onClick={() => setModal(true)}>{<FontAwesomeIcon icon="plus" />}</button>
+            <AddCourse dataCourse={allThemes} onThemeChange={onThemeChange} setModal={isModal} onClose={onClose}/>
+            
             <div className="new-themes-container">
             {
                  allThemes.map((item) => (
