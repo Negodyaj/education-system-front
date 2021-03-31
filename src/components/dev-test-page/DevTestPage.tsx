@@ -23,9 +23,9 @@ function DevTestPage (props: DevTestPageProps) {
             <h1>(dev) test-page</h1>
 
             <button onClick={() => props.sendNotification(generateTestNotification(true))}>
-                Test dismissable notification</button>
+                Test dismissible notification</button>
             <button onClick={() => props.sendNotification(generateTestNotification(false))}>
-                Test non-dismissable notification</button>
+                Test non-dismissible notification</button>
 
             <div>
                 <span>{counter}</span>
