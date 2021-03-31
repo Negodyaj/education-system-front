@@ -17,6 +17,7 @@ function CourseEdition(props: CourseEditionProps) {
     let currentCourse: Themes[] = [];
     let indexCourse = Number(props.idCourse.slice(-1)) - 1;
     let allThemesCourses: Themes[][] = [];
+    let filterNameThemes: string[] = [];
 
     for(let i = 0; i < props.coursesList.length; i++) {
         allThemesCourses.push(props.themesList);
@@ -24,7 +25,6 @@ function CourseEdition(props: CourseEditionProps) {
 
     const [themesCourse, setThemesCourse] = useState(props.coursesList[indexCourse].themes);
     const [allThemes, setAllThemes] = useState(allThemesCourses[indexCourse]);
-    const [choiseTheme, setChoiseTheme] = useState('');
     
     const addNewThemeInProgramCourse = (item: Themes) => {
         let count = 0;
@@ -34,13 +34,17 @@ function CourseEdition(props: CourseEditionProps) {
             }
         }
         if (count === 0) {
-            let indexTheme = allThemes.indexOf(item);
-            allThemes[indexTheme].check = true;
-            setAllThemes([...allThemes]);
             newThemeCourse = {id: themesCourse.length + 1, name: item.name, check: true};
             currentCourse = themesCourse;
             currentCourse.push(newThemeCourse);
             setThemesCourse([...currentCourse]);
+            themesCourse.forEach((item) => { filterNameThemes.push(item.name) });
+            for (let i of allThemes) {
+                if (filterNameThemes.includes(i.name)) {
+                    i.check = true;
+                }
+            }
+            setAllThemes([...allThemes]);
         }
     }
 
@@ -68,7 +72,7 @@ function CourseEdition(props: CourseEditionProps) {
             <div className="new-themes-container">
             {
                  allThemes.map((item) => (
-                    <div className={"new-theme "+ item.check}>
+                    <div key={item.id} className={"new-theme "+ item.check}>
                         <div className="new-theme-name">{item.name}</div>
                         <div className="new-theme-add">
                             <button onClick={() => addNewThemeInProgramCourse(item)} className="button-add-theme">

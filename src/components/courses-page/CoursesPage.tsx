@@ -13,21 +13,6 @@ interface CoursesPageProps {
 }
 
 function CoursesPage(props: CoursesPageProps) {
-
-    /*const url = ... ;
-    const token = ... ;
-    const dataToSend = ... ;
-
-    fetch(url, {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Authorization': 'Bearer ' + token,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(dataToSend)
-        })*/
-
     let filterId: number [];
     let idCoursesDeleteForState: number[] = [];
     let newCourse = {} as Course;
@@ -37,7 +22,7 @@ function CoursesPage(props: CoursesPageProps) {
     const [coursesList, setCoursesList] = useState(courses);
     const [idCourseDelete, setIdCourseDelete] = useState(0);
     const [idCoursesDelete, setIdCoursesDelete] = useState(idCoursesDeleteForState);
-    const [isOpenPopUp, setIsOpenPopUp] = useState(false);
+    const [isOpenInput, setIsOpenInput] = useState(false);
 
     const openModal = (id: number) => {
         setIsModalDelete(true);
@@ -59,7 +44,7 @@ function CoursesPage(props: CoursesPageProps) {
     }
 
     const createCourseHandler = () => {
-        setIsOpenPopUp(true);
+        setIsOpenInput(true);
     }
 
     const addNewCourse = (name: string) => {
@@ -67,14 +52,14 @@ function CoursesPage(props: CoursesPageProps) {
         newCoursesList = coursesList;
         newCoursesList.push(newCourse);
         setCoursesList(newCoursesList);
-        setIsOpenPopUp(false);
+        setIsOpenInput(false);
     }
  
     return(
         <div className="course-container">
             <div className="course-create">
                 {
-                    isOpenPopUp ? <InputNameCourse onClick={addNewCourse} /> : <div></div>
+                    isOpenInput ? <InputNameCourse onClick={addNewCourse} /> : <div></div>
                 }
                 <button onClick={createCourseHandler} className='button-create'>Добавить курс</button> 
             </div>
