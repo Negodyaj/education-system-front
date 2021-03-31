@@ -4,6 +4,7 @@
 }
 .confirmation-dialog.hidden {
     opacity: 0;
+    visibility: hidden;
 }
 
 .confirmation-dialog-overlay {

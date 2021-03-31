@@ -3,7 +3,7 @@ import './ConfirmationDialog.css'
 import ConfirmationDialogContent from "./ConfirmationDialogContent";
 
 export interface ConfirmationDialogProps {
-    isActive: boolean;
+    isShown: boolean;
     title?: string;
     message?: string;
     confirmLabel?: string;
@@ -12,20 +12,12 @@ export interface ConfirmationDialogProps {
 }
 
 function ConfirmationDialog (props: ConfirmationDialogProps) {
-    const [isHidden, setIsHidden] = useState(false); //меняется на true сразу же в useEffect
-    useEffect(() => {
-        setIsHidden(!isHidden);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [props.isActive])
-
-    if (props.isActive)
-        return (
-            <div className = {`confirmation-dialog ${isHidden ? "hidden" : ""}`}>
-                <div className = "confirmation-dialog-overlay"> </div>
-                <ConfirmationDialogContent {...props} />
-            </div>
-        )
-    return null;
+    return (
+        <div className = {`confirmation-dialog ${!props.isShown ? "hidden" : ""}`}>
+            <div className = "confirmation-dialog-overlay"> </div>
+            <ConfirmationDialogContent {...props} />
+        </div>
+    )
 }
 
 export default ConfirmationDialog;
