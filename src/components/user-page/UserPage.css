@@ -6,7 +6,7 @@
 }
 
 .user-list{
-    width: 100%;
+    width: calc(100%-1px);
     margin: 2px;
 }
 
