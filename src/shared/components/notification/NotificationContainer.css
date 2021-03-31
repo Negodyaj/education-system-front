@@ -1,6 +1,6 @@
 .notification-container {
     width: 400px;
-    min-height: 100px;
+    min-height: 0px;
     position: fixed;
     z-index: 1;
     right: 10px;
