@@ -30,9 +30,10 @@ function UserEditForm(props: UserEditFormProps) {
     const [roleMultiselect, setRoleMultiselect] = useState(props.user?.role ?? undefined);
     const [password, setPassword] = useState<string | undefined>(props.user?.password);
     const [phone, setPhone] = useState<string | undefined>(props.user?.phone);
+    const [picLink, setPicLink] = useState(props.user?.userPic)
     const [email, setEmail] = useState<string | undefined>(props.user?.email);
     const [groupName, setGroupName] = useState<string | undefined>(props.user?.groupName);
-    
+
     const [wasValidated, setWasValidated] = useState('');
 
     const newUser: User = {
@@ -44,6 +45,7 @@ function UserEditForm(props: UserEditFormProps) {
         role: roleMultiselect as SelectItem[],
         password: password,
         phone: phone,
+        userPic: picLink,
         email: email,
         groupName: groupName
     }
@@ -75,7 +77,7 @@ function UserEditForm(props: UserEditFormProps) {
             }
         }
     }
-    
+
     const nameOnChange: ChangeEventHandler<HTMLInputElement> = (e) => {
         setName(validateName(e));
     }
@@ -83,7 +85,7 @@ function UserEditForm(props: UserEditFormProps) {
         setSecondName(validateName(e));
     }
     const birthDateOnChange = (date: Date) => {
-        setBirthDate(date.toString());
+        setBirthDate(date.toLocaleDateString());
     }
     const loginOnChange: ChangeEventHandler<HTMLInputElement> = (e) => {
         setLogin(e.target.value);
@@ -97,6 +99,9 @@ function UserEditForm(props: UserEditFormProps) {
     const phoneOnChange: ChangeEventHandler<HTMLInputElement> = (e) => {
         setPhone(e.target.value);
     }
+    const userPicLinkOnChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+        setPicLink(e.target.value)
+    }
     const emailOnChange: ChangeEventHandler<HTMLInputElement> = (e) => {
         setEmail(validateTopLevelDomain(e));
     }
@@ -106,9 +111,7 @@ function UserEditForm(props: UserEditFormProps) {
 
     const onSaveButtonClick: FormEventHandler = (e) => {
         e.preventDefault();
-        newUser.id === undefined && (newUser.id = (() => {
-            return Math.round(Math.random() * 100)
-        })());
+
         props.onSaveClick(newUser)
         props.onCancelClick(false);
     }
@@ -138,7 +141,7 @@ function UserEditForm(props: UserEditFormProps) {
                 </div>
                 <div className="user-list-item">
                     <label className="column">Логин</label>
-                    <input type="text" className="column" value={login} onChange={loginOnChange}/>
+                    <input type="text" className="column" value={login} onChange={loginOnChange} />
                 </div>
                 <div className="user-list-item">
                     <label className="column">Пароль</label>
@@ -152,6 +155,13 @@ function UserEditForm(props: UserEditFormProps) {
                 <div className="user-list-item">
                     <label className="column">Аватар</label>
                     <input type="file" className="column" />
+                    <input
+                        type="text"
+                        className="column"
+                        placeholder="или вставьте ссылку"
+                        value={picLink}
+                        onChange={userPicLinkOnChange} />
+                    <img src={picLink} alt="аватар" />
                 </div>
                 <div className="user-list-item">
                     <label className="column">Почта</label>
