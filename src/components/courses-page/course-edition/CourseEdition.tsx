@@ -66,7 +66,7 @@ function CourseEdition(props: CourseEditionProps) {
     }
 
     const onThemeChange = () =>{
-
+        setAllThemes([...allThemes]);
     }
 
     const [isModal, setModal] = useState(false)
