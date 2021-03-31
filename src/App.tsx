@@ -57,7 +57,7 @@ function App() {
             console.log(roleId);
         }
     }
-    
+
     const logOut = () => {
         setIsLoggedIn(false);
         history.push("/");
@@ -91,13 +91,15 @@ function App() {
                             <Switch>
                                 <Route exact path="/">
                                     {
-                                        roleId===Role.Test && <DevTestPage sendNotification={sendNewNotification}/>
+                                        roleId === Role.Test && <DevTestPage sendNotification={sendNewNotification} />
                                     }
                                 </Route>
                                 {
                                     (roleId === Role.Manager || roleId === Role.Admin) &&
                                     <Route path="/user-page">
-                                        <UserPage roleId={roleId}></UserPage>
+                                        <UserPage
+                                            roleId={roleId}
+                                            sendNotification={sendNewNotification}></UserPage>
                                     </Route>
                                 }
                                 {
@@ -127,10 +129,10 @@ function App() {
                             <LoginForm onLoginClick={loginHandler} />
                     }
                     {
-                        isLoggedIn ? <NotificationContainer 
-                            dismissibleNotifications={dismissibleNotifications} 
+                        isLoggedIn ? <NotificationContainer
+                            dismissibleNotifications={dismissibleNotifications}
                             nonDismissibleNotifications={nonDismissibleNotifications}
-                            deleteNotification={deleteNotification}/> : <></>
+                            deleteNotification={deleteNotification} /> : <></>
                     }
                 </main>
             </div>

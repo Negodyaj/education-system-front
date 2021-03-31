@@ -20,7 +20,7 @@
 
 .user-list-item , .user-list-head{
     display: grid;
-    grid-template-columns: 5vw 15vw 10vw 10vw 10vw 15vw 15vw;
+    grid-template-columns: 5vw 15vw 10vw 10vw 10vw 10vw 15vw;
     margin: 2px;
     min-height: 50px;
     border-bottom: 1px solid rgba(39, 45, 59, 0.15);
