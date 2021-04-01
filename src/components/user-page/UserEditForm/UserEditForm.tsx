@@ -12,6 +12,9 @@ import { convertEnumToDictionary, dictionary, getRussianDictionary } from '../..
 import { Role } from '../../../enums/role';
 import { validateName } from '../../../shared/validators/nameValidator';
 import { validateTopLevelDomain } from '../../../shared/validators/topLevelDomainValidator';
+import { keyToName } from '../../../shared/converters/keyToName';
+import { getNameOfDeclaration } from 'typescript';
+import { KeyObject } from 'crypto';
 
 interface UserEditFormProps {
     roleId: number;
@@ -22,8 +25,8 @@ interface UserEditFormProps {
 
 function UserEditForm(props: UserEditFormProps) {
 
-    const id = useState<number | undefined>(props.user?.id)[0];
-    const [name, setName] = useState<string | undefined>(props.user?.firstName);
+    const id = useState<User['id']>(props.user?.id)[0];
+    const [name, setName] = useState<User['firstName']>(props.user?.firstName);
     const [secondName, setSecondName] = useState<string | undefined>(props.user?.lastName);
     const [birthDate, setBirthDate] = useState<string | undefined>(props.user?.birthDate ?? undefined);
     const [login, setLogin] = useState<string | undefined>(props.user?.login);
@@ -122,12 +125,33 @@ function UserEditForm(props: UserEditFormProps) {
         setWasValidated('was-validated');
     }
 
+    const getName = (obj: User, expr: (arg: object) => string | undefined) => {
+        let a: User = {
+            id: 1
+        };
+        Object.keys(obj).map(key => (a as any)[key as keyof User] = key);
+        return expr(a);
+    }
+
+    const anyInputChangeHandler: ChangeEventHandler<HTMLInputElement> = (e) => {
+        let propKey = e.target.name;
+        let operand = newUser[propKey as keyof User];
+        (newUser[propKey as keyof User] as typeof operand) = e.target.value as typeof operand;
+        console.log(newUser.firstName);
+    }
+
     return (
         <div className={"user-edit-form needs-validation " + wasValidated}>
             <form onSubmit={onSaveButtonClick}>
                 <div className="user-list-item">
                     <label className="column">Имя</label>
-                    <input type="text" className="column" value={name} onChange={nameOnChange} required />
+                    <input
+                        type="text"
+                        className="column"
+                        value={name}
+                        onChange={anyInputChangeHandler}
+                        name={getName(newUser, (o: User) => o.firstName)}
+                        required />
                     <div className="bad-feedback">Введите имя</div>
                 </div>
                 <div className="user-list-item">
