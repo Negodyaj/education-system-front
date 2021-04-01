@@ -90,7 +90,6 @@ function UserPage(props: UserPageProps) {
                 birthDate: newUser.birthDate,
                 login: newUser.login,
                 phone: newUser.phone,
-                password: "qwe!@#",
                 userPic: newUser.userPic,
                 email: newUser.email,
                 roleIds: newUser.role?.map(role => role.value)
