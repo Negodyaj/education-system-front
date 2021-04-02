@@ -22,6 +22,7 @@ function UserPage(props: UserPageProps) {
     const [isEditModeOn, setIsEditModeOn] = useState(false);
     const [isFetching, setIsFetching] = useState(true);
     const [userToEdit, setUserToEdit] = useState<User | undefined>();
+    const [methodInForm, setMethodInForm] = useState('');
     const ids: (number | undefined)[] = Array.from(usersInState, user => user.id);
     const stringChanged = "изменён";
     const stringAdded = 'добавлен';
@@ -70,6 +71,7 @@ function UserPage(props: UserPageProps) {
             .then(data => {
                 setUserToEdit(Object.assign({}, data));
                 setIsFetching(false);
+                setMethodInForm('PUT');
                 setIsEditModeOn(true);
             })
     }
@@ -100,7 +102,8 @@ function UserPage(props: UserPageProps) {
             onSaveClick={onSaveClick}
             sendNotification={props.sendNotification}
             url={url}
-            token={token}></UserEditForm>
+            token={token}
+            method={methodInForm}></UserEditForm>
     }
 
     return (
