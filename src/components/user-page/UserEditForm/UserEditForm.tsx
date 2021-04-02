@@ -38,7 +38,7 @@ function UserEditForm(props: UserEditFormProps) {
         userPic: "",
         phone: "",
         email: "",
-        role:[]
+        role: []
     });
     const [wasValidated, setWasValidated] = useState('');
     const [isFetching, setIsFetching] = useState(true);
@@ -72,7 +72,7 @@ function UserEditForm(props: UserEditFormProps) {
     }
 
     const getUserToUpdate = () => {
-        fetch(props.url + '/' + props.userId?.toString(), {
+        fetch(props.url + '/' + props.userId, {
             headers: {
                 'Accept': 'application/json',
                 'Authorization': 'Bearer ' + props.token,
@@ -98,6 +98,10 @@ function UserEditForm(props: UserEditFormProps) {
         }
         )
             .then(response => {
+                console.log(response);
+                if (response.status > 200) {
+                    return Promise.reject(response.json())
+                }
                 return response.json();
             })
             .then(data => {
@@ -117,6 +121,8 @@ function UserEditForm(props: UserEditFormProps) {
                     }
                     )();
             })
+            .catch(error => {return error})
+            .then(data => console.log(data))
     }
 
     const birthDateOnChange = (date: Date) => {
@@ -143,7 +149,6 @@ function UserEditForm(props: UserEditFormProps) {
         let operand = newUser[propKey as keyof User];
         (newUser[propKey as keyof User] as typeof operand) = e.target.value as typeof operand;
         setNewUser(Object.assign({}, newUser));
-        console.log(newUser)
     }
 
     useEffect(() => {
