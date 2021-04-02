@@ -21,7 +21,7 @@ function UserList(props: UserListProps) {
             return (
                 props.roleId === Role.Manager
                 &&
-                <button className="button-style">
+                <button className="button-icon-style">
                     <FontAwesomeIcon icon="ruble-sign" />
                 </button>
             )
@@ -58,6 +58,7 @@ function UserList(props: UserListProps) {
                 <h4>Пользователи</h4>
                 <button className="button-style" onClick={() => onEditClick()}>
                     <FontAwesomeIcon icon="plus" />
+                     Добавить
                 </button>
             </div>
             <div className="user-list-head">
@@ -83,14 +84,14 @@ function UserList(props: UserListProps) {
                             }
                         </div>
                         <div className="column">{u.groupName}</div>
-                        <div className="column">
+                        <div className="column-button">
                             {
                                 elementsDefinedByRole.paymentButton()
                             }
-                            <button className="button-style" onClick={() => onEditClick(u.id)}>
+                            <button className="button-icon-style" onClick={() => onEditClick(u.id)}>
                                 <FontAwesomeIcon icon="edit" />
                             </button>
-                            <button className="button-style">
+                            <button className="button-icon-style">
                                 <FontAwesomeIcon icon="trash" />
                             </button>
                         </div>

@@ -6,13 +6,13 @@
 }
 
 .user-list{
-    width: calc(100%-1px);
-    margin: 2px;
+padding: 6px;
 }
 
 .user-list-head{
-    font-weight: 600;
+    font-weight: 700;
     font-size: 14px;
+    text-transform: uppercase;
 }
 
 .user-list-head .column span{
@@ -21,7 +21,7 @@
 
 .user-list-item , .user-list-head{
     display: grid;
-    grid-template-columns: 7% 20% 13% 10% 13% 15% 22%;
+    grid-template-columns: 60px 20% 13% 10% 150px 15% 150px;
     margin: 2px 0;
     min-height: 50px;
     border-bottom: 1px solid rgba(39, 45, 59, 0.15);
@@ -31,9 +31,8 @@
 }
 
 
-.column, .column-head{
+.column, .column-head, .column-button{
     display: flex;
-    margin: 0 10px;
     align-self: center;
     font-size: 14px;
     margin-bottom: 3px;
@@ -43,22 +42,35 @@
     justify-content: space-between;
 }
 
+.column-button{
+justify-content: center;
+}
+
 .user-photo{
     width: 40px;
     height: 40px;
     border-radius: 25px;
 }
 
-.button-style{
-    height: 40px;
-    width: 140px;
+.button-style, .button-icon-style {
     background-color: #00CCF2;
     color: #FFFF;
     font-weight: 700;
-    margin:0 5px;
-    border-radius: 25px;
     border: none;
     text-align: center;
+}
+
+.button-style{
+    height: 40px;
+    min-width: 110px;
+    border-radius: 25px;
+}
+
+.button-icon-style{
+    margin:0 5px;
+    width: 40px;
+    height: 40px;
+    border-radius: 25px;
 }
 
 .break-word{
