@@ -21,7 +21,7 @@ function UserPage(props: UserPageProps) {
     const [usersInState, setUsersInState] = useState<User[]>([]);
     const [isEditModeOn, setIsEditModeOn] = useState(false);
     const [isFetching, setIsFetching] = useState(true);
-    const [userToEdit, setUserToEdit] = useState<User | null>(null);
+    const [userToEdit, setUserToEdit] = useState<User | undefined>();
     const ids: (number | undefined)[] = Array.from(usersInState, user => user.id);
     const stringChanged = "изменён";
     const stringAdded = 'добавлен';
@@ -38,15 +38,17 @@ function UserPage(props: UserPageProps) {
             .then(response => response.json())
             .then(data => {
                 setUsersInState(data);
+                console.log(usersInState)
                 setIsFetching(false);
             })
     }
 
-    const getUpdatedUsers = (newUser: User) => {
+    const checkUpdatedUsers = (addedUserForNotification: User) => {
+        setIsFetching(true);
         getUsers();
         props.sendNotification({
             type: "success",
-            text: "пользователь " + newUser.firstName + " " + newUser.lastName + " успешно " + actionInNotification,
+            text: "пользователь " + addedUserForNotification.firstName + " " + addedUserForNotification.lastName + " успешно " + actionInNotification,
             isDismissible: true,
             timestamp: Date.now()
         })
@@ -56,65 +58,35 @@ function UserPage(props: UserPageProps) {
         getUsers();
     }, []);
 
-    const onEditClick = (userToEditId?: number) => {
-        setIsEditModeOn(true);
-        setUserToEdit(
-            usersInState.filter((user) => {
-                return user.id == userToEditId
-            })[0]
-        )
-    }
-    const onSaveClick = (newUser: User) => {
-        let method: string;
-        let registerOrUpdateAction: string;
-        setIsFetching(true);
-        if (newUser.id === undefined) {
-            method = "POST";
-            registerOrUpdateAction = "register";
-            actionInNotification = stringAdded;
-        } else {
-            method = "PUT";
-            registerOrUpdateAction = newUser.id.toString();
-            actionInNotification = stringChanged;
-        }
-        fetch('https://80.78.240.16:7070/api/User/' + registerOrUpdateAction, {
-            method: method,
+    const getUserToUpdate = (userToEditId: number) => {
+        fetch(url + '/' + userToEditId, {
             headers: {
                 'Accept': 'application/json',
                 'Authorization': 'Bearer ' + token,
                 'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                firstName: newUser.firstName,
-                lastName: newUser.lastName,
-                birthDate: newUser.birthDate,
-                login: newUser.login,
-                phone: newUser.phone,
-                userPic: newUser.userPic,
-                email: newUser.email,
-                roleIds: newUser.role?.map(role => role.value)
-            })
-        }
-        )
-            .then(response => {
-                return response.json();
-            })
+            }
+        })
+            .then(response => response.json())
             .then(data => {
-                !data.Code ? getUpdatedUsers(newUser) : (() => {
-                    props.sendNotification({
-                        type: "error",
-                        text: "ошибка сохранения пользователя " + newUser.firstName + " " + newUser.lastName,
-                        isDismissible: true,
-                        timestamp: Date.now()
-                    });
-                    getUsers();
-                }
-                )();
+                setUserToEdit(Object.assign({}, data));
+                setIsFetching(false);
+                setIsEditModeOn(true);
             })
+    }
+    const onEditClick = (userToEditId?: number) => {
+        if (userToEditId) {
+            getUserToUpdate(userToEditId)
+        }
+        else {
+            setUserToEdit(undefined);
+            setIsEditModeOn(true);
+        }
+    }
+    const onSaveClick = (addedUserForNotification: User) => {
+        checkUpdatedUsers(addedUserForNotification)
     }
 
     const renderUserList = () => {
-        console.log(usersInState[0].birthDate)
         return <UserList
             roleId={props.roleId}
             users={usersInState}
@@ -123,20 +95,23 @@ function UserPage(props: UserPageProps) {
     const renderUserEditForm = () => {
         return <UserEditForm
             roleId={props.roleId}
-            user={userToEdit}
+            userToEdit={userToEdit}
             onCancelClick={setIsEditModeOn}
-            onSaveClick={onSaveClick}></UserEditForm>
+            onSaveClick={onSaveClick}
+            sendNotification={props.sendNotification}
+            url={url}
+            token={token}></UserEditForm>
     }
 
     return (
         <div className="user-page">
             {
                 isFetching ?
-                <div>
-                    <FontAwesomeIcon icon="spinner" />
-                </div> : (
-                    isEditModeOn ? renderUserEditForm() : renderUserList()
-                )
+                    <div>
+                        <FontAwesomeIcon icon="spinner" />
+                    </div> : (
+                        isEditModeOn ? renderUserEditForm() : renderUserList()
+                    )
             }
         </div>
     )
