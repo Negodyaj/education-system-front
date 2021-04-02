@@ -21,8 +21,7 @@ function UserPage(props: UserPageProps) {
     const [usersInState, setUsersInState] = useState<User[]>([]);
     const [isEditModeOn, setIsEditModeOn] = useState(false);
     const [isFetching, setIsFetching] = useState(true);
-    const [idOfUserToEdit, setIdOfUserToEdit] = useState<number | undefined>();
-    const [methodInForm, setMethodInForm] = useState('');
+    const [userToEdit, setUserToEdit] = useState<User | undefined>();
     const ids: (number | undefined)[] = Array.from(usersInState, user => user.id);
     const stringChanged = "изменён";
     const stringAdded = 'добавлен';
@@ -44,11 +43,12 @@ function UserPage(props: UserPageProps) {
             })
     }
 
-    const getUpdatedUsers = (newUser: User) => {
+    const checkUpdatedUsers = (addedUserForNotification: User) => {
+        setIsFetching(true);
         getUsers();
         props.sendNotification({
             type: "success",
-            text: "пользователь " + newUser.firstName + " " + newUser.lastName + " успешно " + actionInNotification,
+            text: "пользователь " + addedUserForNotification.firstName + " " + addedUserForNotification.lastName + " успешно " + actionInNotification,
             isDismissible: true,
             timestamp: Date.now()
         })
@@ -58,23 +58,31 @@ function UserPage(props: UserPageProps) {
         getUsers();
     }, []);
 
+    const getUserToUpdate = (userToEditId: number) => {
+        fetch(url + '/' + userToEditId, {
+            headers: {
+                'Accept': 'application/json',
+                'Authorization': 'Bearer ' + token,
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                setUserToEdit(Object.assign({}, data));
+                setIsFetching(false);
+            })
+    }
     const onEditClick = (userToEditId?: number) => {
         if (userToEditId) {
-            setIdOfUserToEdit(
-                usersInState.filter((user) => {
-                    return user.id == userToEditId
-                })[0].id
-            );
-            setMethodInForm('PUT')
+            getUserToUpdate(userToEditId)
         }
         else {
-            setIdOfUserToEdit(undefined);
-            setMethodInForm('POST')
+            setUserToEdit(undefined);
         }
         setIsEditModeOn(true);
     }
-    const onSaveClick = (newUser: User) => {
-        getUpdatedUsers(newUser)
+    const onSaveClick = (addedUserForNotification: User) => {
+        checkUpdatedUsers(addedUserForNotification)
     }
 
     const renderUserList = () => {
@@ -86,13 +94,12 @@ function UserPage(props: UserPageProps) {
     const renderUserEditForm = () => {
         return <UserEditForm
             roleId={props.roleId}
-            userId={idOfUserToEdit}
+            userToEdit={userToEdit}
             onCancelClick={setIsEditModeOn}
             onSaveClick={onSaveClick}
             sendNotification={props.sendNotification}
             url={url}
-            token={token}
-            method={methodInForm}></UserEditForm>
+            token={token}></UserEditForm>
     }
 
     return (

@@ -6,7 +6,6 @@ import React, { ChangeEventHandler, FormEventHandler, useEffect, useState } from
 import { SelectItem } from '../../interfaces/SelectItem';
 import DatePickerComponent from '../../../shared/components/date-picker/DatePickerComponent';
 import { OptionsType } from 'react-select';
-import { convertEntitiesToSelectItems } from '../../../shared/converters/entityToSelectItem';
 import { convertEnumToDictionary, dictionary, getRussianDictionary } from '../../../shared/converters/enumToDictionaryEntity';
 import { Role } from '../../../enums/role';
 import { validateName } from '../../../shared/validators/nameValidator';
@@ -15,21 +14,22 @@ import { getName } from '../../../shared/converters/objectKeyToString';
 import NotificationData from '../../../shared/interfaces/NotificationData';
 import { type } from 'node:os';
 import { UserInput } from '../../interfaces/UserInput';
+import { useForm } from 'react-hook-form';
+import { convertEntitiesToSelectItems } from '../../../shared/converters/EntityToSelectItem';
 
 interface UserEditFormProps {
     roleId: number;
-    userId: number | undefined;
+    userToEdit: User | undefined;
     onCancelClick: (mode: boolean) => void;
     onSaveClick: (newUser: User) => void;
     sendNotification: (newNotification: NotificationData) => void;
     url: string;
     token: string;
-    method: string;
 }
 
 function UserEditForm(props: UserEditFormProps) {
 
-    const [newUser, setNewUser] = useState<User>({
+    const initUser = props.userToEdit || {
         firstName: "",
         lastName: "",
         birthDate: undefined,
@@ -39,9 +39,10 @@ function UserEditForm(props: UserEditFormProps) {
         phone: "",
         email: "",
         role: []
-    });
+    }
+    const [newUser, setNewUser] = useState<User>(initUser);
     const [wasValidated, setWasValidated] = useState('');
-    const [isFetching, setIsFetching] = useState(true);
+    const [isFetching, setIsFetching] = useState(false);
 
     const isDisabled = (Object.values(newUser).reduce((isEmpty, prop) => {
         if (prop) {
@@ -50,6 +51,14 @@ function UserEditForm(props: UserEditFormProps) {
         return isEmpty
     }, true))
 
+    type FormInputs = UserInput;
+
+    console.log(newUser)
+
+    const { register, handleSubmit, getValues } = useForm<FormInputs>({
+        defaultValues: (()=>{if (isFetching===false) {return Object.assign({}, newUser)}})()
+      });
+    
     const elementsDefinedByRole = {
         roleSelector: () => {
             if (props.roleId === Role.Admin) {
@@ -72,7 +81,7 @@ function UserEditForm(props: UserEditFormProps) {
     }
 
     const getUserToUpdate = () => {
-        fetch(props.url + '/' + props.userId, {
+        fetch(props.url + '/' + props.userToEdit?.id, {
             headers: {
                 'Accept': 'application/json',
                 'Authorization': 'Bearer ' + props.token,
@@ -86,9 +95,9 @@ function UserEditForm(props: UserEditFormProps) {
             })
     }
 
-    const updateUser = () => {
-        fetch(props.url + '/' + (props.userId ? props.userId : 'register'), {
-            method: props.method,
+    const sendUser = () => {
+        fetch(props.url + '/register', {
+            method: 'POST',
             headers: {
                 'Accept': 'application/json',
                 'Authorization': 'Bearer ' + props.token,
@@ -117,7 +126,6 @@ function UserEditForm(props: UserEditFormProps) {
                             isDismissible: true,
                             timestamp: Date.now()
                         });
-                        if (props.userId !== undefined) getUserToUpdate();
                     }
                     )();
             })
@@ -135,7 +143,7 @@ function UserEditForm(props: UserEditFormProps) {
     }
     const onSaveButtonClick: FormEventHandler = (e) => {
         e.preventDefault();
-        updateUser();
+        sendUser();
     }
     const onCancelClick = () => {
         props.onCancelClick(false);
@@ -151,14 +159,6 @@ function UserEditForm(props: UserEditFormProps) {
         setNewUser(Object.assign({}, newUser));
     }
 
-    useEffect(() => {
-        if (props.userId !== undefined) {
-            getUserToUpdate()
-        } else {
-            setIsFetching(false)
-        }
-    }, []);
-
     if (isFetching) {
         return (<div>loading</div>)
     } else {
@@ -168,11 +168,10 @@ function UserEditForm(props: UserEditFormProps) {
                     <div className="user-list-item">
                         <label className="column">Имя</label>
                         <input
+                            {...register('firstName')}
                             type="text"
                             className="column"
-                            value={newUser.firstName}
                             onChange={anyTextInputChangeHandler}
-                            name={getName<User>(newUser, (o) => o.firstName)}
                             required />
                         <div className="bad-feedback">Введите имя</div>
                     </div>
