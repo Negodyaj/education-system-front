@@ -20,13 +20,8 @@ padding: 6px;
 }
 
 .user-list-item , .user-list-head{
-    display: grid;
     grid-template-columns: 60px 20% 13% 10% 150px 15% 150px;
     margin: 2px 0;
-    min-height: 50px;
-    border-bottom: 1px solid rgba(39, 45, 59, 0.15);
-    text-align: left;
-    font-size: 14px;
     height: max-content;
 }
 
@@ -47,27 +42,6 @@ justify-content: center;
 }
 
 .user-photo{
-    width: 40px;
-    height: 40px;
-    border-radius: 25px;
-}
-
-.button-style, .button-icon-style {
-    background-color: #00CCF2;
-    color: #FFFF;
-    font-weight: 700;
-    border: none;
-    text-align: center;
-}
-
-.button-style{
-    height: 40px;
-    min-width: 110px;
-    border-radius: 25px;
-}
-
-.button-icon-style{
-    margin:0 5px;
     width: 40px;
     height: 40px;
     border-radius: 25px;

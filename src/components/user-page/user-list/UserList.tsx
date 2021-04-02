@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { Role } from "../../../enums/role";
 import { User } from "../../interfaces/User";
 import '../UserPage.css';
+import '../../../App.css'
 
 interface UserListProps {
     roleId: number;
@@ -61,7 +62,7 @@ function UserList(props: UserListProps) {
                      Добавить
                 </button>
             </div>
-            <div className="user-list-head">
+            <div className="list + user-list-head">
                 <div className="column"> </div>
                 <div className="column"><span title="А-Я" onClick={secondNameSortDefaultAndOnclick}>Фамилия</span></div>
                 <div className="column"><span title="А-Я">Имя</span></div>
@@ -71,7 +72,7 @@ function UserList(props: UserListProps) {
             </div>
             {
                 usersToShow.map(u => (
-                    <div className="user-list-item" key={u.id}>
+                    <div className="list + user-list-item" key={u.id}>
                         <div className="column">
                             <img className="user-photo" src={u.userPic} alt="userpic" />
                         </div>
@@ -88,10 +89,10 @@ function UserList(props: UserListProps) {
                             {
                                 elementsDefinedByRole.paymentButton()
                             }
-                            <button className="button-icon-style" onClick={() => onEditClick(u.id)}>
+                            <button className="button-round" onClick={() => onEditClick(u.id)}>
                                 <FontAwesomeIcon icon="edit" />
                             </button>
-                            <button className="button-icon-style">
+                            <button className="button-round">
                                 <FontAwesomeIcon icon="trash" />
                             </button>
                         </div>
