@@ -15,7 +15,7 @@ import NotificationData from '../../../shared/interfaces/NotificationData';
 import { type } from 'node:os';
 import { UserInput } from '../../interfaces/UserInput';
 import { useForm } from 'react-hook-form';
-import { convertEntitiesToSelectItems } from '../../../shared/converters/EntityToSelectItem';
+import { convertEntitiesToSelectItems } from '../../../shared/converters/entityToSelectItemConverter';
 
 interface UserEditFormProps {
     roleId: number;

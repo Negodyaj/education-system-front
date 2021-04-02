@@ -70,6 +70,7 @@ function UserPage(props: UserPageProps) {
             .then(data => {
                 setUserToEdit(Object.assign({}, data));
                 setIsFetching(false);
+                setIsEditModeOn(true);
             })
     }
     const onEditClick = (userToEditId?: number) => {
@@ -78,8 +79,8 @@ function UserPage(props: UserPageProps) {
         }
         else {
             setUserToEdit(undefined);
+            setIsEditModeOn(true);
         }
-        setIsEditModeOn(true);
     }
     const onSaveClick = (addedUserForNotification: User) => {
         checkUpdatedUsers(addedUserForNotification)
