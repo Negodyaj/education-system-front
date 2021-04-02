@@ -31,20 +31,26 @@ function UserList(props: UserListProps) {
         return lastNameAlphabetSort(a, b);
     }));
 
+    let qqq =1;
+
     const elementsDefinedByRole = {
-        paymentButton: () => {
+        paymentButton: (id?: number) => {
+            if (id != undefined)
+            {qqq = id;}
             return (
                 props.roleId === Role.Manager
                 &&
                 <button onClick={onPaymentButtonClick}>$</button>
+                
             )
         }
     }
 
+
+    const [paymentFormState, setPaymentFormState] = useState('');
     const onPaymentButtonClick = () => {
-        return(
-            <PaymentForm></PaymentForm>
-        )
+        setPaymentFormState('visible');
+
     }
 
     const onEditClick = (userToEditId?: number) => {
@@ -56,6 +62,10 @@ function UserList(props: UserListProps) {
             return lastNameAlphabetSort(a, b);
         })])
         setSignInvertor(signInvertor + 1);
+    }
+
+    const onCancelPaymentClick = () => {
+        setPaymentFormState('');
     }
 
     return (
@@ -97,11 +107,17 @@ function UserList(props: UserListProps) {
                             </button>
 
                             {
-                                elementsDefinedByRole.paymentButton()
+                                elementsDefinedByRole.paymentButton(u.id)
                             }
                         </div>
                     </div>))
             }
+            <PaymentForm
+                paymentFormState={paymentFormState}
+                cancelClick={onCancelPaymentClick}
+                userName={props.users[qqq].firstName}
+                userLastname={props.users[qqq].lastName}
+            ></PaymentForm>
         </div>
     )
 }
