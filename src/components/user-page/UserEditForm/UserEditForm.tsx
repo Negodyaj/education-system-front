@@ -7,11 +7,11 @@ import { SelectItem } from '../../interfaces/SelectItem';
 import DatePickerComponent from '../../../shared/components/date-picker/DatePickerComponent';
 import { OptionsType } from 'react-select';
 import { convertEntitiesToSelectItems } from '../../../shared/converters/entityToSelectItem';
-import { convertEnumToDictionary, dictionary, getRussianDictionary } from '../../../shared/converters/enumToDictionaryEntity';
 import { Role } from '../../../enums/role';
 import { validateName } from '../../../shared/validators/nameValidator';
 import { validateTopLevelDomain } from '../../../shared/validators/topLevelDomainValidator';
 import { getName } from '../../../shared/converters/objectKeyToString';
+import { convertEnumToDictionary, dictionary, getRussianDictionary } from '../../../shared/converters/enumToDictionaryEntity';
 
 interface UserEditFormProps {
     roleId: number;

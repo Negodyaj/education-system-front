@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
 import { Role } from "../../../enums/role";
 import { User } from "../../interfaces/User";
+import PaymentForm from "../payment-form/PaymentForm";
 import '../UserPage.css';
 
 interface UserListProps {
@@ -35,9 +36,15 @@ function UserList(props: UserListProps) {
             return (
                 props.roleId === Role.Manager
                 &&
-                <button>$</button>
+                <button onClick={onPaymentButtonClick}>$</button>
             )
         }
+    }
+
+    const onPaymentButtonClick = () => {
+        return(
+            <PaymentForm></PaymentForm>
+        )
     }
 
     const onEditClick = (userToEditId?: number) => {
