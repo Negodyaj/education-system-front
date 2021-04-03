@@ -1,8 +1,6 @@
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useEffect, useState } from 'react';
-import { Role } from '../../enums/role';
-import { dictionary } from '../../shared/converters/enumToDictionaryEntity';
 import NotificationData from '../../shared/interfaces/NotificationData';
 import { User } from '../interfaces/User';
 import UserList from './user-list/UserList';
@@ -23,10 +21,9 @@ function UserPage(props: UserPageProps) {
     const [isFetching, setIsFetching] = useState(true);
     const [userToEdit, setUserToEdit] = useState<User | undefined>();
     const [methodInForm, setMethodInForm] = useState('');
-    const ids: (number | undefined)[] = Array.from(usersInState, user => user.id);
     const stringChanged = "изменён";
     const stringAdded = 'добавлен';
-    let actionInNotification = stringChanged;
+    let actionInNotification = methodInForm === "POST" ? stringAdded : stringChanged;
 
     const getUsers = () => {
         fetch(url, {
@@ -44,12 +41,12 @@ function UserPage(props: UserPageProps) {
             })
     }
 
-    const checkUpdatedUsers = (addedUserForNotification: User) => {
+    const checkUpdatedUsers = (addedUser: User) => {
         setIsFetching(true);
         getUsers();
         props.sendNotification({
             type: "success",
-            text: "пользователь " + addedUserForNotification.firstName + " " + addedUserForNotification.lastName + " успешно " + actionInNotification,
+            text: "пользователь " + addedUser.firstName + " " + addedUser.lastName + " успешно " + actionInNotification,
             isDismissible: true,
             timestamp: Date.now()
         })
@@ -85,8 +82,8 @@ function UserPage(props: UserPageProps) {
             setIsEditModeOn(true);
         }
     }
-    const onSaveClick = (addedUserForNotification: User) => {
-        checkUpdatedUsers(addedUserForNotification)
+    const onSaveClick = (addedUser: User) => {
+        checkUpdatedUsers(addedUser)
     }
 
     const renderUserList = () => {
@@ -99,8 +96,8 @@ function UserPage(props: UserPageProps) {
         return <UserEditForm
             roleId={props.roleId}
             userToEdit={userToEdit}
-            onCancelClick={setIsEditModeOn}
-            onSaveClick={onSaveClick}
+            setIsEditModeOn={setIsEditModeOn}
+            sendUserPropsForSuccessNotification={onSaveClick}
             sendNotification={props.sendNotification}
             url={url}
             token={token}

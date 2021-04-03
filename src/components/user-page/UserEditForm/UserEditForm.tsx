@@ -4,7 +4,7 @@ import '../UserPage.css';
 import { User } from '../../interfaces/User';
 import React, { ChangeEventHandler, FormEventHandler, useEffect, useState } from 'react';
 import DatePickerComponent from '../../../shared/components/date-picker/DatePickerComponent';
-import { convertEnumToDictionary, dictionary, getRussianDictionary } from '../../../shared/converters/enumToDictionaryEntity';
+import { convertEnumToDictionary, getRussianDictionary } from '../../../shared/converters/enumToDictionaryEntity';
 import { Role } from '../../../enums/role';
 import NotificationData from '../../../shared/interfaces/NotificationData';
 import { UserInput } from '../../interfaces/UserInput';
@@ -14,8 +14,8 @@ import { convertEntitiesToSelectItems } from '../../../shared/converters/entityT
 interface UserEditFormProps {
     roleId: number;
     userToEdit: User | undefined;
-    onCancelClick: (mode: boolean) => void;
-    onSaveClick: (newUser: User) => void;
+    setIsEditModeOn: (mode: boolean) => void;
+    sendUserPropsForSuccessNotification: (newUser: User) => void;
     sendNotification: (newNotification: NotificationData) => void;
     url: string;
     token: string;
@@ -124,15 +124,15 @@ function UserEditForm(props: UserEditFormProps) {
                 }
                 return response.json();
             })
-            .then(data => {
-                props.onCancelClick(false);
-                props.onSaveClick(newUser);
+            .then(addedOrUpdatedUser => {
+                props.setIsEditModeOn(false);
+                props.sendUserPropsForSuccessNotification(addedOrUpdatedUser);
             })
             .catch(error => { return error })
             .then(data => {
                 data && props.sendNotification({
                     type: "error",
-                    text: data.Message + " " + props.method,
+                    text: data.Message,
                     isDismissible: true,
                     timestamp: Date.now()
                 })
@@ -147,14 +147,14 @@ function UserEditForm(props: UserEditFormProps) {
         newUser.roleIds = options;
         setNewUser(Object.assign({}, newUser))
     }
-    const onSaveButtonClick: FormEventHandler = (e) => {
+    const onSubmit: FormEventHandler = (e) => {
         e.preventDefault();
         sendUser();
     }
-    const onCancelClick = () => {
-        props.onCancelClick(false);
+    const setIsEditModeOn = () => {
+        props.setIsEditModeOn(false);
     }
-    const checkValidity = () => {
+    const onSaveClick = () => {
         setWasValidated('was-validated');
     }
 
@@ -170,7 +170,7 @@ function UserEditForm(props: UserEditFormProps) {
     } else {
         return (
             <div className={"user-edit-form needs-validation " + wasValidated}>
-                <form onSubmit={onSaveButtonClick}>
+                <form onSubmit={onSubmit}>
                     <div className="user-list-item">
                         <label className="column">Имя</label>
                         <input
@@ -243,14 +243,14 @@ function UserEditForm(props: UserEditFormProps) {
                     }
                     <div className="user-list-item">
                         <div className="column">
-                            <button className="column" onClick={onCancelClick}>отмена</button>
+                            <button className="column" onClick={setIsEditModeOn}>отмена</button>
                         </div>
                         <div className="column save-button">
                             <button
                                 className="column save-button"
                                 type={"submit"}
                                 disabled={isDisabled}
-                                onClick={checkValidity}>сохранить</button>
+                                onClick={onSaveClick}>сохранить</button>
                         </div>
                     </div>
                 </form>

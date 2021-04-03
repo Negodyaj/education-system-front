@@ -1,6 +1,7 @@
-import { ChangeEventHandler, SetStateAction, useEffect, useState } from 'react'
-import Select, { ActionMeta, OptionsType, SelectOptionActionMeta } from 'react-select'
-import { dictionary } from '../../shared/converters/enumToDictionaryEntity';
+import { useEffect } from 'react'
+import Select, { OptionsType } from 'react-select'
+import { Role } from '../../enums/role';
+import { getEnToRuTranslation } from '../../shared/converters/enumToDictionaryEntity';
 import { SelectItem } from '../interfaces/SelectItem';
 
 interface SelectProps {
@@ -14,14 +15,14 @@ function CustomMultiSelect(props: SelectProps) {
   let userOptions: SelectItem[];
   useEffect(() => {
     userOptions = props.userOptions?.map(roleId => {
-      return { value: roleId, label: dictionary[roleId] }
+      return { value: roleId, label: getEnToRuTranslation(Role[roleId]) }
     }) as SelectItem[]
   }, []
   )
 
   const onSelect = (selectedOptions: OptionsType<object>) => {
     let roleIds = (selectedOptions as SelectItem[]).map(i => i.value)
-    console.log(props.userOptions?.map(roleId => { return { value: roleId, label: dictionary[roleId] } }))
+    console.log(props.userOptions?.map(roleId => { return { value: roleId, label: getEnToRuTranslation(Role[roleId]) } }))
     props.onSelect(roleIds);
   }
 
