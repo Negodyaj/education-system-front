@@ -29,19 +29,47 @@
 }
 
 .notification .close-btn {
-    width: 25px;
-    height: 25px;
-    flex-shrink: 0;
+    font-size: 20px;
     background: none;
     border: none;
     outline: none;
+    position: relative;
 }
 
 .notification .close-btn svg {
-    width: 100%;
-    height: 100%;
     color: white;
-    display: block;
+}
+
+.notification .close-btn-container {
+    position: relative;
+    flex-shrink: 0;
+}
+
+.circle-timer {
+    pointer-events: none;
+    position: absolute;
+    top: -3px;
+    right: -7px;
+    width: 40px;
+    height: 40px;
+    transform: rotateZ(-90deg);
+}
+.circle-timer circle {
+    stroke-dasharray: 113px;
+    stroke-dashoffset: 0px;
+    stroke-linecap: round;
+    stroke-width: 2px;
+    stroke: white;
+    fill: none;
+    animation: countdown linear forwards;
+}
+@keyframes countdown {
+    from {
+        stroke-dashoffset: 113px;
+    }
+    to {
+        stroke-dashoffset: 0px;
+    }
 }
 
 .info-notification {

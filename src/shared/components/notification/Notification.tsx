@@ -16,10 +16,31 @@ function Notification(props: NotificationProps) {
     useEffect(() => {
         setIsHidden(false);
     }, [])
+    
+    const typeToTimeout = () => {
+        switch (props.notificationData.type) {
+            case "information":
+                return 6000;
+            case "success":
+                return 3000;
+            case "warning":
+                return 0;
+            case "error":
+                return 0;
+        }
+        return 0;
+    }
+
+    let timeout = props.notificationData.autoDismissTimeout;
+    if (timeout === undefined) {
+        timeout = typeToTimeout();
+    }
 
     useEffect(() => {
-        let timer = setTimeout(dismiss, 3000);
-        return () => clearTimeout(timer);
+        if (timeout !== 0) {
+            let timer = setTimeout(dismiss, timeout);
+            return () => clearTimeout(timer);
+        }
     }, [])
 
     const dismiss = () => {
@@ -71,9 +92,14 @@ function Notification(props: NotificationProps) {
             <span>{props.notificationData.text}</span>
             {
                 props.notificationData.isDismissible &&
-                <button onClick={dismiss} className="close-btn">
-                    <FontAwesomeIcon icon="times" />
-                </button>
+                <div className="close-btn-container">
+                    <button onClick={dismiss} className="close-btn">
+                        <FontAwesomeIcon icon="times" />
+                    </button>
+                    {timeout > 0 && <svg className="circle-timer">
+                        <circle r="18" cx="20" cy="20" style={{ animationDuration: timeout + "ms" }}></circle>
+                    </svg>}
+                </div>
             }
         </div>
     )
