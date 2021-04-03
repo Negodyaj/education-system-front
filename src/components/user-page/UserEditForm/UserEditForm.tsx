@@ -1,52 +1,43 @@
-
 import CustomMultiSelect from '../../multi-select/CustomMultiSelect';
 import './UserEditForm.css'
 import '../UserPage.css';
 import { User } from '../../interfaces/User';
-import { ChangeEventHandler, FormEventHandler, useState } from 'react';
-import { SelectItem } from '../../interfaces/SelectItem';
+import React, { ChangeEventHandler, FormEventHandler, useEffect, useState } from 'react';
 import DatePickerComponent from '../../../shared/components/date-picker/DatePickerComponent';
-import { OptionsType } from 'react-select';
-import { convertEntitiesToSelectItems } from '../../../shared/converters/EntityToSelectItem';
-import { convertEnumToDictionary, dictionary, getRussianDictionary } from '../../../shared/converters/enumToDictionaryEntity';
+import { convertEnumToDictionary, getRussianDictionary } from '../../../shared/converters/enumToDictionaryEntity';
 import { Role } from '../../../enums/role';
-import { validateName } from '../../../shared/validators/nameValidator';
-import { validateTopLevelDomain } from '../../../shared/validators/topLevelDomainValidator';
+import NotificationData from '../../../shared/interfaces/NotificationData';
+import { UserInput } from '../../interfaces/UserInput';
+import { useForm } from 'react-hook-form';
+import { convertEntitiesToSelectItems } from '../../../shared/converters/entityToSelectItemConverter';
 
 interface UserEditFormProps {
     roleId: number;
-    user: User | null;
-    onCancelClick: (mode: boolean) => void;
-    onSaveClick: (newUser: User) => void;
+    userToEdit: User | undefined;
+    setIsEditModeOn: (mode: boolean) => void;
+    sendUserPropsForSuccessNotification: (newUser: User) => void;
+    sendNotification: (newNotification: NotificationData) => void;
+    url: string;
+    token: string;
+    method: string;
 }
 
 function UserEditForm(props: UserEditFormProps) {
 
-    const id = useState<number | undefined>(props.user?.id)[0];
-    const [name, setName] = useState<string | undefined>(props.user?.firstName);
-    const [secondName, setSecondName] = useState<string | undefined>(props.user?.lastName);
-    const [birthDate, setBirthDate] = useState<string | undefined>(props.user?.birthDate ?? undefined);
-    const [login, setLogin] = useState<string | undefined>(props.user?.login);
-    const [roleMultiselect, setRoleMultiselect] = useState(props.user?.role ?? undefined);
-    const [password, setPassword] = useState<string | undefined>(props.user?.password);
-    const [phone, setPhone] = useState<string | undefined>(props.user?.phone);
-    const [email, setEmail] = useState<string | undefined>(props.user?.email);
-    const [groupName, setGroupName] = useState<string | undefined>(props.user?.groupName);
-    
-    const [wasValidated, setWasValidated] = useState('');
-
-    const newUser: User = {
-        id: id,
-        firstName: name,
-        lastName: secondName,
-        birthDate: birthDate,
-        login: login,
-        role: roleMultiselect as SelectItem[],
-        password: password,
-        phone: phone,
-        email: email,
-        groupName: groupName
+    const initUser = Object.assign({}, props.userToEdit) || {
+        firstName: "",
+        lastName: "",
+        birthDate: undefined,
+        login: "",
+        password: "",
+        userPic: "",
+        phone: "",
+        email: "",
+        role: []
     }
+    const [newUser, setNewUser] = useState<User>(initUser);
+    const [wasValidated, setWasValidated] = useState('');
+    const [isFetching, setIsFetching] = useState(false);
 
     const isDisabled = (Object.values(newUser).reduce((isEmpty, prop) => {
         if (prop) {
@@ -55,7 +46,15 @@ function UserEditForm(props: UserEditFormProps) {
         return isEmpty
     }, true))
 
-    const elementsDefinedByRole = {
+    type FormInputs = UserInput;
+
+    console.log(props.userToEdit)
+
+    const { register, handleSubmit, getValues } = useForm<FormInputs>({
+        defaultValues: (() => { if (isFetching === false) { return Object.assign({}, newUser) } })()
+    });
+
+    const elementsDefinedByProps = {
         roleSelector: () => {
             if (props.roleId === Role.Admin) {
                 return (
@@ -63,119 +62,201 @@ function UserEditForm(props: UserEditFormProps) {
                         <label className="column">Список ролей</label>
                         <CustomMultiSelect
                             selectType={"multi"}
-                            userOptions={roleMultiselect as OptionsType<object>}
+                            userOptions={newUser.roleIds || undefined}
                             options={convertEntitiesToSelectItems(getRussianDictionary(convertEnumToDictionary(Role)))}
                             onSelect={roleOnChange}></CustomMultiSelect>
                     </div>)
             } else {
-                newUser.role = [{
-                    value: Role.Student,
-                    label: dictionary[Role[Role.Student]]
-                }]
+                newUser.roleIds = [Role.Student]
+            }
+        },
+        passwordInput: () => {
+            if (props.userToEdit === undefined) {
+                return (
+                    <div className="user-list-item">
+                        <label className="column">Пароль</label>
+                        <input
+                            {...register('password')}
+                            type="text"
+                            className="column"
+                            value={newUser.password}
+                            onChange={anyTextInputChangeHandler}
+                            required />
+                    </div>
+                )
+            } else {
+                return;
+            }
+        },
+        loginInput: () => {
+            if (props.userToEdit === undefined) {
+                return (
+                    <div className="user-list-item">
+                        <label className="column">Логин</label>
+                        <input
+                            {...register('login')}
+                            type="text"
+                            className="column"
+                            value={newUser.login}
+                            onChange={anyTextInputChangeHandler} />
+                    </div>
+                )
+            } else {
+                return;
             }
         }
     }
-    
-    const nameOnChange: ChangeEventHandler<HTMLInputElement> = (e) => {
-        setName(validateName(e));
-    }
-    const secondNameOnChange: ChangeEventHandler<HTMLInputElement> = (e) => {
-        setSecondName(validateName(e));
-    }
-    const birthDateOnChange = (date: Date) => {
-        setBirthDate(date.toString());
-    }
-    const loginOnChange: ChangeEventHandler<HTMLInputElement> = (e) => {
-        setLogin(e.target.value);
-    }
-    const roleOnChange = (options: OptionsType<object>) => {
-        setRoleMultiselect(options as SelectItem[]);
-    }
-    const passwordOnChange: ChangeEventHandler<HTMLInputElement> = (e) => {
-        setPassword(e.target.value);
-    }
-    const phoneOnChange: ChangeEventHandler<HTMLInputElement> = (e) => {
-        setPhone(e.target.value);
-    }
-    const emailOnChange: ChangeEventHandler<HTMLInputElement> = (e) => {
-        setEmail(validateTopLevelDomain(e));
-    }
-    const groupNameOnChange: ChangeEventHandler<HTMLInputElement> = (e) => {
-        setGroupName(e.target.value);
+
+    const sendUser = () => {
+        fetch(props.url + '/' + (props.userToEdit ? props.userToEdit.id : 'register'), {
+            method: props.method,
+            headers: {
+                'Accept': 'application/json',
+                'Authorization': 'Bearer ' + props.token,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(newUser)// {} instead newUser - to provoke error
+        }
+        )
+            .then(response => {
+                if (response.status > 200) {
+                    return Promise.reject(response.json())
+                }
+                return response.json();
+            })
+            .then(addedOrUpdatedUser => {
+                props.setIsEditModeOn(false);
+                props.sendUserPropsForSuccessNotification(addedOrUpdatedUser);
+            })
+            .catch(error => { return error })
+            .then(data => {
+                data && props.sendNotification({
+                    type: "error",
+                    text: data.Message,
+                    isDismissible: true,
+                    timestamp: Date.now()
+                })
+            })
     }
 
-    const onSaveButtonClick: FormEventHandler = (e) => {
+    const birthDateOnChange = (date: Date) => {
+        newUser.birthDate = date.toLocaleDateString();
+        setNewUser(Object.assign({}, newUser))
+    }
+    const roleOnChange = (options: number[]) => {
+        newUser.roleIds = options;
+        setNewUser(Object.assign({}, newUser))
+    }
+    const onSubmit: FormEventHandler = (e) => {
         e.preventDefault();
-        newUser.id === undefined && (newUser.id = (() => {
-            return Math.round(Math.random() * 100)
-        })());
-        props.onSaveClick(newUser)
-        props.onCancelClick(false);
+        sendUser();
     }
-    const onCancelClick = () => {
-        props.onCancelClick(false);
+    const setIsEditModeOn = () => {
+        props.setIsEditModeOn(false);
     }
-    const checkValidity = () => {
+    const onSaveClick = () => {
         setWasValidated('was-validated');
     }
 
-    return (
-        <div className={"user-edit-form needs-validation " + wasValidated}>
-            <form onSubmit={onSaveButtonClick}>
-                <div className="user-list-item">
-                    <label className="column">Имя</label>
-                    <input type="text" className="column" value={name} onChange={nameOnChange} required />
-                    <div className="bad-feedback">Введите имя</div>
-                </div>
-                <div className="user-list-item">
-                    <label className="column">Фамилия</label>
-                    <input type="text" className="column" value={secondName} onChange={secondNameOnChange} required />
-                    <div className="bad-feedback">Ввведите фамилию</div>
-                </div>
-                <div className="user-list-item">
-                    <label className="column">Дата рождения</label>
-                    <DatePickerComponent date={birthDate} onDateChange={birthDateOnChange} />
-                </div>
-                <div className="user-list-item">
-                    <label className="column">Логин</label>
-                    <input type="text" className="column" value={login} onChange={loginOnChange}/>
-                </div>
-                <div className="user-list-item">
-                    <label className="column">Пароль</label>
-                    <input type="text" className="column" value={password} onChange={passwordOnChange} />
-                </div>
-                <div className="user-list-item">
-                    <label className="column">Телефон</label>
-                    <input type="text" className="column" value={phone} onChange={phoneOnChange} required />
-                    <div className="bad-feedback">Введите номер телефона</div>
-                </div>
-                <div className="user-list-item">
-                    <label className="column">Аватар</label>
-                    <input type="file" className="column" />
-                </div>
-                <div className="user-list-item">
-                    <label className="column">Почта</label>
-                    <input type="email" className="column" value={email} onChange={emailOnChange} required />
-                    <div className="bad-feedback">Введите e-mail</div>
-                </div>
-                {
-                    elementsDefinedByRole.roleSelector()
-                }
-                <div className="user-list-item">
-                    <div className="column">
-                        <button className="column" onClick={onCancelClick}>отмена</button>
+    const anyTextInputChangeHandler: ChangeEventHandler<HTMLInputElement> = (e) => {
+        let propKey: string = e.target.name;
+        let operand = newUser[propKey as keyof User];
+        (newUser[propKey as keyof User] as typeof operand) = e.target.value as typeof operand;
+        setNewUser(Object.assign({}, newUser));
+    }
+
+    if (isFetching) {
+        return (<div>loading</div>)
+    } else {
+        return (
+            <div className={"user-edit-form needs-validation " + wasValidated}>
+                <form onSubmit={onSubmit}>
+                    <div className="user-list-item">
+                        <label className="column">Имя</label>
+                        <input
+                            {...register('firstName')}
+                            value={newUser.firstName}
+                            type="text"
+                            className="column"
+                            onChange={anyTextInputChangeHandler}
+                            required />
+                        <div className="bad-feedback">Введите имя</div>
                     </div>
-                    <div className="column save-button">
-                        <button
-                            className="column save-button"
-                            type={"submit"}
-                            disabled={isDisabled}
-                            onClick={checkValidity}>сохранить</button>
+                    <div className="user-list-item">
+                        <label className="column">Фамилия</label>
+                        <input
+                            {...register('lastName')}
+                            type="text"
+                            className="column"
+                            value={newUser.lastName}
+                            onChange={anyTextInputChangeHandler}
+                            required />
+                        <div className="bad-feedback">Ввведите фамилию</div>
                     </div>
-                </div>
-            </form>
-        </div>
-    )
+                    <div className="user-list-item">
+                        <label className="column">Дата рождения</label>
+                        <DatePickerComponent date={newUser.birthDate} onDateChange={birthDateOnChange} />
+                    </div>
+                    {
+                        elementsDefinedByProps.loginInput()
+                    }
+                    {
+                        elementsDefinedByProps.passwordInput()
+                    }
+                    <div className="user-list-item">
+                        <label className="column">Телефон</label>
+                        <input
+                            {...register('phone')}
+                            type="text"
+                            className="column"
+                            value={newUser.phone}
+                            onChange={anyTextInputChangeHandler}
+                            required />
+                        <div className="bad-feedback">Введите номер телефона</div>
+                    </div>
+                    <div className="user-list-item">
+                        <label className="column">Аватар</label>
+                        <input type="file" className="column" />
+                        <input
+                            {...register('userPic')}
+                            type="text"
+                            className="column"
+                            placeholder="или вставьте ссылку"
+                            value={newUser.userPic}
+                            onChange={anyTextInputChangeHandler}
+                            required />
+                        <img src={newUser.userPic} alt="аватар" />
+                    </div>
+                    <div className="user-list-item">
+                        <label className="column">Почта</label>
+                        <input
+                            {...register('email')}
+                            type="email"
+                            className="column"
+                            value={newUser.email}
+                            onChange={anyTextInputChangeHandler}
+                            required />
+                        <div className="bad-feedback">Введите e-mail</div>
+                    </div>
+                    {
+                        elementsDefinedByProps.roleSelector()
+                    }
+                    <div className="user-list-item">
+                        <div className="column">
+                            <button className="column" onClick={setIsEditModeOn}>отмена</button>
+                        </div>
+                        <div className="column save-button">
+                            <button
+                                className="column save-button"
+                                type={"submit"}
+                                disabled={isDisabled}
+                                onClick={onSaveClick}>сохранить</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        )
+    }
 }
 
 export default UserEditForm;

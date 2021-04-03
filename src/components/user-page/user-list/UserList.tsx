@@ -64,7 +64,6 @@ function UserList(props: UserListProps) {
                 <div className="column"><span title="А-Я">имя</span></div>
                 <div className="column"><span title="А-Я">логин</span></div>
                 <div className="column"><span title="А-Я">роль</span></div>
-                <div className="column"><span title="А-Я">группа</span></div>
             </div>
             {
                 usersToShow.map(u => (
@@ -77,10 +76,9 @@ function UserList(props: UserListProps) {
                         <div className="column">{u.login}</div>
                         <div className="column multiline">
                             {
-                                u.role?.map(r => (<div>{r.label}</div>))
+                                u.roleIds?.map(r => (<div>{Role[r]}</div>))
                             }
                         </div>
-                        <div className="column">{u.groupName}</div>
                         <div className="column">
                             <button className="button-style" onClick={() => onEditClick(u.id)}>
                                 <FontAwesomeIcon icon="edit" />

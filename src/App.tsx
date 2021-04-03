@@ -19,6 +19,7 @@ import { themes } from './shared/themes/Themes';
 import { Role } from './enums/role';
 import NotificationData from './shared/interfaces/NotificationData';
 import DevTestPage from './components/dev-test-page/DevTestPage'
+import TagsPage from './components/tags-page/TagsPage';
 
 function App() {
     const history = useHistory();
@@ -112,15 +113,12 @@ function App() {
                                     <CourseEdition coursesList={courses} themesList={themes} idCourse={location.pathname} />
                                 )}>
                                 </Route>
-                                {/* <Route path="/groups-list">
-                                    <GroupList />
-                                </Route>
-                                <Route path="/courses-list">
-                                    <CoursesList />
-                                </Route>
-                                <Route path="/homework-list">
-                                    <HomeworkList />
-                                </Route> */}
+                                 {
+                                    roleId !== Role.Student &&
+                                    <Route path="/tags-page">
+                                        <TagsPage></TagsPage>
+                                    </Route>
+                                }
                                 <Route path="/homework">
                                     <HomeworkPage roleId={roleId} />
                                 </Route>

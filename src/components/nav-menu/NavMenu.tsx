@@ -20,6 +20,7 @@ function NavMenu(props: NavMenuProps) {
                         <button> Мои курсы </button></NavLink>
                     <NavLink activeClassName="active" to="homework-list">
                         <button> Мои Домашки </button></NavLink>
+                    
                 </nav>
             }
             {
@@ -33,6 +34,12 @@ function NavMenu(props: NavMenuProps) {
                 <nav>
                     <Link to="/homework">Homeworks</Link>
                     <Link to="/courses-page">Страница курсов</Link>
+                </nav>
+            }
+            { props.roleId !== Role.Student &&
+                <nav>
+                    <NavLink activeClassName="active" to="/tags-page">
+                        <button> Тэги </button></NavLink>
                 </nav>
             }
         </div>

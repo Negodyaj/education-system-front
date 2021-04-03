@@ -1,7 +1,6 @@
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useEffect, useState } from 'react';
-import { Role } from '../../enums/role';
-import { dictionary } from '../../shared/converters/enumToDictionaryEntity';
 import NotificationData from '../../shared/interfaces/NotificationData';
 import { User } from '../interfaces/User';
 import UserList from './user-list/UserList';
@@ -16,18 +15,15 @@ interface UserPageProps {
 function UserPage(props: UserPageProps) {
 
     const url = 'https://80.78.240.16:7070/api/User';
-    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoidm9sb2R5YTIyIiwiaWQiOiIxIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoi0JDQtNC80LjQvdC40YHRgtGA0LDRgtC-0YAiLCJuYmYiOjE2MTcxMDAwNjIsImV4cCI6MTYxNzI3Mjg2MiwiaXNzIjoiRWR1Y2F0aW9uU3lzdGVtLkFwaSIsImF1ZCI6IkRldkVkdWNhdGlvbiJ9.m5KxT3HuXeJyb2W2mNokTfhbgpsputj9jR8fpq3sbUc';
-
-
-
+    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoidm9sb2R5YTIyIiwiaWQiOiIxIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoi0JDQtNC80LjQvdC40YHRgtGA0LDRgtC-0YAiLCJuYmYiOjE2MTc0NDk3MjcsImV4cCI6MTYxNzYyMjUyNywiaXNzIjoiRWR1Y2F0aW9uU3lzdGVtLkFwaSIsImF1ZCI6IkRldkVkdWNhdGlvbiJ9.h_GX1srLTRp2r-D8gzfjikmmxW2WJZ6PwU3703G0bMM';
     const [usersInState, setUsersInState] = useState<User[]>([]);
     const [isEditModeOn, setIsEditModeOn] = useState(false);
     const [isFetching, setIsFetching] = useState(true);
-    const [userToEdit, setUserToEdit] = useState<User | null>(null);
-    const ids: (number | undefined)[] = Array.from(usersInState, user => user.id);
+    const [userToEdit, setUserToEdit] = useState<User | undefined>();
+    const [methodInForm, setMethodInForm] = useState('');
     const stringChanged = "изменён";
     const stringAdded = 'добавлен';
-    let actionInNotification = stringChanged;
+    let actionInNotification = methodInForm === "POST" ? stringAdded : stringChanged;
 
     const getUsers = () => {
         fetch(url, {
@@ -40,67 +36,57 @@ function UserPage(props: UserPageProps) {
             .then(response => response.json())
             .then(data => {
                 setUsersInState(data);
+                console.log(usersInState)
                 setIsFetching(false);
             })
+    }
+
+    const checkUpdatedUsers = (addedUser: User) => {
+        setIsFetching(true);
+        getUsers();
+        props.sendNotification({
+            type: "success",
+            text: "пользователь " + addedUser.firstName + " " + addedUser.lastName + " успешно " + actionInNotification,
+            isDismissible: true,
+            timestamp: Date.now()
+        })
     }
 
     useEffect(() => {
         getUsers();
     }, []);
 
-    const onEditClick = (userToEditId?: number) => {
-        setIsEditModeOn(true);
-        setUserToEdit(
-            usersInState.filter((user) => {
-                return user.id == userToEditId
-            })[0]
-        )
-    }
-    const onSaveClick = (newUser: User) => {
-        setIsFetching(true);
-
-        fetch('https://80.78.240.16:7070/api/User/register', {
-            method: "POST",
+    const getUserToUpdate = (userToEditId: number) => {
+        fetch(url + '/' + userToEditId, {
             headers: {
                 'Accept': 'application/json',
                 'Authorization': 'Bearer ' + token,
                 'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                firstName: newUser.firstName,
-                lastName: newUser.lastName,
-                birthDate: newUser.birthDate,
-                login: newUser.login,
-                password: newUser.password,
-                phone: newUser.phone,
-                userPic: newUser.userPic,
-                email: newUser.email,
-                roleIds: [
-                    Role.Student
-                ]
-
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                setUserToEdit(Object.assign({}, data));
+                setMethodInForm('PUT');
+                setIsFetching(false);
+                setIsEditModeOn(true);
             })
+    }
+    const onEditClick = (userToEditId?: number) => {
+        if (userToEditId) {
+            getUserToUpdate(userToEditId)
         }
-        )
-        .then(data => data.json())
-        .then(data => setIsFetching(false));
-        
-
-        //actionInNotification = stringAdded;
-
-        //actionInNotification = stringChanged;
-
-        //setUsersInState(usersInState);
-        // props.sendNotification({
-        //     type: "success",
-        //     text: "пользователь " + newUser.firstName + " " + newUser.lastName + " успешно " + actionInNotification,
-        //     isDismissible: true,
-        //     timestamp: Date.now()
-        // })
+        else {
+            setUserToEdit(undefined);
+            setMethodInForm('POST')
+            setIsEditModeOn(true);
+        }
+    }
+    const onSaveClick = (addedUser: User) => {
+        checkUpdatedUsers(addedUser)
     }
 
     const renderUserList = () => {
-
         return <UserList
             roleId={props.roleId}
             users={usersInState}
@@ -109,17 +95,24 @@ function UserPage(props: UserPageProps) {
     const renderUserEditForm = () => {
         return <UserEditForm
             roleId={props.roleId}
-            user={userToEdit}
-            onCancelClick={setIsEditModeOn}
-            onSaveClick={onSaveClick}></UserEditForm>
+            userToEdit={userToEdit}
+            setIsEditModeOn={setIsEditModeOn}
+            sendUserPropsForSuccessNotification={onSaveClick}
+            sendNotification={props.sendNotification}
+            url={url}
+            token={token}
+            method={methodInForm}></UserEditForm>
     }
 
     return (
         <div className="user-page">
             {
-                isFetching ? <div>loading</div> : (
-                    isEditModeOn ? renderUserEditForm() : renderUserList()
-                )
+                isFetching ?
+                    <div>
+                        <FontAwesomeIcon icon="spinner" />
+                    </div> : (
+                        isEditModeOn ? renderUserEditForm() : renderUserList()
+                    )
             }
         </div>
     )
