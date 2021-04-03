@@ -1,6 +1,6 @@
 import { SelectItem } from "./SelectItem";
 
-export interface UserInput{
+export interface UserInput {
     firstName: string;
     lastName: string;
     birthDate: string;
@@ -9,5 +9,5 @@ export interface UserInput{
     userPic: string;
     email: string;
     password: string;
-    role?: SelectItem[];
+    roleIds?: number[];
 }
