@@ -70,8 +70,8 @@ function UserPage(props: UserPageProps) {
             .then(response => response.json())
             .then(data => {
                 setUserToEdit(Object.assign({}, data));
-                setIsFetching(false);
                 setMethodInForm('PUT');
+                setIsFetching(false);
                 setIsEditModeOn(true);
             })
     }
@@ -81,6 +81,7 @@ function UserPage(props: UserPageProps) {
         }
         else {
             setUserToEdit(undefined);
+            setMethodInForm('POST')
             setIsEditModeOn(true);
         }
     }

@@ -109,7 +109,7 @@ function UserEditForm(props: UserEditFormProps) {
 
     const sendUser = () => {
         fetch(props.url + '/' + (props.userToEdit ? props.userToEdit.id : 'register'), {
-            method: (props.method !== '' ? props.method : 'POST'),
+            method: props.method,
             headers: {
                 'Accept': 'application/json',
                 'Authorization': 'Bearer ' + props.token,
@@ -125,23 +125,18 @@ function UserEditForm(props: UserEditFormProps) {
                 return response.json();
             })
             .then(data => {
-                !data.Code ?
-                    (() => {
-                        props.onCancelClick(false);
-                        props.onSaveClick(newUser)
-                    })() : (() => {
-                        props.sendNotification({
-                            type: "error",
-                            text: data.Message,
-                            //text: "ошибка сохранения пользователя " + newUser.firstName + " " + newUser.lastName,
-                            isDismissible: true,
-                            timestamp: Date.now()
-                        });
-                    }
-                    )();
+                props.onCancelClick(false);
+                props.onSaveClick(newUser);
             })
             .catch(error => { return error })
-            .then(data => console.log(data))
+            .then(data => {
+                data && props.sendNotification({
+                    type: "error",
+                    text: data.Message + " " + props.method,
+                    isDismissible: true,
+                    timestamp: Date.now()
+                })
+            })
     }
 
     const birthDateOnChange = (date: Date) => {
@@ -164,7 +159,6 @@ function UserEditForm(props: UserEditFormProps) {
     }
 
     const anyTextInputChangeHandler: ChangeEventHandler<HTMLInputElement> = (e) => {
-        console.log(props.method);
         let propKey: string = e.target.name;
         let operand = newUser[propKey as keyof User];
         (newUser[propKey as keyof User] as typeof operand) = e.target.value as typeof operand;
