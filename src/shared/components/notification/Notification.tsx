@@ -1,6 +1,6 @@
 import './Notification.css'
 import { ReactComponent as XIcon } from '../../images/x-icon.svg'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import NotificationData from '../../interfaces/NotificationData';
 
 interface NotificationProps {
@@ -10,20 +10,24 @@ interface NotificationProps {
 
 function Notification(props: NotificationProps) {
     const [isHidden, setIsHidden] = useState(true);
+    const deleteRef = useRef(props.deleteNotification);
+    deleteRef.current = props.deleteNotification;
+
     useEffect(() => {
         setIsHidden(false);
     }, [])
 
-    // useEffect(() => {
-    //     setTimeout(dismiss, 3000);
-    // }, [])
+    useEffect(() => {
+        let timer = setTimeout(dismiss, 3000);
+        return () => clearTimeout(timer);
+    }, [])
 
     const dismiss = () => {
         if (props.notificationData.isDismissible) {
             setIsHidden(true);
             setTimeout(() => {
-                if(props.deleteNotification)
-                    props.deleteNotification(props.notificationData)
+                if(deleteRef.current)
+                    deleteRef.current(props.notificationData)
             }, 500)
         }
     }
