@@ -1,8 +1,11 @@
 import './CourseEdition.css';
-import { useState } from 'react';
+import { ChangeEvent, ChangeEventHandler, EventHandler, FormEventHandler, KeyboardEventHandler, RefObject, useState } from 'react';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import { Course } from '../../../shared/courses/Courses';
+import { Course, courses } from '../../../shared/courses/Courses';
 import { Themes } from '../../../shared/themes/Themes';
+import { isTemplateExpression } from 'typescript';
+import React from 'react';
+import SearchComponent from '../../../shared/components/search-component/SearchComponent';
 
 
 interface CourseEditionProps{
@@ -18,23 +21,24 @@ function CourseEdition(props: CourseEditionProps) {
     let indexCourse = Number(props.idCourse.slice(-1)) - 1;
     let allThemesCourses: Themes[][] = [];
     let filterNameThemes: string[] = [];
-
-    for(let i = 0; i < props.coursesList.length; i++) {
+    
+    for (let i = 0; i < props.coursesList.length; i++) {
         allThemesCourses.push(props.themesList);
     }
-
+    
     const [themesCourse, setThemesCourse] = useState(props.coursesList[indexCourse].themes);
     const [allThemes, setAllThemes] = useState(allThemesCourses[indexCourse]);
-    
+    const [searchTurn, setSearchTurn] = useState('');
+        
     const addNewThemeInProgramCourse = (item: Themes) => {
         let count = 0;
-        for(let theme of themesCourse) {
-            if(theme.name === item.name) {
+        for (let theme of themesCourse) {
+            if (theme.name === item.name) {
                 count++;
             }
         }
         if (count === 0) {
-            newThemeCourse = {id: themesCourse.length + 1, name: item.name, check: true};
+            newThemeCourse = { id: themesCourse.length + 1, name: item.name, check: true };
             currentCourse = themesCourse;
             currentCourse.push(newThemeCourse);
             setThemesCourse([...currentCourse]);
@@ -50,18 +54,22 @@ function CourseEdition(props: CourseEditionProps) {
 
     const deleteThemeFromCourse = (theme: Themes) => {
         let index = -1;
-        for(let item of allThemes) {
-            if(theme.name === item.name) {
+        for (let item of allThemes) {
+            if (theme.name === item.name) {
                 index = allThemes.indexOf(item);
             }
         }
-        if(index >= 0) {
+        if (index >= 0) {
             allThemes[index].check = false;
             setAllThemes([...allThemes]);
-        } 
+        }
         currentCourse = themesCourse;
         currentCourse.splice(themesCourse.indexOf(theme), 1);
         setThemesCourse([...currentCourse]);
+    }
+
+    const searchFromTheme = (str: string) => {
+        setSearchTurn(str);
     }
 
     return (
@@ -70,20 +78,28 @@ function CourseEdition(props: CourseEditionProps) {
         <div className='new-themes-course'>
             <div className="new-themes-header">Темы для курса</div>
             <div className="new-themes-container">
-            {
-                 allThemes.map((item) => (
-                    <div key={item.id} className={"new-theme "+ item.check}>
-                        <div className="new-theme-name">{item.name}</div>
-                        <div className="new-theme-add">
-                            <button onClick={() => addNewThemeInProgramCourse(item)} className="button-add-theme">
+                <SearchComponent funcSearch={searchFromTheme}/>
+                {
+                    allThemes.filter((item) => {
+                        if (searchTurn === '') {
+                            return item;
+                        } else if (item.name.toLowerCase().includes(searchTurn.toLowerCase())) {
+                            return item;
+                        }
+                    })
+                    .map((item, key) => (
+                        <div key={key} className={"new-theme "+ item.check}>
+                            <div className="new-theme-name">{item.name}</div>
+                            <div className="new-theme-add">
+                                <button onClick={() => addNewThemeInProgramCourse(item)} className="button-add-theme">
                                 {
                                     item.check ? <FontAwesomeIcon icon="check" /> : <FontAwesomeIcon icon="plus" />
                                 }
-                            </button>
+                                </button>
+                            </div>
                         </div>
-                    </div>
-                ))
-            }
+                    ))
+                }
             </div>
         </div>
         <div className="program-course-container">
