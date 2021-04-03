@@ -81,11 +81,9 @@ function CourseEdition(props: CourseEditionProps) {
                 <SearchComponent funcSearch={searchFromTheme}/>
                 {
                     allThemes.filter((item) => {
-                        if (searchTurn === '') {
+                        if (item.name.toLowerCase().includes(searchTurn.toLowerCase())) {
                             return item;
-                        } else if (item.name.toLowerCase().includes(searchTurn.toLowerCase())) {
-                            return item;
-                        }
+                        } 
                     })
                     .map((item, key) => (
                         <div key={key} className={"new-theme "+ item.check}>
