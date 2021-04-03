@@ -1,7 +1,7 @@
 import './Notification.css'
-import { ReactComponent as XIcon } from '../../images/x-icon.svg'
-import { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import NotificationData from '../../interfaces/NotificationData';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 interface NotificationProps {
     notificationData: NotificationData;
@@ -26,24 +26,53 @@ function Notification(props: NotificationProps) {
         if (props.notificationData.isDismissible) {
             setIsHidden(true);
             setTimeout(() => {
-                if(deleteRef.current)
+                if (deleteRef.current)
                     deleteRef.current(props.notificationData)
-            }, 500)
+            }, 300)
         }
+    }
+
+    const typeToClassName = () => {
+        switch (props.notificationData.type) {
+            case "information":
+                return "info-notification";
+            case "success":
+                return "success-notification";
+            case "warning":
+                return "warning-notification";
+            case "error":
+                return "error-notification";
+        }
+        return "";
+    }
+
+    const typeToIconName = () => {
+        switch (props.notificationData.type) {
+            case "information":
+                return "info-circle";
+            case "success":
+                return "check-circle";
+            case "warning":
+                return "exclamation-circle";
+            case "error":
+                return "times-circle";
+        }
+        return "info-circle";
     }
 
     return (
         <div className={`notification 
-        ${isHidden ? "hidden" : ""}
-        ${props.notificationData.type === "information" ? "info-notification" : ""}
-        ${props.notificationData.type === "success" ? "success-notification" : ""}
-        ${props.notificationData.type === "error" ? "error-notification" : ""}
-        `}>
+            ${isHidden ? "hidden" : ""}
+            ${typeToClassName()} `}
+        >
+            <div className="type-icon">
+                <FontAwesomeIcon icon={typeToIconName()} />
+            </div>
             <span>{props.notificationData.text}</span>
             {
                 props.notificationData.isDismissible &&
-                <button onClick={ dismiss } className="close-btn">
-                    <XIcon/>
+                <button onClick={dismiss} className="close-btn">
+                    <FontAwesomeIcon icon="times" />
                 </button>
             }
         </div>
