@@ -3,16 +3,10 @@ import './UserEditForm.css'
 import '../UserPage.css';
 import { User } from '../../interfaces/User';
 import React, { ChangeEventHandler, FormEventHandler, useEffect, useState } from 'react';
-import { SelectItem } from '../../interfaces/SelectItem';
 import DatePickerComponent from '../../../shared/components/date-picker/DatePickerComponent';
-import { OptionsType } from 'react-select';
 import { convertEnumToDictionary, dictionary, getRussianDictionary } from '../../../shared/converters/enumToDictionaryEntity';
 import { Role } from '../../../enums/role';
-import { validateName } from '../../../shared/validators/nameValidator';
-import { validateTopLevelDomain } from '../../../shared/validators/topLevelDomainValidator';
-import { getName } from '../../../shared/converters/objectKeyToString';
 import NotificationData from '../../../shared/interfaces/NotificationData';
-import { type } from 'node:os';
 import { UserInput } from '../../interfaces/UserInput';
 import { useForm } from 'react-hook-form';
 import { convertEntitiesToSelectItems } from '../../../shared/converters/entityToSelectItemConverter';
@@ -30,7 +24,7 @@ interface UserEditFormProps {
 
 function UserEditForm(props: UserEditFormProps) {
 
-    const initUser = Object.assign({},props.userToEdit) || {
+    const initUser = Object.assign({}, props.userToEdit) || {
         firstName: "",
         lastName: "",
         birthDate: undefined,
@@ -82,11 +76,12 @@ function UserEditForm(props: UserEditFormProps) {
                     <div className="user-list-item">
                         <label className="column">Пароль</label>
                         <input
+                            {...register('password')}
                             type="text"
                             className="column"
                             value={newUser.password}
                             onChange={anyTextInputChangeHandler}
-                            name={getName<User>(newUser, (o) => o.password)} />
+                            required />
                     </div>
                 )
             } else {
@@ -114,7 +109,7 @@ function UserEditForm(props: UserEditFormProps) {
 
     const sendUser = () => {
         fetch(props.url + '/' + (props.userToEdit ? props.userToEdit.id : 'register'), {
-            method: (props.method!=='' ? props.method : 'POST'),
+            method: (props.method !== '' ? props.method : 'POST'),
             headers: {
                 'Accept': 'application/json',
                 'Authorization': 'Bearer ' + props.token,
@@ -217,11 +212,11 @@ function UserEditForm(props: UserEditFormProps) {
                     <div className="user-list-item">
                         <label className="column">Телефон</label>
                         <input
+                            {...register('phone')}
                             type="text"
                             className="column"
                             value={newUser.phone}
                             onChange={anyTextInputChangeHandler}
-                            name={getName<User>(newUser, (o) => o.phone)}
                             required />
                         <div className="bad-feedback">Введите номер телефона</div>
                     </div>
@@ -229,17 +224,24 @@ function UserEditForm(props: UserEditFormProps) {
                         <label className="column">Аватар</label>
                         <input type="file" className="column" />
                         <input
+                            {...register('userPic')}
                             type="text"
                             className="column"
                             placeholder="или вставьте ссылку"
                             value={newUser.userPic}
                             onChange={anyTextInputChangeHandler}
-                            name={getName<User>(newUser, (o) => o.userPic)} />
+                            required />
                         <img src={newUser.userPic} alt="аватар" />
                     </div>
                     <div className="user-list-item">
                         <label className="column">Почта</label>
-                        <input type="email" className="column" value={newUser.email} onChange={anyTextInputChangeHandler} name={getName<User>(newUser, (o) => o.email)} required />
+                        <input
+                            {...register('email')}
+                            type="email"
+                            className="column"
+                            value={newUser.email}
+                            onChange={anyTextInputChangeHandler}
+                            required />
                         <div className="bad-feedback">Введите e-mail</div>
                     </div>
                     {
