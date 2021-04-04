@@ -5,24 +5,31 @@
 
 .course-create {
     display: grid;
-    grid-template-columns: 760px 1fr;;
+    grid-template-columns: 83.5% 17.5%;
     gap: 7px;
-    margin-bottom: 50px;
+    margin-bottom: 30px;
 }
 
 .button-create {
-    background-color: white;
+    background-color: #00CCF2;
+    width: 140px;
     height: 40px;
+    border-radius: 20px;
     outline: none;
-    border: 2px solid rgb(41, 3, 253);
-    border-radius: 5px;
-    width: inherit;
+    border: none;
+    color: #F5FBFF;
+    font-family: 'Montserrat', semi-bold;
+    font-size: 16px;
+}
+
+.button-create:focus {
+    outline: none;
+    border: none;
 }
 
 .courses-list {
     display: flex;
     flex-direction: column;
-    gap: 50px;
     width: 900px;
 }
 
@@ -32,9 +39,9 @@
     align-items: center;
     padding: 0px 10px;
     height: 60px;
-    border: 2px solid rgb(41, 3, 253);
-    border-radius: 5px;
+    border-bottom: 1px solid rgba(39, 45, 59, .15);
     font-size: 20px;
+    font-family: 'Montserrat', regular;
 }
 
 .course-update-delete {
