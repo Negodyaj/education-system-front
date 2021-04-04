@@ -62,7 +62,7 @@ function UserEditForm(props: UserEditFormProps) {
                         <label className="column">Список ролей</label>
                         <CustomMultiSelect
                             selectType={"multi"}
-                            userOptions={newUser.roleIds || undefined}
+                            userOptionsIds={newUser.roleIds || undefined}
                             options={convertEntitiesToSelectItems(getRussianDictionary(convertEnumToDictionary(Role)))}
                             onSelect={roleOnChange}></CustomMultiSelect>
                     </div>)
