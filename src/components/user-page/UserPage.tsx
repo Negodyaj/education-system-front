@@ -1,9 +1,7 @@
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { userInfo } from 'node:os';
 import React, { useEffect, useState } from 'react';
 import ConfirmationDialog from '../../shared/components/confirmation-dialog/ConfirmationDialog';
-import ConfirmationDialogContent from '../../shared/components/confirmation-dialog/ConfirmationDialogContent';
 import NotificationData from '../../shared/interfaces/NotificationData';
 import { User } from '../interfaces/User';
 import UserList from './user-list/UserList';
@@ -83,7 +81,7 @@ function UserPage(props: UserPageProps) {
             })
             .then(response => response.json())
             .then(data => {
-                checkUpdatedUsers([...usersInState].filter(u => u.id === userToDeleteId)[0]);
+                checkUpdatedUsers(data);
             })
         }
         setIsModalShown(false);
