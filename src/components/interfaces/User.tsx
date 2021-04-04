@@ -1,9 +1,7 @@
-import { SelectItem } from "./SelectItem";
-
 export interface User {
     id?: number;
     firstName?: string;
-    lastName?: string;
+    lastName: string;
     birthDate?: string;
     login?: string;
     phone?: string;
@@ -12,5 +10,5 @@ export interface User {
     password?: string;
     groupId?: number;
     groupName?: string;
-    role?: SelectItem[];
+    roleIds?: number[];
 }
