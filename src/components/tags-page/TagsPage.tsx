@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { isJSDocReturnTag } from 'typescript';
 import { Tag } from '../interfaces/Tag';
+import TagList from './tag-list/TagList';
 import './TagsPage.css';
 
 function TagsPage () {
@@ -27,7 +28,7 @@ function TagsPage () {
          <button className="add"></button>
      </div>
      <div className="body"> 
-     <div className="tags"> {tagsInState.map(t=>{return t.name})}</div>
+     <div className="tags"> <TagList tags={tagsInState}></TagList> </div>
      </div>
  </div>
 
