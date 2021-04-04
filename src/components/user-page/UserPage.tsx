@@ -1,6 +1,8 @@
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import ConfirmationDialog from '../../shared/components/confirmation-dialog/ConfirmationDialog';
+import ConfirmationDialogContent from '../../shared/components/confirmation-dialog/ConfirmationDialogContent';
 import NotificationData from '../../shared/interfaces/NotificationData';
 import { User } from '../interfaces/User';
 import UserList from './user-list/UserList';
@@ -21,9 +23,14 @@ function UserPage(props: UserPageProps) {
     const [isFetching, setIsFetching] = useState(true);
     const [userToEdit, setUserToEdit] = useState<User | undefined>();
     const [methodInForm, setMethodInForm] = useState('');
+    const [isModalShown, setIsModalShown] = useState(false);
     const stringChanged = "изменён";
     const stringAdded = 'добавлен';
     let actionInNotification = methodInForm === "POST" ? stringAdded : stringChanged;
+    const confirmationDeleteMessage = "Вы действительно хотите удалить пользователя?";
+    const confirmationDeleteTitle = "Удаление пользователя";
+    const confirmLabel = "Да";
+    const declineLabel = "нет";
 
     const getUsers = () => {
         fetch(url, {
@@ -52,10 +59,6 @@ function UserPage(props: UserPageProps) {
         })
     }
 
-    useEffect(() => {
-        getUsers();
-    }, []);
-
     const getUserToUpdate = (userToEditId: number) => {
         fetch(url + '/' + userToEditId, {
             headers: {
@@ -72,6 +75,18 @@ function UserPage(props: UserPageProps) {
                 setIsEditModeOn(true);
             })
     }
+
+    const deleteUser = (decision: boolean) => {
+        if (decision) {
+
+        }
+        setIsModalShown(false);
+    }
+
+    useEffect(() => {
+        getUsers();
+    }, []);
+
     const onEditClick = (userToEditId?: number) => {
         if (userToEditId) {
             getUserToUpdate(userToEditId)
@@ -82,22 +97,25 @@ function UserPage(props: UserPageProps) {
             setIsEditModeOn(true);
         }
     }
-    const onSaveClick = (addedUser: User) => {
-        checkUpdatedUsers(addedUser)
+
+
+    const onDeleteClick = (userToDeleteId: number) => {
+        setIsModalShown(true);
     }
 
     const renderUserList = () => {
         return <UserList
             roleId={props.roleId}
             users={usersInState}
-            onEditClick={onEditClick}></UserList>
+            onEditClick={onEditClick}
+            onDeleteClick={onDeleteClick}></UserList>
     }
     const renderUserEditForm = () => {
         return <UserEditForm
             roleId={props.roleId}
             userToEdit={userToEdit}
             setIsEditModeOn={setIsEditModeOn}
-            sendUserPropsForSuccessNotification={onSaveClick}
+            sendUserPropsForSuccessNotification={checkUpdatedUsers}
             sendNotification={props.sendNotification}
             url={url}
             token={token}
@@ -114,6 +132,13 @@ function UserPage(props: UserPageProps) {
                         isEditModeOn ? renderUserEditForm() : renderUserList()
                     )
             }
+            <ConfirmationDialog
+                isShown={isModalShown}
+                confirmLabel={confirmLabel}
+                declineLabel={declineLabel}
+                message={confirmationDeleteMessage}
+                title={confirmationDeleteTitle}
+                callback={deleteUser}></ConfirmationDialog>
         </div>
     )
 }
