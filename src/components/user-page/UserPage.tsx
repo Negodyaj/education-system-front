@@ -27,6 +27,10 @@ function UserPage(props: UserPageProps) {
     const stringChanged = "изменён";
     const stringAdded = 'добавлен';
     let actionInNotification = methodInForm === "POST" ? stringAdded : stringChanged;
+    const confirmationDeleteMessage = "Вы действительно хотите удалить пользователя?";
+    const confirmationDeleteTitle = "Удаление пользователя";
+    const confirmLabel = "Да";
+    const declineLabel = "нет";
 
     const getUsers = () => {
         fetch(url, {
@@ -129,12 +133,12 @@ function UserPage(props: UserPageProps) {
                     )
             }
             <ConfirmationDialog
-            isShown={isModalShown}
-            confirmLabel="Да"
-            declineLabel="нет"
-            message="Вы действительно хотите удалить пользователя?"
-            title="Удаление пользователя"
-            callback={deleteUser}></ConfirmationDialog>
+                isShown={isModalShown}
+                confirmLabel={confirmLabel}
+                declineLabel={declineLabel}
+                message={confirmationDeleteMessage}
+                title={confirmationDeleteTitle}
+                callback={deleteUser}></ConfirmationDialog>
         </div>
     )
 }
