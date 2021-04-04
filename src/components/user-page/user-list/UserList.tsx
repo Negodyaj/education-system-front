@@ -13,21 +13,21 @@ interface UserListProps {
 
 function UserList(props: UserListProps) {
 
-    const lastNameAlphabetSort = (a: User, b: User) => {
-        if (a.lastName !== undefined && b.lastName !== undefined) {
-            if (b.lastName > a.lastName) {
-                return Math.pow(-1, signInvertor - 1);
-            }
-            if (b.lastName < a.lastName) {
-                return Math.pow(-1, signInvertor);
-            }
+    const lastNameAlphabetSort = (a: string, b: string) => {
+        a = a.toLowerCase();
+        b = b.toLowerCase();
+        if (b > a) {
+            return Math.pow(-1, signInvertor);
+        }
+        if (b < a) {
+            return Math.pow(-1, signInvertor - 1);
         }
         return 0;
     }
 
     const [signInvertor, setSignInvertor] = useState(1);
     const [usersToShow, setUsersToShow] = useState([...props.users].sort((a, b) => {
-        return lastNameAlphabetSort(a, b);
+        return lastNameAlphabetSort(a.lastName, b.lastName);
     }));
 
     const elementsDefinedByRole = {
@@ -46,7 +46,7 @@ function UserList(props: UserListProps) {
 
     const lastNameColumnOnClick = () => {
         setUsersToShow([...usersToShow.sort((a, b) => {
-            return lastNameAlphabetSort(a, b);
+            return lastNameAlphabetSort(a.lastName, b.lastName);
         })])
         setSignInvertor(signInvertor + 1);
     }
