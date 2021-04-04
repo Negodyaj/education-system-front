@@ -1,5 +1,6 @@
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { userInfo } from 'node:os';
 import React, { useEffect, useState } from 'react';
 import ConfirmationDialog from '../../shared/components/confirmation-dialog/ConfirmationDialog';
 import ConfirmationDialogContent from '../../shared/components/confirmation-dialog/ConfirmationDialogContent';
@@ -18,10 +19,16 @@ function UserPage(props: UserPageProps) {
 
     const url = 'https://80.78.240.16:7070/api/User';
     const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoidm9sb2R5YTIyIiwiaWQiOiIxIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoi0JDQtNC80LjQvdC40YHRgtGA0LDRgtC-0YAiLCJuYmYiOjE2MTc0NDk3MjcsImV4cCI6MTYxNzYyMjUyNywiaXNzIjoiRWR1Y2F0aW9uU3lzdGVtLkFwaSIsImF1ZCI6IkRldkVkdWNhdGlvbiJ9.h_GX1srLTRp2r-D8gzfjikmmxW2WJZ6PwU3703G0bMM';
+    const headers = {
+        'Accept': 'application/json',
+        'Authorization': 'Bearer ' + token,
+        'Content-Type': 'application/json'
+    }
     const [usersInState, setUsersInState] = useState<User[]>([]);
     const [isEditModeOn, setIsEditModeOn] = useState(false);
     const [isFetching, setIsFetching] = useState(true);
     const [userToEdit, setUserToEdit] = useState<User | undefined>();
+    const [userToDeleteId, setUserToDeleteId] = useState<number>();
     const [methodInForm, setMethodInForm] = useState('');
     const [isModalShown, setIsModalShown] = useState(false);
     const stringChanged = "изменён";
@@ -34,11 +41,7 @@ function UserPage(props: UserPageProps) {
 
     const getUsers = () => {
         fetch(url, {
-            headers: {
-                'Accept': 'application/json',
-                'Authorization': 'Bearer ' + token,
-                'Content-Type': 'application/json'
-            }
+            headers: headers
         })
             .then(response => response.json())
             .then(data => {
@@ -48,12 +51,12 @@ function UserPage(props: UserPageProps) {
             })
     }
 
-    const checkUpdatedUsers = (addedUser: User) => {
+    const checkUpdatedUsers = (modifiedUser: User) => {
         setIsFetching(true);
         getUsers();
         props.sendNotification({
             type: "success",
-            text: "пользователь " + addedUser.firstName + " " + addedUser.lastName + " успешно " + actionInNotification,
+            text: "пользователь " + modifiedUser.firstName + " " + modifiedUser.lastName + " успешно " + actionInNotification,
             isDismissible: true,
             timestamp: Date.now()
         })
@@ -61,11 +64,7 @@ function UserPage(props: UserPageProps) {
 
     const getUserToUpdate = (userToEditId: number) => {
         fetch(url + '/' + userToEditId, {
-            headers: {
-                'Accept': 'application/json',
-                'Authorization': 'Bearer ' + token,
-                'Content-Type': 'application/json'
-            }
+            headers: headers
         })
             .then(response => response.json())
             .then(data => {
@@ -78,7 +77,14 @@ function UserPage(props: UserPageProps) {
 
     const deleteUser = (decision: boolean) => {
         if (decision) {
-
+            fetch(url + '/' + userToDeleteId, {
+                method: 'DELETE',
+                headers: headers
+            })
+            .then(response => response.json())
+            .then(data => {
+                checkUpdatedUsers([...usersInState].filter(u => u.id === userToDeleteId)[0]);
+            })
         }
         setIsModalShown(false);
     }
@@ -98,8 +104,8 @@ function UserPage(props: UserPageProps) {
         }
     }
 
-
-    const onDeleteClick = (userToDeleteId: number) => {
+    const onDeleteClick = (userToDeleteIdArg: number) => {
+        setUserToDeleteId(userToDeleteIdArg);
         setIsModalShown(true);
     }
 
@@ -119,6 +125,7 @@ function UserPage(props: UserPageProps) {
             sendNotification={props.sendNotification}
             url={url}
             token={token}
+            headers={headers}
             method={methodInForm}></UserEditForm>
     }
 

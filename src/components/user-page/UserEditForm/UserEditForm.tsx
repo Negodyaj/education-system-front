@@ -19,6 +19,7 @@ interface UserEditFormProps {
     sendNotification: (newNotification: NotificationData) => void;
     url: string;
     token: string;
+    headers: HeadersInit|undefined;
     method: string;
 }
 
@@ -110,11 +111,7 @@ function UserEditForm(props: UserEditFormProps) {
     const sendUser = () => {
         fetch(props.url + '/' + (props.userToEdit ? props.userToEdit.id : 'register'), {
             method: props.method,
-            headers: {
-                'Accept': 'application/json',
-                'Authorization': 'Bearer ' + props.token,
-                'Content-Type': 'application/json'
-            },
+            headers: props.headers,
             body: JSON.stringify(newUser)// {} instead newUser - to provoke error
         }
         )
