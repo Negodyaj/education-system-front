@@ -1,3 +1,29 @@
+.modal-back {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.7);
+    transition: all 0.7s ease;
+    opacity: 1;
+    pointer-events: all;
+}
+
+.modal-add-course {
+    display: grid;
+    grid-template-rows: 70px 1fr 50px;
+    width: 400px;
+    height: 250px;
+    border: 3px solid rgb(41, 3, 253);
+    border-radius: 5px;
+    padding: 5px 5px;
+    margin: 150px auto;
+    background-color: rgb(255, 255, 255);
+    transition: all 0.7s ease;
+    position: relative;
+}
+
 .input-course-container {
     display: flex;
     justify-content: space-between;

@@ -1,4 +1,4 @@
-import './CourseEdition.css';
+/*import './CourseEdition.css';
 import { ChangeEvent, ChangeEventHandler, EventHandler, FormEventHandler, KeyboardEventHandler, RefObject, useState } from 'react';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import { Course, courses } from '../../../shared/courses/Courses';
@@ -9,7 +9,6 @@ import SearchComponent from '../../../shared/components/search-component/SearchC
 
 
 interface CourseEditionProps{
-    coursesList: Course[];
     themesList: Themes[];
     idCourse: string;
 }
@@ -122,4 +121,6 @@ function CourseEdition(props: CourseEditionProps) {
     )
 }
 
-export default CourseEdition;
+export default CourseEdition;*/
+
+export{};

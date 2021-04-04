@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Link, Route } from 'react-router-dom';
-import CourseEdition from './course-edition/CourseEdition';
+//import CourseEdition from './course-edition/CourseEdition';
 import './CoursesPage.css';
 import ModalWindowDelete from './modal-window/ModalWindowDelete';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import InputNameCourse from './InputNameCourse';
-import { courses, Course } from '../../shared/courses/Courses';
-
+import NewCourse from './NewCourse';
+import { DataNewCourse } from './NewCourse';
+import { Course } from '../../shared/courses/Courses';
 
 interface CoursesPageProps {
     roleId: number;
@@ -14,71 +14,98 @@ interface CoursesPageProps {
 
 function CoursesPage(props: CoursesPageProps) {
 
-    /*const url = ... ;
-    const token = ... ;
-    const dataToSend = ... ;
+    const url = 'https://80.78.240.16:7070/api/Course/';
+    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoidm9sb2R5YTIyIiwiaWQiOiIxIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoi0JDQtNC80LjQvdC40YHRgtGA0LDRgtC-0YAiLCJuYmYiOjE2MTc0ODA0MTQsImV4cCI6MTYxNzY1MzIxNCwiaXNzIjoiRWR1Y2F0aW9uU3lzdGVtLkFwaSIsImF1ZCI6IkRldkVkdWNhdGlvbiJ9.tMl6BGk_i_ZwTDtQzMZ-dgFgG5II4Aal95iaz8rPE9o' ;
 
-    fetch(url, {
+    const getCourses = () => {
+        fetch(url, {
+            headers: {
+                'Accept': 'application/json',
+                'Authorization': 'Bearer ' + token,
+                'Content-Type': 'application/json'
+            },
+        })
+            .then(response => response.json())
+            .then(data => {
+                setCoursesList(data);
+            })
+            .catch(error => console.log('Ошибка ' + error))
+    }
+
+    useEffect(() => {
+        getCourses();
+    }, []);
+
+    const addCourse = (newCourse: DataNewCourse) => {
+        fetch(url, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
                 'Authorization': 'Bearer ' + token,
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(dataToSend)
-        })*/
+            body: JSON.stringify(newCourse)
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                getCourses();
+            })
+            .catch(error => console.log('Ошибка ' + error))
+    }
 
-    let filterId: number [];
-    let idCoursesDeleteForState: number[] = [];
-    let newCourse = {} as Course;
-    let newCoursesList: Course[] = [];
+    const deleteCourse = (id: number) => {
+        fetch(url + id, {
+            method: 'DELETE',
+            headers: {
+                'Accept': 'application/json',
+                'Authorization': 'Bearer ' + token,
+                'Content-Type': 'application/json'
+            },
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                getCourses();
+            })
+            .catch(error => console.log('Ошибка ' + error))
+    }
 
+    let courses: Course[] = [];
+
+    const [isModalAdd, setIsModalAdd] = useState(false);
     const [isModalDelete, setIsModalDelete] = useState(false);
     const [coursesList, setCoursesList] = useState(courses);
     const [idCourseDelete, setIdCourseDelete] = useState(0);
-    const [idCoursesDelete, setIdCoursesDelete] = useState(idCoursesDeleteForState);
-    const [isOpenInput, setIsOpenInput] = useState(false);
 
-    const openModal = (id: number) => {
+    const openModalDelete = (id: number) => {
         setIsModalDelete(true);
-        let idCourse = id;
-        setIdCourseDelete(idCourse);
+        setIdCourseDelete(id);
     }
 
     const onDeleteHandler = (num: number) => {
-        setIsModalDelete(false);
         if (num === 1) {
-            filterId = idCoursesDelete;
-            filterId.push(idCourseDelete);
-            for(let i of filterId) {
-                console.log(i);
-            }
-            setIdCoursesDelete(filterId);
-            setCoursesList(coursesList.filter((item) => !(idCoursesDelete.includes(item.id))));
+            deleteCourse(idCourseDelete);
         }
+        setIsModalDelete(false);
     }
 
-    const createCourseHandler = () => {
-        setIsOpenInput(true);
+    const openModalAdd = () => {
+        setIsModalAdd(true);
     }
 
-    const addNewCourse = (name: string) => {
-        if(name !== '') {
-            newCourse = { id: coursesList.length + 1, name: name, themes: [] };
-            newCoursesList = coursesList;
-            newCoursesList.push(newCourse);
-            setCoursesList(newCoursesList);
-            setIsOpenInput(false);
-        }
+    const addNewCourse = (data?: DataNewCourse) => {
+        if(data !== undefined) {
+            addCourse(data);
+        } 
+        setIsModalAdd(false);
     }
  
     return(
         <div className="course-container">
             <div className="course-create">
-                {
-                    isOpenInput ? <InputNameCourse onClick={addNewCourse} /> : <div></div>
-                }
-                <button onClick={createCourseHandler} className='button-create'>Добавить курс</button> 
+                <div> </div>
+                <button onClick={openModalAdd} className='button-create'>Добавить курс</button> 
             </div>
             <div className="courses-list">
                 {
@@ -91,14 +118,15 @@ function CoursesPage(props: CoursesPageProps) {
                                         <FontAwesomeIcon icon="edit" />
                                     </button>
                                 </Link>
-                                <button onClick={() => openModal(item.id)} className='button-delete'>
-                                    <FontAwesomeIcon icon="trash-alt" />
+                                <button onClick={() => openModalDelete(item.id)} className='button-delete'>
+                                    <FontAwesomeIcon icon="trash" />
                                 </button>
                             </div>
                         </div>
                     ))
                 }
             </div>
+            { isModalAdd && <NewCourse dataNewCourse={addNewCourse} /> }
             { isModalDelete && <ModalWindowDelete onClickDelete={onDeleteHandler}/>}
         </div>
     )
