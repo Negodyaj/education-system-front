@@ -44,6 +44,11 @@
     font-family: 'Montserrat', regular;
 }
 
+.course:hover{
+    background-color: rgba(0, 211, 248, 0.255);
+    border-radius: 5px;
+}
+
 .course-update-delete {
     display: flex;
     justify-content: space-between;
@@ -53,7 +58,7 @@
 }
 
 .button-update {
-    background-color: white;
+    background-color: rgba(255, 255, 255, 0);
     background-size: contain;
     width: 40px;
     height: 40px;
@@ -62,7 +67,7 @@
 }
 
 .button-delete {
-    background-color: white;
+    background-color: rgba(255, 255, 255, 0);
     background-size: contain;
     width: 40px;
     height: 40px;

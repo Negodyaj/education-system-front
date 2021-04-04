@@ -1,29 +1,62 @@
+@keyframes open-back {
+    to {
+        opacity: 1;
+      }
+}
+
+@keyframes open-modal {
+    to {
+        opacity: 1;
+        margin: 150px auto;
+      }
+}
+
 .modal-back {
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
-    background-color: rgba(0, 0, 0, 0.7);
-    transition: all 0.7s ease;
-    opacity: 1;
+    background-color: rgba(45, 46, 48, 0.7);
+    opacity: 0;
+    animation-name: open-back;
+    animation-duration: .6s;
+    animation-fill-mode: forwards;
     pointer-events: all;
 }
 
 .modal-add-course {
     display: grid;
     grid-template-rows: 70px 1fr 50px;
-    width: 400px;
-    height: 250px;
-    border: 3px solid rgb(41, 3, 253);
-    border-radius: 5px;
+    opacity: 0;
+    width: 700px;
+    height: 500px;
+    border: 3px solid rgb(255, 255, 255);
+    border-radius: 20px;
     padding: 5px 5px;
-    margin: 150px auto;
+    margin-top: -100%;
     background-color: rgb(255, 255, 255);
-    transition: all 0.7s ease;
+    animation-name: open-modal;
+    animation-duration: .6s;
+    animation-fill-mode: forwards;
     position: relative;
 }
 
+.modal-header {
+    border-bottom: none;
+    padding: 0;
+}
+
+.head-modal {
+    display: flex;
+    margin-left: 95px;
+    align-items: flex-end;
+    padding-top: 25px;
+}
+
+.head-modal h4{
+    margin-bottom: 0;
+}
 .input-course-container {
     display: flex;
     justify-content: space-between;
@@ -36,33 +69,80 @@
 
 }
 
-.input-course-text {
+.create-course {
+    display: grid;
+    grid-template-rows: 45px 50px 45px 160px;
+    width: 70%;
+    margin: 0 auto;
+}
+
+.course-data {
+    display:flex;
+    justify-content: flex-start;
     width: 100%;
     border: none;
-    padding-left: 10px;
+    align-items: center;
 }
 
-.input-course-name {
+.new-course-header {
+    display:flex;
+    justify-content: flex-start;
+    align-items: flex-end;
+}
+
+.course-description {
     width: inherit;
-    border: none;
+    height: 150px;
+    border: 2px solid rgba(162, 163, 194, 0.686);
     outline: none;
+    border-radius: 5px;
+    word-break: break-word;
 }
 
-.input-course-name:focus {
-    border: none;
+.course-name {
+    width: inherit;
+    height: 40px;
+    border: 2px solid rgba(162, 163, 194, 0.686);
     outline: none;
+    border-radius: 5px;
 }
 
 .create-new-course {
     width: 50px;
 }
 
-.button-create-new-course {
-    border: none;
+.select-delete {
+    height: 55px;
 }
 
+.button-close {
+    border-radius: 50%;
+    background-color: #00CCF2;
+    width: 40px;
+    height: 40px;
+    outline: none;
+    border: none;
+    color: white;
+}
 
-.button-create-new-course:focus {
+.button-close:focus {
+    border: none;
+    outline: none;
+}
+
+.button-select {
+    background-color: #00CCF2;
+    width: 140px;
+    height: 40px;
+    border-radius: 20px;
+    outline: none;
+    border: none;
+    color: #F5FBFF;
+    font-family: 'Montserrat', semi-bold;
+    font-size: 16px;
+}
+
+.button-select:focus {
     border: none;
     outline: none;
 }
