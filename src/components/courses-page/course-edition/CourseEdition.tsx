@@ -1,11 +1,10 @@
-/*import './CourseEdition.css';
-import { ChangeEvent, ChangeEventHandler, EventHandler, FormEventHandler, KeyboardEventHandler, RefObject, useState } from 'react';
+import './CourseEdition.css';
+import { useEffect, useState } from 'react';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import { Course, courses } from '../../../shared/courses/Courses';
 import { Themes } from '../../../shared/themes/Themes';
-import { isTemplateExpression } from 'typescript';
 import React from 'react';
 import SearchComponent from '../../../shared/components/search-component/SearchComponent';
+import { Course } from '../../../shared/courses/Courses';
 
 
 interface CourseEditionProps{
@@ -15,18 +14,41 @@ interface CourseEditionProps{
 
 function CourseEdition(props: CourseEditionProps) {
 
+    const url = 'https://80.78.240.16:7070/api/Course/';
+    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoidm9sb2R5YTIyIiwiaWQiOiIxIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoi0JDQtNC80LjQvdC40YHRgtGA0LDRgtC-0YAiLCJuYmYiOjE2MTc0ODA0MTQsImV4cCI6MTYxNzY1MzIxNCwiaXNzIjoiRWR1Y2F0aW9uU3lzdGVtLkFwaSIsImF1ZCI6IkRldkVkdWNhdGlvbiJ9.tMl6BGk_i_ZwTDtQzMZ-dgFgG5II4Aal95iaz8rPE9o' ;
+
+    const getCourseById = (id: string) => {
+        fetch(url + id, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Authorization': 'Bearer ' + token,
+                'Content-Type': 'application/json'
+            },
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                let currentCourse: Course = data;
+                setThemesCourse(currentCourse.themes);
+            })
+            .catch(error => console.log('Ошибка ' + error))
+    }
+
+    useEffect(() => {
+        getCourseById(props.idCourse);
+    }, []);
+
     let newThemeCourse = {} as Themes;
     let currentCourse: Themes[] = [];
     let indexCourse = Number(props.idCourse.slice(-1)) - 1;
     let allThemesCourses: Themes[][] = [];
     let filterNameThemes: string[] = [];
+
+    let currentThemesCourse: Themes[] = []; 
     
-    for (let i = 0; i < props.coursesList.length; i++) {
-        allThemesCourses.push(props.themesList);
-    }
-    
-    const [themesCourse, setThemesCourse] = useState(props.coursesList[indexCourse].themes);
-    const [allThemes, setAllThemes] = useState(allThemesCourses[indexCourse]);
+    const [themesCourse, setThemesCourse] = useState(currentThemesCourse);
+    const [allThemes, setAllThemes] = useState(props.themesList);
     const [searchTurn, setSearchTurn] = useState('');
         
     const addNewThemeInProgramCourse = (item: Themes) => {
@@ -121,6 +143,4 @@ function CourseEdition(props: CourseEditionProps) {
     )
 }
 
-export default CourseEdition;*/
-
-export{};
+export default CourseEdition;

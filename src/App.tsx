@@ -12,7 +12,7 @@ import UserPage from './components/user-page/UserPage';
 import DatePickerComponent from './shared/components/date-picker/DatePickerComponent';
 import CustomMultiSelect from './components/multi-select/CustomMultiSelect';
 import CoursesPage from './components/courses-page/CoursesPage';
-//import CourseEdition from './components/courses-page/course-edition/CourseEdition';
+import CourseEdition from './components/courses-page/course-edition/CourseEdition';
 import "./shared/fontawesome/FontawesomeIcons"; 
 import { themes } from './shared/themes/Themes';
 import { Role } from './enums/role';
@@ -108,10 +108,10 @@ function App() {
                                         <CoursesPage roleId={roleId}></CoursesPage>
                                     </Route>
                                 }
-                                {/* <Route path="/course-edition/:id" render={({ location, history }) => (
+                                <Route path="/course-edition/:id" render={({ location, history }) => (
                                     <CourseEdition themesList={themes} idCourse={location.pathname} />
                                 )}>
-                                </Route> */}
+                                </Route>
                                  {
                                     roleId !== Role.Student &&
                                     <Route path="/tags-page">
