@@ -53,22 +53,27 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 85px;
+    width: 90px;
     height: 40px;
 }
 
 .button-update {
-    background-color: rgba(255, 255, 255, 0);
+    background-color: #00CCF2;
     background-size: contain;
+    border-radius: 50%;
+    color: white;
     width: 40px;
     height: 40px;
     outline: none;
     border: none;
+    
 }
 
 .button-delete {
-    background-color: rgba(255, 255, 255, 0);
+    background-color: #00CCF2;
     background-size: contain;
+    border-radius: 50%;
+    color: white;
     width: 40px;
     height: 40px;
     outline: none;

@@ -111,7 +111,7 @@ function CoursesPage(props: CoursesPageProps) {
                 {
                     coursesList.map(item => (
                         <div key={item.id} className="course">
-                            <div className="course-name">{item.name}</div>
+                            <div className="current-course-name">{item.name}</div>
                             <div className="course-update-delete">
                                 <Link to={"/course-edition/" + item.id}>
                                     <button className='button-update'>
