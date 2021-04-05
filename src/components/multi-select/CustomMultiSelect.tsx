@@ -6,23 +6,26 @@ import { SelectItem } from '../interfaces/SelectItem';
 
 interface SelectProps {
   selectType?: string;
-  userOptions: number[] | undefined;
+  userOptionsIds: number[] | undefined;
   options: SelectItem[];
-  onSelect: (roleIds: number[]) => void;
+  onSelect: (optionIds: number[]) => void;
 }
 
 function CustomMultiSelect(props: SelectProps) {
   let userOptions: SelectItem[];
+
   useEffect(() => {
-    userOptions = props.userOptions?.map(roleId => {
-      return { value: roleId, label: getEnToRuTranslation(Role[roleId]) }
+    userOptions = props.userOptionsIds?.map(optionId => {
+      return {
+        value: optionId,
+        label: getEnToRuTranslation(Role[optionId])
+      }
     }) as SelectItem[]
   }, []
   )
 
   const onSelect = (selectedOptions: OptionsType<object>) => {
     let roleIds = (selectedOptions as SelectItem[]).map(i => i.value)
-    console.log(props.userOptions?.map(roleId => { return { value: roleId, label: getEnToRuTranslation(Role[roleId]) } }))
     props.onSelect(roleIds);
   }
 

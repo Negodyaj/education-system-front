@@ -1,7 +1,7 @@
 import './Notification.css'
-import { ReactComponent as XIcon } from '../../images/x-icon.svg'
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import NotificationData from '../../interfaces/NotificationData';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 interface NotificationProps {
     notificationData: NotificationData;
@@ -10,37 +10,96 @@ interface NotificationProps {
 
 function Notification(props: NotificationProps) {
     const [isHidden, setIsHidden] = useState(true);
+    const deleteRef = useRef(props.deleteNotification);
+    deleteRef.current = props.deleteNotification;
+
     useEffect(() => {
         setIsHidden(false);
     }, [])
+    
+    const typeToTimeout = () => {
+        switch (props.notificationData.type) {
+            case "information":
+                return 6000;
+            case "success":
+                return 3000;
+            case "warning":
+                return 0;
+            case "error":
+                return 0;
+        }
+        return 0;
+    }
 
-    // useEffect(() => {
-    //     setTimeout(dismiss, 3000);
-    // }, [])
+    let timeout = props.notificationData.autoDismissTimeout;
+    if (timeout === undefined) {
+        timeout = typeToTimeout();
+    }
+
+    useEffect(() => {
+        if (timeout !== 0) {
+            let timer = setTimeout(dismiss, timeout);
+            return () => clearTimeout(timer);
+        }
+    }, [])
 
     const dismiss = () => {
         if (props.notificationData.isDismissible) {
             setIsHidden(true);
             setTimeout(() => {
-                if(props.deleteNotification)
-                    props.deleteNotification(props.notificationData)
-            }, 500)
+                if (deleteRef.current)
+                    deleteRef.current(props.notificationData)
+            }, 300)
         }
+    }
+
+    const typeToClassName = () => {
+        switch (props.notificationData.type) {
+            case "information":
+                return "info-notification";
+            case "success":
+                return "success-notification";
+            case "warning":
+                return "warning-notification";
+            case "error":
+                return "error-notification";
+        }
+        return "";
+    }
+
+    const typeToIconName = () => {
+        switch (props.notificationData.type) {
+            case "information":
+                return "info-circle";
+            case "success":
+                return "check-circle";
+            case "warning":
+                return "exclamation-circle";
+            case "error":
+                return "times-circle";
+        }
+        return "info-circle";
     }
 
     return (
         <div className={`notification 
-        ${isHidden ? "hidden" : ""}
-        ${props.notificationData.type === "information" ? "info-notification" : ""}
-        ${props.notificationData.type === "success" ? "success-notification" : ""}
-        ${props.notificationData.type === "error" ? "error-notification" : ""}
-        `}>
+            ${isHidden ? "hidden" : ""}
+            ${typeToClassName()} `}
+        >
+            <div className="type-icon">
+                <FontAwesomeIcon icon={typeToIconName()} />
+            </div>
             <span>{props.notificationData.text}</span>
             {
                 props.notificationData.isDismissible &&
-                <button onClick={ dismiss } className="close-btn">
-                    <XIcon/>
-                </button>
+                <div className="close-btn-container">
+                    <button onClick={dismiss} className="close-btn">
+                        <FontAwesomeIcon icon="times" />
+                    </button>
+                    {timeout > 0 && <svg className="circle-timer">
+                        <circle r="18" cx="20" cy="20" style={{ animationDuration: timeout + "ms" }}></circle>
+                    </svg>}
+                </div>
             }
         </div>
     )

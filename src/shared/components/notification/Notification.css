@@ -1,62 +1,101 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat');
+
 .notification {
     display: flex;
+    max-height: 150px;
     justify-content: space-between;
-    min-height: 80px;
-    border-radius: 5px;
+    align-items: center;
+    border-radius: 20px;
+    padding: 10px 20px;
+    padding-left: 20px;
     margin-bottom: 10px;
-    transition: all 0.5s ease, border 0.1s linear;
+    transition: all 0.3s linear;
     overflow: hidden;
+    border: none;
+    color: white;
+    box-shadow: 5px 5px 5px rgba(0,0,0,0.2);
+    font-size: 14px;
+}
+
+.notification .type-icon {
+    font-size: 40px;
 }
 
 .notification span{
-    padding: 5px;
     flex-grow: 1;
-    align-self: center;
-    font-weight: bold;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    text-align: left;
+    padding: 10px;
 }
 
 .notification .close-btn {
-    align-self: start;
-    width: 30px;
-    height: 30px;
-    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    font-size: 20px;
     background: none;
     border: none;
     outline: none;
-    padding: 7px;
+    position: relative;
 }
 
 .notification .close-btn svg {
-    width: 100%;
-    height: 100%;
-    fill: red;
-    display: block;
+    color: white;
+}
+
+.notification .close-btn-container {
+    position: relative;
+    flex-shrink: 0;
+}
+
+.circle-timer {
+    pointer-events: none;
+    position: absolute;
+    right: 0;
+    width: 40px;
+    height: 40px;
+    transform: rotateZ(-90deg);
+}
+.circle-timer circle {
+    stroke-dasharray: 113px;
+    stroke-dashoffset: 0px;
+    stroke-linecap: round;
+    stroke-width: 2px;
+    stroke: white;
+    fill: none;
+    animation: countdown linear forwards;
+}
+@keyframes countdown {
+    from {
+        stroke-dashoffset: 113px;
+    }
+    to {
+        stroke-dashoffset: 0px;
+    }
 }
 
 .info-notification {
-    border: 2px solid blue;
-    box-shadow: 5px 5px 5px rgba(0,0,0,0.2);
-    background: lightblue;
-    color: darkblue;
+    background: #2D62ED;
 }
 
 .success-notification {
-    border: 2px solid green;
-    background: lightgreen;
-    color: darkgreen
+    background: #00D9A6;
+}
+
+.warning-notification {
+    background: #FFAF62;
 }
 
 .error-notification {
-    border: 2px solid red;
-    background: lightpink;
-    color: darkred;
+    background: #FF0041;
 }
+
 
 .hidden {
     opacity: 0;
-    height: 0;
-    min-height: 0;
-    padding: 0;
+    max-height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
     margin: 0;
-    border: 0;
 }
