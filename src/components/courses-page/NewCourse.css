@@ -126,6 +126,8 @@
 }
 
 .select-delete {
+    display: flex;
+    justify-content: space-around;
     height: 55px;
 }
 
