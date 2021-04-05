@@ -1,7 +1,8 @@
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Role } from "../../../enums/role";
+import { getEnToRuTranslation } from "../../../shared/converters/enumToDictionaryEntity";
 import { User } from "../../interfaces/User";
 import '../UserPage.css';
 
@@ -73,7 +74,7 @@ function UserList(props: UserListProps) {
                         <div className="column">{u.login}</div>
                         <div className="column multiline">
                             {
-                                u.roleIds?.map(r => (<div>{Role[r]}</div>))
+                                u.roles?.map(r => (<div>{getEnToRuTranslation(Role[r])}</div>))
                             }
                         </div>
                         <div className="column">
