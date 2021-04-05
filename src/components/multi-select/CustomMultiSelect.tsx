@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import Select, { OptionsType } from 'react-select'
 import { Role } from '../../enums/role';
 import { getEnToRuTranslation } from '../../shared/converters/enumToDictionaryEntity';
@@ -12,17 +12,12 @@ interface SelectProps {
 }
 
 function CustomMultiSelect(props: SelectProps) {
-  let userOptions: SelectItem[];
-
-  useEffect(() => {
-    userOptions = props.userOptionsIds?.map(optionId => {
-      return {
-        value: optionId,
-        label: getEnToRuTranslation(Role[optionId])
-      }
-    }) as SelectItem[]
-  }, []
-  )
+  const[userOptions] = useState<SelectItem[]>(props.userOptionsIds?.map(optionId => {
+    return {
+      value: optionId,
+      label: getEnToRuTranslation(Role[optionId])
+    }
+  }) as SelectItem[]);
 
   const onSelect = (selectedOptions: OptionsType<object>) => {
     let roleIds = (selectedOptions as SelectItem[]).map(i => i.value)

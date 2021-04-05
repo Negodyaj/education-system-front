@@ -34,7 +34,7 @@ function UserEditForm(props: UserEditFormProps) {
         userPic: "",
         phone: "",
         email: "",
-        role: []
+        roles: []
     }
     const [newUser, setNewUser] = useState<User>(initUser);
     const [wasValidated, setWasValidated] = useState('');
@@ -63,12 +63,12 @@ function UserEditForm(props: UserEditFormProps) {
                         <label className="column">Список ролей</label>
                         <CustomMultiSelect
                             selectType={"multi"}
-                            userOptionsIds={newUser.roleIds || undefined}
+                            userOptionsIds={newUser.roles || undefined}
                             options={convertEntitiesToSelectItems(getRussianDictionary(convertEnumToDictionary(Role)))}
                             onSelect={roleOnChange}></CustomMultiSelect>
                     </div>)
             } else {
-                newUser.roleIds = [Role.Student]
+                newUser.roles = [Role.Student]
             }
         },
         passwordInput: () => {
@@ -141,7 +141,7 @@ function UserEditForm(props: UserEditFormProps) {
         setNewUser(Object.assign({}, newUser))
     }
     const roleOnChange = (options: number[]) => {
-        newUser.roleIds = options;
+        newUser.roles = options;
         setNewUser(Object.assign({}, newUser))
     }
     const onSubmit: FormEventHandler = (e) => {
