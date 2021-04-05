@@ -33,6 +33,7 @@ function NavMenu(props: NavMenuProps) {
                 (props.roleId === Role.Teacher  || props.roleId === Role.Methodist) &&
                 <nav>
                     <Link to="/homework">Homeworks</Link>
+                    <Link to="/courses-page">Страница курсов</Link>
                 </nav>
             }
             { props.roleId !== Role.Student &&
