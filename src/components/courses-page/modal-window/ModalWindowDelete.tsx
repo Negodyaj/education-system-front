@@ -1,3 +1,4 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './ModalWindowDelete.css';
 
 interface ModalWindowProps {
@@ -18,15 +19,14 @@ function ModalWindowDelete(props: ModalWindowProps) {
     <div className="modal-back">
       <div className="modal">
           <div className="modal-header">
-              <button className="button-close" onClick={closeModalWindow}>X</button>
+              <button className="button-close-course-delete" onClick={closeModalWindow}>
+                  <FontAwesomeIcon icon='times' />
+              </button>
           </div>
           <div className="modal-text">Вы уверены, что хотите удалить данный курс?</div>
           <div className="modal-bottom">
-              <div></div>
-              <div className="select-delete">
-                  <button className="button-yes" onClick={deleteCourse}>Да</button>
-                  <button className="button-no" onClick={closeModalWindow}>Нет</button>
-              </div>
+            <button className="button-no" onClick={closeModalWindow}>Отмена</button>
+            <button className="button-yes" onClick={deleteCourse}>Да</button>
           </div>
       </div>
     </div>

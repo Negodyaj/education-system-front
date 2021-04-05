@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, Route } from 'react-router-dom';
-//import CourseEdition from './course-edition/CourseEdition';
+import CourseEdition from './course-edition/CourseEdition';
 import './CoursesPage.css';
 import ModalWindowDelete from './modal-window/ModalWindowDelete';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";

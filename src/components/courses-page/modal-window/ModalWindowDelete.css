@@ -1,3 +1,17 @@
+@keyframes open-modal-back {
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes open-modal-delete {
+    to {
+        opacity: 1;
+        margin: 250px auto;
+    }
+
+}
+
 .modal-back {
     position: fixed;
     top: 0;
@@ -5,67 +19,80 @@
     width: 100vw;
     height: 100vh;
     background-color: rgba(0, 0, 0, 0.7);
-    transition: all 0.7s ease;
-    opacity: 1;
+    opacity: 0;
     pointer-events: all;
+    animation-name: open-modal-back;
+    animation-duration: .6s;
+    animation-fill-mode: forwards;
 }
 
 .modal {
     display: grid;
     grid-template-rows: 70px 1fr 50px;
-    width: 400px;
+    width: 500px;
     height: 250px;
-    border: 3px solid rgb(41, 3, 253);
-    border-radius: 5px;
+    border-radius: 20px;
     padding: 5px 5px;
-    margin: 150px auto;
+    margin-top: -100%;
     background-color: rgb(255, 255, 255);
-    transition: all 0.7s ease;
     position: relative;
+    opacity: 0;
+    animation-name: open-modal-delete;
+    animation-duration: .6s;
+    animation-fill-mode: forwards;
 }
 
 .modal-header {
     position: relative;
 }
 
-.button-close {
+.button-close-course-delete {
     position: absolute;
     top: 4px;
     right: 4px;
-    width: 25px;
-    height: 25px;
+    width: 40px;
+    height: 40px;
     outline: none;
-    padding: 0;
+    border: none;
     cursor: pointer;
-    background-color: rgb(195, 210, 233);
-    border-radius: 3px;
+    background-color: #00CCF2;
+    border-radius: 50%;
+    color: #F5FBFF;
+}
+
+.button-close-course-delete {
+    outline: none;
+    border: none;
 }
 
 .modal-text {
     display: flex;
-    text-align: justify;
     align-items: flex-start;
-    font-size: 24px;
+    padding: 0 30px;
+    font-size: 20px;
+    font-family: 'Montserrat';
+    font-weight: 600;
 }
-
-
 
 .modal-bottom {
-    display: grid;
-    grid-template-columns: 230px 1fr;
-}
-
-.select-delete {
     display: flex;
     justify-content: space-around;
-    align-items: flex-start;
 }
 
 .button-yes, .button-no {
-    width: 60px;
-    height: 30px;
+    background-color: #00CCF2;
+    width: 140px;
+    height: 40px;
+    border-radius: 20px;
     outline: none;
-    cursor: pointer;
-    background-color: rgb(195, 210, 233);
-    border-radius: 5px;
+    border: none;
+    color: #F5FBFF;
+    font-family: 'Montserrat';
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.button-yes:focus, .button-no:focus {
+    outline: none;
+    border: none;
 }

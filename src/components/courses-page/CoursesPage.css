@@ -18,7 +18,8 @@
     outline: none;
     border: none;
     color: #F5FBFF;
-    font-family: 'Montserrat', semi-bold;
+    font-family: 'Montserrat';
+    font-weight: 600;
     font-size: 16px;
 }
 
@@ -41,13 +42,15 @@
     height: 60px;
     border-bottom: 1px solid rgba(39, 45, 59, .15);
     font-size: 20px;
-    font-family: 'Montserrat', regular;
+    font-family: 'Montserrat';
+    font-weight: 400;
 }
 
 .course:hover{
-    background-color: rgba(0, 211, 248, 0.255);
+    background-color: rgba(0, 211, 248, 0.15);
     border-radius: 5px;
-}
+    cursor: pointer;
+} 
 
 .course-update-delete {
     display: flex;
@@ -66,7 +69,11 @@
     height: 40px;
     outline: none;
     border: none;
-    
+}
+
+.button-update:focus {
+    outline: none;
+    border: none;
 }
 
 .button-delete {
@@ -76,6 +83,11 @@
     color: white;
     width: 40px;
     height: 40px;
+    outline: none;
+    border: none;
+}
+
+.button-delete:focus {
     outline: none;
     border: none;
 }

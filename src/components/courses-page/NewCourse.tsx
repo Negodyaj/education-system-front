@@ -1,10 +1,14 @@
 import './NewCourse.css';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import React from 'react';
+import Select from 'react-select/src/Select';
+import { SelectItem } from '../interfaces/SelectItem';
+import CustomMultiSelect from '../multi-select/CustomMultiSelect';
 
 export interface DataNewCourse { 
     name: string; 
     description: string;
+    duration: number
 }
 
 interface NewCourseProps{
@@ -14,7 +18,8 @@ interface NewCourseProps{
 function NewCourse(props: NewCourseProps) {
 
     let nameNewCourse = React.createRef<HTMLInputElement>();
-    let descriptionCourse = React.createRef<HTMLTextAreaElement>();
+    let descriptionNewCourse = React.createRef<HTMLTextAreaElement>();
+    let durationNewCourse = React.createRef<HTMLInputElement>();
 
     const closeModalWindow = () => {
         props.dataNewCourse();
@@ -24,7 +29,8 @@ function NewCourse(props: NewCourseProps) {
         props.dataNewCourse(
             {
                 name: `${nameNewCourse.current?.value}`,
-                description: `${descriptionCourse.current?.value}`
+                description: `${descriptionNewCourse.current?.value}`,
+                duration: Number(durationNewCourse.current?.value)
             }
         );
     }
@@ -45,7 +51,12 @@ function NewCourse(props: NewCourseProps) {
                     </div>
                     <div className='new-course-header'>Описание курса</div>
                     <div className="course-data">
-                        <textarea className="course-description" placeholder="Описание самого лучшего курса" ref={descriptionCourse} />
+                        <textarea className="course-description" placeholder="Описание самого лучшего курса" ref={descriptionNewCourse} />
+                    </div>
+                    <div className='new-course-header'>Продолжительность курса</div>
+                    <div className="course-data">
+                        <input type="text" className="course-duration" ref={durationNewCourse} />
+                        <div className="duration-course-text">месяц(а)</div>
                     </div>
                 </div>
                 <div className="select-delete">
