@@ -1,29 +1,43 @@
-import { ChangeEventHandler, SetStateAction, useState } from 'react'
-import Select, { ActionMeta, OptionsType, SelectOptionActionMeta } from 'react-select'
+import { useEffect } from 'react'
+import Select, { OptionsType } from 'react-select'
+import { Role } from '../../enums/role';
+import { getEnToRuTranslation } from '../../shared/converters/enumToDictionaryEntity';
 import { SelectItem } from '../interfaces/SelectItem';
 
 interface SelectProps {
   selectType?: string;
-  userOptions: OptionsType<object>;
+  userOptionsIds: number[] | undefined;
   options: SelectItem[];
-  onSelect: (items: OptionsType<object>) => void;
+  onSelect: (optionIds: number[]) => void;
 }
 
 function CustomMultiSelect(props: SelectProps) {
+  let userOptions: SelectItem[];
+
+  useEffect(() => {
+    userOptions = props.userOptionsIds?.map(optionId => {
+      return {
+        value: optionId,
+        label: getEnToRuTranslation(Role[optionId])
+      }
+    }) as SelectItem[]
+  }, []
+  )
 
   const onSelect = (selectedOptions: OptionsType<object>) => {
-    props.onSelect(selectedOptions);
+    let roleIds = (selectedOptions as SelectItem[]).map(i => i.value)
+    props.onSelect(roleIds);
   }
 
   const SingleSelect = () => (
-    <Select options={props.userOptions} />
+    <Select options={props.options} />
   )
   const MultiSelect = () => (
     <Select
       isMulti
       name="Role"
       options={props.options}
-      value={props.userOptions}
+      value={userOptions}
       className="basic-multi-select"
       classNamePrefix="select"
       onChange={onSelect}

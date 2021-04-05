@@ -10,25 +10,26 @@ interface UserListProps {
     roleId: number;
     users: User[];
     onEditClick: (userToEditId?: number) => void;
+    onDeleteClick: (userToDelete: number) => void;
 }
 
 function UserList(props: UserListProps) {
 
-    const lastNameAlphabetSort = (a: User, b: User) => {
-        if (a.lastName !== undefined && b.lastName !== undefined) {
-            if (b.lastName > a.lastName) {
-                return Math.pow(-1, signInvertor - 1);
-            }
-            if (b.lastName < a.lastName) {
-                return Math.pow(-1, signInvertor);
-            }
+    const lastNameAlphabetSort = (a: string, b: string) => {
+        a = a.toLowerCase();
+        b = b.toLowerCase();
+        if (b > a) {
+            return Math.pow(-1, signInvertor);
+        }
+        if (b < a) {
+            return Math.pow(-1, signInvertor - 1);
         }
         return 0;
     }
 
     const [signInvertor, setSignInvertor] = useState(1);
     const [usersToShow, setUsersToShow] = useState([...props.users].sort((a, b) => {
-        return lastNameAlphabetSort(a, b);
+        return lastNameAlphabetSort(a.lastName, b.lastName);
     }));
 
     let qqq =1;
@@ -59,7 +60,7 @@ function UserList(props: UserListProps) {
 
     const lastNameColumnOnClick = () => {
         setUsersToShow([...usersToShow.sort((a, b) => {
-            return lastNameAlphabetSort(a, b);
+            return lastNameAlphabetSort(a.lastName, b.lastName);
         })])
         setSignInvertor(signInvertor + 1);
     }
@@ -71,7 +72,7 @@ function UserList(props: UserListProps) {
     return (
         <div className="user-list">
             <div className="column-head">
-                <button className="button-style" onClick={() => onEditClick()}>
+                <button className="button-style" onClick={() => props.onEditClick()}>
                     <FontAwesomeIcon icon="plus" />
                 </button>
             </div>
@@ -81,7 +82,6 @@ function UserList(props: UserListProps) {
                 <div className="column"><span title="А-Я">имя</span></div>
                 <div className="column"><span title="А-Я">логин</span></div>
                 <div className="column"><span title="А-Я">роль</span></div>
-                <div className="column"><span title="А-Я">группа</span></div>
             </div>
             {
                 usersToShow.map(u => (
@@ -94,15 +94,14 @@ function UserList(props: UserListProps) {
                         <div className="column">{u.login}</div>
                         <div className="column multiline">
                             {
-                                u.role?.map(r => (<div>{r.label}</div>))
+                                u.roleIds?.map(r => (<div>{Role[r]}</div>))
                             }
                         </div>
-                        <div className="column">{u.groupName}</div>
                         <div className="column">
-                            <button className="button-style" onClick={() => onEditClick(u.id)}>
+                            <button className="button-style" onClick={() => props.onEditClick(u.id)}>
                                 <FontAwesomeIcon icon="edit" />
                             </button>
-                            <button className="button-style">
+                            <button className="button-style" onClick={() => props.onDeleteClick(u.id as number)}>
                                 <FontAwesomeIcon icon="trash" />
                             </button>
 

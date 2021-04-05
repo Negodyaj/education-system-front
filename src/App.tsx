@@ -16,6 +16,7 @@ import "./shared/fontawesome/FontawesomeIcons";
 import { Role } from './enums/role';
 import NotificationData from './shared/interfaces/NotificationData';
 import DevTestPage from './components/dev-test-page/DevTestPage'
+import TagsPage from './components/tags-page/TagsPage';
 
 function App() {
     const history = useHistory();
@@ -103,6 +104,12 @@ function App() {
                                     roleId === Role.Teacher &&
                                     <Route path="/courses-page">
                                         <CoursesPage roleId={roleId}></CoursesPage>
+                                    </Route>
+                                }
+                                 {
+                                    roleId !== Role.Student &&
+                                    <Route path="/tags-page">
+                                        <TagsPage></TagsPage>
                                     </Route>
                                 }
                                 <Route path="/homework">
