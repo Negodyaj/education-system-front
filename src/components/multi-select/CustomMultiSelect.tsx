@@ -12,7 +12,7 @@ interface SelectProps {
 }
 
 function CustomMultiSelect(props: SelectProps) {
-  const[userOptions] = useState<SelectItem[]>(props.userOptionsIds?.map(optionId => {
+  const[userOptions, setUserOptions] = useState<SelectItem[]>(props.userOptionsIds?.map(optionId => {
     return {
       value: optionId,
       label: getEnToRuTranslation(Role[optionId])
@@ -20,6 +20,7 @@ function CustomMultiSelect(props: SelectProps) {
   }) as SelectItem[]);
 
   const onSelect = (selectedOptions: OptionsType<object>) => {
+    setUserOptions(selectedOptions as SelectItem[])
     let roleIds = (selectedOptions as SelectItem[]).map(i => i.value)
     props.onSelect(roleIds);
   }

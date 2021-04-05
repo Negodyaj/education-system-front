@@ -6,7 +6,6 @@ import React, { ChangeEventHandler, FormEventHandler, useEffect, useState } from
 import DatePickerComponent from '../../../shared/components/date-picker/DatePickerComponent';
 import { convertEnumToDictionary, getRussianDictionary } from '../../../shared/converters/enumToDictionaryEntity';
 import { Role } from '../../../enums/role';
-import NotificationData from '../../../shared/interfaces/NotificationData';
 import { UserInput } from '../../interfaces/UserInput';
 import { useForm } from 'react-hook-form';
 import { convertEntitiesToSelectItems } from '../../../shared/converters/entityToSelectItemConverter';
@@ -15,11 +14,11 @@ interface UserEditFormProps {
     roleId: number;
     userToEdit: User | undefined;
     setIsEditModeOn: (mode: boolean) => void;
-    sendUserPropsForSuccessNotification: (newUser: User) => void;
-    sendNotification: (newNotification: NotificationData) => void;
+    reviseSending: (newUser: User) => void;
+    sendNotification: (data: { type: "error" | "success", message: string }) => void;
     url: string;
     token: string;
-    headers: HeadersInit|undefined;
+    headers: HeadersInit | undefined;
     method: string;
 }
 
@@ -34,7 +33,7 @@ function UserEditForm(props: UserEditFormProps) {
         userPic: "",
         phone: "",
         email: "",
-        roles: []
+        roleIds: []
     }
     const [newUser, setNewUser] = useState<User>(initUser);
     const [wasValidated, setWasValidated] = useState('');
@@ -48,8 +47,6 @@ function UserEditForm(props: UserEditFormProps) {
     }, true))
 
     type FormInputs = UserInput;
-
-    console.log(props.userToEdit)
 
     const { register, handleSubmit, getValues } = useForm<FormInputs>({
         defaultValues: (() => { if (isFetching === false) { return Object.assign({}, newUser) } })()
@@ -112,27 +109,21 @@ function UserEditForm(props: UserEditFormProps) {
         fetch(props.url + '/' + (props.userToEdit ? props.userToEdit.id : 'register'), {
             method: props.method,
             headers: props.headers,
-            body: JSON.stringify(newUser)// {} instead newUser - to provoke error
+            body: JSON.stringify(newUser)
         }
         )
             .then(response => {
+                console.log(newUser)
                 if (response.status > 200) {
-                    return Promise.reject(response.json())
+                    throw response.json().then(value => {
+                        props.sendNotification({ type: 'error', message: `${value.Code} ${value.Message}` })
+                    });
                 }
                 return response.json();
             })
             .then(addedOrUpdatedUser => {
                 props.setIsEditModeOn(false);
-                props.sendUserPropsForSuccessNotification(addedOrUpdatedUser);
-            })
-            .catch(error => { return error })
-            .then(data => {
-                data && props.sendNotification({
-                    type: "error",
-                    text: data.Message,
-                    isDismissible: true,
-                    timestamp: Date.now()
-                })
+                props.reviseSending(addedOrUpdatedUser);
             })
     }
 
@@ -141,7 +132,7 @@ function UserEditForm(props: UserEditFormProps) {
         setNewUser(Object.assign({}, newUser))
     }
     const roleOnChange = (options: number[]) => {
-        newUser.roles = options;
+        newUser.roleIds = options;
         setNewUser(Object.assign({}, newUser))
     }
     const onSubmit: FormEventHandler = (e) => {

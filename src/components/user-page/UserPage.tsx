@@ -16,7 +16,7 @@ interface UserPageProps {
 function UserPage(props: UserPageProps) {
 
     const url = 'https://80.78.240.16:7070/api/User';
-    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoidm9sb2R5YTIyIiwiaWQiOiIxIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoi0JDQtNC80LjQvdC40YHRgtGA0LDRgtC-0YAiLCJuYmYiOjE2MTc0NDk3MjcsImV4cCI6MTYxNzYyMjUyNywiaXNzIjoiRWR1Y2F0aW9uU3lzdGVtLkFwaSIsImF1ZCI6IkRldkVkdWNhdGlvbiJ9.h_GX1srLTRp2r-D8gzfjikmmxW2WJZ6PwU3703G0bMM';
+    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoidm9sb2R5YTIyIiwiaWQiOiIxIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjpbItCQ0LTQvNC40L3QuNGB0YLRgNCw0YLQvtGAIiwi0J_RgNC10L_QvtC00LDQstCw0YLQtdC70YwiLCLQnNC10L3QtdC00LbQtdGAIl0sIm5iZiI6MTYxNzY0ODg5OCwiZXhwIjoxNjE3ODIxNjk4LCJpc3MiOiJFZHVjYXRpb25TeXN0ZW0uQXBpIiwiYXVkIjoiRGV2RWR1Y2F0aW9uIn0.2UJnH39pkpiqT3P9C9s-PAWmLi8Oiz_qr5TKZdkys7o';
     const headers = {
         'Accept': 'application/json',
         'Authorization': 'Bearer ' + token,
@@ -44,19 +44,25 @@ function UserPage(props: UserPageProps) {
             .then(response => response.json())
             .then(data => {
                 setUsersInState(data);
-                console.log(usersInState)
                 setIsFetching(false);
             })
     }
 
-    const checkUpdatedUsers = (modifiedUser: User) => {
-        setIsFetching(true);
-        getUsers();
+    const sendNotification = (data: { type: "error" | "success", message: string }) => {
         props.sendNotification({
-            type: "success",
-            text: "пользователь " + modifiedUser.firstName + " " + modifiedUser.lastName + " успешно " + actionInNotification,
+            type: data.type,
+            text: data.message,
             isDismissible: true,
             timestamp: Date.now()
+        })
+    }
+
+    const checkUpdatedUsers = (addedUser: User) => {
+        setIsFetching(true);
+        getUsers();
+        sendNotification({
+            type: "success",
+            message: "пользователь " + addedUser.firstName + " " + addedUser.lastName + " успешно " + actionInNotification
         })
     }
 
@@ -102,6 +108,7 @@ function UserPage(props: UserPageProps) {
         }
     }
 
+
     const onDeleteClick = (userToDeleteIdArg: number) => {
         setUserToDeleteId(userToDeleteIdArg);
         setIsModalShown(true);
@@ -119,12 +126,12 @@ function UserPage(props: UserPageProps) {
             roleId={props.roleId}
             userToEdit={userToEdit}
             setIsEditModeOn={setIsEditModeOn}
-            sendUserPropsForSuccessNotification={checkUpdatedUsers}
-            sendNotification={props.sendNotification}
+            reviseSending={checkUpdatedUsers}
+            sendNotification={sendNotification}
             url={url}
             token={token}
-            headers={headers}
-            method={methodInForm}></UserEditForm>
+            method={methodInForm}
+            headers={headers}></UserEditForm>
     }
 
     return (

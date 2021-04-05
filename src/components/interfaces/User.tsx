@@ -11,4 +11,5 @@ export interface User {
     groupId?: number;
     groupName?: string;
     roles?: number[];
+    roleIds?:number[];
 }
