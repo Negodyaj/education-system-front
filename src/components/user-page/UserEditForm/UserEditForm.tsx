@@ -9,6 +9,8 @@ import { Role } from '../../../enums/role';
 import { UserInput } from '../../interfaces/UserInput';
 import { useForm } from 'react-hook-form';
 import { convertEntitiesToSelectItems } from '../../../shared/converters/entityToSelectItemConverter';
+import { ErrorMessage } from '@hookform/error-message';
+import { getName } from '../../../shared/converters/objectKeyToString';
 
 interface UserEditFormProps {
     roleId: number;
@@ -48,7 +50,9 @@ function UserEditForm(props: UserEditFormProps) {
 
     type FormInputs = UserInput;
 
-    const { register, handleSubmit, getValues } = useForm<FormInputs>({
+    const { register, formState: { errors, isValid }, handleSubmit, getValues } = useForm<FormInputs>({
+        mode: 'onChange',
+        criteriaMode: 'all',
         defaultValues: (() => { if (isFetching === false) { return Object.assign({}, newUser) } })()
     });
 
@@ -78,8 +82,7 @@ function UserEditForm(props: UserEditFormProps) {
                             type="text"
                             className="column"
                             value={newUser.password}
-                            onChange={anyTextInputChangeHandler}
-                            required />
+                            onChange={anyTextInputChangeHandler} />
                     </div>
                 )
             } else {
@@ -136,14 +139,13 @@ function UserEditForm(props: UserEditFormProps) {
         setNewUser(Object.assign({}, newUser))
     }
     const onSubmit: FormEventHandler = (e) => {
-        e.preventDefault();
-        sendUser();
+         sendUser();
     }
     const setIsEditModeOn = () => {
         props.setIsEditModeOn(false);
     }
     const onSaveClick = () => {
-        setWasValidated('was-validated');
+        //setWasValidated('was-validated');
     }
 
     const anyTextInputChangeHandler: ChangeEventHandler<HTMLInputElement> = (e) => {
@@ -157,18 +159,27 @@ function UserEditForm(props: UserEditFormProps) {
         return (<div>loading</div>)
     } else {
         return (
-            <div className={"user-edit-form needs-validation " + wasValidated}>
-                <form onSubmit={onSubmit}>
+            <div className={"user-edit-form needs-validation was-validated"}>
+                <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="user-list-item">
                         <label className="column">Имя</label>
                         <input
-                            {...register('firstName')}
+                            {...register('firstName', {
+                                required: {
+                                    value: true,
+                                    message: "Введите имя"
+                                }
+                            })}
                             value={newUser.firstName}
                             type="text"
                             className="column"
-                            onChange={anyTextInputChangeHandler}
-                            required />
-                        <div className="bad-feedback">Введите имя</div>
+                            onChange={anyTextInputChangeHandler} />
+                        <ErrorMessage className="bad-feedback"
+                            errors={errors}
+                            name={getName<User>(newUser, o => o.firstName)}>
+                            </ErrorMessage>
+
+
                     </div>
                     <div className="user-list-item">
                         <label className="column">Фамилия</label>
@@ -177,8 +188,7 @@ function UserEditForm(props: UserEditFormProps) {
                             type="text"
                             className="column"
                             value={newUser.lastName}
-                            onChange={anyTextInputChangeHandler}
-                            required />
+                            onChange={anyTextInputChangeHandler} />
                         <div className="bad-feedback">Ввведите фамилию</div>
                     </div>
                     <div className="user-list-item">
@@ -198,8 +208,7 @@ function UserEditForm(props: UserEditFormProps) {
                             type="text"
                             className="column"
                             value={newUser.phone}
-                            onChange={anyTextInputChangeHandler}
-                            required />
+                            onChange={anyTextInputChangeHandler} />
                         <div className="bad-feedback">Введите номер телефона</div>
                     </div>
                     <div className="user-list-item">
@@ -211,8 +220,7 @@ function UserEditForm(props: UserEditFormProps) {
                             className="column"
                             placeholder="или вставьте ссылку"
                             value={newUser.userPic}
-                            onChange={anyTextInputChangeHandler}
-                            required />
+                            onChange={anyTextInputChangeHandler} />
                         <img src={newUser.userPic} alt="аватар" />
                     </div>
                     <div className="user-list-item">
@@ -222,8 +230,7 @@ function UserEditForm(props: UserEditFormProps) {
                             type="email"
                             className="column"
                             value={newUser.email}
-                            onChange={anyTextInputChangeHandler}
-                            required />
+                            onChange={anyTextInputChangeHandler} />
                         <div className="bad-feedback">Введите e-mail</div>
                     </div>
                     {
@@ -242,7 +249,7 @@ function UserEditForm(props: UserEditFormProps) {
                         </div>
                     </div>
                 </form>
-            </div>
+            </div >
         )
     }
 }
