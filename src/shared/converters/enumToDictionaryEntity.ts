@@ -15,11 +15,16 @@ export const getRussianDictionary = (entities: DictionaryEntity[]): DictionaryEn
         }
     })
 
-export const dictionary: { [key: string]: string } = {
+export const getEnToRuTranslation = (eng:string) => {
+    return dictionary[eng];
+}
+
+const dictionary: { [key: string]: string } = {
     [Role[Role.Admin]]: "Администратор",
     [Role[Role.Manager]]: "Менеджер",
     [Role[Role.Methodist]]: "Методист",
     [Role[Role.Student]]: "Студент",
     [Role[Role.Teacher]]: "Преподаватель",
-    [Role[Role.Tutor]]: "Тьютор"
+    [Role[Role.Tutor]]: "Тьютор",
+    [Role[Role.Test]]: "Тестовая роль"
 }
