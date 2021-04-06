@@ -41,7 +41,7 @@ function UserList(props: UserListProps) {
             return (
                 props.roleId === Role.Manager
                 &&
-                <button className="button-round">
+                <button className="button-round" onClick={() => onPaymentButtonClick(userId)}>
                     <FontAwesomeIcon icon="ruble-sign" />
                 </button>
             )

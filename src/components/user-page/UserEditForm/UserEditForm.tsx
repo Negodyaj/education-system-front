@@ -9,6 +9,7 @@ import { convertEntitiesToSelectItems } from '../../../shared/converters/entityT
 import { convertEnumToDictionary, getRussianDictionary } from '../../../shared/converters/enumToDictionaryEntity';
 import { Role } from '../../../enums/role';
 import { UserInput } from '../../interfaces/UserInput';
+import { useForm } from 'react-hook-form';
 //import { convertEntitiesToSelectItems } from '../../../shared/converters/entityToSelectItemConverter';
 
 interface UserEditFormProps {
@@ -249,7 +250,4 @@ function UserEditForm(props: UserEditFormProps) {
 }
 
 export default UserEditForm;
-function useForm<T>(arg0: { defaultValues: User | undefined; }): { register: any; handleSubmit: any; getValues: any; } {
-    throw new Error('Function not implemented.');
-}
 
