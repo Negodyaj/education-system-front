@@ -31,25 +31,22 @@ function UserList(props: UserListProps) {
     const [usersToShow, setUsersToShow] = useState([...props.users].sort((a, b) => {
         return lastNameAlphabetSort(a.lastName, b.lastName);
     }));
-
-    let qqq =1;
+    const [userForPayment, setUserForPayment] = useState<User | undefined>(undefined);
+    const [paymentFormState, setPaymentFormState] = useState('');
 
     const elementsDefinedByRole = {
-        paymentButton: (id?: number) => {
-            if (id != undefined)
-            {qqq = id;}
-            return (
+        paymentButton: (userId: number | undefined) => {
+           return (
                 props.roleId === Role.Manager
                 &&
-                <button onClick={onPaymentButtonClick}>$</button>
+                <button onClick={() => onPaymentButtonClick(userId)}>$</button>
                 
             )
         }
     }
 
-
-    const [paymentFormState, setPaymentFormState] = useState('');
-    const onPaymentButtonClick = () => {
+    const onPaymentButtonClick = (userId: number | undefined) => {
+        setUserForPayment([...usersToShow].filter(u => u.id === userId)[0]);
         setPaymentFormState('visible');
 
     }
@@ -114,8 +111,8 @@ function UserList(props: UserListProps) {
             <PaymentForm
                 paymentFormState={paymentFormState}
                 cancelClick={onCancelPaymentClick}
-                userName={props.users[qqq].firstName}
-                userLastname={props.users[qqq].lastName}
+                userName={userForPayment?.firstName}
+                userLastname={userForPayment?.lastName}
             ></PaymentForm>
         </div>
     )
