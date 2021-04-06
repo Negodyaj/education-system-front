@@ -58,8 +58,8 @@ function UserEditForm(props: UserEditFormProps) {
         roleSelector: () => {
             if (props.roleId === Role.Admin) {
                 return (
-                    <div className="user-list-item">
-                        <label className="column">Список ролей</label>
+                    <div className="form-row">
+                        <label className="">Список ролей</label>
                         <CustomMultiSelect
                             selectType={"multi"}
                             userOptionsIds={newUser.roleIds || undefined}
@@ -73,12 +73,12 @@ function UserEditForm(props: UserEditFormProps) {
         passwordInput: () => {
             if (props.userToEdit === undefined) {
                 return (
-                    <div className="user-list-item">
-                        <label className="column">Пароль</label>
+                    <div className="form-row">
+                        <label className="">Пароль</label>
                         <input
                             {...register('password')}
                             type="text"
-                            className="column"
+                            className=""
                             value={newUser.password}
                             onChange={anyTextInputChangeHandler}
                             required />
@@ -91,12 +91,12 @@ function UserEditForm(props: UserEditFormProps) {
         loginInput: () => {
             if (props.userToEdit === undefined) {
                 return (
-                    <div className="user-list-item">
-                        <label className="column">Логин</label>
+                    <div className="form-row">
+                        <label className="">Логин</label>
                         <input
                             {...register('login')}
                             type="text"
-                            className="column"
+                            className=""
                             value={newUser.login}
                             onChange={anyTextInputChangeHandler} />
                     </div>
@@ -155,7 +155,7 @@ function UserEditForm(props: UserEditFormProps) {
         props.setIsEditModeOn(false);
     }
     const onSaveClick = () => {
-        setWasValidated('was-validated');
+        //setWasValidated('was-validated');
     }
 
     const anyTextInputChangeHandler: ChangeEventHandler<HTMLInputElement> = (e) => {
@@ -169,32 +169,32 @@ function UserEditForm(props: UserEditFormProps) {
         return (<div>loading</div>)
     } else {
         return (
-            <div className={"user-edit-form needs-validation " + wasValidated}>
+            <div className={"user-edit-form needs-validation " + "was-validated"}>
                 <form onSubmit={onSubmit}>
-                    <div className="user-list-item">
-                        <label className="column">Имя</label>
+                    <div className="form-row">
+                        <label className="">Имя</label>
                         <input
                             {...register('firstName')}
                             value={newUser.firstName}
                             type="text"
-                            className="column"
+                            className=""
                             onChange={anyTextInputChangeHandler}
                             required />
                         <div className="bad-feedback">Введите имя</div>
                     </div>
-                    <div className="user-list-item">
-                        <label className="column">Фамилия</label>
+                    <div className="form-row">
+                        <label className="">Фамилия</label>
                         <input
                             {...register('lastName')}
                             type="text"
-                            className="column"
+                            className=""
                             value={newUser.lastName}
                             onChange={anyTextInputChangeHandler}
                             required />
                         <div className="bad-feedback">Ввведите фамилию</div>
                     </div>
-                    <div className="user-list-item">
-                        <label className="column">Дата рождения</label>
+                    <div className="form-row">
+                        <label className="">Дата рождения</label>
                         <DatePickerComponent date={newUser.birthDate} onDateChange={birthDateOnChange} />
                     </div>
                     {
@@ -203,51 +203,53 @@ function UserEditForm(props: UserEditFormProps) {
                     {
                         elementsDefinedByProps.passwordInput()
                     }
-                    <div className="user-list-item">
-                        <label className="column">Телефон</label>
+                    <div className="form-row">
+                        <label className="">Телефон</label>
                         <input
                             {...register('phone')}
                             type="text"
-                            className="column"
+                            className=""
                             value={newUser.phone}
                             onChange={anyTextInputChangeHandler}
                             required />
                         <div className="bad-feedback">Введите номер телефона</div>
                     </div>
-                    <div className="user-list-item">
-                        <label className="column">Аватар</label>
-                        <input type="file" className="column" />
+                    <div className="form-row">
+                        <label className="">Аватар</label>
+                        <input type="file" className="" />
                         <input
                             {...register('userPic')}
                             type="text"
-                            className="column"
+                            className=""
                             placeholder="или вставьте ссылку"
                             value={newUser.userPic}
                             onChange={anyTextInputChangeHandler}
                             required />
                         <img src={newUser.userPic} alt="аватар" />
                     </div>
-                    <div className="user-list-item">
-                        <label className="column">Почта</label>
+                    <div className="form-row">
+                        <label className="">Почта</label>
                         <input
                             {...register('email')}
                             type="email"
-                            className="column"
+                            className=""
                             value={newUser.email}
                             onChange={anyTextInputChangeHandler}
                             required />
                         <div className="bad-feedback">Введите e-mail</div>
                     </div>
+                    <div className="form-row">
                     {
                         elementsDefinedByProps.roleSelector()
                     }
-                    <div className="user-list-item">
-                        <div className="column">
-                            <button className="column" onClick={setIsEditModeOn}>отмена</button>
+                    </div>
+                    <div className="form-row form-row-button">
+                        <div className="">
+                            <button className="" onClick={setIsEditModeOn}>отмена</button>
                         </div>
-                        <div className="column save-button">
+                        <div className="save-button">
                             <button
-                                className="column save-button"
+                                className="save-button"
                                 type={"submit"}
                                 disabled={isDisabled}
                                 onClick={onSaveClick}>сохранить</button>
