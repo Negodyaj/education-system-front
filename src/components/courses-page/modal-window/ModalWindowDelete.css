@@ -60,7 +60,7 @@
     color: #F5FBFF;
 }
 
-.button-close-course-delete {
+.button-close-course-delete:focus {
     outline: none;
     border: none;
 }

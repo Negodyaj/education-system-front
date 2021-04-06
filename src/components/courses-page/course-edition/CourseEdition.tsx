@@ -8,16 +8,47 @@ import { Course } from '../../../shared/courses/Courses';
 
 
 interface CourseEditionProps{
-    themesList: Themes[];
     idCourse: string;
+}
+
+interface NewThemeCourse {
+    idCourse: number;
+    idTheme: number;
 }
 
 function CourseEdition(props: CourseEditionProps) {
 
-    const url = 'https://80.78.240.16:7070/api/Course/';
-    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoidm9sb2R5YTIyIiwiaWQiOiIxIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoi0JDQtNC80LjQvdC40YHRgtGA0LDRgtC-0YAiLCJuYmYiOjE2MTc0ODA0MTQsImV4cCI6MTYxNzY1MzIxNCwiaXNzIjoiRWR1Y2F0aW9uU3lzdGVtLkFwaSIsImF1ZCI6IkRldkVkdWNhdGlvbiJ9.tMl6BGk_i_ZwTDtQzMZ-dgFgG5II4Aal95iaz8rPE9o' ;
+    let newThemeCourse = {} as Themes;
+    let currentCourse = {} as Course;
+    let indexCourse = Number(props.idCourse.slice(-1));
+    let themesList: Themes[] = [];
+    let currentThemesCourse: Course[] = []; 
+    
+    const [themesCourse, setThemesCourse] = useState(currentThemesCourse);
+    const [allThemes, setAllThemes] = useState(themesList);
+    const [searchTurn, setSearchTurn] = useState('');
 
-    const getCourseById = (id: string) => {
+    const url = 'https://80.78.240.16:7070/api/Course/';
+    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoidm9sb2R5YTIyIiwiaWQiOiIxIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjpbItCQ0LTQvNC40L3QuNGB0YLRgNCw0YLQvtGAIiwi0J_RgNC10L_QvtC00LDQstCw0YLQtdC70YwiLCLQnNC10L3QtdC00LbQtdGAIl0sIm5iZiI6MTYxNzcxMTI1MiwiZXhwIjoxNjE3ODg0MDUyLCJpc3MiOiJFZHVjYXRpb25TeXN0ZW0uQXBpIiwiYXVkIjoiRGV2RWR1Y2F0aW9uIn0.IVG_etkEiLTYu5-VDZWQlk43808p1Ut_eV-CA7APZ84' ;
+
+
+    const getAllThemes = () => {
+        fetch(url + 'theme/', {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Authorization': 'Bearer ' + token,
+                'Content-Type': 'application/json'
+            },
+        })
+            .then(response => response.json())
+            .then(data => {
+                setAllThemes(data);
+            })
+            .catch(error => console.log('Ошибка ' + error))
+    }
+
+    const getCourseById = (id: number) => {
         fetch(url + id, {
             method: 'GET',
             headers: {
@@ -28,52 +59,48 @@ function CourseEdition(props: CourseEditionProps) {
         })
             .then(response => response.json())
             .then(data => {
-                console.log(data);
-                let currentCourse: Course = data;
+                currentCourse = data;
                 setThemesCourse(currentCourse.themes);
             })
             .catch(error => console.log('Ошибка ' + error))
     }
 
     useEffect(() => {
-        getCourseById(props.idCourse);
+        getCourseById(indexCourse);
+        getAllThemes();
     }, []);
 
-    let newThemeCourse = {} as Themes;
-    let currentCourse: Themes[] = [];
-    let indexCourse = Number(props.idCourse.slice(-1)) - 1;
-    let allThemesCourses: Themes[][] = [];
-    let filterNameThemes: string[] = [];
-
-    let currentThemesCourse: Themes[] = []; 
-    
-    const [themesCourse, setThemesCourse] = useState(currentThemesCourse);
-    const [allThemes, setAllThemes] = useState(props.themesList);
-    const [searchTurn, setSearchTurn] = useState('');
+    const addThemeCourse = (newThemeCourse: NewThemeCourse) => {
+        fetch(url + newThemeCourse.idCourse + '/theme/' + newThemeCourse.idTheme, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Authorization': 'Bearer ' + token,
+                'Content-Type': 'application/json'
+            },
+        })
+            .then(response => response.json())
+            .then(data => {
+                getCourseById(indexCourse);
+            })
+            .catch(error => console.log('Ошибка ' + error))
+    }
         
-    const addNewThemeInProgramCourse = (item: Themes) => {
+    const addNewThemeInProgramCourse = (theme: Themes) => {
         let count = 0;
-        for (let theme of themesCourse) {
-            if (theme.name === item.name) {
+        for (let item of themesCourse) {
+            if (item.name === theme.name) {
                 count++;
             }
         }
         if (count === 0) {
-            newThemeCourse = { id: themesCourse.length + 1, name: item.name, check: true };
-            currentCourse = themesCourse;
-            currentCourse.push(newThemeCourse);
-            setThemesCourse([...currentCourse]);
-            themesCourse.forEach((item) => { filterNameThemes.push(item.name) });
-            for (let i of allThemes) {
-                if (filterNameThemes.includes(i.name)) {
-                    i.check = true;
-                }
-            }
-            setAllThemes([...allThemes]);
+            let newTheme: NewThemeCourse = {idCourse: indexCourse, idTheme: theme.id};
+            addThemeCourse(newTheme);
+            console.log(newTheme);
         }
     }
 
-    const deleteThemeFromCourse = (theme: Themes) => {
+    /* const deleteThemeFromCourse = (theme: Themes) => {
         let index = -1;
         for (let item of allThemes) {
             if (theme.name === item.name) {
@@ -81,13 +108,13 @@ function CourseEdition(props: CourseEditionProps) {
             }
         }
         if (index >= 0) {
-            allThemes[index].check = false;
+            //allThemes[index].check = false;
             setAllThemes([...allThemes]);
         }
         currentCourse = themesCourse;
         currentCourse.splice(themesCourse.indexOf(theme), 1);
         setThemesCourse([...currentCourse]);
-    }
+    } */
 
     const searchFromTheme = (str: string) => {
         setSearchTurn(str);
@@ -107,13 +134,13 @@ function CourseEdition(props: CourseEditionProps) {
                         } 
                     })
                     .map((item, key) => (
-                        <div key={key} className={"new-theme "+ item.check}>
+                        <div key={key} className={"new-theme "+ item/* .check */}>
                             <div className="new-theme-name">{item.name}</div>
                             <div className="new-theme-add">
                                 <button onClick={() => addNewThemeInProgramCourse(item)} className="button-add-theme">
-                                {
+                               {/*  {
                                     item.check ? <FontAwesomeIcon icon="check" /> : <FontAwesomeIcon icon="plus" />
-                                }
+                                } */}
                                 </button>
                             </div>
                         </div>
@@ -129,7 +156,7 @@ function CourseEdition(props: CourseEditionProps) {
                         <div className="theme">
                             <div className="theme-name">{theme.name}</div>
                             <div className="theme-delete">
-                                <button onClick={() => deleteThemeFromCourse(theme)} className='button-theme-delete'>
+                                <button /* onClick={() => deleteThemeFromCourse(theme)} */ className='button-theme-delete'>
                                     <FontAwesomeIcon icon="minus" />
                                 </button>
                             </div>
