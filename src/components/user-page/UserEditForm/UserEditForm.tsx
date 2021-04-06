@@ -11,12 +11,13 @@ import { useForm } from 'react-hook-form';
 import { convertEntitiesToSelectItems } from '../../../shared/converters/entityToSelectItemConverter';
 import { ErrorMessage } from '@hookform/error-message';
 import { getName } from '../../../shared/converters/objectKeyToString';
+import { PreviousMethod } from '../UserPage';
 
 interface UserEditFormProps {
     roleId: number;
     userToEdit: User | undefined;
     setIsEditModeOn: (mode: boolean) => void;
-    reviseSending: (newUser: User) => void;
+    reviseSending: (newUser: User, previousMethod:PreviousMethod) => void;
     sendNotification: (data: { type: "error" | "success", message: string }) => void;
     url: string;
     token: string;
@@ -35,7 +36,7 @@ function UserEditForm(props: UserEditFormProps) {
         userPic: "",
         phone: "",
         email: "",
-        roles: []
+        roleIds: []
     }) 
 
     const [newUser, setNewUser] = useState<User>(initUser);
@@ -49,10 +50,10 @@ function UserEditForm(props: UserEditFormProps) {
         return isEmpty
     }, true))
 
-    type FormInputs = User;
+    type FormInputs = UserInput;
 
     const { register, formState: { errors }, handleSubmit, getValues, setValue } = useForm<FormInputs>({
-        mode: 'onChange',
+        mode: 'all',
         criteriaMode: 'all',
         defaultValues: (() => { if (isFetching === false) { return Object.assign({}, newUser) } })()
     });
@@ -65,12 +66,12 @@ function UserEditForm(props: UserEditFormProps) {
                         <label className="column">Список ролей</label>
                         <CustomMultiSelect
                             selectType={"multi"}
-                            userOptionsIds={getValues('roles') || undefined}
+                            userOptionsIds={getValues('roleIds') || undefined}
                             options={convertEntitiesToSelectItems(getRussianDictionary(convertEnumToDictionary(Role)))}
                             onSelect={roleOnChange}></CustomMultiSelect>
                     </div>)
             } else {
-                newUser.roles = [Role.Student]
+                setValue('roleIds',[Role.Student]);
             }
         },
         passwordInput: () => {
@@ -139,7 +140,6 @@ function UserEditForm(props: UserEditFormProps) {
         }
         )
             .then(response => {
-                console.log(newUser)
                 if (response.status > 200) {
                     throw response.json().then(value => {
                         props.sendNotification({ type: 'error', message: `${value.Code} ${value.Message}` })
@@ -149,7 +149,7 @@ function UserEditForm(props: UserEditFormProps) {
             })
             .then(addedOrUpdatedUser => {
                 props.setIsEditModeOn(false);
-                props.reviseSending(addedOrUpdatedUser);
+                props.reviseSending(addedOrUpdatedUser, 'NOT DELETE');
             })
     }
 
@@ -157,11 +157,10 @@ function UserEditForm(props: UserEditFormProps) {
         setValue('birthDate', date)
     }
     const roleOnChange = (options: number[]) => {
-        newUser.roleIds = options;
-        setNewUser(Object.assign({}, newUser))
+        setValue('roleIds', options);
     }
     const onSubmit = (data: FormInputs) => {
-        console.log(data.birthDate)
+        console.log(JSON.stringify(data))
         sendUser(data);
     }
     const setIsEditModeOn = () => {
@@ -286,10 +285,6 @@ function UserEditForm(props: UserEditFormProps) {
                                 required: {
                                     value: true,
                                     message: "Введите email"
-                                },
-                                pattern: {
-                                    value: /(\w\.\w)/g,
-                                    message: "Неверный формат адреса"
                                 }
                             })}
                             type="text"

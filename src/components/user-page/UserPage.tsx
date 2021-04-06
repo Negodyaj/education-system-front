@@ -8,6 +8,8 @@ import UserList from './user-list/UserList';
 import UserEditForm from './UserEditForm/UserEditForm';
 import './UserPage.css'
 
+export type PreviousMethod = 'DELETE'|'NOT DELETE';
+
 interface UserPageProps {
     roleId: number;
     sendNotification: (newNotification: NotificationData) => void;
@@ -57,9 +59,12 @@ function UserPage(props: UserPageProps) {
         })
     }
 
-    const checkUpdatedUsers = (addedUser: User) => {
+    
+
+    const checkUpdatedUsers = (addedUser: User, previousMethod: PreviousMethod|string) => {
         setIsFetching(true);
         getUsers();
+        previousMethod === 'DELETE' && (actionInNotification = 'удалён');
         sendNotification({
             type: "success",
             message: "пользователь " + addedUser.firstName + " " + addedUser.lastName + " успешно " + actionInNotification
@@ -85,10 +90,17 @@ function UserPage(props: UserPageProps) {
                 method: 'DELETE',
                 headers: headers
             })
-            .then(response => response.json())
-            .then(data => {
-                checkUpdatedUsers(data);
-            })
+                .then(response => {
+                    if (response.status > 200) {
+                        throw response.json().then(value => {
+                            sendNotification({ type: 'error', message: `${value.Code} ${value.Message}` })
+                        });
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    checkUpdatedUsers(data, 'DELETE');
+                })
         }
         setIsModalShown(false);
     }
