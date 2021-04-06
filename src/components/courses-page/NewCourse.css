@@ -30,7 +30,7 @@
     grid-template-rows: 70px 1fr 50px;
     opacity: 0;
     width: 700px;
-    height: 550px;
+    height: 610px;
     border: 3px solid rgb(255, 255, 255);
     border-radius: 20px;
     padding: 5px 5px;
@@ -42,21 +42,34 @@
     position: relative;
 }
 
-.modal-header {
-    border-bottom: none;
-    padding: 0;
+.modal-header-add-course {
+    position: relative;
 }
 
 .head-modal {
     display: flex;
-    margin-left: 95px;
-    align-items: flex-end;
+    margin-left: 100px;
     padding-top: 25px;
 }
 
-.head-modal h4{
-    margin-bottom: 0;
+.button-close {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    border-radius: 50%;
+    background-color: #00CCF2;
+    width: 40px;
+    height: 40px;
+    outline: none;
+    border: none;
+    color: white;
 }
+
+.button-close:focus {
+    border: none;
+    outline: none;
+}
+
 .input-course-container {
     display: flex;
     justify-content: space-between;
@@ -71,7 +84,7 @@
 
 .create-course {
     display: grid;
-    grid-template-rows: 45px 50px 45px 160px 45px 50px;
+    grid-template-rows: 45px 50px 20px 45px 160px 20px 45px 50px 20px;
     width: 70%;
     margin: 0 auto;
 }
@@ -90,6 +103,25 @@
     align-items: flex-end;
 }
 
+.course-name {
+    width: inherit;
+    height: 40px;
+    border: 2px solid rgba(162, 163, 194, 0.686);
+    outline: none;
+    border-radius: 5px;
+    padding-left: 10px;
+}
+
+.error-no-name, .error-no-description, .error-no-duration {
+    display: flex;
+    justify-content: flex-start;
+    width: inherit;
+    color: red;
+    font-family: 'Montserrat';
+    font-weight: 400;
+    font-size: 12px;
+}
+
 .course-description {
     width: inherit;
     height: 150px;
@@ -98,11 +130,13 @@
     border-radius: 5px;
     word-break: break-word;
     resize: none;
+    padding-left: 10px;
+    padding-top: 7px;
 }
 
 .course-duration {
     padding-left: 13px;
-    width: 40px;
+    width: 50px;
     border: 2px solid rgba(162, 163, 194, 0.686);
     outline: none;
     border-radius: 5px;
@@ -113,14 +147,6 @@
     outline: none;
 }
 
-.course-name {
-    width: inherit;
-    height: 40px;
-    border: 2px solid rgba(162, 163, 194, 0.686);
-    outline: none;
-    border-radius: 5px;
-}
-
 .create-new-course {
     width: 50px;
 }
@@ -129,21 +155,6 @@
     display: flex;
     justify-content: space-around;
     height: 55px;
-}
-
-.button-close {
-    border-radius: 50%;
-    background-color: #00CCF2;
-    width: 40px;
-    height: 40px;
-    outline: none;
-    border: none;
-    color: white;
-}
-
-.button-close:focus {
-    border: none;
-    outline: none;
 }
 
 .button-select {
