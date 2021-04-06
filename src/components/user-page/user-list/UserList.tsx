@@ -38,7 +38,7 @@ function UserList(props: UserListProps) {
 
     const elementsDefinedByRole = {
         paymentButton: (userId: number | undefined) => {
-           return (
+            return (
                 props.roleId === Role.Manager
                 &&
                 <button className="button-round">
@@ -109,9 +109,10 @@ function UserList(props: UserListProps) {
                                     <FontAwesomeIcon icon="trash" />
                                 </button>
 
-                            {
-                                elementsDefinedByRole.paymentButton(u.id)
-                            }
+                                {
+                                    elementsDefinedByRole.paymentButton(u.id)
+                                }
+                            </div>
                         </div>
                     </div>))
             }
