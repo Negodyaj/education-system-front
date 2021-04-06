@@ -50,8 +50,8 @@ function UserEditForm(props: UserEditFormProps) {
 
     type FormInputs = UserInput;
 
-    const { register, formState: { errors, isValid }, handleSubmit, getValues } = useForm<FormInputs>({
-        mode: 'onChange',
+    const { register, formState: { errors, isValid }, handleSubmit, getValues, setValue } = useForm<FormInputs>({
+        mode: 'all',
         criteriaMode: 'all',
         defaultValues: (() => { if (isFetching === false) { return Object.assign({}, newUser) } })()
     });
@@ -80,9 +80,7 @@ function UserEditForm(props: UserEditFormProps) {
                         <input
                             {...register('password')}
                             type="text"
-                            className="column"
-                            value={newUser.password}
-                            onChange={anyTextInputChangeHandler} />
+                            className="column" />
                     </div>
                 )
             } else {
@@ -97,9 +95,7 @@ function UserEditForm(props: UserEditFormProps) {
                         <input
                             {...register('login')}
                             type="text"
-                            className="column"
-                            value={newUser.login}
-                            onChange={anyTextInputChangeHandler} />
+                            className="column" />
                     </div>
                 )
             } else {
@@ -108,7 +104,7 @@ function UserEditForm(props: UserEditFormProps) {
         }
     }
 
-    const sendUser = () => {
+    const sendUser = (newUser: FormInputs) => {
         fetch(props.url + '/' + (props.userToEdit ? props.userToEdit.id : 'register'), {
             method: props.method,
             headers: props.headers,
@@ -130,16 +126,16 @@ function UserEditForm(props: UserEditFormProps) {
             })
     }
 
-    const birthDateOnChange = (date: Date) => {
-        newUser.birthDate = date.toLocaleDateString();
-        setNewUser(Object.assign({}, newUser))
+    const birthDateOnChange = (date: string) => {
+        setValue('birthDate', date)
     }
     const roleOnChange = (options: number[]) => {
         newUser.roleIds = options;
         setNewUser(Object.assign({}, newUser))
     }
-    const onSubmit: FormEventHandler = (e) => {
-         sendUser();
+    const onSubmit = (data: FormInputs) => {
+        console.log(data.birthDate)
+        sendUser(data);
     }
     const setIsEditModeOn = () => {
         props.setIsEditModeOn(false);
@@ -148,12 +144,6 @@ function UserEditForm(props: UserEditFormProps) {
         //setWasValidated('was-validated');
     }
 
-    const anyTextInputChangeHandler: ChangeEventHandler<HTMLInputElement> = (e) => {
-        let propKey: string = e.target.name;
-        let operand = newUser[propKey as keyof User];
-        (newUser[propKey as keyof User] as typeof operand) = e.target.value as typeof operand;
-        setNewUser(Object.assign({}, newUser));
-    }
 
     if (isFetching) {
         return (<div>loading</div>)
@@ -168,32 +158,46 @@ function UserEditForm(props: UserEditFormProps) {
                                 required: {
                                     value: true,
                                     message: "Введите имя"
+                                },
+                                pattern: {
+                                    value: /[A-Za-zА-Яа-я]{3}/,
+                                    message: "Допустимы только буквенные символы"
                                 }
                             })}
-                            value={newUser.firstName}
                             type="text"
-                            className="column"
-                            onChange={anyTextInputChangeHandler} />
-                        <ErrorMessage className="bad-feedback"
+                            className="column" />
+                        <ErrorMessage
                             errors={errors}
-                            name={getName<User>(newUser, o => o.firstName)}>
-                            </ErrorMessage>
-
-
+                            name={getName<User>(newUser, o => o.firstName)}
+                            className="bad-feedback"
+                            as="div">
+                        </ErrorMessage>
                     </div>
                     <div className="user-list-item">
                         <label className="column">Фамилия</label>
                         <input
-                            {...register('lastName')}
+                            {...register('lastName', {
+                                required: {
+                                    value: true,
+                                    message: "Введите фамилию"
+                                },
+                                pattern: {
+                                    value: /[A-Za-zА-Яа-я]{3}/,
+                                    message: "Допустимы только буквенные символы"
+                                }
+                            })}
                             type="text"
-                            className="column"
-                            value={newUser.lastName}
-                            onChange={anyTextInputChangeHandler} />
-                        <div className="bad-feedback">Ввведите фамилию</div>
+                            className="column" />
+                        <ErrorMessage
+                            errors={errors}
+                            name={getName<User>(newUser, o => o.lastName)}
+                            className="bad-feedback"
+                            as="div">
+                        </ErrorMessage>
                     </div>
                     <div className="user-list-item">
                         <label className="column">Дата рождения</label>
-                        <DatePickerComponent date={newUser.birthDate} onDateChange={birthDateOnChange} />
+                        <DatePickerComponent {...register('birthDate')} date={getValues('birthDate')} onDateChange={birthDateOnChange} />
                     </div>
                     {
                         elementsDefinedByProps.loginInput()
@@ -206,9 +210,7 @@ function UserEditForm(props: UserEditFormProps) {
                         <input
                             {...register('phone')}
                             type="text"
-                            className="column"
-                            value={newUser.phone}
-                            onChange={anyTextInputChangeHandler} />
+                            className="column" />
                         <div className="bad-feedback">Введите номер телефона</div>
                     </div>
                     <div className="user-list-item">
@@ -218,9 +220,7 @@ function UserEditForm(props: UserEditFormProps) {
                             {...register('userPic')}
                             type="text"
                             className="column"
-                            placeholder="или вставьте ссылку"
-                            value={newUser.userPic}
-                            onChange={anyTextInputChangeHandler} />
+                            placeholder="или вставьте ссылку" />
                         <img src={newUser.userPic} alt="аватар" />
                     </div>
                     <div className="user-list-item">
@@ -228,9 +228,7 @@ function UserEditForm(props: UserEditFormProps) {
                         <input
                             {...register('email')}
                             type="email"
-                            className="column"
-                            value={newUser.email}
-                            onChange={anyTextInputChangeHandler} />
+                            className="column" />
                         <div className="bad-feedback">Введите e-mail</div>
                     </div>
                     {
