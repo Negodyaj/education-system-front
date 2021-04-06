@@ -80,7 +80,7 @@ main {
   border: none;
   text-align: center;
   outline: none;
-  font-family: Monserate;
+  font-family: Montserrat;
 
 }
 
@@ -103,7 +103,6 @@ main {
   border-bottom: 1px solid rgba(39, 45, 59, 0.15);
   text-align: left;
   font-size: 14px;
-  font-family: Monserate;
-  scr: url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100&display=swap');
+  font-family: Montserrat;
 }
 

@@ -58,7 +58,7 @@ function UserList(props: UserListProps) {
                 <h4>Пользователи</h4>
                 <button className="button-style" onClick={() => props.onEditClick()}>
                     <FontAwesomeIcon icon="plus" />
-                    <span> Добавить</span> 
+                    <span> Добавить</span>
                 </button>
             </div>
             <div className="list + user-list-head">
@@ -84,18 +84,19 @@ function UserList(props: UserListProps) {
                         </div>
                         <div className="column">{u.groupName}</div>
                         <div className="column-button">
-                        <div className="column">
-                            <button className="button-round" onClick={() => props.onEditClick(u.id)}>
-                                <FontAwesomeIcon icon="edit" />
-                            </button>
-                            <button className="button-round" onClick={() => props.onDeleteClick(u.id as number)}>
-                                <FontAwesomeIcon icon="trash" />
-                            </button>
+                            <div className="column">
+                                <button className="button-round" onClick={() => props.onEditClick(u.id)}>
+                                    <FontAwesomeIcon icon="edit" />
+                                </button>
+                                <button className="button-round" onClick={() => props.onDeleteClick(u.id as number)}>
+                                    <FontAwesomeIcon icon="trash" />
+                                </button>
 
-                            {
-                                elementsDefinedByRole.paymentButton()
-                            }
-                           
+                                {
+                                    elementsDefinedByRole.paymentButton()
+                                }
+
+                            </div>
                         </div>
                     </div>))
             }
