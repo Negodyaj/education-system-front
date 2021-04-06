@@ -10,5 +10,6 @@ export interface User {
     password?: string;
     groupId?: number;
     groupName?: string;
-    roleIds?: number[];
+    roles?: number[];
+    roleIds?:number[];
 }

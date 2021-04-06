@@ -6,7 +6,6 @@ import React, { ChangeEventHandler, FormEventHandler, useEffect, useState } from
 import DatePickerComponent from '../../../shared/components/date-picker/DatePickerComponent';
 import { convertEnumToDictionary, getRussianDictionary } from '../../../shared/converters/enumToDictionaryEntity';
 import { Role } from '../../../enums/role';
-import NotificationData from '../../../shared/interfaces/NotificationData';
 import { UserInput } from '../../interfaces/UserInput';
 import { useForm } from 'react-hook-form';
 import { convertEntitiesToSelectItems } from '../../../shared/converters/entityToSelectItemConverter';
@@ -15,10 +14,11 @@ interface UserEditFormProps {
     roleId: number;
     userToEdit: User | undefined;
     setIsEditModeOn: (mode: boolean) => void;
-    sendUserPropsForSuccessNotification: (newUser: User) => void;
-    sendNotification: (newNotification: NotificationData) => void;
+    reviseSending: (newUser: User) => void;
+    sendNotification: (data: { type: "error" | "success", message: string }) => void;
     url: string;
     token: string;
+    headers: HeadersInit | undefined;
     method: string;
 }
 
@@ -33,7 +33,7 @@ function UserEditForm(props: UserEditFormProps) {
         userPic: "",
         phone: "",
         email: "",
-        role: []
+        roleIds: []
     }
     const [newUser, setNewUser] = useState<User>(initUser);
     const [wasValidated, setWasValidated] = useState('');
@@ -48,8 +48,6 @@ function UserEditForm(props: UserEditFormProps) {
 
     type FormInputs = UserInput;
 
-    console.log(props.userToEdit)
-
     const { register, handleSubmit, getValues } = useForm<FormInputs>({
         defaultValues: (() => { if (isFetching === false) { return Object.assign({}, newUser) } })()
     });
@@ -62,12 +60,12 @@ function UserEditForm(props: UserEditFormProps) {
                         <label className="">Список ролей</label>
                         <CustomMultiSelect
                             selectType={"multi"}
-                            userOptionsIds={newUser.roleIds || undefined}
+                            userOptionsIds={newUser.roles || undefined}
                             options={convertEntitiesToSelectItems(getRussianDictionary(convertEnumToDictionary(Role)))}
                             onSelect={roleOnChange}></CustomMultiSelect>
                     </div>)
             } else {
-                newUser.roleIds = [Role.Student]
+                newUser.roles = [Role.Student]
             }
         },
         passwordInput: () => {
@@ -110,32 +108,22 @@ function UserEditForm(props: UserEditFormProps) {
     const sendUser = () => {
         fetch(props.url + '/' + (props.userToEdit ? props.userToEdit.id : 'register'), {
             method: props.method,
-            headers: {
-                'Accept': 'application/json',
-                'Authorization': 'Bearer ' + props.token,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(newUser)// {} instead newUser - to provoke error
+            headers: props.headers,
+            body: JSON.stringify(newUser)
         }
         )
             .then(response => {
+                console.log(newUser)
                 if (response.status > 200) {
-                    return Promise.reject(response.json())
+                    throw response.json().then(value => {
+                        props.sendNotification({ type: 'error', message: `${value.Code} ${value.Message}` })
+                    });
                 }
                 return response.json();
             })
             .then(addedOrUpdatedUser => {
                 props.setIsEditModeOn(false);
-                props.sendUserPropsForSuccessNotification(addedOrUpdatedUser);
-            })
-            .catch(error => { return error })
-            .then(data => {
-                data && props.sendNotification({
-                    type: "error",
-                    text: data.Message,
-                    isDismissible: true,
-                    timestamp: Date.now()
-                })
+                props.reviseSending(addedOrUpdatedUser);
             })
     }
 
