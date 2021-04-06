@@ -6,12 +6,13 @@
 }
 
 .user-list{
-    margin-left: 5px;
+padding: 6px;
 }
 
 .user-list-head{
-    font-weight: 600;
+    font-weight: 700;
     font-size: 14px;
+    text-transform: uppercase;
 }
 
 .user-list-head .column span{
@@ -19,45 +20,31 @@
 }
 
 .user-list-item , .user-list-head{
-    display: grid;
-    grid-template-columns: 5vw 15vw 10vw 10vw 10vw 10vw 15vw;
-    margin: 2px;
-    min-height: 50px;
-    border-bottom: 1px solid rgba(39, 45, 59, 0.15);
-    text-align: left;
-    font-size: 14px;
+    grid-template-columns: 60px 20% 13% 10% 150px 15% 150px;
+    margin: 2px 0;
     height: max-content;
 }
 
 
-.column, .column-head{
+.column, .column-head, .column-button{
     display: flex;
-    margin: 0 10px;
     align-self: center;
+    font-size: 14px;
+    margin-bottom: 3px;
 }
 
 .column-head{
-    justify-content: flex-end;
+    justify-content: space-between;
+}
+
+.column-button{
+justify-content: center;
 }
 
 .user-photo{
     width: 40px;
     height: 40px;
     border-radius: 25px;
-}
-
-.button-style{
-    height: 40px;
-    width: 140px;
-    background-color: #00CCF2;
-    color: #FFFF;
-    font-size: 16px;
-    font-weight: 700;
-    margin:0 8px;
-    border-radius: 25px;
-    border: none;
-    line-height: 40px;
-    text-align: center;
 }
 
 .break-word{
