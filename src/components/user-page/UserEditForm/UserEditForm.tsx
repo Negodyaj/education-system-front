@@ -2,7 +2,7 @@ import CustomMultiSelect from '../../multi-select/CustomMultiSelect';
 import './UserEditForm.css'
 import '../UserPage.css';
 import { User } from '../../interfaces/User';
-import React, { ChangeEventHandler, FormEventHandler, useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import DatePickerComponent from '../../../shared/components/date-picker/DatePickerComponent';
 import { convertEnumToDictionary, getRussianDictionary } from '../../../shared/converters/enumToDictionaryEntity';
 import { Role } from '../../../enums/role';
@@ -26,7 +26,7 @@ interface UserEditFormProps {
 
 function UserEditForm(props: UserEditFormProps) {
 
-    const initUser = Object.assign({}, props.userToEdit) || {
+    const initUser = Object.assign({}, props.userToEdit|| {
         firstName: "",
         lastName: "",
         birthDate: undefined,
@@ -35,8 +35,9 @@ function UserEditForm(props: UserEditFormProps) {
         userPic: "",
         phone: "",
         email: "",
-        roleIds: []
-    }
+        roles: []
+    }) 
+
     const [newUser, setNewUser] = useState<User>(initUser);
     const [wasValidated, setWasValidated] = useState('');
     const [isFetching, setIsFetching] = useState(false);
@@ -48,10 +49,10 @@ function UserEditForm(props: UserEditFormProps) {
         return isEmpty
     }, true))
 
-    type FormInputs = UserInput;
+    type FormInputs = User;
 
-    const { register, formState: { errors, isValid }, handleSubmit, getValues, setValue } = useForm<FormInputs>({
-        mode: 'all',
+    const { register, formState: { errors }, handleSubmit, getValues, setValue } = useForm<FormInputs>({
+        mode: 'onChange',
         criteriaMode: 'all',
         defaultValues: (() => { if (isFetching === false) { return Object.assign({}, newUser) } })()
     });
@@ -64,7 +65,7 @@ function UserEditForm(props: UserEditFormProps) {
                         <label className="column">Список ролей</label>
                         <CustomMultiSelect
                             selectType={"multi"}
-                            userOptionsIds={newUser.roles || undefined}
+                            userOptionsIds={getValues('roles') || undefined}
                             options={convertEntitiesToSelectItems(getRussianDictionary(convertEnumToDictionary(Role)))}
                             onSelect={roleOnChange}></CustomMultiSelect>
                     </div>)
@@ -78,9 +79,20 @@ function UserEditForm(props: UserEditFormProps) {
                     <div className="user-list-item">
                         <label className="column">Пароль</label>
                         <input
-                            {...register('password')}
+                            {...register('password', {
+                                required: {
+                                    value: true,
+                                    message: "Введите пароль"
+                                }
+                            })}
                             type="text"
                             className="column" />
+                        <ErrorMessage
+                            errors={errors}
+                            name={getName<User>(newUser, o => o.password)}
+                            className="bad-feedback"
+                            as="div">
+                        </ErrorMessage>
                     </div>
                 )
             } else {
@@ -93,9 +105,24 @@ function UserEditForm(props: UserEditFormProps) {
                     <div className="user-list-item">
                         <label className="column">Логин</label>
                         <input
-                            {...register('login')}
+                            {...register('login', {
+                                required: {
+                                    value: true,
+                                    message: "Введите логин"
+                                },
+                                pattern: {
+                                    value: /[a-z0-9]/,
+                                    message: "Допустимы только строчные буквы и цифры"
+                                }
+                            })}
                             type="text"
                             className="column" />
+                        <ErrorMessage
+                            errors={errors}
+                            name={getName<User>(newUser, o => o.login)}
+                            className="bad-feedback"
+                            as="div">
+                        </ErrorMessage>
                     </div>
                 )
             } else {
@@ -140,10 +167,6 @@ function UserEditForm(props: UserEditFormProps) {
     const setIsEditModeOn = () => {
         props.setIsEditModeOn(false);
     }
-    const onSaveClick = () => {
-        //setWasValidated('was-validated');
-    }
-
 
     if (isFetching) {
         return (<div>loading</div>)
@@ -160,7 +183,8 @@ function UserEditForm(props: UserEditFormProps) {
                                     message: "Введите имя"
                                 },
                                 pattern: {
-                                    value: /[A-Za-zА-Яа-я]{3}/,
+
+                                    value: /[A-Za-zА-Яа-я]/,
                                     message: "Допустимы только буквенные символы"
                                 }
                             })}
@@ -182,7 +206,7 @@ function UserEditForm(props: UserEditFormProps) {
                                     message: "Введите фамилию"
                                 },
                                 pattern: {
-                                    value: /[A-Za-zА-Яа-я]{3}/,
+                                    value: /[A-Za-zА-Яа-я]/,
                                     message: "Допустимы только буквенные символы"
                                 }
                             })}
@@ -197,7 +221,10 @@ function UserEditForm(props: UserEditFormProps) {
                     </div>
                     <div className="user-list-item">
                         <label className="column">Дата рождения</label>
-                        <DatePickerComponent {...register('birthDate')} date={getValues('birthDate')} onDateChange={birthDateOnChange} />
+                        <DatePickerComponent
+                            {...register('birthDate')}
+                            date={getValues('birthDate')}
+                            onDateChange={birthDateOnChange} />
                     </div>
                     {
                         elementsDefinedByProps.loginInput()
@@ -208,28 +235,71 @@ function UserEditForm(props: UserEditFormProps) {
                     <div className="user-list-item">
                         <label className="column">Телефон</label>
                         <input
-                            {...register('phone')}
+                            {...register('phone', {
+                                required: {
+                                    value: true,
+                                    message: "Введите номер телефона"
+                                },
+                                pattern: {
+                                    value: /[0-9]/,
+                                    message: "Допустимы только цифры"
+                                }
+                            })}
                             type="text"
                             className="column" />
-                        <div className="bad-feedback">Введите номер телефона</div>
+                        <ErrorMessage
+                            errors={errors}
+                            name={getName<User>(newUser, o => o.phone)}
+                            className="bad-feedback"
+                            as="div">
+                        </ErrorMessage>
                     </div>
                     <div className="user-list-item">
                         <label className="column">Аватар</label>
                         <input type="file" className="column" />
                         <input
-                            {...register('userPic')}
+                            {...register('userPic', {
+                                required: {
+                                    value: true,
+                                    message: "Добавьте ссылку на изображение  или загрузите файл"
+                                },
+                                pattern: {
+                                    value: /\S/,
+                                    message: "Недопустимый формат ссылки"
+                                }
+                            })}
                             type="text"
                             className="column"
                             placeholder="или вставьте ссылку" />
-                        <img src={newUser.userPic} alt="аватар" />
+                        <ErrorMessage
+                            errors={errors}
+                            name={getName<User>(newUser, o => o.userPic)}
+                            className="bad-feedback"
+                            as="div">
+                        </ErrorMessage>
+                        <img src={getValues('userPic')} alt="аватар" />
                     </div>
                     <div className="user-list-item">
                         <label className="column">Почта</label>
                         <input
-                            {...register('email')}
-                            type="email"
+                            {...register('email', {
+                                required: {
+                                    value: true,
+                                    message: "Введите email"
+                                },
+                                pattern: {
+                                    value: /(\w\.\w)/g,
+                                    message: "Неверный формат адреса"
+                                }
+                            })}
+                            type="text"
                             className="column" />
-                        <div className="bad-feedback">Введите e-mail</div>
+                        <ErrorMessage
+                            errors={errors}
+                            name={getName<User>(newUser, o => o.email)}
+                            className="bad-feedback"
+                            as="div">
+                        </ErrorMessage>
                     </div>
                     {
                         elementsDefinedByProps.roleSelector()
@@ -242,8 +312,7 @@ function UserEditForm(props: UserEditFormProps) {
                             <button
                                 className="column save-button"
                                 type={"submit"}
-                                disabled={isDisabled}
-                                onClick={onSaveClick}>сохранить</button>
+                                disabled={isDisabled}>сохранить</button>
                         </div>
                     </div>
                 </form>
