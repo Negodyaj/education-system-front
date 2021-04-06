@@ -12,10 +12,13 @@ import UserPage from './components/user-page/UserPage';
 import DatePickerComponent from './shared/components/date-picker/DatePickerComponent';
 import CustomMultiSelect from './components/multi-select/CustomMultiSelect';
 import CoursesPage from './components/courses-page/CoursesPage';
+import CourseEdition from './components/courses-page/course-edition/CourseEdition';
 import "./shared/fontawesome/FontawesomeIcons"; 
+import { themes } from './shared/themes/Themes';
 import { Role } from './enums/role';
 import NotificationData from './shared/interfaces/NotificationData';
-import DevTestPage from './components/dev-test-page/DevTestPage';
+import DevTestPage from './components/dev-test-page/DevTestPage'
+import TagsPage from './components/tags-page/TagsPage';
 
 
 function App() {
@@ -55,7 +58,7 @@ function App() {
             console.log(roleId);
         }
     }
-    
+
     const logOut = () => {
         setIsLoggedIn(false);
         history.push("/");
@@ -89,19 +92,31 @@ function App() {
                             <Switch>
                                 <Route exact path="/">
                                     {
-                                        roleId===Role.Test && <DevTestPage sendNotification={sendNewNotification}/>
+                                        roleId === Role.Test && <DevTestPage sendNotification={sendNewNotification} />
                                     }
                                 </Route>
                                 {
                                     (roleId === Role.Manager || roleId === Role.Admin) &&
                                     <Route path="/user-page">
-                                        <UserPage roleId={roleId}></UserPage>
+                                        <UserPage
+                                            roleId={roleId}
+                                            sendNotification={sendNewNotification}></UserPage>
                                     </Route>
                                 }
                                 {
                                     roleId === Role.Teacher &&
                                     <Route path="/courses-page">
                                         <CoursesPage roleId={roleId}></CoursesPage>
+                                    </Route>
+                                }
+                                <Route path="/course-edition/:id" render={({ location, history }) => (
+                                    <CourseEdition themesList={themes} idCourse={location.pathname} />
+                                )}>
+                                </Route>
+                                 {
+                                    roleId !== Role.Student &&
+                                    <Route path="/tags-page">
+                                        <TagsPage></TagsPage>
                                     </Route>
                                 }
                                 <Route path="/homework">
@@ -112,10 +127,10 @@ function App() {
                             <LoginForm onLoginClick={loginHandler} />
                     }
                     {
-                        isLoggedIn ? <NotificationContainer 
-                            dismissibleNotifications={dismissibleNotifications} 
+                        isLoggedIn ? <NotificationContainer
+                            dismissibleNotifications={dismissibleNotifications}
                             nonDismissibleNotifications={nonDismissibleNotifications}
-                            deleteNotification={deleteNotification}/> : <></>
+                            deleteNotification={deleteNotification} /> : <></>
                     }
                 </main>
             </div>
