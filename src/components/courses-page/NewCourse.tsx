@@ -39,7 +39,7 @@ function NewCourse(props: NewCourseProps) {
         );
         setIsNameNewCourseFilled(nameNewCourse.current?.value === '' ? true : false);
         setIsDescriptionNewCourseFilled(descriptionNewCourse.current?.value === '' ? true : false);
-        setIsDurationNewCourseFilled(Number(durationNewCourse.current?.value) === 0 ? true : false);
+        setIsDurationNewCourseFilled(durationNewCourse.current?.value === '' ? true : false);
     }
 
     return(
@@ -68,7 +68,7 @@ function NewCourse(props: NewCourseProps) {
                     }
                     <div className='new-course-header'>Продолжительность курса</div>
                     <div className="course-data">
-                        <input type="number" min={0} className="course-duration" ref={durationNewCourse} />
+                        <input type="number" min={1} className="course-duration" ref={durationNewCourse} />
                         <div className="duration-course-text">месяца(ов)</div>
                     </div>
                     { 
