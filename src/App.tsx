@@ -15,7 +15,8 @@ import CoursesPage from './components/courses-page/CoursesPage';
 import "./shared/fontawesome/FontawesomeIcons"; 
 import { Role } from './enums/role';
 import NotificationData from './shared/interfaces/NotificationData';
-import DevTestPage from './components/dev-test-page/DevTestPage'
+import DevTestPage from './components/dev-test-page/DevTestPage';
+
 
 function App() {
     const history = useHistory();

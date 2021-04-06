@@ -59,7 +59,7 @@ function UserList(props: UserListProps) {
                 <h4>Пользователи</h4>
                 <button className="button-style" onClick={() => onEditClick()}>
                     <FontAwesomeIcon icon="plus" />
-                     Добавить
+                    <span> Добавить</span> 
                 </button>
             </div>
             <div className="list + user-list-head">
