@@ -8,9 +8,6 @@ interface TagListProps {
 function TagList(props: TagListProps) {
     return (
         <>
-        {
-            console.log(props.tags)
-        }
             {
                 props.tags?.map(t => {
                     return (

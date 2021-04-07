@@ -12,12 +12,14 @@ import { convertEntitiesToSelectItems } from '../../../shared/converters/entityT
 import { ErrorMessage } from '@hookform/error-message';
 import { getName } from '../../../shared/converters/objectKeyToString';
 import { PreviousMethod } from '../UserPage';
+import { sendPutRequest } from '../../../services/http.service';
+import { UserUpdate } from '../../interfaces/UserUpdate';
 
 interface UserEditFormProps {
     roleId: number;
     userToEdit: User | undefined;
     setIsEditModeOn: (mode: boolean) => void;
-    reviseSending: (newUser: User, previousMethod: PreviousMethod) => void;
+    reviseSending: (newUser: User) => void;
     sendNotification: (data: { type: "error" | "success", message: string }) => void;
     url: string;
     token: string;
@@ -31,12 +33,9 @@ function UserEditForm(props: UserEditFormProps) {
         firstName: "",
         lastName: "",
         birthDate: undefined,
-        login: "",
-        password: "",
         userPic: "",
         phone: "",
-        email: "",
-        roleIds: []
+        email: ""
     })
 
     const [newUser, setNewUser] = useState<User>(initUser);
@@ -50,7 +49,7 @@ function UserEditForm(props: UserEditFormProps) {
         return isEmpty
     }, true))
 
-    type FormInputs = UserInput;
+    type FormInputs = UserUpdate|UserInput;
 
     const { register, formState: { errors }, handleSubmit, getValues, setValue } = useForm<FormInputs>({
         mode: 'all',
@@ -71,7 +70,7 @@ function UserEditForm(props: UserEditFormProps) {
                             onSelect={roleOnChange}></CustomMultiSelect>
                     </div>)
             } else {
-                setValue('roleIds', [Role.Student]);
+                //setValue('roleIds', [Role.Student]);
             }
         },
         passwordInput: () => {
@@ -132,35 +131,26 @@ function UserEditForm(props: UserEditFormProps) {
         }
     }
 
-    const sendUser = (newUser: FormInputs) => {
-        fetch(props.url + '/' + (props.userToEdit ? props.userToEdit.id : 'register'), {
-            method: props.method,
-            headers: props.headers,
-            body: JSON.stringify(newUser)
-        }
-        )
-            .then(response => {
-                if (response.status > 200) {
-                    throw response.json().then(value => {
-                        props.sendNotification({ type: 'error', message: `${value.Code} ${value.Message}` })
-                    });
-                }
-                return response.json();
-            })
-            .then(addedOrUpdatedUser => {
-                props.setIsEditModeOn(false);
-                props.reviseSending(addedOrUpdatedUser, 'NOT DELETE');
-            })
+    const sendUser = async (newUser: FormInputs) => {
+        props.reviseSending(await sendPutRequest(props.url + (props.userToEdit ? '/' + props.userToEdit.id : ''), 
+        {
+            firstName: newUser.firstName,
+            lastName: newUser.lastName,
+            phone: newUser.phone,
+            email: newUser.email,
+            userPic: newUser.userPic,
+            birthDate: newUser.birthDate
+        }))
     }
 
     const birthDateOnChange = (date: string) => {
         setValue('birthDate', date)
     }
     const roleOnChange = (options: number[]) => {
-        setValue('roleIds', options);
+        //setValue('roleIds', options);
     }
     const onSubmit = (data: FormInputs) => {
-        console.log(JSON.stringify(data))
+        console.log(initUser as UserUpdate)
         sendUser(data);
     }
     const setIsEditModeOn = () => {
