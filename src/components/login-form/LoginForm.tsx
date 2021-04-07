@@ -11,8 +11,8 @@ function LoginForm(props: LoginFormProps) {
     const [password, setPassword] = useState('');
 
     const loginButtonOnClick = () => {
-        //authenticate(login, password);
-        props.onLoginClick(login, password);
+        authenticate(login, password);
+        //props.onLoginClick(login, password);
     }
 
     const handleloginChange = (event: ChangeEvent<HTMLInputElement>) => {

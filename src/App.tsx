@@ -23,8 +23,9 @@ import { getUser } from './services/test-wretch';
 
 
 function App() {
+    const token = getToken();
     const history = useHistory();
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [isLoggedIn, setIsLoggedIn] = useState(!!token);
     const [roleId, setRoleId] = useState(0);
     const [dismissibleNotifications, setDismissibleNotifications] = useState<NotificationData[]>([]);
     const [nonDismissibleNotifications, setNonDismissibleNotifications] = useState<NotificationData[]>([]);
