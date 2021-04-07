@@ -1,0 +1,101 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat');
+
+.notification {
+    display: flex;
+    max-height: 150px;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 20px;
+    padding: 10px 20px;
+    padding-left: 20px;
+    margin-bottom: 10px;
+    transition: all 0.3s linear;
+    overflow: hidden;
+    border: none;
+    color: white;
+    box-shadow: 5px 5px 5px rgba(0,0,0,0.2);
+    font-size: 14px;
+}
+
+.notification .type-icon {
+    font-size: 40px;
+}
+
+.notification span{
+    flex-grow: 1;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    text-align: left;
+    padding: 10px;
+}
+
+.notification .close-btn {
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    font-size: 20px;
+    background: none;
+    border: none;
+    outline: none;
+    position: relative;
+}
+
+.notification .close-btn svg {
+    color: white;
+}
+
+.notification .close-btn-container {
+    position: relative;
+    flex-shrink: 0;
+}
+
+.circle-timer {
+    pointer-events: none;
+    position: absolute;
+    right: 0;
+    width: 40px;
+    height: 40px;
+    transform: rotateZ(-90deg);
+}
+.circle-timer circle {
+    stroke-dasharray: 113px;
+    stroke-dashoffset: 0px;
+    stroke-linecap: round;
+    stroke-width: 2px;
+    stroke: white;
+    fill: none;
+    animation: countdown linear forwards;
+}
+@keyframes countdown {
+    from {
+        stroke-dashoffset: 113px;
+    }
+    to {
+        stroke-dashoffset: 0px;
+    }
+}
+
+.info-notification {
+    background: #2D62ED;
+}
+
+.success-notification {
+    background: #00D9A6;
+}
+
+.warning-notification {
+    background: #FFAF62;
+}
+
+.error-notification {
+    background: #FF0041;
+}
+
+
+.hidden {
+    opacity: 0;
+    max-height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin: 0;
+}

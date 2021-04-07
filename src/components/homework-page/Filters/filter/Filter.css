@@ -1,0 +1,53 @@
+.multiselect {
+    width: 200px;
+  }
+  
+  .selectBox{
+    position: relative;
+  }
+  
+  .selectBox select {
+    width: 100%;
+    font-weight: bold;
+  }
+  
+  .overSelect {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+  }
+  
+.list-items {
+    border: 1px #dadada solid;
+    background-color: #f6ffff;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .list-items.hidden{
+    display: none;
+  }
+
+  .list-items input{
+    margin-left: 4px;
+  }
+
+  .list-items-footer{
+    display:flex;
+    justify-content: center;
+  }
+
+  .apply-filter-btn{
+    width:120px;
+    height: 19px;
+    padding: -5px;
+    font-size: 10px;
+    margin-bottom: 4px;
+  }
+  
+  #checkboxes p {
+    display: block;
+  }
+  
