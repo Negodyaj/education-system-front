@@ -14,7 +14,6 @@ import CustomMultiSelect from './components/multi-select/CustomMultiSelect';
 import CoursesPage from './components/courses-page/CoursesPage';
 import CourseEdition from './components/courses-page/course-edition/CourseEdition';
 import "./shared/fontawesome/FontawesomeIcons"; 
-import { themes } from './shared/themes/Themes';
 import { Role } from './enums/role';
 import NotificationData from './shared/interfaces/NotificationData';
 import DevTestPage from './components/dev-test-page/DevTestPage'
@@ -110,7 +109,7 @@ function App() {
                                     </Route>
                                 }
                                 <Route path="/course-edition/:id" render={({ location, history }) => (
-                                    <CourseEdition themesList={themes} idCourse={location.pathname} />
+                                    <CourseEdition idCourse={location.pathname} />
                                 )}>
                                 </Route>
                                  {
