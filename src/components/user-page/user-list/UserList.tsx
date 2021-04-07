@@ -1,6 +1,6 @@
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Role } from "../../../enums/role";
 import { getEnToRuTranslation } from "../../../shared/converters/enumToDictionaryEntity";
 import { User } from "../../interfaces/User";
@@ -29,9 +29,7 @@ function UserList(props: UserListProps) {
     }
 
     const [signInvertor, setSignInvertor] = useState(1);
-    const [usersToShow, setUsersToShow] = useState([...props.users].sort((a, b) => {
-        return lastNameAlphabetSort(a.lastName, b.lastName);
-    }));
+    const [usersToShow, setUsersToShow] = useState([...props.users]);
 
     const elementsDefinedByRole = {
         paymentButton: () => {
@@ -46,9 +44,9 @@ function UserList(props: UserListProps) {
     }
 
     const lastNameColumnOnClick = () => {
-        setUsersToShow([...usersToShow.sort((a, b) => {
+        setUsersToShow(usersToShow.sort((a, b) => {
             return lastNameAlphabetSort(a.lastName, b.lastName);
-        })])
+        }))
         setSignInvertor(signInvertor + 1);
     }
 
@@ -69,7 +67,9 @@ function UserList(props: UserListProps) {
                 <div className="column"><span title="А-Я">роль</span></div>
             </div>
             {
-                usersToShow.map(u => (
+                usersToShow?.sort((a, b) => {
+                    return lastNameAlphabetSort(a.lastName, b.lastName);
+                }).map(u => (
                     <div className="list + user-list-item" key={u.id}>
                         <div className="column">
                             <img className="user-photo" src={u.userPic} alt="userpic" />
