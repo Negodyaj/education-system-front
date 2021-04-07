@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import CustomList from './components/custom-list/CustomList';
@@ -19,6 +19,7 @@ import NotificationData from './shared/interfaces/NotificationData';
 import DevTestPage from './components/dev-test-page/DevTestPage'
 import TagsPage from './components/tags-page/TagsPage';
 import { getToken } from './services/auth.service';
+import { getUser } from './services/test-wretch';
 
 
 function App() {
@@ -64,6 +65,10 @@ function App() {
         setIsLoggedIn(false);
         history.push("/");
     }
+
+    useEffect(() => {
+        getUser()
+    }, [])
 
     return (
         <div className="App">
