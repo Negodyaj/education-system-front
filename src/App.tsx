@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import CustomList from './components/custom-list/CustomList';
@@ -18,11 +18,14 @@ import { Role } from './enums/role';
 import NotificationData from './shared/interfaces/NotificationData';
 import DevTestPage from './components/dev-test-page/DevTestPage'
 import TagsPage from './components/tags-page/TagsPage';
+import { getToken } from './services/auth.service';
+import { getUser } from './services/test-wretch';
 
 
 function App() {
     const history = useHistory();
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const token = getToken();
+    const [isLoggedIn, setIsLoggedIn] = useState(!!token);
     const [roleId, setRoleId] = useState(0);
     const [dismissibleNotifications, setDismissibleNotifications] = useState<NotificationData[]>([]);
     const [nonDismissibleNotifications, setNonDismissibleNotifications] = useState<NotificationData[]>([]);
@@ -63,6 +66,10 @@ function App() {
         history.push("/");
     }
 
+    useEffect(() => {
+        getUser()
+    }, [])
+
     return (
         <div className="App">
             <header>
@@ -85,7 +92,6 @@ function App() {
                     }
                 </aside>
                 <main>
-
                     {
                         isLoggedIn ?
                             <Switch>
