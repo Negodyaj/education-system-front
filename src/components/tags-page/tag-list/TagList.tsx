@@ -9,11 +9,12 @@ function TagList(props: TagListProps) {
     return ( 
         <>
             { 
-                props.tags.map(t => { 
-                    return (
-                        <div className='tags-list-item'> {t.name}</div>
-                    )
-                })
+             console.log (props.tags)
+            //    props.tags.map(t => { 
+            //         return (
+            //             <div className='tags-list-item'> {t.name}</div>
+            //         )
+            //     })
             }
         </>
     )
