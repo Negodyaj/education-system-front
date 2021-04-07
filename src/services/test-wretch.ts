@@ -7,6 +7,5 @@ export const getUser = () => {
   .unauthorized(error => { console.log(error)})
   .error(418, error => { console.log(error) })
   .json(data => console.log(data))
-  // .res(response => console.log(response.json()))
 }
 
