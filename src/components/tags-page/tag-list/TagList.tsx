@@ -6,10 +6,13 @@ interface TagListProps {
 
 
 function TagList(props: TagListProps) {
-    return ( 
+    return (
         <>
-            { 
-               props.tags?.map(t => { 
+        {
+            console.log(props.tags)
+        }
+            {
+                props.tags?.map(t => {
                     return (
                         <div className='tags-list-item'> {t.name}</div>
                     )

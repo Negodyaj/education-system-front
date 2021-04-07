@@ -1,22 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import CustomList from './components/custom-list/CustomList';
-import Cards from './Cards';
-import { Link, Switch, Route, useHistory } from 'react-router-dom';
+import { Switch, Route, useHistory } from 'react-router-dom';
 import LoginForm from './components/login-form/LoginForm';
 import NavMenu from './components/nav-menu/NavMenu';
 import HomeworkPage from './components/homework-page/HomeworkPage';
 import NotificationContainer from './shared/components/notification/NotificationContainer'
 import UserPage from './components/user-page/UserPage';
-import DatePickerComponent from './shared/components/date-picker/DatePickerComponent';
-import CustomMultiSelect from './components/multi-select/CustomMultiSelect';
 import CoursesPage from './components/courses-page/CoursesPage';
 import CourseEdition from './components/courses-page/course-edition/CourseEdition';
-import "./shared/fontawesome/FontawesomeIcons"; 
+import "./shared/fontawesome/FontawesomeIcons";
 import { Role } from './enums/role';
 import NotificationData from './shared/interfaces/NotificationData';
-import DevTestPage from './components/dev-test-page/DevTestPage'
+import DevTestPage from './components/dev-test-page/DevTestPage';
 import TagsPage from './components/tags-page/TagsPage';
 import { getToken } from './services/auth.service';
 import { getUser } from './services/test-wretch';
@@ -26,7 +22,7 @@ function App() {
     const history = useHistory();
     const token = getToken();
     const [isLoggedIn, setIsLoggedIn] = useState(!!token);
-    const [roleId, setRoleId] = useState(0);
+    const [roleId, setRoleId] = useState(1);
     const [dismissibleNotifications, setDismissibleNotifications] = useState<NotificationData[]>([]);
     const [nonDismissibleNotifications, setNonDismissibleNotifications] = useState<NotificationData[]>([]);
 
@@ -118,7 +114,7 @@ function App() {
                                     <CourseEdition idCourse={location.pathname} />
                                 )}>
                                 </Route>
-                                 {
+                                {
                                     roleId !== Role.Student &&
                                     <Route path="/tags-page">
                                         <TagsPage></TagsPage>

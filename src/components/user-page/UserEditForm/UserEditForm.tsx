@@ -17,7 +17,7 @@ interface UserEditFormProps {
     roleId: number;
     userToEdit: User | undefined;
     setIsEditModeOn: (mode: boolean) => void;
-    reviseSending: (newUser: User, previousMethod:PreviousMethod) => void;
+    reviseSending: (newUser: User, previousMethod: PreviousMethod) => void;
     sendNotification: (data: { type: "error" | "success", message: string }) => void;
     url: string;
     token: string;
@@ -27,7 +27,7 @@ interface UserEditFormProps {
 
 function UserEditForm(props: UserEditFormProps) {
 
-    const initUser = Object.assign({}, props.userToEdit|| {
+    const initUser = Object.assign({}, props.userToEdit || {
         firstName: "",
         lastName: "",
         birthDate: undefined,
@@ -37,7 +37,7 @@ function UserEditForm(props: UserEditFormProps) {
         phone: "",
         email: "",
         roleIds: []
-    }) 
+    })
 
     const [newUser, setNewUser] = useState<User>(initUser);
     const [wasValidated, setWasValidated] = useState('');
@@ -71,7 +71,7 @@ function UserEditForm(props: UserEditFormProps) {
                             onSelect={roleOnChange}></CustomMultiSelect>
                     </div>)
             } else {
-                setValue('roleIds',[Role.Student]);
+                setValue('roleIds', [Role.Student]);
             }
         },
         passwordInput: () => {

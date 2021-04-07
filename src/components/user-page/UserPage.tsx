@@ -1,6 +1,7 @@
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useState } from 'react';
+import { sendGetRequest } from '../../services/http.service';
 import ConfirmationDialog from '../../shared/components/confirmation-dialog/ConfirmationDialog';
 import NotificationData from '../../shared/interfaces/NotificationData';
 import { User } from '../interfaces/User';
@@ -8,7 +9,7 @@ import UserList from './user-list/UserList';
 import UserEditForm from './UserEditForm/UserEditForm';
 import './UserPage.css'
 
-export type PreviousMethod = 'DELETE'|'NOT DELETE';
+export type PreviousMethod = 'DELETE' | 'NOT DELETE';
 
 interface UserPageProps {
     roleId: number;
@@ -26,7 +27,7 @@ function UserPage(props: UserPageProps) {
     }
     const [usersInState, setUsersInState] = useState<User[]>([]);
     const [isEditModeOn, setIsEditModeOn] = useState(false);
-    const [isFetching, setIsFetching] = useState(true);
+    const [isFetching, setIsFetching] = useState(false);
     const [userToEdit, setUserToEdit] = useState<User | undefined>();
     const [userToDeleteId, setUserToDeleteId] = useState<number>();
     const [methodInForm, setMethodInForm] = useState('');
@@ -39,15 +40,10 @@ function UserPage(props: UserPageProps) {
     const confirmLabel = "Да";
     const declineLabel = "нет";
 
-    const getUsers = () => {
-        fetch(url, {
-            headers: headers
-        })
-            .then(response => response.json())
-            .then(data => {
-                setUsersInState(data);
-                setIsFetching(false);
-            })
+
+    const getUsers = async () => {
+        setUsersInState(await sendGetRequest('User'))
+        alert(props.roleId)
     }
 
     const sendNotification = (data: { type: "error" | "success", message: string }) => {
@@ -59,9 +55,9 @@ function UserPage(props: UserPageProps) {
         })
     }
 
-    
 
-    const checkUpdatedUsers = (addedUser: User, previousMethod: PreviousMethod|string) => {
+
+    const checkUpdatedUsers = (addedUser: User, previousMethod: PreviousMethod | string) => {
         setIsFetching(true);
         getUsers();
         previousMethod === 'DELETE' && (actionInNotification = 'удалён');
