@@ -6,23 +6,22 @@ export const sendGetRequest = async (path: string) => {
     return await baseWretch
         .url(path)
         .get()
-        .json(data => responseHandler(data))
+        .json(data => responseHandler(data));
 
 };
 export const sendPutRequest = async (path: string, body?: any) => {
-    console.log(body)
     return await baseWretch
         .url(path)
         .put(body)
-        .json(data => responseHandler(data))
+        .json(data => responseHandler(data));
 
 };
 const responseHandler = (response: any): any[] | any => {
     let result = Object.values(response);
     if (result.length > 1) {
-        return result
+        return result;
     } else {
-        return result[0]
+        return result[0];
     }
 }
 const baseWretch = wretch()
