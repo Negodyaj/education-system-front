@@ -20,7 +20,7 @@ function CourseEdition(props: CourseEditionProps) {
 
     let currentCourse = {} as Course;
     let themesCurrentCourse: Themes[] = [];
-    let indexCourse = Number(props.idCourse.slice(-1));
+    let indexCourse = Number(props.idCourse.replace(/[a-z-A-Z\/]/g, ""));
     let themesList: Themes[] = [];
     let checkThemes: Themes[] = [];
     
