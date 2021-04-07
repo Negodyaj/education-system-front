@@ -1,20 +1,22 @@
 import { ChangeEvent, useState } from 'react';
+import { authenticate } from '../../services/auth.service';
 import './LoginForm.css';
 
 interface LoginFormProps {
-    onLoginClick: (email: string, password: string) => void
+    onLoginClick: (login: string, password: string) => void
 }
 
 function LoginForm(props: LoginFormProps) {
-    const [email, setEmail] = useState('');
+    const [login, setLogin] = useState('');
     const [password, setPassword] = useState('');
 
     const loginButtonOnClick = () => {
-        props.onLoginClick(email, password);
+        authenticate(login, password);
+        //props.onLoginClick(login, password);
     }
 
-    const handleEmailChange = (event: ChangeEvent<HTMLInputElement>) => {
-        setEmail(event.target.value);
+    const handleloginChange = (event: ChangeEvent<HTMLInputElement>) => {
+        setLogin(event.target.value);
     }
 
     const handlePasswordChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -24,8 +26,8 @@ function LoginForm(props: LoginFormProps) {
     return (
         <div className="login-form">
             <label className="form-field">
-                <span>Email:</span>
-                <input type="text" value={email} onChange={handleEmailChange}/>
+                <span>Login:</span>
+                <input type="text" value={login} onChange={handleloginChange}/>
             </label>
             <label className="form-field">
                 <span>Password</span>
