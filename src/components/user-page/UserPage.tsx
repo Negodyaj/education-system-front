@@ -2,12 +2,13 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useState } from 'react';
 import ConfirmationDialog from '../../shared/components/confirmation-dialog/ConfirmationDialog';
-import ConfirmationDialogContent from '../../shared/components/confirmation-dialog/ConfirmationDialogContent';
 import NotificationData from '../../shared/interfaces/NotificationData';
 import { User } from '../interfaces/User';
 import UserList from './user-list/UserList';
 import UserEditForm from './UserEditForm/UserEditForm';
 import './UserPage.css'
+
+export type PreviousMethod = 'DELETE'|'NOT DELETE';
 
 interface UserPageProps {
     roleId: number;
@@ -17,11 +18,17 @@ interface UserPageProps {
 function UserPage(props: UserPageProps) {
 
     const url = 'https://80.78.240.16:7070/api/User';
-    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoidm9sb2R5YTIyIiwiaWQiOiIxIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoi0JDQtNC80LjQvdC40YHRgtGA0LDRgtC-0YAiLCJuYmYiOjE2MTc0NDk3MjcsImV4cCI6MTYxNzYyMjUyNywiaXNzIjoiRWR1Y2F0aW9uU3lzdGVtLkFwaSIsImF1ZCI6IkRldkVkdWNhdGlvbiJ9.h_GX1srLTRp2r-D8gzfjikmmxW2WJZ6PwU3703G0bMM';
+    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoidm9sb2R5YTIyIiwiaWQiOiIxIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjpbItCQ0LTQvNC40L3QuNGB0YLRgNCw0YLQvtGAIiwi0J_RgNC10L_QvtC00LDQstCw0YLQtdC70YwiLCLQnNC10L3QtdC00LbQtdGAIl0sIm5iZiI6MTYxNzY0ODg5OCwiZXhwIjoxNjE3ODIxNjk4LCJpc3MiOiJFZHVjYXRpb25TeXN0ZW0uQXBpIiwiYXVkIjoiRGV2RWR1Y2F0aW9uIn0.2UJnH39pkpiqT3P9C9s-PAWmLi8Oiz_qr5TKZdkys7o';
+    const headers = {
+        'Accept': 'application/json',
+        'Authorization': 'Bearer ' + token,
+        'Content-Type': 'application/json'
+    }
     const [usersInState, setUsersInState] = useState<User[]>([]);
     const [isEditModeOn, setIsEditModeOn] = useState(false);
     const [isFetching, setIsFetching] = useState(true);
     const [userToEdit, setUserToEdit] = useState<User | undefined>();
+    const [userToDeleteId, setUserToDeleteId] = useState<number>();
     const [methodInForm, setMethodInForm] = useState('');
     const [isModalShown, setIsModalShown] = useState(false);
     const stringChanged = "изменён";
@@ -34,38 +41,39 @@ function UserPage(props: UserPageProps) {
 
     const getUsers = () => {
         fetch(url, {
-            headers: {
-                'Accept': 'application/json',
-                'Authorization': 'Bearer ' + token,
-                'Content-Type': 'application/json'
-            }
+            headers: headers
         })
             .then(response => response.json())
             .then(data => {
                 setUsersInState(data);
-                console.log(usersInState)
                 setIsFetching(false);
             })
     }
 
-    const checkUpdatedUsers = (addedUser: User) => {
-        setIsFetching(true);
-        getUsers();
+    const sendNotification = (data: { type: "error" | "success", message: string }) => {
         props.sendNotification({
-            type: "success",
-            text: "пользователь " + addedUser.firstName + " " + addedUser.lastName + " успешно " + actionInNotification,
+            type: data.type,
+            text: data.message,
             isDismissible: true,
             timestamp: Date.now()
         })
     }
 
+    
+
+    const checkUpdatedUsers = (addedUser: User, previousMethod: PreviousMethod|string) => {
+        setIsFetching(true);
+        getUsers();
+        previousMethod === 'DELETE' && (actionInNotification = 'удалён');
+        sendNotification({
+            type: "success",
+            message: "пользователь " + addedUser.firstName + " " + addedUser.lastName + " успешно " + actionInNotification
+        })
+    }
+
     const getUserToUpdate = (userToEditId: number) => {
         fetch(url + '/' + userToEditId, {
-            headers: {
-                'Accept': 'application/json',
-                'Authorization': 'Bearer ' + token,
-                'Content-Type': 'application/json'
-            }
+            headers: headers
         })
             .then(response => response.json())
             .then(data => {
@@ -78,7 +86,21 @@ function UserPage(props: UserPageProps) {
 
     const deleteUser = (decision: boolean) => {
         if (decision) {
-
+            fetch(url + '/' + userToDeleteId, {
+                method: 'DELETE',
+                headers: headers
+            })
+                .then(response => {
+                    if (response.status > 200) {
+                        throw response.json().then(value => {
+                            sendNotification({ type: 'error', message: `${value.Code} ${value.Message}` })
+                        });
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    checkUpdatedUsers(data, 'DELETE');
+                })
         }
         setIsModalShown(false);
     }
@@ -99,7 +121,8 @@ function UserPage(props: UserPageProps) {
     }
 
 
-    const onDeleteClick = (userToDeleteId: number) => {
+    const onDeleteClick = (userToDeleteIdArg: number) => {
+        setUserToDeleteId(userToDeleteIdArg);
         setIsModalShown(true);
     }
 
@@ -115,11 +138,12 @@ function UserPage(props: UserPageProps) {
             roleId={props.roleId}
             userToEdit={userToEdit}
             setIsEditModeOn={setIsEditModeOn}
-            sendUserPropsForSuccessNotification={checkUpdatedUsers}
-            sendNotification={props.sendNotification}
+            reviseSending={checkUpdatedUsers}
+            sendNotification={sendNotification}
             url={url}
             token={token}
-            method={methodInForm}></UserEditForm>
+            method={methodInForm}
+            headers={headers}></UserEditForm>
     }
 
     return (
