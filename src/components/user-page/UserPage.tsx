@@ -1,12 +1,15 @@
 
-import { useEffect, useState } from 'react';
-import { Role } from '../../enums/role';
-import { dictionary } from '../../shared/converters/enumToDictionaryEntity';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, { useEffect, useState } from 'react';
+import { sendDeleteRequest, sendGetRequest } from '../../services/http.service';
+import ConfirmationDialog from '../../shared/components/confirmation-dialog/ConfirmationDialog';
 import NotificationData from '../../shared/interfaces/NotificationData';
 import { User } from '../interfaces/User';
 import UserList from './user-list/UserList';
 import UserEditForm from './UserEditForm/UserEditForm';
 import './UserPage.css'
+
+export type PreviousMethod = 'DELETE' | 'NOT DELETE';
 
 interface UserPageProps {
     roleId: number;
@@ -15,33 +18,63 @@ interface UserPageProps {
 
 function UserPage(props: UserPageProps) {
 
-    const url = 'https://80.78.240.16:7070/api/User';
-    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoidm9sb2R5YTIyIiwiaWQiOiIxIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoi0JDQtNC80LjQvdC40YHRgtGA0LDRgtC-0YAiLCJuYmYiOjE2MTcxMDAwNjIsImV4cCI6MTYxNzI3Mjg2MiwiaXNzIjoiRWR1Y2F0aW9uU3lzdGVtLkFwaSIsImF1ZCI6IkRldkVkdWNhdGlvbiJ9.m5KxT3HuXeJyb2W2mNokTfhbgpsputj9jR8fpq3sbUc';
-
-
-
-    const [usersInState, setUsersInState] = useState<User[]>([]);
+    const url = 'User';
+    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoidm9sb2R5YTIyIiwiaWQiOiIxIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjpbItCQ0LTQvNC40L3QuNGB0YLRgNCw0YLQvtGAIiwi0J_RgNC10L_QvtC00LDQstCw0YLQtdC70YwiLCLQnNC10L3QtdC00LbQtdGAIl0sIm5iZiI6MTYxNzY0ODg5OCwiZXhwIjoxNjE3ODIxNjk4LCJpc3MiOiJFZHVjYXRpb25TeXN0ZW0uQXBpIiwiYXVkIjoiRGV2RWR1Y2F0aW9uIn0.2UJnH39pkpiqT3P9C9s-PAWmLi8Oiz_qr5TKZdkys7o';
+    const headers = {
+        'Accept': 'application/json',
+        'Authorization': 'Bearer ' + token,
+        'Content-Type': 'application/json'
+    }
+    const [usersInState, setUsersInState] = useState<User[] | undefined>();
     const [isEditModeOn, setIsEditModeOn] = useState(false);
-    const [isFetching, setIsFetching] = useState(true);
-    const [userToEdit, setUserToEdit] = useState<User | null>(null);
-    const ids: (number | undefined)[] = Array.from(usersInState, user => user.id);
+    const [isFetching, setIsFetching] = useState(false);
+    const [userToEdit, setUserToEdit] = useState<User | undefined>();
+    const [userToDeleteId, setUserToDeleteId] = useState<number>();
+    const [methodInForm, setMethodInForm] = useState('');
+    const [isModalShown, setIsModalShown] = useState(false);
     const stringChanged = "изменён";
     const stringAdded = 'добавлен';
-    let actionInNotification = stringChanged;
+    let actionInNotification = methodInForm === "POST" ? stringAdded : stringChanged;
+    const confirmationDeleteMessage = "Вы действительно хотите удалить пользователя?";
+    const confirmationDeleteTitle = "Удаление пользователя";
+    const confirmLabel = "Да";
+    const declineLabel = "нет";
 
-    const getUsers = () => {
-        fetch(url, {
-            headers: {
-                'Accept': 'application/json',
-                'Authorization': 'Bearer ' + token,
-                'Content-Type': 'application/json'
-            }
+
+    const getUsers = async () => {
+        setUsersInState(await sendGetRequest<User[]>(url))
+    }
+
+    const sendNotification = (data: { type: "error" | "success", message: string }) => {
+        props.sendNotification({
+            type: data.type,
+            text: data.message,
+            isDismissible: true,
+            timestamp: Date.now()
         })
-            .then(response => response.json())
-            .then(data => {
-                setUsersInState(data);
-                setIsFetching(false);
-            })
+    }
+
+    const refreshUsers = () => {
+        setUsersInState(undefined);
+        getUsers();
+    }
+    const checkUpdatedUsers = (addedUser: User) => {
+        refreshUsers();
+        setIsEditModeOn(false)
+    }
+
+    const getUserToUpdate = (userToEditId: number) => {
+
+    }
+
+    const deleteUser = async (decision: boolean) => {
+        setIsModalShown(true);
+        if (decision === true) {
+            if (await sendDeleteRequest(url + '/' + userToDeleteId)) {
+                refreshUsers()
+            };
+        }
+        setIsModalShown(false)
     }
 
     useEffect(() => {
@@ -49,78 +82,53 @@ function UserPage(props: UserPageProps) {
     }, []);
 
     const onEditClick = (userToEditId?: number) => {
-        setIsEditModeOn(true);
-        setUserToEdit(
-            usersInState.filter((user) => {
-                return user.id == userToEditId
-            })[0]
-        )
-    }
-    const onSaveClick = (newUser: User) => {
-        setIsFetching(true);
-
-        fetch('https://80.78.240.16:7070/api/User/register', {
-            method: "POST",
-            headers: {
-                'Accept': 'application/json',
-                'Authorization': 'Bearer ' + token,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                firstName: newUser.firstName,
-                lastName: newUser.lastName,
-                birthDate: newUser.birthDate,
-                login: newUser.login,
-                password: newUser.password,
-                phone: newUser.phone,
-                userPic: newUser.userPic,
-                email: newUser.email,
-                roleIds: [
-                    Role.Student
-                ]
-
-            })
+        if (userToEditId) {
+            setUserToEdit([...usersInState as User[]].filter(u => u.id === userToEditId)[0]);
+        } else {
+            setUserToEdit(undefined);
         }
-        )
-        .then(data => data.json())
-        .then(data => setIsFetching(false));
-        
-
-        //actionInNotification = stringAdded;
-
-        //actionInNotification = stringChanged;
-
-        //setUsersInState(usersInState);
-        // props.sendNotification({
-        //     type: "success",
-        //     text: "пользователь " + newUser.firstName + " " + newUser.lastName + " успешно " + actionInNotification,
-        //     isDismissible: true,
-        //     timestamp: Date.now()
-        // })
+        setIsEditModeOn(true);
     }
 
-    const renderUserList = () => {
-
-        return <UserList
-            roleId={props.roleId}
-            users={usersInState}
-            onEditClick={onEditClick}></UserList>
-    }
-    const renderUserEditForm = () => {
-        return <UserEditForm
-            roleId={props.roleId}
-            user={userToEdit}
-            onCancelClick={setIsEditModeOn}
-            onSaveClick={onSaveClick}></UserEditForm>
+    const onDeleteClick = (userToDeleteIdArg: number) => {
+        setUserToDeleteId(userToDeleteIdArg);
+        setIsModalShown(true);
     }
 
     return (
         <div className="user-page">
             {
-                isFetching ? <div>loading</div> : (
-                    isEditModeOn ? renderUserEditForm() : renderUserList()
-                )
+                isFetching ?
+                    <div>
+                        <FontAwesomeIcon icon="spinner" />
+                    </div> : (
+                        isEditModeOn
+                            ?
+                            <UserEditForm
+                                roleId={props.roleId}
+                                userToEdit={userToEdit}
+                                setIsEditModeOn={setIsEditModeOn}
+                                reviseSending={checkUpdatedUsers}
+                                sendNotification={sendNotification}
+                                url={url}
+                                token={token}
+                                method={methodInForm}
+                                headers={headers}></UserEditForm>
+                            :
+                            usersInState && <UserList
+                                roleId={props.roleId}
+                                users={usersInState}
+                                onEditClick={onEditClick}
+                                onDeleteClick={onDeleteClick}></UserList>
+                    )
             }
+            <ConfirmationDialog
+                isShown={isModalShown}
+                confirmLabel={confirmLabel}
+                declineLabel={declineLabel}
+                message={confirmationDeleteMessage}
+                title={confirmationDeleteTitle}
+                callback={deleteUser}></ConfirmationDialog>
         </div>
     )
 }

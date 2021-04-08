@@ -8,22 +8,35 @@ interface DevTestPageProps {
 }
 
 function DevTestPage (props: DevTestPageProps) {
-    const [dialogActive, setDialogActive] = useState(false);
+    const [dialogShown, setDialogShown] = useState(false);
+    const [counter, setCounter] = useState(0);
+
+    const counterCallback = (decision: boolean) => {
+        if (decision) {
+            setCounter(counter+1);
+        }
+        setDialogShown(false);
+    }
 
     return (
         <div>
             <h1>(dev) test-page</h1>
 
             <button onClick={() => props.sendNotification(generateTestNotification(true))}>
-                Test dismissable notification</button>
+                Test dismissible notification</button>
             <button onClick={() => props.sendNotification(generateTestNotification(false))}>
-                Test non-dismissable notification</button>
+                Test non-dismissible notification</button>
 
             <div>
-                <button onClick={() => {setDialogActive(true)}}>Show dialog</button> 
+                <span>{counter}</span>
+                <button onClick={() => {setDialogShown(true)}}>+1</button> 
             </div>
 
-            <ConfirmationDialog isActive={dialogActive} setIsActive={setDialogActive}/>
+            <ConfirmationDialog 
+                isShown={dialogShown} 
+                title={'Увеличить счетчик на 1?'}
+                message={`Новое значение: ${counter+1}`}
+                callback={counterCallback}/>
         </div>
     )
 }

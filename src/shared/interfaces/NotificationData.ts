@@ -3,6 +3,7 @@ interface NotificationData {
     text: string;
     isDismissible: boolean;
     timestamp: number;
+    autoDismissTimeout?: number;
 }
 
 export default NotificationData;
