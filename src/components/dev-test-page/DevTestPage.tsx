@@ -1,4 +1,5 @@
-import { useState } from "react";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import ConfirmationDialog from "../../shared/components/confirmation-dialog/ConfirmationDialog";
 import { generateTestNotification } from "../../shared/components/notification/generateTestNotification";
 import NotificationData from "../../shared/interfaces/NotificationData";
@@ -20,7 +21,7 @@ function DevTestPage (props: DevTestPageProps) {
 
     return (
         <div>
-            <h1>(dev) test-page</h1>
+            <h1>secret test page</h1>
 
             <button onClick={() => props.sendNotification(generateTestNotification(true))}>
                 Test dismissible notification</button>
@@ -37,6 +38,8 @@ function DevTestPage (props: DevTestPageProps) {
                 title={'Увеличить счетчик на 1?'}
                 message={`Новое значение: ${counter+1}`}
                 callback={counterCallback}/>
+
+            <div className="test-page-link"><Link to="/">back to login</Link></div>
         </div>
     )
 }
