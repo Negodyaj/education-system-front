@@ -6,7 +6,6 @@ import React from 'react';
 import SearchComponent from '../../../shared/components/search-component/SearchComponent';
 import { Course } from '../../../shared/courses/Courses';
 import { sendGetRequest } from '../../../services/http.service';
-import ThemesCourse from './ThemesCourse';
 
 
 interface CourseEditionProps{
@@ -33,7 +32,7 @@ function CourseEdition(props: CourseEditionProps) {
     const [course, setCourse] = useState(currentCourse);
 
     const url = 'https://80.78.240.16:7070/api/Course/';
-    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoidm9sb2R5YTIyIiwiaWQiOiIxIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjpbItCQ0LTQvNC40L3QuNGB0YLRgNCw0YLQvtGAIiwi0J_RgNC10L_QvtC00LDQstCw0YLQtdC70YwiLCLQnNC10L3QtdC00LbQtdGAIl0sIm5iZiI6MTYxNzcxMTI1MiwiZXhwIjoxNjE3ODg0MDUyLCJpc3MiOiJFZHVjYXRpb25TeXN0ZW0uQXBpIiwiYXVkIjoiRGV2RWR1Y2F0aW9uIn0.IVG_etkEiLTYu5-VDZWQlk43808p1Ut_eV-CA7APZ84' ;
+    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoidm9sb2R5YTIyIiwiaWQiOiIxIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjpbItCQ0LTQvNC40L3QuNGB0YLRgNCw0YLQvtGAIiwi0J_RgNC10L_QvtC00LDQstCw0YLQtdC70YwiLCLQnNC10L3QtdC00LbQtdGAIl0sIm5iZiI6MTYxNzg3Mzk2NywiZXhwIjoxNjE4MDQ2NzY3LCJpc3MiOiJFZHVjYXRpb25TeXN0ZW0uQXBpIiwiYXVkIjoiRGV2RWR1Y2F0aW9uIn0.HZXVQsbvTalFg3rtXiBAlHT9x7rACmyXXXfzyxfuam8' ;
 
     const getAllThemes = () => {
         fetch(url + 'theme/', {
