@@ -10,7 +10,6 @@ import { UserInput } from '../../interfaces/UserInput';
 import { useForm } from 'react-hook-form';
 import { convertEntitiesToSelectItems } from '../../../shared/converters/entityToSelectItemConverter';
 import { getName } from '../../../shared/converters/objectKeyToString';
-import { PreviousMethod } from '../UserPage';
 import { sendPutRequest } from '../../../services/http.service';
 import { UserUpdate } from '../../interfaces/UserUpdate';
 import { ErrorMessage } from '@hookform/error-message';
@@ -307,3 +306,4 @@ function UserEditForm(props: UserEditFormProps) {
 }
 
 export default UserEditForm;
+

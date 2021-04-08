@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { Role } from "../../../enums/role";
 import { getEnToRuTranslation } from "../../../shared/converters/enumToDictionaryEntity";
 import { User } from "../../interfaces/User";
+import PaymentForm from "../payment-form/PaymentForm";
 import '../UserPage.css';
 import '../../../App.css'
 import ConfirmationDialog from "../../../shared/components/confirmation-dialog/ConfirmationDialog";
@@ -13,7 +14,7 @@ interface UserListProps {
     roleId: number;
     users: User[];
     onEditClick: (userToEditId?: number) => void;
-    onDeleteClick: (userToDelete: number) => void;
+    onDeleteClick: (userToDeleteId: number) => void;
 }
 
 function UserList(props: UserListProps) {
@@ -33,13 +34,15 @@ function UserList(props: UserListProps) {
     const [signInvertor, setSignInvertor] = useState(1);
     const [usersToShow, setUsersToShow] = useState([...props.users]);
     const [isModalShow, setIsModalShow] = useState(false)
+    const [userForPayment, setUserForPayment] = useState<User | undefined>(undefined);
+    const [paymentFormState, setPaymentFormState] = useState('');
 
     const elementsDefinedByRole = {
-        paymentButton: () => {
+        paymentButton: (userId: number | undefined) => {
             return (
                 props.roleId === Role.Manager
                 &&
-                <button className="button-round">
+                <button className="button-round" onClick={() => onPaymentButtonClick(userId)}>
                     <FontAwesomeIcon icon="ruble-sign" />
                 </button>
             )
@@ -55,6 +58,16 @@ function UserList(props: UserListProps) {
         }
     }
 
+    const onPaymentButtonClick = (userId: number | undefined) => {
+        setUserForPayment([...usersToShow].filter(u => u.id === userId)[0]);
+        setPaymentFormState('visible');
+
+    }
+
+    const onEditClick = (userToEditId?: number) => {
+        props.onEditClick(userToEditId);
+    }
+
     const lastNameColumnOnClick = () => {
         setUsersToShow(usersToShow.sort((a, b) => {
             return lastNameAlphabetSort(a.lastName, b.lastName);
@@ -65,6 +78,10 @@ function UserList(props: UserListProps) {
     const messageOnDelete = "Вы уверены?";
     const confirmLabel = 'Yes';
     const declineLabel = 'No';
+
+    const onCancelPaymentClick = () => {
+        setPaymentFormState('');
+    }
 
     const onDeleteRoleClick = (userId: number|undefined, roleId: number) => {
         
@@ -127,9 +144,8 @@ function UserList(props: UserListProps) {
                                 </button>
 
                                 {
-                                    elementsDefinedByRole.paymentButton()
+                                    elementsDefinedByRole.paymentButton(u.id)
                                 }
-
                             </div>
                         </div>
                         <ConfirmationDialog
@@ -142,6 +158,12 @@ function UserList(props: UserListProps) {
                     </div>
                 ))
             }
+            <PaymentForm
+                paymentFormState={paymentFormState}
+                cancelClick={onCancelPaymentClick}
+                userName={userForPayment?.firstName}
+                userLastname={userForPayment?.lastName}
+            ></PaymentForm>
         </div>
 
     )
