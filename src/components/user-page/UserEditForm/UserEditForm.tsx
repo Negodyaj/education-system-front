@@ -132,7 +132,7 @@ function UserEditForm(props: UserEditFormProps) {
     }
 
     const sendUser = async (newUser: FormInputs) => {
-        props.reviseSending(await sendPutRequest(props.url + (props.userToEdit ? '/' + props.userToEdit.id : ''), 
+        props.reviseSending(await sendPutRequest<UserUpdate>(props.url + (props.userToEdit ? '/' + props.userToEdit.id : ''), 
         {
             firstName: newUser.firstName,
             lastName: newUser.lastName,
