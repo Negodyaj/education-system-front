@@ -4,7 +4,7 @@ import "react-datepicker/dist/react-datepicker.css";
 
 interface DatePickerComponentProps {
   date: string | undefined,
-  onDateChange: (date: Date) => void
+  onDateChange: (date: string) => void
 }
 
 function DatePickerComponent(props: DatePickerComponentProps) {
@@ -18,7 +18,7 @@ function DatePickerComponent(props: DatePickerComponentProps) {
   const handleDateChange = (date: Date | [Date, Date] | null) => {
     if (date instanceof Date) {
       setStartDate(date);
-      props.onDateChange(date);
+      props.onDateChange(date.toLocaleDateString());
     }
   }
   return (
