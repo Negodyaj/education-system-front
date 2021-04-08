@@ -11,11 +11,19 @@ export const sendGetRequest = async (path: string) => {
 };
 export const sendPutRequest = async (path: string, body?: any) => {
     return await baseWretch
-        .url(path)
-        .put(body)
-        .json(data => responseHandler(data));
-
+      .url(path)
+      .put(body)
+      .json(data => responseHandler(data));
 };
+
+export const sendPostRequest = async (path: string, body?: any) => {
+  return await baseWretch
+      .url(path)
+      .post(body)
+      .json(data => responseHandler(data));
+};
+
+
 const responseHandler = (response: any): any[] | any => {
     let result = Object.values(response);
     if (result.length > 1) {
@@ -29,4 +37,5 @@ const baseWretch = wretch()
     .auth(`Bearer ${getToken()}`)
     .catcher(404, error => console.log(error))
     .catcher(403, error => console.log(error))
-    .catcher(409, error => console.log(error))
+  .catcher(409, error => console.log(error))
+    
