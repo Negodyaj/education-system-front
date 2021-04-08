@@ -1,4 +1,5 @@
 import './PaymentForm.css'
+//import '/App.css'
 
 interface PaymentProps {
     paymentFormState: string;
@@ -12,7 +13,12 @@ function PaymentForm(props: PaymentProps) {
     return (
         <div className={"payment " + (props.paymentFormState)}>
             <div className={"inner-payment " + (props.paymentFormState)}>
-                <div className="header-payment">Назначить платеж {props.userName} {props.userLastname}</div>
+                <div className="header-payment">
+                    <div>Назначить платеж пользователю
+                        <div>{props.userName} {props.userLastname}</div>
+                    </div>
+                    <button className="button-round" onClick={props.cancelClick}>х</button>
+                </div>
                 <form>
                     <div className="input-row">
                         <label>Сумма платежа</label>
@@ -30,10 +36,14 @@ function PaymentForm(props: PaymentProps) {
                         <label>Номер договора</label>
                         <input></input>
                     </div>
+                    <div className="row input-row ">
+                        <label>Оплачено полностью</label>
+                        <input className="checkbox" type="checkbox" checked></input>
+                    </div>
                 </form>
-                <div>
-                    <button onClick={props.cancelClick}>Отмена</button>
-                    <button>Подтвердить платеж</button>
+                <div className="footer-payment">
+                    <button className="button-select" onClick={props.cancelClick}>Отмена</button>
+                    <button className="button-select">Подтвердить</button>
                 </div>
             </div>
         </div>

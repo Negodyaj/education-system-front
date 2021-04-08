@@ -39,6 +39,8 @@
 }
 
 .header-payment{
+    display: flex;
+    justify-content: space-between;
     text-align: left;
     font-size: 28px;
     color: #2E384D;
@@ -52,12 +54,13 @@
 }
 
 .input-row label{
+    width: max-content;
     text-align: left;
     font-size: 12px;
     color: #8C98A9;
 }
 
-.input-row input{
+.input-row input:not([type=checkbox]){
     margin-top: 7px;
     width: 272px;
     height: 40px;
@@ -66,5 +69,17 @@
     font-size: 13px;
     color: #2E384D;
     outline: none;
+}
+.checkbox{
+    width: max-content;
+}
+.row{
+    display: flex;
+    flex-direction: row;
+}
+
+.footer-payment{
+    display: flex;
+    justify-content: space-between;
 }
 
