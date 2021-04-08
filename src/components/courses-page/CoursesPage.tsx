@@ -8,6 +8,7 @@ import NewCourse from './NewCourse';
 import { DataNewCourse } from './NewCourse';
 import { Course } from '../../shared/courses/Courses';
 import { sendPostRequest } from '../../services/http.service';
+import { getToken } from '../../services/auth.service';
 
 interface CoursesPageProps {
     roleId: number;
@@ -22,7 +23,7 @@ function CoursesPage(props: CoursesPageProps) {
         fetch(url, {
             headers: {
                 'Accept': 'application/json',
-                'Authorization': 'Bearer ' + token,
+                'Authorization': 'Bearer ' + getToken(),
                 'Content-Type': 'application/json'
             },
         })
@@ -38,7 +39,7 @@ function CoursesPage(props: CoursesPageProps) {
     }, []);
 
     const addCourse = async (newCourse: DataNewCourse) => {
-        (await sendPostRequest('Course/', newCourse));
+        (await sendPostRequest<Course>('Course/', newCourse));
         getCourses();
         // fetch(url, {
         //     method: 'POST',
@@ -62,7 +63,7 @@ function CoursesPage(props: CoursesPageProps) {
             method: 'DELETE',
             headers: {
                 'Accept': 'application/json',
-                'Authorization': 'Bearer ' + token,
+                'Authorization': 'Bearer ' + getToken(),
                 'Content-Type': 'application/json'
             },
         })
