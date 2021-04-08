@@ -11,7 +11,7 @@ function TagsPage() {
     const url = 'Tag';
     const [tagsInState, setTagsInState] = useState<Tag[]>([]);
     const getTags = async () => {
-        setTagsInState (await sendGetRequest(url))
+        setTagsInState (await sendGetRequest<Tag[]>(url))
     };
 
     useEffect(() => {

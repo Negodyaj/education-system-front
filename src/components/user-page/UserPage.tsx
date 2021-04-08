@@ -42,7 +42,7 @@ function UserPage(props: UserPageProps) {
 
 
     const getUsers = async () => {
-        setUsersInState(await sendGetRequest(url))
+        setUsersInState(await sendGetRequest<User[]>(url))
     }
 
     const sendNotification = (data: { type: "error" | "success", message: string }) => {
