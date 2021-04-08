@@ -9,21 +9,26 @@ export const sendGetRequest = async <T>(path: string) => {
         .json(data => data as T);
 
 };
-export const sendPutRequest = async <T>(path: string, body?: any) => {
+export const sendPutRequest = async <T>(path: string, body: any) => {
     return await baseWretch
       .url(path)
       .put(body)
       .json(data => data as T);
 };
 
-export const sendPostRequest = async <T>(path: string, body?: any) => {
+export const sendPostRequest = async <T>(path: string, body: any) => {
   return await baseWretch
       .url(path)
       .post(body)
       .json(data => data as T);
 };
 
-
+export const sendDeleteRequest = async <T>(path: string, id: any) => {
+  return await baseWretch
+      .url(path)
+      .delete(id)
+      .json(data => data as T);
+};
 
 const baseWretch = wretch()
     .url(baseUrl + '/')
