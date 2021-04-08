@@ -6,6 +6,8 @@ import { getEnToRuTranslation } from "../../../shared/converters/enumToDictionar
 import { User } from "../../interfaces/User";
 import '../UserPage.css';
 import '../../../App.css'
+import ConfirmationDialog from "../../../shared/components/confirmation-dialog/ConfirmationDialog";
+import { sendDeleteRequest } from "../../../services/http.service";
 
 interface UserListProps {
     roleId: number;
@@ -30,6 +32,7 @@ function UserList(props: UserListProps) {
 
     const [signInvertor, setSignInvertor] = useState(1);
     const [usersToShow, setUsersToShow] = useState([...props.users]);
+    const [isModalShow, setIsModalShow] = useState(false)
 
     const elementsDefinedByRole = {
         paymentButton: () => {
@@ -40,6 +43,15 @@ function UserList(props: UserListProps) {
                     <FontAwesomeIcon icon="ruble-sign" />
                 </button>
             )
+        },
+        deleteRoleButton: (userId: number|undefined, roleId: number) => {
+            const currentUserId = userId;
+    
+            return (
+                props.roleId === Role.Admin
+                &&
+                <button className='button-round mini-button' onClick={() => onDeleteRoleClick(userId, roleId)}>x</button>
+            )
         }
     }
 
@@ -48,6 +60,25 @@ function UserList(props: UserListProps) {
             return lastNameAlphabetSort(a.lastName, b.lastName);
         }))
         setSignInvertor(signInvertor + 1);
+    }
+    const titleOnDelete = 'Удаление роли';
+    const messageOnDelete = "Вы уверены?";
+    const confirmLabel = 'Yes';
+    const declineLabel = 'No';
+
+    const onDeleteRoleClick = (userId: number|undefined, roleId: number) => {
+        
+        setIsModalShow(true);
+        console.log('uuu')
+    }
+
+    const deleteRole = (decision: boolean) => {
+        if(true){
+            
+        alert('delete')
+    }
+        setIsModalShow(false);
+
     }
 
     return (
@@ -80,10 +111,8 @@ function UserList(props: UserListProps) {
                         <div className="column multiline">
                             {
                                 u.roles?.map(r => (<div className='role'>
-                                    <button className='button-round mini-button'>
-                                        x
-                                    </button>
-                                <div>{getEnToRuTranslation(Role[r])}</div>
+                                    {elementsDefinedByRole.deleteRoleButton(u.id, r )}
+                                    <div>{getEnToRuTranslation(Role[r])}</div>
                                 </div>))
                             }
                         </div>
@@ -103,7 +132,15 @@ function UserList(props: UserListProps) {
 
                             </div>
                         </div>
-                    </div>))
+                        <ConfirmationDialog
+                            isShown={isModalShow}
+                            confirmLabel={confirmLabel}
+                            declineLabel={declineLabel}
+                            message={messageOnDelete}
+                            title={titleOnDelete}
+                            callback={deleteRole}></ConfirmationDialog>
+                    </div>
+                ))
             }
         </div>
 
