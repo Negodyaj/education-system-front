@@ -6,6 +6,6 @@ export interface Course {
   name: string;
   description: string;
   duration: number;
-  themes: [];
+  themes: Themes[];
   materials: [];
 }

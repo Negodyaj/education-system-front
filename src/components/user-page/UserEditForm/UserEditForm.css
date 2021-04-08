@@ -21,7 +21,7 @@
     font-size: 12px;
     color:#FF007C;
 }
-.was-validated :invalid, .was-validated :invalid~.bad-feedback{
+.bad-feedback{
     border-color:#FF007C;
     opacity: 1;
 }
