@@ -8,7 +8,7 @@ interface TagListProps {
 
 function TagList(props: TagListProps) {
     return (
-        <>
+        <div className ='pop'>
             {
                 props.tags?.map((item) => { 
                     if (item.name.toLowerCase().includes(props.str.toLowerCase())) {
@@ -16,7 +16,7 @@ function TagList(props: TagListProps) {
                     }
                 })
             }
-        </>
+        </div>
     )
 }
 

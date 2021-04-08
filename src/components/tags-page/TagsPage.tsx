@@ -1,13 +1,11 @@
 import React, { ChangeEventHandler, useEffect, useState } from 'react';
-import { isJSDocReturnTag } from 'typescript';
 import { Tag } from '../interfaces/Tag';
 import TagList from './tag-list/TagList';
 import './TagsPage.css';
 import wretch from 'wretch';
 import { sendGetRequest } from '../../services/http.service';
+import '../../App.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import SearchComponent from '../../shared/components/search-component/SearchComponent';
-
 
 function TagsPage() {
     const url = 'Tag';
@@ -30,20 +28,21 @@ function TagsPage() {
     // e
     return (
 
-        <div className="table">
+        <div className="main-content">
             <div className="header">
-                <div className="input">
+                <div className="form-input">
                     <input onChange={tagsFilter} />
-                    
-                        
-                            <button className="add"></button>
-            </div>
-            </div>
-            
-                <div className="body">
-                    <div className="tags"> <TagList str={searchTurn} tags={tagsInState}></TagList> </div>
+
+                    <button className="button-style"> <FontAwesomeIcon icon="plus" />
+                    </button>
+
                 </div>
             </div>
+
+            <div className="body">
+                <div className="list"> <TagList str={searchTurn} tags={tagsInState}></TagList> </div>
+            </div>
+        </div>
 
     )
 
