@@ -67,10 +67,12 @@ function UserPage(props: UserPageProps) {
 
     }
 
-    const deleteUser = (decision: boolean) => {
+    const deleteUser = async (decision: boolean) => {
         setIsModalShown(true);
         if (decision === true) {
-            sendDeleteRequest(url + '/' + userToDeleteId)
+            if (await sendDeleteRequest(url + '/' + userToDeleteId)) {
+                refreshUsers()
+            };
         }
         setIsModalShown(false)
     }
@@ -91,7 +93,6 @@ function UserPage(props: UserPageProps) {
     const onDeleteClick = (userToDeleteIdArg: number) => {
         setUserToDeleteId(userToDeleteIdArg);
         setIsModalShown(true);
-        refreshUsers();
     }
 
     return (
