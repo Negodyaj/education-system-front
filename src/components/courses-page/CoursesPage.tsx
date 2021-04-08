@@ -7,6 +7,8 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import NewCourse from './NewCourse';
 import { DataNewCourse } from './NewCourse';
 import { Course } from '../../shared/courses/Courses';
+import { sendPostRequest } from '../../services/http.service';
+import { getToken } from '../../services/auth.service';
 
 interface CoursesPageProps {
     roleId: number;
@@ -21,7 +23,7 @@ function CoursesPage(props: CoursesPageProps) {
         fetch(url, {
             headers: {
                 'Accept': 'application/json',
-                'Authorization': 'Bearer ' + token,
+                'Authorization': 'Bearer ' + getToken(),
                 'Content-Type': 'application/json'
             },
         })
@@ -36,22 +38,24 @@ function CoursesPage(props: CoursesPageProps) {
         getCourses();
     }, []);
 
-    const addCourse = (newCourse: DataNewCourse) => {
-        fetch(url, {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Authorization': 'Bearer ' + token,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(newCourse)
-        })
-            .then(response => response.json())
-            .then(data => {
-                console.log(data);
-                getCourses();
-            })
-            .catch(error => console.log('Ошибка ' + error))
+    const addCourse = async (newCourse: DataNewCourse) => {
+        (await sendPostRequest<Course>('Course/', newCourse));
+        getCourses();
+        // fetch(url, {
+        //     method: 'POST',
+        //     headers: {
+        //         'Accept': 'application/json',
+        //         'Authorization': 'Bearer ' + token,
+        //         'Content-Type': 'application/json'
+        //     },
+        //     body: JSON.stringify(newCourse)
+        // })
+        //     .then(response => response.json())
+        //     .then(data => {
+        //         console.log(data);
+        //         getCourses();
+        //     })
+        //     .catch(error => console.log('Ошибка ' + error))
     }
 
     const deleteCourse = (id: number) => {
@@ -59,7 +63,7 @@ function CoursesPage(props: CoursesPageProps) {
             method: 'DELETE',
             headers: {
                 'Accept': 'application/json',
-                'Authorization': 'Bearer ' + token,
+                'Authorization': 'Bearer ' + getToken(),
                 'Content-Type': 'application/json'
             },
         })
