@@ -9,6 +9,7 @@ import { Role } from '../../../enums/role';
 import { UserInput } from '../../interfaces/UserInput';
 import { useForm } from 'react-hook-form';
 import { convertEntitiesToSelectItems } from '../../../shared/converters/entityToSelectItemConverter';
+import '../../../App.css'
 
 interface UserEditFormProps {
     roleId: number;
@@ -56,8 +57,8 @@ function UserEditForm(props: UserEditFormProps) {
         roleSelector: () => {
             if (props.roleId === Role.Admin) {
                 return (
-                    <div className="form-row">
-                        <label className="">Список ролей</label>
+                    <div className="form-row multi">
+                        <label className="form-label">Список ролей</label>
                         <CustomMultiSelect
                             selectType={"multi"}
                             userOptionsIds={newUser.roles || undefined}
@@ -72,11 +73,11 @@ function UserEditForm(props: UserEditFormProps) {
             if (props.userToEdit === undefined) {
                 return (
                     <div className="form-row">
-                        <label className="">Пароль</label>
+                        <label className="form-label">Пароль</label>
                         <input
                             {...register('password')}
                             type="text"
-                            className=""
+                            className="form-input"
                             value={newUser.password}
                             onChange={anyTextInputChangeHandler}
                             required />
@@ -90,11 +91,11 @@ function UserEditForm(props: UserEditFormProps) {
             if (props.userToEdit === undefined) {
                 return (
                     <div className="form-row">
-                        <label className="">Логин</label>
+                        <label className="form-label">Логин</label>
                         <input
                             {...register('login')}
                             type="text"
-                            className=""
+                            className="form-input"
                             value={newUser.login}
                             onChange={anyTextInputChangeHandler} />
                     </div>
@@ -158,31 +159,31 @@ function UserEditForm(props: UserEditFormProps) {
     } else {
         return (
             <div className={"user-edit-form needs-validation " + "was-validated"}>
-                <form onSubmit={onSubmit}>
+                <form  onSubmit={onSubmit}>
                     <div className="form-row">
-                        <label className="">Имя</label>
+                        <label className="form-label">Имя</label>
                         <input
                             {...register('firstName')}
                             value={newUser.firstName}
                             type="text"
-                            className=""
+                            className="form-input"
                             onChange={anyTextInputChangeHandler}
                             required />
                         <div className="bad-feedback">Введите имя</div>
                     </div>
                     <div className="form-row">
-                        <label className="">Фамилия</label>
+                        <label className="form-label">Фамилия</label>
                         <input
                             {...register('lastName')}
                             type="text"
-                            className=""
+                            className="form-input"
                             value={newUser.lastName}
                             onChange={anyTextInputChangeHandler}
                             required />
                         <div className="bad-feedback">Ввведите фамилию</div>
                     </div>
                     <div className="form-row">
-                        <label className="">Дата рождения</label>
+                        <label className="form-label">Дата рождения</label>
                         <DatePickerComponent date={newUser.birthDate} onDateChange={birthDateOnChange} />
                     </div>
                     {
@@ -192,23 +193,23 @@ function UserEditForm(props: UserEditFormProps) {
                         elementsDefinedByProps.passwordInput()
                     }
                     <div className="form-row">
-                        <label className="">Телефон</label>
+                        <label className="form-label">Телефон</label>
                         <input
                             {...register('phone')}
                             type="text"
-                            className=""
+                            className="form-input"
                             value={newUser.phone}
                             onChange={anyTextInputChangeHandler}
                             required />
                         <div className="bad-feedback">Введите номер телефона</div>
                     </div>
                     <div className="form-row">
-                        <label className="">Аватар</label>
-                        <input type="file" className="" />
+                        <label className="form-label">Аватар</label>
+                        <input type="file" className="form-input" />
                         <input
                             {...register('userPic')}
                             type="text"
-                            className=""
+                            className="form-input"
                             placeholder="или вставьте ссылку"
                             value={newUser.userPic}
                             onChange={anyTextInputChangeHandler}
@@ -216,11 +217,11 @@ function UserEditForm(props: UserEditFormProps) {
                         <img src={newUser.userPic} alt="аватар" />
                     </div>
                     <div className="form-row">
-                        <label className="">Почта</label>
+                        <label className="form-label">Почта</label>
                         <input
                             {...register('email')}
                             type="email"
-                            className=""
+                            className="form-input"
                             value={newUser.email}
                             onChange={anyTextInputChangeHandler}
                             required />
