@@ -1,5 +1,5 @@
-/* import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React, { useEffect, useState } from "react";
 import { Course } from '../../../shared/courses/Courses';
 import { Themes } from "../../../shared/themes/Themes";
 
@@ -9,6 +9,9 @@ interface ThemesCourseProps {
 
 function ThemesCourse (props: ThemesCourseProps) {
 
+    useEffect(() => {
+        console.log(props.course);
+    }, []);
     //let themes: Themes[] = [];
 
     const [themes, setThemes] = useState(props.course?.themes);
@@ -20,7 +23,7 @@ function ThemesCourse (props: ThemesCourseProps) {
                     <div className="theme">
                         <div className="theme-name">{theme.name}</div>
                         <div className="theme-delete">
-                            <button onClick={() => deleteThemeFromCourse(theme)} className='button-theme-delete'>
+                            <button /* onClick={() => deleteThemeFromCourse(theme)} */ className='button-theme-delete'>
                                 <FontAwesomeIcon icon="minus" />
                             </button>
                         </div>
@@ -29,6 +32,7 @@ function ThemesCourse (props: ThemesCourseProps) {
             }
         </>
     )
-} */
+}
 
-export {}
+export default ThemesCourse;
+
