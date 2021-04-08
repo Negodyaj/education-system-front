@@ -15,6 +15,7 @@ interface UserListProps {
     users: User[];
     onEditClick: (userToEditId?: number) => void;
     onDeleteClick: (userToDeleteId: number) => void;
+    refreshUsers: () => void;
 }
 
 function UserList(props: UserListProps) {
@@ -91,8 +92,8 @@ function UserList(props: UserListProps) {
 
     const deleteRole = (decision: boolean) => {
         if(true){
-            
-        alert('delete')
+            props.refreshUsers()
+        
     }
         setIsModalShow(false);
 
