@@ -5,6 +5,7 @@ import { Themes } from '../../../shared/themes/Themes';
 import React from 'react';
 import SearchComponent from '../../../shared/components/search-component/SearchComponent';
 import { Course } from '../../../shared/courses/Courses';
+import { sendGetRequest } from '../../../services/http.service';
 
 
 interface CourseEditionProps{
@@ -20,7 +21,7 @@ function CourseEdition(props: CourseEditionProps) {
 
     let currentCourse = {} as Course;
     let themesCurrentCourse: Themes[] = [];
-    let indexCourse = Number(props.idCourse.slice(-1));
+    let indexCourse = Number(props.idCourse.replace(/[a-z-A-Z\/]/g, ""));
     let themesList: Themes[] = [];
     let checkThemes: Themes[] = [];
     
@@ -28,9 +29,10 @@ function CourseEdition(props: CourseEditionProps) {
     const [allThemes, setAllThemes] = useState(themesList);
     const [searchTurn, setSearchTurn] = useState('');
     const [check, setCheck] = useState(themesCourse);
+    const [course, setCourse] = useState(currentCourse);
 
     const url = 'https://80.78.240.16:7070/api/Course/';
-    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoidm9sb2R5YTIyIiwiaWQiOiIxIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjpbItCQ0LTQvNC40L3QuNGB0YLRgNCw0YLQvtGAIiwi0J_RgNC10L_QvtC00LDQstCw0YLQtdC70YwiLCLQnNC10L3QtdC00LbQtdGAIl0sIm5iZiI6MTYxNzcxMTI1MiwiZXhwIjoxNjE3ODg0MDUyLCJpc3MiOiJFZHVjYXRpb25TeXN0ZW0uQXBpIiwiYXVkIjoiRGV2RWR1Y2F0aW9uIn0.IVG_etkEiLTYu5-VDZWQlk43808p1Ut_eV-CA7APZ84' ;
+    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoidm9sb2R5YTIyIiwiaWQiOiIxIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjpbItCQ0LTQvNC40L3QuNGB0YLRgNCw0YLQvtGAIiwi0J_RgNC10L_QvtC00LDQstCw0YLQtdC70YwiLCLQnNC10L3QtdC00LbQtdGAIl0sIm5iZiI6MTYxNzg3Mzk2NywiZXhwIjoxNjE4MDQ2NzY3LCJpc3MiOiJFZHVjYXRpb25TeXN0ZW0uQXBpIiwiYXVkIjoiRGV2RWR1Y2F0aW9uIn0.HZXVQsbvTalFg3rtXiBAlHT9x7rACmyXXXfzyxfuam8' ;
 
     const getAllThemes = () => {
         fetch(url + 'theme/', {
@@ -52,26 +54,14 @@ function CourseEdition(props: CourseEditionProps) {
         getAllThemes();
     }, []);
 
-    const getCourseById = (id: number) => {
-        fetch(url + id, {
-            method: 'GET',
-            headers: {
-                'Accept': 'application/json',
-                'Authorization': 'Bearer ' + token,
-                'Content-Type': 'application/json'
-            },
-        })
-            .then(response => response.json())
-            .then(data => {
-                currentCourse = data;
-                setThemesCourse(currentCourse.themes);
-            })
-            .catch(error => console.log('Ошибка ' + error))
-    }
+    const getCourseById = async (id: number) => {
+        setCourse(await sendGetRequest('Course/' + id)); 
+    };
 
     useEffect(() => {
         getCourseById(indexCourse);
-    });
+        console.log(course);
+    }, []);
 
     const addThemeCourse = (newThemeCourse: NewThemeCourse) => {
         fetch(url + newThemeCourse.idCourse + '/theme/' + newThemeCourse.idTheme, {
@@ -113,7 +103,7 @@ function CourseEdition(props: CourseEditionProps) {
                 count++;
             }
         }
-        if (count === 0) {
+        if (count === 0) { 
             let newTheme: NewThemeCourse = {idCourse: indexCourse, idTheme: theme.id};
             addThemeCourse(newTheme);
             checkThemes = check;
@@ -169,7 +159,7 @@ function CourseEdition(props: CourseEditionProps) {
             <div className="program-course-header">Программа курса</div>
             <div className="program-course">
                 {
-                    themesCourse.map((theme) => (
+                    themesCourse?.map((theme) => (
                         <div className="theme">
                             <div className="theme-name">{theme.name}</div>
                             <div className="theme-delete">

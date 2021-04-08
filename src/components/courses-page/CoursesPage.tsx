@@ -7,6 +7,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import NewCourse from './NewCourse';
 import { DataNewCourse } from './NewCourse';
 import { Course } from '../../shared/courses/Courses';
+import { sendPostRequest } from '../../services/http.service';
 
 interface CoursesPageProps {
     roleId: number;
@@ -36,22 +37,24 @@ function CoursesPage(props: CoursesPageProps) {
         getCourses();
     }, []);
 
-    const addCourse = (newCourse: DataNewCourse) => {
-        fetch(url, {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Authorization': 'Bearer ' + token,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(newCourse)
-        })
-            .then(response => response.json())
-            .then(data => {
-                console.log(data);
-                getCourses();
-            })
-            .catch(error => console.log('Ошибка ' + error))
+    const addCourse = async (newCourse: DataNewCourse) => {
+        (await sendPostRequest('Course/', newCourse));
+        getCourses();
+        // fetch(url, {
+        //     method: 'POST',
+        //     headers: {
+        //         'Accept': 'application/json',
+        //         'Authorization': 'Bearer ' + token,
+        //         'Content-Type': 'application/json'
+        //     },
+        //     body: JSON.stringify(newCourse)
+        // })
+        //     .then(response => response.json())
+        //     .then(data => {
+        //         console.log(data);
+        //         getCourses();
+        //     })
+        //     .catch(error => console.log('Ошибка ' + error))
     }
 
     const deleteCourse = (id: number) => {
