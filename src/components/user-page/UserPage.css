@@ -57,3 +57,16 @@ justify-content: center;
     flex-direction: column;
 }
 
+.mini-button{
+    height: 14px;
+    width: 14px;
+  align-self: center;
+  text-align: center;
+  font-size: 7px;
+
+    }
+    
+    .role{
+        display: flex;
+        flex-direction: row-reverse;
+    }

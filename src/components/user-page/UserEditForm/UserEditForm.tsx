@@ -9,11 +9,11 @@ import { Role } from '../../../enums/role';
 import { UserInput } from '../../interfaces/UserInput';
 import { useForm } from 'react-hook-form';
 import { convertEntitiesToSelectItems } from '../../../shared/converters/entityToSelectItemConverter';
-import { ErrorMessage } from '@hookform/error-message';
 import { getName } from '../../../shared/converters/objectKeyToString';
 import { PreviousMethod } from '../UserPage';
 import { sendPutRequest } from '../../../services/http.service';
 import { UserUpdate } from '../../interfaces/UserUpdate';
+import { ErrorMessage } from '@hookform/error-message';
 
 interface UserEditFormProps {
     roleId: number;

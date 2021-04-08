@@ -79,7 +79,12 @@ function UserList(props: UserListProps) {
                         <div className="column">{u.login}</div>
                         <div className="column multiline">
                             {
-                                u.roles?.map(r => (<div>{getEnToRuTranslation(Role[r])}</div>))
+                                u.roles?.map(r => (<div className='role'>
+                                    <button className='button-round mini-button'>
+                                        x
+                                    </button>
+                                <div>{getEnToRuTranslation(Role[r])}</div>
+                                </div>))
                             }
                         </div>
                         <div className="column">{u.groupName}</div>
