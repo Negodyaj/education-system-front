@@ -5,7 +5,8 @@ import { Themes } from '../../../shared/themes/Themes';
 import React from 'react';
 import SearchComponent from '../../../shared/components/search-component/SearchComponent';
 import { Course } from '../../../shared/courses/Courses';
-import { sendGetRequest } from '../../../services/http.service';
+import { sendDeleteRequest, sendGetRequest, sendPostRequest } from '../../../services/http.service';
+import { getToken } from '../../../services/auth.service';
 
 
 interface CourseEditionProps{
@@ -34,20 +35,8 @@ function CourseEdition(props: CourseEditionProps) {
     const url = 'https://80.78.240.16:7070/api/Course/';
     const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoidm9sb2R5YTIyIiwiaWQiOiIxIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjpbItCQ0LTQvNC40L3QuNGB0YLRgNCw0YLQvtGAIiwi0J_RgNC10L_QvtC00LDQstCw0YLQtdC70YwiLCLQnNC10L3QtdC00LbQtdGAIl0sIm5iZiI6MTYxNzg3Mzk2NywiZXhwIjoxNjE4MDQ2NzY3LCJpc3MiOiJFZHVjYXRpb25TeXN0ZW0uQXBpIiwiYXVkIjoiRGV2RWR1Y2F0aW9uIn0.HZXVQsbvTalFg3rtXiBAlHT9x7rACmyXXXfzyxfuam8' ;
 
-    const getAllThemes = () => {
-        fetch(url + 'theme/', {
-            method: 'GET',
-            headers: {
-                'Accept': 'application/json',
-                'Authorization': 'Bearer ' + token,
-                'Content-Type': 'application/json'
-            },
-        })
-            .then(response => response.json())
-            .then(data => {
-                setAllThemes(data);
-            })
-            .catch(error => console.log('Ошибка ' + error))
+    const getAllThemes = async() => {
+        setAllThemes(await sendGetRequest('Course/theme'))
     }
 
     useEffect(() => {
@@ -55,7 +44,9 @@ function CourseEdition(props: CourseEditionProps) {
     }, []);
 
     const getCourseById = async (id: number) => {
-        setCourse(await sendGetRequest('Course/' + id)); 
+        setCourse(await sendGetRequest('Course/' + id));
+        let tempArr: Course = course
+        setThemesCourse(tempArr.themes);
     };
 
     useEffect(() => {
@@ -63,42 +54,20 @@ function CourseEdition(props: CourseEditionProps) {
         console.log(course);
     }, []);
 
-    const addThemeCourse = (newThemeCourse: NewThemeCourse) => {
-        fetch(url + newThemeCourse.idCourse + '/theme/' + newThemeCourse.idTheme, {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Authorization': 'Bearer ' + token,
-                'Content-Type': 'application/json'
-            },
-        })
-            .then(response => response.json())
-            .then(data => {
-                getCourseById(indexCourse);
-            })
-            .catch(error => console.log('Ошибка ' + error))
+    const addThemeCourse = async(newThemeCourse: NewThemeCourse) => {
+        await sendPostRequest('Course/' + newThemeCourse.idCourse + '/theme/' + newThemeCourse.idTheme, newThemeCourse)
+        getCourseById(indexCourse);
     }
 
-    const deleteThemeCourse = (newThemeCourse: NewThemeCourse) => {
-        fetch(url + newThemeCourse.idCourse + '/theme/' + newThemeCourse.idTheme, {
-            method: 'DELETE',
-            headers: {
-                'Accept': 'application/json',
-                'Authorization': 'Bearer ' + token,
-                'Content-Type': 'application/json'
-            },
-        })
-            .then(response => response.json())
-            .then(data => {
-                getCourseById(indexCourse);
-            })
-            .catch(error => console.log('Ошибка ' + error))
+    const deleteThemeCourse = async (newThemeCourse: NewThemeCourse) => {
+        await sendDeleteRequest('Course/' + newThemeCourse.idCourse + '/theme/' + newThemeCourse.idTheme, newThemeCourse.idTheme);
+        getCourseById(indexCourse);
     }
         
     const addNewThemeInProgramCourse = (theme: Themes) => {
         console.log(props.idCourse);
         let count = 0;
-        for (let item of themesCourse) {
+        for (let item of course.themes) {
             if (item.name === theme.name) {
                 count++;
             }
