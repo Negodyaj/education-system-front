@@ -1,10 +1,11 @@
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Role } from "../../../enums/role";
 import { getEnToRuTranslation } from "../../../shared/converters/enumToDictionaryEntity";
 import { User } from "../../interfaces/User";
 import '../UserPage.css';
+import '../../../App.css'
 
 interface UserListProps {
     roleId: number;
@@ -28,35 +29,37 @@ function UserList(props: UserListProps) {
     }
 
     const [signInvertor, setSignInvertor] = useState(1);
-    const [usersToShow, setUsersToShow] = useState([...props.users].sort((a, b) => {
-        return lastNameAlphabetSort(a.lastName, b.lastName);
-    }));
+    const [usersToShow, setUsersToShow] = useState([...props.users]);
 
     const elementsDefinedByRole = {
         paymentButton: () => {
             return (
                 props.roleId === Role.Manager
                 &&
-                <button>$</button>
+                <button className="button-round">
+                    <FontAwesomeIcon icon="ruble-sign" />
+                </button>
             )
         }
     }
 
     const lastNameColumnOnClick = () => {
-        setUsersToShow([...usersToShow.sort((a, b) => {
+        setUsersToShow(usersToShow.sort((a, b) => {
             return lastNameAlphabetSort(a.lastName, b.lastName);
-        })])
+        }))
         setSignInvertor(signInvertor + 1);
     }
 
     return (
         <div className="user-list">
             <div className="column-head">
+                <h4>Пользователи</h4>
                 <button className="button-style" onClick={() => props.onEditClick()}>
                     <FontAwesomeIcon icon="plus" />
+                    <span> Добавить</span>
                 </button>
             </div>
-            <div className="user-list-head">
+            <div className="list + user-list-head">
                 <div className="column"> </div>
                 <div className="column"><span title="А-Я" onClick={lastNameColumnOnClick}>фамилия</span></div>
                 <div className="column"><span title="А-Я">имя</span></div>
@@ -64,8 +67,10 @@ function UserList(props: UserListProps) {
                 <div className="column"><span title="А-Я">роль</span></div>
             </div>
             {
-                usersToShow.map(u => (
-                    <div className="user-list-item" key={u.id}>
+                usersToShow?.sort((a, b) => {
+                    return lastNameAlphabetSort(a.lastName, b.lastName);
+                }).map(u => (
+                    <div className="list + user-list-item" key={u.id}>
                         <div className="column">
                             <img className="user-photo" src={u.userPic} alt="userpic" />
                         </div>
@@ -77,21 +82,26 @@ function UserList(props: UserListProps) {
                                 u.roles?.map(r => (<div>{getEnToRuTranslation(Role[r])}</div>))
                             }
                         </div>
-                        <div className="column">
-                            <button className="button-style" onClick={() => props.onEditClick(u.id)}>
-                                <FontAwesomeIcon icon="edit" />
-                            </button>
-                            <button className="button-style" onClick={() => props.onDeleteClick(u.id as number)}>
-                                <FontAwesomeIcon icon="trash" />
-                            </button>
+                        <div className="column">{u.groupName}</div>
+                        <div className="column-button">
+                            <div className="column">
+                                <button className="button-round" onClick={() => props.onEditClick(u.id)}>
+                                    <FontAwesomeIcon icon="edit" />
+                                </button>
+                                <button className="button-round" onClick={() => props.onDeleteClick(u.id as number)}>
+                                    <FontAwesomeIcon icon="trash" />
+                                </button>
 
-                            {
-                                elementsDefinedByRole.paymentButton()
-                            }
+                                {
+                                    elementsDefinedByRole.paymentButton()
+                                }
+
+                            </div>
                         </div>
                     </div>))
             }
         </div>
+
     )
 }
 
