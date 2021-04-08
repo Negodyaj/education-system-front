@@ -3,8 +3,8 @@ import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 
 interface DatePickerComponentProps {
-  date: string | undefined,
-  onDateChange: (date: string) => void
+  date?: string | undefined,
+  onDateChange?: (date: string) => void
 }
 
 function DatePickerComponent(props: DatePickerComponentProps) {
@@ -16,7 +16,7 @@ function DatePickerComponent(props: DatePickerComponentProps) {
 
   const [startDate, setStartDate] = useState(new Date(date[0], date[1], date[2]));
   const handleDateChange = (date: Date | [Date, Date] | null) => {
-    if (date instanceof Date) {
+    if (date instanceof Date && props.onDateChange!==undefined) {
       setStartDate(date);
       props.onDateChange(date.toLocaleDateString());
     }

@@ -1,3 +1,4 @@
+import DatePickerComponent from '../../../shared/components/date-picker/DatePickerComponent'
 import './PaymentForm.css'
 //import '/App.css'
 
@@ -8,6 +9,11 @@ interface PaymentProps {
     userLastname?: string;
 }
 
+
+
+// const paymentDateOnChange (date: string) => {
+//     setValue('birthDate', date)
+// }
 
 function PaymentForm(props: PaymentProps) {
     return (
@@ -26,7 +32,8 @@ function PaymentForm(props: PaymentProps) {
                     </div>
                     <div className="input-row">
                         <label>Дата платежа</label>
-                        <input></input>
+                        <DatePickerComponent
+                         />
                     </div>
                     <div className="input-row">
                         <label>Период оплаты</label>
