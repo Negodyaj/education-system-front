@@ -22,9 +22,6 @@ interface UserEditFormProps {
     reviseSending: (newUser: User) => void;
     sendNotification: (data: { type: "error" | "success", message: string }) => void;
     url: string;
-    token: string;
-    headers: HeadersInit | undefined;
-    method: string;
 }
 
 function UserEditForm(props: UserEditFormProps) {
@@ -32,6 +29,8 @@ function UserEditForm(props: UserEditFormProps) {
     const initUser = Object.assign({}, props.userToEdit || {
         firstName: "",
         lastName: "",
+        login: "",
+        password: "",
         birthDate: undefined,
         userPic: "",
         phone: "",
@@ -49,7 +48,7 @@ function UserEditForm(props: UserEditFormProps) {
         return isEmpty
     }, true))
 
-    type FormInputs = UserUpdate|UserInput;
+    type FormInputs = UserInput;
 
     const { register, formState: { errors }, handleSubmit, getValues, setValue } = useForm<FormInputs>({
         mode: 'all',
