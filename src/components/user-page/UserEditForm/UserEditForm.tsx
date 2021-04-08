@@ -86,7 +86,7 @@ function UserEditForm(props: UserEditFormProps) {
                                 }
                             })}
                             type="text"
-                            className="form-input"
+                            className="form-input"/>
                         <ErrorMessage
                             errors={errors}
                             name={getName<User>(newUser, o => o.password)}
@@ -116,7 +116,7 @@ function UserEditForm(props: UserEditFormProps) {
                                 }
                             })}
                             type="text"
-                            className="form-input"
+                            className="form-input" />
                         <ErrorMessage
                             errors={errors}
                             name={getName<User>(newUser, o => o.login)}
@@ -178,7 +178,7 @@ function UserEditForm(props: UserEditFormProps) {
                                 }
                             })}
                             type="text"
-                            className="form-input"
+                            className="form-input"/>
                         <ErrorMessage
                             errors={errors}
                             name={getName<User>(newUser, o => o.firstName)}
@@ -200,7 +200,7 @@ function UserEditForm(props: UserEditFormProps) {
                                 }
                             })}
                             type="text"
-                            className="form-input"
+                            className="form-input" />
                         <ErrorMessage
                             errors={errors}
                             name={getName<User>(newUser, o => o.lastName)}
@@ -235,7 +235,7 @@ function UserEditForm(props: UserEditFormProps) {
                                 }
                             })}
                             type="text"
-                            className="form-input"
+                            className="form-input" />
                         <ErrorMessage
                             errors={errors}
                             name={getName<User>(newUser, o => o.phone)}
@@ -245,7 +245,7 @@ function UserEditForm(props: UserEditFormProps) {
                     </div>
                     <div className="form-row">
                         <label className="form-label">Аватар</label>
-                        <input type="file" className="form-input" />
+                        <input type="file" className="" />
                         <input
                             {...register('userPic', {
                                 required: {
@@ -259,7 +259,7 @@ function UserEditForm(props: UserEditFormProps) {
                             })}
                             type="text"
                             className="form-input"
-                            placeholder="или вставьте ссылку"
+                            placeholder="или вставьте ссылку" />
                         <ErrorMessage
                             errors={errors}
                             name={getName<User>(newUser, o => o.userPic)}
@@ -293,11 +293,11 @@ function UserEditForm(props: UserEditFormProps) {
                     </div>
                     <div className="form-row form-row-button">
                         <div className="">
-                            <button className="" onClick={setIsEditModeOn}>отмена</button>
+                            <button className="button-style" onClick={setIsEditModeOn}>отмена</button>
                         </div>
-                        <div className="save-button">
+                        <div className="button-style">
                             <button
-                                className="save-button"
+                                className="button-style"
                                 type={"submit"}
                                 disabled={isDisabled}>сохранить</button>
                         </div>
