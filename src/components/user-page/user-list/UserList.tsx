@@ -48,13 +48,18 @@ function UserList(props: UserListProps) {
                 </button>
             )
         },
-        deleteRoleButton: (userId: number|undefined, roleId: number) => {
-            const currentUserId = userId;
-    
+        deleteRoleButton: (userId: number | undefined, roleId: number) => {
+          
+            
+            if(userId != undefined) { 
+            confirmationDeleteMessage = "Вы точно хотите избавить пользователя "+props.users.filter(u => u.id === userId)[0].firstName +'( '+props.users.filter(u => u.id === userId)[0].login+')'+ " от роли " +Role[roleId]+"? "
+            }    
             return (
                 props.roleId === Role.Admin
                 &&
-                <button className='button-round mini-button' onClick={() => onDeleteRoleClick(userId, roleId)}>x</button>
+                <button className='button-round mini-button' onClick={() => onDeleteRoleClick(userId, roleId)}>
+                    <FontAwesomeIcon icon="cross" />
+                </button>
             )
         }
     }
@@ -76,25 +81,29 @@ function UserList(props: UserListProps) {
         setSignInvertor(signInvertor + 1);
     }
     const titleOnDelete = 'Удаление роли';
-    const messageOnDelete = "Вы уверены?";
-    const confirmLabel = 'Yes';
-    const declineLabel = 'No';
+    let confirmationDeleteMessage = 'Вы уверены?'
+    const messageOnDelete = {
+        Name: '',
+        Login: '',
+        Role: ''
+    }
+    const confirmLabel = 'Да';
+    const declineLabel = 'Нет';
 
     const onCancelPaymentClick = () => {
         setPaymentFormState('');
     }
 
-    const onDeleteRoleClick = (userId: number|undefined, roleId: number) => {
-        
+    const onDeleteRoleClick = (userId: number | undefined, roleId: number) => {
+
         setIsModalShow(true);
         console.log('uuu')
     }
 
     const deleteRole = (decision: boolean) => {
-        if(true){
-            props.refreshUsers()
-        
-    }
+        if (decision) {
+            props.refreshUsers();
+        }
         setIsModalShow(false);
 
     }
@@ -129,7 +138,7 @@ function UserList(props: UserListProps) {
                         <div className="column multiline">
                             {
                                 u.roles?.map(r => (<div className='role'>
-                                    {elementsDefinedByRole.deleteRoleButton(u.id, r )}
+                                    {elementsDefinedByRole.deleteRoleButton(u.id, r)}
                                     <div>{getEnToRuTranslation(Role[r])}</div>
                                 </div>))
                             }
@@ -153,7 +162,7 @@ function UserList(props: UserListProps) {
                             isShown={isModalShow}
                             confirmLabel={confirmLabel}
                             declineLabel={declineLabel}
-                            message={messageOnDelete}
+                            message={confirmationDeleteMessage}
                             title={titleOnDelete}
                             callback={deleteRole}></ConfirmationDialog>
                     </div>
