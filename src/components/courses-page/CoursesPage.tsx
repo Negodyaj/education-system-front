@@ -7,6 +7,8 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import NewCourse from './NewCourse';
 import { DataNewCourse } from './NewCourse';
 import { Course } from '../../shared/courses/Courses';
+import { sendPostRequest } from '../../services/http.service';
+import { getToken } from '../../services/auth.service';
 
 interface CoursesPageProps {
     roleId: number;
@@ -15,13 +17,13 @@ interface CoursesPageProps {
 function CoursesPage(props: CoursesPageProps) {
 
     const url = 'https://80.78.240.16:7070/api/Course/';
-    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoidm9sb2R5YTIyIiwiaWQiOiIxIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoi0JDQtNC80LjQvdC40YHRgtGA0LDRgtC-0YAiLCJuYmYiOjE2MTc0ODA0MTQsImV4cCI6MTYxNzY1MzIxNCwiaXNzIjoiRWR1Y2F0aW9uU3lzdGVtLkFwaSIsImF1ZCI6IkRldkVkdWNhdGlvbiJ9.tMl6BGk_i_ZwTDtQzMZ-dgFgG5II4Aal95iaz8rPE9o' ;
+    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoidm9sb2R5YTIyIiwiaWQiOiIxIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjpbItCQ0LTQvNC40L3QuNGB0YLRgNCw0YLQvtGAIiwi0J_RgNC10L_QvtC00LDQstCw0YLQtdC70YwiLCLQnNC10L3QtdC00LbQtdGAIl0sIm5iZiI6MTYxNzY5NDYzNCwiZXhwIjoxNjE3ODY3NDM0LCJpc3MiOiJFZHVjYXRpb25TeXN0ZW0uQXBpIiwiYXVkIjoiRGV2RWR1Y2F0aW9uIn0.Mb_LYjXFxFH9oXrNvW1tK0mqwaMglimBI75M9IBfF4I' ;
 
     const getCourses = () => {
         fetch(url, {
             headers: {
                 'Accept': 'application/json',
-                'Authorization': 'Bearer ' + token,
+                'Authorization': 'Bearer ' + getToken(),
                 'Content-Type': 'application/json'
             },
         })
@@ -36,22 +38,24 @@ function CoursesPage(props: CoursesPageProps) {
         getCourses();
     }, []);
 
-    const addCourse = (newCourse: DataNewCourse) => {
-        fetch(url, {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Authorization': 'Bearer ' + token,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(newCourse)
-        })
-            .then(response => response.json())
-            .then(data => {
-                console.log(data);
-                getCourses();
-            })
-            .catch(error => console.log('Ошибка ' + error))
+    const addCourse = async (newCourse: DataNewCourse) => {
+        (await sendPostRequest<Course>('Course/', newCourse));
+        getCourses();
+        // fetch(url, {
+        //     method: 'POST',
+        //     headers: {
+        //         'Accept': 'application/json',
+        //         'Authorization': 'Bearer ' + token,
+        //         'Content-Type': 'application/json'
+        //     },
+        //     body: JSON.stringify(newCourse)
+        // })
+        //     .then(response => response.json())
+        //     .then(data => {
+        //         console.log(data);
+        //         getCourses();
+        //     })
+        //     .catch(error => console.log('Ошибка ' + error))
     }
 
     const deleteCourse = (id: number) => {
@@ -59,7 +63,7 @@ function CoursesPage(props: CoursesPageProps) {
             method: 'DELETE',
             headers: {
                 'Accept': 'application/json',
-                'Authorization': 'Bearer ' + token,
+                'Authorization': 'Bearer ' + getToken(),
                 'Content-Type': 'application/json'
             },
         })
@@ -95,9 +99,11 @@ function CoursesPage(props: CoursesPageProps) {
     }
 
     const addNewCourse = (data?: DataNewCourse) => {
-        if(data !== undefined) {
+        if(data?.name === '' || data?.description === '' || data?.duration === 0) {
+            return;
+        } else if (data !== undefined) {
             addCourse(data);
-        } 
+        }
         setIsModalAdd(false);
     }
  
