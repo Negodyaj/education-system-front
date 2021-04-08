@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import ConfirmationDialog from "../../shared/components/confirmation-dialog/ConfirmationDialog";
 import { generateTestNotification } from "../../shared/components/notification/generateTestNotification";
 import NotificationData from "../../shared/interfaces/NotificationData";
+import { SelectItem } from "../interfaces/SelectItem";
+import CustomMultiSelect from "../multi-select/CustomMultiSelect";
 
 interface DevTestPageProps {
     sendNotification: (newNotification: NotificationData) => void;
@@ -18,6 +20,21 @@ function DevTestPage (props: DevTestPageProps) {
         }
         setDialogShown(false);
     }
+
+    const selectItems:SelectItem[]= [
+        {
+            value: 1,
+            label: "aaa"
+        },
+        {
+            value: 2,
+            label: "bbb"
+        },
+        {
+            value: 3,
+            label: "ccc"
+        }
+    ]
 
     return (
         <div>
@@ -38,6 +55,13 @@ function DevTestPage (props: DevTestPageProps) {
                 title={'Увеличить счетчик на 1?'}
                 message={`Новое значение: ${counter+1}`}
                 callback={counterCallback}/>
+
+            <CustomMultiSelect
+                selectType='multi'
+                userOptionsIds={[]}
+                options={selectItems}
+                onSelect={()=>{}}
+            />
 
             <div className="test-page-link"><Link to="/">back to login</Link></div>
         </div>
