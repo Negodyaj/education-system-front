@@ -11,7 +11,7 @@ interface UserListProps {
     roleId: number;
     users: User[];
     onEditClick: (userToEditId?: number) => void;
-    onDeleteClick: (userToDelete: number) => void;
+    onDeleteClick: (userToDeleteId: number) => void;
 }
 
 function UserList(props: UserListProps) {
