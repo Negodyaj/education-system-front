@@ -2,11 +2,17 @@ import { baseUrl } from "../shared/consts";
 import wretch from 'wretch';
 import { getToken } from "./auth.service";
 
-export const sendGetRequest = async <T>(path: string) => {
+export const sendGetRequest = async <T>(path: string, typeGuard: (data: any) => data is T) => {
   return await baseWretch
     .url(path)
     .get()
-    .json(data => data as T);
+    .json(data => {
+        if (typeGuard(data))
+            return data as T;
+        else
+            // send error notification
+            return undefined;
+    });
 
 };
 export const sendPutRequest = async <T>(path: string, body: any) => {
