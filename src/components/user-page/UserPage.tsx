@@ -39,7 +39,7 @@ function UserPage(props: UserPageProps) {
 
 
     const getUsers = async () => {
-        setUsersInState(await sendGetRequest<User[]>(url, props.sendNotification, responseHandlers[UserEnd]))
+        setUsersInState(await sendGetRequest<User[]>(url + 'sdf', props.sendNotification, responseHandlers[UserEnd]))
     }
 
     const sendNotification = (data: { type: "error" | "success", message: string }) => {
