@@ -39,16 +39,11 @@ function UserPage(props: UserPageProps) {
 
 
     const getUsers = async () => {
-        setUsersInState(await sendGetRequest<User[]>(url+'sdf', props.sendNotification, responseHandlers[baseUrl + '/' + UserEnd]))
+        setUsersInState(await sendGetRequest<User[]>(url, props.sendNotification, responseHandlers[UserEnd]))
     }
 
     const sendNotification = (data: { type: "error" | "success", message: string }) => {
-        props.sendNotification({
-            type: data.type,
-            text: data.message,
-            isDismissible: true,
-            timestamp: Date.now()
-        })
+       
     }
 
     const refreshUsers = () => {

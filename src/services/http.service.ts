@@ -53,7 +53,7 @@ const baseWretch = (
   return wretch()
     .url(baseUrl + '/')
     .auth(`Bearer ${getToken()}`)
-    .catcher(404, error => sendN(rh.notifications['error'] as NotificationData))
+    .catcher(404, error => sendN(rh.notifications()['error'] as NotificationData))
     .catcher(403, error => console.log(error))
     .catcher(409, error => console.log(error))
 }

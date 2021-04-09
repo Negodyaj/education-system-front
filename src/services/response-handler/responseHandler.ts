@@ -8,22 +8,24 @@ enum nType {
     Success = 'success'
 }
 export interface responseHandlerItem {
-    notifications: { [key in nType]: NotificationData|undefined },
+    notifications: () => { [key in nType]: NotificationData | undefined },
     typeGuarder: typeGuarders;
 }
 export interface responseHandler {
     [url: string]: responseHandlerItem
 }
 export const responseHandlers: responseHandler = {
-    [baseUrl + '/' + UserEnd]: {
-        notifications: {
-            [nType.Error]: {
-                type: 'error',
-                text: 'страница не найдена',
-                isDismissible: true,
-                timestamp: Date.now()
-            },
-            [nType.Success]: undefined
+    [UserEnd]: {
+        notifications: () => {
+            return ({
+                [nType.Error]: {
+                    type: 'error',
+                    text: 'страница не найдена',
+                    isDismissible: true,
+                    timestamp: Date.now()
+                },
+                [nType.Success]: undefined
+            })
         },
         typeGuarder: isUser
     }
