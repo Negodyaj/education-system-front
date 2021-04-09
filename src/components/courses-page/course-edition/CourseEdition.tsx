@@ -24,10 +24,12 @@ function CourseEdition(props: CourseEditionProps) {
     let themesCurrentCourse: Themes[] = [];
     let indexCourse = Number(props.idCourse.replace(/[a-z-A-Z\/]/g, ""));
     let themesList: Themes[] = [];
+    let nameThemesCourse: string[] = [];
     
     const [themesCourse, setThemesCourse] = useState(themesCurrentCourse);
     const [allThemes, setAllThemes] = useState(themesList);
     const [searchTurn, setSearchTurn] = useState('');
+    const [nameThemes, setNameThemes] = useState(nameThemesCourse);
 
     const getAllThemes = async() => {
         setAllThemes(await sendGetRequest('Course/theme'))
@@ -46,17 +48,31 @@ function CourseEdition(props: CourseEditionProps) {
     const addThemeCourse = (newThemeCourse: NewThemeCourse) => {
         sendPostRequest('Course/' + newThemeCourse.idCourse + '/theme/' + newThemeCourse.idTheme, newThemeCourse);
         setTimeout (() => updateCourseThemes(), 300);
+        checkThemes();
+        
     }
 
     const deleteThemeCourse = (newThemeCourse: NewThemeCourse) => {
         sendDeleteRequest('Course/' + newThemeCourse.idCourse + '/theme/' + newThemeCourse.idTheme, newThemeCourse.idTheme);
         setTimeout (() => updateCourseThemes(), 300);
+        checkThemes();
     }
+
+    const checkThemes = () => {
+        themesCourse.map((theme) => (
+            nameThemesCourse.push(theme.name)
+        ))
+        setNameThemes(nameThemesCourse);
+        console.log(nameThemes);
+    }
+
+
 
     useEffect(() => {
         getAllThemes();
         getCourseById(indexCourse);
         updateCourseThemes();
+        setTimeout (() => checkThemes(), 2000);
     }, []);
 
         
@@ -101,10 +117,10 @@ function CourseEdition(props: CourseEditionProps) {
                             <div className="new-theme-name">{item.name}</div>
                             <div className="new-theme-add">
                                 <button onClick={() => addNewThemeInProgramCourse(item)} className="button-add-theme">
-                                <FontAwesomeIcon icon="plus" />
-                                {/* {
-                                    themesCourse.includes(item) ? <FontAwesomeIcon icon="check" /> : <FontAwesomeIcon icon="plus" />
-                                } */}
+                                {/* <FontAwesomeIcon icon="plus" /> */}
+                                {
+                                    nameThemes.includes(item.name) ? <FontAwesomeIcon icon="check" /> : <FontAwesomeIcon icon="plus" />
+                                }
                                 </button>
                             </div>
                         </div>
