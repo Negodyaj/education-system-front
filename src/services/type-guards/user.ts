@@ -1,10 +1,10 @@
 import { User } from "../../components/interfaces/User";
 
-export type userTypeGuarder = (data: any) => data is User;
 
-export type typeGuarders = userTypeGuarder | undefined;
 
-export const isUser : userTypeGuarder = (data: any) : data is User => {
-    const dataToCheck = data as User;
-    return !!dataToCheck.email && !!dataToCheck.phone;
+
+type userArr = User[];
+export const isUserArr = (data: any) : data is userArr => {
+    const dataToCheck = data as userArr;
+    return !!dataToCheck[0].email && !!dataToCheck[0].phone;
 }

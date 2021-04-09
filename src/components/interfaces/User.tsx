@@ -7,9 +7,5 @@ export interface User {
     phone?: string;
     userPic?: string;
     email?: string;
-    password?: string;
-    groupId?: number;
-    groupName?: string;
     roles?: number[];
-    roleIds?:number[];
 }

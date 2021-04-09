@@ -1,7 +1,8 @@
+import { User } from "../../components/interfaces/User";
 import { baseUrl } from "../../shared/consts";
 import { UserEnd } from "../../shared/endpointConsts";
 import NotificationData from "../../shared/interfaces/NotificationData";
-import { isUser, typeGuarders } from "../type-guards/user";
+import { isUserArr } from "../type-guards/user";
 
 enum nType {
     Error = 'error',
@@ -9,7 +10,7 @@ enum nType {
 }
 export interface responseHandlerItem {
     notifications: () => { [key in nType]: NotificationData | undefined },
-    typeGuarder: typeGuarders;
+    isT: <T>(data: any) => data is T;
 }
 export interface responseHandler {
     [url: string]: responseHandlerItem
@@ -27,6 +28,6 @@ export const responseHandlers: responseHandler = {
                 [nType.Success]: undefined
             })
         },
-        typeGuarder: isUser
+        isT: <userArr>(data: any): data is userArr =>isUserArr(data) //дженерик не хотел принимать просто User[]
     }
 }

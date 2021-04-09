@@ -82,7 +82,7 @@ function UserEditForm(props: UserEditFormProps) {
                             className="form-input" />
                         <ErrorMessage
                             errors={errors}
-                            name={getName<User>(newUser, o => o.password)}
+                            //name={getName<User>(newUser, o => o.password)}
                             className="bad-feedback"
                             as="div">
                         </ErrorMessage>

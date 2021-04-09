@@ -11,7 +11,13 @@ export const sendGetRequest = async <T>(
   return await baseWretch(path, sendN, rh)
     .url(path)
     .get()
-    .json(data => data as T);
+    .json(data => {
+      if (rh.isT(data)) {
+        return data as T;
+      } else {
+        return undefined;
+      }
+    });
 
 };
 export const sendPutRequest = async <T>(
