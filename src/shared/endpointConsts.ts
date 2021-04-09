@@ -1,0 +1,1 @@
+export const UserEnd: string = 'User';

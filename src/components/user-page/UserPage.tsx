@@ -2,7 +2,10 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useState } from 'react';
 import { sendDeleteRequest, sendGetRequest } from '../../services/http.service';
+import { responseHandlers } from '../../services/response-handler/responseHandler';
 import ConfirmationDialog from '../../shared/components/confirmation-dialog/ConfirmationDialog';
+import { baseUrl } from '../../shared/consts';
+import { UserEnd } from '../../shared/endpointConsts';
 import NotificationData from '../../shared/interfaces/NotificationData';
 import { User } from '../interfaces/User';
 import UserList from './user-list/UserList';
@@ -36,7 +39,7 @@ function UserPage(props: UserPageProps) {
 
 
     const getUsers = async () => {
-        setUsersInState(await sendGetRequest<User[]>(url))
+        setUsersInState(await sendGetRequest<User[]>(url+'sdf', props.sendNotification, responseHandlers[baseUrl + '/' + UserEnd]))
     }
 
     const sendNotification = (data: { type: "error" | "success", message: string }) => {
@@ -62,13 +65,13 @@ function UserPage(props: UserPageProps) {
     }
 
     const deleteUser = async (decision: boolean) => {
-        setIsModalShown(true);
-        if (decision === true) {
-            if (await sendDeleteRequest(url + '/' + userToDeleteId)) {
-                refreshUsers()
-            };
-        }
-        setIsModalShown(false)
+        // setIsModalShown(true);
+        // if (decision === true) {
+        //     if (await sendDeleteRequest(url + '/' + userToDeleteId)) {
+        //         refreshUsers()
+        //     };
+        // }
+        // setIsModalShown(false)
     }
 
     useEffect(() => {

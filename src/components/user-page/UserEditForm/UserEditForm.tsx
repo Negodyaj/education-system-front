@@ -125,19 +125,19 @@ function UserEditForm(props: UserEditFormProps) {
     }
 
     const sendUser = async (newUser: FormInputs) => {
-        if (props.userToEdit) {
-            props.reviseSending(await sendPutRequest<UserUpdate>(props.url + (props.userToEdit ? '/' + props.userToEdit.id : ''),
-                {
-                    firstName: newUser.firstName,
-                    lastName: newUser.lastName,
-                    phone: newUser.phone,
-                    email: newUser.email,
-                    userPic: newUser.userPic,
-                    birthDate: newUser.birthDate
-                }))
-        } else {
-            props.reviseSending(await sendPostRequest<User>(props.url + '/' + 'register', newUser));
-        }
+        // if (props.userToEdit) {
+        //     props.reviseSending(await sendPutRequest<UserUpdate>(props.url + (props.userToEdit ? '/' + props.userToEdit.id : ''),
+        //         {
+        //             firstName: newUser.firstName,
+        //             lastName: newUser.lastName,
+        //             phone: newUser.phone,
+        //             email: newUser.email,
+        //             userPic: newUser.userPic,
+        //             birthDate: newUser.birthDate
+        //         }))
+        // } else {
+        //     props.reviseSending(await sendPostRequest<User>(props.url + '/' + 'register', newUser));
+        // }
     }
 
     const birthDateOnChange = (date: string) => {

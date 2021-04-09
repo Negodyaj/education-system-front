@@ -55,7 +55,7 @@ function CourseEdition(props: CourseEditionProps) {
     }, []);
 
     const getCourseById = async (id: number) => {
-        setCourse(await sendGetRequest('Course/' + id)); 
+        //setCourse(await sendGetRequest('Course/' + id)); 
     };
 
     useEffect(() => {

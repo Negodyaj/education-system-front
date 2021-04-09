@@ -39,7 +39,7 @@ function CoursesPage(props: CoursesPageProps) {
     }, []);
 
     const addCourse = async (newCourse: DataNewCourse) => {
-        (await sendPostRequest<Course>('Course/', newCourse));
+        //(await sendPostRequest<Course>('Course/', newCourse));
         getCourses();
         // fetch(url, {
         //     method: 'POST',
