@@ -1,7 +1,7 @@
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useState } from 'react';
-import { sendGetRequest } from '../../services/http.service';
+import { sendDeleteRequest, sendGetRequest } from '../../services/http.service';
 import ConfirmationDialog from '../../shared/components/confirmation-dialog/ConfirmationDialog';
 import NotificationData from '../../shared/interfaces/NotificationData';
 import { User } from '../interfaces/User';
@@ -54,10 +54,12 @@ function UserPage(props: UserPageProps) {
         })
     }
 
-
-
-    const checkUpdatedUsers = (addedUser: User) => {
+    const refreshUsers = () => {
+        setUsersInState(undefined);
         getUsers();
+    }
+    const checkUpdatedUsers = (addedUser: User) => {
+        refreshUsers();
         setIsEditModeOn(false)
     }
 
@@ -65,8 +67,14 @@ function UserPage(props: UserPageProps) {
 
     }
 
-    const deleteUser = (decision: boolean) => {
-
+    const deleteUser = async (decision: boolean) => {
+        setIsModalShown(true);
+        if (decision === true) {
+            if (await sendDeleteRequest(url + '/' + userToDeleteId)) {
+                refreshUsers()
+            };
+        }
+        setIsModalShown(false)
     }
 
     useEffect(() => {
@@ -83,7 +91,8 @@ function UserPage(props: UserPageProps) {
     }
 
     const onDeleteClick = (userToDeleteIdArg: number) => {
-
+        setUserToDeleteId(userToDeleteIdArg);
+        setIsModalShown(true);
     }
 
     return (

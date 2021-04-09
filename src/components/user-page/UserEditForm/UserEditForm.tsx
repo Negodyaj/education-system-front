@@ -9,11 +9,11 @@ import { Role } from '../../../enums/role';
 import { UserInput } from '../../interfaces/UserInput';
 import { useForm } from 'react-hook-form';
 import { convertEntitiesToSelectItems } from '../../../shared/converters/entityToSelectItemConverter';
-import { ErrorMessage } from '@hookform/error-message';
 import { getName } from '../../../shared/converters/objectKeyToString';
-import { PreviousMethod } from '../UserPage';
 import { sendPutRequest } from '../../../services/http.service';
 import { UserUpdate } from '../../interfaces/UserUpdate';
+import { ErrorMessage } from '@hookform/error-message';
+import '../../../App.css'
 
 interface UserEditFormProps {
     roleId: number;
@@ -61,8 +61,8 @@ function UserEditForm(props: UserEditFormProps) {
         roleSelector: () => {
             if (props.roleId === Role.Admin) {
                 return (
-                    <div className="user-list-item">
-                        <label className="column">Список ролей</label>
+                    <div className="form-row multi">
+                        <label className="form-label">Список ролей</label>
                         <CustomMultiSelect
                             selectType={"multi"}
                             userOptionsIds={getValues('roleIds') || undefined}
@@ -76,8 +76,8 @@ function UserEditForm(props: UserEditFormProps) {
         passwordInput: () => {
             if (props.userToEdit === undefined) {
                 return (
-                    <div className="user-list-item">
-                        <label className="column">Пароль</label>
+                    <div className="form-row">
+                        <label className="form-label">Пароль</label>
                         <input
                             {...register('password', {
                                 required: {
@@ -86,7 +86,7 @@ function UserEditForm(props: UserEditFormProps) {
                                 }
                             })}
                             type="text"
-                            className="column" />
+                            className="form-input"/>
                         <ErrorMessage
                             errors={errors}
                             name={getName<User>(newUser, o => o.password)}
@@ -102,8 +102,8 @@ function UserEditForm(props: UserEditFormProps) {
         loginInput: () => {
             if (props.userToEdit === undefined) {
                 return (
-                    <div className="user-list-item">
-                        <label className="column">Логин</label>
+                    <div className="form-row">
+                        <label className="form-label">Логин</label>
                         <input
                             {...register('login', {
                                 required: {
@@ -116,7 +116,7 @@ function UserEditForm(props: UserEditFormProps) {
                                 }
                             })}
                             type="text"
-                            className="column" />
+                            className="form-input" />
                         <ErrorMessage
                             errors={errors}
                             name={getName<User>(newUser, o => o.login)}
@@ -163,8 +163,8 @@ function UserEditForm(props: UserEditFormProps) {
         return (
             <div className={"user-edit-form needs-validation was-validated"}>
                 <form onSubmit={handleSubmit(onSubmit)}>
-                    <div className="user-list-item">
-                        <label className="column">Имя</label>
+                    <div className="form-row">
+                        <label className="form-label">Имя</label>
                         <input
                             {...register('firstName', {
                                 required: {
@@ -178,7 +178,7 @@ function UserEditForm(props: UserEditFormProps) {
                                 }
                             })}
                             type="text"
-                            className="column" />
+                            className="form-input"/>
                         <ErrorMessage
                             errors={errors}
                             name={getName<User>(newUser, o => o.firstName)}
@@ -186,8 +186,8 @@ function UserEditForm(props: UserEditFormProps) {
                             as="div">
                         </ErrorMessage>
                     </div>
-                    <div className="user-list-item">
-                        <label className="column">Фамилия</label>
+                    <div className="form-row">
+                        <label className="form-label">Фамилия</label>
                         <input
                             {...register('lastName', {
                                 required: {
@@ -200,7 +200,7 @@ function UserEditForm(props: UserEditFormProps) {
                                 }
                             })}
                             type="text"
-                            className="column" />
+                            className="form-input" />
                         <ErrorMessage
                             errors={errors}
                             name={getName<User>(newUser, o => o.lastName)}
@@ -208,8 +208,8 @@ function UserEditForm(props: UserEditFormProps) {
                             as="div">
                         </ErrorMessage>
                     </div>
-                    <div className="user-list-item">
-                        <label className="column">Дата рождения</label>
+                    <div className="form-row">
+                        <label className="form-label">Дата рождения</label>
                         <DatePickerComponent
                             {...register('birthDate')}
                             date={getValues('birthDate')}
@@ -221,8 +221,8 @@ function UserEditForm(props: UserEditFormProps) {
                     {
                         elementsDefinedByProps.passwordInput()
                     }
-                    <div className="user-list-item">
-                        <label className="column">Телефон</label>
+                    <div className="form-row">
+                        <label className="form-label">Телефон</label>
                         <input
                             {...register('phone', {
                                 required: {
@@ -235,7 +235,7 @@ function UserEditForm(props: UserEditFormProps) {
                                 }
                             })}
                             type="text"
-                            className="column" />
+                            className="form-input" />
                         <ErrorMessage
                             errors={errors}
                             name={getName<User>(newUser, o => o.phone)}
@@ -243,9 +243,9 @@ function UserEditForm(props: UserEditFormProps) {
                             as="div">
                         </ErrorMessage>
                     </div>
-                    <div className="user-list-item">
-                        <label className="column">Аватар</label>
-                        <input type="file" className="column" />
+                    <div className="form-row">
+                        <label className="form-label">Аватар</label>
+                        <input type="file" className="" />
                         <input
                             {...register('userPic', {
                                 required: {
@@ -258,7 +258,7 @@ function UserEditForm(props: UserEditFormProps) {
                                 }
                             })}
                             type="text"
-                            className="column"
+                            className="form-input"
                             placeholder="или вставьте ссылку" />
                         <ErrorMessage
                             errors={errors}
@@ -268,8 +268,8 @@ function UserEditForm(props: UserEditFormProps) {
                         </ErrorMessage>
                         <img src={getValues('userPic')} alt="аватар" />
                     </div>
-                    <div className="user-list-item">
-                        <label className="column">Почта</label>
+                    <div className="form-row">
+                        <label className="form-label">Почта</label>
                         <input
                             {...register('email', {
                                 required: {
@@ -286,16 +286,18 @@ function UserEditForm(props: UserEditFormProps) {
                             as="div">
                         </ErrorMessage>
                     </div>
+                    <div className="form-row">
                     {
                         elementsDefinedByProps.roleSelector()
                     }
-                    <div className="user-list-item">
-                        <div className="column">
-                            <button className="column" onClick={setIsEditModeOn}>отмена</button>
+                    </div>
+                    <div className="form-row form-row-button">
+                        <div className="">
+                            <button className="button-style" onClick={setIsEditModeOn}>отмена</button>
                         </div>
-                        <div className="column save-button">
+                        <div className="button-style">
                             <button
-                                className="column save-button"
+                                className="button-style"
                                 type={"submit"}
                                 disabled={isDisabled}>сохранить</button>
                         </div>
@@ -307,3 +309,4 @@ function UserEditForm(props: UserEditFormProps) {
 }
 
 export default UserEditForm;
+

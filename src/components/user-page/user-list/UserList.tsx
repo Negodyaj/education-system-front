@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { Role } from "../../../enums/role";
 import { getEnToRuTranslation } from "../../../shared/converters/enumToDictionaryEntity";
 import { User } from "../../interfaces/User";
+import PaymentForm from "../payment-form/PaymentForm";
 import '../UserPage.css';
 import '../../../App.css'
 
@@ -11,7 +12,7 @@ interface UserListProps {
     roleId: number;
     users: User[];
     onEditClick: (userToEditId?: number) => void;
-    onDeleteClick: (userToDelete: number) => void;
+    onDeleteClick: (userToDeleteId: number) => void;
 }
 
 function UserList(props: UserListProps) {
@@ -30,17 +31,29 @@ function UserList(props: UserListProps) {
 
     const [signInvertor, setSignInvertor] = useState(1);
     const [usersToShow, setUsersToShow] = useState([...props.users]);
+    const [userForPayment, setUserForPayment] = useState<User | undefined>(undefined);
+    const [paymentFormState, setPaymentFormState] = useState('');
 
     const elementsDefinedByRole = {
-        paymentButton: () => {
+        paymentButton: (userId: number | undefined) => {
             return (
                 props.roleId === Role.Manager
                 &&
-                <button className="button-round">
+                <button className="button-round" onClick={() => onPaymentButtonClick(userId)}>
                     <FontAwesomeIcon icon="ruble-sign" />
                 </button>
             )
         }
+    }
+
+    const onPaymentButtonClick = (userId: number | undefined) => {
+        setUserForPayment([...usersToShow].filter(u => u.id === userId)[0]);
+        setPaymentFormState('visible');
+
+    }
+
+    const onEditClick = (userToEditId?: number) => {
+        props.onEditClick(userToEditId);
     }
 
     const lastNameColumnOnClick = () => {
@@ -48,6 +61,10 @@ function UserList(props: UserListProps) {
             return lastNameAlphabetSort(a.lastName, b.lastName);
         }))
         setSignInvertor(signInvertor + 1);
+    }
+
+    const onCancelPaymentClick = () => {
+        setPaymentFormState('');
     }
 
     return (
@@ -93,13 +110,18 @@ function UserList(props: UserListProps) {
                                 </button>
 
                                 {
-                                    elementsDefinedByRole.paymentButton()
+                                    elementsDefinedByRole.paymentButton(u.id)
                                 }
-
                             </div>
                         </div>
                     </div>))
             }
+            <PaymentForm
+                paymentFormState={paymentFormState}
+                cancelClick={onCancelPaymentClick}
+                userName={userForPayment?.firstName}
+                userLastname={userForPayment?.lastName}
+            ></PaymentForm>
         </div>
 
     )

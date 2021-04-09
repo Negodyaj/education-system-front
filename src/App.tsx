@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import { Switch, Route, useHistory } from 'react-router-dom';
+import { Switch, Route, useHistory, Link } from 'react-router-dom';
 import LoginForm from './components/login-form/LoginForm';
 import NavMenu from './components/nav-menu/NavMenu';
 import HomeworkPage from './components/homework-page/HomeworkPage';
@@ -22,7 +22,7 @@ function App() {
     const history = useHistory();
     const token = getToken();
     const [isLoggedIn, setIsLoggedIn] = useState(!!token);
-    const [roleId, setRoleId] = useState(3);
+    const [roleId, setRoleId] = useState(Role.Admin);
     const [dismissibleNotifications, setDismissibleNotifications] = useState<NotificationData[]>([]);
     const [nonDismissibleNotifications, setNonDismissibleNotifications] = useState<NotificationData[]>([]);
 
@@ -91,11 +91,6 @@ function App() {
                     {
                         isLoggedIn ?
                             <Switch>
-                                <Route exact path="/">
-                                    {
-                                        roleId === Role.Test && <DevTestPage sendNotification={sendNewNotification} />
-                                    }
-                                </Route>
                                 {
                                     (roleId === Role.Manager || roleId === Role.Admin) &&
                                     <Route path="/user-page">
@@ -125,7 +120,16 @@ function App() {
                                 </Route>
                             </Switch>
                             :
-                            <LoginForm onLoginClick={loginHandler} />
+                            <Switch>
+                                <Route exact path="/">
+                                    <LoginForm onLoginClick={loginHandler} />
+                                    <div className="test-page-link"><Link to="/dev-test-page">secret test page</Link></div>
+                                </Route>
+                                <Route path="/dev-test-page">
+                                    <DevTestPage sendNotification={sendNewNotification} />
+                                </Route>
+                            </Switch>
+
                     }
                     {
                         isLoggedIn ? <NotificationContainer
