@@ -121,3 +121,8 @@ main {
   font-family: 'Montserrat';
 }
 
+.test-page-link {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+}
