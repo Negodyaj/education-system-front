@@ -25,20 +25,22 @@
     border-color:#FF007C;
     opacity: 1;
 }
+
 img{
     height: 100px;
     width: 100px;
+    margin-bottom: 11px;
 }
 
 .form-row{
     display: flex;
     flex-direction: column;
-
-    height: 90px;
+    min-height: 90px;
 }
 
-
-
+.form-input{
+    margin-bottom: 0px;
+}
 
 .form-row-button{
     justify-content: flex-end;
@@ -47,4 +49,38 @@ img{
 
 .multi{
     width: 272px;
+}
+
+.file-upload{ 
+    width: 272px; 
+} 
+#file-input{
+    display:none;
+} 
+
+.file-upload label{
+    background-color: #00CCF2;
+    color: #FFFF;
+    font-weight: 700;
+    border: none;
+    text-align: center;
+    outline: none;
+    font-family: Montserrat;
+    font-weight:bold;
+    text-align: center;
+    height: 40px;
+    width: 272px; 
+    border-radius: 5px;
+    font-family: 'Montserrat';
+    line-height: 40px;
+} 
+
+.file-upload label:hover{
+    background:#2D62ED;
+}
+
+#no-file{
+color:#FF007C;
+font-size: 12px;
+margin-bottom: 11px;
 }
