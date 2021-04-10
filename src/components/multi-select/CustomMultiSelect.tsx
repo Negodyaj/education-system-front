@@ -1,6 +1,7 @@
 import { NONAME } from 'node:dns';
 import { useEffect, useState } from 'react'
 import Select, { NonceProvider, OptionsType } from 'react-select'
+import { reduceEachTrailingCommentRange } from 'typescript';
 import { Role } from '../../enums/role';
 import { getEnToRuTranslation } from '../../shared/converters/enumToDictionaryEntity';
 import { SelectItem } from '../interfaces/SelectItem';
@@ -26,14 +27,28 @@ function CustomMultiSelect(props: SelectProps) {
     props.onSelect(roleIds);
   }
 
+  const customStyleColors = {
+    main: '#00CCF2',
+    light: '#BEF1F9',
+    shadow: '#272D3B26',
+  }
+
   const customStyles = {
-    control: (provided: any) => ({
+    control: (provided: any, state: any) => ({
       ...provided,
       height: 40,
-      border: "1px solid #272D3B26",
+      border: state.isFocused 
+        ? "2px solid " + customStyleColors.main 
+        : "1px solid " + customStyleColors.shadow,
+      ':hover': {
+        border: state.isFocused 
+          ? "2px solid " + customStyleColors.main 
+          : "1px solid " + customStyleColors.main,
+      },
       borderRadius: 20,
-      boxShadow: "0px 3px 6px #272D3B26",
-      padding: "0px 5px"
+      boxShadow: "0px 3px 6px " + customStyleColors.shadow,
+      padding: "0px 5px",
+      outline: 'none',
     }),
     option: (provided: any, state: any) => ({
       ...provided,
@@ -43,9 +58,9 @@ function CustomMultiSelect(props: SelectProps) {
         ? 'white' 
         : 'black',
       backgroundColor: state.isSelected
-        ? '#00CCF2'
+        ? customStyleColors.main
         : state.isFocused 
-        ? '#BEF1F9' 
+        ? customStyleColors.light 
         : 'white',
     }),
     menu: (provided: any, state: any) => ({
