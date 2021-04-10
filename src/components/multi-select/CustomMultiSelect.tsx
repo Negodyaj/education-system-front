@@ -1,7 +1,7 @@
 import { NONAME } from 'node:dns';
 import { useEffect, useState } from 'react'
 import Select, { NonceProvider, OptionsType } from 'react-select'
-import { reduceEachTrailingCommentRange } from 'typescript';
+import { getJSDocReadonlyTag, reduceEachTrailingCommentRange } from 'typescript';
 import { Role } from '../../enums/role';
 import { getEnToRuTranslation } from '../../shared/converters/enumToDictionaryEntity';
 import { SelectItem } from '../interfaces/SelectItem';
@@ -34,8 +34,8 @@ function CustomMultiSelect(props: SelectProps) {
   }
 
   const customStyles = {
-    control: (provided: any, state: any) => ({
-      ...provided,
+    control: (baseStyles: any, state: any) => ({
+      ...baseStyles,
       height: 40,
       border: state.isFocused 
         ? "2px solid " + customStyleColors.main 
@@ -47,11 +47,20 @@ function CustomMultiSelect(props: SelectProps) {
       },
       borderRadius: 20,
       boxShadow: "0px 3px 6px " + customStyleColors.shadow,
-      padding: "0px 5px",
+      padding: state.isFocused 
+        ? "0px 4px"
+        : "0px 5px",
       outline: 'none',
     }),
-    option: (provided: any, state: any) => ({
-      ...provided,
+    singleValue: () => ({
+      padding: "0px 10px"
+    }),
+    valueContainer: (baseStyles: any) => ({
+      ...baseStyles,
+      padding: 0,
+    }),
+    option: (baseStyles: any, state: any) => ({
+      ...baseStyles,
       borderRadius: 20,
       height: 40,
       color: state.isSelected
@@ -63,37 +72,50 @@ function CustomMultiSelect(props: SelectProps) {
         ? customStyleColors.light 
         : 'white',
     }),
-    menu: (provided: any, state: any) => ({
-      ...provided,
+    menu: (baseStyles: any) => ({
+      ...baseStyles,
       margin: 0,
       borderRadius: 20,
     }),
-    menuList: (provided: any, state: any) => ({
-      ...provided,
+    menuList: (baseStyles: any) => ({
+      ...baseStyles,
       padding: 0,
+    }),
+    multiValue: (baseStyles: any) => ({
+      ...baseStyles,
+      backgroundColor: customStyleColors.light,
+      height: 28,
+      borderRadius: 14,
+      padding: "0px 5px",
+      ':hover': {
+        backgroundColor: customStyleColors.main,
+      },
+      ':hover div': {
+        color: 'white',
+      }
+    }),
+    multiValueLabel: (baseStyles: any) => ({
+      ...baseStyles,
+    }),
+    multiValueRemove: (baseStyles: any) => ({
+      ...baseStyles,
+      cursor: 'pointer',
+      ':hover': {
+        background: 'none',
+      }
+    }),
+    placeholder: () => ({
+      padding: "0px 10px",
+      color: 'lightgray',
     })
-    // option: (provided: any, state: any) => ({
-    //   ...provided,
-    //   borderBottom: '1px dotted pink',
-    //   color: state.isSelected ? 'red' : 'blue',
-    //   padding: 20,
-    // }),
-    // control: () => ({
-    //   // none of react-select's styles are passed to <Control />
-    //   width: 200,
-    // }),
-    // singleValue: (provided: any, state: any) => {
-    //   const opacity = state.isDisabled ? 0.5 : 1;
-    //   const transition = 'opacity 300ms';
-  
-    //   return { ...provided, opacity, transition };
-    // }
   }
 
   const SingleSelect = () => (
     <Select 
       options={props.options} 
-      styles={customStyles}/>
+      styles={customStyles}
+      placeholder='Выберите опцию'
+    />
   )
   const MultiSelect = () => (
     <Select
@@ -105,6 +127,8 @@ function CustomMultiSelect(props: SelectProps) {
       classNamePrefix="select"
       onChange={onSelect}
       styles={customStyles}
+      placeholder='Выберите опцию'
+      noOptionsMessage={() => 'Опций больше нет'}
     />
   )
   return (
