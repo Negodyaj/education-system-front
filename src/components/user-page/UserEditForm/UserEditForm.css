@@ -37,6 +37,9 @@ img{
     min-height: 90px;
 }
 
+.form-input{
+    margin-bottom: 0px;
+}
 
 .form-row-button{
     justify-content: flex-end;
@@ -77,5 +80,6 @@ img{
 
 #no-file{
 color:#FF007C;
+font-size: 12px;
 margin-bottom: 11px;
 }
