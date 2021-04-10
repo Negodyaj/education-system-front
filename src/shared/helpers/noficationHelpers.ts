@@ -1,4 +1,9 @@
+import { WretcherError } from 'wretch'
 import NotificationData from '../interfaces/NotificationData'
+
+export const makeErrorText = (error: any) => {
+    return (error as WretcherError)?.status?.toString() || '' + ' ' + (error as WretcherError)?.message
+}
 
 export const makeNotification = (
     type: string,

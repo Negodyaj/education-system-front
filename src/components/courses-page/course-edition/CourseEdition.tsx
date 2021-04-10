@@ -30,27 +30,27 @@ function CourseEdition(props: CourseEditionProps) {
     const [nameThemes, setNameThemes] = useState(nameThemesCourse);
 
     const getAllThemes = async() => {
-        setAllThemes(await sendGetRequest('Course/theme'))
+        //setAllThemes(await sendGetRequest('Course/theme'))
     }
 
     const getCourseById = async (id: number) => {
-        const dataCourse = await sendGetRequest<Course>('Course/' + id);
-        return dataCourse;
+        // const dataCourse = await sendGetRequest<Course>('Course/' + id);
+        // return dataCourse;
     };
 
     const updateCourseThemes = async () => {
-        currentCourse = await getCourseById(indexCourse);
-        checkThemes(currentCourse);
-        setThemesCourse(currentCourse.themes);
+        // currentCourse = await getCourseById(indexCourse);
+        // checkThemes(currentCourse);
+        // setThemesCourse(currentCourse.themes);
     } 
 
     const addThemeCourse = (newThemeCourse: NewThemeCourse) => {
-        sendPostRequest('Course/' + newThemeCourse.idCourse + '/theme/' + newThemeCourse.idTheme, newThemeCourse);
+        //sendPostRequest('Course/' + newThemeCourse.idCourse + '/theme/' + newThemeCourse.idTheme, newThemeCourse);
         setTimeout (() => updateCourseThemes(), 300);
     }
 
     const deleteThemeCourse = (newThemeCourse: NewThemeCourse) => {
-        sendDeleteRequest('Course/' + newThemeCourse.idCourse + '/theme/' + newThemeCourse.idTheme, newThemeCourse.idTheme);
+        //sendDeleteRequest('Course/' + newThemeCourse.idCourse + '/theme/' + newThemeCourse.idTheme, newThemeCourse.idTheme);
         setTimeout (() => updateCourseThemes(), 200);
     }
 

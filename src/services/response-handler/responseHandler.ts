@@ -1,7 +1,10 @@
 import { WretcherError, WretcherResponse } from "wretch";
 import { User } from "../../components/interfaces/User";
-import { UserEnd, UserUserIdEnd } from "../../shared/endpointConsts";
+import { Course } from "../../shared/courses/Courses";
+import { CourseEnd, UserEnd, UserUserIdEnd } from "../../shared/endpointConsts";
+import { makeErrorText, makeNotification } from "../../shared/helpers/noficationHelpers";
 import NotificationData from "../../shared/interfaces/NotificationData";
+import { isCourseArr } from "../type-guards/courseArr";
 import { isUser } from "../type-guards/user";
 import { isUserArr } from "../type-guards/userArray";
 
@@ -55,5 +58,15 @@ export const responseHandlers: responseHandler = {
             })
         },
         isT: (data: any): data is User => isUser(data)
+    },
+    [CourseEnd]: {
+        notifications: (response?: any) => {
+            return ({
+                [nType.Error]:makeNotification(nType.Error, makeErrorText(response)),
+                [nType.Success]:undefined
+            }
+            )
+        },
+        isT: (data: any): data is Course[] => isCourseArr(data)
     }
 }
