@@ -35,7 +35,7 @@ function UserEditForm(props: UserEditFormProps) {
         userPic: "",
         phone: "",
         email: "",
-        roleIds:[]
+        roleIds: []
     })
 
     const [newUser, setNewUser] = useState<User>(initUser);
@@ -154,6 +154,7 @@ function UserEditForm(props: UserEditFormProps) {
         props.setIsEditModeOn(false);
     }
 
+
     if (isFetching) {
         return (<div>loading</div>)
     } else {
@@ -240,9 +241,12 @@ function UserEditForm(props: UserEditFormProps) {
                             as="div">
                         </ErrorMessage>
                     </div>
-                    <div className="form-row">
+                    <div className="form-row upl-file">
                         <label className="form-label">Аватар</label>
-                        <input type="file" className="" />
+                        <div className="file-upload">
+                            <label><input id="file-input" type="file" name="file" />Выберите файл</label>
+                            <div id="no-file">Файл не выбран</div>
+                        </div>
                         <input
                             {...register('userPic', {
                                 required: {
@@ -275,7 +279,7 @@ function UserEditForm(props: UserEditFormProps) {
                                 }
                             })}
                             type="text"
-                            className="column" />
+                            className="form-input" />
                         <ErrorMessage
                             errors={errors}
                             name={getName<User>(newUser, o => o.email)}
