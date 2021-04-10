@@ -17,6 +17,7 @@ import '../../../App.css'
 import NotificationData from '../../../shared/interfaces/NotificationData';
 import { responseHandlers } from '../../../services/response-handler/responseHandler';
 import { UserEnd, UserUserIdEnd } from '../../../shared/endpointConsts';
+import { convertUserToUserUpdate } from '../../../shared/converters/userToUserUpdate';
 
 interface UserEditFormProps {
     roleId: number;
@@ -133,18 +134,12 @@ function UserEditForm(props: UserEditFormProps) {
             return;
         }
     }
-    const sendUser = async (newUser: FormInputs) => {
+    const sendUser = async (newOrUpdatedUser: FormInputs) => {
         if (props.userToEdit) {
             reviseSending(await sendPutRequest<UserUpdate>(
                 props.url + ('/' + props.userToEdit.id),
-                {
-                    firstName: newUser.firstName,
-                    lastName: newUser.lastName,
-                    phone: newUser.phone,
-                    email: newUser.email,
-                    userPic: newUser.userPic,
-                    birthDate: newUser.birthDate
-                }, props.sendNotification, responseHandlers[UserUserIdEnd]))
+                convertUserToUserUpdate(newOrUpdatedUser)
+                , props.sendNotification, responseHandlers[UserUserIdEnd]))
         } else {
             //props.reviseSending(await sendPostRequest<User>(props.url + '/' + 'register', newUser));
         }
@@ -157,7 +152,6 @@ function UserEditForm(props: UserEditFormProps) {
         setValue('roleIds', options);
     }
     const onSubmit = (data: FormInputs) => {
-        console.log(data as UserInput)
         sendUser(data);
     }
     const setIsEditModeOn = () => {

@@ -1,6 +1,5 @@
-import { Wretcher, WretcherError, WretcherResponse } from "wretch";
+import { WretcherError, WretcherResponse } from "wretch";
 import { User } from "../../components/interfaces/User";
-import { baseUrl } from "../../shared/consts";
 import { UserEnd, UserUserIdEnd } from "../../shared/endpointConsts";
 import NotificationData from "../../shared/interfaces/NotificationData";
 import { isUser } from "../type-guards/user";
@@ -20,7 +19,7 @@ export interface responseHandler {
 const standardErrorNotification = (error?: any) => {
     return {
         type: 'error',
-        text: (error as WretcherError)?.status?.toString() + ' ' + (error as WretcherError)?.message,//приведение безопасно, так как кэтчер ошибки в http.service не может передать сюда ничего кроме WretcherError
+        text: (error as WretcherError)?.status?.toString() || '' + ' ' + (error as WretcherError)?.message,//приведение безопасно, так как кэтчер ошибки в http.service не может передать сюда ничего кроме WretcherError
         isDismissible: true,
         timestamp: Date.now()
     }
@@ -41,7 +40,14 @@ export const responseHandlers: responseHandler = {
                 [nType.Error]: standardErrorNotification(response),
                 [nType.Success]: {
                     type: 'success',
-                    text: (response ? 'пользователь ' + (response as User).firstName + ' ' + (response as User).lastName + ' успешно изменён' : ''),
+                    text: (
+                        response
+                            ?
+                            'пользователь ' + (response as User).firstName + ' ' + (response as User).lastName + ' успешно '
+                            +
+                            (response.isDeleted
+                                ?
+                                'удалён' : 'изменён') : ''),
                     isDismissible: true,
                     timestamp: Date.now(),
                     autoDismissTimeout: 6000

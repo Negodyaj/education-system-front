@@ -81,7 +81,7 @@ const localResponseHandler = <T>(data: any, sendN: (n: NotificationData | undefi
     sendN(rh.notifications(data)['success'])
     return data as T;
   } else {
-    sendN(rh.notifications()['error']);
+    sendN(rh.notifications({ message: 'Ошибка. Неверные данные.' } as WretcherError)['error']);
     return undefined;
   }
 }
