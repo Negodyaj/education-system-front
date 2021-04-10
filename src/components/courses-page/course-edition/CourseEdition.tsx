@@ -6,9 +6,13 @@ import React from 'react';
 import SearchComponent from '../../../shared/components/search-component/SearchComponent';
 import { Course } from '../../../shared/courses/Courses';
 import { sendDeleteRequest, sendGetRequest, sendPostRequest } from '../../../services/http.service';
+import NotificationData from '../../../shared/interfaces/NotificationData';
+import { CourseThemesEnd } from '../../../shared/endpointConsts';
+import { responseHandlers } from '../../../services/response-handler/responseHandler';
 
 interface CourseEditionProps{
     idCourse: string;
+    sendNewNotification: (newNotification: NotificationData | undefined) => void;
 }
 
 interface NewThemeCourse {
@@ -25,12 +29,13 @@ function CourseEdition(props: CourseEditionProps) {
     let indexCourse = Number(props.idCourse.replace(/[a-z-A-Z\/]/g, ""));
     
     const [themesCourse, setThemesCourse] = useState(themesCurrentCourse);
-    const [allThemes, setAllThemes] = useState(themesList);
+    const [allThemes, setAllThemes] = useState<Themes[] | undefined>(themesList);
     const [searchTurn, setSearchTurn] = useState('');
     const [nameThemes, setNameThemes] = useState(nameThemesCourse);
 
     const getAllThemes = async() => {
-        //setAllThemes(await sendGetRequest('Course/theme'))
+        setAllThemes(await sendGetRequest<Themes[]>(CourseThemesEnd, props.sendNewNotification, responseHandlers[CourseThemesEnd]));
+        console.log(allThemes);
     }
 
     const getCourseById = async (id: number) => {
@@ -102,7 +107,7 @@ function CourseEdition(props: CourseEditionProps) {
                 <div className="new-themes-container">
                     <SearchComponent funcSearch={searchFromTheme}/>
                     {
-                        allThemes.filter((item) => {
+                        allThemes?.filter((item) => {
                             if (item.name.toLowerCase().includes(searchTurn.toLowerCase())) {
                                 return item;
                             } 

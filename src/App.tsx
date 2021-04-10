@@ -109,7 +109,9 @@ function App() {
                                     </Route>
                                 }
                                 <Route path="/course-edition/:id" render={({ location, history }) => (
-                                    <CourseEdition idCourse={location.pathname} />
+                                    <CourseEdition 
+                                        idCourse={location.pathname} 
+                                        sendNewNotification={sendNewNotification}/>
                                 )}>
                                 </Route>
                                 {
