@@ -1,7 +1,7 @@
 import { WretcherError, WretcherResponse } from "wretch";
 import { User } from "../../components/interfaces/User";
 import { Course } from "../../shared/courses/Courses";
-import { CourseCourseIdEnd, CourseEnd, CourseThemesEnd, UserEnd, UserUserIdEnd } from "../../shared/endpointConsts";
+import { CourseCourseIdEnd, CourseEnd, CourseIdThemeIdEnd, CourseThemesEnd, UserEnd, UserUserIdEnd } from "../../shared/endpointConsts";
 import { makeErrorText, makeNotification } from "../../shared/helpers/noficationHelpers";
 import NotificationData from "../../shared/interfaces/NotificationData";
 import { Themes } from "../../shared/themes/Themes";
@@ -17,7 +17,7 @@ export enum nType {
 }
 export interface responseHandlerItem {
     notifications: (response?: any) => { [key in nType]: NotificationData | undefined },
-    isT: (data: any) => data is any;
+    isT: ((data: any) => data is any) | undefined;
 }
 export interface responseHandler {
     [url: string]: responseHandlerItem
@@ -89,5 +89,25 @@ export const responseHandlers: responseHandler = {
             })
         },
         isT: (data: any): data is Themes[] => isThemesArr(data)
+    },
+    [CourseThemesEnd]: {
+        notifications: (response?: any) => {
+            return ({
+                [nType.Error]:makeNotification(nType.Error, makeErrorText(response)),
+                [nType.Success]:undefined
+            })
+        },
+        isT: (data: any): data is Themes[] => isThemesArr(data)
+    },
+    [CourseIdThemeIdEnd]: {
+        notifications: (response?: any) => {
+            return ({
+                [nType.Error]:makeNotification(nType.Error, makeErrorText(response)),
+                [nType.Success]: makeNotification(nType.Success, ('Курс успешно изменен'))
+            })
+        },
+        isT: undefined
     }
+    
+    
 }

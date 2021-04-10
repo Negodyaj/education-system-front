@@ -7,7 +7,7 @@ import SearchComponent from '../../../shared/components/search-component/SearchC
 import { Course } from '../../../shared/courses/Courses';
 import { sendDeleteRequest, sendGetRequest, sendPostRequest } from '../../../services/http.service';
 import NotificationData from '../../../shared/interfaces/NotificationData';
-import { CourseCourseIdEnd, CourseThemesEnd } from '../../../shared/endpointConsts';
+import { CourseCourseIdEnd, CourseIdThemeIdEnd, CourseThemesEnd } from '../../../shared/endpointConsts';
 import { responseHandlers } from '../../../services/response-handler/responseHandler';
 
 interface CourseEditionProps{
@@ -45,12 +45,14 @@ function CourseEdition(props: CourseEditionProps) {
 
     const updateCourseThemes = async () => {
         currentCourse = await getCourseById(indexCourse);
-        //checkThemes(currentCourse);
+        checkThemes(currentCourse as Course);
         setThemesCourse(currentCourse?.themes);
     } 
 
+    
     const addThemeCourse = (newThemeCourse: NewThemeCourse) => {
-        //sendPostRequest('Course/' + newThemeCourse.idCourse + '/theme/' + newThemeCourse.idTheme, newThemeCourse);
+        let str = 'Course/' + newThemeCourse.idCourse + '/theme/' + newThemeCourse.idTheme;
+        sendPostRequest(str, props.sendNewNotification, responseHandlers[CourseIdThemeIdEnd]);
         setTimeout (() => updateCourseThemes(), 300);
     }
 

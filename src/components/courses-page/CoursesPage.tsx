@@ -67,7 +67,7 @@ function CoursesPage(props: CoursesPageProps) {
         }
         setIsModalAdd(false);
     }
- 
+
     return(
         <div className="course-container">
             <div className="course-create">

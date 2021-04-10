@@ -42,16 +42,15 @@ export const sendPutRequest = async <T>(
 };
 export const sendPostRequest = async <T>(
   path: string,
-  body: any,
   sendN: (n: NotificationData | undefined) => void,
-  rh: responseHandlerItem) => {
-  return await baseWretch(path, sendN, rh)
+  rh: responseHandlerItem,
+  body?: any) => {
+    return await baseWretch(path, sendN, rh)
     .url(path)
     .post(body)
     .json(data => {
-      {
-        return localResponseHandler<T>(data, sendN, rh);
-      }
+      console.log(data);
+      if (data) return localResponseHandler<T>(data, sendN, rh);
     })
     .catch((error: WretcherError) => {
       sendN(rh.notifications(error)['error']);
@@ -77,7 +76,7 @@ export const sendDeleteRequest = async <T>(
 };
 const localResponseHandler = <T>(data: any, sendN: (n: NotificationData | undefined) => void,
   rh: responseHandlerItem) => {
-  if (rh.isT(data)) {
+  if (rh.isT ? rh.isT(data): true) {
     sendN(rh.notifications(data)['success'])
     return data as T;
   } else {
