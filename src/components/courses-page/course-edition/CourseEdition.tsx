@@ -7,7 +7,7 @@ import SearchComponent from '../../../shared/components/search-component/SearchC
 import { Course } from '../../../shared/courses/Courses';
 import { sendDeleteRequest, sendGetRequest, sendPostRequest } from '../../../services/http.service';
 import NotificationData from '../../../shared/interfaces/NotificationData';
-import { CourseThemesEnd } from '../../../shared/endpointConsts';
+import { CourseCourseIdEnd, CourseThemesEnd } from '../../../shared/endpointConsts';
 import { responseHandlers } from '../../../services/response-handler/responseHandler';
 
 interface CourseEditionProps{
@@ -22,13 +22,13 @@ interface NewThemeCourse {
 
 function CourseEdition(props: CourseEditionProps) {
 
-    let currentCourse = {} as Course;
+    let currentCourse = {} as Course | undefined;
     let themesCurrentCourse: Themes[] = [];
     let themesList: Themes[] = [];
     let nameThemesCourse: string[] = [];
     let indexCourse = Number(props.idCourse.replace(/[a-z-A-Z\/]/g, ""));
     
-    const [themesCourse, setThemesCourse] = useState(themesCurrentCourse);
+    const [themesCourse, setThemesCourse] = useState<Themes[] | undefined>(themesCurrentCourse);
     const [allThemes, setAllThemes] = useState<Themes[] | undefined>(themesList);
     const [searchTurn, setSearchTurn] = useState('');
     const [nameThemes, setNameThemes] = useState(nameThemesCourse);
@@ -39,14 +39,14 @@ function CourseEdition(props: CourseEditionProps) {
     }
 
     const getCourseById = async (id: number) => {
-        // const dataCourse = await sendGetRequest<Course>('Course/' + id);
-        // return dataCourse;
+        const dataCourse = await sendGetRequest<Course>(CourseCourseIdEnd + id, props.sendNewNotification, responseHandlers[CourseCourseIdEnd]);
+        return dataCourse;
     };
 
     const updateCourseThemes = async () => {
-        // currentCourse = await getCourseById(indexCourse);
-        // checkThemes(currentCourse);
-        // setThemesCourse(currentCourse.themes);
+        currentCourse = await getCourseById(indexCourse);
+        //checkThemes(currentCourse);
+        setThemesCourse(currentCourse?.themes);
     } 
 
     const addThemeCourse = (newThemeCourse: NewThemeCourse) => {
@@ -81,7 +81,7 @@ function CourseEdition(props: CourseEditionProps) {
 
     const checkTheThemeInTheCourse = (theme: Themes): number => {
         let count = 0;
-        for (let item of themesCourse) {
+        for (let item of themesCourse as Themes[]) {
             if (item.name === theme.name) {
                 count++;
                 break;
