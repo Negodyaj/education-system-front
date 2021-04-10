@@ -10,7 +10,7 @@ import { UserInput } from '../../interfaces/UserInput';
 import { useForm } from 'react-hook-form';
 import { convertEntitiesToSelectItems } from '../../../shared/converters/entityToSelectItemConverter';
 import { getName } from '../../../shared/converters/objectKeyToString';
-import { sendPutRequest } from '../../../services/http.service';
+import { sendPostRequest, sendPutRequest } from '../../../services/http.service';
 import { UserUpdate } from '../../interfaces/UserUpdate';
 import { ErrorMessage } from '@hookform/error-message';
 import '../../../App.css'
@@ -22,9 +22,6 @@ interface UserEditFormProps {
     reviseSending: (newUser: User) => void;
     sendNotification: (data: { type: "error" | "success", message: string }) => void;
     url: string;
-    token: string;
-    headers: HeadersInit | undefined;
-    method: string;
 }
 
 function UserEditForm(props: UserEditFormProps) {
@@ -32,24 +29,20 @@ function UserEditForm(props: UserEditFormProps) {
     const initUser = Object.assign({}, props.userToEdit || {
         firstName: "",
         lastName: "",
+        login: "",
+        password: "",
         birthDate: undefined,
         userPic: "",
         phone: "",
-        email: ""
+        email: "",
+        roleIds: []
     })
 
     const [newUser, setNewUser] = useState<User>(initUser);
     const [wasValidated, setWasValidated] = useState('');
     const [isFetching, setIsFetching] = useState(false);
 
-    const isDisabled = (Object.values(newUser).reduce((isEmpty, prop) => {
-        if (prop) {
-            return false;
-        }
-        return isEmpty
-    }, true))
-
-    type FormInputs = UserUpdate|UserInput;
+    type FormInputs = UserInput;
 
     const { register, formState: { errors }, handleSubmit, getValues, setValue } = useForm<FormInputs>({
         mode: 'all',
@@ -70,7 +63,7 @@ function UserEditForm(props: UserEditFormProps) {
                             onSelect={roleOnChange}></CustomMultiSelect>
                     </div>)
             } else {
-                //setValue('roleIds', [Role.Student]);
+                setValue('roleIds', [Role.Student]);
             }
         },
         passwordInput: () => {
@@ -86,7 +79,7 @@ function UserEditForm(props: UserEditFormProps) {
                                 }
                             })}
                             type="text"
-                            className="form-input"/>
+                            className="form-input" />
                         <ErrorMessage
                             errors={errors}
                             name={getName<User>(newUser, o => o.password)}
@@ -132,30 +125,35 @@ function UserEditForm(props: UserEditFormProps) {
     }
 
     const sendUser = async (newUser: FormInputs) => {
-        props.reviseSending(await sendPutRequest<UserUpdate>(props.url + (props.userToEdit ? '/' + props.userToEdit.id : ''), 
-        {
-            firstName: newUser.firstName,
-            lastName: newUser.lastName,
-            phone: newUser.phone,
-            email: newUser.email,
-            userPic: newUser.userPic,
-            birthDate: newUser.birthDate
-        }))
+        if (props.userToEdit) {
+            props.reviseSending(await sendPutRequest<UserUpdate>(props.url + (props.userToEdit ? '/' + props.userToEdit.id : ''),
+                {
+                    firstName: newUser.firstName,
+                    lastName: newUser.lastName,
+                    phone: newUser.phone,
+                    email: newUser.email,
+                    userPic: newUser.userPic,
+                    birthDate: newUser.birthDate
+                }))
+        } else {
+            props.reviseSending(await sendPostRequest<User>(props.url + '/' + 'register', newUser));
+        }
     }
 
     const birthDateOnChange = (date: string) => {
         setValue('birthDate', date)
     }
     const roleOnChange = (options: number[]) => {
-        //setValue('roleIds', options);
+        setValue('roleIds', options);
     }
     const onSubmit = (data: FormInputs) => {
-        console.log(initUser as UserUpdate)
+        console.log(data as UserInput)
         sendUser(data);
     }
     const setIsEditModeOn = () => {
         props.setIsEditModeOn(false);
     }
+
 
     if (isFetching) {
         return (<div>loading</div>)
@@ -178,7 +176,7 @@ function UserEditForm(props: UserEditFormProps) {
                                 }
                             })}
                             type="text"
-                            className="form-input"/>
+                            className="form-input" />
                         <ErrorMessage
                             errors={errors}
                             name={getName<User>(newUser, o => o.firstName)}
@@ -243,9 +241,12 @@ function UserEditForm(props: UserEditFormProps) {
                             as="div">
                         </ErrorMessage>
                     </div>
-                    <div className="form-row">
+                    <div className="form-row upl-file">
                         <label className="form-label">Аватар</label>
-                        <input type="file" className="" />
+                        <div className="file-upload">
+                            <label><input id="file-input" type="file" name="file" />Выберите файл</label>
+                            <div id="no-file">Файл не выбран</div>
+                        </div>
                         <input
                             {...register('userPic', {
                                 required: {
@@ -278,7 +279,7 @@ function UserEditForm(props: UserEditFormProps) {
                                 }
                             })}
                             type="text"
-                            className="column" />
+                            className="form-input" />
                         <ErrorMessage
                             errors={errors}
                             name={getName<User>(newUser, o => o.email)}
@@ -287,9 +288,9 @@ function UserEditForm(props: UserEditFormProps) {
                         </ErrorMessage>
                     </div>
                     <div className="form-row">
-                    {
-                        elementsDefinedByProps.roleSelector()
-                    }
+                        {
+                            elementsDefinedByProps.roleSelector()
+                        }
                     </div>
                     <div className="form-row form-row-button">
                         <div className="">
@@ -298,8 +299,7 @@ function UserEditForm(props: UserEditFormProps) {
                         <div className="button-style">
                             <button
                                 className="button-style"
-                                type={"submit"}
-                                disabled={isDisabled}>сохранить</button>
+                                type={"submit"}>сохранить</button>
                         </div>
                     </div>
                 </form>
@@ -307,6 +307,6 @@ function UserEditForm(props: UserEditFormProps) {
         )
     }
 }
-
 export default UserEditForm;
+
 

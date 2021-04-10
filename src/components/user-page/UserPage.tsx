@@ -19,12 +19,6 @@ interface UserPageProps {
 function UserPage(props: UserPageProps) {
 
     const url = 'User';
-    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoidm9sb2R5YTIyIiwiaWQiOiIxIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjpbItCQ0LTQvNC40L3QuNGB0YLRgNCw0YLQvtGAIiwi0J_RgNC10L_QvtC00LDQstCw0YLQtdC70YwiLCLQnNC10L3QtdC00LbQtdGAIl0sIm5iZiI6MTYxNzY0ODg5OCwiZXhwIjoxNjE3ODIxNjk4LCJpc3MiOiJFZHVjYXRpb25TeXN0ZW0uQXBpIiwiYXVkIjoiRGV2RWR1Y2F0aW9uIn0.2UJnH39pkpiqT3P9C9s-PAWmLi8Oiz_qr5TKZdkys7o';
-    const headers = {
-        'Accept': 'application/json',
-        'Authorization': 'Bearer ' + token,
-        'Content-Type': 'application/json'
-    }
     const [usersInState, setUsersInState] = useState<User[] | undefined>();
     const [isEditModeOn, setIsEditModeOn] = useState(false);
     const [isFetching, setIsFetching] = useState(false);
@@ -64,7 +58,7 @@ function UserPage(props: UserPageProps) {
     }
 
     const getUserToUpdate = (userToEditId: number) => {
-
+        
     }
 
     const deleteUser = async (decision: boolean) => {
@@ -110,10 +104,7 @@ function UserPage(props: UserPageProps) {
                                 setIsEditModeOn={setIsEditModeOn}
                                 reviseSending={checkUpdatedUsers}
                                 sendNotification={sendNotification}
-                                url={url}
-                                token={token}
-                                method={methodInForm}
-                                headers={headers}></UserEditForm>
+                                url={url}></UserEditForm>
                             :
                             usersInState && <UserList
                                 roleId={props.roleId}
