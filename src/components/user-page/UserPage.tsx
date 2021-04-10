@@ -7,6 +7,8 @@ import ConfirmationDialog from '../../shared/components/confirmation-dialog/Conf
 import { UserEnd } from '../../shared/endpointConsts';
 import NotificationData from '../../shared/interfaces/NotificationData';
 import { User } from '../interfaces/User';
+import { UserInput } from '../interfaces/UserInput';
+import { UserUpdate } from '../interfaces/UserUpdate';
 import UserList from './user-list/UserList';
 import UserEditForm from './UserEditForm/UserEditForm';
 import './UserPage.css'
@@ -20,8 +22,8 @@ interface UserPageProps {
 
 function UserPage(props: UserPageProps) {
 
-    const url = 'User/1';
-    const [usersInState, setUsersInState] = useState<User[]|undefined>();
+    const url = 'User';
+    const [usersInState, setUsersInState] = useState<User[] | undefined>();
     const [isEditModeOn, setIsEditModeOn] = useState(false);
     const [isFetching, setIsFetching] = useState(false);
     const [userToEdit, setUserToEdit] = useState<User | undefined>();
@@ -39,20 +41,20 @@ function UserPage(props: UserPageProps) {
     }
 
     const sendNotification = (data: { type: "error" | "success", message: string }) => {
-       
+
     }
 
     const refreshUsers = () => {
         setUsersInState(undefined);
         getUsers();
     }
-    const checkUpdatedUsers = (addedUser: User) => {
+    const checkUpdatedUsers = (addedUser: UserUpdate | undefined) => {
         refreshUsers();
         setIsEditModeOn(false)
     }
 
     const getUserToUpdate = (userToEditId: number) => {
-        
+
     }
 
     const deleteUser = async (decision: boolean) => {
@@ -97,7 +99,7 @@ function UserPage(props: UserPageProps) {
                                 userToEdit={userToEdit}
                                 setIsEditModeOn={setIsEditModeOn}
                                 reviseSending={checkUpdatedUsers}
-                                sendNotification={sendNotification}
+                                sendNotification={props.sendNotification}
                                 url={url}></UserEditForm>
                             :
                             usersInState && <UserList

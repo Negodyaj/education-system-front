@@ -1,36 +1,53 @@
-import { WretcherError, WretcherResponse } from "wretch";
+import { Wretcher, WretcherError, WretcherResponse } from "wretch";
 import { User } from "../../components/interfaces/User";
 import { baseUrl } from "../../shared/consts";
-import { UserEnd } from "../../shared/endpointConsts";
+import { UserEnd, UserUserIdEnd } from "../../shared/endpointConsts";
 import NotificationData from "../../shared/interfaces/NotificationData";
-import { isUserArr } from "../type-guards/user";
+import { isUser } from "../type-guards/user";
+import { isUserArr } from "../type-guards/userArray";
 
-enum nType {
+export enum nType {
     Error = 'error',
     Success = 'success'
 }
 export interface responseHandlerItem {
-    notifications: (response?: string) => { [key in nType]: NotificationData | undefined },
+    notifications: (response?: any) => { [key in nType]: NotificationData | undefined },
     isT: (data: any) => data is any;
 }
 export interface responseHandler {
     [url: string]: responseHandlerItem
 }
-const standardErrorNotification = (text?: string) => {
+const standardErrorNotification = (error?: any) => {
     return {
-    type: 'error',
-    text: text || 'ошибка',
-    isDismissible: true,
-    timestamp: Date.now()}
+        type: 'error',
+        text: (error as WretcherError)?.status?.toString() + ' ' + (error as WretcherError)?.message,//приведение безопасно, так как кэтчер ошибки в http.service не может передать сюда ничего кроме WretcherError
+        isDismissible: true,
+        timestamp: Date.now()
+    }
 }
 export const responseHandlers: responseHandler = {
     [UserEnd]: {
-        notifications: (response?: string) => {
+        notifications: (response?: any) => {
             return ({
                 [nType.Error]: standardErrorNotification(response),
                 [nType.Success]: undefined
             })
         },
         isT: (data: any): data is User[] => isUserArr(data)
+    },
+    [UserUserIdEnd]: {
+        notifications: (response?: any) => {
+            return ({
+                [nType.Error]: standardErrorNotification(response),
+                [nType.Success]: {
+                    type: 'success',
+                    text: (response ? 'пользователь ' + (response as User).firstName + ' ' + (response as User).lastName + ' успешно изменён' : ''),
+                    isDismissible: true,
+                    timestamp: Date.now(),
+                    autoDismissTimeout: 6000
+                }
+            })
+        },
+        isT: (data: any): data is User => isUser(data)
     }
 }

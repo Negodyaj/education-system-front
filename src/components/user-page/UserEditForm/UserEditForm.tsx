@@ -14,13 +14,16 @@ import { sendPostRequest, sendPutRequest } from '../../../services/http.service'
 import { UserUpdate } from '../../interfaces/UserUpdate';
 import { ErrorMessage } from '@hookform/error-message';
 import '../../../App.css'
+import NotificationData from '../../../shared/interfaces/NotificationData';
+import { responseHandlers } from '../../../services/response-handler/responseHandler';
+import { UserEnd, UserUserIdEnd } from '../../../shared/endpointConsts';
 
 interface UserEditFormProps {
     roleId: number;
     userToEdit: User | undefined;
     setIsEditModeOn: (mode: boolean) => void;
-    reviseSending: (newUser: User) => void;
-    sendNotification: (data: { type: "error" | "success", message: string }) => void;
+    reviseSending: (newUser: UserUpdate | undefined) => void;
+    sendNotification: (n: NotificationData | undefined) => void;
     url: string;
 }
 
@@ -35,7 +38,7 @@ function UserEditForm(props: UserEditFormProps) {
         userPic: "",
         phone: "",
         email: "",
-        roleIds:[]
+        roleIds: []
     })
 
     const [newUser, setNewUser] = useState<User>(initUser);
@@ -82,7 +85,7 @@ function UserEditForm(props: UserEditFormProps) {
                             className="form-input" />
                         <ErrorMessage
                             errors={errors}
-                            //name={getName<User>(newUser, o => o.password)}
+                            name={getName<User>(newUser, o => o.password)}
                             className="bad-feedback"
                             as="div">
                         </ErrorMessage>
@@ -123,21 +126,28 @@ function UserEditForm(props: UserEditFormProps) {
             }
         }
     }
-
+    const reviseSending = (updatedUser: UserUpdate | undefined) => {
+        if (updatedUser) {
+            props.reviseSending(updatedUser)
+        } else {
+            return;
+        }
+    }
     const sendUser = async (newUser: FormInputs) => {
-        // if (props.userToEdit) {
-        //     props.reviseSending(await sendPutRequest<UserUpdate>(props.url + (props.userToEdit ? '/' + props.userToEdit.id : ''),
-        //         {
-        //             firstName: newUser.firstName,
-        //             lastName: newUser.lastName,
-        //             phone: newUser.phone,
-        //             email: newUser.email,
-        //             userPic: newUser.userPic,
-        //             birthDate: newUser.birthDate
-        //         }))
-        // } else {
-        //     props.reviseSending(await sendPostRequest<User>(props.url + '/' + 'register', newUser));
-        // }
+        if (props.userToEdit) {
+            reviseSending(await sendPutRequest<UserUpdate>(
+                props.url + ('/' + props.userToEdit.id),
+                {
+                    firstName: newUser.firstName,
+                    lastName: newUser.lastName,
+                    phone: newUser.phone,
+                    email: newUser.email,
+                    userPic: newUser.userPic,
+                    birthDate: newUser.birthDate
+                }, props.sendNotification, responseHandlers[UserUserIdEnd]))
+        } else {
+            //props.reviseSending(await sendPostRequest<User>(props.url + '/' + 'register', newUser));
+        }
     }
 
     const birthDateOnChange = (date: string) => {
