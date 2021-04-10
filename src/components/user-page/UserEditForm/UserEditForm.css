@@ -37,8 +37,6 @@ img{
 }
 
 
-
-
 .form-row-button{
     justify-content: flex-end;
     flex-direction: row;
@@ -46,4 +44,37 @@ img{
 
 .multi{
     width: 272px;
+}
+
+.file-upload{ 
+    width: 272px; 
+} 
+#file-input{
+    display:none;
+} 
+
+.file-upload label{
+    background-color: #00CCF2;
+    color: #FFFF;
+    font-weight: 700;
+    border: none;
+    text-align: center;
+    outline: none;
+    font-family: Montserrat;
+    font-weight:bold;
+    text-align: center;
+    height: 40px;
+    width: 272px; 
+    border-radius: 5px;
+    font-family: 'Montserrat';
+    line-height: 40px;
+} 
+
+.file-upload label:hover{
+    background:#2D62ED;
+}
+
+#no-file{
+color:#FF007C;
+margin-bottom: 11px;
 }
