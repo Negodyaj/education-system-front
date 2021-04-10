@@ -33,8 +33,7 @@ img{
 .form-row{
     display: flex;
     flex-direction: column;
-
-    height: 90px;
+    min-height: 90px;
 }
 
 

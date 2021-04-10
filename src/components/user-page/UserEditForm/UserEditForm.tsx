@@ -245,7 +245,7 @@ function UserEditForm(props: UserEditFormProps) {
                     </div>
                     <div className="form-row">
                         <label className="form-label">Аватар</label>
-                        <input type="file" className="" />
+                        <input type="file" className="form-input" />
                         <input
                             {...register('userPic', {
                                 required: {
@@ -278,7 +278,7 @@ function UserEditForm(props: UserEditFormProps) {
                                 }
                             })}
                             type="text"
-                            className="column" />
+                            className="form-input" />
                         <ErrorMessage
                             errors={errors}
                             name={getName<User>(newUser, o => o.email)}
