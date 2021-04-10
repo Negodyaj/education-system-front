@@ -128,6 +128,10 @@ function App() {
                                 </Route>
                                 <Route path="/dev-test-page">
                                     <DevTestPage sendNotification={sendNewNotification} />
+                                    <NotificationContainer
+                                        dismissibleNotifications={dismissibleNotifications}
+                                        nonDismissibleNotifications={nonDismissibleNotifications}
+                                        deleteNotification={deleteNotification} />
                                 </Route>
                             </Switch>
 
