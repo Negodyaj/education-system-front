@@ -10,25 +10,27 @@ enum nType {
     Success = 'success'
 }
 export interface responseHandlerItem {
-    notifications: (response: string) => { [key in nType]: NotificationData | undefined },
-    isT: <T>(data: any) => data is T;
+    notifications: (response?: string) => { [key in nType]: NotificationData | undefined },
+    isT: (data: any) => data is any;
 }
 export interface responseHandler {
     [url: string]: responseHandlerItem
 }
+const standardErrorNotification = (text?: string) => {
+    return {
+    type: 'error',
+    text: text || 'ошибка',
+    isDismissible: true,
+    timestamp: Date.now()}
+}
 export const responseHandlers: responseHandler = {
     [UserEnd]: {
-        notifications: (response: string) => {
+        notifications: (response?: string) => {
             return ({
-                [nType.Error]: {
-                    type: 'error',
-                    text: response,
-                    isDismissible: true,
-                    timestamp: Date.now()
-                },
+                [nType.Error]: standardErrorNotification(response),
                 [nType.Success]: undefined
             })
         },
-        isT: <userArr>(data: any): data is userArr => isUserArr(data) //дженерик не хотел принимать просто User[]
+        isT: (data: any): data is User[] => isUserArr(data)
     }
 }

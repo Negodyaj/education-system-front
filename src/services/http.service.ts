@@ -2,19 +2,22 @@ import { baseUrl } from "../shared/consts";
 import wretch from 'wretch';
 import { getToken } from "./auth.service";
 import NotificationData from "../shared/interfaces/NotificationData";
-import { responseHandler, responseHandlerItem } from "./response-handler/responseHandler";
+import { responseHandlerItem } from "./response-handler/responseHandler";
 
 export const sendGetRequest = async <T>(
   path: string,
-  sendN: (n: NotificationData) => void,
+  sendN: (n: NotificationData | undefined) => void,
   rh: responseHandlerItem) => {
+
   return await baseWretch(path, sendN, rh)
     .url(path)
     .get()
     .json(data => {
       if (rh.isT(data)) {
+        sendN(rh.notifications()['success'])
         return data as T;
       } else {
+        sendN(rh.notifications()['error']);
         return undefined;
       }
     });
@@ -23,7 +26,7 @@ export const sendGetRequest = async <T>(
 export const sendPutRequest = async <T>(
   path: string,
   body: any,
-  sendN: (n: NotificationData) => void,
+  sendN: (n: NotificationData | undefined) => void,
   rh: responseHandlerItem) => {
   return await baseWretch(path, sendN, rh)
     .url(path)
@@ -34,7 +37,7 @@ export const sendPutRequest = async <T>(
 export const sendPostRequest = async <T>(
   path: string,
   body: any,
-  sendN: (n: NotificationData) => void,
+  sendN: (n: NotificationData | undefined) => void,
   rh: responseHandlerItem) => {
   return await baseWretch(path, sendN, rh)
     .url(path)
@@ -44,7 +47,7 @@ export const sendPostRequest = async <T>(
 
 export const sendDeleteRequest = async <T>(
   path: string,
-  sendN: (n: NotificationData) => void,
+  sendN: (n: NotificationData | undefined) => void,
   rh: responseHandlerItem) => {
   return await baseWretch(path, sendN, rh)
     .url(path)
@@ -54,12 +57,12 @@ export const sendDeleteRequest = async <T>(
 
 const baseWretch = (
   responsePath: string,
-  sendN: (n: NotificationData) => void,
+  sendN: (n: NotificationData | undefined) => void,
   rh: responseHandlerItem) => {
   return wretch()
     .url(baseUrl + '/')
     .auth(`Bearer ${getToken()}`)
-    .catcher(404, error => sendN(rh.notifications(error.status.toString())['error'] as NotificationData))
+    .catcher(404, error => sendN(rh.notifications(error.status.toString())['error']))
     .catcher(403, error => console.log(error))
     .catcher(409, error => console.log(error))
 }

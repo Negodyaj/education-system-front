@@ -26,7 +26,8 @@ function App() {
     const [dismissibleNotifications, setDismissibleNotifications] = useState<NotificationData[]>([]);
     const [nonDismissibleNotifications, setNonDismissibleNotifications] = useState<NotificationData[]>([]);
 
-    const sendNewNotification = (newNotification: NotificationData) => {
+    const sendNewNotification = (newNotification: NotificationData | undefined) => {
+        if (!newNotification) return;
         if (newNotification.isDismissible) {
             setDismissibleNotifications([newNotification, ...dismissibleNotifications]);
         } else {

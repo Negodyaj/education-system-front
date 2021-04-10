@@ -4,7 +4,6 @@ import React, { useEffect, useState } from 'react';
 import { sendDeleteRequest, sendGetRequest } from '../../services/http.service';
 import { responseHandlers } from '../../services/response-handler/responseHandler';
 import ConfirmationDialog from '../../shared/components/confirmation-dialog/ConfirmationDialog';
-import { baseUrl } from '../../shared/consts';
 import { UserEnd } from '../../shared/endpointConsts';
 import NotificationData from '../../shared/interfaces/NotificationData';
 import { User } from '../interfaces/User';
@@ -16,22 +15,19 @@ export type PreviousMethod = 'DELETE' | 'NOT DELETE';
 
 interface UserPageProps {
     roleId: number;
-    sendNotification: (newNotification: NotificationData) => void;
+    sendNotification: (newNotification: NotificationData | undefined) => void;
 }
 
 function UserPage(props: UserPageProps) {
 
-    const url = 'User';
-    const [usersInState, setUsersInState] = useState<User[] | undefined>();
+    const url = 'User/1';
+    const [usersInState, setUsersInState] = useState<User[]|undefined>();
     const [isEditModeOn, setIsEditModeOn] = useState(false);
     const [isFetching, setIsFetching] = useState(false);
     const [userToEdit, setUserToEdit] = useState<User | undefined>();
     const [userToDeleteId, setUserToDeleteId] = useState<number>();
     const [methodInForm, setMethodInForm] = useState('');
     const [isModalShown, setIsModalShown] = useState(false);
-    const stringChanged = "изменён";
-    const stringAdded = 'добавлен';
-    let actionInNotification = methodInForm === "POST" ? stringAdded : stringChanged;
     const confirmationDeleteMessage = "Вы действительно хотите удалить пользователя?";
     const confirmationDeleteTitle = "Удаление пользователя";
     const confirmLabel = "Да";
@@ -39,7 +35,7 @@ function UserPage(props: UserPageProps) {
 
 
     const getUsers = async () => {
-        setUsersInState(await sendGetRequest<User[]>(url + 'sdf', props.sendNotification, responseHandlers[UserEnd]))
+        setUsersInState(await sendGetRequest<User[]>(url, props.sendNotification, responseHandlers[UserEnd]))
     }
 
     const sendNotification = (data: { type: "error" | "success", message: string }) => {
