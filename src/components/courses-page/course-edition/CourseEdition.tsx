@@ -7,8 +7,6 @@ import SearchComponent from '../../../shared/components/search-component/SearchC
 import { Course } from '../../../shared/courses/Courses';
 import { sendDeleteRequest, sendGetRequest, sendPostRequest } from '../../../services/http.service';
 
-
-
 interface CourseEditionProps{
     idCourse: string;
 }
@@ -22,9 +20,9 @@ function CourseEdition(props: CourseEditionProps) {
 
     let currentCourse = {} as Course;
     let themesCurrentCourse: Themes[] = [];
-    let indexCourse = Number(props.idCourse.replace(/[a-z-A-Z\/]/g, ""));
     let themesList: Themes[] = [];
     let nameThemesCourse: string[] = [];
+    let indexCourse = Number(props.idCourse.replace(/[a-z-A-Z\/]/g, ""));
     
     const [themesCourse, setThemesCourse] = useState(themesCurrentCourse);
     const [allThemes, setAllThemes] = useState(themesList);
@@ -42,52 +40,49 @@ function CourseEdition(props: CourseEditionProps) {
 
     const updateCourseThemes = async () => {
         currentCourse = await getCourseById(indexCourse);
+        checkThemes(currentCourse);
         setThemesCourse(currentCourse.themes);
     } 
 
     const addThemeCourse = (newThemeCourse: NewThemeCourse) => {
         sendPostRequest('Course/' + newThemeCourse.idCourse + '/theme/' + newThemeCourse.idTheme, newThemeCourse);
         setTimeout (() => updateCourseThemes(), 300);
-        checkThemes();
-        
     }
 
     const deleteThemeCourse = (newThemeCourse: NewThemeCourse) => {
         sendDeleteRequest('Course/' + newThemeCourse.idCourse + '/theme/' + newThemeCourse.idTheme, newThemeCourse.idTheme);
-        setTimeout (() => updateCourseThemes(), 300);
-        checkThemes();
+        setTimeout (() => updateCourseThemes(), 200);
     }
 
-    const checkThemes = () => {
-        themesCourse.map((theme) => (
+    const checkThemes = (course: Course) => {
+        course.themes.map((theme) => (
             nameThemesCourse.push(theme.name)
         ))
         setNameThemes(nameThemesCourse);
-        console.log(nameThemes);
     }
-
-
-
+    
     useEffect(() => {
         getAllThemes();
-        getCourseById(indexCourse);
         updateCourseThemes();
-        setTimeout (() => checkThemes(), 2000);
     }, []);
 
         
     const addNewThemeInProgramCourse = (theme: Themes) => {
-        console.log(props.idCourse);
+        if (checkTheThemeInTheCourse(theme) === 0) { 
+            let newTheme: NewThemeCourse = {idCourse: indexCourse, idTheme: theme.id};
+            addThemeCourse(newTheme);
+        }
+    }
+
+    const checkTheThemeInTheCourse = (theme: Themes): number => {
         let count = 0;
         for (let item of themesCourse) {
             if (item.name === theme.name) {
                 count++;
+                break;
             }
         }
-        if (count === 0) { 
-            let newTheme: NewThemeCourse = {idCourse: indexCourse, idTheme: theme.id};
-            addThemeCourse(newTheme);
-        }
+        return count;
     }
 
     const deleteThemeFromCourse = (theme: Themes) => {
@@ -101,51 +96,50 @@ function CourseEdition(props: CourseEditionProps) {
 
     return (
     <div className="course-edition-container">
-      <div className='course-update'>
-        <div className='new-themes-course'>
-            <div className="new-themes-header">Темы для курса</div>
-            <div className="new-themes-container">
-                <SearchComponent funcSearch={searchFromTheme}/>
-                {
-                    allThemes.filter((item) => {
-                        if (item.name.toLowerCase().includes(searchTurn.toLowerCase())) {
-                            return item;
-                        } 
-                    })
-                    .map((item, key) => (
-                        <div key={key} className={"new-theme "}>
-                            <div className="new-theme-name">{item.name}</div>
-                            <div className="new-theme-add">
-                                <button onClick={() => addNewThemeInProgramCourse(item)} className="button-add-theme">
-                                {/* <FontAwesomeIcon icon="plus" /> */}
-                                {
-                                    nameThemes.includes(item.name) ? <FontAwesomeIcon icon="check" /> : <FontAwesomeIcon icon="plus" />
-                                }
-                                </button>
+        <div className='course-update'>
+            <div className='new-themes-course'>
+                <div className="new-themes-header">Темы для курса</div>
+                <div className="new-themes-container">
+                    <SearchComponent funcSearch={searchFromTheme}/>
+                    {
+                        allThemes.filter((item) => {
+                            if (item.name.toLowerCase().includes(searchTurn.toLowerCase())) {
+                                return item;
+                            } 
+                        })
+                        .map((item, key) => (
+                            <div key={key} className={"new-theme "}>
+                                <div className="new-theme-name">{item.name}</div>
+                                <div className="new-theme-add">
+                                    <button onClick={() => addNewThemeInProgramCourse(item)} className="button-add-theme">
+                                    {
+                                        nameThemes.includes(item.name) ? <FontAwesomeIcon icon="check" /> : <FontAwesomeIcon icon="plus" />
+                                    }
+                                    </button>
+                                </div>
                             </div>
-                        </div>
-                    ))
-                }
+                        ))
+                    }
+                </div>
+            </div>
+            <div className="program-course-container">
+                <div className="program-course-header">Программа курса</div>
+                <div className="program-course">
+                    {
+                        themesCourse?.map((theme) => (
+                            <div className="theme">
+                                <div className="theme-name">{theme.name}</div>
+                                <div className="theme-delete">
+                                    <button onClick={() => deleteThemeFromCourse(theme)} className='button-theme-delete'>
+                                        <FontAwesomeIcon icon="minus" />
+                                    </button>
+                                </div>
+                            </div>
+                        ))
+                    }
+                </div>
             </div>
         </div>
-        <div className="program-course-container">
-            <div className="program-course-header">Программа курса</div>
-            <div className="program-course">
-                {
-                    themesCourse?.map((theme) => (
-                        <div className="theme">
-                            <div className="theme-name">{theme.name}</div>
-                            <div className="theme-delete">
-                                <button onClick={() => deleteThemeFromCourse(theme)} className='button-theme-delete'>
-                                    <FontAwesomeIcon icon="minus" />
-                                </button>
-                            </div>
-                        </div>
-                    ))
-                }
-            </div>
-        </div>
-      </div>
     </div>
     )
 }
