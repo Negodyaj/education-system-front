@@ -81,7 +81,7 @@ main {
   text-align: center;
   outline: none;
   font-family: Montserrat;
-
+  margin:0 5px;
 }
 
 .button-round{
@@ -106,3 +106,23 @@ main {
   font-family: Montserrat;
 }
 
+.form-label{
+  height: 16px;
+  margin-bottom: 7px;
+  font-family: 'Montserrat';
+}
+
+.form-input{
+  height: 40px;
+  width: 272px;
+  border: 1px solid #E0E7FF;
+  border-radius: 5px;
+  margin-bottom: 11px;
+  font-family: 'Montserrat';
+}
+
+.test-page-link {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+}

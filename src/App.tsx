@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import { Switch, Route, useHistory } from 'react-router-dom';
+import { Switch, Route, useHistory, Link } from 'react-router-dom';
 import LoginForm from './components/login-form/LoginForm';
 import NavMenu from './components/nav-menu/NavMenu';
 import HomeworkPage from './components/homework-page/HomeworkPage';
@@ -22,11 +22,12 @@ function App() {
     const history = useHistory();
     const token = getToken();
     const [isLoggedIn, setIsLoggedIn] = useState(!!token);
-    const [roleId, setRoleId] = useState(1);
+    const [roleId, setRoleId] = useState(Role.Teacher);
     const [dismissibleNotifications, setDismissibleNotifications] = useState<NotificationData[]>([]);
     const [nonDismissibleNotifications, setNonDismissibleNotifications] = useState<NotificationData[]>([]);
 
-    const sendNewNotification = (newNotification: NotificationData) => {
+    const sendNewNotification = (newNotification: NotificationData | undefined) => {
+        if (!newNotification) return;
         if (newNotification.isDismissible) {
             setDismissibleNotifications([newNotification, ...dismissibleNotifications]);
         } else {
@@ -91,11 +92,6 @@ function App() {
                     {
                         isLoggedIn ?
                             <Switch>
-                                <Route exact path="/">
-                                    {
-                                        roleId === Role.Test && <DevTestPage sendNotification={sendNewNotification} />
-                                    }
-                                </Route>
                                 {
                                     (roleId === Role.Manager || roleId === Role.Admin) &&
                                     <Route path="/user-page">
@@ -107,11 +103,15 @@ function App() {
                                 {
                                     roleId === Role.Teacher &&
                                     <Route path="/courses-page">
-                                        <CoursesPage roleId={roleId}></CoursesPage>
+                                        <CoursesPage
+                                            roleId={roleId}
+                                            sendNewNotification={sendNewNotification}></CoursesPage>
                                     </Route>
                                 }
                                 <Route path="/course-edition/:id" render={({ location, history }) => (
-                                    <CourseEdition idCourse={location.pathname} />
+                                    <CourseEdition 
+                                        idCourse={location.pathname} 
+                                        sendNewNotification={sendNewNotification}/>
                                 )}>
                                 </Route>
                                 {
@@ -125,7 +125,20 @@ function App() {
                                 </Route>
                             </Switch>
                             :
-                            <LoginForm onLoginClick={loginHandler} />
+                            <Switch>
+                                <Route exact path="/">
+                                    <LoginForm onLoginClick={loginHandler} />
+                                    <div className="test-page-link"><Link to="/dev-test-page">secret test page</Link></div>
+                                </Route>
+                                <Route path="/dev-test-page">
+                                    <DevTestPage sendNotification={sendNewNotification} />
+                                    <NotificationContainer
+                                        dismissibleNotifications={dismissibleNotifications}
+                                        nonDismissibleNotifications={nonDismissibleNotifications}
+                                        deleteNotification={deleteNotification} />
+                                </Route>
+                            </Switch>
+
                     }
                     {
                         isLoggedIn ? <NotificationContainer

@@ -1,56 +1,52 @@
 import CustomMultiSelect from '../../multi-select/CustomMultiSelect';
-import './UserEditForm.css'
-import '../UserPage.css';
 import { User } from '../../interfaces/User';
+import { UserRegisterResponse } from '../../interfaces/UserRegisterResponse';
 import React, { useState } from 'react';
 import DatePickerComponent from '../../../shared/components/date-picker/DatePickerComponent';
 import { convertEnumToDictionary, getRussianDictionary } from '../../../shared/converters/enumToDictionaryEntity';
+import { convertUserToUserUpdate } from '../../../shared/converters/userToUserUpdate';
+import { convertUserToUserInput } from '../../../shared/converters/userToUserInput';
 import { Role } from '../../../enums/role';
-import { UserInput } from '../../interfaces/UserInput';
 import { useForm } from 'react-hook-form';
 import { convertEntitiesToSelectItems } from '../../../shared/converters/entityToSelectItemConverter';
 import { getName } from '../../../shared/converters/objectKeyToString';
-import { sendPutRequest } from '../../../services/http.service';
+import { sendPostRequest, sendPutRequest } from '../../../services/http.service';
 import { UserUpdate } from '../../interfaces/UserUpdate';
 import { ErrorMessage } from '@hookform/error-message';
+import NotificationData from '../../../shared/interfaces/NotificationData';
+import { responseHandlers } from '../../../services/response-handler/responseHandler';
+import { UserRegisterEnd, UserUserUpdateIdEnd } from '../../../shared/endpointConsts';
+import './UserEditForm.css';
+import '../UserPage.css';
+import '../../../App.css';
 
 interface UserEditFormProps {
     roleId: number;
     userToEdit: User | undefined;
     setIsEditModeOn: (mode: boolean) => void;
-    reviseSending: (newUser: User) => void;
-    sendNotification: (data: { type: "error" | "success", message: string }) => void;
+    reviseSending: () => void;
+    sendNotification: (n: NotificationData | undefined) => void;
     url: string;
-    token: string;
-    headers: HeadersInit | undefined;
-    method: string;
 }
 
 function UserEditForm(props: UserEditFormProps) {
 
-    const initUser = Object.assign({}, props.userToEdit || {
+    const initUser: User = Object.assign({}, props.userToEdit || {
         firstName: "",
         lastName: "",
-        birthDate: undefined,
+        login: "",
+        password: "",
+        birthDate: new Date().toLocaleDateString('ru-RU'),
         userPic: "",
         phone: "",
-        email: ""
+        email: "",
+        roleIds: []
     })
 
     const [newUser, setNewUser] = useState<User>(initUser);
-    const [wasValidated, setWasValidated] = useState('');
     const [isFetching, setIsFetching] = useState(false);
 
-    const isDisabled = (Object.values(newUser).reduce((isEmpty, prop) => {
-        if (prop) {
-            return false;
-        }
-        return isEmpty
-    }, true))
-
-    type FormInputs = UserUpdate|UserInput;
-
-    const { register, formState: { errors }, handleSubmit, getValues, setValue } = useForm<FormInputs>({
+    const { register, formState: { errors }, handleSubmit, getValues, setValue } = useForm<User>({
         mode: 'all',
         criteriaMode: 'all',
         defaultValues: (() => { if (isFetching === false) { return Object.assign({}, newUser) } })()
@@ -58,10 +54,10 @@ function UserEditForm(props: UserEditFormProps) {
 
     const elementsDefinedByProps = {
         roleSelector: () => {
-            if (props.roleId === Role.Admin) {
+            if (props.roleId === Role.Admin && !props.userToEdit) {
                 return (
-                    <div className="user-list-item">
-                        <label className="column">Список ролей</label>
+                    <div className="form-row multi">
+                        <label className="form-label">Список ролей</label>
                         <CustomMultiSelect
                             selectType={"multi"}
                             userOptionsIds={getValues('roleIds') || undefined}
@@ -69,14 +65,14 @@ function UserEditForm(props: UserEditFormProps) {
                             onSelect={roleOnChange}></CustomMultiSelect>
                     </div>)
             } else {
-                //setValue('roleIds', [Role.Student]);
+                setValue('roleIds', [Role.Student]);
             }
         },
         passwordInput: () => {
             if (props.userToEdit === undefined) {
                 return (
-                    <div className="user-list-item">
-                        <label className="column">Пароль</label>
+                    <div className="form-row">
+                        <label className="form-label">Пароль</label>
                         <input
                             {...register('password', {
                                 required: {
@@ -85,7 +81,7 @@ function UserEditForm(props: UserEditFormProps) {
                                 }
                             })}
                             type="text"
-                            className="column" />
+                            className="form-input" />
                         <ErrorMessage
                             errors={errors}
                             name={getName<User>(newUser, o => o.password)}
@@ -101,8 +97,8 @@ function UserEditForm(props: UserEditFormProps) {
         loginInput: () => {
             if (props.userToEdit === undefined) {
                 return (
-                    <div className="user-list-item">
-                        <label className="column">Логин</label>
+                    <div className="form-row">
+                        <label className="form-label">Логин</label>
                         <input
                             {...register('login', {
                                 required: {
@@ -115,7 +111,7 @@ function UserEditForm(props: UserEditFormProps) {
                                 }
                             })}
                             type="text"
-                            className="column" />
+                            className="form-input" />
                         <ErrorMessage
                             errors={errors}
                             name={getName<User>(newUser, o => o.login)}
@@ -129,27 +125,36 @@ function UserEditForm(props: UserEditFormProps) {
             }
         }
     }
-
-    const sendUser = async (newUser: FormInputs) => {
-        props.reviseSending(await sendPutRequest<UserUpdate>(props.url + (props.userToEdit ? '/' + props.userToEdit.id : ''), 
-        {
-            firstName: newUser.firstName,
-            lastName: newUser.lastName,
-            phone: newUser.phone,
-            email: newUser.email,
-            userPic: newUser.userPic,
-            birthDate: newUser.birthDate
-        }))
+    const reviseSending = (newOrUpdatedUser: UserUpdate | undefined) => {
+        if (newOrUpdatedUser) {
+            props.reviseSending()
+        } else {
+            return;
+        }
+    }
+    const sendUser = async (newOrUpdatedUser: User) => {
+        if (props.userToEdit) {
+            reviseSending(await sendPutRequest<UserUpdate>(
+                props.url + ('/' + props.userToEdit.id),
+                convertUserToUserUpdate(newOrUpdatedUser),
+                props.sendNotification,
+                responseHandlers[UserUserUpdateIdEnd]))
+        } else {
+            reviseSending(await sendPostRequest<UserRegisterResponse>(
+                props.url + '/' + 'register',
+                props.sendNotification,
+                responseHandlers[UserRegisterEnd],
+                convertUserToUserInput(newOrUpdatedUser)));
+        }
     }
 
     const birthDateOnChange = (date: string) => {
         setValue('birthDate', date)
     }
     const roleOnChange = (options: number[]) => {
-        //setValue('roleIds', options);
+        setValue('roleIds', options);
     }
-    const onSubmit = (data: FormInputs) => {
-        console.log(initUser as UserUpdate)
+    const onSubmit = (data: User) => {
         sendUser(data);
     }
     const setIsEditModeOn = () => {
@@ -162,8 +167,8 @@ function UserEditForm(props: UserEditFormProps) {
         return (
             <div className={"user-edit-form needs-validation was-validated"}>
                 <form onSubmit={handleSubmit(onSubmit)}>
-                    <div className="user-list-item">
-                        <label className="column">Имя</label>
+                    <div className="form-row">
+                        <label className="form-label">Имя</label>
                         <input
                             {...register('firstName', {
                                 required: {
@@ -177,7 +182,7 @@ function UserEditForm(props: UserEditFormProps) {
                                 }
                             })}
                             type="text"
-                            className="column" />
+                            className="form-input" />
                         <ErrorMessage
                             errors={errors}
                             name={getName<User>(newUser, o => o.firstName)}
@@ -185,8 +190,8 @@ function UserEditForm(props: UserEditFormProps) {
                             as="div">
                         </ErrorMessage>
                     </div>
-                    <div className="user-list-item">
-                        <label className="column">Фамилия</label>
+                    <div className="form-row">
+                        <label className="form-label">Фамилия</label>
                         <input
                             {...register('lastName', {
                                 required: {
@@ -199,7 +204,7 @@ function UserEditForm(props: UserEditFormProps) {
                                 }
                             })}
                             type="text"
-                            className="column" />
+                            className="form-input" />
                         <ErrorMessage
                             errors={errors}
                             name={getName<User>(newUser, o => o.lastName)}
@@ -207,8 +212,8 @@ function UserEditForm(props: UserEditFormProps) {
                             as="div">
                         </ErrorMessage>
                     </div>
-                    <div className="user-list-item">
-                        <label className="column">Дата рождения</label>
+                    <div className="form-row">
+                        <label className="form-label">Дата рождения</label>
                         <DatePickerComponent
                             {...register('birthDate')}
                             date={getValues('birthDate')}
@@ -220,8 +225,8 @@ function UserEditForm(props: UserEditFormProps) {
                     {
                         elementsDefinedByProps.passwordInput()
                     }
-                    <div className="user-list-item">
-                        <label className="column">Телефон</label>
+                    <div className="form-row">
+                        <label className="form-label">Телефон</label>
                         <input
                             {...register('phone', {
                                 required: {
@@ -234,7 +239,7 @@ function UserEditForm(props: UserEditFormProps) {
                                 }
                             })}
                             type="text"
-                            className="column" />
+                            className="form-input" />
                         <ErrorMessage
                             errors={errors}
                             name={getName<User>(newUser, o => o.phone)}
@@ -242,9 +247,12 @@ function UserEditForm(props: UserEditFormProps) {
                             as="div">
                         </ErrorMessage>
                     </div>
-                    <div className="user-list-item">
-                        <label className="column">Аватар</label>
-                        <input type="file" className="column" />
+                    <div className="form-row upl-file">
+                        <label className="form-label">Аватар</label>
+                        <div className="file-upload">
+                            <label><input id="file-input" type="file" name="file" />Выберите файл</label>
+                            <div id="no-file">Файл не выбран</div>
+                        </div>
                         <input
                             {...register('userPic', {
                                 required: {
@@ -257,7 +265,7 @@ function UserEditForm(props: UserEditFormProps) {
                                 }
                             })}
                             type="text"
-                            className="column"
+                            className="form-input"
                             placeholder="или вставьте ссылку" />
                         <ErrorMessage
                             errors={errors}
@@ -267,8 +275,8 @@ function UserEditForm(props: UserEditFormProps) {
                         </ErrorMessage>
                         <img src={getValues('userPic')} alt="аватар" />
                     </div>
-                    <div className="user-list-item">
-                        <label className="column">Почта</label>
+                    <div className="form-row">
+                        <label className="form-label">Почта</label>
                         <input
                             {...register('email', {
                                 required: {
@@ -277,7 +285,7 @@ function UserEditForm(props: UserEditFormProps) {
                                 }
                             })}
                             type="text"
-                            className="column" />
+                            className="form-input" />
                         <ErrorMessage
                             errors={errors}
                             name={getName<User>(newUser, o => o.email)}
@@ -285,18 +293,19 @@ function UserEditForm(props: UserEditFormProps) {
                             as="div">
                         </ErrorMessage>
                     </div>
-                    {
-                        elementsDefinedByProps.roleSelector()
-                    }
-                    <div className="user-list-item">
-                        <div className="column">
-                            <button className="column" onClick={setIsEditModeOn}>отмена</button>
+                    <div className="form-row">
+                        {
+                            elementsDefinedByProps.roleSelector()
+                        }
+                    </div>
+                    <div className="form-row form-row-button">
+                        <div className="">
+                            <button className="button-style" onClick={setIsEditModeOn}>отмена</button>
                         </div>
-                        <div className="column save-button">
+                        <div className="button-style">
                             <button
-                                className="column save-button"
-                                type={"submit"}
-                                disabled={isDisabled}>сохранить</button>
+                                className="button-style"
+                                type={"submit"}>сохранить</button>
                         </div>
                     </div>
                 </form>
@@ -304,6 +313,6 @@ function UserEditForm(props: UserEditFormProps) {
         )
     }
 }
-
 export default UserEditForm;
+
 

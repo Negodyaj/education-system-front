@@ -1,27 +1,86 @@
 .user-edit-form{
     display: flex;
     flex-direction: column;
+    min-width: 272px;
+    margin-left:144px;
 }
 
 .user-edit-form span{
     display: flex;
     justify-content: space-around;
 }
+.user-edit-form form{
+    width: 272px;
+}
 
 .bad-feedback{
-    width:300px;
-    align-self: center;
-    padding-left: 5px;
+    align-self: left;
     opacity: 0;
     pointer-events: none;
     transition: 1s ease;
     font-size: 12px;
-    color: red;
+    color:#FF007C;
 }
 .bad-feedback{
-    border-color: red;
+    border-color:#FF007C;
     opacity: 1;
 }
+
 img{
-    height: 150px;
+    height: 100px;
+    width: 100px;
+    margin-bottom: 11px;
+}
+
+.form-row{
+    display: flex;
+    flex-direction: column;
+    min-height: 90px;
+}
+
+.form-input{
+    margin-bottom: 0px;
+}
+
+.form-row-button{
+    justify-content: flex-end;
+    flex-direction: row;
+}
+
+.multi{
+    width: 272px;
+}
+
+.file-upload{ 
+    width: 272px; 
+} 
+#file-input{
+    display:none;
+} 
+
+.file-upload label{
+    background-color: #00CCF2;
+    color: #FFFF;
+    font-weight: 700;
+    border: none;
+    text-align: center;
+    outline: none;
+    font-family: Montserrat;
+    font-weight:bold;
+    text-align: center;
+    height: 40px;
+    width: 272px; 
+    border-radius: 5px;
+    font-family: 'Montserrat';
+    line-height: 40px;
+} 
+
+.file-upload label:hover{
+    background:#2D62ED;
+}
+
+#no-file{
+color:#FF007C;
+font-size: 12px;
+margin-bottom: 11px;
 }

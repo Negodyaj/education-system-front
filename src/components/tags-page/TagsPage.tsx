@@ -5,34 +5,45 @@ import TagList from './tag-list/TagList';
 import './TagsPage.css';
 import wretch from 'wretch';
 import { sendGetRequest } from '../../services/http.service';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import SearchComponent from '../../shared/components/search-component/SearchComponent';
 
 
 function TagsPage() {
     const url = 'Tag';
     const [tagsInState, setTagsInState] = useState<Tag[]>([]);
+    const [searchTurn, setSearchTurn] = useState('');
     const getTags = async () => {
-        setTagsInState (await sendGetRequest<Tag[]>(url))
+        //setTagsInState(await sendGetRequest<Tag[]>(url))
     };
 
     useEffect(() => {
         getTags();
     }, []);
 
-    const anyTextInputChangeHandler: ChangeEventHandler<HTMLInputElement> = (e) => {
-        
-    }
+    const tagsFilter: ChangeEventHandler<HTMLInputElement> = (e) => {
+        setSearchTurn(e.target.value);
+    };
 
+    // const searchFromTags = (str: string) => {
+    //     setSearchTurn(str);
+    // e
     return (
 
         <div className="table">
             <div className="header">
-                <input className="search-bar"></input>
-                <button className="add"></button>
+                <div className="input">
+                    <input onChange={tagsFilter} />
+                    
+                        
+                            <button className="add"></button>
             </div>
-            <div className="body">
-                <div className="tags"> <TagList tags={tagsInState}></TagList> </div>
             </div>
-        </div>
+            
+                <div className="body">
+                    <div className="tags"> <TagList str={searchTurn} tags={tagsInState}></TagList> </div>
+                </div>
+            </div>
 
     )
 
@@ -40,3 +51,6 @@ function TagsPage() {
 }
 
 export default TagsPage
+
+
+
