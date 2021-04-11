@@ -7,12 +7,14 @@ import { User } from "../../interfaces/User";
 import PaymentForm from "../payment-form/PaymentForm";
 import '../UserPage.css';
 import '../../../App.css'
+import NotificationData from "../../../shared/interfaces/NotificationData";
 
 interface UserListProps {
     roleId: number;
     users: User[];
     onEditClick: (userToEditId?: number) => void;
     onDeleteClick: (userToDeleteId: number) => void;
+    sendNotification: (newNotification: NotificationData | undefined) => void;
 }
 
 function UserList(props: UserListProps) {
@@ -121,6 +123,8 @@ function UserList(props: UserListProps) {
                 cancelClick={onCancelPaymentClick}
                 userName={userForPayment?.firstName}
                 userLastname={userForPayment?.lastName}
+                userId={userForPayment?.id}
+                sendNotification={props.sendNotification}
             ></PaymentForm>
         </div>
 

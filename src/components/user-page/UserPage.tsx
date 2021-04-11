@@ -93,7 +93,8 @@ function UserPage(props: UserPageProps) {
                                 roleId={props.roleId}
                                 users={usersInState}
                                 onEditClick={onEditClick}
-                                onDeleteClick={onDeleteClick}></UserList>
+                                onDeleteClick={onDeleteClick}
+                                sendNotification={props.sendNotification}></UserList>
                     )
             }
             <ConfirmationDialog
