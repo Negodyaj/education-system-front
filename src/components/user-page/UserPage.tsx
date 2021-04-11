@@ -22,25 +22,21 @@ function UserPage(props: UserPageProps) {
     const url = 'User';
     const [usersInState, setUsersInState] = useState<User[] | undefined>();
     const [isEditModeOn, setIsEditModeOn] = useState(false);
-    const [isFetching, setIsFetching] = useState(false);
     const [userToEdit, setUserToEdit] = useState<User | undefined>();
     const [userToDeleteId, setUserToDeleteId] = useState<number>();
-    const [methodInForm, setMethodInForm] = useState('');
     const [isModalShown, setIsModalShown] = useState(false);
     const confirmationDeleteMessage = "Вы действительно хотите удалить пользователя?";
     const confirmationDeleteTitle = "Удаление пользователя";
     const confirmLabel = "Да";
     const declineLabel = "нет";
 
+    useEffect(() => {
+        getUsers();
+    }, []);
 
     const getUsers = async () => {
         setUsersInState(await sendGetRequest<User[]>(url, props.sendNotification, responseHandlers[UserEnd]))
     }
-
-    const sendNotification = (data: { type: "error" | "success", message: string }) => {
-
-    }
-
     const refreshUsers = () => {
         setUsersInState(undefined);
         getUsers();
@@ -49,11 +45,9 @@ function UserPage(props: UserPageProps) {
         refreshUsers();
         setIsEditModeOn(false)
     }
-
     const getUserToUpdate = (userToEditId: number) => {
-
+        //actualize user before UserEditForm rendering
     }
-
     const deleteUser = async (decision: boolean) => {
         if (decision === true) {
             if (await sendDeleteRequest<UserDelete[]>(
@@ -65,11 +59,6 @@ function UserPage(props: UserPageProps) {
         }
         setIsModalShown(false)
     }
-
-    useEffect(() => {
-        getUsers();
-    }, []);
-
     const onEditClick = (userToEditId?: number) => {
         if (userToEditId) {
             setUserToEdit([...usersInState as User[]].filter(u => u.id === userToEditId)[0]);
@@ -78,7 +67,6 @@ function UserPage(props: UserPageProps) {
         }
         setIsEditModeOn(true);
     }
-
     const onDeleteClick = (userToDeleteIdArg: number) => {
         setUserToDeleteId(userToDeleteIdArg);
         setIsModalShown(true);
@@ -87,7 +75,7 @@ function UserPage(props: UserPageProps) {
     return (
         <div className="user-page">
             {
-                isFetching ?
+                !usersInState ?
                     <div>
                         <FontAwesomeIcon icon="spinner" />
                     </div> : (
@@ -101,7 +89,7 @@ function UserPage(props: UserPageProps) {
                                 sendNotification={props.sendNotification}
                                 url={url}></UserEditForm>
                             :
-                            usersInState && <UserList
+                            <UserList
                                 roleId={props.roleId}
                                 users={usersInState}
                                 onEditClick={onEditClick}
@@ -118,5 +106,4 @@ function UserPage(props: UserPageProps) {
         </div>
     )
 }
-
 export default UserPage;

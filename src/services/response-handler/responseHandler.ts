@@ -1,4 +1,3 @@
-import { WretcherError, WretcherResponse } from "wretch";
 import { User } from "../../components/interfaces/User";
 import { UserDelete } from "../../components/interfaces/UserDelete";
 import { UserRegisterResponse } from "../../components/interfaces/UserRegisterResponse";
@@ -26,19 +25,11 @@ export interface responseHandlerItem {
 export interface responseHandler {
     readonly [url: string]: responseHandlerItem
 }
-const standardErrorNotification = (error?: any) => {
-    return {
-        type: 'error',
-        text: (error as WretcherError)?.status?.toString() || '' + ' ' + (error as WretcherError)?.message,//приведение безопасно, так как кэтчер ошибки в http.service не может передать сюда ничего кроме WretcherError
-        isDismissible: true,
-        timestamp: Date.now()
-    }
-}
 export const responseHandlers: responseHandler = {
     [UserEnd]: {
         notifications: (response?: any) => {
             return ({
-                [nType.Error]: standardErrorNotification(response),
+                [nType.Error]: makeNotification(nType.Error, makeErrorText(response)),
                 [nType.Success]: undefined
             })
         },
@@ -47,17 +38,11 @@ export const responseHandlers: responseHandler = {
     [UserUserUpdateIdEnd]: {
         notifications: (response?: any) => {
             return ({
-                [nType.Error]: standardErrorNotification(response),
-                [nType.Success]: {
-                    type: 'success',
-                    text: (
-                        response
-                            ?
-                            'пользователь ' + (response as User).firstName + ' ' + (response as User).lastName + ' успешно изменён' : ''),
-                    isDismissible: true,
-                    timestamp: Date.now(),
-                    autoDismissTimeout: 6000
-                }
+                [nType.Error]: makeNotification(nType.Error, makeErrorText(response)),
+                [nType.Success]: makeNotification(nType.Success, (
+                    response ? 'пользователь ' + (response as User).firstName + ' ' + (response as User).lastName + ' успешно изменён' : ''
+                )
+                )
             })
         },
         isT: (data: any): data is User => isUser(data)
@@ -98,15 +83,6 @@ export const responseHandlers: responseHandler = {
             })
         },
         isT: (data: any): data is Course => isCourse(data)
-    },
-    [CourseThemesEnd]: {
-        notifications: (response?: any) => {
-            return ({
-                [nType.Error]: makeNotification(nType.Error, makeErrorText(response)),
-                [nType.Success]: undefined
-            })
-        },
-        isT: (data: any): data is Themes[] => isThemesArr(data)
     },
     [CourseThemesEnd]: {
         notifications: (response?: any) => {

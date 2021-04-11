@@ -1,10 +1,11 @@
 import CustomMultiSelect from '../../multi-select/CustomMultiSelect';
-import './UserEditForm.css'
-import '../UserPage.css';
 import { User } from '../../interfaces/User';
+import { UserRegisterResponse } from '../../interfaces/UserRegisterResponse';
 import React, { useState } from 'react';
 import DatePickerComponent from '../../../shared/components/date-picker/DatePickerComponent';
 import { convertEnumToDictionary, getRussianDictionary } from '../../../shared/converters/enumToDictionaryEntity';
+import { convertUserToUserUpdate } from '../../../shared/converters/userToUserUpdate';
+import { convertUserToUserInput } from '../../../shared/converters/userToUserInput';
 import { Role } from '../../../enums/role';
 import { useForm } from 'react-hook-form';
 import { convertEntitiesToSelectItems } from '../../../shared/converters/entityToSelectItemConverter';
@@ -12,13 +13,12 @@ import { getName } from '../../../shared/converters/objectKeyToString';
 import { sendPostRequest, sendPutRequest } from '../../../services/http.service';
 import { UserUpdate } from '../../interfaces/UserUpdate';
 import { ErrorMessage } from '@hookform/error-message';
-import '../../../App.css'
 import NotificationData from '../../../shared/interfaces/NotificationData';
 import { responseHandlers } from '../../../services/response-handler/responseHandler';
 import { UserRegisterEnd, UserUserUpdateIdEnd } from '../../../shared/endpointConsts';
-import { convertUserToUserUpdate } from '../../../shared/converters/userToUserUpdate';
-import { convertUserToUserInput } from '../../../shared/converters/userToUserInput';
-import { UserRegisterResponse } from '../../interfaces/UserRegisterResponse';
+import './UserEditForm.css';
+import '../UserPage.css';
+import '../../../App.css';
 
 interface UserEditFormProps {
     roleId: number;
@@ -36,7 +36,7 @@ function UserEditForm(props: UserEditFormProps) {
         lastName: "",
         login: "",
         password: "",
-        birthDate: undefined,
+        birthDate: new Date().toLocaleDateString('ru-RU'),
         userPic: "",
         phone: "",
         email: "",
@@ -54,7 +54,7 @@ function UserEditForm(props: UserEditFormProps) {
 
     const elementsDefinedByProps = {
         roleSelector: () => {
-            if (props.roleId === Role.Admin) {
+            if (props.roleId === Role.Admin && !props.userToEdit) {
                 return (
                     <div className="form-row multi">
                         <label className="form-label">Список ролей</label>
@@ -136,15 +136,15 @@ function UserEditForm(props: UserEditFormProps) {
         if (props.userToEdit) {
             reviseSending(await sendPutRequest<UserUpdate>(
                 props.url + ('/' + props.userToEdit.id),
-                convertUserToUserUpdate(newOrUpdatedUser)
-                , props.sendNotification, responseHandlers[UserUserUpdateIdEnd]))
+                convertUserToUserUpdate(newOrUpdatedUser),
+                props.sendNotification,
+                responseHandlers[UserUserUpdateIdEnd]))
         } else {
             reviseSending(await sendPostRequest<UserRegisterResponse>(
                 props.url + '/' + 'register',
                 props.sendNotification,
                 responseHandlers[UserRegisterEnd],
-                convertUserToUserInput(newOrUpdatedUser)
-            ));
+                convertUserToUserInput(newOrUpdatedUser)));
         }
     }
 
@@ -160,7 +160,6 @@ function UserEditForm(props: UserEditFormProps) {
     const setIsEditModeOn = () => {
         props.setIsEditModeOn(false);
     }
-
 
     if (isFetching) {
         return (<div>loading</div>)
