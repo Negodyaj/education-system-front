@@ -48,7 +48,7 @@ function UserPage(props: UserPageProps) {
         setUsersInState(undefined);
         getUsers();
     }
-    const checkUpdatedUsers = (addedUser: UserUpdate | undefined) => {
+    const checkUpdatedUsers = () => {
         refreshUsers();
         setIsEditModeOn(false)
     }

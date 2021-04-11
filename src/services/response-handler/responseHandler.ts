@@ -1,7 +1,8 @@
 import { WretcherError, WretcherResponse } from "wretch";
 import { User } from "../../components/interfaces/User";
+import { UserRegisterResponse } from "../../components/interfaces/UserRegisterResponse";
 import { Course } from "../../shared/courses/Courses";
-import { CourseCourseIdEnd, CourseEnd, CourseIdThemeIdEnd, CourseThemesEnd, UserEnd, UserUserIdEnd } from "../../shared/endpointConsts";
+import { CourseCourseIdEnd, CourseEnd, CourseIdThemeIdEnd, CourseThemesEnd, UserEnd, UserRegister, UserUserIdEnd } from "../../shared/endpointConsts";
 import { makeErrorText, makeNotification } from "../../shared/helpers/noficationHelpers";
 import NotificationData from "../../shared/interfaces/NotificationData";
 import { Themes } from "../../shared/themes/Themes";
@@ -10,6 +11,7 @@ import { isCourseArr } from "../type-guards/courseArr";
 import { isThemesArr } from "../type-guards/themesArr";
 import { isUser } from "../type-guards/user";
 import { isUserArr } from "../type-guards/userArray";
+import { isUserRegisterResponse } from "../type-guards/userRegisterResponse";
 
 export enum nType {
     Error = 'error',
@@ -65,8 +67,8 @@ export const responseHandlers: responseHandler = {
     [CourseEnd]: {
         notifications: (response?: any) => {
             return ({
-                [nType.Error]:makeNotification(nType.Error, makeErrorText(response)),
-                [nType.Success]:undefined
+                [nType.Error]: makeNotification(nType.Error, makeErrorText(response)),
+                [nType.Success]: undefined
             }
             )
         },
@@ -75,8 +77,8 @@ export const responseHandlers: responseHandler = {
     [CourseCourseIdEnd]: {
         notifications: (response?: any) => {
             return ({
-                [nType.Error]:makeNotification(nType.Error, makeErrorText(response)),
-                [nType.Success]:undefined
+                [nType.Error]: makeNotification(nType.Error, makeErrorText(response)),
+                [nType.Success]: undefined
             })
         },
         isT: (data: any): data is Course => isCourse(data)
@@ -84,8 +86,8 @@ export const responseHandlers: responseHandler = {
     [CourseThemesEnd]: {
         notifications: (response?: any) => {
             return ({
-                [nType.Error]:makeNotification(nType.Error, makeErrorText(response)),
-                [nType.Success]:undefined
+                [nType.Error]: makeNotification(nType.Error, makeErrorText(response)),
+                [nType.Success]: undefined
             })
         },
         isT: (data: any): data is Themes[] => isThemesArr(data)
@@ -93,8 +95,8 @@ export const responseHandlers: responseHandler = {
     [CourseThemesEnd]: {
         notifications: (response?: any) => {
             return ({
-                [nType.Error]:makeNotification(nType.Error, makeErrorText(response)),
-                [nType.Success]:undefined
+                [nType.Error]: makeNotification(nType.Error, makeErrorText(response)),
+                [nType.Success]: undefined
             })
         },
         isT: (data: any): data is Themes[] => isThemesArr(data)
@@ -102,12 +104,21 @@ export const responseHandlers: responseHandler = {
     [CourseIdThemeIdEnd]: {
         notifications: (response?: any) => {
             return ({
-                [nType.Error]:makeNotification(nType.Error, makeErrorText(response)),
+                [nType.Error]: makeNotification(nType.Error, makeErrorText(response)),
                 [nType.Success]: makeNotification(nType.Success, ('Курс успешно изменен'))
             })
         },
         isT: undefined
-    }
-    
-    
+    },
+    [UserRegister]: {
+        notifications: (response?: any) => {
+            return ({
+                [nType.Error]: makeNotification(nType.Error, makeErrorText(response)),
+                [nType.Success]: makeNotification(nType.Success, ('Пользователь ' + (response as UserRegisterResponse).firstName + ' ' + (response as UserRegisterResponse).lastName + ' зарегистрирован'))
+            })
+        },
+        isT: (data: any): data is UserRegisterResponse => isUserRegisterResponse(data)
+    },
+
+
 }

@@ -16,21 +16,23 @@ import { ErrorMessage } from '@hookform/error-message';
 import '../../../App.css'
 import NotificationData from '../../../shared/interfaces/NotificationData';
 import { responseHandlers } from '../../../services/response-handler/responseHandler';
-import { UserEnd, UserUserIdEnd } from '../../../shared/endpointConsts';
+import { UserEnd, UserRegister, UserUserIdEnd } from '../../../shared/endpointConsts';
 import { convertUserToUserUpdate } from '../../../shared/converters/userToUserUpdate';
+import { convertUserToUserInput } from '../../../shared/converters/userToUserInput';
+import { UserRegisterResponse } from '../../interfaces/UserRegisterResponse';
 
 interface UserEditFormProps {
     roleId: number;
     userToEdit: User | undefined;
     setIsEditModeOn: (mode: boolean) => void;
-    reviseSending: (newUser: UserUpdate | undefined) => void;
+    reviseSending: () => void;
     sendNotification: (n: NotificationData | undefined) => void;
     url: string;
 }
 
 function UserEditForm(props: UserEditFormProps) {
 
-    const initUser = Object.assign({}, props.userToEdit || {
+    const initUser:User = Object.assign({}, props.userToEdit || {
         firstName: "",
         lastName: "",
         login: "",
@@ -46,9 +48,7 @@ function UserEditForm(props: UserEditFormProps) {
     const [wasValidated, setWasValidated] = useState('');
     const [isFetching, setIsFetching] = useState(false);
 
-    type FormInputs = UserInput;
-
-    const { register, formState: { errors }, handleSubmit, getValues, setValue } = useForm<FormInputs>({
+    const { register, formState: { errors }, handleSubmit, getValues, setValue } = useForm<User>({
         mode: 'all',
         criteriaMode: 'all',
         defaultValues: (() => { if (isFetching === false) { return Object.assign({}, newUser) } })()
@@ -127,21 +127,26 @@ function UserEditForm(props: UserEditFormProps) {
             }
         }
     }
-    const reviseSending = (updatedUser: UserUpdate | undefined) => {
-        if (updatedUser) {
-            props.reviseSending(updatedUser)
+    const reviseSending = (newOrUpdatedUser: UserUpdate | undefined) => {
+        if (newOrUpdatedUser) {
+            props.reviseSending()
         } else {
             return;
         }
     }
-    const sendUser = async (newOrUpdatedUser: FormInputs) => {
+    const sendUser = async (newOrUpdatedUser: User) => {
         if (props.userToEdit) {
             reviseSending(await sendPutRequest<UserUpdate>(
                 props.url + ('/' + props.userToEdit.id),
                 convertUserToUserUpdate(newOrUpdatedUser)
                 , props.sendNotification, responseHandlers[UserUserIdEnd]))
         } else {
-            //props.reviseSending(await sendPostRequest<User>(props.url + '/' + 'register', newUser));
+            reviseSending(await sendPostRequest<UserRegisterResponse>(
+                props.url + '/' + 'register',
+                props.sendNotification,
+                responseHandlers[UserRegister],
+                convertUserToUserInput(newOrUpdatedUser)
+            ));
         }
     }
 
@@ -151,7 +156,7 @@ function UserEditForm(props: UserEditFormProps) {
     const roleOnChange = (options: number[]) => {
         setValue('roleIds', options);
     }
-    const onSubmit = (data: FormInputs) => {
+    const onSubmit = (data: User) => {
         sendUser(data);
     }
     const setIsEditModeOn = () => {
