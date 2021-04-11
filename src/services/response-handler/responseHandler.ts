@@ -2,7 +2,7 @@ import { User } from "../../components/interfaces/User";
 import { UserDelete } from "../../components/interfaces/UserDelete";
 import { UserRegisterResponse } from "../../components/interfaces/UserRegisterResponse";
 import { Course } from "../../shared/courses/Courses";
-import { CourseAdd, CourseCourseIdEnd, CourseDelete, CourseEnd, CourseIdThemeIdEnd, CourseThemesEnd, UserEnd, UserRegisterEnd, UserUserDeleteIdEnd, UserUserUpdateIdEnd } from "../../shared/endpointConsts";
+import { CourseAddEnd, CourseCourseIdEnd, CourseDeleteEnd, CourseEnd, CourseIdThemeIdAddEnd, CourseIdThemeIdDeleteEnd, CourseThemesEnd, UserEnd, UserRegisterEnd, UserUserDeleteIdEnd, UserUserUpdateIdEnd } from "../../shared/endpointConsts";
 import { makeErrorText, makeNotification } from "../../shared/helpers/noficationHelpers";
 import NotificationData from "../../shared/interfaces/NotificationData";
 import { Themes } from "../../shared/themes/Themes";
@@ -10,6 +10,7 @@ import { isCourse } from "../type-guards/course";
 import { isCourseArr } from "../type-guards/courseArr";
 import { isCourseDelete } from "../type-guards/courseDelete";
 import { isThemesArr } from "../type-guards/themesArr";
+import { isThemeDelete } from "../type-guards/themeDelete";
 import { isUser } from "../type-guards/user";
 import { isUserArr } from "../type-guards/userArray";
 import { isUserDelete } from "../type-guards/userDelete";
@@ -76,7 +77,7 @@ export const responseHandlers: responseHandler = {
         },
         isT: (data: any): data is Course[] => isCourseArr(data)
     },
-    [CourseAdd]: {
+    [CourseAddEnd]: {
         notifications: (response?: any) => {
             return ({
                 [nType.Error]: makeNotification(nType.Error, makeErrorText(response)),
@@ -85,7 +86,7 @@ export const responseHandlers: responseHandler = {
         },
         isT: (data: any): data is Course => isCourse(data)
     },
-    [CourseDelete]: {
+    [CourseDeleteEnd]: {
         notifications: (response?: any) => {
             return ({
                 [nType.Error]: makeNotification(nType.Error, makeErrorText(response)),
@@ -112,7 +113,7 @@ export const responseHandlers: responseHandler = {
         },
         isT: (data: any): data is Themes[] => isThemesArr(data)
     },
-    [CourseIdThemeIdEnd]: {
+    [CourseIdThemeIdAddEnd]: {
         notifications: (response?: any) => {
             return ({
                 [nType.Error]: makeNotification(nType.Error, makeErrorText(response)),
@@ -120,5 +121,15 @@ export const responseHandlers: responseHandler = {
             })
         },
         isT: undefined
+    },
+    [CourseIdThemeIdDeleteEnd]: {
+        notifications: (response?: any) => {
+            return ({
+                [nType.Error]: makeNotification(nType.Error, makeErrorText(response)),
+                [nType.Success]: makeNotification(nType.Success, ('Тема ' + (response as Themes).name + ' удалена'))
+            })
+        },
+        isT: (data: any): data is Themes => isThemeDelete(data)
     }
+
 }

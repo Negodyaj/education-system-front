@@ -7,7 +7,7 @@ import SearchComponent from '../../../shared/components/search-component/SearchC
 import { Course } from '../../../shared/courses/Courses';
 import { sendDeleteRequest, sendGetRequest, sendPostRequest } from '../../../services/http.service';
 import NotificationData from '../../../shared/interfaces/NotificationData';
-import { CourseCourseIdEnd, CourseIdThemeIdEnd, CourseThemesEnd } from '../../../shared/endpointConsts';
+import { CourseCourseIdEnd, CourseIdThemeIdDeleteEnd, CourseIdThemeIdAddEnd, CourseThemesEnd } from '../../../shared/endpointConsts';
 import { responseHandlers } from '../../../services/response-handler/responseHandler';
 
 interface CourseEditionProps{
@@ -52,12 +52,13 @@ function CourseEdition(props: CourseEditionProps) {
     
     const addThemeCourse = (newThemeCourse: NewThemeCourse) => {
         let str = 'Course/' + newThemeCourse.idCourse + '/theme/' + newThemeCourse.idTheme;
-        sendPostRequest(str, props.sendNewNotification, responseHandlers[CourseIdThemeIdEnd]);
+        sendPostRequest<Themes>(str, props.sendNewNotification, responseHandlers[CourseIdThemeIdAddEnd]);
         setTimeout (() => updateCourseThemes(), 200);
     }
 
     const deleteThemeCourse = (newThemeCourse: NewThemeCourse) => {
-        //sendDeleteRequest('Course/' + newThemeCourse.idCourse + '/theme/' + newThemeCourse.idTheme, newThemeCourse.idTheme);
+        let str = 'Course/' + newThemeCourse.idCourse + '/theme/' + newThemeCourse.idTheme;
+        sendDeleteRequest<Themes>(str, props.sendNewNotification, responseHandlers[CourseIdThemeIdDeleteEnd]);
         setTimeout (() => updateCourseThemes(), 200);
     }
 
