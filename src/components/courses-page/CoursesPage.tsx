@@ -8,7 +8,7 @@ import NewCourse from './NewCourse';
 import { DataNewCourse } from './NewCourse';
 import { Course } from '../../shared/courses/Courses';
 import { sendDeleteRequest, sendGetRequest, sendPostRequest } from '../../services/http.service';
-import { CourseEnd } from '../../shared/endpointConsts';
+import { CourseAdd, CourseDelete, CourseEnd } from '../../shared/endpointConsts';
 import { responseHandlers } from '../../services/response-handler/responseHandler';
 import NotificationData from '../../shared/interfaces/NotificationData';
 
@@ -27,12 +27,12 @@ function CoursesPage(props: CoursesPageProps) {
     }, []);
 
     const addCourse = async (newCourse: DataNewCourse) => {
-        //(await sendPostRequest('Course/', newCourse));
+        await sendPostRequest<Course>(CourseEnd, props.sendNewNotification, responseHandlers[CourseAdd], newCourse);
         getCourses();
     }
 
     const deleteCourse = async (id: number) => {
-        //await sendDeleteRequest('Course/' + id, id)
+        await sendDeleteRequest<Course>(CourseEnd + '/' + id, props.sendNewNotification, responseHandlers[CourseDelete]);
         getCourses();
     }
 

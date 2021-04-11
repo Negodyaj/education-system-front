@@ -53,7 +53,7 @@ function CourseEdition(props: CourseEditionProps) {
     const addThemeCourse = (newThemeCourse: NewThemeCourse) => {
         let str = 'Course/' + newThemeCourse.idCourse + '/theme/' + newThemeCourse.idTheme;
         sendPostRequest(str, props.sendNewNotification, responseHandlers[CourseIdThemeIdEnd]);
-        setTimeout (() => updateCourseThemes(), 300);
+        setTimeout (() => updateCourseThemes(), 200);
     }
 
     const deleteThemeCourse = (newThemeCourse: NewThemeCourse) => {

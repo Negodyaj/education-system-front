@@ -2,12 +2,13 @@ import { User } from "../../components/interfaces/User";
 import { UserDelete } from "../../components/interfaces/UserDelete";
 import { UserRegisterResponse } from "../../components/interfaces/UserRegisterResponse";
 import { Course } from "../../shared/courses/Courses";
-import { CourseCourseIdEnd, CourseEnd, CourseIdThemeIdEnd, CourseThemesEnd, UserEnd, UserRegisterEnd, UserUserDeleteIdEnd, UserUserUpdateIdEnd } from "../../shared/endpointConsts";
+import { CourseAdd, CourseCourseIdEnd, CourseDelete, CourseEnd, CourseIdThemeIdEnd, CourseThemesEnd, UserEnd, UserRegisterEnd, UserUserDeleteIdEnd, UserUserUpdateIdEnd } from "../../shared/endpointConsts";
 import { makeErrorText, makeNotification } from "../../shared/helpers/noficationHelpers";
 import NotificationData from "../../shared/interfaces/NotificationData";
 import { Themes } from "../../shared/themes/Themes";
 import { isCourse } from "../type-guards/course";
 import { isCourseArr } from "../type-guards/courseArr";
+import { isCourseDelete } from "../type-guards/courseDelete";
 import { isThemesArr } from "../type-guards/themesArr";
 import { isUser } from "../type-guards/user";
 import { isUserArr } from "../type-guards/userArray";
@@ -75,6 +76,24 @@ export const responseHandlers: responseHandler = {
         },
         isT: (data: any): data is Course[] => isCourseArr(data)
     },
+    [CourseAdd]: {
+        notifications: (response?: any) => {
+            return ({
+                [nType.Error]: makeNotification(nType.Error, makeErrorText(response)),
+                [nType.Success]: makeNotification(nType.Success, ('Курс успешно добавлен'))
+            })
+        },
+        isT: (data: any): data is Course => isCourse(data)
+    },
+    [CourseDelete]: {
+        notifications: (response?: any) => {
+            return ({
+                [nType.Error]: makeNotification(nType.Error, makeErrorText(response)),
+                [nType.Success]: makeNotification(nType.Success, ('Курс ' + (response as Course).name + ' успешно удалён'))
+            })
+        },
+        isT: (data: any): data is Course => isCourseDelete(data)
+    },
     [CourseCourseIdEnd]: {
         notifications: (response?: any) => {
             return ({
@@ -97,7 +116,7 @@ export const responseHandlers: responseHandler = {
         notifications: (response?: any) => {
             return ({
                 [nType.Error]: makeNotification(nType.Error, makeErrorText(response)),
-                [nType.Success]: makeNotification(nType.Success, ('Курс успешно изменен'))
+                [nType.Success]: makeNotification(nType.Success, ('Тема добавлена'))
             })
         },
         isT: undefined

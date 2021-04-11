@@ -47,7 +47,7 @@ export const sendPostRequest = async <T>(
   body?: any) => {
   return await baseWretch(path, sendN, rh)
     .url(path)
-    .post(body)
+    .post(body || undefined)
     .json(data => {
       console.log(data);
       if (data) return localResponseHandler<T>(data, sendN, rh);
