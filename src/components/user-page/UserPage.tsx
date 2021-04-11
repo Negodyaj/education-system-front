@@ -94,6 +94,7 @@ function UserPage(props: UserPageProps) {
                                 users={usersInState}
                                 onEditClick={onEditClick}
                                 onDeleteClick={onDeleteClick}
+                                sendNotification={props.sendNotification}
                                 refreshUsers ={refreshUsers}></UserList>
                     )
             }

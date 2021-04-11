@@ -2,7 +2,7 @@ import { User } from "../../components/interfaces/User";
 import { UserDelete } from "../../components/interfaces/UserDelete";
 import { UserRegisterResponse } from "../../components/interfaces/UserRegisterResponse";
 import { Course } from "../../shared/courses/Courses";
-import { CourseAddEnd, CourseCourseIdEnd, CourseDeleteEnd, CourseEnd, CourseIdThemeIdAddEnd, CourseIdThemeIdDeleteEnd, CourseThemesEnd, UserEnd, UserRegisterEnd, UserUserDeleteIdEnd, UserUserUpdateIdEnd } from "../../shared/endpointConsts";
+import { CourseAddEnd, CourseCourseIdEnd, CourseDeleteEnd, CourseEnd, CourseIdThemeIdAddEnd, CourseIdThemeIdDeleteEnd, CourseThemesEnd, RoleDeleteEnd, UserEnd, UserRegisterEnd, UserUserDeleteIdEnd, UserUserUpdateIdEnd } from "../../shared/endpointConsts";
 import { makeErrorText, makeNotification } from "../../shared/helpers/noficationHelpers";
 import NotificationData from "../../shared/interfaces/NotificationData";
 import { Themes } from "../../shared/themes/Themes";
@@ -15,6 +15,7 @@ import { isUser } from "../type-guards/user";
 import { isUserArr } from "../type-guards/userArray";
 import { isUserDelete } from "../type-guards/userDelete";
 import { isUserRegisterResponse } from "../type-guards/userRegisterResponse";
+import { isString } from "../type-guards/string";
 
 export enum nType {
     Error = 'error',
@@ -130,6 +131,15 @@ export const responseHandlers: responseHandler = {
             })
         },
         isT: (data: any): data is Themes => isThemeDelete(data)
+    },
+    [RoleDeleteEnd]: {
+        notifications: (response?: any) => {
+            return ({
+                [nType.Error]: makeNotification(nType.Error, makeErrorText(response)),
+                [nType.Success]: makeNotification(nType.Success, (response as string))
+            })
+        },
+        isT: (data: any): data is String => isString(data)  
     }
 
 }
