@@ -6,7 +6,6 @@ import React, { useState } from 'react';
 import DatePickerComponent from '../../../shared/components/date-picker/DatePickerComponent';
 import { convertEnumToDictionary, getRussianDictionary } from '../../../shared/converters/enumToDictionaryEntity';
 import { Role } from '../../../enums/role';
-import { UserInput } from '../../interfaces/UserInput';
 import { useForm } from 'react-hook-form';
 import { convertEntitiesToSelectItems } from '../../../shared/converters/entityToSelectItemConverter';
 import { getName } from '../../../shared/converters/objectKeyToString';
@@ -16,7 +15,7 @@ import { ErrorMessage } from '@hookform/error-message';
 import '../../../App.css'
 import NotificationData from '../../../shared/interfaces/NotificationData';
 import { responseHandlers } from '../../../services/response-handler/responseHandler';
-import { UserEnd, UserRegister, UserUserIdEnd } from '../../../shared/endpointConsts';
+import { UserRegisterEnd, UserUserUpdateIdEnd } from '../../../shared/endpointConsts';
 import { convertUserToUserUpdate } from '../../../shared/converters/userToUserUpdate';
 import { convertUserToUserInput } from '../../../shared/converters/userToUserInput';
 import { UserRegisterResponse } from '../../interfaces/UserRegisterResponse';
@@ -32,7 +31,7 @@ interface UserEditFormProps {
 
 function UserEditForm(props: UserEditFormProps) {
 
-    const initUser:User = Object.assign({}, props.userToEdit || {
+    const initUser: User = Object.assign({}, props.userToEdit || {
         firstName: "",
         lastName: "",
         login: "",
@@ -45,7 +44,6 @@ function UserEditForm(props: UserEditFormProps) {
     })
 
     const [newUser, setNewUser] = useState<User>(initUser);
-    const [wasValidated, setWasValidated] = useState('');
     const [isFetching, setIsFetching] = useState(false);
 
     const { register, formState: { errors }, handleSubmit, getValues, setValue } = useForm<User>({
@@ -139,12 +137,12 @@ function UserEditForm(props: UserEditFormProps) {
             reviseSending(await sendPutRequest<UserUpdate>(
                 props.url + ('/' + props.userToEdit.id),
                 convertUserToUserUpdate(newOrUpdatedUser)
-                , props.sendNotification, responseHandlers[UserUserIdEnd]))
+                , props.sendNotification, responseHandlers[UserUserUpdateIdEnd]))
         } else {
             reviseSending(await sendPostRequest<UserRegisterResponse>(
                 props.url + '/' + 'register',
                 props.sendNotification,
-                responseHandlers[UserRegister],
+                responseHandlers[UserRegisterEnd],
                 convertUserToUserInput(newOrUpdatedUser)
             ));
         }

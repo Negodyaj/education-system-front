@@ -1,6 +1,7 @@
 export const UserEnd: string = 'User';
-export const UserUserIdEnd: string = 'User/';
-export const UserRegister: string = 'User/register';
+export const UserUserUpdateIdEnd: string = 'User/UpdateId';
+export const UserUserDeleteIdEnd:string = 'User/DeleteId';
+export const UserRegisterEnd: string = 'User/register';
 export const CourseEnd: string = 'Course';
 export const CourseCourseIdEnd: string = 'Course/';
 export const CourseThemesEnd: string = 'Course/theme';

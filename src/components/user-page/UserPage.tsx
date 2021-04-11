@@ -4,16 +4,13 @@ import React, { useEffect, useState } from 'react';
 import { sendDeleteRequest, sendGetRequest } from '../../services/http.service';
 import { responseHandlers } from '../../services/response-handler/responseHandler';
 import ConfirmationDialog from '../../shared/components/confirmation-dialog/ConfirmationDialog';
-import { UserEnd } from '../../shared/endpointConsts';
+import { UserEnd, UserUserDeleteIdEnd } from '../../shared/endpointConsts';
 import NotificationData from '../../shared/interfaces/NotificationData';
 import { User } from '../interfaces/User';
-import { UserInput } from '../interfaces/UserInput';
-import { UserUpdate } from '../interfaces/UserUpdate';
+import { UserDelete } from '../interfaces/UserDelete';
 import UserList from './user-list/UserList';
 import UserEditForm from './UserEditForm/UserEditForm';
 import './UserPage.css'
-
-export type PreviousMethod = 'DELETE' | 'NOT DELETE';
 
 interface UserPageProps {
     roleId: number;
@@ -58,13 +55,15 @@ function UserPage(props: UserPageProps) {
     }
 
     const deleteUser = async (decision: boolean) => {
-        // setIsModalShown(true);
-        // if (decision === true) {
-        //     if (await sendDeleteRequest(url + '/' + userToDeleteId)) {
-        //         refreshUsers()
-        //     };
-        // }
-        // setIsModalShown(false)
+        if (decision === true) {
+            if (await sendDeleteRequest<UserDelete[]>(
+                url + '/' + userToDeleteId,
+                props.sendNotification,
+                responseHandlers[UserUserDeleteIdEnd])) {
+                refreshUsers()
+            };
+        }
+        setIsModalShown(false)
     }
 
     useEffect(() => {

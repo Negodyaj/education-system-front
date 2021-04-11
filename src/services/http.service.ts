@@ -45,7 +45,7 @@ export const sendPostRequest = async <T>(
   sendN: (n: NotificationData | undefined) => void,
   rh: responseHandlerItem,
   body?: any) => {
-    return await baseWretch(path, sendN, rh)
+  return await baseWretch(path, sendN, rh)
     .url(path)
     .post(body)
     .json(data => {
@@ -65,9 +65,7 @@ export const sendDeleteRequest = async <T>(
     .url(path)
     .delete()
     .json(data => {
-      {
-        return localResponseHandler<T>(data, sendN, rh);
-      }
+      return localResponseHandler<T>(data, sendN, rh);
     })
     .catch((error: WretcherError) => {
       sendN(rh.notifications(error)['error']);
@@ -76,7 +74,7 @@ export const sendDeleteRequest = async <T>(
 };
 const localResponseHandler = <T>(data: any, sendN: (n: NotificationData | undefined) => void,
   rh: responseHandlerItem) => {
-  if (rh.isT ? rh.isT(data): true) {
+  if (rh.isT ? rh.isT(data) : true) {
     sendN(rh.notifications(data)['success'])
     return data as T;
   } else {
