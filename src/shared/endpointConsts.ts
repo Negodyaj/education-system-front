@@ -1,0 +1,11 @@
+export const UserEnd: string = 'User';
+export const UserUserUpdateIdEnd: string = 'User/UpdateId';
+export const UserUserDeleteIdEnd:string = 'User/DeleteId';
+export const UserRegisterEnd: string = 'User/register';
+export const CourseEnd: string = 'Course';
+export const CourseAddEnd: string = 'CourseAdd';
+export const CourseDeleteEnd: string = 'CourseDelete';
+export const CourseCourseIdEnd: string = 'Course/';
+export const CourseThemesEnd: string = 'Course/theme';
+export const CourseIdThemeIdAddEnd: string = 'Course/id/theme/id';
+export const CourseIdThemeIdDeleteEnd: string = 'Course/id/theme/idDelete';
