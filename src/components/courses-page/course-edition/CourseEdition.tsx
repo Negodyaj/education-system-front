@@ -28,6 +28,7 @@ function CourseEdition(props: CourseEditionProps) {
     const [allThemes, setAllThemes] = useState(themesList);
     const [searchTurn, setSearchTurn] = useState('');
     const [nameThemes, setNameThemes] = useState(nameThemesCourse);
+    const [courseName, setCourseName] = useState(currentCourse);
 
     const getAllThemes = async() => {
         setAllThemes(await sendGetRequest('Course/theme'))
@@ -40,6 +41,7 @@ function CourseEdition(props: CourseEditionProps) {
 
     const updateCourseThemes = async () => {
         currentCourse = await getCourseById(indexCourse);
+        setCourseName(currentCourse);
         checkThemes(currentCourse);
         setThemesCourse(currentCourse.themes);
     } 
@@ -96,6 +98,7 @@ function CourseEdition(props: CourseEditionProps) {
 
     return (
     <div className="course-edition-container">
+        <h3 className="current-course-name">{ 'Курс: ' + courseName.name }</h3>
         <div className='course-update'>
             <div className='new-themes-course'>
                 <div className="new-themes-header">Темы для курса</div>

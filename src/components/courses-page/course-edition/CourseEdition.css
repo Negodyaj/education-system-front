@@ -1,18 +1,28 @@
 .course-edition-container {
-    display: flex;
+}
+
+.current-course-name {
+    position: relative;
+    margin: 20px auto;
+    margin-bottom: 20px;
+    border-bottom: 1px solid rgba(39, 45, 59, .15);
+    width: 1000px;
+    text-align:center;
 }
 
 .course-update {
     display: grid;
     grid-template-columns: 1fr 1fr;
-
 }
 
 .new-themes-course {
-
     
 }
-
+.theme:hover{
+    background-color: rgba(0, 211, 248, 0.15);
+    border-radius: 5px;
+    cursor: pointer;
+} 
 .new-themes-header, .program-course-header {
     font-size: 25px;
     margin-bottom: 20px;
@@ -32,10 +42,15 @@
     padding: 0 10px;
     width: 350px;
     height: 50px;
-    border: 2px solid rgb(41, 3, 253);
-    border-radius: 5px;
     font-size: 20px;
+    border-bottom: 1px solid rgba(39, 45, 59, .15);
 }
+
+.new-theme:hover{
+    background-color: rgba(0, 211, 248, 0.15);
+    border-radius: 5px;
+    cursor: pointer;
+} 
 
 .true{
     background-color: rgba(197, 244, 186, 0.26);
@@ -43,7 +58,7 @@
 }
 
 .button-add-theme {
-    background-color: white;
+    background-color: rgba(255, 255, 255, 0);
     background-size: contain;
     width: 32px;
     height: 32px;
@@ -65,8 +80,7 @@
     grid-template-columns: 90% 10%;
     width: inherit;
     height: 50px;
-    border: 2px solid rgb(41, 3, 253);
-    border-radius: 5px;
+    border-bottom: 1px solid rgba(39, 45, 59, .15);
     font-size: 20px;
 }
 
@@ -84,7 +98,7 @@
 } 
 
 .button-theme-delete {
-    background-color: white;
+    background-color: rgba(255, 255, 255, 0);
     background-size: contain;
     width: 40px;
     height: 40px;
