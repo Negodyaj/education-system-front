@@ -22,12 +22,12 @@ export enum nType {
     Error = 'error',
     Success = 'success'
 }
-export interface responseHandlerItem {
+export interface ResponseHandlerItem {
     readonly notifications: (response?: any) => { [key in nType]: NotificationData | undefined },
     readonly isT: ((data: any) => data is any) | undefined;
 }
 export interface responseHandler {
-    readonly [url: string]: responseHandlerItem
+    readonly [url: string]: ResponseHandlerItem
 }
 export const responseHandlers: responseHandler = {
     [UserEnd]: {
@@ -138,8 +138,8 @@ export const responseHandlers: responseHandler = {
             return ({
                 [nType.Error]: makeNotification(nType.Error, makeErrorText(response)),
                 [nType.Success]: makeNotification(nType.Success, ('Оплата пользователю ' 
-                + (response as PaymentResponse).user.firstName 
-                + (response as PaymentResponse).user.lastName 
+                + (response as PaymentResponse)?.user?.firstName 
+                + (response as PaymentResponse)?.user?.lastName 
                 + ' назначена'))
             })
         },

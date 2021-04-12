@@ -1,9 +1,11 @@
+import { useForm } from 'react-hook-form';
 import { sendPostRequest } from '../../../services/http.service';
 import { responseHandlers } from '../../../services/response-handler/responseHandler';
 import { convertPaymentToPaymentInput } from '../../../shared/converters/paymentToPaymentInput';
 import { PaymentAddEnd } from '../../../shared/endpointConsts';
 import NotificationData from '../../../shared/interfaces/NotificationData';
 import { Payment } from '../../interfaces/Payment';
+import { PaymentInput } from '../../interfaces/PaymentInput';
 import { PaymentResponse } from '../../interfaces/PaymentResponse';
 import './PaymentForm.css'
 //import '/App.css'
@@ -19,15 +21,31 @@ interface PaymentProps {
 
 
 
-
-
 function PaymentForm(props: PaymentProps) {
-    const payment = (newPayment: Payment) => {
-    sendPostRequest<PaymentResponse>(
-        'User' + '/' + props.userId + '/' + 'payment',
-        props.sendNotification,
-        responseHandlers[PaymentAddEnd],
-        convertPaymentToPaymentInput(newPayment))
+
+    const InitPayment: PaymentInput = {
+        amount: "",
+        date: Date(),
+        period: "",
+        contractNumber: "",
+    }
+
+    const { register, formState: { errors }, handleSubmit, getValues, setValue } = useForm<PaymentInput>({
+        mode: 'all',
+        criteriaMode: 'all',
+        defaultValues: InitPayment
+    });
+
+    const sendPayment = (newPayment: PaymentInput) => {
+        sendPostRequest<PaymentResponse>(
+            'User' + '/' + props.userId + '/' + 'payment',
+            props.sendNotification,
+            responseHandlers[PaymentAddEnd],
+            newPayment)
+    }
+
+    const onSubmit = (data: PaymentInput) => {
+        sendPayment(data);
     }
 
     return (
@@ -39,32 +57,33 @@ function PaymentForm(props: PaymentProps) {
                     </div>
                     <button className="button-round" onClick={props.cancelClick}>х</button>
                 </div>
-                <form>
+                <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="input-row">
                         <label>Сумма платежа</label>
-                        <input key = 'amount'></input>
+                        <input key='amount' {...register("amount")}></input>
                     </div>
                     <div className="input-row">
                         <label>Дата платежа</label>
-                        <input key='date'></input>
+                        <input key='date' {...register("date")}></input>
                     </div>
                     <div className="input-row">
                         <label>Период оплаты</label>
-                        <input key = 'period'></input>
+                        <input key='period' {...register("period")}></input>
                     </div>
                     <div className="input-row">
                         <label>Номер договора</label>
-                        <input key='contractNumber'></input>
+                        <input key='contractNumber' {...register("contractNumber")}></input>
                     </div>
                     <div className="row input-row ">
                         <label>Оплачено полностью</label>
                         <input className="checkbox" type="checkbox" checked></input>
                     </div>
+                    <div className="footer-payment">
+                        <button className="button-select" onClick={props.cancelClick}>Отмена</button>
+                        <button className="button-select" type={"submit"}>Подтвердить</button>
+                    </div>
                 </form>
-                <div className="footer-payment">
-                    <button className="button-select" onClick={props.cancelClick}>Отмена</button>
-                    <button className="button-select" >Подтвердить</button>
-                </div>
+
             </div>
         </div>
     )
