@@ -99,7 +99,7 @@ function UserList(props: UserListProps) {
                                 u.roles?.map(r => (<div>{getEnToRuTranslation(Role[r])}</div>))
                             }
                         </div>
-                        <div className="column">{u.groupName}</div>
+                        <div className="column">{/*u.groupName*/}</div>
                         <div className="column-button">
                             <div className="column">
                                 <button className="button-round" onClick={() => props.onEditClick(u.id)}>

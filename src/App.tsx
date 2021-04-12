@@ -22,11 +22,12 @@ function App() {
     const history = useHistory();
     const token = getToken();
     const [isLoggedIn, setIsLoggedIn] = useState(!!token);
-    const [roleId, setRoleId] = useState(Role.Admin);
+    const [roleId, setRoleId] = useState(Role.Teacher);
     const [dismissibleNotifications, setDismissibleNotifications] = useState<NotificationData[]>([]);
     const [nonDismissibleNotifications, setNonDismissibleNotifications] = useState<NotificationData[]>([]);
 
-    const sendNewNotification = (newNotification: NotificationData) => {
+    const sendNewNotification = (newNotification: NotificationData | undefined) => {
+        if (!newNotification) return;
         if (newNotification.isDismissible) {
             setDismissibleNotifications([newNotification, ...dismissibleNotifications]);
         } else {
@@ -102,11 +103,15 @@ function App() {
                                 {
                                     roleId === Role.Teacher &&
                                     <Route path="/courses-page">
-                                        <CoursesPage roleId={roleId}></CoursesPage>
+                                        <CoursesPage
+                                            roleId={roleId}
+                                            sendNewNotification={sendNewNotification}></CoursesPage>
                                     </Route>
                                 }
                                 <Route path="/course-edition/:id" render={({ location, history }) => (
-                                    <CourseEdition idCourse={location.pathname} />
+                                    <CourseEdition 
+                                        idCourse={location.pathname} 
+                                        sendNewNotification={sendNewNotification}/>
                                 )}>
                                 </Route>
                                 {
