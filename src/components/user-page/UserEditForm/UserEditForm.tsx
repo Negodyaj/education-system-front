@@ -10,7 +10,7 @@ import { Role } from '../../../enums/role';
 import { useForm } from 'react-hook-form';
 import { convertEntitiesToSelectItems } from '../../../shared/converters/entityToSelectItemConverter';
 import { getName } from '../../../shared/converters/objectKeyToString';
-import { sendDeleteRequest, sendPostRequest, sendPutRequest } from '../../../services/http.service';
+import { sendPostRequest, sendPutRequest } from '../../../services/http.service';
 import { UserUpdate } from '../../interfaces/UserUpdate';
 import { ErrorMessage } from '@hookform/error-message';
 import NotificationData from '../../../shared/interfaces/NotificationData';
@@ -19,7 +19,6 @@ import { UserRegisterEnd, UserUserUpdateIdEnd } from '../../../shared/endpointCo
 import './UserEditForm.css';
 import '../UserPage.css';
 import '../../../App.css';
-import { getPostOrDeleteRolesRequest } from './sendUpdatedRoles';
 
 interface UserEditFormProps {
     roleId: number;
@@ -55,7 +54,7 @@ function UserEditForm(props: UserEditFormProps) {
 
     const elementsDefinedByProps = {
         roleSelector: () => {
-            if (props.roleId === Role.Admin) {
+            if (props.roleId === Role.Admin && !props.userToEdit) {
                 return (
                     <div className="form-row multi">
                         <label className="form-label">Список ролей</label>
@@ -126,9 +125,8 @@ function UserEditForm(props: UserEditFormProps) {
             }
         }
     }
-
-    const reviseSending = (isSended: boolean) => {
-        if (isSended) {
+    const reviseSending = (newOrUpdatedUser: UserUpdate | undefined) => {
+        if (newOrUpdatedUser) {
             props.reviseSending()
         } else {
             return;
@@ -136,34 +134,24 @@ function UserEditForm(props: UserEditFormProps) {
     }
     const sendUser = async (newOrUpdatedUser: User) => {
         if (props.userToEdit) {
-            const [postOrDeleteRolesRequest, rolesInRequestParams, rh] = getPostOrDeleteRolesRequest(props.userToEdit.roleIds as number[], newOrUpdatedUser.roleIds as number[]);
-            reviseSending(
-                !!await sendPutRequest<UserUpdate>(
-                    props.url + ('/' + props.userToEdit.id),
-                    convertUserToUserUpdate(newOrUpdatedUser),
-                    props.sendNotification,
-                    responseHandlers[UserUserUpdateIdEnd])
-                &&
-                !!await (async () => {
-                    for (const r in rolesInRequestParams) {
-                        return await postOrDeleteRolesRequest(
-                            'User/' + newOrUpdatedUser.id + 'role/' + r)
-                    }
-                })())
+            reviseSending(await sendPutRequest<UserUpdate>(
+                props.url + ('/' + props.userToEdit.id),
+                convertUserToUserUpdate(newOrUpdatedUser),
+                props.sendNotification,
+                responseHandlers[UserUserUpdateIdEnd]))
         } else {
-            reviseSending(
-                !!await sendPostRequest<UserRegisterResponse>(
-                    props.url + '/' + 'register',
-                    props.sendNotification,
-                    responseHandlers[UserRegisterEnd],
-                    convertUserToUserInput(newOrUpdatedUser)));
+            reviseSending(await sendPostRequest<UserRegisterResponse>(
+                props.url + '/' + 'register',
+                props.sendNotification,
+                responseHandlers[UserRegisterEnd],
+                convertUserToUserInput(newOrUpdatedUser)));
         }
     }
 
     const birthDateOnChange = (date: string) => {
         setValue('birthDate', date)
     }
-    const roleOnChange = async (options: number[]) => {
+    const roleOnChange = (options: number[]) => {
         setValue('roleIds', options);
     }
     const onSubmit = (data: User) => {
