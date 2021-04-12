@@ -7,12 +7,14 @@ import wretch from 'wretch';
 import { sendGetRequest } from '../../services/http.service';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import SearchComponent from '../../shared/components/search-component/SearchComponent';
+import AddTagModal from './add-tag-modal/AddTagModal';
 
 
 function TagsPage() {
     const url = 'Tag';
     const [tagsInState, setTagsInState] = useState<Tag[]>([]);
     const [searchTurn, setSearchTurn] = useState('');
+    
     const getTags = async () => {
         setTagsInState(await sendGetRequest<Tag[]>(url))
     };
@@ -25,26 +27,31 @@ function TagsPage() {
         setSearchTurn(e.target.value);
     };
 
+
     // const searchFromTags = (str: string) => {
     //     setSearchTurn(str);
     // e
     return (
+        <div>
+            <div className="table">
+                <div className="header">
+                    <div className="input">
+                        <input onChange={tagsFilter} />
 
-        <div className="table">
-            <div className="header">
-                <div className="input">
-                    <input onChange={tagsFilter} />
-                    
-                        
-                            <button className="add"></button>
-            </div>
-            </div>
-            
+
+                        <button className="add" ></button>
+                    </div>
+                </div>
+
                 <div className="body">
                     <div className="tags"> <TagList str={searchTurn} tags={tagsInState}></TagList> </div>
+
                 </div>
+
             </div>
 
+            <AddTagModal />
+        </div>
     )
 
 
