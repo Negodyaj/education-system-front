@@ -1,121 +1,109 @@
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { sendDeleteRequest, sendGetRequest } from '../../services/http.service';
+import { responseHandlers } from '../../services/response-handler/responseHandler';
+import ConfirmationDialog from '../../shared/components/confirmation-dialog/ConfirmationDialog';
+import { UserEnd, UserUserDeleteIdEnd } from '../../shared/endpointConsts';
 import NotificationData from '../../shared/interfaces/NotificationData';
 import { User } from '../interfaces/User';
+import { UserDelete } from '../interfaces/UserDelete';
 import UserList from './user-list/UserList';
 import UserEditForm from './UserEditForm/UserEditForm';
 import './UserPage.css'
 
 interface UserPageProps {
     roleId: number;
-    sendNotification: (newNotification: NotificationData) => void;
+    sendNotification: (newNotification: NotificationData | undefined) => void;
 }
 
 function UserPage(props: UserPageProps) {
 
-    const url = 'https://80.78.240.16:7070/api/User';
-    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoidm9sb2R5YTIyIiwiaWQiOiIxIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoi0JDQtNC80LjQvdC40YHRgtGA0LDRgtC-0YAiLCJuYmYiOjE2MTc0NDk3MjcsImV4cCI6MTYxNzYyMjUyNywiaXNzIjoiRWR1Y2F0aW9uU3lzdGVtLkFwaSIsImF1ZCI6IkRldkVkdWNhdGlvbiJ9.h_GX1srLTRp2r-D8gzfjikmmxW2WJZ6PwU3703G0bMM';
-    const [usersInState, setUsersInState] = useState<User[]>([]);
+    const url = 'User';
+    const [usersInState, setUsersInState] = useState<User[] | undefined>();
     const [isEditModeOn, setIsEditModeOn] = useState(false);
-    const [isFetching, setIsFetching] = useState(true);
     const [userToEdit, setUserToEdit] = useState<User | undefined>();
-    const [methodInForm, setMethodInForm] = useState('');
-    const stringChanged = "изменён";
-    const stringAdded = 'добавлен';
-    let actionInNotification = methodInForm === "POST" ? stringAdded : stringChanged;
-
-    const getUsers = () => {
-        fetch(url, {
-            headers: {
-                'Accept': 'application/json',
-                'Authorization': 'Bearer ' + token,
-                'Content-Type': 'application/json'
-            }
-        })
-            .then(response => response.json())
-            .then(data => {
-                setUsersInState(data);
-                console.log(usersInState)
-                setIsFetching(false);
-            })
-    }
-
-    const checkUpdatedUsers = (addedUser: User) => {
-        setIsFetching(true);
-        getUsers();
-        props.sendNotification({
-            type: "success",
-            text: "пользователь " + addedUser.firstName + " " + addedUser.lastName + " успешно " + actionInNotification,
-            isDismissible: true,
-            timestamp: Date.now()
-        })
-    }
+    const [userToDeleteId, setUserToDeleteId] = useState<number>();
+    const [isModalShown, setIsModalShown] = useState(false);
+    const confirmationDeleteMessage = "Вы действительно хотите удалить пользователя?";
+    const confirmationDeleteTitle = "Удаление пользователя";
+    const confirmLabel = "Да";
+    const declineLabel = "нет";
 
     useEffect(() => {
         getUsers();
     }, []);
 
+    const getUsers = async () => {
+        setUsersInState(await sendGetRequest<User[]>(url, props.sendNotification, responseHandlers[UserEnd]))
+    }
+    const refreshUsers = () => {
+        setUsersInState(undefined);
+        getUsers();
+    }
+    const checkUpdatedUsers = () => {
+        refreshUsers();
+        setIsEditModeOn(false)
+    }
     const getUserToUpdate = (userToEditId: number) => {
-        fetch(url + '/' + userToEditId, {
-            headers: {
-                'Accept': 'application/json',
-                'Authorization': 'Bearer ' + token,
-                'Content-Type': 'application/json'
-            }
-        })
-            .then(response => response.json())
-            .then(data => {
-                setUserToEdit(Object.assign({}, data));
-                setMethodInForm('PUT');
-                setIsFetching(false);
-                setIsEditModeOn(true);
-            })
+        //actualize user before UserEditForm rendering
+    }
+    const deleteUser = async (decision: boolean) => {
+        if (decision === true) {
+            if (await sendDeleteRequest<UserDelete[]>(
+                url + '/' + userToDeleteId,
+                props.sendNotification,
+                responseHandlers[UserUserDeleteIdEnd])) {
+                refreshUsers()
+            };
+        }
+        setIsModalShown(false)
     }
     const onEditClick = (userToEditId?: number) => {
         if (userToEditId) {
-            getUserToUpdate(userToEditId)
-        }
-        else {
+            setUserToEdit([...usersInState as User[]].filter(u => u.id === userToEditId)[0]);
+        } else {
             setUserToEdit(undefined);
-            setMethodInForm('POST')
-            setIsEditModeOn(true);
         }
+        setIsEditModeOn(true);
     }
-    const onSaveClick = (addedUser: User) => {
-        checkUpdatedUsers(addedUser)
-    }
-
-    const renderUserList = () => {
-        return <UserList
-            roleId={props.roleId}
-            users={usersInState}
-            onEditClick={onEditClick}></UserList>
-    }
-    const renderUserEditForm = () => {
-        return <UserEditForm
-            roleId={props.roleId}
-            userToEdit={userToEdit}
-            setIsEditModeOn={setIsEditModeOn}
-            sendUserPropsForSuccessNotification={onSaveClick}
-            sendNotification={props.sendNotification}
-            url={url}
-            token={token}
-            method={methodInForm}></UserEditForm>
+    const onDeleteClick = (userToDeleteIdArg: number) => {
+        setUserToDeleteId(userToDeleteIdArg);
+        setIsModalShown(true);
     }
 
     return (
         <div className="user-page">
             {
-                isFetching ?
+                !usersInState ?
                     <div>
                         <FontAwesomeIcon icon="spinner" />
                     </div> : (
-                        isEditModeOn ? renderUserEditForm() : renderUserList()
+                        isEditModeOn
+                            ?
+                            <UserEditForm
+                                roleId={props.roleId}
+                                userToEdit={userToEdit}
+                                setIsEditModeOn={setIsEditModeOn}
+                                reviseSending={checkUpdatedUsers}
+                                sendNotification={props.sendNotification}
+                                url={url}></UserEditForm>
+                            :
+                            <UserList
+                                roleId={props.roleId}
+                                users={usersInState}
+                                onEditClick={onEditClick}
+                                onDeleteClick={onDeleteClick}></UserList>
                     )
             }
+            <ConfirmationDialog
+                isShown={isModalShown}
+                confirmLabel={confirmLabel}
+                declineLabel={declineLabel}
+                message={confirmationDeleteMessage}
+                title={confirmationDeleteTitle}
+                callback={deleteUser}></ConfirmationDialog>
         </div>
     )
 }
-
 export default UserPage;

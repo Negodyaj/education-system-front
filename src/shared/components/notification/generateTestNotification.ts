@@ -1,3 +1,4 @@
+import { makeNotification } from "../../helpers/noficationHelpers";
 import NotificationData from "../../interfaces/NotificationData";
 
 export function generateTestNotification(isDismissible: boolean): NotificationData {
@@ -18,10 +19,5 @@ export function generateTestNotification(isDismissible: boolean): NotificationDa
 
     const type = randomType();
 
-    return {
-        type: type,
-        text: `${type}: ${Math.floor(Math.random() * 1000000)}`,
-        isDismissible: isDismissible,
-        timestamp: Date.now(),
-    }
+    return makeNotification(type, `${type}: ${Math.floor(Math.random() * 1000000)}`, isDismissible);
 }
