@@ -117,7 +117,7 @@ function App() {
                                 {
                                     roleId !== Role.Student &&
                                     <Route path="/tags-page">
-                                        <TagsPage></TagsPage>
+                                        <TagsPage sendNotification={sendNewNotification}></TagsPage>
                                     </Route>
                                 }
                                 <Route path="/homework">

@@ -2,7 +2,7 @@ import { User } from "../../components/interfaces/User";
 import { UserDelete } from "../../components/interfaces/UserDelete";
 import { UserRegisterResponse } from "../../components/interfaces/UserRegisterResponse";
 import { Course } from "../../shared/courses/Courses";
-import { CourseAddEnd, CourseCourseIdEnd, CourseDeleteEnd, CourseEnd, CourseIdThemeIdAddEnd, CourseIdThemeIdDeleteEnd, CourseThemesEnd, UserEnd, UserRegisterEnd, UserUserDeleteIdEnd, UserUserUpdateIdEnd } from "../../shared/endpointConsts";
+import { CourseAddEnd, CourseCourseIdEnd, CourseDeleteEnd, CourseEnd, CourseIdThemeIdAddEnd, CourseIdThemeIdDeleteEnd, CourseThemesEnd, TagAddEnd, TagEnd, UserEnd, UserRegisterEnd, UserUserDeleteIdEnd, UserUserUpdateIdEnd } from "../../shared/endpointConsts";
 import { makeErrorText, makeNotification } from "../../shared/helpers/noficationHelpers";
 import NotificationData from "../../shared/interfaces/NotificationData";
 import { Themes } from "../../shared/themes/Themes";
@@ -15,6 +15,8 @@ import { isUser } from "../type-guards/user";
 import { isUserArr } from "../type-guards/userArray";
 import { isUserDelete } from "../type-guards/userDelete";
 import { isUserRegisterResponse } from "../type-guards/userRegisterResponse";
+import { Tag } from "../../components/interfaces/Tag";
+import { isTagArr } from "../type-guards/tagArr";
 
 export enum nType {
     Error = 'error',
@@ -130,6 +132,24 @@ export const responseHandlers: responseHandler = {
             })
         },
         isT: (data: any): data is Themes => isThemeDelete(data)
-    }
+    },
+    [TagEnd]: {
+        notifications: (response?: any) => {
+            return ({
+                [nType.Error]: makeNotification(nType.Error, makeErrorText(response)),
+                [nType.Success]: undefined
+            })
+    },
+    isT: (data: any): data is Tag[] => isTagArr(data)
+},
+[TagAddEnd]: {
+    notifications: (response?: any) => {
+        return ({
+            [nType.Error]: makeNotification(nType.Error, makeErrorText(response)),
+            [nType.Success]: makeNotification(nType.Success, ('Тег успешно добавлен'))
+        })
+    },
+    isT: (data: any): data is Tag[] => isTagArr(data)
+}
 
 }

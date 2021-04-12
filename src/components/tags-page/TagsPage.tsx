@@ -4,19 +4,26 @@ import { Tag } from '../interfaces/Tag';
 import TagList from './tag-list/TagList';
 import './TagsPage.css';
 import wretch from 'wretch';
-import { sendGetRequest } from '../../services/http.service';
+import { sendGetRequest, sendPostRequest } from '../../services/http.service';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import SearchComponent from '../../shared/components/search-component/SearchComponent';
 import AddTagModal from './add-tag-modal/AddTagModal';
+import { responseHandlers } from '../../services/response-handler/responseHandler';
+import { TagAddEnd, TagEnd, UserEnd } from '../../shared/endpointConsts';
+import NotificationData from '../../shared/interfaces/NotificationData';
 
+interface TagsPageProps{
+    sendNotification: (newNotification: NotificationData | undefined) => void;
+}
 
-function TagsPage() {
+function TagsPage(props: TagsPageProps) {
     const url = 'Tag';
-    const [tagsInState, setTagsInState] = useState<Tag[]>([]);
+    const [tagsInState, setTagsInState] = useState<Tag[]|undefined>([]);
     const [searchTurn, setSearchTurn] = useState('');
     
     const getTags = async () => {
-        //setTagsInState(await sendGetRequest<Tag[]>(url))
+        setTagsInState(await sendGetRequest<Tag[]>(url, props.sendNotification, responseHandlers[TagEnd]))
+        setTagsInState(await sendPostRequest<Tag[]>(url, props.sendNotification, responseHandlers[TagAddEnd]))
     };
 
     useEffect(() => {

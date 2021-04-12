@@ -1,7 +1,7 @@
 import { Tag } from "../../interfaces/Tag";
 
 interface TagListProps {
-    tags: Tag[];
+    tags: Tag[]|undefined;
     str: string;
 }
 
