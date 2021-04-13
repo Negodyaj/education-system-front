@@ -56,16 +56,18 @@ function CourseEdition(props: CourseEditionProps) {
     } 
 
     
-    const addThemeCourse = (newThemeCourse: NewThemeCourse) => {
+    const addThemeCourse = async (newThemeCourse: NewThemeCourse) => {
         let url = 'Course/' + newThemeCourse.idCourse + '/theme/' + newThemeCourse.idTheme;
-        sendPostRequestNoResponse(url, props.sendNewNotification, responseHandlers[CourseIdThemeIdAddEnd]);
-        setTimeout (() => updateCourseThemes(), 200);
+        if (await sendPostRequestNoResponse(url, props.sendNewNotification, responseHandlers[CourseIdThemeIdAddEnd])) {
+            updateCourseThemes();
+        }
     }
 
-    const deleteThemeCourse = (newThemeCourse: NewThemeCourse) => {
+    const deleteThemeCourse = async (newThemeCourse: NewThemeCourse) => {
         let url = 'Course/' + newThemeCourse.idCourse + '/theme/' + newThemeCourse.idTheme;
-        sendDeleteRequestNoResponse(url, props.sendNewNotification, responseHandlers[CourseIdThemeIdDeleteEnd]);
-        setTimeout (() => updateCourseThemes(), 200);
+        if (await sendDeleteRequestNoResponse(url, props.sendNewNotification, responseHandlers[CourseIdThemeIdDeleteEnd])) {
+            updateCourseThemes();
+        }
     }
 
     const checkThemes = (course: Course) => {

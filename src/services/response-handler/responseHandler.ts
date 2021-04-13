@@ -120,7 +120,7 @@ export const responseHandlers: responseHandler = {
         notifications: (response?: any) => {
             return ({
                 [nType.Error]: makeNotification(nType.Error, makeErrorText(response)),
-                [nType.Success]: makeNotification(nType.Success, ('Тема добавлена'))
+                [nType.Success]: makeNotification(nType.Success, ('Тема добавлена в курс'))
             })
         },
         isT: undefined
@@ -129,7 +129,7 @@ export const responseHandlers: responseHandler = {
         notifications: (response?: any) => {
             return ({
                 [nType.Error]: makeNotification(nType.Error, makeErrorText(response)),
-                [nType.Success]: makeNotification(nType.Success, ('Тема удалена'))
+                [nType.Success]: makeNotification(nType.Success, ('Тема удалена из курса'))
             })
         },
         isT: (data: any): data is Themes => isThemeDelete(data)
