@@ -37,6 +37,7 @@ function CourseEdition(props: CourseEditionProps) {
     const [changeDisplayingButtonOpenProgramCourse, setChangeDisplayingButtonOpenProgramCourse] = useState(false);
     const [changeDisplayingButtonOpenMaterialsCourse, setChangeDisplayingButtonOpenMaterialsCourse] = useState(false);
     const [isClassOnProgramCourse, setIsClassOnProgramCourse] = useState(' unvisible');
+    const [isClassOnMaterialTheme, setIsClassOnMaterialTheme] = useState(' unvisible'); 
 
     const getAllThemes = async() => {
         setAllThemes(await sendGetRequest<Themes[]>(CourseThemesEnd, props.sendNewNotification, responseHandlers[CourseThemesEnd]));
@@ -86,7 +87,8 @@ function CourseEdition(props: CourseEditionProps) {
             let newTheme: NewThemeCourse = {idCourse: indexCourse, idTheme: theme.id};
             addThemeCourse(newTheme);
             setTimeout (() => setChangeDisplayingButtonOpenProgramCourse(true), 200);
-            setTimeout (() => setIsClassOnProgramCourse(' visible'), 200);
+            setTimeout(() => setIsClassOnProgramCourse(' visible'), 200);
+            setTimeout(() => setIsClassOnMaterialTheme(' visible'), 200);
         }
     }
 
@@ -118,6 +120,8 @@ function CourseEdition(props: CourseEditionProps) {
     const openMaterialsCourse = () => {
         setChangeDisplayingButtonOpenMaterialsCourse(!changeDisplayingButtonOpenMaterialsCourse);
         setIsOpenMaterialsCourse(!isOpenMaterialsCourse);
+        isClassOnMaterialTheme === ' unvisible' ? setIsClassOnMaterialTheme(' visible') : setIsClassOnMaterialTheme(' unvisible');
+
     }
     
 
@@ -181,7 +185,7 @@ function CourseEdition(props: CourseEditionProps) {
                     </div>
                 </div>
                 <div className="materials-current-course-container">
-                    <div className="materials-course-header">
+                    <div onClick={openMaterialsCourse} className={"materials-course-header" + isClassOnMaterialTheme}>
                         <button onClick={openMaterialsCourse} className="materials-course-header-button-open">
                             {
                                 changeDisplayingButtonOpenMaterialsCourse ? <FontAwesomeIcon icon="angle-down" /> : <FontAwesomeIcon icon="angle-up" />
