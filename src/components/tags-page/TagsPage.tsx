@@ -12,18 +12,18 @@ import { responseHandlers } from '../../services/response-handler/responseHandle
 import { TagAddEnd, TagEnd, UserEnd } from '../../shared/endpointConsts';
 import NotificationData from '../../shared/interfaces/NotificationData';
 
-interface TagsPageProps{
+interface TagsPageProps {
     sendNotification: (newNotification: NotificationData | undefined) => void;
 }
 
 function TagsPage(props: TagsPageProps) {
     const url = 'Tag';
-    const [tagsInState, setTagsInState] = useState<Tag[]|undefined>([]);
+    const [tagsInState, setTagsInState] = useState<Tag[] | undefined>([]);
     const [searchTurn, setSearchTurn] = useState('');
     const [hidden, setHidden] = useState('hidden')
-    
+
     const getTags = async () => {
-        setTagsInState(await sendGetRequest<Tag[]>(url, props.sendNotification, responseHandlers[TagEnd])) 
+        setTagsInState(await sendGetRequest<Tag[]>(url, props.sendNotification, responseHandlers[TagEnd]))
     };
 
     useEffect(() => {
@@ -34,31 +34,25 @@ function TagsPage(props: TagsPageProps) {
         setSearchTurn(e.target.value);
     };
 
-    const closeModal = () => setHidden ("hidden");
-   
+    const closeModal = () => setHidden("hidden");
+
     return (
-        <div className="app">
-            <div className="main-content">
-                <div className="column-head">
-                    <div className="input">
-                        <input onChange={tagsFilter} />
-
-
-                        <button className="button-style" onClick={()=>{setHidden("")}}>
+        <div className="main">
+            <div className="column-head">
+                <div className="input">
+                    <input onChange={tagsFilter} />
+                    <button className="button-style" onClick={() => { setHidden("") }}>
                         <FontAwesomeIcon icon="plus" />
-                    <span> Добавить</span>
-                        </button>
-                    </div>
+                        <span> Добавить</span>
+                    </button>
                 </div>
-
-                <div className="body">
-                    <div className="tags"> <TagList str={searchTurn} tags={tagsInState} sendNotification={props.sendNotification} setTagsInState={setTagsInState}></TagList> </div>
-
-                </div>
-
             </div>
 
-            <AddTagModal sendNotification={props.sendNotification} setTagsInState={setTagsInState} hidden={hidden} setHidden={closeModal}/>
+            <div className="body">
+                <div className="tags-list"> <TagList str={searchTurn} tags={tagsInState} sendNotification={props.sendNotification} setTagsInState={setTagsInState}></TagList> </div>
+
+            </div>
+            <AddTagModal sendNotification={props.sendNotification} setTagsInState={setTagsInState} hidden={hidden} setHidden={closeModal} />
         </div>
     )
 

@@ -111,3 +111,6 @@
   .column-head{
     justify-content: space-between;
 }
+.tag-row{
+    text-align: unset;
+}

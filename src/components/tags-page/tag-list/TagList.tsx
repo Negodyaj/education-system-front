@@ -4,8 +4,9 @@ import { responseHandlers } from "../../../services/response-handler/responseHan
 import { TagDeleteEnd, TagEnd } from "../../../shared/endpointConsts";
 import NotificationData from "../../../shared/interfaces/NotificationData";
 import { Tag } from "../../interfaces/Tag";
-import '../../courses-page/CoursesPage.css';
+import '../../../App.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import '../TagsPage.css'
 
 interface TagListProps {
     sendNotification: (newNotification: NotificationData | undefined) => void;
@@ -18,25 +19,28 @@ interface TagListProps {
 function TagList(props: TagListProps) {
     const [deletedTag, setdeleteTag] = useState('');
     const deleteTag = async (tagId: number) => {
-       if (await sendDeleteRequestNoResponse('Tag/' + tagId, props.sendNotification, responseHandlers[TagDeleteEnd]))
-           props.setTagsInState(await sendGetRequest<Tag[]>('Tag', props.sendNotification, responseHandlers[TagEnd]))
+        if (await sendDeleteRequestNoResponse('Tag/' + tagId, props.sendNotification, responseHandlers[TagDeleteEnd]))
+            props.setTagsInState(await sendGetRequest<Tag[]>('Tag', props.sendNotification, responseHandlers[TagEnd]))
     }
 
     return (
-        <div className="tag-container">
+        <>
             {
                 props.tags?.map((item) => {
                     if (item.name.toLowerCase().includes(props.str.toLowerCase())) {
-                        return (<div className="tags-list"> <div className="tag"> {item.name} </div> <button className='button-delete' onClick={() => deleteTag(item.id)}> 
-                            <FontAwesomeIcon icon="trash"/> </button></div>)
+                        return (
+                            <span className="tag-row">
+                                <div className="tag"> {item.name} </div>
+                                <button className='button-round' onClick={() => deleteTag(item.id)}>
+                                    <FontAwesomeIcon icon="trash" />
+                                </button>
+                            </span>
+                        )
                     }
                 })
             }
-
-
-        </div>
+        </>
     )
 }
-
 
 export default TagList
