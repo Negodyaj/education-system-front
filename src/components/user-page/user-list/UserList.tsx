@@ -107,11 +107,11 @@ function UserList(props: UserListProps) {
 
     }
 
-    const deleteRole = (decision: boolean) => {
+    const deleteRole = async (decision: boolean) => {
         if (decision) {
             //console.log()
             console.log('User' + '/' + userID + '/' + 'role' + '/' + roleID)
-            sendDeleteRequestNoResponse('User' + '/' + userID + '/' + 'role' + '/' + roleID, props.sendNotification, responseHandlers[RoleDeleteEnd]);
+            if(await sendDeleteRequestNoResponse('User' + '/' + userID + '/' + 'role' + '/' + roleID, props.sendNotification, responseHandlers[RoleDeleteEnd]))
             props.refreshUsers();
         }
         setIsModalShow(false);

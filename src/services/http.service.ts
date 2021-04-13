@@ -100,7 +100,8 @@ export const sendDeleteRequestNoResponse = async (
     .url(path)
     .delete()
     .res(res => {
-      sendN(rh.notifications()['success'])
+      sendN(rh.notifications()['success']);
+      return res;
     })
 };
 const localResponseHandler = <T>(data: any, sendN: (n: NotificationData | undefined) => void,
