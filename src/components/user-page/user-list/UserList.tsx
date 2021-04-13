@@ -41,6 +41,9 @@ function UserList(props: UserListProps) {
     const [isModalShow, setIsModalShow] = useState(false)
     const [userForPayment, setUserForPayment] = useState<User | undefined>(undefined);
     const [paymentFormState, setPaymentFormState] = useState('');
+    const [roleID, setRoleID] = useState(0);
+    const [userID, setUserID] = useState(0);
+
 
     const elementsDefinedByRole = {
         paymentButton: (userId: number | undefined) => {
@@ -52,16 +55,11 @@ function UserList(props: UserListProps) {
                 </button>
             )
         },
-        deleteRoleButton: (userId: number, roleId: number) => {
-          
-            
-           
-            confirmationDeleteMessage = "Вы точно хотите избавить пользователя "+props.users.filter(u => u.id === userId)[0].firstName +'( '+props.users.filter(u => u.id === userId)[0].login+')'+ " от роли " +Role[roleId]+"? "
-               
+        deleteRoleButton: (user: User, roleId: number) => {
             return (
-                props.roleId === Role.Admin
+             props.roleId === Role.Admin
                 &&
-                <button className='button-round mini-button' onClick={() => onDeleteRoleClick(userId, roleId)}>
+                <button className='button-round mini-button' onClick={() => onDeleteRoleClick(user, roleId)}>
                     <FontAwesomeIcon icon="times" />
                 </button>
             )
@@ -85,29 +83,32 @@ function UserList(props: UserListProps) {
         setSignInvertor(signInvertor + 1);
     }
     const titleOnDelete = 'Удаление роли';
-    let confirmationDeleteMessage = 'Вы уверены?'
-   
+    const[ confirmationDeleteMessage, setConfirmationDeleteMessage] = useState('Вы уверены?')
+
     const confirmLabel = 'Да';
     const declineLabel = 'Нет';
 
     const onCancelPaymentClick = () => {
         setPaymentFormState('');
     }
-const [roleID, setRoleID] =useState(0)
-const [userID, setUserID] =useState(0)
 
-    const onDeleteRoleClick = (userId: number, roleId: number) => {
-setUserID(userId);
-setRoleID(roleId);
+
+    const onDeleteRoleClick = (user: User, roleId: number) => {
+        setUserID(user.id as number);
+        setRoleID(roleId);
+        setConfirmationDeleteMessage ( "Вы точно хотите избавить пользователя " + user.lastName + '( ' + user.login + ')' + " от роли " + Role[roleId] + "? ")
+        console.log(userID, roleID)
         setIsModalShow(true);
-       
+        console.log(user.lastName, user.login)
+        console.log(confirmationDeleteMessage)
+
     }
 
     const deleteRole = (decision: boolean) => {
         if (decision) {
             //console.log()
-            console.log('User'+'/'+ userID + '/'+'role'+ '/' + roleID)
-            sendDeleteRequest<String>('User'+'/'+ userID + '/'+'role'+ '/' + roleID, props.sendNotification, responseHandlers[RoleDeleteEnd]);
+            console.log('User' + '/' + userID + '/' + 'role' + '/' + roleID)
+            sendDeleteRequest<String>('User' + '/' + userID + '/' + 'role' + '/' + roleID, props.sendNotification, responseHandlers[RoleDeleteEnd]);
             props.refreshUsers();
         }
         setIsModalShow(false);
@@ -144,7 +145,7 @@ setRoleID(roleId);
                         <div className="column multiline">
                             {
                                 u.roles?.map(r => (<div className='role'>
-                                    {elementsDefinedByRole.deleteRoleButton(u.id as number, r)}
+                                    {elementsDefinedByRole.deleteRoleButton(u, r)}
                                     <div>{getEnToRuTranslation(Role[r])}</div>
                                 </div>))
                             }
