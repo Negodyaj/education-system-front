@@ -6,6 +6,7 @@ import { Role } from '../../enums/role';
 import { getEnToRuTranslation } from '../../shared/converters/enumToDictionaryEntity';
 import { SelectItem } from '../interfaces/SelectItem';
 
+
 interface SelectProps {
   selectType?: string;
   userOptionsIds: number[] | undefined;

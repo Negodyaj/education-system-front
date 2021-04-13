@@ -14,7 +14,7 @@ function TagsPage() {
     const [tagsInState, setTagsInState] = useState<Tag[]>([]);
     const [searchTurn, setSearchTurn] = useState('');
     const getTags = async () => {
-        setTagsInState(await sendGetRequest<Tag[]>(url))
+        //setTagsInState(await sendGetRequest<Tag[]>(url))
     };
 
     useEffect(() => {

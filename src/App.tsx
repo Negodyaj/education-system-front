@@ -26,7 +26,8 @@ function App() {
     const [dismissibleNotifications, setDismissibleNotifications] = useState<NotificationData[]>([]);
     const [nonDismissibleNotifications, setNonDismissibleNotifications] = useState<NotificationData[]>([]);
 
-    const sendNewNotification = (newNotification: NotificationData) => {
+    const sendNewNotification = (newNotification: NotificationData | undefined) => {
+        if (!newNotification) return;
         if (newNotification.isDismissible) {
             setDismissibleNotifications([newNotification, ...dismissibleNotifications]);
         } else {
@@ -102,11 +103,15 @@ function App() {
                                 {
                                     roleId === Role.Teacher &&
                                     <Route path="/courses-page">
-                                        <CoursesPage roleId={roleId}></CoursesPage>
+                                        <CoursesPage
+                                            roleId={roleId}
+                                            sendNewNotification={sendNewNotification}></CoursesPage>
                                     </Route>
                                 }
                                 <Route path="/course-edition/:id" render={({ location, history }) => (
-                                    <CourseEdition idCourse={location.pathname} />
+                                    <CourseEdition 
+                                        idCourse={location.pathname} 
+                                        sendNewNotification={sendNewNotification}/>
                                 )}>
                                 </Route>
                                 {
@@ -127,6 +132,10 @@ function App() {
                                 </Route>
                                 <Route path="/dev-test-page">
                                     <DevTestPage sendNotification={sendNewNotification} />
+                                    <NotificationContainer
+                                        dismissibleNotifications={dismissibleNotifications}
+                                        nonDismissibleNotifications={nonDismissibleNotifications}
+                                        deleteNotification={deleteNotification} />
                                 </Route>
                             </Switch>
 

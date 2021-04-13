@@ -2,18 +2,19 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useState } from 'react';
 import { sendDeleteRequest, sendGetRequest } from '../../services/http.service';
+import { responseHandlers } from '../../services/response-handler/responseHandler';
 import ConfirmationDialog from '../../shared/components/confirmation-dialog/ConfirmationDialog';
+import { UserEnd, UserUserDeleteIdEnd } from '../../shared/endpointConsts';
 import NotificationData from '../../shared/interfaces/NotificationData';
 import { User } from '../interfaces/User';
+import { UserDelete } from '../interfaces/UserDelete';
 import UserList from './user-list/UserList';
 import UserEditForm from './UserEditForm/UserEditForm';
 import './UserPage.css'
 
-export type PreviousMethod = 'DELETE' | 'NOT DELETE';
-
 interface UserPageProps {
     roleId: number;
-    sendNotification: (newNotification: NotificationData) => void;
+    sendNotification: (newNotification: NotificationData | undefined) => void;
 }
 
 function UserPage(props: UserPageProps) {
@@ -21,60 +22,43 @@ function UserPage(props: UserPageProps) {
     const url = 'User';
     const [usersInState, setUsersInState] = useState<User[] | undefined>();
     const [isEditModeOn, setIsEditModeOn] = useState(false);
-    const [isFetching, setIsFetching] = useState(false);
     const [userToEdit, setUserToEdit] = useState<User | undefined>();
     const [userToDeleteId, setUserToDeleteId] = useState<number>();
-    const [methodInForm, setMethodInForm] = useState('');
     const [isModalShown, setIsModalShown] = useState(false);
-    const stringChanged = "изменён";
-    const stringAdded = 'добавлен';
-    let actionInNotification = methodInForm === "POST" ? stringAdded : stringChanged;
     const confirmationDeleteMessage = "Вы действительно хотите удалить пользователя?";
     const confirmationDeleteTitle = "Удаление пользователя";
     const confirmLabel = "Да";
     const declineLabel = "нет";
 
+    useEffect(() => {
+        getUsers();
+    }, []);
 
     const getUsers = async () => {
-        setUsersInState(await sendGetRequest<User[]>(url))
+        setUsersInState(await sendGetRequest<User[]>(url, props.sendNotification, responseHandlers[UserEnd]))
     }
-
-    const sendNotification = (data: { type: "error" | "success", message: string }) => {
-        props.sendNotification({
-            type: data.type,
-            text: data.message,
-            isDismissible: true,
-            timestamp: Date.now()
-        })
-    }
-
     const refreshUsers = () => {
         setUsersInState(undefined);
         getUsers();
     }
-    const checkUpdatedUsers = (addedUser: User) => {
+    const checkUpdatedUsers = () => {
         refreshUsers();
         setIsEditModeOn(false)
     }
-
     const getUserToUpdate = (userToEditId: number) => {
-        
+        //actualize user before UserEditForm rendering
     }
-
     const deleteUser = async (decision: boolean) => {
-        setIsModalShown(true);
         if (decision === true) {
-            if (await sendDeleteRequest(url + '/' + userToDeleteId)) {
+            if (await sendDeleteRequest<UserDelete[]>(
+                url + '/' + userToDeleteId,
+                props.sendNotification,
+                responseHandlers[UserUserDeleteIdEnd])) {
                 refreshUsers()
             };
         }
         setIsModalShown(false)
     }
-
-    useEffect(() => {
-        getUsers();
-    }, []);
-
     const onEditClick = (userToEditId?: number) => {
         if (userToEditId) {
             setUserToEdit([...usersInState as User[]].filter(u => u.id === userToEditId)[0]);
@@ -83,7 +67,6 @@ function UserPage(props: UserPageProps) {
         }
         setIsEditModeOn(true);
     }
-
     const onDeleteClick = (userToDeleteIdArg: number) => {
         setUserToDeleteId(userToDeleteIdArg);
         setIsModalShown(true);
@@ -92,7 +75,7 @@ function UserPage(props: UserPageProps) {
     return (
         <div className="user-page">
             {
-                isFetching ?
+                !usersInState ?
                     <div>
                         <FontAwesomeIcon icon="spinner" />
                     </div> : (
@@ -103,10 +86,10 @@ function UserPage(props: UserPageProps) {
                                 userToEdit={userToEdit}
                                 setIsEditModeOn={setIsEditModeOn}
                                 reviseSending={checkUpdatedUsers}
-                                sendNotification={sendNotification}
+                                sendNotification={props.sendNotification}
                                 url={url}></UserEditForm>
                             :
-                            usersInState && <UserList
+                            <UserList
                                 roleId={props.roleId}
                                 users={usersInState}
                                 onEditClick={onEditClick}
@@ -123,5 +106,4 @@ function UserPage(props: UserPageProps) {
         </div>
     )
 }
-
 export default UserPage;

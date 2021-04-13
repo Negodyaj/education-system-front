@@ -1,6 +1,6 @@
 import { Group } from "./Group";
 
-export interface Course{
+export interface Course {
     courseName:string;
     groups: Group[];
 }

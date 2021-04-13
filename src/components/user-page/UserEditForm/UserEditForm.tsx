@@ -1,50 +1,52 @@
 import CustomMultiSelect from '../../multi-select/CustomMultiSelect';
-import './UserEditForm.css'
-import '../UserPage.css';
 import { User } from '../../interfaces/User';
+import { UserRegisterResponse } from '../../interfaces/UserRegisterResponse';
 import React, { useState } from 'react';
 import DatePickerComponent from '../../../shared/components/date-picker/DatePickerComponent';
 import { convertEnumToDictionary, getRussianDictionary } from '../../../shared/converters/enumToDictionaryEntity';
+import { convertUserToUserUpdate } from '../../../shared/converters/userToUserUpdate';
+import { convertUserToUserInput } from '../../../shared/converters/userToUserInput';
 import { Role } from '../../../enums/role';
-import { UserInput } from '../../interfaces/UserInput';
 import { useForm } from 'react-hook-form';
 import { convertEntitiesToSelectItems } from '../../../shared/converters/entityToSelectItemConverter';
 import { getName } from '../../../shared/converters/objectKeyToString';
 import { sendPostRequest, sendPutRequest } from '../../../services/http.service';
 import { UserUpdate } from '../../interfaces/UserUpdate';
 import { ErrorMessage } from '@hookform/error-message';
-import '../../../App.css'
+import NotificationData from '../../../shared/interfaces/NotificationData';
+import { responseHandlers } from '../../../services/response-handler/responseHandler';
+import { UserRegisterEnd, UserUserUpdateIdEnd } from '../../../shared/endpointConsts';
+import './UserEditForm.css';
+import '../UserPage.css';
+import '../../../App.css';
 
 interface UserEditFormProps {
     roleId: number;
     userToEdit: User | undefined;
     setIsEditModeOn: (mode: boolean) => void;
-    reviseSending: (newUser: User) => void;
-    sendNotification: (data: { type: "error" | "success", message: string }) => void;
+    reviseSending: () => void;
+    sendNotification: (n: NotificationData | undefined) => void;
     url: string;
 }
 
 function UserEditForm(props: UserEditFormProps) {
 
-    const initUser = Object.assign({}, props.userToEdit || {
+    const initUser: User = Object.assign({}, props.userToEdit || {
         firstName: "",
         lastName: "",
         login: "",
         password: "",
-        birthDate: undefined,
+        birthDate: new Date().toLocaleDateString('ru-RU'),
         userPic: "",
         phone: "",
         email: "",
-        roleIds:[]
+        roles: []
     })
 
     const [newUser, setNewUser] = useState<User>(initUser);
-    const [wasValidated, setWasValidated] = useState('');
     const [isFetching, setIsFetching] = useState(false);
 
-    type FormInputs = UserInput;
-
-    const { register, formState: { errors }, handleSubmit, getValues, setValue } = useForm<FormInputs>({
+    const { register, formState: { errors }, handleSubmit, getValues, setValue } = useForm<User>({
         mode: 'all',
         criteriaMode: 'all',
         defaultValues: (() => { if (isFetching === false) { return Object.assign({}, newUser) } })()
@@ -52,18 +54,18 @@ function UserEditForm(props: UserEditFormProps) {
 
     const elementsDefinedByProps = {
         roleSelector: () => {
-            if (props.roleId === Role.Admin) {
+            if (props.roleId === Role.Admin && !props.userToEdit) {
                 return (
                     <div className="form-row multi">
                         <label className="form-label">Список ролей</label>
                         <CustomMultiSelect
                             selectType={"multi"}
-                            userOptionsIds={getValues('roleIds') || undefined}
+                            userOptionsIds={getValues('roles') || undefined}
                             options={convertEntitiesToSelectItems(getRussianDictionary(convertEnumToDictionary(Role)))}
                             onSelect={roleOnChange}></CustomMultiSelect>
                     </div>)
             } else {
-                setValue('roleIds', [Role.Student]);
+                setValue('roles', [Role.Student]);
             }
         },
         passwordInput: () => {
@@ -123,20 +125,26 @@ function UserEditForm(props: UserEditFormProps) {
             }
         }
     }
-
-    const sendUser = async (newUser: FormInputs) => {
-        if (props.userToEdit) {
-            props.reviseSending(await sendPutRequest<UserUpdate>(props.url + (props.userToEdit ? '/' + props.userToEdit.id : ''),
-                {
-                    firstName: newUser.firstName,
-                    lastName: newUser.lastName,
-                    phone: newUser.phone,
-                    email: newUser.email,
-                    userPic: newUser.userPic,
-                    birthDate: newUser.birthDate
-                }))
+    const reviseSending = (newOrUpdatedUser: UserUpdate | undefined) => {
+        if (newOrUpdatedUser) {
+            props.reviseSending()
         } else {
-            props.reviseSending(await sendPostRequest<User>(props.url + '/' + 'register', newUser));
+            return;
+        }
+    }
+    const sendUser = async (newOrUpdatedUser: User) => {
+        if (props.userToEdit) {
+            reviseSending(await sendPutRequest<UserUpdate>(
+                props.url + ('/' + props.userToEdit.id),
+                convertUserToUserUpdate(newOrUpdatedUser),
+                props.sendNotification,
+                responseHandlers[UserUserUpdateIdEnd]))
+        } else {
+            reviseSending(await sendPostRequest<UserRegisterResponse>(
+                props.url + '/' + 'register',
+                props.sendNotification,
+                responseHandlers[UserRegisterEnd],
+                convertUserToUserInput(newOrUpdatedUser)));
         }
     }
 
@@ -144,10 +152,9 @@ function UserEditForm(props: UserEditFormProps) {
         setValue('birthDate', date)
     }
     const roleOnChange = (options: number[]) => {
-        setValue('roleIds', options);
+        setValue('roles', options);
     }
-    const onSubmit = (data: FormInputs) => {
-        console.log(data as UserInput)
+    const onSubmit = (data: User) => {
         sendUser(data);
     }
     const setIsEditModeOn = () => {
@@ -240,9 +247,12 @@ function UserEditForm(props: UserEditFormProps) {
                             as="div">
                         </ErrorMessage>
                     </div>
-                    <div className="form-row">
+                    <div className="form-row upl-file">
                         <label className="form-label">Аватар</label>
-                        <input type="file" className="" />
+                        <div className="file-upload">
+                            <label><input id="file-input" type="file" name="file" />Выберите файл</label>
+                            <div id="no-file">Файл не выбран</div>
+                        </div>
                         <input
                             {...register('userPic', {
                                 required: {
@@ -275,7 +285,7 @@ function UserEditForm(props: UserEditFormProps) {
                                 }
                             })}
                             type="text"
-                            className="column" />
+                            className="form-input" />
                         <ErrorMessage
                             errors={errors}
                             name={getName<User>(newUser, o => o.email)}
