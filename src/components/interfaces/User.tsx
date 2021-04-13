@@ -9,5 +9,4 @@ export interface User {
     userPic?: string;
     email?: string;
     roles?: number[];
-    roleIds?: number[];
 }
