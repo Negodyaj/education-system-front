@@ -62,7 +62,7 @@ function UserList(props: UserListProps) {
                 props.roleId === Role.Admin
                 &&
                 <button className='button-round mini-button' onClick={() => onDeleteRoleClick(userId, roleId)}>
-                    <FontAwesomeIcon icon="cross" />
+                    <FontAwesomeIcon icon="times" />
                 </button>
             )
         }
