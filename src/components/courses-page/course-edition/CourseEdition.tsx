@@ -33,7 +33,6 @@ function CourseEdition(props: CourseEditionProps) {
     const [searchTurn, setSearchTurn] = useState('');
     const [nameThemes, setNameThemes] = useState(nameThemesCourse);
     const [courseName, setCourseName] = useState(currentCourse);
-    const [isOpenMaterialsCourse, setIsOpenMaterialsCourse] = useState(false);
     const [changeDisplayingButtonOpenProgramCourse, setChangeDisplayingButtonOpenProgramCourse] = useState(false);
     const [changeDisplayingButtonOpenMaterialsCourse, setChangeDisplayingButtonOpenMaterialsCourse] = useState(false);
     const [isClassOnProgramCourse, setIsClassOnProgramCourse] = useState(' unvisible');
@@ -88,7 +87,6 @@ function CourseEdition(props: CourseEditionProps) {
             addThemeCourse(newTheme);
             setTimeout (() => setChangeDisplayingButtonOpenProgramCourse(true), 200);
             setTimeout(() => setIsClassOnProgramCourse(' visible'), 200);
-            setTimeout(() => setIsClassOnMaterialTheme(' visible'), 200);
         }
     }
 
@@ -119,7 +117,6 @@ function CourseEdition(props: CourseEditionProps) {
 
     const openMaterialsCourse = () => {
         setChangeDisplayingButtonOpenMaterialsCourse(!changeDisplayingButtonOpenMaterialsCourse);
-        setIsOpenMaterialsCourse(!isOpenMaterialsCourse);
         isClassOnMaterialTheme === ' unvisible' ? setIsClassOnMaterialTheme(' visible') : setIsClassOnMaterialTheme(' unvisible');
 
     }
