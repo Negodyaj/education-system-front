@@ -37,7 +37,7 @@ function CourseEdition(props: CourseEditionProps) {
     const [isOpenMaterialsCourse, setIsOpenMaterialsCourse] = useState(false);
     const [changeDisplayingButtonOpenProgramCourse, setChangeDisplayingButtonOpenProgramCourse] = useState(false);
     const [changeDisplayingButtonOpenMaterialsCourse, setChangeDisplayingButtonOpenMaterialsCourse] = useState(false);
-    const [classOnProgramCourse, setClassOnProgramCourse] = useState(false);
+    const [isClassOnProgramCourse, setIsClassOnProgramCourse] = useState(' unvisible');
 
     const getAllThemes = async() => {
         setAllThemes(await sendGetRequest<Themes[]>(CourseThemesEnd, props.sendNewNotification, responseHandlers[CourseThemesEnd]));
@@ -114,7 +114,7 @@ function CourseEdition(props: CourseEditionProps) {
     const openProgramCourse = () => {
         setChangeDisplayingButtonOpenProgramCourse(!changeDisplayingButtonOpenProgramCourse);
         setIsOpenProgramCourse(!isOpenProgramCourse);
-        setClassOnProgramCourse(!classOnProgramCourse);
+        isClassOnProgramCourse === ' unvisible' ? setIsClassOnProgramCourse(' visible') : setIsClassOnProgramCourse(' unvisible');
     }
 
     const openMaterialsCourse = () => {
@@ -168,7 +168,7 @@ function CourseEdition(props: CourseEditionProps) {
                         </button>
                         <div className="program-course-header-text">Программа курса</div>
                     </div>
-                    <div className={"program-course " + classOnProgramCourse}>
+                    <div className={"program-course" + isClassOnProgramCourse}>
                         {   isOpenProgramCourse &&
                             themesCourse?.map((theme) => (
                                 <div key={theme.id} className="theme">

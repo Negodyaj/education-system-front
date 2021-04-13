@@ -30,6 +30,16 @@
     grid-template-rows: 60px 1fr;
 }
 
+.program-course-header{
+    cursor: pointer;
+    z-index: 1;
+}
+
+.materials-course-header {
+    cursor: pointer;
+    z-index: 1;
+}
+
 .program-course-header-button-open, .materials-course-header-button-open, .new-themes-header-button-add {
     width: 40px;
     height: 40px;
@@ -119,32 +129,25 @@
 
 @keyframes accordionEffectClose {
     to {
-        opacity: 0;
-        height: max-content;
         margin-top: -50px;
+        opacity: 0;
     }
 }
 
-.program-course.true{
+.program-course.visible{
     margin-top: -50px;
-    animation-name: accordionEffectOpen;
-    animation-duration: .5s;
-    animation-fill-mode: forwards;
+    animation: .5s forwards accordionEffectOpen;
 }
 
-.program-course.false{
-    opacity: 0;
-    margin-top: 0px;
-    animation-name: accordionEffectClose;
-    animation-duration: .5s;
-    animation-fill-mode: forwards;
+.program-course.unvisible{
+    animation: .5s forwards accordionEffectClose;
 }
+
 
 .program-course{
     width: 600px;
-    animation-name: accordionEffectClose;
-    animation-duration: .5s;
-    animation-fill-mode: forwards;
+    opacity: 0;
+    margin-top: -50px;
 }
 
 .theme {
