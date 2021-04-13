@@ -6,9 +6,13 @@ import React from 'react';
 import SearchComponent from '../../../shared/components/search-component/SearchComponent';
 import { Course } from '../../../shared/courses/Courses';
 import { sendDeleteRequest, sendGetRequest, sendPostRequest } from '../../../services/http.service';
+import NotificationData from '../../../shared/interfaces/NotificationData';
+import { CourseCourseIdEnd, CourseIdThemeIdDeleteEnd, CourseIdThemeIdAddEnd, CourseThemesEnd } from '../../../shared/endpointConsts';
+import { responseHandlers } from '../../../services/response-handler/responseHandler';
 
 interface CourseEditionProps{
     idCourse: string;
+    sendNewNotification: (newNotification: NotificationData | undefined) => void;
 }
 
 interface NewThemeCourse {
@@ -18,14 +22,14 @@ interface NewThemeCourse {
 
 function CourseEdition(props: CourseEditionProps) {
 
-    let currentCourse = {} as Course;
+    let currentCourse = {} as Course | undefined;
     let themesCurrentCourse: Themes[] = [];
     let themesList: Themes[] = [];
     let nameThemesCourse: string[] = [];
     let indexCourse = Number(props.idCourse.replace(/[a-z-A-Z\/]/g, ""));
     
-    const [themesCourse, setThemesCourse] = useState(themesCurrentCourse);
-    const [allThemes, setAllThemes] = useState(themesList);
+    const [themesCourse, setThemesCourse] = useState<Themes[] | undefined>(themesCurrentCourse);
+    const [allThemes, setAllThemes] = useState<Themes[] | undefined>(themesList);
     const [searchTurn, setSearchTurn] = useState('');
     const [nameThemes, setNameThemes] = useState(nameThemesCourse);
     const [courseName, setCourseName] = useState(currentCourse);
@@ -35,28 +39,32 @@ function CourseEdition(props: CourseEditionProps) {
     const [changeDisplayingButtonOpenMaterialsCourse, setChangeDisplayingButtonOpenMaterialsCourse] = useState(false);
 
     const getAllThemes = async() => {
-        setAllThemes(await sendGetRequest('Course/theme'))
+        setAllThemes(await sendGetRequest<Themes[]>(CourseThemesEnd, props.sendNewNotification, responseHandlers[CourseThemesEnd]));
+        console.log(allThemes);
     }
 
     const getCourseById = async (id: number) => {
-        const dataCourse = await sendGetRequest<Course>('Course/' + id);
+        const dataCourse = await sendGetRequest<Course>(CourseCourseIdEnd + id, props.sendNewNotification, responseHandlers[CourseCourseIdEnd]);
         return dataCourse;
     };
 
     const updateCourseThemes = async () => {
         currentCourse = await getCourseById(indexCourse);
         setCourseName(currentCourse);
-        checkThemes(currentCourse);
-        setThemesCourse(currentCourse.themes);
+        checkThemes(currentCourse as Course);
+        setThemesCourse(currentCourse?.themes);
     } 
 
+    
     const addThemeCourse = (newThemeCourse: NewThemeCourse) => {
-        sendPostRequest('Course/' + newThemeCourse.idCourse + '/theme/' + newThemeCourse.idTheme, newThemeCourse);
+        let str = 'Course/' + newThemeCourse.idCourse + '/theme/' + newThemeCourse.idTheme;
+        sendPostRequest<Themes>(str, props.sendNewNotification, responseHandlers[CourseIdThemeIdAddEnd]);
         setTimeout (() => updateCourseThemes(), 200);
     }
 
     const deleteThemeCourse = (newThemeCourse: NewThemeCourse) => {
-        sendDeleteRequest('Course/' + newThemeCourse.idCourse + '/theme/' + newThemeCourse.idTheme, newThemeCourse.idTheme);
+        let str = 'Course/' + newThemeCourse.idCourse + '/theme/' + newThemeCourse.idTheme;
+        sendDeleteRequest<Themes>(str, props.sendNewNotification, responseHandlers[CourseIdThemeIdDeleteEnd]);
         setTimeout (() => updateCourseThemes(), 200);
     }
 
@@ -84,7 +92,7 @@ function CourseEdition(props: CourseEditionProps) {
 
     const checkTheThemeInTheCourse = (theme: Themes): number => {
         let count = 0;
-        for (let item of themesCourse) {
+        for (let item of themesCourse as Themes[]) {
             if (item.name === theme.name) {
                 count++;
                 break;
@@ -128,7 +136,7 @@ function CourseEdition(props: CourseEditionProps) {
                 <div className="new-themes-container">
                     <SearchComponent funcSearch={searchFromTheme}/>
                     {
-                        allThemes.filter((item) => {
+                        allThemes?.filter((item) => {
                             if (item.name.toLowerCase().includes(searchTurn.toLowerCase())) {
                                 return item;
                             } 

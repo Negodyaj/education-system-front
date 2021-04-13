@@ -8,9 +8,13 @@ import NewCourse from './NewCourse';
 import { DataNewCourse } from './NewCourse';
 import { Course } from '../../shared/courses/Courses';
 import { sendDeleteRequest, sendGetRequest, sendPostRequest } from '../../services/http.service';
+import { CourseAddEnd, CourseDeleteEnd, CourseEnd } from '../../shared/endpointConsts';
+import { responseHandlers } from '../../services/response-handler/responseHandler';
+import NotificationData from '../../shared/interfaces/NotificationData';
 
 interface CoursesPageProps {
     roleId: number;
+    sendNewNotification: (newNotification: NotificationData | undefined) => void;
 }
 
 function CoursesPage(props: CoursesPageProps) {
@@ -23,7 +27,7 @@ function CoursesPage(props: CoursesPageProps) {
     const [idCourseDelete, setIdCourseDelete] = useState(0);
 
     const getCourses = async () => {
-        setCoursesList(await sendGetRequest('Course/'));
+        setCoursesList(await sendGetRequest<Course[]>(CourseEnd, props.sendNewNotification, responseHandlers[CourseEnd]));
     }
 
     useEffect(() => {
@@ -31,12 +35,12 @@ function CoursesPage(props: CoursesPageProps) {
     }, []);
 
     const addCourse = async (newCourse: DataNewCourse) => {
-        (await sendPostRequest('Course/', newCourse));
+        await sendPostRequest<Course>(CourseEnd, props.sendNewNotification, responseHandlers[CourseAddEnd], newCourse);
         getCourses();
     }
 
     const deleteCourse = async (id: number) => {
-        await sendDeleteRequest('Course/' + id, id)
+        await sendDeleteRequest<Course>(CourseEnd + '/' + id, props.sendNewNotification, responseHandlers[CourseDeleteEnd]);
         getCourses();
     }
 
@@ -64,7 +68,7 @@ function CoursesPage(props: CoursesPageProps) {
         }
         setIsModalAdd(false);
     }
- 
+
     return(
         <div className="course-container">
             <div className="course-create">
@@ -73,7 +77,7 @@ function CoursesPage(props: CoursesPageProps) {
             </div>
             <div className="courses-list">
                 {
-                    coursesList.map(item => (
+                    coursesList?.map(item => (
                         <div key={item.id} className="course">
                             <div className="current-course-name">{item.name}</div>
                             <div className="course-update-delete">
