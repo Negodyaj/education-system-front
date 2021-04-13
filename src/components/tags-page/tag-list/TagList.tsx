@@ -4,9 +4,8 @@ import { responseHandlers } from "../../../services/response-handler/responseHan
 import { TagDeleteEnd, TagEnd } from "../../../shared/endpointConsts";
 import NotificationData from "../../../shared/interfaces/NotificationData";
 import { Tag } from "../../interfaces/Tag";
-import '../../../App.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import '../TagsPage.css'
+
 
 interface TagListProps {
     sendNotification: (newNotification: NotificationData | undefined) => void;

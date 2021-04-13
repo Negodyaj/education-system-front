@@ -1,9 +1,7 @@
 import React, { ChangeEventHandler, useEffect, useState } from 'react';
-import { isJSDocReturnTag } from 'typescript';
 import { Tag } from '../interfaces/Tag';
 import TagList from './tag-list/TagList';
 import './TagsPage.css';
-import wretch from 'wretch';
 import { sendGetRequest, sendPostRequest } from '../../services/http.service';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import SearchComponent from '../../shared/components/search-component/SearchComponent';
@@ -38,14 +36,12 @@ function TagsPage(props: TagsPageProps) {
 
     return (
         <div className="main">
-            <div className="column-head">
-                <div className="input">
-                    <input onChange={tagsFilter} />
-                    <button className="button-style" onClick={() => { setHidden("") }}>
-                        <FontAwesomeIcon icon="plus" />
-                        <span> Добавить</span>
-                    </button>
-                </div>
+            <div className="tag-header">
+                <input className="input-search" onChange={tagsFilter} placeholder="Введите тег" />
+                <button className="button-style" onClick={() => { setHidden("") }}>
+                    <FontAwesomeIcon icon="plus" />
+                    <span> Добавить</span>
+                </button>
             </div>
 
             <div className="body">
