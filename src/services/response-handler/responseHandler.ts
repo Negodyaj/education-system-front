@@ -17,6 +17,7 @@ import { isUserDelete } from "../type-guards/userDelete";
 import { isUserRegisterResponse } from "../type-guards/userRegisterResponse";
 import { Tag } from "../../components/interfaces/Tag";
 import { isTagArr } from "../type-guards/tagArr";
+import { isTag } from "../type-guards/tag";
 
 export enum nType {
     Error = 'error',
@@ -149,7 +150,7 @@ export const responseHandlers: responseHandler = {
             [nType.Success]: makeNotification(nType.Success, ('Тег успешно добавлен'))
         })
     },
-    isT: (data: any): data is Tag[] => isTagArr(data)
+    isT: (data: any): data is Tag[] => isTag(data)
 }
 
 }

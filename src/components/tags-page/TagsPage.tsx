@@ -20,10 +20,10 @@ function TagsPage(props: TagsPageProps) {
     const url = 'Tag';
     const [tagsInState, setTagsInState] = useState<Tag[]|undefined>([]);
     const [searchTurn, setSearchTurn] = useState('');
+    const [hidden, setHidden] = useState("hidden")
     
     const getTags = async () => {
-        setTagsInState(await sendGetRequest<Tag[]>(url, props.sendNotification, responseHandlers[TagEnd]))
-        setTagsInState(await sendPostRequest<Tag[]>(url, props.sendNotification, responseHandlers[TagAddEnd]))
+        setTagsInState(await sendGetRequest<Tag[]>(url, props.sendNotification, responseHandlers[TagEnd])) 
     };
 
     useEffect(() => {
@@ -57,7 +57,7 @@ function TagsPage(props: TagsPageProps) {
 
             </div>
 
-            <AddTagModal />
+            <AddTagModal sendNotification={props.sendNotification} setTagsInState={setTagsInState} hidden={hidden}/>
         </div>
     )
 
