@@ -7,5 +7,5 @@ export interface UserInput {
     userPic?: string;
     email?: string;
     password?: string;
-    roleIds?: number[];
+    roles?: number[];
 }

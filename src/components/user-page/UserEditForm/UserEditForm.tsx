@@ -40,7 +40,7 @@ function UserEditForm(props: UserEditFormProps) {
         userPic: "",
         phone: "",
         email: "",
-        roleIds: []
+        roles: []
     })
 
     const [newUser, setNewUser] = useState<User>(initUser);
@@ -60,12 +60,12 @@ function UserEditForm(props: UserEditFormProps) {
                         <label className="form-label">Список ролей</label>
                         <CustomMultiSelect
                             selectType={"multi"}
-                            userOptionsIds={getValues('roleIds') || undefined}
+                            userOptionsIds={getValues('roles') || undefined}
                             options={convertEntitiesToSelectItems(getRussianDictionary(convertEnumToDictionary(Role)))}
                             onSelect={roleOnChange}></CustomMultiSelect>
                     </div>)
             } else {
-                setValue('roleIds', [Role.Student]);
+                setValue('roles', [Role.Student]);
             }
         },
         passwordInput: () => {
@@ -152,7 +152,7 @@ function UserEditForm(props: UserEditFormProps) {
         setValue('birthDate', date)
     }
     const roleOnChange = (options: number[]) => {
-        setValue('roleIds', options);
+        setValue('roles', options);
     }
     const onSubmit = (data: User) => {
         sendUser(data);

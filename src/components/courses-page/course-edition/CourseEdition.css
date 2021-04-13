@@ -1,20 +1,72 @@
 .course-edition-container {
-    display: flex;
+    display: grid;
+    grid-template-rows: 50px 1fr;
+    width: 1050px;
+    margin: 0 auto;
+}
+
+.current-course-header-name {
+    font-family: 'Montserrat';
+    font-weight: 600;
+    font-size: 20px;
+    border-bottom: 1px solid rgba(39, 45, 59, .15);
 }
 
 .course-update {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-
+    grid-template-columns: 350px 600px;
+    gap: 100px;
+    margin-top: 30px;
 }
 
-.new-themes-course {
-
-    
+.current-course-container {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
 }
 
-.new-themes-header, .program-course-header {
-    font-size: 25px;
+.new-themes-course, .program-current-course-container, .materials-current-course-container {
+    display: grid;
+    grid-template-rows: 60px 1fr;
+}
+
+.program-course-header-button-open, .materials-course-header-button-open, .new-themes-header-button-add {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    outline: none;
+    border: none;
+    background-color: #00CCF2;
+    margin-right: 20px;
+    cursor: pointer;
+    color: #F5FBFF;
+}
+
+.program-course-header-button-open:focus, .materials-course-header-button-open:focus, .new-themes-header-button-add:focus {
+    outline: none;
+    border: none;
+}
+
+.new-themes-course-header {
+    display: grid;
+    grid-template-columns: 1fr 50px;
+}
+
+.theme:hover{
+    background-color: rgba(0, 211, 248, 0.15);
+    border-radius: 5px;
+    cursor: pointer;
+} 
+.new-themes-header-text, .program-course-header, .materials-course-header {
+    display: flex;
+    justify-content: flex-start;
+    padding-left: 20px;
+    align-items: center;
+    height: 40px;
+    border-radius: 20px;
+    font-family: 'Montserrat';
+    font-weight: 400;
+    font-size: 20px;
     margin-bottom: 20px;
 }
 
@@ -22,7 +74,6 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 10px;
 }
 
 .new-theme {
@@ -32,10 +83,17 @@
     padding: 0 10px;
     width: 350px;
     height: 50px;
-    border: 2px solid rgb(41, 3, 253);
-    border-radius: 5px;
-    font-size: 20px;
+    font-family: 'Montserrat';
+    font-weight: 400;
+    font-size: 16px;
+    border-bottom: 1px solid rgba(39, 45, 59, .15);
 }
+
+.new-theme:hover{
+    background-color: rgba(0, 211, 248, 0.15);
+    border-radius: 5px;
+    cursor: pointer;
+} 
 
 .true{
     background-color: rgba(197, 244, 186, 0.26);
@@ -43,7 +101,7 @@
 }
 
 .button-add-theme {
-    background-color: white;
+    background-color: rgba(255, 255, 255, 0);
     background-size: contain;
     width: 32px;
     height: 32px;
@@ -58,6 +116,7 @@
 
 .program-course {
     width: 600px;
+    height: max-content;
 }
 
 .theme {
@@ -65,9 +124,10 @@
     grid-template-columns: 90% 10%;
     width: inherit;
     height: 50px;
-    border: 2px solid rgb(41, 3, 253);
-    border-radius: 5px;
-    font-size: 20px;
+    border-bottom: 1px solid rgba(39, 45, 59, .15);
+    font-family: 'Montserrat';
+    font-weight: 400;
+    font-size: 16px;
 }
 
 .theme-name {
@@ -84,7 +144,7 @@
 } 
 
 .button-theme-delete {
-    background-color: white;
+    background-color: rgba(255, 255, 255, 0);
     background-size: contain;
     width: 40px;
     height: 40px;
