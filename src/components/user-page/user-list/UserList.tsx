@@ -43,7 +43,7 @@ function UserList(props: UserListProps) {
     const [paymentFormState, setPaymentFormState] = useState('');
     const [roleID, setRoleID] = useState(0);
     const [userID, setUserID] = useState(0);
-const[isDisableRole, setIsDisableRole]= useState(false)
+
 
     const elementsDefinedByRole = {
         paymentButton: (userId: number | undefined) => {
@@ -115,7 +115,6 @@ const[isDisableRole, setIsDisableRole]= useState(false)
             props.refreshUsers();
         }
         setIsModalShow(false);
-
     }
 
     return (
