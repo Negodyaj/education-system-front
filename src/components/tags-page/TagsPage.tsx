@@ -35,11 +35,7 @@ function TagsPage(props: TagsPageProps) {
     };
 
     const closeModal = () => setHidden ("hidden");
-
-
-    // const searchFromTags = (str: string) => {
-    //     setSearchTurn(str);
-    // e
+   
     return (
         <div>
             <div className="table">
@@ -53,7 +49,7 @@ function TagsPage(props: TagsPageProps) {
                 </div>
 
                 <div className="body">
-                    <div className="tags"> <TagList str={searchTurn} tags={tagsInState}></TagList> </div>
+                    <div className="tags"> <TagList str={searchTurn} tags={tagsInState} sendNotification={props.sendNotification} setTagsInState={setTagsInState}></TagList> </div>
 
                 </div>
 

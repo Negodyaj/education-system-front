@@ -11,3 +11,4 @@ export const CourseIdThemeIdAddEnd: string = 'Course/id/theme/id';
 export const CourseIdThemeIdDeleteEnd: string = 'Course/id/theme/idDelete';
 export const TagEnd: string ='Tag';
 export const TagAddEnd: string ='Tag/Add';
+export const TagDeleteEnd: string ='Tag/Delete';
