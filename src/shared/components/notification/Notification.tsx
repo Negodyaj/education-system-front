@@ -9,12 +9,12 @@ interface NotificationProps {
 }
 
 function Notification(props: NotificationProps) {
-    const [isHidden, setIsHidden] = useState(true);
+    //const [isHidden, setIsHidden] = useState(true);
     const deleteRef = useRef(props.deleteNotification);
     deleteRef.current = props.deleteNotification;
 
     useEffect(() => {
-        setIsHidden(false);
+        //setIsHidden(false);
     }, [])
     
     const typeToTimeout = () => {
@@ -45,7 +45,7 @@ function Notification(props: NotificationProps) {
 
     const dismiss = () => {
         if (props.notificationData.isDismissible) {
-            setIsHidden(true);
+            //setIsHidden(true);
             setTimeout(() => {
                 if (deleteRef.current)
                     deleteRef.current(props.notificationData)
@@ -83,7 +83,7 @@ function Notification(props: NotificationProps) {
 
     return (
         <div className={`notification 
-            ${isHidden ? "hidden" : ""}
+            ${false ? "hidden" : ""}
             ${typeToClassName()} `}
         >
             <div className="type-icon">
