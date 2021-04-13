@@ -1,50 +1,46 @@
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { sendPostRequest } from '../../../services/http.service';
+import { sendGetRequest, sendPostRequest } from '../../../services/http.service';
 import { responseHandlers } from '../../../services/response-handler/responseHandler';
-import { convertPaymentToPaymentInput } from '../../../shared/converters/paymentToPaymentInput';
-import { PaymentAddEnd } from '../../../shared/endpointConsts';
+import { PaymentAddEnd, PaymentEnd } from '../../../shared/endpointConsts';
 import NotificationData from '../../../shared/interfaces/NotificationData';
 import { Payment } from '../../interfaces/Payment';
 import { PaymentInput } from '../../interfaces/PaymentInput';
 import { PaymentResponse } from '../../interfaces/PaymentResponse';
 import './PaymentForm.css'
-//import '/App.css'
+import '../../../App.css';
+import { stringify } from 'node:querystring';
 
 interface PaymentProps {
     paymentFormState: string;
     cancelClick: () => void;
-    userName?: string;
-    userLastname?: string;
-    userId?: number;
     sendNotification: (newNotification: NotificationData | undefined) => void;
+    userPayment: PaymentResponse | undefined;
 }
 
-
-
 function PaymentForm(props: PaymentProps) {
-
-    const InitPayment: PaymentInput = {
-        amount: "",
-        date: Date(),
-        period: "",
-        contractNumber: "",
-    }
 
     const { register, formState: { errors }, handleSubmit, getValues, setValue } = useForm<PaymentInput>({
         mode: 'all',
         criteriaMode: 'all',
-        defaultValues: InitPayment
+        defaultValues: {
+            amount: 2500,
+            date: Date(),
+            period: "",
+            contractNumber: props.userPayment?.contractNumber
+        }
     });
 
     const sendPayment = (newPayment: PaymentInput) => {
         sendPostRequest<PaymentResponse>(
-            'User' + '/' + props.userId + '/' + 'payment',
+            'User' + '/' + props.userPayment?.user?.id + '/' + 'payment',
             props.sendNotification,
             responseHandlers[PaymentAddEnd],
             newPayment)
+            console.log(newPayment)
     }
 
-    const onSubmit = (data: PaymentInput) => {
+    const onSubmit = (data: Payment) => {
         sendPayment(data);
     }
 
@@ -53,7 +49,7 @@ function PaymentForm(props: PaymentProps) {
             <div className={"inner-payment " + (props.paymentFormState)}>
                 <div className="header-payment">
                     <div>Назначить платеж пользователю
-                        <div>{props.userName} {props.userLastname}</div>
+                        <div>{props.userPayment?.user?.firstName} {props.userPayment?.user?.lastName}</div>
                     </div>
                     <button className="button-round" onClick={props.cancelClick}>х</button>
                 </div>
@@ -72,20 +68,22 @@ function PaymentForm(props: PaymentProps) {
                     </div>
                     <div className="input-row">
                         <label>Номер договора</label>
-                        <input key='contractNumber' {...register("contractNumber")}></input>
+                        <input key='contractNumber' value={props.userPayment?.contractNumber}
+                            {...register("contractNumber")}
+                        ></input>
                     </div>
-                    <div className="row input-row ">
+                    {/* <div className="row input-row ">
                         <label>Оплачено полностью</label>
                         <input className="checkbox" type="checkbox" checked></input>
-                    </div>
+                    </div> */}
                     <div className="footer-payment">
-                        <button className="button-select" onClick={props.cancelClick}>Отмена</button>
+                        <button className="button-select" type="button" onClick={props.cancelClick}>Отмена</button>
                         <button className="button-select" type={"submit"}>Подтвердить</button>
                     </div>
                 </form>
 
             </div>
-        </div>
+        </div >
     )
 }
 

@@ -8,6 +8,11 @@ import PaymentForm from "../payment-form/PaymentForm";
 import '../UserPage.css';
 import '../../../App.css'
 import NotificationData from "../../../shared/interfaces/NotificationData";
+import { PaymentResponse } from '../../interfaces/PaymentResponse';
+import { sendGetRequest } from "../../../services/http.service";
+import { responseHandlers } from "../../../services/response-handler/responseHandler";
+import { PaymentEnd } from "../../../shared/endpointConsts";
+import { Console } from "node:console";
 
 interface UserListProps {
     roleId: number;
@@ -31,11 +36,26 @@ function UserList(props: UserListProps) {
         return 0;
     }
 
+    const initPaymentResponse: PaymentResponse[] = [{
+        id: 0,
+        amount: 0,
+        date: "",
+        period: "",
+        contractNumber: 0,
+        user: {
+            id: 0,
+            firstName: "",
+            lastName: "",
+            userPic: ""
+        }
+    }]
+
     const [signInvertor, setSignInvertor] = useState(1);
     const [usersToShow, setUsersToShow] = useState([...props.users]);
-    const [userForPayment, setUserForPayment] = useState<User | undefined>(undefined);
+    //const [userForPayment, setUserForPayment] = useState<User | undefined>(undefined);
     const [paymentFormState, setPaymentFormState] = useState('');
-
+    const [userPayment, setUserPayment] = useState<PaymentResponse[] | undefined>(initPaymentResponse || undefined);
+    
     const elementsDefinedByRole = {
         paymentButton: (userId: number | undefined) => {
             return (
@@ -47,11 +67,11 @@ function UserList(props: UserListProps) {
             )
         }
     }
-
+    
     const onPaymentButtonClick = (userId: number | undefined) => {
-        setUserForPayment([...usersToShow].filter(u => u.id === userId)[0]);
+        //setUserForPayment([...usersToShow].filter(u => u.id === userId)[0]);
         setPaymentFormState('visible');
-
+        getPayment([...usersToShow].filter(u => u.id === userId)[0].id);
     }
 
     const onEditClick = (userToEditId?: number) => {
@@ -67,6 +87,15 @@ function UserList(props: UserListProps) {
 
     const onCancelPaymentClick = () => {
         setPaymentFormState('');
+    }
+
+    const getPayment = async (userId?: number) => {
+        setUserPayment(await sendGetRequest<PaymentResponse[] | undefined>(
+            'User' + '/' + userId + '/' + 'payment',
+            props.sendNotification,
+            responseHandlers[PaymentEnd]));
+            //console.log('User' + '/' + userId + '/' + 'payment');
+        //console.log((userPayment as PaymentResponse[])[0])
     }
 
     return (
@@ -110,7 +139,6 @@ function UserList(props: UserListProps) {
                                 <button className="button-round" onClick={() => props.onDeleteClick(u.id as number)}>
                                     <FontAwesomeIcon icon="trash" />
                                 </button>
-
                                 {
                                     elementsDefinedByRole.paymentButton(u.id)
                                 }
@@ -121,10 +149,8 @@ function UserList(props: UserListProps) {
             <PaymentForm
                 paymentFormState={paymentFormState}
                 cancelClick={onCancelPaymentClick}
-                userName={userForPayment?.firstName}
-                userLastname={userForPayment?.lastName}
-                userId={userForPayment?.id}
                 sendNotification={props.sendNotification}
+                userPayment={(userPayment as PaymentResponse[])[0] || undefined}
             ></PaymentForm>
         </div>
 

@@ -2,7 +2,7 @@ import { User } from "../../components/interfaces/User";
 import { UserDelete } from "../../components/interfaces/UserDelete";
 import { UserRegisterResponse } from "../../components/interfaces/UserRegisterResponse";
 import { Course } from "../../shared/courses/Courses";
-import { CourseAddEnd, CourseCourseIdEnd, CourseDeleteEnd, CourseEnd, CourseIdThemeIdAddEnd, CourseIdThemeIdDeleteEnd, CourseThemesEnd, PaymentAddEnd, UserEnd, UserRegisterEnd, UserUserDeleteIdEnd, UserUserUpdateIdEnd } from "../../shared/endpointConsts";
+import { CourseAddEnd, CourseCourseIdEnd, CourseDeleteEnd, CourseEnd, CourseIdThemeIdAddEnd, CourseIdThemeIdDeleteEnd, CourseThemesEnd, PaymentAddEnd, PaymentEnd, UserEnd, UserRegisterEnd, UserUserDeleteIdEnd, UserUserUpdateIdEnd } from "../../shared/endpointConsts";
 import { makeErrorText, makeNotification } from "../../shared/helpers/noficationHelpers";
 import NotificationData from "../../shared/interfaces/NotificationData";
 import { Themes } from "../../shared/themes/Themes";
@@ -16,7 +16,8 @@ import { isUserArr } from "../type-guards/userArray";
 import { isUserDelete } from "../type-guards/userDelete";
 import { isUserRegisterResponse } from "../type-guards/userRegisterResponse";
 import { PaymentResponse } from "../../components/interfaces/PaymentResponse";
-import { isPaymentResponse } from "../type-guards/payment";
+import { isPaymentResponseArr } from "../type-guards/paymentResponseArr";
+import { isPaymentResponse } from "../type-guards/paymentResponse";
 
 export enum nType {
     Error = 'error',
@@ -144,6 +145,16 @@ export const responseHandlers: responseHandler = {
             })
         },
         isT: (data: any): data is PaymentResponse => isPaymentResponse(data)
+    },
+    [PaymentEnd]: {
+        notifications: (response?: any) => {
+            return ({
+                [nType.Error]: makeNotification(nType.Error, makeErrorText(response)),
+                [nType.Success]: undefined
+            }
+            )
+        },
+        isT: (data: any): data is PaymentResponse[] => isPaymentResponseArr(data)
     }
 
 }

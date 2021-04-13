@@ -1,6 +1,6 @@
 export interface PaymentInput {
-    amount: string,
+    amount: number,
     date: string,
     period: string,
-    contractNumber: string,
+    contractNumber: number,
 }
