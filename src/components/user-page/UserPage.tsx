@@ -1,135 +1,109 @@
 
-import { useState } from 'react';
-import { Roles } from '../../shared/components/roles/Roles';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, { useEffect, useState } from 'react';
+import { sendDeleteRequest, sendGetRequest } from '../../services/http.service';
+import { responseHandlers } from '../../services/response-handler/responseHandler';
+import ConfirmationDialog from '../../shared/components/confirmation-dialog/ConfirmationDialog';
+import { UserEnd, UserUserDeleteIdEnd } from '../../shared/endpointConsts';
+import NotificationData from '../../shared/interfaces/NotificationData';
 import { User } from '../interfaces/User';
+import { UserDelete } from '../interfaces/UserDelete';
 import UserList from './user-list/UserList';
 import UserEditForm from './UserEditForm/UserEditForm';
 import './UserPage.css'
 
 interface UserPageProps {
     roleId: number;
+    sendNotification: (newNotification: NotificationData | undefined) => void;
 }
 
 function UserPage(props: UserPageProps) {
 
-    const users: User[] = [
-        {
-            id: 430,
-            name: "Гай Юлий",
-            secondName: "Цезарь",
-            birthDate: new Date(0, 1, 1),
-            login: "Lorem",
-            password: "cesar",
-            phone: "+7 987 654 32 10",
-            role: [{
-                value: 2,
-                label: "студент"
-            }],
-            email: "boss@myempire.com",
-            groupId: 4,
-            groupName: "C# Base дневная"
-        },
-        {
-            id: 40,
-            name: "Марк Аврелий",
-            secondName: "Антонин",
-            birthDate: new Date(3, 2, 2),
-            login: "ave",
-            password: "cesar",
-            phone: "+7 897 012 345 67 89",
-            role: [{
-                value: 2,
-                label: "студент"
-            }],
-            email: "boss@myempire.com",
-            groupId: 4,
-            groupName: "C# Base дневная"
-        },
-        {
-            id: 30,
-            name: "Тит Элий Адриан сверхпредрассредоточенный",
-            secondName: "Антонин",
-            birthDate: new Date(103, 2, 21),
-            login: "ipsum",
-            password: "cesar",
-            phone: "+7 999 887 23 05",
-            role: [{
-                value: 2,
-                label: "студент"
-            }, {
-                value: 3,
-                label: "менеджер"
-            }, {
-                value: 4,
-                label: "администратор"
-            }],
-            email: "boss@myempire.com",
-            groupId: 4,
-            groupName: "C# Base дневная"
-        },
-        {
-            id: 4,
-            name: "Публий Элий Траян",
-            secondName: "Адриан",
-            birthDate: new Date(1993, 2, 21),
-            login: "dolor",
-            password: "cesar",
-            phone: "+7 902 089 97 42",
-            role: [{
-                value: 2,
-                label: "студент"
-            }],
-            email: "boss@myempire.com",
-            groupId: 4,
-            groupName: "C# Base дневная"
-        },
-    ];
-
-    const [usersInState, setUsersInState] = useState(users);
+    const url = 'User';
+    const [usersInState, setUsersInState] = useState<User[] | undefined>();
     const [isEditModeOn, setIsEditModeOn] = useState(false);
-    const [userToEdit, setUserToEdit] = useState<User | null>(null);
-    const ids: (number | undefined)[] = Array.from(usersInState, user => user.id);
+    const [userToEdit, setUserToEdit] = useState<User | undefined>();
+    const [userToDeleteId, setUserToDeleteId] = useState<number>();
+    const [isModalShown, setIsModalShown] = useState(false);
+    const confirmationDeleteMessage = "Вы действительно хотите удалить пользователя?";
+    const confirmationDeleteTitle = "Удаление пользователя";
+    const confirmLabel = "Да";
+    const declineLabel = "нет";
 
-    const onEditClick = (userToEditId?: number) => {
-        if (userToEditId === null) return;
-        setIsEditModeOn(true);
-        setUserToEdit(
-            usersInState.filter((user) => {
-                return user.id == userToEditId
-            })[0]
-        )
+    useEffect(() => {
+        getUsers();
+    }, []);
+
+    const getUsers = async () => {
+        setUsersInState(await sendGetRequest<User[]>(url, props.sendNotification, responseHandlers[UserEnd]))
     }
-    const onSaveClick = (newUser: User) => {
-        let i: number = ids.indexOf(newUser.id);
-        if (i === -1) {
-            usersInState.push(newUser);
-        } else {
-            usersInState[i] = newUser;
+    const refreshUsers = () => {
+        setUsersInState(undefined);
+        getUsers();
+    }
+    const checkUpdatedUsers = () => {
+        refreshUsers();
+        setIsEditModeOn(false)
+    }
+    const getUserToUpdate = (userToEditId: number) => {
+        //actualize user before UserEditForm rendering
+    }
+    const deleteUser = async (decision: boolean) => {
+        if (decision === true) {
+            if (await sendDeleteRequest<UserDelete[]>(
+                url + '/' + userToDeleteId,
+                props.sendNotification,
+                responseHandlers[UserUserDeleteIdEnd])) {
+                refreshUsers()
+            };
         }
-        setUsersInState(usersInState);
+        setIsModalShown(false)
     }
-
-    const renderUserList = () => {
-        return <UserList
-            roleId={props.roleId}
-            users={usersInState}
-            onEditClick={onEditClick}></UserList>
+    const onEditClick = (userToEditId?: number) => {
+        if (userToEditId) {
+            setUserToEdit([...usersInState as User[]].filter(u => u.id === userToEditId)[0]);
+        } else {
+            setUserToEdit(undefined);
+        }
+        setIsEditModeOn(true);
     }
-    const renderUserEditForm = () => {
-        return <UserEditForm
-            roleId={props.roleId}
-            user={userToEdit}
-            onCancelClick={setIsEditModeOn}
-            onSaveClick={onSaveClick}></UserEditForm>
+    const onDeleteClick = (userToDeleteIdArg: number) => {
+        setUserToDeleteId(userToDeleteIdArg);
+        setIsModalShown(true);
     }
 
     return (
         <div className="user-page">
             {
-                isEditModeOn ? renderUserEditForm() : renderUserList()
+                !usersInState ?
+                    <div>
+                        <FontAwesomeIcon icon="spinner" />
+                    </div> : (
+                        isEditModeOn
+                            ?
+                            <UserEditForm
+                                roleId={props.roleId}
+                                userToEdit={userToEdit}
+                                setIsEditModeOn={setIsEditModeOn}
+                                reviseSending={checkUpdatedUsers}
+                                sendNotification={props.sendNotification}
+                                url={url}></UserEditForm>
+                            :
+                            <UserList
+                                roleId={props.roleId}
+                                users={usersInState}
+                                onEditClick={onEditClick}
+                                onDeleteClick={onDeleteClick}></UserList>
+                    )
             }
+            <ConfirmationDialog
+                isShown={isModalShown}
+                confirmLabel={confirmLabel}
+                declineLabel={declineLabel}
+                message={confirmationDeleteMessage}
+                title={confirmationDeleteTitle}
+                callback={deleteUser}></ConfirmationDialog>
         </div>
     )
 }
-
 export default UserPage;

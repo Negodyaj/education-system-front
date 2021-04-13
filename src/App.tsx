@@ -1,36 +1,51 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import CustomList from './components/custom-list/CustomList';
-import Cards from './Cards';
-import { Link, Switch, Route, useHistory } from 'react-router-dom';
+import { Switch, Route, useHistory, Link } from 'react-router-dom';
 import LoginForm from './components/login-form/LoginForm';
 import NavMenu from './components/nav-menu/NavMenu';
 import HomeworkPage from './components/homework-page/HomeworkPage';
-import CoursesList from './components/courses-list/CoursesList';
-import GroupList from './components/group-list/GroupList';
-import NewsList from './components/news-list/NewsList';
-import HomeworkList from './components/homework-list/HomeworkList';
 import NotificationContainer from './shared/components/notification/NotificationContainer'
 import UserPage from './components/user-page/UserPage';
-import DatePickerComponent from './shared/components/date-picker/DatePickerComponent';
-import CustomMultiSelect from './components/multi-select/CustomMultiSelect';
 import CoursesPage from './components/courses-page/CoursesPage';
-import "./shared/fontawesome/FontawesomeIcons"; 
+import CourseEdition from './components/courses-page/course-edition/CourseEdition';
+import "./shared/fontawesome/FontawesomeIcons";
+import { Role } from './enums/role';
+import NotificationData from './shared/interfaces/NotificationData';
+import DevTestPage from './components/dev-test-page/DevTestPage';
+import TagsPage from './components/tags-page/TagsPage';
+import { getToken } from './services/auth.service';
+import { getUser } from './services/test-wretch';
+
 
 function App() {
     const history = useHistory();
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [roleId, setRoleId] = useState(0);
+    const token = getToken();
+    const [isLoggedIn, setIsLoggedIn] = useState(!!token);
+    const [roleId, setRoleId] = useState(Role.Admin);
+    const [dismissibleNotifications, setDismissibleNotifications] = useState<NotificationData[]>([]);
+    const [nonDismissibleNotifications, setNonDismissibleNotifications] = useState<NotificationData[]>([]);
 
+    const sendNewNotification = (newNotification: NotificationData | undefined) => {
+        if (!newNotification) return;
+        if (newNotification.isDismissible) {
+            setDismissibleNotifications([newNotification, ...dismissibleNotifications]);
+        } else {
+            setNonDismissibleNotifications([newNotification, ...nonDismissibleNotifications]);
+        }
+    }
+    const deleteNotification = (dismissedNotification: NotificationData) => {
+        const newState = dismissibleNotifications.filter(notification => notification != dismissedNotification);
+        setDismissibleNotifications(newState);
+    }
 
     const users = [
-        { login: 'test', password: 'test', roleId: 1 },
-        { login: 'student', password: 'qwerty', roleId: 2 },
-        { login: 'manager', password: 'manager', roleId: 3 },
-        { login: 'admin', password: 'admin', roleId: 4 },
-        { login: 'methodist', password: 'methodist', roleId: 5 },
-        { login: 'teacher', password: 'teacher', roleId: 6 }
+        { login: 'test', password: 'test', roleId: Role.Test },
+        { login: 'student', password: 'qwerty', roleId: Role.Student },
+        { login: 'manager', password: 'manager', roleId: Role.Manager },
+        { login: 'admin', password: 'admin', roleId: Role.Admin },
+        { login: 'methodist', password: 'methodist', roleId: Role.Methodist },
+        { login: 'teacher', password: 'teacher', roleId: Role.Teacher }
     ];
 
     const loginHandler = (email: string, password: string) => {
@@ -39,23 +54,18 @@ function App() {
             const entry = securityEntries[0];
             setIsLoggedIn(true);
             setRoleId(entry.roleId);
+            console.log(roleId);
         }
     }
-
-    // const rolesList = [
-    //     { value: 'Преподаватель', label: 'Преподаватель' },
-    //     { value: 'Студент', label: 'Студент' },
-    //     { value: 'Администратор', label: 'Администратор' },
-    //     { value: 'Методист', label: 'Методист' },
-    //     { value: 'Тьютор', label: 'Тьютор' },
-    //     { value: 'Менеджер', label: 'Менеджер' }
-    // ]
-    
 
     const logOut = () => {
         setIsLoggedIn(false);
         history.push("/");
     }
+
+    useEffect(() => {
+        getUser()
+    }, [])
 
     return (
         <div className="App">
@@ -79,46 +89,62 @@ function App() {
                     }
                 </aside>
                 <main>
-
                     {
                         isLoggedIn ?
                             <Switch>
-                                <Route exact path="/">
-                                    {
-                                        roleId===2 && <NewsList />
-                                    }
-                                </Route>
                                 {
-                                    (roleId === 3 || roleId === 4) &&
+                                    (roleId === Role.Manager || roleId === Role.Admin) &&
                                     <Route path="/user-page">
-                                        <UserPage roleId={roleId}></UserPage>
+                                        <UserPage
+                                            roleId={roleId}
+                                            sendNotification={sendNewNotification}></UserPage>
                                     </Route>
                                 }
                                 {
-                                    roleId === 6 &&
+                                    roleId === Role.Teacher &&
                                     <Route path="/courses-page">
-                                        <CoursesPage roleId={roleId}></CoursesPage>
+                                        <CoursesPage
+                                            roleId={roleId}
+                                            sendNewNotification={sendNewNotification}></CoursesPage>
                                     </Route>
                                 }
-
-                                <Route path="/groups-list">
-                                    <GroupList />
+                                <Route path="/course-edition/:id" render={({ location, history }) => (
+                                    <CourseEdition 
+                                        idCourse={location.pathname} 
+                                        sendNewNotification={sendNewNotification}/>
+                                )}>
                                 </Route>
-                                <Route path="/courses-list">
-                                    <CoursesList />
-                                </Route>
-                                <Route path="/homework-list">
-                                    <HomeworkList />
-                                </Route>
+                                {
+                                    roleId !== Role.Student &&
+                                    <Route path="/tags-page">
+                                        <TagsPage sendNotification={sendNewNotification}></TagsPage>
+                                    </Route>
+                                }
                                 <Route path="/homework">
                                     <HomeworkPage roleId={roleId} />
                                 </Route>
                             </Switch>
                             :
-                            <LoginForm onLoginClick={loginHandler} />
+                            <Switch>
+                                <Route exact path="/">
+                                    <LoginForm onLoginClick={loginHandler} />
+                                    <div className="test-page-link"><Link to="/dev-test-page">secret test page</Link></div>
+                                </Route>
+                                <Route path="/dev-test-page">
+                                    <DevTestPage sendNotification={sendNewNotification} />
+                                    <NotificationContainer
+                                        dismissibleNotifications={dismissibleNotifications}
+                                        nonDismissibleNotifications={nonDismissibleNotifications}
+                                        deleteNotification={deleteNotification} />
+                                </Route>
+                            </Switch>
+
                     }
                     {
-                        isLoggedIn ? roleId === 2 && <NotificationContainer/> : <></>
+                        isLoggedIn ? <NotificationContainer
+                            dismissibleNotifications={dismissibleNotifications}
+                            nonDismissibleNotifications={nonDismissibleNotifications}
+                            deleteNotification={deleteNotification} /> : <></>
                     }
                 </main>
             </div>

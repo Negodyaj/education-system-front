@@ -1,15 +1,12 @@
-import { SelectItem } from "./SelectItem";
-
 export interface User {
     id?: number;
-    name?: string;
-    secondName?: string;
-    birthDate: Date | null;
-    login?: string;
-    role?: SelectItem[];
+    firstName?: string;
+    lastName: string;
+    birthDate?: string;
     password?: string;
+    login?: string;
     phone?: string;
+    userPic?: string;
     email?: string;
-    groupId?: number;
-    groupName?: string;
+    roles?: number[];
 }

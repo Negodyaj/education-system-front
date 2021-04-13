@@ -1,0 +1,28 @@
+.search-component{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px;
+    width: 350px;
+    height: 50px;
+    font-family: 'Montserrat';
+    font-weight: 400;
+    font-size: 16px;
+}
+
+
+
+.input input{
+    border: none;
+    width: 300px;
+    margin-left: 5px;
+}
+
+.input input:active{
+    border: none;
+}
+
+.input input:focus{
+    border: none;
+    outline: none;
+}

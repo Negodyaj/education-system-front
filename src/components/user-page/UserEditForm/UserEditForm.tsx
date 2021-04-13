@@ -1,167 +1,318 @@
-
 import CustomMultiSelect from '../../multi-select/CustomMultiSelect';
-import './UserEditForm.css'
-import '../UserPage.css';
 import { User } from '../../interfaces/User';
-import { ChangeEventHandler, useState } from 'react';
-import { SelectItem } from '../../interfaces/SelectItem';
+import { UserRegisterResponse } from '../../interfaces/UserRegisterResponse';
+import React, { useState } from 'react';
 import DatePickerComponent from '../../../shared/components/date-picker/DatePickerComponent';
-import { Roles } from '../../../shared/components/roles/Roles';
-import { OptionsType } from 'react-select';
-import { convertEntitiesToSelectItems, convertEntityToSelectItem } from '../../../shared/converters/EntityToSelectItem';
+import { convertEnumToDictionary, getRussianDictionary } from '../../../shared/converters/enumToDictionaryEntity';
+import { convertUserToUserUpdate } from '../../../shared/converters/userToUserUpdate';
+import { convertUserToUserInput } from '../../../shared/converters/userToUserInput';
+import { Role } from '../../../enums/role';
+import { useForm } from 'react-hook-form';
+import { convertEntitiesToSelectItems } from '../../../shared/converters/entityToSelectItemConverter';
+import { getName } from '../../../shared/converters/objectKeyToString';
+import { sendPostRequest, sendPutRequest } from '../../../services/http.service';
+import { UserUpdate } from '../../interfaces/UserUpdate';
+import { ErrorMessage } from '@hookform/error-message';
+import NotificationData from '../../../shared/interfaces/NotificationData';
+import { responseHandlers } from '../../../services/response-handler/responseHandler';
+import { UserRegisterEnd, UserUserUpdateIdEnd } from '../../../shared/endpointConsts';
+import './UserEditForm.css';
+import '../UserPage.css';
+import '../../../App.css';
 
 interface UserEditFormProps {
     roleId: number;
-    user: User | null;
-    onCancelClick: (mode: boolean) => void;
-    onSaveClick: (newUser: User) => void;
+    userToEdit: User | undefined;
+    setIsEditModeOn: (mode: boolean) => void;
+    reviseSending: () => void;
+    sendNotification: (n: NotificationData | undefined) => void;
+    url: string;
 }
 
 function UserEditForm(props: UserEditFormProps) {
-    const id = useState<number | undefined>(props.user?.id)[0];
-    const [name, setName] = useState<string | undefined>(props.user?.name);
-    const [secondName, setSecondName] = useState<string | undefined>(props.user?.secondName);
-    const [birthDate, setBirthDate] = useState<Date | null>(props.user?.birthDate ?? null);
-    const [login, setLogin] = useState<string | undefined>(props.user?.login);
-    const [roleMultiselect, setRoleMultiselect] = useState(props.user?.role ?? undefined);
-    const [password, setPassword] = useState<string | undefined>(props.user?.password);
-    const [phone, setPhone] = useState<string | undefined>(props.user?.phone);
-    const [email, setEmail] = useState<string | undefined>(props.user?.email);
-    const [groupName, setGroupName] = useState<string | undefined>(props.user?.groupName);
 
-    const newUser: User = {
-        id: id,
-        name: name,
-        secondName: secondName,
-        birthDate: birthDate,
-        login: login,
-        role: roleMultiselect as SelectItem[],
-        password: password,
-        phone: phone,
-        email: email,
-        groupName: groupName
-    }
+    const initUser: User = Object.assign({}, props.userToEdit || {
+        firstName: "",
+        lastName: "",
+        login: "",
+        password: "",
+        birthDate: new Date().toLocaleDateString('ru-RU'),
+        userPic: "",
+        phone: "",
+        email: "",
+        roles: []
+    })
 
-    const isDisabled = (Object.values(newUser).reduce((isEmpty, prop) => {
-        if (prop) {
-            return false;
-        }
-        return isEmpty
-    }, true))
+    const [newUser, setNewUser] = useState<User>(initUser);
+    const [isFetching, setIsFetching] = useState(false);
 
-    const elementsDefinedByRole = {
+    const { register, formState: { errors }, handleSubmit, getValues, setValue } = useForm<User>({
+        mode: 'all',
+        criteriaMode: 'all',
+        defaultValues: (() => { if (isFetching === false) { return Object.assign({}, newUser) } })()
+    });
+
+    const elementsDefinedByProps = {
         roleSelector: () => {
-            if (props.roleId === Roles.filter(role => { return role.name === "администратор" })[0].id) {
+            if (props.roleId === Role.Admin && !props.userToEdit) {
                 return (
-                    <div className="user-list-item">
-                        <label className="column">Список ролей</label>
+                    <div className="form-row multi">
+                        <label className="form-label">Список ролей</label>
                         <CustomMultiSelect
                             selectType={"multi"}
-                            userOptions={roleMultiselect as OptionsType<object>}
-                            options={convertEntitiesToSelectItems(Roles)}
+                            userOptionsIds={getValues('roles') || undefined}
+                            options={convertEntitiesToSelectItems(getRussianDictionary(convertEnumToDictionary(Role)))}
                             onSelect={roleOnChange}></CustomMultiSelect>
                     </div>)
             } else {
-                newUser.role =
-                    convertEntitiesToSelectItems(
-                        Roles.filter(role => { return role.name === "студент" })
-                    )
+                setValue('roles', [Role.Student]);
+            }
+        },
+        passwordInput: () => {
+            if (props.userToEdit === undefined) {
+                return (
+                    <div className="form-row">
+                        <label className="form-label">Пароль</label>
+                        <input
+                            {...register('password', {
+                                required: {
+                                    value: true,
+                                    message: "Введите пароль"
+                                }
+                            })}
+                            type="text"
+                            className="form-input" />
+                        <ErrorMessage
+                            errors={errors}
+                            name={getName<User>(newUser, o => o.password)}
+                            className="bad-feedback"
+                            as="div">
+                        </ErrorMessage>
+                    </div>
+                )
+            } else {
+                return;
+            }
+        },
+        loginInput: () => {
+            if (props.userToEdit === undefined) {
+                return (
+                    <div className="form-row">
+                        <label className="form-label">Логин</label>
+                        <input
+                            {...register('login', {
+                                required: {
+                                    value: true,
+                                    message: "Введите логин"
+                                },
+                                pattern: {
+                                    value: /[a-z0-9]/,
+                                    message: "Допустимы только строчные буквы и цифры"
+                                }
+                            })}
+                            type="text"
+                            className="form-input" />
+                        <ErrorMessage
+                            errors={errors}
+                            name={getName<User>(newUser, o => o.login)}
+                            className="bad-feedback"
+                            as="div">
+                        </ErrorMessage>
+                    </div>
+                )
+            } else {
+                return;
             }
         }
     }
-
-    const nameOnChange: ChangeEventHandler<HTMLInputElement> = (e) => {
-        setName(e.target.value);
+    const reviseSending = (newOrUpdatedUser: UserUpdate | undefined) => {
+        if (newOrUpdatedUser) {
+            props.reviseSending()
+        } else {
+            return;
+        }
     }
-    const secondNameOnChange: ChangeEventHandler<HTMLInputElement> = (e) => {
-        setSecondName(e.target.value);
-    }
-    const birthDateOnChange = (date: Date) => {
-        setBirthDate(date);
-    }
-    const loginOnChange: ChangeEventHandler<HTMLInputElement> = (e) => {
-        setLogin(e.target.value);
-    }
-    const roleOnChange = (options: OptionsType<object>) => {
-        setRoleMultiselect(options as SelectItem[]);
-    }
-    const passwordOnChange: ChangeEventHandler<HTMLInputElement> = (e) => {
-        setPassword(e.target.value);
-    }
-    const phoneOnChange: ChangeEventHandler<HTMLInputElement> = (e) => {
-        setPhone(e.target.value);
-    }
-    const emailOnChange: ChangeEventHandler<HTMLInputElement> = (e) => {
-        setEmail(e.target.value);
-    }
-    const groupNameOnChange: ChangeEventHandler<HTMLInputElement> = (e) => {
-        setGroupName(e.target.value);
+    const sendUser = async (newOrUpdatedUser: User) => {
+        if (props.userToEdit) {
+            reviseSending(await sendPutRequest<UserUpdate>(
+                props.url + ('/' + props.userToEdit.id),
+                convertUserToUserUpdate(newOrUpdatedUser),
+                props.sendNotification,
+                responseHandlers[UserUserUpdateIdEnd]))
+        } else {
+            reviseSending(await sendPostRequest<UserRegisterResponse>(
+                props.url + '/' + 'register',
+                props.sendNotification,
+                responseHandlers[UserRegisterEnd],
+                convertUserToUserInput(newOrUpdatedUser)));
+        }
     }
 
-    const onSaveClick = () => {
-        newUser.id === undefined && (newUser.id = (() => {
-            return Math.round(Math.random() * 100)
-        })());
-        props.onSaveClick(newUser)
-        props.onCancelClick(false);
+    const birthDateOnChange = (date: string) => {
+        setValue('birthDate', date)
     }
-    const onCancelClick = () => {
-        props.onCancelClick(false);
+    const roleOnChange = (options: number[]) => {
+        setValue('roles', options);
+    }
+    const onSubmit = (data: User) => {
+        sendUser(data);
+    }
+    const setIsEditModeOn = () => {
+        props.setIsEditModeOn(false);
     }
 
-    return (
-        <div className="user-edit-form">
-            {console.log('-------')}
-            {console.log(birthDate)}
-            <div className="user-list-item">
-                <label className="column">Имя</label>
-                <input type="text" className="column" value={name} onChange={nameOnChange} />
-            </div>
-            <div className="user-list-item">
-                <label className="column">Фамилия</label>
-                <input type="text" className="column" value={secondName} onChange={secondNameOnChange} />
-            </div>
-            <div className="user-list-item">
-                <label className="column">Дата рождения</label>
-                <DatePickerComponent date={props.user?.birthDate ?? null} onDateChange={birthDateOnChange} />
-            </div>
-            <div className="user-list-item">
-                <label className="column">Логин</label>
-                <input type="text" className="column" value={login} onChange={loginOnChange} />
-            </div>
-            <div className="user-list-item">
-                <label className="column">Пароль</label>
-                <input type="text" className="column" value={password} onChange={passwordOnChange} />
-            </div>
-            <div className="user-list-item">
-                <label className="column">Телефон</label>
-                <input type="text" className="column" value={phone} onChange={phoneOnChange} />
-            </div>
-            <div className="user-list-item">
-                <label className="column">Аватар</label>
-                <input type="file" className="column" />
-            </div>
-            <div className="user-list-item">
-                <label className="column">Почта</label>
-                <input type="text" className="column" value={email} onChange={emailOnChange} />
-            </div>
+    if (isFetching) {
+        return (<div>loading</div>)
+    } else {
+        return (
+            <div className={"user-edit-form needs-validation was-validated"}>
+                <form onSubmit={handleSubmit(onSubmit)}>
+                    <div className="form-row">
+                        <label className="form-label">Имя</label>
+                        <input
+                            {...register('firstName', {
+                                required: {
+                                    value: true,
+                                    message: "Введите имя"
+                                },
+                                pattern: {
 
-            {
-                elementsDefinedByRole.roleSelector()
-            }{
-                console.log(roleMultiselect)
-            }
-
-            <div className="user-list-item">
-                <div className="column">
-                    <button className="column" onClick={onCancelClick}>отмена</button>
-                </div>
-                <div className="column">
-                    <button className="column" onClick={onSaveClick} disabled={isDisabled}>сохранить</button>
-                </div>
-            </div>
-        </div>
-    )
+                                    value: /[A-Za-zА-Яа-я]/,
+                                    message: "Допустимы только буквенные символы"
+                                }
+                            })}
+                            type="text"
+                            className="form-input" />
+                        <ErrorMessage
+                            errors={errors}
+                            name={getName<User>(newUser, o => o.firstName)}
+                            className="bad-feedback"
+                            as="div">
+                        </ErrorMessage>
+                    </div>
+                    <div className="form-row">
+                        <label className="form-label">Фамилия</label>
+                        <input
+                            {...register('lastName', {
+                                required: {
+                                    value: true,
+                                    message: "Введите фамилию"
+                                },
+                                pattern: {
+                                    value: /[A-Za-zА-Яа-я]/,
+                                    message: "Допустимы только буквенные символы"
+                                }
+                            })}
+                            type="text"
+                            className="form-input" />
+                        <ErrorMessage
+                            errors={errors}
+                            name={getName<User>(newUser, o => o.lastName)}
+                            className="bad-feedback"
+                            as="div">
+                        </ErrorMessage>
+                    </div>
+                    <div className="form-row">
+                        <label className="form-label">Дата рождения</label>
+                        <DatePickerComponent
+                            {...register('birthDate')}
+                            date={getValues('birthDate')}
+                            onDateChange={birthDateOnChange} />
+                    </div>
+                    {
+                        elementsDefinedByProps.loginInput()
+                    }
+                    {
+                        elementsDefinedByProps.passwordInput()
+                    }
+                    <div className="form-row">
+                        <label className="form-label">Телефон</label>
+                        <input
+                            {...register('phone', {
+                                required: {
+                                    value: true,
+                                    message: "Введите номер телефона"
+                                },
+                                pattern: {
+                                    value: /[0-9]/,
+                                    message: "Допустимы только цифры"
+                                }
+                            })}
+                            type="text"
+                            className="form-input" />
+                        <ErrorMessage
+                            errors={errors}
+                            name={getName<User>(newUser, o => o.phone)}
+                            className="bad-feedback"
+                            as="div">
+                        </ErrorMessage>
+                    </div>
+                    <div className="form-row upl-file">
+                        <label className="form-label">Аватар</label>
+                        <div className="file-upload">
+                            <label><input id="file-input" type="file" name="file" />Выберите файл</label>
+                            <div id="no-file">Файл не выбран</div>
+                        </div>
+                        <input
+                            {...register('userPic', {
+                                required: {
+                                    value: true,
+                                    message: "Добавьте ссылку на изображение  или загрузите файл"
+                                },
+                                pattern: {
+                                    value: /\S/,
+                                    message: "Недопустимый формат ссылки"
+                                }
+                            })}
+                            type="text"
+                            className="form-input"
+                            placeholder="или вставьте ссылку" />
+                        <ErrorMessage
+                            errors={errors}
+                            name={getName<User>(newUser, o => o.userPic)}
+                            className="bad-feedback"
+                            as="div">
+                        </ErrorMessage>
+                        <img src={getValues('userPic')} alt="аватар" />
+                    </div>
+                    <div className="form-row">
+                        <label className="form-label">Почта</label>
+                        <input
+                            {...register('email', {
+                                required: {
+                                    value: true,
+                                    message: "Введите email"
+                                }
+                            })}
+                            type="text"
+                            className="form-input" />
+                        <ErrorMessage
+                            errors={errors}
+                            name={getName<User>(newUser, o => o.email)}
+                            className="bad-feedback"
+                            as="div">
+                        </ErrorMessage>
+                    </div>
+                    <div className="form-row">
+                        {
+                            elementsDefinedByProps.roleSelector()
+                        }
+                    </div>
+                    <div className="form-row form-row-button">
+                        <div className="">
+                            <button className="button-style" onClick={setIsEditModeOn}>отмена</button>
+                        </div>
+                        <div className="button-style">
+                            <button
+                                className="button-style"
+                                type={"submit"}>сохранить</button>
+                        </div>
+                    </div>
+                </form>
+            </div >
+        )
+    }
 }
-
 export default UserEditForm;
+
+
