@@ -8,7 +8,7 @@ import PaymentForm from "../payment-form/PaymentForm";
 import '../UserPage.css';
 import '../../../App.css'
 import ConfirmationDialog from "../../../shared/components/confirmation-dialog/ConfirmationDialog";
-import { sendDeleteRequest } from "../../../services/http.service";
+import { sendDeleteRequest, sendDeleteRequestNoResponse } from "../../../services/http.service";
 import NotificationData from "../../../shared/interfaces/NotificationData";
 import { responseHandlers } from "../../../services/response-handler/responseHandler";
 import { RoleDeleteEnd } from "../../../shared/endpointConsts";
@@ -43,7 +43,7 @@ function UserList(props: UserListProps) {
     const [paymentFormState, setPaymentFormState] = useState('');
     const [roleID, setRoleID] = useState(0);
     const [userID, setUserID] = useState(0);
-
+const[isDisableRole, setIsDisableRole]= useState(false)
 
     const elementsDefinedByRole = {
         paymentButton: (userId: number | undefined) => {
@@ -56,10 +56,13 @@ function UserList(props: UserListProps) {
             )
         },
         deleteRoleButton: (user: User, roleId: number) => {
+            let dis = true
+            if(user.roles!= undefined && user.roles.length > 1) { dis = false}
+            
             return (
              props.roleId === Role.Admin
                 &&
-                <button className='button-round mini-button' onClick={() => onDeleteRoleClick(user, roleId)}>
+                <button className='button-round mini-button' disabled={dis} onClick={() => onDeleteRoleClick(user, roleId)}>
                     <FontAwesomeIcon icon="times" />
                 </button>
             )
@@ -108,7 +111,7 @@ function UserList(props: UserListProps) {
         if (decision) {
             //console.log()
             console.log('User' + '/' + userID + '/' + 'role' + '/' + roleID)
-            sendDeleteRequest<String>('User' + '/' + userID + '/' + 'role' + '/' + roleID, props.sendNotification, responseHandlers[RoleDeleteEnd]);
+            sendDeleteRequestNoResponse('User' + '/' + userID + '/' + 'role' + '/' + roleID, props.sendNotification, responseHandlers[RoleDeleteEnd]);
             props.refreshUsers();
         }
         setIsModalShow(false);
