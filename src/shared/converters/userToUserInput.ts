@@ -10,7 +10,7 @@ const initUserInput: UserInput = {
     email: "",
     login: "",
     password: "",
-    roleIds: []
+    roles: []
 }
 
 export const convertUserToUserInput = (UpdatedUser: User) => {
