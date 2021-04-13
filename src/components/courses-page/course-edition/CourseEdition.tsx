@@ -123,7 +123,7 @@ function CourseEdition(props: CourseEditionProps) {
 
     return (
     <div className="course-edition-container">
-        <h3 className="current-course-header-name">{ 'Курс ' + courseName.name }</h3>
+        <h3 className="current-course-header-name">{ 'Курс ' + courseName?.name }</h3>
         <div className='course-update'>
             <div className='new-themes-course'>
                 <div className="new-themes-course-header">
