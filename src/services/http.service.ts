@@ -97,6 +97,7 @@ export const sendDeleteRequestNoResponse = async (
   return await baseWretch(path, sendN, rh)
     .url(path)
     .delete()
+    .res( )
    
 };
 const localResponseHandler = <T>(data: any, sendN: (n: NotificationData | undefined) => void,

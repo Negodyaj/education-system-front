@@ -17,7 +17,7 @@ function TagList(props: TagListProps) {
     const [deletedTag, setdeleteTag]= useState('');
     const deleteTag = async (tagId: number) => {
        
-       await sendDeleteRequestNoResponse('Tag/' + tagId, props.sendNotification, responseHandlers[TagDeleteEnd])           
+       if (await sendDeleteRequestNoResponse('Tag/' + tagId, props.sendNotification, responseHandlers[TagDeleteEnd]))           
        await props.setTagsInState(await sendGetRequest<Tag[]>('Tag', props.sendNotification, responseHandlers[TagEnd]))  
     }
     
