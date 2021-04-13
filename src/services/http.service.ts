@@ -48,7 +48,9 @@ export const sendPutRequestNoResponse = async (
   return await baseWretch(path, sendN, rh)
     .url(path)
     .put(body)
-    .res()
+    .res(response => {sendN(rh.notifications()['success'])
+    return response
+  })
 };
 export const sendPostRequest = async <T>(
   path: string,
@@ -75,7 +77,9 @@ export const sendPostRequestNoResponse = async (
   return await baseWretch(path, sendN, rh)
     .url(path)
     .post(body)
-    .res()
+    .res(response => {sendN(rh.notifications()['success'])
+    return response
+  })
 };
 export const sendDeleteRequest = async <T>(
   path: string,
@@ -99,7 +103,10 @@ export const sendDeleteRequestNoResponse = async (
   return await baseWretch(path, sendN, rh)
     .url(path)
     .delete()
-    .res()
+    .res(response => {sendN(rh.notifications()['success'])
+    return response
+  })
+    
 };
 const localResponseHandler = <T>(data: any, sendN: (n: NotificationData | undefined) => void,
   rh: responseHandlerItem) => {

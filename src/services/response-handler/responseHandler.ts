@@ -129,7 +129,7 @@ export const responseHandlers: responseHandler = {
         notifications: (response?: any) => {
             return ({
                 [nType.Error]: makeNotification(nType.Error, makeErrorText(response)),
-                [nType.Success]: makeNotification(nType.Success, ('Тема ' + (response as Themes).name + ' удалена'))
+                [nType.Success]: makeNotification(nType.Success, ('Тема удалена'))
             })
         },
         isT: (data: any): data is Themes => isThemeDelete(data)
