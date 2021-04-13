@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { sendDeleteRequest, sendGetRequest } from "../../../services/http.service";
+import { sendDeleteRequest, sendDeleteRequestNoResponse, sendGetRequest } from "../../../services/http.service";
 import { responseHandlers } from "../../../services/response-handler/responseHandler";
 import { TagDeleteEnd, TagEnd } from "../../../shared/endpointConsts";
 import NotificationData from "../../../shared/interfaces/NotificationData";
@@ -17,7 +17,7 @@ function TagList(props: TagListProps) {
     const [deletedTag, setdeleteTag]= useState('');
     const deleteTag = async (tagId: number) => {
        
-       await sendDeleteRequest<Tag>('Tag/' + tagId, props.sendNotification, responseHandlers[TagDeleteEnd])           
+       await sendDeleteRequestNoResponse('Tag/' + tagId, props.sendNotification, responseHandlers[TagDeleteEnd])           
        await props.setTagsInState(await sendGetRequest<Tag[]>('Tag', props.sendNotification, responseHandlers[TagEnd]))  
     }
     
