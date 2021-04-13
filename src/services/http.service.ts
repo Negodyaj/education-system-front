@@ -48,6 +48,7 @@ export const sendPutRequestNoResponse = async (
   return await baseWretch(path, sendN, rh)
     .url(path)
     .put(body)
+    .res()
 };
 export const sendPostRequest = async <T>(
   path: string,
@@ -73,7 +74,8 @@ export const sendPostRequestNoResponse = async (
   body?: any) => {
   return await baseWretch(path, sendN, rh)
     .url(path)
-    .post(body || undefined)
+    .post(body)
+    .res()
 };
 export const sendDeleteRequest = async <T>(
   path: string,
@@ -97,8 +99,7 @@ export const sendDeleteRequestNoResponse = async (
   return await baseWretch(path, sendN, rh)
     .url(path)
     .delete()
-    .res( )
-   
+    .res()
 };
 const localResponseHandler = <T>(data: any, sendN: (n: NotificationData | undefined) => void,
   rh: responseHandlerItem) => {
