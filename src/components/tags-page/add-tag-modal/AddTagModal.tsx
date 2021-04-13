@@ -10,13 +10,14 @@ import { Tag } from "../../interfaces/Tag"
 interface AddTagModalProps {
     sendNotification: (newNotification: NotificationData | undefined) => void;
     setTagsInState: (uptags: Tag[]|undefined) => void;
+    setHidden: () => void;
     hidden: string;
 }
 
 function AddTagModal(props: AddTagModalProps) {
     const [nameNewTag, setNameNewTag]= useState('');
     
-    const closeModalWindow = () => { props.hidden };
+    const closeModalWindow = () => {(props.setHidden())};
     const tagOnChange: ChangeEventHandler<HTMLInputElement> = (e) => {
         setNameNewTag(e.target.value);
     };
@@ -27,7 +28,7 @@ function AddTagModal(props: AddTagModalProps) {
     };
 
     return (
-        <div className="modal-back">
+        <div className={"modal-back " + (props.hidden)}>
             <div className="modal">
                 <div className="head-modal"><h4>Введите новый тег</h4></div>
                 <button className="button-close"  onClick={closeModalWindow}>

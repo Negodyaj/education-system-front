@@ -20,7 +20,7 @@ function TagsPage(props: TagsPageProps) {
     const url = 'Tag';
     const [tagsInState, setTagsInState] = useState<Tag[]|undefined>([]);
     const [searchTurn, setSearchTurn] = useState('');
-    const [hidden, setHidden] = useState("hidden")
+    const [hidden, setHidden] = useState('hidden')
     
     const getTags = async () => {
         setTagsInState(await sendGetRequest<Tag[]>(url, props.sendNotification, responseHandlers[TagEnd])) 
@@ -34,6 +34,8 @@ function TagsPage(props: TagsPageProps) {
         setSearchTurn(e.target.value);
     };
 
+    const closeModal = () => setHidden ("hidden");
+
 
     // const searchFromTags = (str: string) => {
     //     setSearchTurn(str);
@@ -46,7 +48,7 @@ function TagsPage(props: TagsPageProps) {
                         <input onChange={tagsFilter} />
 
 
-                        <button className="add" ></button>
+                        <button className="add" onClick={()=>{setHidden("")}}></button>
                     </div>
                 </div>
 
@@ -57,7 +59,7 @@ function TagsPage(props: TagsPageProps) {
 
             </div>
 
-            <AddTagModal sendNotification={props.sendNotification} setTagsInState={setTagsInState} hidden={hidden}/>
+            <AddTagModal sendNotification={props.sendNotification} setTagsInState={setTagsInState} hidden={hidden} setHidden={closeModal}/>
         </div>
     )
 
