@@ -56,13 +56,12 @@ function UserList(props: UserListProps) {
             )
         },
         deleteRoleButton: (user: User, roleId: number) => {
-            let dis = true
-            if(user.roles!= undefined && user.roles.length > 1) { dis = false}
+         
             
             return (
-             props.roleId === Role.Admin
+             (props.roleId === Role.Admin && user.roles!= undefined && user.roles.length > 1)
                 &&
-                <button className='button-round mini-button' disabled={dis} onClick={() => onDeleteRoleClick(user, roleId)}>
+                <button className='button-round mini-button' onClick={() => onDeleteRoleClick(user, roleId)}>
                     <FontAwesomeIcon icon="times" />
                 </button>
             )
