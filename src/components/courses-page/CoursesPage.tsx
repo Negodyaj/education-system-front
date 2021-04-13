@@ -18,6 +18,14 @@ interface CoursesPageProps {
 }
 
 function CoursesPage(props: CoursesPageProps) {
+
+    let courses: Course[] = [];
+
+    const [isModalAdd, setIsModalAdd] = useState(false);
+    const [isModalDelete, setIsModalDelete] = useState(false);
+    const [coursesList, setCoursesList] = useState(courses);
+    const [idCourseDelete, setIdCourseDelete] = useState(0);
+
     const getCourses = async () => {
         setCoursesList(await sendGetRequest<Course[]>(CourseEnd, props.sendNewNotification, responseHandlers[CourseEnd]));
     }
@@ -35,13 +43,6 @@ function CoursesPage(props: CoursesPageProps) {
         await sendDeleteRequest<Course>(CourseEnd + '/' + id, props.sendNewNotification, responseHandlers[CourseDeleteEnd]);
         getCourses();
     }
-
-    let courses: Course[] = [];
-
-    const [isModalAdd, setIsModalAdd] = useState(false);
-    const [isModalDelete, setIsModalDelete] = useState(false);
-    const [coursesList, setCoursesList] = useState<Course[]|undefined>(courses);
-    const [idCourseDelete, setIdCourseDelete] = useState(0);
 
     const openModalDelete = (id: number) => {
         setIsModalDelete(true);
