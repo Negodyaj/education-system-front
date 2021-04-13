@@ -33,6 +33,7 @@
 .program-course-header{
     cursor: pointer;
     z-index: 1;
+    background-color: white;
 }
 
 .materials-course-header {
@@ -129,24 +130,26 @@
 
 @keyframes accordionEffectClose {
     to {
-        margin-top: -50px;
+        margin-top: -70px;
         opacity: 0;
+        height: 0;
     }
 }
 
 .program-course.visible{
     margin-top: -50px;
-    animation: .5s forwards accordionEffectOpen;
+    animation: .6s forwards accordionEffectOpen;
 }
 
 .program-course.unvisible{
-    animation: .5s forwards accordionEffectClose;
+    animation: .3s forwards accordionEffectClose;
+    
+    
 }
 
 
 .program-course{
     width: 600px;
-    opacity: 0;
     margin-top: -50px;
 }
 

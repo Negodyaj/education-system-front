@@ -33,7 +33,6 @@ function CourseEdition(props: CourseEditionProps) {
     const [searchTurn, setSearchTurn] = useState('');
     const [nameThemes, setNameThemes] = useState(nameThemesCourse);
     const [courseName, setCourseName] = useState(currentCourse);
-    const [isOpenProgramCourse, setIsOpenProgramCourse] = useState(false);
     const [isOpenMaterialsCourse, setIsOpenMaterialsCourse] = useState(false);
     const [changeDisplayingButtonOpenProgramCourse, setChangeDisplayingButtonOpenProgramCourse] = useState(false);
     const [changeDisplayingButtonOpenMaterialsCourse, setChangeDisplayingButtonOpenMaterialsCourse] = useState(false);
@@ -87,7 +86,7 @@ function CourseEdition(props: CourseEditionProps) {
             let newTheme: NewThemeCourse = {idCourse: indexCourse, idTheme: theme.id};
             addThemeCourse(newTheme);
             setTimeout (() => setChangeDisplayingButtonOpenProgramCourse(true), 200);
-            setTimeout (() => setIsOpenProgramCourse(true), 200);
+            setTimeout (() => setIsClassOnProgramCourse(' visible'), 200);
         }
     }
 
@@ -113,7 +112,6 @@ function CourseEdition(props: CourseEditionProps) {
 
     const openProgramCourse = () => {
         setChangeDisplayingButtonOpenProgramCourse(!changeDisplayingButtonOpenProgramCourse);
-        setIsOpenProgramCourse(!isOpenProgramCourse);
         isClassOnProgramCourse === ' unvisible' ? setIsClassOnProgramCourse(' visible') : setIsClassOnProgramCourse(' unvisible');
     }
 
@@ -134,7 +132,6 @@ function CourseEdition(props: CourseEditionProps) {
                         <FontAwesomeIcon icon="plus" />
                     </button>
                 </div>
-                
                 <div className="new-themes-container">
                     <SearchComponent funcSearch={searchFromTheme}/>
                     {
@@ -169,7 +166,7 @@ function CourseEdition(props: CourseEditionProps) {
                         <div className="program-course-header-text">Программа курса</div>
                     </div>
                     <div className={"program-course" + isClassOnProgramCourse}>
-                        {   isOpenProgramCourse &&
+                        {
                             themesCourse?.map((theme) => (
                                 <div key={theme.id} className="theme">
                                     <div className="theme-name">{theme.name}</div>
