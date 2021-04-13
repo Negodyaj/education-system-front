@@ -1,3 +1,113 @@
 .hidden {
     display: none;
     }
+.tags-list {
+    display: flex;
+    flex-direction: column;
+    width: 900px;
+}
+
+.tag-container {
+    width: 900px;
+    margin: 0 auto;
+    
+}
+
+.tag-create {
+    display: grid;
+    grid-template-columns: 83.5% 17.5%;
+    gap: 7px;
+    margin-bottom: 30px;
+}
+
+.button-create {
+    background-color: #00CCF2;
+    width: 140px;
+    height: 40px;
+    border-radius: 20px;
+    outline: none;
+    border: none;
+    color: #F5FBFF;
+    font-family: 'Montserrat';
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.button-create:focus {
+    outline: none;
+    border: none;
+}
+
+.tags-list {
+    display: flex;
+    flex-direction: column;
+    width: 900px;
+}
+
+.tag {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 10px;
+    height: 60px;
+    border-bottom: 1px solid rgba(39, 45, 59, .15);
+    font-size: 20px;
+    font-family: 'Montserrat';
+    font-weight: 400;
+}
+
+.course:hover{
+    background-color: rgba(0, 211, 248, 0.15);
+    border-radius: 5px;
+    cursor: pointer;
+} 
+
+.course-update-delete {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 90px;
+    height: 40px;
+}
+
+.button-update {
+    background-color: #00CCF2;
+    background-size: contain;
+    border-radius: 50%;
+    color: white;
+    width: 40px;
+    height: 40px;
+    outline: none;
+    border: none;
+}
+
+.button-update:focus {
+    outline: none;
+    border: none;
+}
+
+.button-delete {
+    background-color: #00CCF2;
+    background-size: contain;
+    border-radius: 50%;
+    color: white;
+    width: 40px;
+    height: 40px;
+    outline: none;
+    border: none;
+}
+
+.button-delete:focus {
+    outline: none;
+    border: none;
+}
+
+.button-style{
+    height: 40px;
+    min-width: 110px;
+    border-radius: 25px;
+  }
+
+  .column-head{
+    justify-content: space-between;
+}

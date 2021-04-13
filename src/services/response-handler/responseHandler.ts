@@ -156,7 +156,7 @@ export const responseHandlers: responseHandler = {
         notifications: (response?: any) => {
             return ({
                 [nType.Error]: makeNotification(nType.Error, makeErrorText(response)),
-                [nType.Success]: makeNotification(nType.Success, ('Тег ' + (response as Tag).name + ' удален'))
+                [nType.Success]: makeNotification(nType.Success, ('Тег удален'))
             })
         },
         isT: undefined

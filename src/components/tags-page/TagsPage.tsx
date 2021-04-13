@@ -37,14 +37,17 @@ function TagsPage(props: TagsPageProps) {
     const closeModal = () => setHidden ("hidden");
    
     return (
-        <div>
-            <div className="table">
-                <div className="header">
+        <div className="app">
+            <div className="main-content">
+                <div className="column-head">
                     <div className="input">
                         <input onChange={tagsFilter} />
 
 
-                        <button className="add" onClick={()=>{setHidden("")}}></button>
+                        <button className="button-style" onClick={()=>{setHidden("")}}>
+                        <FontAwesomeIcon icon="plus" />
+                    <span> Добавить</span>
+                        </button>
                     </div>
                 </div>
 
