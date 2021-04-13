@@ -61,6 +61,7 @@ function DevTestPage (props: DevTestPageProps) {
                 options={selectItems}
                 onSelect={()=>{}}
             />
+            <br/>
             <CustomMultiSelect
                 selectType='multi'
                 userOptionsIds={[]}

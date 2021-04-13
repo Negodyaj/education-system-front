@@ -1,3 +1,4 @@
+import { faFileExport } from '@fortawesome/free-solid-svg-icons';
 import { NONAME } from 'node:dns';
 import { useEffect, useState } from 'react'
 import Select, { NonceProvider, OptionsType } from 'react-select'
@@ -32,38 +33,46 @@ function CustomMultiSelect(props: SelectProps) {
     main: '#00CCF2',
     light: '#BEF1F9',
     shadow: '#272D3B26',
+    borderLight: '#E0E7FF',
+    borderDark: '#ABADB3'
   }
+  const customStyleHeight = 40;
 
   const customStyles = {
     control: (baseStyles: any, state: any) => ({
       ...baseStyles,
-      height: 40,
+      height: customStyleHeight,
       border: state.isFocused 
-        ? "2px solid " + customStyleColors.main 
-        : "1px solid " + customStyleColors.shadow,
+        ? "1px solid " + customStyleColors.borderDark 
+        : "1px solid " + customStyleColors.borderLight,
       ':hover': {
         border: state.isFocused 
-          ? "2px solid " + customStyleColors.main 
-          : "1px solid " + customStyleColors.main,
+          ? "1px solid " + customStyleColors.borderDark 
+          : "1px solid " + customStyleColors.borderLight,
       },
-      borderRadius: 20,
-      boxShadow: "0px 3px 6px " + customStyleColors.shadow,
-      padding: state.isFocused 
-        ? "0px 4px"
-        : "0px 5px",
+      borderRadius: 5,
+      boxShadow: 'none',
+      padding: "0px 5px",
       outline: 'none',
+      caretColor: 'transparent',
     }),
     singleValue: () => ({
-      padding: "0px 10px"
+      padding: "0px 5px"
     }),
     valueContainer: (baseStyles: any) => ({
       ...baseStyles,
       padding: 0,
+      height: customStyleHeight,
+    }),
+    input: (baseStyles: any) => ({
+      ...baseStyles,
+      height: customStyleHeight,
+      padding: 0,
     }),
     option: (baseStyles: any, state: any) => ({
       ...baseStyles,
-      borderRadius: 20,
-      height: 40,
+      borderRadius: 5,
+      height: customStyleHeight,
       color: state.isSelected
         ? 'white' 
         : 'black',
@@ -76,7 +85,7 @@ function CustomMultiSelect(props: SelectProps) {
     menu: (baseStyles: any) => ({
       ...baseStyles,
       margin: 0,
-      borderRadius: 20,
+      borderRadius: 5,
     }),
     menuList: (baseStyles: any) => ({
       ...baseStyles,
@@ -86,14 +95,14 @@ function CustomMultiSelect(props: SelectProps) {
       ...baseStyles,
       backgroundColor: customStyleColors.light,
       height: 28,
-      borderRadius: 14,
+      borderRadius: 5,
       padding: "0px 5px",
       ':hover': {
         backgroundColor: customStyleColors.main,
       },
       ':hover div': {
         color: 'white',
-      }
+      },
     }),
     multiValueLabel: (baseStyles: any) => ({
       ...baseStyles,
@@ -106,7 +115,7 @@ function CustomMultiSelect(props: SelectProps) {
       }
     }),
     placeholder: () => ({
-      padding: "0px 10px",
+      padding: "0px 5px",
       color: 'lightgray',
     })
   }
