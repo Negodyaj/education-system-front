@@ -40,6 +40,16 @@ export const sendPutRequest = async <T>(
       return undefined
     });
 };
+export const sendPutRequestNoResponse = async (
+  path: string,
+  body: any,
+  sendN: (n: NotificationData | undefined) => void,
+  rh: responseHandlerItem) => {
+  return await baseWretch(path, sendN, rh)
+    .url(path)
+    .put(body)
+    .res()
+};
 export const sendPostRequest = async <T>(
   path: string,
   sendN: (n: NotificationData | undefined) => void,
@@ -57,6 +67,16 @@ export const sendPostRequest = async <T>(
       return undefined
     });
 };
+export const sendPostRequestNoResponse = async (
+  path: string,
+  sendN: (n: NotificationData | undefined) => void,
+  rh: responseHandlerItem,
+  body?: any) => {
+  return await baseWretch(path, sendN, rh)
+    .url(path)
+    .post(body)
+    .res()
+};
 export const sendDeleteRequest = async <T>(
   path: string,
   sendN: (n: NotificationData | undefined) => void,
@@ -71,6 +91,15 @@ export const sendDeleteRequest = async <T>(
       sendN(rh.notifications(error)['error']);
       return undefined
     });
+};
+export const sendDeleteRequestNoResponse = async (
+  path: string,
+  sendN: (n: NotificationData | undefined) => void,
+  rh: responseHandlerItem) => {
+  return await baseWretch(path, sendN, rh)
+    .url(path)
+    .delete()
+    .res()
 };
 const localResponseHandler = <T>(data: any, sendN: (n: NotificationData | undefined) => void,
   rh: responseHandlerItem) => {

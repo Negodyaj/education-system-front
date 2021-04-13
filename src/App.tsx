@@ -22,7 +22,7 @@ function App() {
     const history = useHistory();
     const token = getToken();
     const [isLoggedIn, setIsLoggedIn] = useState(!!token);
-    const [roleId, setRoleId] = useState(Role.Teacher);
+    const [roleId, setRoleId] = useState(Role.Admin);
     const [dismissibleNotifications, setDismissibleNotifications] = useState<NotificationData[]>([]);
     const [nonDismissibleNotifications, setNonDismissibleNotifications] = useState<NotificationData[]>([]);
 
@@ -117,7 +117,7 @@ function App() {
                                 {
                                     roleId !== Role.Student &&
                                     <Route path="/tags-page">
-                                        <TagsPage></TagsPage>
+                                        <TagsPage sendNotification={sendNewNotification}></TagsPage>
                                     </Route>
                                 }
                                 <Route path="/homework">
