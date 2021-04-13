@@ -37,6 +37,7 @@ function CourseEdition(props: CourseEditionProps) {
     const [isOpenMaterialsCourse, setIsOpenMaterialsCourse] = useState(false);
     const [changeDisplayingButtonOpenProgramCourse, setChangeDisplayingButtonOpenProgramCourse] = useState(false);
     const [changeDisplayingButtonOpenMaterialsCourse, setChangeDisplayingButtonOpenMaterialsCourse] = useState(false);
+    const [classOnProgramCourse, setClassOnProgramCourse] = useState(false);
 
     const getAllThemes = async() => {
         setAllThemes(await sendGetRequest<Themes[]>(CourseThemesEnd, props.sendNewNotification, responseHandlers[CourseThemesEnd]));
@@ -113,6 +114,7 @@ function CourseEdition(props: CourseEditionProps) {
     const openProgramCourse = () => {
         setChangeDisplayingButtonOpenProgramCourse(!changeDisplayingButtonOpenProgramCourse);
         setIsOpenProgramCourse(!isOpenProgramCourse);
+        setClassOnProgramCourse(!classOnProgramCourse);
     }
 
     const openMaterialsCourse = () => {
@@ -141,8 +143,8 @@ function CourseEdition(props: CourseEditionProps) {
                                 return item;
                             } 
                         })
-                        .map((item, key) => (
-                            <div key={key} className={"new-theme "}>
+                        .map((item) => (
+                            <div key={item.id} className={"new-theme "}>
                                 <div className="new-theme-name">{item.name}</div>
                                 <div className="new-theme-add">
                                     <button onClick={() => addNewThemeInProgramCourse(item)} className="button-add-theme">
@@ -158,7 +160,7 @@ function CourseEdition(props: CourseEditionProps) {
             </div>
             <div className="current-course-container">
                 <div className="program-current-course-container">
-                    <div className="program-course-header">
+                    <div onClick={openProgramCourse}  className="program-course-header">
                         <button onClick={openProgramCourse} className="program-course-header-button-open">
                             {
                                 changeDisplayingButtonOpenProgramCourse ? <FontAwesomeIcon icon="angle-down" /> : <FontAwesomeIcon icon="angle-up" />
@@ -166,10 +168,10 @@ function CourseEdition(props: CourseEditionProps) {
                         </button>
                         <div className="program-course-header-text">Программа курса</div>
                     </div>
-                    <div className="program-course">
+                    <div className={"program-course " + classOnProgramCourse}>
                         {   isOpenProgramCourse &&
                             themesCourse?.map((theme) => (
-                                <div className="theme">
+                                <div key={theme.id} className="theme">
                                     <div className="theme-name">{theme.name}</div>
                                     <div className="theme-delete">
                                         <button onClick={() => deleteThemeFromCourse(theme)} className='button-theme-delete'>

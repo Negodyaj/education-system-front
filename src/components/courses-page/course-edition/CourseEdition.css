@@ -95,11 +95,6 @@
     cursor: pointer;
 } 
 
-.true{
-    background-color: rgba(197, 244, 186, 0.26);
-    border: 2px solid rgb(89, 133, 78);
-}
-
 .button-add-theme {
     background-color: rgba(255, 255, 255, 0);
     background-size: contain;
@@ -114,9 +109,42 @@
     outline: none;
 }
 
-.program-course {
+@keyframes accordionEffectOpen {
+    to {
+        opacity: 1;
+        height: max-content;
+        margin-top: 0;
+    }
+}
+
+@keyframes accordionEffectClose {
+    to {
+        opacity: 0;
+        height: max-content;
+        margin-top: -50px;
+    }
+}
+
+.program-course.true{
+    margin-top: -50px;
+    animation-name: accordionEffectOpen;
+    animation-duration: .5s;
+    animation-fill-mode: forwards;
+}
+
+.program-course.false{
+    opacity: 0;
+    margin-top: 0px;
+    animation-name: accordionEffectClose;
+    animation-duration: .5s;
+    animation-fill-mode: forwards;
+}
+
+.program-course{
     width: 600px;
-    height: max-content;
+    animation-name: accordionEffectClose;
+    animation-duration: .5s;
+    animation-fill-mode: forwards;
 }
 
 .theme {
