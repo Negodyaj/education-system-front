@@ -4,12 +4,11 @@ import { sendGetRequest, sendPostRequest } from '../../../services/http.service'
 import { responseHandlers } from '../../../services/response-handler/responseHandler';
 import { PaymentAddEnd, PaymentEnd } from '../../../shared/endpointConsts';
 import NotificationData from '../../../shared/interfaces/NotificationData';
-import { Payment } from '../../interfaces/Payment';
-import { PaymentInput } from '../../interfaces/PaymentInput';
 import { PaymentResponse } from '../../interfaces/PaymentResponse';
 import './PaymentForm.css'
 import '../../../App.css';
 import { stringify } from 'node:querystring';
+import { PaymentInput } from '../../interfaces/PaymentInput';
 
 interface PaymentProps {
     paymentFormState: string;
@@ -40,7 +39,7 @@ function PaymentForm(props: PaymentProps) {
             console.log(newPayment)
     }
 
-    const onSubmit = (data: Payment) => {
+    const onSubmit = (data: PaymentInput) => {
         sendPayment(data);
     }
 
@@ -68,7 +67,7 @@ function PaymentForm(props: PaymentProps) {
                     </div>
                     <div className="input-row">
                         <label>Номер договора</label>
-                        <input key='contractNumber' value={props.userPayment?.contractNumber}
+                        <input key='contractNumber'
                             {...register("contractNumber")}
                         ></input>
                     </div>
