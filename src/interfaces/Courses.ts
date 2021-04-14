@@ -1,4 +1,4 @@
-import { Themes } from "../themes/Themes";
+import { Themes } from "./Themes";
 
 export interface Course {
   isDeleted: boolean;

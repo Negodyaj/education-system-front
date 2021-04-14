@@ -1,4 +1,4 @@
-import { Course } from "../../shared/courses/Courses";
+import { Course } from "../../interfaces/Courses";
 
 
 export const isCourseArr = (data: any): data is Course[] => {

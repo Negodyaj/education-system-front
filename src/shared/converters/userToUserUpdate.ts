@@ -1,5 +1,5 @@
-import { User } from "../../components/interfaces/User";
-import { UserUpdate } from "../../components/interfaces/UserUpdate";
+import { User } from "../../interfaces/User";
+import { UserUpdate } from "../../interfaces/UserUpdate";
 
 const initUserUpdate: UserUpdate = {
     firstName: "",
