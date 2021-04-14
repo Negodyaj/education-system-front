@@ -19,6 +19,7 @@ import { UserRegisterEnd, UserUserUpdateIdEnd } from '../../../shared/endpointCo
 import './UserEditForm.css';
 import '../UserPage.css';
 import '../../../App.css';
+import { convertRoleIdsToSelectItem } from '../../../shared/converters/roleIdsToSelectItem';
 
 interface UserEditFormProps {
     roleId: number;
@@ -60,9 +61,9 @@ function UserEditForm(props: UserEditFormProps) {
                         <label className="form-label">Список ролей</label>
                         <CustomMultiSelect
                             selectType={"multi"}
-                            userOptionsIds={getValues('roles') || undefined}
+                            userOptions={convertRoleIdsToSelectItem(getValues('roles'))}
                             options={convertEntitiesToSelectItems(getRussianDictionary(convertEnumToDictionary(Role)))}
-                            onSelect={roleOnChange}></CustomMultiSelect>
+                            onMultiSelect={roleOnChange}></CustomMultiSelect>
                     </div>)
             } else {
                 setValue('roles', [Role.Student]);
