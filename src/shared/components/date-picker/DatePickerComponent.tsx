@@ -1,7 +1,10 @@
 import { useEffect, useState } from 'react';
-import DatePicker from 'react-datepicker';
+import DatePicker, { registerLocale } from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import './DatePickerComponent.css';
+import ru from "date-fns/locale/ru"; 
+import { runInContext } from 'node:vm';
+registerLocale("ru",  ru); 
 
 interface DatePickerComponentProps {
   date: string | undefined,
