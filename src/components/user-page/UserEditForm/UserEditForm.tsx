@@ -25,7 +25,6 @@ interface UserEditFormProps {
     userToEdit: User | undefined;
     setIsEditModeOn: (mode: boolean) => void;
     reviseSending: () => void;
-    sendNotification: (n: NotificationData | undefined) => void;
     url: string;
 }
 

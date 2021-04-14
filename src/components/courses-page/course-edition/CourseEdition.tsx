@@ -19,7 +19,6 @@ interface NewThemeCourse {
 
 interface CourseEditionProps{
     idCourse: string;
-    sendNewNotification: (newNotification: NotificationData | undefined) => void;
 }
 
 function CourseEdition(props: CourseEditionProps) {

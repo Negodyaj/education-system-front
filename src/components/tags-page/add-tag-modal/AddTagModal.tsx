@@ -8,7 +8,6 @@ import { TagAddEnd, TagEnd } from "../../../shared/endpointConsts";
 import NotificationData from "../../../shared/interfaces/NotificationData";
 
 interface AddTagModalProps {
-    sendNotification: (newNotification: NotificationData | undefined) => void;
     setTagsInState: (uptags: Tag[]|undefined) => void;
     setHidden: () => void;
     hidden: string;

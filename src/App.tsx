@@ -22,7 +22,7 @@ function App() {
     const history = useHistory();
     const token = getToken();
     const [isLoggedIn, setIsLoggedIn] = useState(!!token);
-    const [roleId, setRoleId] = useState(Role.Teacher);
+    const [roleId, setRoleId] = useState(Role.Admin);
 
     const users = [
         { login: 'test', password: 'test', roleId: Role.Test },
@@ -77,25 +77,20 @@ function App() {
                     {
                         isLoggedIn ?
                             <Switch>
-                                {/* {
+                                {
                                     (roleId === Role.Manager || roleId === Role.Admin) &&
                                     <Route path="/user-page">
-                                        <UserPage
-                                            roleId={roleId}
-                                            sendNotification={sendNewNotification}></UserPage>
+                                        <UserPage roleId={roleId}></UserPage>
                                     </Route>
-                                }*/
-                                
-                                    // roleId === Role.Teacher &&
+                                }
+                                {
+                                    roleId === Role.Teacher &&
                                     <Route path="/courses-page">
                                         <CoursesPage />
                                     </Route>
-                                 /*
+                                }
                                 <Route path="/course-edition/:id" render={({ location, history }) => (
-                                    <CourseEdition 
-                                        idCourse={location.pathname} 
-                                        />
-                                )}>
+                                    <CourseEdition idCourse={location.pathname} />)}>
                                 </Route>
                                 {
                                     roleId !== Role.Student &&
@@ -104,7 +99,7 @@ function App() {
                                     </Route>
                                 }
                                 <Route path="/homework">
-                                    <HomeworkPage/>
+                                    <HomeworkPage />
                                 </Route>
                             </Switch>
                             :
@@ -114,13 +109,13 @@ function App() {
                                     <div className="test-page-link"><Link to="/dev-test-page">secret test page</Link></div>
                                 </Route>
                                 <Route path="/dev-test-page">
-                                    <DevTestPage  />
-                                    <NotificationContainer/>
-                                </Route> */}
+                                    <DevTestPage />
+                                    <NotificationContainer />
+                                </Route>
                             </Switch>
-
-                            :
-                            isLoggedIn ? <NotificationContainer /> : <></>
+                    }
+                    {
+                        isLoggedIn && <NotificationContainer />
                     }
                 </main>
             </div>

@@ -32,40 +32,40 @@ function CoursesPage() {
         dispatch(getCourses());
     }, []);
 
-    // const addCourse = async (newCourse: DataNewCourse) => {
-    //     await sendPostRequest<Course>(CourseEnd, isCourse, newCourse);
-    //     getCourses();
-    // }
+    const addCourse = async (newCourse: DataNewCourse) => {
+        await sendPostRequest<Course>(CourseEnd, isCourse, newCourse);
+        getCourses();
+    }
 
-    // const deleteCourse = async (id: number) => {
-    //     await sendDeleteRequest<Course>(CourseEnd + '/' + id, isCourse);
-    //     getCourses();
-    // }
+    const deleteCourse = async (id: number) => {
+        await sendDeleteRequest<Course>(CourseEnd + '/' + id, isCourse);
+        getCourses();
+    }
 
-    // const openModalDelete = (id: number) => {
-    //     setIsModalDelete(true);
-    //     setIdCourseDelete(id);
-    // }
+    const openModalDelete = (id: number) => {
+        setIsModalDelete(true);
+        setIdCourseDelete(id);
+    }
 
-    // const onDeleteHandler = (num: number) => {
-    //     if (num === 1) {
-    //         deleteCourse(idCourseDelete);
-    //     }
-    //     setIsModalDelete(false);
-    // }
+    const onDeleteHandler = (num: number) => {
+        if (num === 1) {
+            deleteCourse(idCourseDelete);
+        }
+        setIsModalDelete(false);
+    }
 
-    // const openModalAdd = () => {
-    //     setIsModalAdd(true);
-    // }
+    const openModalAdd = () => {
+        setIsModalAdd(true);
+    }
 
-    // const addNewCourse = (data?: DataNewCourse) => {
-    //     if(data?.name === '' || data?.description === '' || data?.duration === 0) {
-    //         return;
-    //     } else if (data !== undefined) {
-    //         addCourse(data);
-    //     }
-    //     setIsModalAdd(false);
-    // }
+    const addNewCourse = (data?: DataNewCourse) => {
+        if(data?.name === '' || data?.description === '' || data?.duration === 0) {
+            return;
+        } else if (data !== undefined) {
+            addCourse(data);
+        }
+        setIsModalAdd(false);
+    }
 
     return (
         <div className="course-container">

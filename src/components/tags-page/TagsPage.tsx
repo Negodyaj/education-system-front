@@ -11,21 +11,20 @@ import { TagAddEnd, TagEnd, UserEnd } from '../../shared/endpointConsts';
 import NotificationData from '../../shared/interfaces/NotificationData';
 import { Tag } from '../../interfaces/Tag';
 import TagList from './tag-list/TagList';
+import { isTagArr } from '../../services/type-guards/tagArr';
 
-interface TagsPageProps{
-    sendNotification: (newNotification: NotificationData | undefined) => void;
+interface TagsPageProps {
 }
 
 function TagsPage(props: TagsPageProps) {
     const url = 'Tag';
-    const [tagsInState, setTagsInState] = useState<Tag[]|undefined>([]);
+    const [tagsInState, setTagsInState] = useState<Tag[] | undefined>([]);
     const [searchTurn, setSearchTurn] = useState('');
     const [hidden, setHidden] = useState('hidden')
-    
-    const getTags = async () => {
-        //setTagsInState(await sendGetRequest<Tag[]>(url, props.sendNotification, responseHandlers[TagEnd])) 
-    };
 
+    const getTags = async () => {
+        setTagsInState(await sendGetRequest<Tag[]>(url, isTagArr))
+    };
     useEffect(() => {
         getTags();
     }, []);
@@ -33,29 +32,21 @@ function TagsPage(props: TagsPageProps) {
     const tagsFilter: ChangeEventHandler<HTMLInputElement> = (e) => {
         setSearchTurn(e.target.value);
     };
-
-    const closeModal = () => setHidden ("hidden");
-   
+    const closeModal = () => setHidden("hidden");
     return (
         <div>
             <div className="table">
                 <div className="header">
                     <div className="input">
                         <input onChange={tagsFilter} />
-
-
-                        <button className="add" onClick={()=>{setHidden("")}}></button>
+                        <button className="add" onClick={() => { setHidden("") }}></button>
                     </div>
                 </div>
-
                 <div className="body">
-                    <div className="tags"> <TagList str={searchTurn} tags={tagsInState} sendNotification={props.sendNotification} setTagsInState={setTagsInState}></TagList> </div>
-
+                    <div className="tags"> <TagList str={searchTurn} tags={tagsInState} setTagsInState={setTagsInState}></TagList> </div>
                 </div>
-
             </div>
-
-            <AddTagModal sendNotification={props.sendNotification} setTagsInState={setTagsInState} hidden={hidden} setHidden={closeModal}/>
+            <AddTagModal setTagsInState={setTagsInState} hidden={hidden} setHidden={closeModal} />
         </div>
     )
 

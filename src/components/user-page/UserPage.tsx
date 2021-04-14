@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { User } from '../../interfaces/User';
 import { sendDeleteRequest, sendGetRequest } from '../../services/http.service';
 import { responseHandlers } from '../../services/response-handler/responseHandler';
+import { isUserArr } from '../../services/type-guards/userArray';
 import ConfirmationDialog from '../../shared/components/confirmation-dialog/ConfirmationDialog';
 import { UserEnd, UserUserDeleteIdEnd } from '../../shared/endpointConsts';
 import NotificationData from '../../shared/interfaces/NotificationData';
@@ -13,7 +14,6 @@ import './UserPage.css'
 
 interface UserPageProps {
     roleId: number;
-    sendNotification: (newNotification: NotificationData | undefined) => void;
 }
 
 function UserPage(props: UserPageProps) {
@@ -34,7 +34,7 @@ function UserPage(props: UserPageProps) {
     }, []);
 
     const getUsers = async () => {
-        //setUsersInState(await sendGetRequest<User[]>(url, props.sendNotification, responseHandlers[UserEnd]))
+        setUsersInState(await sendGetRequest<User[]>(url, isUserArr))
     }
     const refreshUsers = () => {
         setUsersInState(undefined);
@@ -85,7 +85,6 @@ function UserPage(props: UserPageProps) {
                                 userToEdit={userToEdit}
                                 setIsEditModeOn={setIsEditModeOn}
                                 reviseSending={checkUpdatedUsers}
-                                sendNotification={props.sendNotification}
                                 url={url}></UserEditForm>
                             :
                             <UserList
