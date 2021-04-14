@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import './CoursesPage.css';
 import ModalWindowDelete from './modal-window/ModalWindowDelete';
@@ -9,7 +9,6 @@ import { Course } from '../../interfaces/Courses';
 import { sendDeleteRequest, sendGetRequest, sendPostRequest } from '../../services/http.service';
 import { CourseAddEnd, CourseDeleteEnd, CourseEnd } from '../../shared/endpointConsts';
 import { responseHandlers } from '../../services/response-handler/responseHandler';
-import NotificationData from '../../shared/interfaces/NotificationData';
 import { useDispatch, useSelector } from "react-redux";
 import { IRootState } from '../../store';
 import { isCourse } from '../../services/type-guards/course';
@@ -88,16 +87,16 @@ function CoursesPage() {
                                             <FontAwesomeIcon icon="edit" />
                                         </button>
                                     </Link>
-                                    {/* <button onClick={() => openModalDelete(item.id)} className='button-delete'> */}
-                                    {/* <FontAwesomeIcon icon="trash" /> */}
-                                    {/* </button> */}
+                                    <button onClick={() => openModalDelete(item.id)} className='button-delete'>
+                                        <FontAwesomeIcon icon="trash" /> 
+                                    </button>
                                 </div>
                             </div>
                         ))
                 }
             </div>
-            {/* { isModalAdd && <NewCourse dataNewCourse={addNewCourse} /> }
-            { isModalDelete && <ModalWindowDelete onClickDelete={onDeleteHandler}/>} */}
+            { isModalAdd && <NewCourse dataNewCourse={addNewCourse} /> }
+            { isModalDelete && <ModalWindowDelete onClickDelete={onDeleteHandler}/>}
         </div>
     )
 }
