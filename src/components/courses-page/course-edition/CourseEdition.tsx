@@ -17,13 +17,18 @@ interface NewThemeCourse {
     idTheme: number;
 }
 
-function CourseEdition() {
+interface CourseEditionProps{
+    idCourse: string;
+    sendNewNotification: (newNotification: NotificationData | undefined) => void;
+}
+
+function CourseEdition(props: CourseEditionProps) {
 
     let currentCourse = {} as Course | undefined;
     let themesCurrentCourse: Themes[] = [];
     let themesList: Themes[] = [];
     let nameThemesCourse: string[] = [];
-    let indexCourse /*= Number(props.idCourse.replace(/[a-z-A-Z\/]/g, ""))*/;
+    let indexCourse = Number(props.idCourse.replace(/[a-z-A-Z\/]/g, ""));
     
     const [themesCourse, setThemesCourse] = useState<Themes[] | undefined>(themesCurrentCourse);
     const [allThemes, setAllThemes] = useState<Themes[] | undefined>(themesList);

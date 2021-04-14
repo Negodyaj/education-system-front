@@ -14,12 +14,13 @@ const initialState: INotificationContainerState = {
     },
     deleteNotification: function (this: INotificationContainerState, dismissedNotification: NotificationData): void {
         this.dismissibleNotifications = [...this.dismissibleNotifications].filter(
-            notification => notification != dismissedNotification
+            notification => notification !== dismissedNotification
         );
     }
 };
 export function coursePageReducer(state: INotificationContainerState = initialState, action: any): INotificationContainerState {
     switch (action.type) {
+        // case: 
         default:
             return state;
     }

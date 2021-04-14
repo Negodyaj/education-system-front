@@ -77,22 +77,20 @@ function App() {
                     {
                         isLoggedIn ?
                             <Switch>
-                                {
+                                {/* {
                                     (roleId === Role.Manager || roleId === Role.Admin) &&
                                     <Route path="/user-page">
                                         <UserPage
                                             roleId={roleId}
                                             sendNotification={sendNewNotification}></UserPage>
                                     </Route>
-                                }
-                                {
-                                    roleId === Role.Teacher &&
+                                }*/
+                                
+                                    // roleId === Role.Teacher &&
                                     <Route path="/courses-page">
-                                        <CoursesPage
-                                            roleId={roleId}
-                                            ></CoursesPage>
+                                        <CoursesPage />
                                     </Route>
-                                }
+                                 /*
                                 <Route path="/course-edition/:id" render={({ location, history }) => (
                                     <CourseEdition 
                                         idCourse={location.pathname} 
@@ -118,15 +116,11 @@ function App() {
                                 <Route path="/dev-test-page">
                                     <DevTestPage  />
                                     <NotificationContainer/>
-                                </Route>
+                                </Route> */}
                             </Switch>
 
-                    }
-                    {
-                        isLoggedIn ? <NotificationContainer
-                            dismissibleNotifications={dismissibleNotifications}
-                            nonDismissibleNotifications={nonDismissibleNotifications}
-                            deleteNotification={deleteNotification} /> : <></>
+                            :
+                            isLoggedIn ? <NotificationContainer /> : <></>
                     }
                 </main>
             </div>
