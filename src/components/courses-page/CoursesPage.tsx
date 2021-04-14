@@ -14,6 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { IRootState } from '../../store';
 import { isCourse } from '../../services/type-guards/course';
 import { isCourseArr } from '../../services/type-guards/courseArr';
+import { getCourses } from '../../store/courses-page/thunk';
 
 function CoursesPage() {
 
@@ -25,12 +26,10 @@ function CoursesPage() {
     const [coursesList, setCoursesList] = useState<Course[]>();
     const [idCourseDelete, setIdCourseDelete] = useState(0);
 
-    const getCourses = async () => {
-        setCoursesList(await sendGetRequest<Course[]>(CourseEnd, isCourseArr));
-    }
+    
 
     useEffect(() => {
-        getCourses();
+        dispatch(getCourses());
     }, []);
 
     // const addCourse = async (newCourse: DataNewCourse) => {
@@ -76,7 +75,7 @@ function CoursesPage() {
             </div>
             <div className="courses-list">
                 {
-                    coursesList?.map(item => (
+                    pageState.courseList?.map(item => (
                         <div key={item.id} className="course">
                             <div className="current-course-name">{item.name}</div>
                             <div className="course-update-delete">

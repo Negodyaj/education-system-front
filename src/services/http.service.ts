@@ -1,11 +1,8 @@
 import { baseUrl } from "../shared/consts";
 import wretch from 'wretch';
 import { getToken } from "./auth.service";
-import NotificationData from "../shared/interfaces/NotificationData";
-import { responseHandlerItem } from "./response-handler/responseHandler";
 
-export const sendGetRequest = async <T>(path: string, isT: ((data: any) => data is any) | undefined
-) => {
+export const sendGetRequest = async <T>(path: string, isT: ((data: any) => data is any) | undefined) => {
   return await baseWretch()
     .url(path)
     .get()
@@ -58,7 +55,7 @@ const localResponseHandler = <T>(data: any, isT: ((data: any) => data is any) | 
   if (isT ? isT(data) : true) {
     return data as T;
   } else {
-    return undefined;
+    return Promise.reject();
   }
 }
 const baseWretch = () => {

@@ -11,7 +11,7 @@ export function coursePageReducer(state: ICoursePageState = initialState, action
         case COURSE_LIST_WRETCH_LOADING:
             return { ...state, isDataLoading: true}
         case COURSE_LIST_WRETCH_LOADED:
-            return { ...state, courseList: [...action.payload], isDataLoading: false };
+            return { ...state, courseList: action.payload, isDataLoading: false };
         case COURSE_LIST_WRETCH_FAIL:
             return { ...state, courseList: [], isDataLoading: false };
         default:
