@@ -55,7 +55,7 @@ const localResponseHandler = <T>(data: any, isT: ((data: any) => data is any) | 
   if (isT ? isT(data) : true) {
     return data as T;
   } else {
-    return Promise.reject();
+    return undefined;
   }
 }
 const baseWretch = () => {

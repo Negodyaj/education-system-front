@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import './CoursesPage.css';
 import ModalWindowDelete from './modal-window/ModalWindowDelete';
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import NewCourse from './NewCourse';
 import { DataNewCourse } from './NewCourse';
 import { Course } from '../../interfaces/Courses';
@@ -26,7 +26,7 @@ function CoursesPage() {
     const [coursesList, setCoursesList] = useState<Course[]>();
     const [idCourseDelete, setIdCourseDelete] = useState(0);
 
-    
+
 
     useEffect(() => {
         dispatch(getCourses());
@@ -67,7 +67,7 @@ function CoursesPage() {
     //     setIsModalAdd(false);
     // }
 
-    return(
+    return (
         <div className="course-container">
             <div className="course-create">
                 <div> </div>
@@ -75,21 +75,25 @@ function CoursesPage() {
             </div>
             <div className="courses-list">
                 {
-                    pageState.courseList?.map(item => (
-                        <div key={item.id} className="course">
-                            <div className="current-course-name">{item.name}</div>
-                            <div className="course-update-delete">
-                                <Link to={"/course-edition/" + item.id}>
-                                    <button className='button-update'>
-                                        <FontAwesomeIcon icon="edit" />
-                                    </button>
-                                </Link>
-                                {/* <button onClick={() => openModalDelete(item.id)} className='button-delete'> */}
+                    pageState.isDataLoading
+                        ?
+                        <>LOADING</>
+                        :
+                        pageState.courseList?.map(item => (
+                            <div key={item.id} className="course">
+                                <div className="current-course-name">{item.name}</div>
+                                <div className="course-update-delete">
+                                    <Link to={"/course-edition/" + item.id}>
+                                        <button className='button-update'>
+                                            <FontAwesomeIcon icon="edit" />
+                                        </button>
+                                    </Link>
+                                    {/* <button onClick={() => openModalDelete(item.id)} className='button-delete'> */}
                                     {/* <FontAwesomeIcon icon="trash" /> */}
-                                {/* </button> */}
+                                    {/* </button> */}
+                                </div>
                             </div>
-                        </div>
-                    ))
+                        ))
                 }
             </div>
             {/* { isModalAdd && <NewCourse dataNewCourse={addNewCourse} /> }
