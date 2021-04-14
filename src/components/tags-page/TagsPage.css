@@ -38,3 +38,13 @@ opacity: 0.2;
     cursor: initial;
 }
 
+.tag-tittle{
+    font-family: Montserrat;
+    width: 500px;
+    margin-top: 0;
+    margin-bottom: .5rem;
+    line-height: 1.2;
+    text-align:left;
+    margin-left: 20px;
+}
+

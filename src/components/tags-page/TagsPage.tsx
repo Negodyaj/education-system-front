@@ -36,14 +36,15 @@ function TagsPage(props: TagsPageProps) {
 
     return (
         <div className="main">
+            <div className="tag-tittle"> <h4> Теги</h4> </div>
             <div className="tag-header">
-                <input className="input-search" onChange={tagsFilter} placeholder="Введите тег" />
+                <input className="input-search" onChange={tagsFilter} placeholder="Поиск" />
                 <button className="button-style" onClick={() => { setHidden("") }}>
                     <FontAwesomeIcon icon="plus" />
                     <span> Добавить</span>
                 </button>
             </div>
-
+            
             <div className="body">
                 <div className="tags-list"> <TagList str={searchTurn} tags={tagsInState} sendNotification={props.sendNotification} setTagsInState={setTagsInState}></TagList> </div>
 
