@@ -1,5 +1,5 @@
-import { User } from "../../components/interfaces/User";
-import { UserInput } from "../../components/interfaces/UserInput";
+import { User } from "../../interfaces/User";
+import { UserInput } from "../../interfaces/UserInput";
 
 const initUserInput: UserInput = {
     firstName: "",

@@ -1,5 +1,5 @@
-import { DictionaryEntity } from "../../components/interfaces/DictionaryEntity";
-import { SelectItem } from "../../components/interfaces/SelectItem";
+import { DictionaryEntity } from "../../interfaces/DictionaryEntity";
+import { SelectItem } from "../../interfaces/SelectItem";
 
 
 

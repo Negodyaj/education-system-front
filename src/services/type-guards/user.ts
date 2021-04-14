@@ -1,4 +1,4 @@
-import { User } from "../../components/interfaces/User";
+import { User } from "../../interfaces/User";
 
 export const isUser = (data: any): data is User => {
     const dataToCheck = data as User;

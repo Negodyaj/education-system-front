@@ -1,12 +1,12 @@
 import { useState } from "react";
+import { Tag } from "../../../interfaces/Tag";
 import { sendDeleteRequest, sendDeleteRequestNoResponse, sendGetRequest } from "../../../services/http.service";
 import { responseHandlers } from "../../../services/response-handler/responseHandler";
+import { isTagArr } from "../../../services/type-guards/tagArr";
 import { TagDeleteEnd, TagEnd } from "../../../shared/endpointConsts";
 import NotificationData from "../../../shared/interfaces/NotificationData";
-import { Tag } from "../../interfaces/Tag";
 
 interface TagListProps {
-    sendNotification: (newNotification: NotificationData | undefined) => void;
     tags: Tag[] | undefined;
     setTagsInState: (uptags: Tag[]|undefined) => void;
     str: string;
@@ -17,8 +17,8 @@ function TagList(props: TagListProps) {
     const [deletedTag, setdeleteTag]= useState('');
     const deleteTag = async (tagId: number) => {
        
-       if (await sendDeleteRequestNoResponse('Tag/' + tagId, props.sendNotification, responseHandlers[TagDeleteEnd]))           
-       await props.setTagsInState(await sendGetRequest<Tag[]>('Tag', props.sendNotification, responseHandlers[TagEnd]))  
+       if (await sendDeleteRequestNoResponse('Tag/' + tagId))           
+       await props.setTagsInState(await sendGetRequest<Tag[]>('Tag', isTagArr))  
     }
     
     return (
@@ -30,8 +30,6 @@ function TagList(props: TagListProps) {
                     }
                 })
             }
-
-
         </>
     )
 }

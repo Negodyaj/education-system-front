@@ -1,14 +1,13 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { url } from "node:inspector";
 import React, { ChangeEventHandler, useState } from "react"
+import { Tag } from "../../../interfaces/Tag";
 import { sendGetRequest, sendPostRequest } from "../../../services/http.service"
 import { responseHandlers } from "../../../services/response-handler/responseHandler";
 import { TagAddEnd, TagEnd } from "../../../shared/endpointConsts";
 import NotificationData from "../../../shared/interfaces/NotificationData";
-import { Tag } from "../../interfaces/Tag"
 
 interface AddTagModalProps {
-    sendNotification: (newNotification: NotificationData | undefined) => void;
     setTagsInState: (uptags: Tag[]|undefined) => void;
     setHidden: () => void;
     hidden: string;
@@ -22,9 +21,9 @@ function AddTagModal(props: AddTagModalProps) {
         setNameNewTag(e.target.value);
     };
     const AddNewTag = async () => {
-        let a;
-        if (a=!!await sendPostRequest<Tag>('Tag', props.sendNotification, responseHandlers[TagAddEnd], {name: nameNewTag}))
-       props.setTagsInState(await sendGetRequest<Tag[]>('Tag', props.sendNotification, responseHandlers[TagEnd])) 
+    //     let a;
+    //     if (a=!!await sendPostRequest<Tag>('Tag', props.sendNotification, responseHandlers[TagAddEnd], {name: nameNewTag}))
+    //    props.setTagsInState(await sendGetRequest<Tag[]>('Tag', props.sendNotification, responseHandlers[TagEnd])) 
     };
 
     return (

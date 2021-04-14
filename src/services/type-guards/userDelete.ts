@@ -1,4 +1,4 @@
-import { UserDelete } from "../../components/interfaces/UserDelete";
+import { UserDelete } from "../../interfaces/UserDelete";
 
 export const isUserDelete  = (data: any): data is UserDelete => {
     const dataToCheck = data as UserDelete;

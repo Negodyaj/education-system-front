@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 import Select, { OptionsType } from 'react-select'
 import { Role } from '../../enums/role';
+import { SelectItem } from '../../interfaces/SelectItem';
 import { getEnToRuTranslation } from '../../shared/converters/enumToDictionaryEntity';
-import { SelectItem } from '../interfaces/SelectItem';
 
 
 interface SelectProps {
