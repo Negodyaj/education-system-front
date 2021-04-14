@@ -1,11 +1,13 @@
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { sendDeleteRequest, sendGetRequest } from '../../services/http.service';
 import { responseHandlers } from '../../services/response-handler/responseHandler';
 import ConfirmationDialog from '../../shared/components/confirmation-dialog/ConfirmationDialog';
 import { UserEnd, UserUserDeleteIdEnd } from '../../shared/endpointConsts';
 import NotificationData from '../../shared/interfaces/NotificationData';
+import { IRootState } from '../../store';
 import { User } from '../interfaces/User';
 import { UserDelete } from '../interfaces/UserDelete';
 import UserList from './user-list/UserList';
@@ -18,7 +20,8 @@ interface UserPageProps {
 }
 
 function UserPage(props: UserPageProps) {
-
+    const state = useSelector((state: IRootState) => state.userListPage);
+    console.log(state);
     const url = 'User';
     const [usersInState, setUsersInState] = useState<User[] | undefined>();
     const [isEditModeOn, setIsEditModeOn] = useState(false);
@@ -75,7 +78,7 @@ function UserPage(props: UserPageProps) {
     return (
         <div className="user-page">
             {
-                !usersInState ?
+                !(usersInState || state.userList) ?
                     <div>
                         <FontAwesomeIcon icon="spinner" />
                     </div> : (
@@ -91,7 +94,7 @@ function UserPage(props: UserPageProps) {
                             :
                             <UserList
                                 roleId={props.roleId}
-                                users={usersInState}
+                                users={usersInState || state.userList}
                                 onEditClick={onEditClick}
                                 onDeleteClick={onDeleteClick}></UserList>
                     )

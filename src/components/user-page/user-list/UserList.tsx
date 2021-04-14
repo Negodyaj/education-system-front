@@ -7,6 +7,10 @@ import { User } from "../../interfaces/User";
 import PaymentForm from "../payment-form/PaymentForm";
 import '../UserPage.css';
 import '../../../App.css'
+import { IRootState } from "../../../store";
+import { useDispatch, useSelector } from "react-redux";
+import { addItemToList } from "../../../store/user-list-page/action-creators";
+import { getUsers } from "../../../store/user-list-page/thunk";
 
 interface UserListProps {
     roleId: number;
@@ -16,7 +20,9 @@ interface UserListProps {
 }
 
 function UserList(props: UserListProps) {
-
+    const dispatch = useDispatch();
+    const pageState = useSelector((state: IRootState) => state.userListPage);
+    const mockUser: User = { lastName: 'Masha', firstName: 'Valya' };
     const lastNameAlphabetSort = (a: string, b: string) => {
         a = a.toLowerCase();
         b = b.toLowerCase();
@@ -33,6 +39,10 @@ function UserList(props: UserListProps) {
     const [usersToShow, setUsersToShow] = useState([...props.users]);
     const [userForPayment, setUserForPayment] = useState<User | undefined>(undefined);
     const [paymentFormState, setPaymentFormState] = useState('');
+
+    useEffect(() => {        
+        dispatch(getUsers());
+    }, []);
 
     const elementsDefinedByRole = {
         paymentButton: (userId: number | undefined) => {
@@ -69,13 +79,19 @@ function UserList(props: UserListProps) {
 
     return (
         <div className="user-list">
+            { pageState.isDataLoading && <div>Loading...</div> }
             <div className="column-head">
                 <h4>Пользователи</h4>
                 <button className="button-style" onClick={() => props.onEditClick()}>
                     <FontAwesomeIcon icon="plus" />
                     <span> Добавить</span>
                 </button>
+                <button className="button-style" onClick={() => dispatch(addItemToList(mockUser))}>Добавить мокового юзера</button>
             </div>
+            {
+                pageState.userList.length &&
+                pageState.userList.map(user => (<div>{user.firstName} {user.lastName}</div>))
+            }
             <div className="list + user-list-head">
                 <div className="column"> </div>
                 <div className="column"><span title="А-Я" onClick={lastNameColumnOnClick}>фамилия</span></div>

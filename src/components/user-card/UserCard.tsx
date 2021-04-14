@@ -1,8 +1,7 @@
-import { User } from '../../interfaces/User';
 import './UserCard.css';
 
 export interface UserCardProps {
-    userData: User
+    userData: any
 }
 
 function UserCard(props: UserCardProps) {
