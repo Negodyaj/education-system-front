@@ -19,6 +19,7 @@ import { UserRegisterEnd, UserUserUpdateIdEnd } from '../../../shared/endpointCo
 import './UserEditForm.css';
 import '../UserPage.css';
 import '../../../App.css';
+import { UserInput } from '../../interfaces/UserInput';
 
 interface UserEditFormProps {
     roleId: number;
@@ -31,7 +32,7 @@ interface UserEditFormProps {
 
 function UserEditForm(props: UserEditFormProps) {
 
-    const initUser: User = Object.assign({}, props.userToEdit || {
+    const initUser: UserInput = Object.assign({}, props.userToEdit || {
         firstName: "",
         lastName: "",
         login: "",
@@ -43,10 +44,10 @@ function UserEditForm(props: UserEditFormProps) {
         roleIds: []
     })
 
-    const [newUser, setNewUser] = useState<User>(initUser);
+    const [newUser, setNewUser] = useState<UserInput>(initUser);
     const [isFetching, setIsFetching] = useState(false);
 
-    const { register, formState: { errors }, handleSubmit, getValues, setValue } = useForm<User>({
+    const { register, formState: { errors }, handleSubmit, getValues, setValue } = useForm<UserInput>({
         mode: 'all',
         criteriaMode: 'all',
         defaultValues: (() => { if (isFetching === false) { return Object.assign({}, newUser) } })()
@@ -84,7 +85,7 @@ function UserEditForm(props: UserEditFormProps) {
                             className="form-input" />
                         <ErrorMessage
                             errors={errors}
-                            name={getName<User>(newUser, o => o.password)}
+                            name={getName<UserInput>(newUser, o => o.password)}
                             className="bad-feedback"
                             as="div">
                         </ErrorMessage>
@@ -114,7 +115,7 @@ function UserEditForm(props: UserEditFormProps) {
                             className="form-input" />
                         <ErrorMessage
                             errors={errors}
-                            name={getName<User>(newUser, o => o.login)}
+                            name={getName<UserInput>(newUser, o => o.login)}
                             className="bad-feedback"
                             as="div">
                         </ErrorMessage>
@@ -185,7 +186,7 @@ function UserEditForm(props: UserEditFormProps) {
                             className="form-input" />
                         <ErrorMessage
                             errors={errors}
-                            name={getName<User>(newUser, o => o.firstName)}
+                            name={getName<UserInput>(newUser, o => o.firstName)}
                             className="bad-feedback"
                             as="div">
                         </ErrorMessage>
@@ -207,7 +208,7 @@ function UserEditForm(props: UserEditFormProps) {
                             className="form-input" />
                         <ErrorMessage
                             errors={errors}
-                            name={getName<User>(newUser, o => o.lastName)}
+                            name={getName<UserInput>(newUser, o => o.lastName)}
                             className="bad-feedback"
                             as="div">
                         </ErrorMessage>
@@ -242,7 +243,7 @@ function UserEditForm(props: UserEditFormProps) {
                             className="form-input" />
                         <ErrorMessage
                             errors={errors}
-                            name={getName<User>(newUser, o => o.phone)}
+                            name={getName<UserInput>(newUser, o => o.phone)}
                             className="bad-feedback"
                             as="div">
                         </ErrorMessage>
@@ -269,7 +270,7 @@ function UserEditForm(props: UserEditFormProps) {
                             placeholder="или вставьте ссылку" />
                         <ErrorMessage
                             errors={errors}
-                            name={getName<User>(newUser, o => o.userPic)}
+                            name={getName<UserInput>(newUser, o => o.userPic)}
                             className="bad-feedback"
                             as="div">
                         </ErrorMessage>
@@ -288,7 +289,7 @@ function UserEditForm(props: UserEditFormProps) {
                             className="form-input" />
                         <ErrorMessage
                             errors={errors}
-                            name={getName<User>(newUser, o => o.email)}
+                            name={getName<UserInput>(newUser, o => o.email)}
                             className="bad-feedback"
                             as="div">
                         </ErrorMessage>

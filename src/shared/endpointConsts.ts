@@ -9,5 +9,5 @@ export const CourseCourseIdEnd: string = 'Course/';
 export const CourseThemesEnd: string = 'Course/theme';
 export const CourseIdThemeIdAddEnd: string = 'Course/id/theme/id';
 export const CourseIdThemeIdDeleteEnd: string = 'Course/id/theme/idDelete';
-export const PaymentAddEnd: string = 'User/UserId/payment';
-export const PaymentEnd: string = 'User/UserId/payment';
+export const PaymentAddEnd: string = 'PaymentAddEnd';
+export const PaymentEnd: string = 'PaymentEnd';

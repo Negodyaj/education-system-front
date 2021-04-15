@@ -1,20 +1,21 @@
 import { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { sendGetRequest, sendPostRequest } from '../../../services/http.service';
 import { responseHandlers } from '../../../services/response-handler/responseHandler';
-import { PaymentAddEnd, PaymentEnd } from '../../../shared/endpointConsts';
+import {  PaymentAddEnd, PaymentEnd } from '../../../shared/endpointConsts';
 import NotificationData from '../../../shared/interfaces/NotificationData';
 import { PaymentResponse } from '../../interfaces/PaymentResponse';
 import './PaymentForm.css'
 import '../../../App.css';
 import { stringify } from 'node:querystring';
 import { PaymentInput } from '../../interfaces/PaymentInput';
+import { User } from '../../interfaces/User';
 
 interface PaymentProps {
     paymentFormState: string;
     cancelClick: () => void;
     sendNotification: (newNotification: NotificationData | undefined) => void;
-    userPayment: PaymentResponse | undefined;
+    userForPayment: User | undefined;
 }
 
 function PaymentForm(props: PaymentProps) {
@@ -26,21 +27,27 @@ function PaymentForm(props: PaymentProps) {
             amount: 2500,
             date: Date(),
             period: "",
-            contractNumber: props.userPayment?.contractNumber
+            contractNumber: props.userForPayment?.contractNumber
         }
     });
 
     const sendPayment = (newPayment: PaymentInput) => {
         sendPostRequest<PaymentResponse>(
-            'User' + '/' + props.userPayment?.user?.id + '/' + 'payment',
+            `User/${props.userForPayment?.id}/payment`,
             props.sendNotification,
             responseHandlers[PaymentAddEnd],
             newPayment)
+            
             console.log(newPayment)
     }
-
-    const onSubmit = (data: PaymentInput) => {
-        sendPayment(data);
+    //console.log(props.userPayment?.contractNumber)
+    const onSubmit: SubmitHandler<PaymentInput> = (data: PaymentInput) => {
+        sendPayment({
+            amount: +data.amount,
+            date: data.date,
+            period: data.period,
+            contractNumber: +data.contractNumber
+        });
     }
 
     return (
@@ -48,7 +55,7 @@ function PaymentForm(props: PaymentProps) {
             <div className={"inner-payment " + (props.paymentFormState)}>
                 <div className="header-payment">
                     <div>Назначить платеж пользователю
-                        <div>{props.userPayment?.user?.firstName} {props.userPayment?.user?.lastName}</div>
+                        <div>{props.userForPayment?.firstName} {props.userForPayment?.lastName}</div>
                     </div>
                     <button className="button-round" onClick={props.cancelClick}>х</button>
                 </div>
@@ -67,7 +74,7 @@ function PaymentForm(props: PaymentProps) {
                     </div>
                     <div className="input-row">
                         <label>Номер договора</label>
-                        <input key='contractNumber'
+                        <input key='contractNumber' type='number'
                             {...register("contractNumber")}
                         ></input>
                     </div>

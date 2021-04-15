@@ -49,8 +49,7 @@ export const sendPostRequest = async <T>(
     .url(path)
     .post(body)
     .json(data => {
-      console.log('jopa');
-      if (data) return localResponseHandler<T>(data, sendN, rh);
+   return localResponseHandler<T>(data, sendN, rh);
     })
     .catch((error: WretcherError) => {
       sendN(rh.notifications(error)['error']);

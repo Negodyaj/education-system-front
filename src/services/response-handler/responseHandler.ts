@@ -151,8 +151,7 @@ export const responseHandlers: responseHandler = {
             return ({
                 [nType.Error]: makeNotification(nType.Error, makeErrorText(response)),
                 [nType.Success]: undefined
-            }
-            )
+            })
         },
         isT: (data: any): data is PaymentResponse[] => isPaymentResponseArr(data)
     }

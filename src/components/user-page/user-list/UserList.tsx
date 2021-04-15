@@ -36,25 +36,10 @@ function UserList(props: UserListProps) {
         return 0;
     }
 
-    const initPaymentResponse: PaymentResponse[] = [{
-        id: 0,
-        amount: 0,
-        date: "",
-        period: "",
-        contractNumber: 0,
-        user: {
-            id: 0,
-            firstName: "",
-            lastName: "",
-            userPic: ""
-        }
-    }]
-
     const [signInvertor, setSignInvertor] = useState(1);
     const [usersToShow, setUsersToShow] = useState([...props.users]);
-    //const [userForPayment, setUserForPayment] = useState<User | undefined>(undefined);
+    const [userForPayment, setUserForPayment] = useState<User | undefined>(undefined);
     const [paymentFormState, setPaymentFormState] = useState('');
-    const [userPayment, setUserPayment] = useState<PaymentResponse[] | undefined>(initPaymentResponse || undefined);
     
     const elementsDefinedByRole = {
         paymentButton: (userId: number | undefined) => {
@@ -69,9 +54,9 @@ function UserList(props: UserListProps) {
     }
     
     const onPaymentButtonClick = (userId: number | undefined) => {
-        //setUserForPayment([...usersToShow].filter(u => u.id === userId)[0]);
+        setUserForPayment([...usersToShow].filter(u => u.id === userId)[0]);
         setPaymentFormState('visible');
-        getPayment([...usersToShow].filter(u => u.id === userId)[0].id);
+        //getPayment([...usersToShow].filter(u => u.id === userId)[0].id);
     }
 
     const onEditClick = (userToEditId?: number) => {
@@ -89,14 +74,14 @@ function UserList(props: UserListProps) {
         setPaymentFormState('');
     }
 
-    const getPayment = async (userId?: number) => {
-        setUserPayment(await sendGetRequest<PaymentResponse[] | undefined>(
-            'User' + '/' + userId + '/' + 'payment',
-            props.sendNotification,
-            responseHandlers[PaymentEnd]));
-            //console.log('User' + '/' + userId + '/' + 'payment');
-        //console.log((userPayment as PaymentResponse[])[0])
-    }
+    // const getPayment = async (userId?: number) => {
+    //     setUserForPayment(await sendGetRequest<PaymentResponse[] | undefined>(
+    //         'User' + '/' + userId + '/' + 'payment',
+    //         props.sendNotification,
+    //         responseHandlers[PaymentEnd]));
+    //         //console.log('User' + '/' + userId + '/' + 'payment');
+    //     //console.log((userPayment as PaymentResponse[])[0])
+    // }
 
     return (
         <div className="user-list">
@@ -150,7 +135,7 @@ function UserList(props: UserListProps) {
                 paymentFormState={paymentFormState}
                 cancelClick={onCancelPaymentClick}
                 sendNotification={props.sendNotification}
-                userPayment={(userPayment as PaymentResponse[])[0] || undefined}
+                userForPayment={userForPayment}
             ></PaymentForm>
         </div>
 

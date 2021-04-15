@@ -9,5 +9,5 @@ export interface PaymentResponse {
         firstName: string,
         lastName: string,
         userPic: string
-    }
+    } | null
 }
