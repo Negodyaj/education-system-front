@@ -1,14 +1,8 @@
 import React, { ChangeEventHandler, useEffect, useState } from 'react';
-import { isJSDocReturnTag } from 'typescript';
 import './TagsPage.css';
-import wretch from 'wretch';
 import { sendGetRequest, sendPostRequest } from '../../services/http.service';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import SearchComponent from '../../shared/components/search-component/SearchComponent';
 import AddTagModal from './add-tag-modal/AddTagModal';
-import { responseHandlers } from '../../services/response-handler/responseHandler';
-import { TagAddEnd, TagEnd, UserEnd } from '../../shared/endpointConsts';
-import NotificationData from '../../shared/interfaces/NotificationData';
 import { Tag } from '../../interfaces/Tag';
 import TagList from './tag-list/TagList';
 import { isTagArr } from '../../services/type-guards/tagArr';
@@ -32,19 +26,23 @@ function TagsPage(props: TagsPageProps) {
     const tagsFilter: ChangeEventHandler<HTMLInputElement> = (e) => {
         setSearchTurn(e.target.value);
     };
+
     const closeModal = () => setHidden("hidden");
+
     return (
-        <div>
-            <div className="table">
-                <div className="header">
-                    <div className="input">
-                        <input onChange={tagsFilter} />
-                        <button className="add" onClick={() => { setHidden("") }}></button>
-                    </div>
-                </div>
-                <div className="body">
-                    <div className="tags"> <TagList str={searchTurn} tags={tagsInState} setTagsInState={setTagsInState}></TagList> </div>
-                </div>
+        <div className="main">
+            <div className="tag-tittle"> <h4> Теги</h4> </div>
+            <div className="tag-header">
+                <input className="input-search" onChange={tagsFilter} placeholder="Поиск" />
+                <button className="button-style" onClick={() => { setHidden("") }}>
+                    <FontAwesomeIcon icon="plus" />
+                    <span> Добавить</span>
+                </button>
+            </div>
+            
+            <div className="body">
+                <div className="tags-list"> <TagList str={searchTurn} tags={tagsInState} setTagsInState={setTagsInState}></TagList> </div>
+
             </div>
             <AddTagModal setTagsInState={setTagsInState} hidden={hidden} setHidden={closeModal} />
         </div>
