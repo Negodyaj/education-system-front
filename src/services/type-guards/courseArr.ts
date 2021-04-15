@@ -2,6 +2,8 @@ import { Course } from "../../interfaces/Courses";
 
 
 export const isCourseArr = (data: any): data is Course[] => {
-    const dataToCheck = data as Course[];
-    return Array.isArray(dataToCheck) && !!dataToCheck[0].name && !!dataToCheck[0].description;
+    if (data)
+        return Array.isArray(data) && !!data[0].name && !!data[0].description;
+    else
+        return false;
 }

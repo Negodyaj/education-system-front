@@ -1,6 +1,6 @@
 import { Course } from "../interfaces/Courses";
+import NotificationData from "../interfaces/NotificationData";
 import { Tag } from "../interfaces/Tag";
-import NotificationData from "../shared/interfaces/NotificationData";
 
 export interface ICoursePageState {
     courseList: Course[],
@@ -8,10 +8,10 @@ export interface ICoursePageState {
 }
 
 export interface INotificationContainerState {
-    dismissibleNotifications: NotificationData[],
-    nonDismissibleNotifications: NotificationData[],
-    sendNotification: (notification: NotificationData) => void,
-    deleteNotification: (dismissedNotification: NotificationData) => void
+    notifications: {
+        dismissible: NotificationData[],
+        nonDismissible: NotificationData[],
+    }
 }
 
 export interface ITagsPageState {
