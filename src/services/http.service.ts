@@ -2,14 +2,14 @@ import { baseUrl } from "../shared/consts";
 import wretch from 'wretch';
 import { getToken } from "./auth.service";
 
-export const sendGetRequest = async <T>(path: string, isT: ((data: any) => data is any) | undefined) => {
+export const sendGetRequest = async <T>(path: string, isT: ((data: any) => data is T) | undefined) => {
   return await baseWretch()
     .url(path)
     .get()
     .json(data => localResponseHandler<T>(data, isT))
     .catch(error => error);
 };
-export const sendPutRequest = async <T>(path: string, isT: ((data: any) => data is any) | undefined,
+export const sendPutRequest = async <T>(path: string, isT: ((data: any) => data is T) | undefined,
   body: any
 ) => {
   return await baseWretch()
@@ -24,7 +24,7 @@ export const sendPutRequestNoResponse = async (path: string, body: any) => {
     .put(body)
     .res(response => response)
 };
-export const sendPostRequest = async <T>(path: string, isT: ((data: any) => data is any) | undefined, body?: any) => {
+export const sendPostRequest = async <T>(path: string, isT: ((data: any) => data is T) | undefined, body?: any) => {
   return await baseWretch()
     .url(path)
     .post(body || undefined)
@@ -37,7 +37,7 @@ export const sendPostRequestNoResponse = async (path: string, body?: any) => {
     .post(body)
     .res(response => response)
 };
-export const sendDeleteRequest = async <T>(path: string, isT: ((data: any) => data is any) | undefined) => {
+export const sendDeleteRequest = async <T>(path: string, isT: ((data: any) => data is T) | undefined) => {
   return await baseWretch()
     .url(path)
     .delete()
@@ -51,7 +51,7 @@ export const sendDeleteRequestNoResponse = async (path: string) => {
     .delete()
     .res(response => {return response})
 };
-const localResponseHandler = <T>(data: any, isT: ((data: any) => data is any) | undefined) => {
+const localResponseHandler = <T>(data: any, isT: ((data: any) => data is T) | undefined) => {
   if (isT ? isT(data) : true) {
     return data as T;
   } else {

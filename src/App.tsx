@@ -116,6 +116,7 @@ function App() {
                     }
                     {
                         isLoggedIn && <NotificationContainer />
+                        
                     }
                 </main>
             </div>
