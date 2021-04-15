@@ -5,8 +5,9 @@ export interface ICoursePageState {
     courseList: Course[]
     isOpenModalCreateCourse: boolean
     isModalDelete: boolean
-    isCourseDelete: number
+    isCourseDeleting: boolean
     isDataLoading: boolean
+    courseForDeleteId: number
 }
 
 export interface INotificationContainerState {
@@ -14,4 +15,8 @@ export interface INotificationContainerState {
         dismissible: NotificationData[],
         nonDismissible: NotificationData[],
     }
+}
+
+export interface IModalDeleteCourse {
+    courseForDeleteId: number
 }

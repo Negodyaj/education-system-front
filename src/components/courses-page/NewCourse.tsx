@@ -1,7 +1,9 @@
 import './NewCourse.css';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import React, { useState } from 'react';
-import { setIsCloseModalCreateCourse } from '../../store/courses-page/action-creators';
+import { closeModalCreateCourse } from '../../store/courses-page/action-creators';
+import { useDispatch, useSelector } from 'react-redux';
+import { IRootState } from '../../store';
 
 export interface DataNewCourse { 
     name: string; 
@@ -19,12 +21,14 @@ function NewCourse(props: NewCourseProps) {
     let descriptionNewCourse = React.createRef<HTMLTextAreaElement>();
     let durationNewCourse = React.createRef<HTMLInputElement>();
 
+    const dispatch = useDispatch();
+
     const [isNameNewCourseFilled, setIsNameNewCourseFilled] = useState(false);
     const [isDescriptionNewCourseFilled, setIsDescriptionNewCourseFilled] = useState(false);
     const [isDurationNewCourseFilled, setIsDurationNewCourseFilled] = useState(false);
 
     const closeModalWindow = () => {
-        props.dataNewCourse();
+        dispatch(closeModalCreateCourse());
     }
 
     const showDataNewCourse = () => {
@@ -41,7 +45,7 @@ function NewCourse(props: NewCourseProps) {
     }
 
     return(
-        <div onClick={setIsCloseModalCreateCourse} className="modal-back">
+        <div className="modal-back">
             <div className="modal-add-course">
                 <div className="modal-header-add-course">
                     <div className="head-modal"><h4>Создать новый курс</h4></div>
@@ -74,7 +78,7 @@ function NewCourse(props: NewCourseProps) {
                     }
                 </div>
                 <div className="select-delete">
-                    <button className="button-select" onClick={setIsCloseModalCreateCourse}>Отменить</button>
+                    <button className="button-select" onClick={closeModalWindow}>Отменить</button>
                     <button className="button-select" onClick={showDataNewCourse}>Добавить</button>
                 </div>
             </div>
