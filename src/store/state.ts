@@ -1,5 +1,5 @@
 import { Course } from "../interfaces/Courses";
-import NotificationData from "../shared/interfaces/NotificationData";
+import NotificationData from "../interfaces/NotificationData";
 
 export interface ICoursePageState {
     courseList: Course[]

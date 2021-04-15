@@ -24,7 +24,7 @@ export const sendPutRequestNoResponse = async (path: string, body: any) => {
     .put(body)
     .res(response => response)
 };
-export const sendPostRequest = async <T>(path: string, isT: ((data: any) => data is any) | undefined, body?: any) => {
+export const sendPostRequest = async <T>(path: string, isT: ((data: any) => data is T) | undefined, body?: any) => {
   return await baseWretch()
     .url(path)
     .post(body || undefined)
@@ -37,7 +37,7 @@ export const sendPostRequestNoResponse = async (path: string, body?: any) => {
     .post(body)
     .res(response => response)
 };
-export const sendDeleteRequest = async <T>(path: string, isT: ((data: any) => data is any) | undefined) => {
+export const sendDeleteRequest = async <T>(path: string, isT: ((data: any) => data is T) | undefined) => {
   return await baseWretch()
     .url(path)
     .delete()
@@ -49,9 +49,9 @@ export const sendDeleteRequestNoResponse = async (path: string) => {
   return await baseWretch()
     .url(path)
     .delete()
-    .res(response => response)
+    .res(response => {return response})
 };
-const localResponseHandler = <T>(data: any, isT: ((data: any) => data is any) | undefined) => {
+const localResponseHandler = <T>(data: any, isT: ((data: any) => data is T) | undefined) => {
   if (isT ? isT(data) : true) {
     return data as T;
   } else {

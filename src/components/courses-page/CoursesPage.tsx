@@ -14,6 +14,7 @@ import { IRootState } from '../../store';
 import { isCourse } from '../../services/type-guards/course';
 import { isCourseArr } from '../../services/type-guards/courseArr';
 import { getCourses } from '../../store/courses-page/thunk';
+import NotificationData from '../../interfaces/NotificationData';
 import { setIsOpenModalCreateCourse } from '../../store/courses-page/action-creators';
 
 function CoursesPage() {
