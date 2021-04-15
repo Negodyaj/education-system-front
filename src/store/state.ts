@@ -13,8 +13,8 @@ export interface IUserListPage {
 }
 
 export interface INotificationContainerState {
-    dismissibleNotifications: NotificationData[],
-    nonDismissibleNotifications: NotificationData[],
-    sendNotification: (notification: NotificationData) => void,
-    deleteNotification: (dismissedNotification: NotificationData) => void
+    notifications: {
+        dismissible: NotificationData[],
+        nonDismissible: NotificationData[],
+    }
 }

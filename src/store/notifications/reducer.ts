@@ -1,26 +1,44 @@
 import NotificationData from "../../interfaces/NotificationData";
+import { DELETE_NOTIFICATION, PUSH_NOTIFICATION } from "../actionTypes";
 import { INotificationContainerState } from "../state";
+import { NotificationContainerActions } from "./action-creators";
 
 const initialState: INotificationContainerState = {
-    dismissibleNotifications: [],
-    nonDismissibleNotifications: [],
-    sendNotification: function (this: INotificationContainerState, newNotification: NotificationData): void {
-        if (!newNotification) return;
-        if (newNotification.isDismissible) {
-            this.dismissibleNotifications.push(newNotification);
-        } else {
-            this.nonDismissibleNotifications.push(newNotification);
-        }
-    },
-    deleteNotification: function (this: INotificationContainerState, dismissedNotification: NotificationData): void {
-        this.dismissibleNotifications = [...this.dismissibleNotifications].filter(
-            notification => notification !== dismissedNotification
-        );
+    notifications: {
+        dismissible: [],
+        nonDismissible: [],
     }
 };
-export function coursePageReducer(state: INotificationContainerState = initialState, action: any): INotificationContainerState {
+export function notificationContainerReducer(
+    state: INotificationContainerState = initialState,
+    action: NotificationContainerActions):
+    INotificationContainerState {
     switch (action.type) {
-        // case: 
+        case PUSH_NOTIFICATION:
+            if (action.payload.isDismissible) {
+                return {
+                    notifications: {
+                        ...state.notifications,
+                        dismissible: [...state.notifications.dismissible, action.payload],
+                    }
+                }
+            } else {
+                return {
+                    notifications: {
+                        ...state.notifications,
+                        nonDismissible: [...state.notifications.nonDismissible, action.payload],
+                    }
+                }
+            }
+        case DELETE_NOTIFICATION:
+            return {
+                notifications: {
+                    ...state.notifications,
+                    dismissible: state.notifications.dismissible.filter(
+                        notification => notification !== action.payload
+                    )
+                }
+            }
         default:
             return state;
     }
