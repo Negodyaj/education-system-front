@@ -23,7 +23,7 @@ function TagsPage(props: TagsPageProps) {
         getTags();
     }, []);
 
-    const tagsFilter: ChangeEventHandler<HTMLInputElement> = (e) => {
+    const filterTags: ChangeEventHandler<HTMLInputElement> = (e) => {
         setSearchTurn(e.target.value);
     };
 
@@ -33,7 +33,7 @@ function TagsPage(props: TagsPageProps) {
         <div className="main">
             <div className="tag-tittle"> <h4> Теги</h4> </div>
             <div className="tag-header">
-                <input className="input-search" onChange={tagsFilter} placeholder="Поиск" />
+                <input className="input-search" onChange={filterTags} placeholder="Поиск" />
                 <button className="button-style" onClick={() => { setHidden("") }}>
                     <FontAwesomeIcon icon="plus" />
                     <span> Добавить</span>

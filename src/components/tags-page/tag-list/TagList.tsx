@@ -24,12 +24,12 @@ function TagList(props: TagListProps) {
                 props.tags?.map((item) => {
                     if (item.name.toLowerCase().includes(props.str.toLowerCase())) {
                         return (
-                            <span className="tag-row">
+                            <div className="tag-row">
                                 <div className="tag"> {item.name} </div>
                                 <button className='button-round' onClick={() => deleteTag(item.id)}>
                                     <FontAwesomeIcon icon="trash" />
                                 </button>
-                            </span>
+                            </div>
                         )
                     }
                 })
