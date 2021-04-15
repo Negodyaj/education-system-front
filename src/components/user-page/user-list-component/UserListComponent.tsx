@@ -4,18 +4,18 @@ import React, { useEffect, useState } from "react";
 import { Role } from "../../../enums/role";
 import { getEnToRuTranslation } from "../../../shared/converters/enumToDictionaryEntity";
 import PaymentForm from "../payment-form/PaymentForm";
-import '../UserPage.css';
+import '../UserListPage.css';
 import '../../../App.css'
 import { User } from "../../../interfaces/User";
 
-interface UserListProps {
+interface UserListComponentProps {
     roleId: number;
     users: User[];
     onEditClick: (userToEditId?: number) => void;
     onDeleteClick: (userToDeleteId: number) => void;
 }
 
-function UserList(props: UserListProps) {
+function UserListComponent(props: UserListComponentProps) {
 
     const lastNameAlphabetSort = (a: string, b: string) => {
         a = a.toLowerCase();
@@ -127,4 +127,4 @@ function UserList(props: UserListProps) {
     )
 }
 
-export default UserList;
+export default UserListComponent;
