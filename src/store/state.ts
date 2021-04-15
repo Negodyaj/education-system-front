@@ -2,8 +2,11 @@ import { Course } from "../interfaces/Courses";
 import NotificationData from "../shared/interfaces/NotificationData";
 
 export interface ICoursePageState {
-    courseList: Course[],
-    isDataLoading: boolean,
+    courseList: Course[]
+    isOpenModalCreateCourse: boolean
+    isModalDelete: boolean
+    isCourseDelete: number
+    isDataLoading: boolean
 }
 
 export interface INotificationContainerState {

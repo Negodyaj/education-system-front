@@ -14,6 +14,7 @@ import { IRootState } from '../../store';
 import { isCourse } from '../../services/type-guards/course';
 import { isCourseArr } from '../../services/type-guards/courseArr';
 import { getCourses } from '../../store/courses-page/thunk';
+import { setIsOpenModalCreateCourse } from '../../store/courses-page/action-creators';
 
 function CoursesPage() {
 
@@ -22,7 +23,7 @@ function CoursesPage() {
 
     const [isModalAdd, setIsModalAdd] = useState(false);
     const [isModalDelete, setIsModalDelete] = useState(false);
-    const [coursesList, setCoursesList] = useState<Course[]>();
+    //const [coursesList, setCoursesList] = useState<Course[]>();
     const [idCourseDelete, setIdCourseDelete] = useState(0);
 
 
@@ -53,9 +54,10 @@ function CoursesPage() {
         setIsModalDelete(false);
     }
 
-    const openModalAdd = () => {
-        setIsModalAdd(true);
-    }
+    //в процессе...
+    // const openModalAdd = () => {
+    //     setIsModalAdd(true);
+    // }
 
     const addNewCourse = (data?: DataNewCourse) => {
         if(data?.name === '' || data?.description === '' || data?.duration === 0) {
@@ -70,13 +72,13 @@ function CoursesPage() {
         <div className="course-container">
             <div className="course-create">
                 <div> </div>
-                {/* <button onClick={openModalAdd} className='button-create'>Добавить курс</button>  */}
+                <button onClick={setIsOpenModalCreateCourse} className='button-create'>Добавить курс</button> 
             </div>
             <div className="courses-list">
                 {
                     pageState.isDataLoading
                         ?
-                        <>LOADING</>
+                            <FontAwesomeIcon icon='spinner' />
                         :
                         pageState.courseList?.map(item => (
                             <div key={item.id} className="course">

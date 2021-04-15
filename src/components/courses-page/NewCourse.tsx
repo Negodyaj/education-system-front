@@ -1,6 +1,7 @@
 import './NewCourse.css';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import React, { useState } from 'react';
+import { setIsCloseModalCreateCourse } from '../../store/courses-page/action-creators';
 
 export interface DataNewCourse { 
     name: string; 
@@ -40,7 +41,7 @@ function NewCourse(props: NewCourseProps) {
     }
 
     return(
-        <div className="modal-back">
+        <div onClick={setIsCloseModalCreateCourse} className="modal-back">
             <div className="modal-add-course">
                 <div className="modal-header-add-course">
                     <div className="head-modal"><h4>Создать новый курс</h4></div>
@@ -73,7 +74,7 @@ function NewCourse(props: NewCourseProps) {
                     }
                 </div>
                 <div className="select-delete">
-                    <button className="button-select" onClick={closeModalWindow}>Отменить</button>
+                    <button className="button-select" onClick={setIsCloseModalCreateCourse}>Отменить</button>
                     <button className="button-select" onClick={showDataNewCourse}>Добавить</button>
                 </div>
             </div>

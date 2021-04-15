@@ -2,14 +2,14 @@ import { baseUrl } from "../shared/consts";
 import wretch from 'wretch';
 import { getToken } from "./auth.service";
 
-export const sendGetRequest = async <T>(path: string, isT: ((data: any) => data is any) | undefined) => {
+export const sendGetRequest = async <T>(path: string, isT: ((data: any) => data is T) | undefined) => {
   return await baseWretch()
     .url(path)
     .get()
     .json(data => localResponseHandler<T>(data, isT))
     .catch(error => error);
 };
-export const sendPutRequest = async <T>(path: string, isT: ((data: any) => data is any) | undefined,
+export const sendPutRequest = async <T>(path: string, isT: ((data: any) => data is T) | undefined,
   body: any
 ) => {
   return await baseWretch()
