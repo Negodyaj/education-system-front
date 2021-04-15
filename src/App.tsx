@@ -22,7 +22,7 @@ function App() {
     const history = useHistory();
     const token = getToken();
     const [isLoggedIn, setIsLoggedIn] = useState(!!token);
-    const [roleId, setRoleId] = useState(Role.Admin);
+    const [roleId, setRoleId] = useState(Role.Teacher);
 
     const users = [
         { login: 'test', password: 'test', roleId: Role.Test },
@@ -116,6 +116,7 @@ function App() {
                     }
                     {
                         isLoggedIn && <NotificationContainer />
+                        
                     }
                 </main>
             </div>
