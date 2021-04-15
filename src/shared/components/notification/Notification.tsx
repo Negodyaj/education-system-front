@@ -9,15 +9,16 @@ interface NotificationProps {
 }
 
 function Notification(props: NotificationProps) {
-    //const [isHidden, setIsHidden] = useState(true);
     const deleteRef = useRef(props.deleteNotification);
     deleteRef.current = props.deleteNotification;
-    const notificationDomRef = useRef(null);
 
-    useEffect(() => {
-        //setIsHidden(false);
-    }, [])
-    
+    const notificationDomRef = useRef(null);
+    const animateHide = () => {
+        const elem = notificationDomRef.current as unknown as HTMLDivElement;
+        elem.classList.remove("visible");
+        elem.classList.add("hidden");
+    }
+
     const typeToTimeout = () => {
         switch (props.notificationData.type) {
             case "information":
@@ -46,7 +47,7 @@ function Notification(props: NotificationProps) {
 
     const dismiss = () => {
         if (props.notificationData.isDismissible) {
-            (notificationDomRef.current as unknown as HTMLDivElement).classList.add("hidden");
+            animateHide();
             setTimeout(() => {
                 if (deleteRef.current)
                     deleteRef.current(props.notificationData)
@@ -83,8 +84,7 @@ function Notification(props: NotificationProps) {
     }
 
     return (
-        <div className={`notification 
-            ${false ? "hidden" : ""}
+        <div className={`notification visible
             ${typeToClassName()} `}
             ref={notificationDomRef}    
         >
