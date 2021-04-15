@@ -3,7 +3,7 @@ import { TAGS_LIST_FILTERED, TAGS_LIST_WRETCH_LOADED } from "../actionTypes";
 
 export type TagsPageActions =
     | ReturnType<typeof setTagsListWasLoaded>
-    | ReturnType<typeof setTagsListWasFiltred>
+    | ReturnType<typeof setTagsListWasFiltered>
 
 export const setTagsListWasLoaded = (tags: Tag[]) => {
     return ({
@@ -12,7 +12,7 @@ export const setTagsListWasLoaded = (tags: Tag[]) => {
     } as const);
 }
 
-export const setTagsListWasFiltred = (tags: Tag[]) => {
+export const setTagsListWasFiltered = (tags: Tag[]) => {
     return ({
         type: TAGS_LIST_FILTERED,
         payload: tags
