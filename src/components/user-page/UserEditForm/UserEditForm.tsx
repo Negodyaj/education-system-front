@@ -1,6 +1,4 @@
 import CustomMultiSelect from '../../multi-select/CustomMultiSelect';
-import { User } from '../../interfaces/User';
-import { UserRegisterResponse } from '../../interfaces/UserRegisterResponse';
 import React, { useState } from 'react';
 import DatePickerComponent from '../../../shared/components/date-picker/DatePickerComponent';
 import { convertEnumToDictionary, getRussianDictionary } from '../../../shared/converters/enumToDictionaryEntity';
@@ -11,7 +9,6 @@ import { useForm } from 'react-hook-form';
 import { convertEntitiesToSelectItems } from '../../../shared/converters/entityToSelectItemConverter';
 import { getName } from '../../../shared/converters/objectKeyToString';
 import { sendPostRequest, sendPutRequest } from '../../../services/http.service';
-import { UserUpdate } from '../../interfaces/UserUpdate';
 import { ErrorMessage } from '@hookform/error-message';
 import NotificationData from '../../../interfaces/NotificationData';
 import { responseHandlers } from '../../../services/response-handler/responseHandler';
@@ -19,13 +16,15 @@ import { UserRegisterEnd, UserUserUpdateIdEnd } from '../../../shared/endpointCo
 import './UserEditForm.css';
 import '../UserPage.css';
 import '../../../App.css';
+import { User } from '../../../interfaces/User';
+import { UserUpdate } from '../../../interfaces/UserUpdate';
+import { UserRegisterResponse } from '../../../interfaces/UserRegisterResponse';
 
 interface UserEditFormProps {
     roleId: number;
     userToEdit: User | undefined;
     setIsEditModeOn: (mode: boolean) => void;
     reviseSending: () => void;
-    sendNotification: (n: NotificationData | undefined) => void;
     url: string;
 }
 
@@ -133,19 +132,19 @@ function UserEditForm(props: UserEditFormProps) {
         }
     }
     const sendUser = async (newOrUpdatedUser: User) => {
-        if (props.userToEdit) {
-            reviseSending(await sendPutRequest<UserUpdate>(
-                props.url + ('/' + props.userToEdit.id),
-                convertUserToUserUpdate(newOrUpdatedUser),
-                props.sendNotification,
-                responseHandlers[UserUserUpdateIdEnd]))
-        } else {
-            reviseSending(await sendPostRequest<UserRegisterResponse>(
-                props.url + '/' + 'register',
-                props.sendNotification,
-                responseHandlers[UserRegisterEnd],
-                convertUserToUserInput(newOrUpdatedUser)));
-        }
+        // if (props.userToEdit) {
+        //     reviseSending(await sendPutRequest<UserUpdate>(
+        //         props.url + ('/' + props.userToEdit.id),
+        //         convertUserToUserUpdate(newOrUpdatedUser),
+        //         props.sendNotification,
+        //         responseHandlers[UserUserUpdateIdEnd]))
+        // } else {
+        //     reviseSending(await sendPostRequest<UserRegisterResponse>(
+        //         props.url + '/' + 'register',
+        //         props.sendNotification,
+        //         responseHandlers[UserRegisterEnd],
+        //         convertUserToUserInput(newOrUpdatedUser)));
+        // }
     }
 
     const birthDateOnChange = (date: string) => {

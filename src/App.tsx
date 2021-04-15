@@ -23,21 +23,6 @@ function App() {
     const token = getToken();
     const [isLoggedIn, setIsLoggedIn] = useState(!!token);
     const [roleId, setRoleId] = useState(Role.Admin);
-    const [dismissibleNotifications, setDismissibleNotifications] = useState<NotificationData[]>([]);
-    const [nonDismissibleNotifications, setNonDismissibleNotifications] = useState<NotificationData[]>([]);
-
-    const sendNewNotification = (newNotification: NotificationData | undefined) => {
-        if (!newNotification) return;
-        if (newNotification.isDismissible) {
-            setDismissibleNotifications([newNotification, ...dismissibleNotifications]);
-        } else {
-            setNonDismissibleNotifications([newNotification, ...nonDismissibleNotifications]);
-        }
-    }
-    const deleteNotification = (dismissedNotification: NotificationData) => {
-        const newState = dismissibleNotifications.filter(notification => notification != dismissedNotification);
-        setDismissibleNotifications(newState);
-    }
 
     const users = [
         { login: 'test', password: 'test', roleId: Role.Test },
@@ -95,33 +80,26 @@ function App() {
                                 {
                                     (roleId === Role.Manager || roleId === Role.Admin) &&
                                     <Route path="/user-page">
-                                        <UserPage
-                                            roleId={roleId}
-                                            sendNotification={sendNewNotification}></UserPage>
+                                        <UserPage roleId={roleId}></UserPage>
                                     </Route>
                                 }
                                 {
                                     roleId === Role.Teacher &&
                                     <Route path="/courses-page">
-                                        <CoursesPage
-                                            roleId={roleId}
-                                            sendNewNotification={sendNewNotification}></CoursesPage>
+                                        <CoursesPage />
                                     </Route>
                                 }
                                 <Route path="/course-edition/:id" render={({ location, history }) => (
-                                    <CourseEdition 
-                                        idCourse={location.pathname} 
-                                        sendNewNotification={sendNewNotification}/>
-                                )}>
+                                    <CourseEdition idCourse={location.pathname} />)}>
                                 </Route>
                                 {
                                     roleId !== Role.Student &&
                                     <Route path="/tags-page">
-                                        <TagsPage sendNotification={sendNewNotification}></TagsPage>
+                                        <TagsPage ></TagsPage>
                                     </Route>
                                 }
                                 <Route path="/homework">
-                                    <HomeworkPage roleId={roleId} />
+                                    <HomeworkPage />
                                 </Route>
                             </Switch>
                             :
@@ -131,20 +109,13 @@ function App() {
                                     <div className="test-page-link"><Link to="/dev-test-page">secret test page</Link></div>
                                 </Route>
                                 <Route path="/dev-test-page">
-                                    <DevTestPage sendNotification={sendNewNotification} />
-                                    <NotificationContainer
-                                        dismissibleNotifications={dismissibleNotifications}
-                                        nonDismissibleNotifications={nonDismissibleNotifications}
-                                        deleteNotification={deleteNotification} />
+                                    <DevTestPage />
+                                    <NotificationContainer />
                                 </Route>
                             </Switch>
-
                     }
                     {
-                        isLoggedIn ? <NotificationContainer
-                            dismissibleNotifications={dismissibleNotifications}
-                            nonDismissibleNotifications={nonDismissibleNotifications}
-                            deleteNotification={deleteNotification} /> : <></>
+                        isLoggedIn && <NotificationContainer />
                     }
                 </main>
             </div>

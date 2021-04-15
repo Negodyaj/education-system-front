@@ -5,7 +5,6 @@ import { generateTestNotification } from "../../shared/components/notification/g
 import NotificationData from "../../interfaces/NotificationData";
 
 interface DevTestPageProps {
-    sendNotification: (newNotification: NotificationData) => void;
 }
 
 function DevTestPage (props: DevTestPageProps) {
@@ -23,9 +22,9 @@ function DevTestPage (props: DevTestPageProps) {
         <div>
             <h1>secret test page</h1>
 
-            <button onClick={() => props.sendNotification(generateTestNotification(true))}>
+            <button >
                 Test dismissible notification</button>
-            <button onClick={() => props.sendNotification(generateTestNotification(false))}>
+            <button >
                 Test non-dismissible notification</button>
 
             <div>
