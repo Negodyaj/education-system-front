@@ -13,11 +13,14 @@ function Notification(props: NotificationProps) {
     deleteRef.current = props.deleteNotification;
 
     const notificationDomRef = useRef(null);
-    const animateHide = () => {
+    const toggleHidden = () => {
         const elem = notificationDomRef.current as unknown as HTMLDivElement;
-        elem.classList.remove("visible");
-        elem.classList.add("hidden");
+        elem.classList.toggle("hidden");
     }
+
+    useEffect(()=>{
+        toggleHidden();
+    }, [])
 
     const typeToTimeout = () => {
         switch (props.notificationData.type) {
@@ -47,7 +50,7 @@ function Notification(props: NotificationProps) {
 
     const dismiss = () => {
         if (props.notificationData.isDismissible) {
-            animateHide();
+            toggleHidden();
             setTimeout(() => {
                 if (deleteRef.current)
                     deleteRef.current(props.notificationData)
@@ -84,7 +87,7 @@ function Notification(props: NotificationProps) {
     }
 
     return (
-        <div className={`notification visible
+        <div className={`notification hidden
             ${typeToClassName()} `}
             ref={notificationDomRef}    
         >
