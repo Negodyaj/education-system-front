@@ -7,6 +7,8 @@ export interface ICoursePageState {
 }
 
 export interface INotificationContainerState {
-    dismissibleNotifications: NotificationData[],
-    nonDismissibleNotifications: NotificationData[],
+    notifications: {
+        dismissible: NotificationData[],
+        nonDismissible: NotificationData[],
+    }
 }

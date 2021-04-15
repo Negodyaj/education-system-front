@@ -1,16 +1,18 @@
 import './Notification.css'
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import NotificationData from '../../../interfaces/NotificationData';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useDispatch } from 'react-redux';
+import { removeNotification } from '../../../store/notifications/thunk';
 
 interface NotificationProps {
     notificationData: NotificationData;
-    deleteNotification?: (notificationData: NotificationData) => void;
 }
 
 function Notification(props: NotificationProps) {
-    const deleteRef = useRef(props.deleteNotification);
-    deleteRef.current = props.deleteNotification;
+    const dispatch = useDispatch();
+    //const deleteRef = useRef(dispatch(removeNotification));
+    //deleteRef.current = dispatch(removeNotification);
 
     const notificationDomRef = useRef(null);
     const toggleHidden = () => {
@@ -52,8 +54,8 @@ function Notification(props: NotificationProps) {
         if (props.notificationData.isDismissible) {
             toggleHidden();
             setTimeout(() => {
-                if (deleteRef.current)
-                    deleteRef.current(props.notificationData)
+                if (dispatch(removeNotification))
+                    dispatch(removeNotification(props.notificationData));
             }, 300);
         }
     }

@@ -4,8 +4,10 @@ import { INotificationContainerState } from "../state";
 import { NotificationContainerActions } from "./action-creators";
 
 const initialState: INotificationContainerState = {
-    dismissibleNotifications: [],
-    nonDismissibleNotifications: []
+    notifications: {
+        dismissible: [],
+        nonDismissible: [],
+    }
 };
 export function notificationContainerReducer(
     state: INotificationContainerState = initialState,
@@ -15,21 +17,27 @@ export function notificationContainerReducer(
         case PUSH_NOTIFICATION:
             if (action.payload.isDismissible) {
                 return {
-                    ...state,
-                    dismissibleNotifications: [...state.dismissibleNotifications, action.payload]
+                    notifications: {
+                        ...state.notifications,
+                        dismissible: [...state.notifications.dismissible, action.payload],
+                    }
                 }
             } else {
                 return {
-                    ...state,
-                    nonDismissibleNotifications: [...state.nonDismissibleNotifications, action.payload]
+                    notifications: {
+                        ...state.notifications,
+                        nonDismissible: [...state.notifications.nonDismissible, action.payload],
+                    }
                 }
             }
         case DELETE_NOTIFICATION:
             return {
-                ...state,
-                dismissibleNotifications: state.dismissibleNotifications.filter(
-                    notification => notification !== action.payload 
-                )
+                notifications: {
+                    ...state.notifications,
+                    dismissible: state.notifications.dismissible.filter(
+                        notification => notification !== action.payload
+                    )
+                }
             }
         default:
             return state;
