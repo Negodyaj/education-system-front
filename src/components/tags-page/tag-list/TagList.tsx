@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { sendDeleteRequest, sendDeleteRequestNoResponse, sendGetRequest } from "../../../services/http.service";
 import { isTagArr } from "../../../services/type-guards/tagArr";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Tag } from "../../../interfaces/Tag";
+import { useDispatch, useSelector } from "react-redux";
+import { getTags } from "../../../store/tags-page/thunk";
+import { IRootState } from "../../../store";
 
 
 interface TagListProps {
@@ -13,15 +16,22 @@ interface TagListProps {
 
 function TagList(props: TagListProps) {
     const [deletedTag, setdeleteTag] = useState('');
+    const dispatch = useDispatch()
+    const pageState = useSelector((state: IRootState) => state.tagsPage);
+
+    useEffect(() => {
+        dispatch(getTags());
+    }, []);
+
     const deleteTag = async (tagId: number) => {
-        if (await sendDeleteRequestNoResponse(`Tag/${tagId}`))           
-     props.setTagsInState(await sendGetRequest<Tag[]>('Tag', isTagArr))  
+        if (await sendDeleteRequestNoResponse(`Tag/${tagId}`))
+            props.setTagsInState(await sendGetRequest<Tag[]>('Tag', isTagArr))
     }
 
     return (
         <>
             {
-                props.tags?.map((item) => {
+                pageState.tagList.map((item) => {
                     if (item.name.toLowerCase().includes(props.str.toLowerCase())) {
                         return (
                             <div className="tag-row">

@@ -1,9 +1,7 @@
 
-import { Course } from "../../interfaces/Courses";
 import { CourseAddEnd, CourseCourseIdEnd, CourseDeleteEnd, CourseEnd, CourseIdThemeIdAddEnd, CourseIdThemeIdDeleteEnd, CourseThemesEnd, TagAddEnd, TagDeleteEnd, TagEnd, UserEnd, UserRegisterEnd, UserUserDeleteIdEnd, UserUserUpdateIdEnd } from "../../shared/endpointConsts";
 import { makeErrorText, makeNotification } from "../../shared/helpers/notificationHelpers";
 import NotificationData from "../../interfaces/NotificationData";
-import { Themes } from "../../interfaces/Themes";
 import { isCourse } from "../type-guards/course";
 import { isCourseArr } from "../type-guards/courseArr";
 import { isCourseDelete } from "../type-guards/courseDelete";
@@ -16,9 +14,11 @@ import { isUserRegisterResponse } from "../type-guards/userRegisterResponse";
 import { isTagArr } from "../type-guards/tagArr";
 import { isTag } from "../type-guards/tag";
 import { User } from "../../interfaces/User";
+import { Course } from "../../interfaces/Courses";
+import { Themes } from "../../interfaces/Themes";
+import { Tag } from "../../interfaces/Tag";
 import { UserRegisterResponse } from "../../interfaces/UserRegisterResponse";
 import { UserDelete } from "../../interfaces/UserDelete";
-import { Tag } from "../../interfaces/Tag";
 
 export enum nType {
     Error = 'error',

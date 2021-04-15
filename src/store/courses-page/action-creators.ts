@@ -1,4 +1,4 @@
-import { Course } from "../../interfaces/Courses"
+import { Course } from "../../interfaces/Courses";
 import { COURSE_LIST_WRETCH_LOADING, COURSE_LIST_WRETCH_LOADED, COURSE_LIST_WRETCH_FAIL } from "../actionTypes"
 
 export type CoursePageActions =
