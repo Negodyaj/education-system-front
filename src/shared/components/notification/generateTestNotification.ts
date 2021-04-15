@@ -1,4 +1,4 @@
-import { makeNotification } from "../../helpers/noficationHelpers";
+import { makeNotification } from "../../helpers/notificationHelpers";
 import NotificationData from "../../../interfaces/NotificationData";
 
 export function generateTestNotification(isDismissible: boolean): NotificationData {
