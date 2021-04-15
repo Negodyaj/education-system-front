@@ -1,14 +1,8 @@
 import React, { ChangeEventHandler, useEffect, useState } from 'react';
-import { Tag } from '../interfaces/Tag';
-import TagList from './tag-list/TagList';
 import './TagsPage.css';
 import { sendGetRequest, sendPostRequest } from '../../services/http.service';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import SearchComponent from '../../shared/components/search-component/SearchComponent';
 import AddTagModal from './add-tag-modal/AddTagModal';
-import { responseHandlers } from '../../services/response-handler/responseHandler';
-import { TagAddEnd, TagEnd, UserEnd } from '../../shared/endpointConsts';
-import NotificationData from '../../shared/interfaces/NotificationData';
 import { Tag } from '../../interfaces/Tag';
 import TagList from './tag-list/TagList';
 import { isTagArr } from '../../services/type-guards/tagArr';
@@ -47,10 +41,10 @@ function TagsPage(props: TagsPageProps) {
             </div>
             
             <div className="body">
-                <div className="tags-list"> <TagList str={searchTurn} tags={tagsInState} sendNotification={props.sendNotification} setTagsInState={setTagsInState}></TagList> </div>
+                <div className="tags-list"> <TagList str={searchTurn} tags={tagsInState} setTagsInState={setTagsInState}></TagList> </div>
 
             </div>
-            <AddTagModal sendNotification={props.sendNotification} setTagsInState={setTagsInState} hidden={hidden} setHidden={closeModal} />
+            <AddTagModal setTagsInState={setTagsInState} hidden={hidden} setHidden={closeModal} />
         </div>
     )
 

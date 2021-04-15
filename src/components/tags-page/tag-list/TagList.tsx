@@ -1,11 +1,8 @@
 import React, { useState } from "react";
 import { sendDeleteRequest, sendDeleteRequestNoResponse, sendGetRequest } from "../../../services/http.service";
-import { responseHandlers } from "../../../services/response-handler/responseHandler";
 import { isTagArr } from "../../../services/type-guards/tagArr";
-import { TagDeleteEnd, TagEnd } from "../../../shared/endpointConsts";
-import NotificationData from "../../../shared/interfaces/NotificationData";
-import { Tag } from "../../interfaces/Tag";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Tag } from "../../../interfaces/Tag";
 
 
 interface TagListProps {
@@ -14,13 +11,11 @@ interface TagListProps {
     str: string;
 }
 
-
 function TagList(props: TagListProps) {
     const [deletedTag, setdeleteTag] = useState('');
     const deleteTag = async (tagId: number) => {
-       
-       if (await sendDeleteRequestNoResponse('Tag/' + tagId))           
-       await props.setTagsInState(await sendGetRequest<Tag[]>('Tag', isTagArr))  
+        if (await sendDeleteRequestNoResponse(`Tag/${tagId}`))           
+     props.setTagsInState(await sendGetRequest<Tag[]>('Tag', isTagArr))  
     }
 
     return (

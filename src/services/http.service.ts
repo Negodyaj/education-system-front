@@ -49,7 +49,7 @@ export const sendDeleteRequestNoResponse = async (path: string) => {
   return await baseWretch()
     .url(path)
     .delete()
-    .res(response => response)
+    .res(response => {return response})
 };
 const localResponseHandler = <T>(data: any, isT: ((data: any) => data is any) | undefined) => {
   if (isT ? isT(data) : true) {

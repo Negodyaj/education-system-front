@@ -2,9 +2,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import React, { ChangeEventHandler, useState } from "react"
 import { Tag } from "../../../interfaces/Tag";
 import { sendGetRequest, sendPostRequest } from "../../../services/http.service"
-import { responseHandlers } from "../../../services/response-handler/responseHandler";
-import { TagAddEnd, TagEnd } from "../../../shared/endpointConsts";
-import NotificationData from "../../../shared/interfaces/NotificationData";
+import { isTag } from "../../../services/type-guards/tag";
+import { isTagArr } from "../../../services/type-guards/tagArr";
+
 
 interface AddTagModalProps {
     setTagsInState: (uptags: Tag[]|undefined) => void;
@@ -28,9 +28,9 @@ function AddTagModal(props: AddTagModalProps) {
         }
     };
     const AddNewTag = async () => {
-    //     let a;
-    //     if (a=!!await sendPostRequest<Tag>('Tag', props.sendNotification, responseHandlers[TagAddEnd], {name: nameNewTag}))
-    //    props.setTagsInState(await sendGetRequest<Tag[]>('Tag', props.sendNotification, responseHandlers[TagEnd])) 
+        let a;
+        if (a=!!await sendPostRequest<Tag>('Tag', isTag, {name: nameNewTag}))
+       props.setTagsInState(await sendGetRequest<Tag[]>('Tag', isTagArr)) 
     };
     const [isDisabled, setIsDisabled] = useState(true);
     const [block, setBlock] = useState("block")
