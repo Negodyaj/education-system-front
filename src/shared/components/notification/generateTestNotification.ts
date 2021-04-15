@@ -1,5 +1,5 @@
 import { makeNotification } from "../../helpers/noficationHelpers";
-import NotificationData from "../../interfaces/NotificationData";
+import NotificationData from "../../../interfaces/NotificationData";
 
 export function generateTestNotification(isDismissible: boolean): NotificationData {
     const randomType = function (): string {

@@ -7,7 +7,7 @@ import { responseHandlers } from '../../services/response-handler/responseHandle
 import { isUserArr } from '../../services/type-guards/userArray';
 import ConfirmationDialog from '../../shared/components/confirmation-dialog/ConfirmationDialog';
 import { UserEnd, UserUserDeleteIdEnd } from '../../shared/endpointConsts';
-import NotificationData from '../../shared/interfaces/NotificationData';
+import NotificationData from '../../interfaces/NotificationData';
 import UserList from './user-list/UserList';
 import UserEditForm from './UserEditForm/UserEditForm';
 import './UserPage.css'

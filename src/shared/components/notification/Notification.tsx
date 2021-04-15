@@ -1,6 +1,6 @@
 import './Notification.css'
 import React, { useState, useEffect, useRef } from 'react'
-import NotificationData from '../../interfaces/NotificationData';
+import NotificationData from '../../../interfaces/NotificationData';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 interface NotificationProps {
@@ -9,14 +9,19 @@ interface NotificationProps {
 }
 
 function Notification(props: NotificationProps) {
-    const [isHidden, setIsHidden] = useState(true);
     const deleteRef = useRef(props.deleteNotification);
     deleteRef.current = props.deleteNotification;
 
-    useEffect(() => {
-        setIsHidden(false);
+    const notificationDomRef = useRef(null);
+    const toggleHidden = () => {
+        const elem = notificationDomRef.current as unknown as HTMLDivElement;
+        elem.classList.toggle("hidden");
+    }
+
+    useEffect(()=>{
+        toggleHidden();
     }, [])
-    
+
     const typeToTimeout = () => {
         switch (props.notificationData.type) {
             case "information":
@@ -45,11 +50,11 @@ function Notification(props: NotificationProps) {
 
     const dismiss = () => {
         if (props.notificationData.isDismissible) {
-            setIsHidden(true);
+            toggleHidden();
             setTimeout(() => {
                 if (deleteRef.current)
                     deleteRef.current(props.notificationData)
-            }, 300)
+            }, 300);
         }
     }
 
@@ -82,9 +87,9 @@ function Notification(props: NotificationProps) {
     }
 
     return (
-        <div className={`notification 
-            ${isHidden ? "hidden" : ""}
+        <div className={`notification hidden
             ${typeToClassName()} `}
+            ref={notificationDomRef}    
         >
             <div className="type-icon">
                 <FontAwesomeIcon icon={typeToIconName()} />

@@ -10,7 +10,7 @@ import { convertEntitiesToSelectItems } from '../../../shared/converters/entityT
 import { getName } from '../../../shared/converters/objectKeyToString';
 import { sendPostRequest, sendPutRequest } from '../../../services/http.service';
 import { ErrorMessage } from '@hookform/error-message';
-import NotificationData from '../../../shared/interfaces/NotificationData';
+import NotificationData from '../../../interfaces/NotificationData';
 import { responseHandlers } from '../../../services/response-handler/responseHandler';
 import { UserRegisterEnd, UserUserUpdateIdEnd } from '../../../shared/endpointConsts';
 import './UserEditForm.css';

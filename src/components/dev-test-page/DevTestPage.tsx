@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import ConfirmationDialog from "../../shared/components/confirmation-dialog/ConfirmationDialog";
 import { generateTestNotification } from "../../shared/components/notification/generateTestNotification";
-import NotificationData from "../../shared/interfaces/NotificationData";
+import NotificationData from "../../interfaces/NotificationData";
 
 interface DevTestPageProps {
 }
