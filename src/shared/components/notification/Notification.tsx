@@ -12,6 +12,7 @@ function Notification(props: NotificationProps) {
     //const [isHidden, setIsHidden] = useState(true);
     const deleteRef = useRef(props.deleteNotification);
     deleteRef.current = props.deleteNotification;
+    const notificationDomRef = useRef(null);
 
     useEffect(() => {
         //setIsHidden(false);
@@ -45,11 +46,11 @@ function Notification(props: NotificationProps) {
 
     const dismiss = () => {
         if (props.notificationData.isDismissible) {
-            //setIsHidden(true);
+            (notificationDomRef.current as unknown as HTMLDivElement).classList.add("hidden");
             setTimeout(() => {
                 if (deleteRef.current)
                     deleteRef.current(props.notificationData)
-            }, 300)
+            }, 300);
         }
     }
 
@@ -85,6 +86,7 @@ function Notification(props: NotificationProps) {
         <div className={`notification 
             ${false ? "hidden" : ""}
             ${typeToClassName()} `}
+            ref={notificationDomRef}    
         >
             <div className="type-icon">
                 <FontAwesomeIcon icon={typeToIconName()} />

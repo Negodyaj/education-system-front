@@ -15,7 +15,30 @@
         padding-bottom: 10px;
         margin-bottom: 10px;
     }
-  }
+}
+
+@keyframes disappear {
+    to {
+        opacity: 0;
+        max-height: 0;
+        padding-top: 0;
+        padding-bottom: 0;
+        margin-bottom: 0;
+    }
+    from {
+        opacity: 1;
+        max-height: 150px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        margin-bottom: 10px;
+    }
+}
+
+.notification.hidden {
+    animation-name: disappear;
+    animation-duration: 0.3s;
+    animation-fill-mode: forwards;
+}
 
 .notification {
     margin: 0;
@@ -110,13 +133,4 @@
 
 .error-notification {
     background: #FF0041;
-}
-
-
-.hidden {
-    opacity: 0;
-    max-height: 0;
-    padding-top: 0;
-    padding-bottom: 0;
-    margin: 0;
 }
