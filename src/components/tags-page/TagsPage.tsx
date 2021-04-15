@@ -9,9 +9,11 @@ import AddTagModal from './add-tag-modal/AddTagModal';
 import { responseHandlers } from '../../services/response-handler/responseHandler';
 import { TagAddEnd, TagEnd, UserEnd } from '../../shared/endpointConsts';
 import NotificationData from '../../shared/interfaces/NotificationData';
+import { Tag } from '../../interfaces/Tag';
+import TagList from './tag-list/TagList';
+import { isTagArr } from '../../services/type-guards/tagArr';
 
 interface TagsPageProps {
-    sendNotification: (newNotification: NotificationData | undefined) => void;
 }
 
 function TagsPage(props: TagsPageProps) {
@@ -21,9 +23,8 @@ function TagsPage(props: TagsPageProps) {
     const [hidden, setHidden] = useState('hidden')
 
     const getTags = async () => {
-        setTagsInState(await sendGetRequest<Tag[]>(url, props.sendNotification, responseHandlers[TagEnd]))
+        setTagsInState(await sendGetRequest<Tag[]>(url, isTagArr))
     };
-
     useEffect(() => {
         getTags();
     }, []);

@@ -1,4 +1,4 @@
-import { Tag } from "../../components/interfaces/Tag";
+import { Tag } from "../../interfaces/Tag";
 
 export const isTagArr = (data: any): data is Tag[] => {
     const dataToCheck = data as Tag[];

@@ -1,23 +1,22 @@
 import './CourseEdition.css';
 import { useEffect, useState } from 'react';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import { Themes } from '../../../shared/themes/Themes';
-import React from 'react';
+import { Themes } from '../../../interfaces/Themes';
 import SearchComponent from '../../../shared/components/search-component/SearchComponent';
-import { Course } from '../../../shared/courses/Courses';
-import { sendDeleteRequest, sendDeleteRequestNoResponse, sendGetRequest, sendPostRequest, sendPostRequestNoResponse } from '../../../services/http.service';
-import NotificationData from '../../../shared/interfaces/NotificationData';
+import { Course } from '../../../interfaces/Courses';
+import { sendDeleteRequest, sendDeleteRequestNoResponse, sendGetRequest, sendPostRequestNoResponse } from '../../../services/http.service';
 import { CourseCourseIdEnd, CourseIdThemeIdDeleteEnd, CourseIdThemeIdAddEnd, CourseThemesEnd } from '../../../shared/endpointConsts';
 import { responseHandlers } from '../../../services/response-handler/responseHandler';
-
-interface CourseEditionProps{
-    idCourse: string;
-    sendNewNotification: (newNotification: NotificationData | undefined) => void;
-}
+import { isThemesArr } from '../../../services/type-guards/themesArr';
+import { isCourse } from '../../../services/type-guards/course';
 
 interface NewThemeCourse {
     idCourse: number;
     idTheme: number;
+}
+
+interface CourseEditionProps{
+    idCourse: string;
 }
 
 function CourseEdition(props: CourseEditionProps) {
@@ -39,12 +38,12 @@ function CourseEdition(props: CourseEditionProps) {
     const [isClassOnMaterialTheme, setIsClassOnMaterialTheme] = useState(' unvisible'); 
 
     const getAllThemes = async() => {
-        setAllThemes(await sendGetRequest<Themes[]>(CourseThemesEnd, props.sendNewNotification, responseHandlers[CourseThemesEnd]));
+        setAllThemes(await sendGetRequest<Themes[]>(CourseThemesEnd, isThemesArr));
         console.log(allThemes);
     }
 
     const getCourseById = async (id: number) => {
-        const dataCourse = await sendGetRequest<Course>(CourseCourseIdEnd + id, props.sendNewNotification, responseHandlers[CourseCourseIdEnd]);
+        const dataCourse = await sendGetRequest<Course>(CourseCourseIdEnd + id, isCourse);
         return dataCourse;
     };
 
@@ -58,13 +57,13 @@ function CourseEdition(props: CourseEditionProps) {
     
     const addThemeCourse = (newThemeCourse: NewThemeCourse) => {
         let url = 'Course/' + newThemeCourse.idCourse + '/theme/' + newThemeCourse.idTheme;
-        sendPostRequestNoResponse(url, props.sendNewNotification, responseHandlers[CourseIdThemeIdAddEnd]);
+        sendPostRequestNoResponse(url);
         setTimeout (() => updateCourseThemes(), 200);
     }
 
     const deleteThemeCourse = (newThemeCourse: NewThemeCourse) => {
         let url = 'Course/' + newThemeCourse.idCourse + '/theme/' + newThemeCourse.idTheme;
-        sendDeleteRequestNoResponse(url, props.sendNewNotification, responseHandlers[CourseIdThemeIdDeleteEnd]);
+        sendDeleteRequestNoResponse(url);
         setTimeout (() => updateCourseThemes(), 200);
     }
 

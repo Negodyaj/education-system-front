@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
-import { Course } from '../../../shared/courses/Courses';
-import { Themes } from "../../../shared/themes/Themes";
+import { Course } from '../../../interfaces/Courses';
+import { Themes } from "../../../interfaces/Themes";
 
 interface ThemesCourseProps {
     course: Course;
