@@ -1,4 +1,4 @@
-import NotificationData from "../../shared/interfaces/NotificationData";
+import NotificationData from "../../interfaces/NotificationData";
 import { INotificationContainerState } from "../state";
 
 const initialState: INotificationContainerState = {
