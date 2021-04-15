@@ -6,7 +6,7 @@ import React from 'react';
 import SearchComponent from '../../../shared/components/search-component/SearchComponent';
 import { Course } from '../../../shared/courses/Courses';
 import { sendDeleteRequest, sendDeleteRequestNoResponse, sendGetRequest, sendPostRequest } from '../../../services/http.service';
-import NotificationData from '../../../shared/interfaces/NotificationData';
+import NotificationData from '../../../interfaces/NotificationData';
 import { CourseCourseIdEnd, CourseIdThemeIdDeleteEnd, CourseIdThemeIdAddEnd, CourseThemesEnd } from '../../../shared/endpointConsts';
 import { responseHandlers } from '../../../services/response-handler/responseHandler';
 

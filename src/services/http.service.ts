@@ -1,7 +1,7 @@
 import { baseUrl } from "../shared/consts";
 import wretch, { WretcherError } from 'wretch';
 import { getToken } from "./auth.service";
-import NotificationData from "../shared/interfaces/NotificationData";
+import NotificationData from "../interfaces/NotificationData";
 import { responseHandlerItem } from "./response-handler/responseHandler";
 
 export const sendGetRequest = async <T>(

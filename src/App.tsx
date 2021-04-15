@@ -11,7 +11,7 @@ import CoursesPage from './components/courses-page/CoursesPage';
 import CourseEdition from './components/courses-page/course-edition/CourseEdition';
 import "./shared/fontawesome/FontawesomeIcons";
 import { Role } from './enums/role';
-import NotificationData from './shared/interfaces/NotificationData';
+import NotificationData from './interfaces/NotificationData';
 import DevTestPage from './components/dev-test-page/DevTestPage';
 import TagsPage from './components/tags-page/TagsPage';
 import { getToken } from './services/auth.service';

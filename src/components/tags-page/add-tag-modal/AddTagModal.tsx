@@ -4,7 +4,7 @@ import React, { ChangeEventHandler, useState } from "react"
 import { sendGetRequest, sendPostRequest } from "../../../services/http.service"
 import { responseHandlers } from "../../../services/response-handler/responseHandler";
 import { TagAddEnd, TagEnd } from "../../../shared/endpointConsts";
-import NotificationData from "../../../shared/interfaces/NotificationData";
+import NotificationData from "../../../interfaces/NotificationData";
 import { Tag } from "../../interfaces/Tag"
 
 interface AddTagModalProps {

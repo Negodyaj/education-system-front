@@ -10,7 +10,7 @@ import SearchComponent from '../../shared/components/search-component/SearchComp
 import AddTagModal from './add-tag-modal/AddTagModal';
 import { responseHandlers } from '../../services/response-handler/responseHandler';
 import { TagAddEnd, TagEnd, UserEnd } from '../../shared/endpointConsts';
-import NotificationData from '../../shared/interfaces/NotificationData';
+import NotificationData from '../../interfaces/NotificationData';
 
 interface TagsPageProps{
     sendNotification: (newNotification: NotificationData | undefined) => void;

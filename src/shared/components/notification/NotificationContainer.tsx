@@ -1,4 +1,4 @@
-import NotificationData from '../../interfaces/NotificationData';
+import NotificationData from '../../../interfaces/NotificationData';
 import Notification from './Notification';
 import './NotificationContainer.css';
 

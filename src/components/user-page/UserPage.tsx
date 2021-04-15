@@ -5,7 +5,7 @@ import { sendDeleteRequest, sendGetRequest } from '../../services/http.service';
 import { responseHandlers } from '../../services/response-handler/responseHandler';
 import ConfirmationDialog from '../../shared/components/confirmation-dialog/ConfirmationDialog';
 import { UserEnd, UserUserDeleteIdEnd } from '../../shared/endpointConsts';
-import NotificationData from '../../shared/interfaces/NotificationData';
+import NotificationData from '../../interfaces/NotificationData';
 import { User } from '../interfaces/User';
 import { UserDelete } from '../interfaces/UserDelete';
 import UserList from './user-list/UserList';

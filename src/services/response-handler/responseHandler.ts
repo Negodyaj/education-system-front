@@ -4,7 +4,7 @@ import { UserRegisterResponse } from "../../components/interfaces/UserRegisterRe
 import { Course } from "../../shared/courses/Courses";
 import { CourseAddEnd, CourseCourseIdEnd, CourseDeleteEnd, CourseEnd, CourseIdThemeIdAddEnd, CourseIdThemeIdDeleteEnd, CourseThemesEnd, TagAddEnd, TagDeleteEnd, TagEnd, UserEnd, UserRegisterEnd, UserUserDeleteIdEnd, UserUserUpdateIdEnd } from "../../shared/endpointConsts";
 import { makeErrorText, makeNotification } from "../../shared/helpers/noficationHelpers";
-import NotificationData from "../../shared/interfaces/NotificationData";
+import NotificationData from "../../interfaces/NotificationData";
 import { Themes } from "../../shared/themes/Themes";
 import { isCourse } from "../type-guards/course";
 import { isCourseArr } from "../type-guards/courseArr";

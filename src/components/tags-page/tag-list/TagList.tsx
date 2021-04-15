@@ -2,7 +2,7 @@ import { useState } from "react";
 import { sendDeleteRequest, sendDeleteRequestNoResponse, sendGetRequest } from "../../../services/http.service";
 import { responseHandlers } from "../../../services/response-handler/responseHandler";
 import { TagDeleteEnd, TagEnd } from "../../../shared/endpointConsts";
-import NotificationData from "../../../shared/interfaces/NotificationData";
+import NotificationData from "../../../interfaces/NotificationData";
 import { Tag } from "../../interfaces/Tag";
 
 interface TagListProps {

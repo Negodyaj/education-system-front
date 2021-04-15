@@ -10,7 +10,7 @@ import { Course } from '../../shared/courses/Courses';
 import { sendDeleteRequest, sendGetRequest, sendPostRequest } from '../../services/http.service';
 import { CourseAddEnd, CourseDeleteEnd, CourseEnd } from '../../shared/endpointConsts';
 import { responseHandlers } from '../../services/response-handler/responseHandler';
-import NotificationData from '../../shared/interfaces/NotificationData';
+import NotificationData from '../../interfaces/NotificationData';
 
 interface CoursesPageProps {
     roleId: number;
