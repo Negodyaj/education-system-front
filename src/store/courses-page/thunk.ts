@@ -22,7 +22,6 @@ export const deleteCourse = (id: number) => {
     return (dispatch: Dispatch) => {
         sendDeleteRequest<Course>(`${coursesUrl}/${id}`, isCourse)
             .then(course => {
-
                 return course
             })
             .catch(error => console.log(error))

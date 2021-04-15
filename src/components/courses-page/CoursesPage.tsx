@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './CoursesPage.css';
 import ModalWindowDelete from './modal-window/ModalWindowDelete';
@@ -6,13 +6,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import NewCourse from './NewCourse';
 import { DataNewCourse } from './NewCourse';
 import { Course } from '../../interfaces/Courses';
-import { sendDeleteRequest, sendPostRequest } from '../../services/http.service';
+import { sendPostRequest } from '../../services/http.service';
 import { CourseEnd } from '../../shared/endpointConsts';
 import { useDispatch, useSelector } from "react-redux";
 import { IRootState } from '../../store';
 import { isCourse } from '../../services/type-guards/course';
-import { deleteCourse, getCourses } from '../../store/courses-page/thunk';
-import { closeModalCreateCourse, closeModalDeleteCourse, getIdDeleteCourse, showOpenModalCreateCourse, showOpenModalDeleteCourse } from '../../store/courses-page/action-creators';
+import { getCourses } from '../../store/courses-page/thunk';
+import { closeModalCreateCourse, showOpenModalCreateCourse, showOpenModalDeleteCourse } from '../../store/courses-page/action-creators';
 
 function CoursesPage() {
 
@@ -44,7 +44,6 @@ function CoursesPage() {
         } else if (data !== undefined) {
             addCourse(data);
         }
-        // setIsModalAdd(false);
     }
 
     return (

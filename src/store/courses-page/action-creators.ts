@@ -1,5 +1,5 @@
 import { Course } from "../../interfaces/Courses"
-import { COURSE_LIST_WRETCH_LOADING, COURSE_LIST_WRETCH_LOADED, COURSE_LIST_WRETCH_FAIL, COURSE_LIST_OPEN_MODAL_CREATE_COURSE, COURSE_LIST_CLOSE_MODAL_CREATE_COURSE, COURSE_LIST_CLOSE_MODAL_DELETE_COURSE, COURSE_LIST_OPEN_MODAL_DELETE_COURSE, COURSE_LIST_GET_ID_DELETE_COURSE, COURSE_LIST_DELETE_COURSE } from "../actionTypes"
+import { COURSE_LIST_WRETCH_LOADING, COURSE_LIST_WRETCH_LOADED, COURSE_LIST_WRETCH_FAIL, COURSE_LIST_OPEN_MODAL_CREATE_COURSE, COURSE_LIST_CLOSE_MODAL_CREATE_COURSE, COURSE_LIST_CLOSE_MODAL_DELETE_COURSE, COURSE_LIST_OPEN_MODAL_DELETE_COURSE, COURSE_LIST_DELETE_COURSE } from "../actionTypes"
 
 export type CoursePageActions =
     | ReturnType<typeof setCoursesListIsLoading>
@@ -9,7 +9,6 @@ export type CoursePageActions =
     | ReturnType<typeof closeModalCreateCourse>
     | ReturnType<typeof showOpenModalDeleteCourse>
     | ReturnType<typeof closeModalDeleteCourse>
-    | ReturnType<typeof deleteCourse>
 
 export const setCoursesListIsLoading = () => {
     return ({
@@ -49,7 +48,7 @@ export const closeModalCreateCourse = () => {
 export const showOpenModalDeleteCourse = (courseDeleteId: number) => {
     return ({
         type: COURSE_LIST_OPEN_MODAL_DELETE_COURSE,
-        payload: 0
+        payload: courseDeleteId
     } as const);
 }
 
@@ -57,12 +56,5 @@ export const closeModalDeleteCourse = () => {
     return ({
         type: COURSE_LIST_CLOSE_MODAL_DELETE_COURSE,
         payload: false
-    } as const);
-}
-
-export const deleteCourse = (course: Course) => {
-    return ({
-        type: COURSE_LIST_DELETE_COURSE,
-        payload: course
     } as const);
 }

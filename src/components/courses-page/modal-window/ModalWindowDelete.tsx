@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useDispatch, useSelector } from 'react-redux';
 import { IRootState } from '../../../store';
 import { closeModalDeleteCourse } from '../../../store/courses-page/action-creators';
+import { deleteCourse, getCourses } from '../../../store/courses-page/thunk'
 import './ModalWindowDelete.css';
 
 function ModalWindowDelete() {
@@ -13,8 +14,10 @@ function ModalWindowDelete() {
     dispatch(closeModalDeleteCourse());
   }
 
-  const deleteCourse = (id: number | undefined) => {
-    dispatch(deleteCourse(id))
+  const deleteCourseById = (id: number) => {
+    dispatch(deleteCourse(id));
+    dispatch(getCourses());
+    dispatch(closeModalDeleteCourse());
   }
 
   return (
@@ -28,7 +31,7 @@ function ModalWindowDelete() {
           <div className="modal-content-course-delete">Вы уверены, что хотите удалить данный курс?</div>
           <div className="modal-bottom-course-delete">
             <button className="button-no" onClick={closeModalWindow}>Отмена</button>
-            <button className="button-yes" onClick={() => {deleteCourse(courseId)}}>Да</button>
+            <button className="button-yes" onClick={() => {deleteCourseById(courseId)}}>Да</button>
           </div>
       </div>
     </div>

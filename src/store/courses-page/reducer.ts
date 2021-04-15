@@ -37,8 +37,6 @@ export function coursePageReducer(state: ICoursePageState = initialState, action
             return { ...state, isModalDelete: true, courseForDeleteId: action.payload };
         case COURSE_LIST_CLOSE_MODAL_DELETE_COURSE:
             return { ...state, isModalDelete: false };
-        case COURSE_LIST_DELETE_COURSE:
-            return { ...state, isCourseDeleting: true };
         default:
             return state;
     }
