@@ -1,3 +1,7 @@
+.menu-container{
+    width:300px;
+}
+
 .menu-container button{
     width: 100%;
     height: 30px;
@@ -9,6 +13,48 @@
     flex-direction: column;
 }
 
-.menu-container .active button {
+/*.menu-container .active button {
     background-color: lightblue;
+}*/
+
+button.left{
+    width: 30px;
+    background-color: blue;
+    transform:rotateZ(180deg); 
 }
+
+button.right{
+    background-color: red;
+}
+
+.menu-container .hidden{
+    background-color: aqua;
+}
+
+.menu-container .vision{
+    background-color: blueviolet;
+}
+
+/*button{
+    cursor: pointer;
+}
+button .narrow-button{
+    background-color:white;
+    transition: transform 1s ease;
+}
+.narrow-button button:active {
+    background-color: red;
+    transform:rotateY(180deg);    
+}
+
+.menu-container {
+    transition: all 2s ease-in-out;
+    overflow: hidden;
+    height: 100px;
+    opacity: 1;
+}
+
+.menu-container.hidden {
+    height: 0;
+    opacity: 0;
+}*/

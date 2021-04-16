@@ -1,4 +1,5 @@
-import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { Role } from '../../enums/role';
 import "./NavMenu.css"
@@ -6,9 +7,17 @@ interface NavMenuProps {
     roleId: number
 }
 
+
 function NavMenu(props: NavMenuProps) {
+    const [isHidden, setHidden] = useState(false);
+
+let shangeHidden = () => {
+    isHidden ? setHidden(false) : setHidden(true);
+}
     return (
         <div className="menu-container">
+
+        <div className={isHidden ? "hidden" : "vision"}>
             {
                 props.roleId === Role.Student &&
                 <nav>
@@ -42,6 +51,11 @@ function NavMenu(props: NavMenuProps) {
                         <button> Тэги </button></NavLink>
                 </nav>
             }
+                       
+        </div>
+            <button className={isHidden ? "left" : "right"} onClick={shangeHidden}> 
+            <FontAwesomeIcon icon="angle-double-right"/>
+            </button> 
         </div>
     )
 }
