@@ -1,22 +1,21 @@
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { User } from '../../interfaces/User';
 import { sendDeleteRequest, sendGetRequest } from '../../services/http.service';
-import { responseHandlers } from '../../services/response-handler/responseHandler';
 import { isUserArr } from '../../services/type-guards/userArray';
 import ConfirmationDialog from '../../shared/components/confirmation-dialog/ConfirmationDialog';
-import { UserEnd, UserUserDeleteIdEnd } from '../../shared/endpointConsts';
-import NotificationData from '../../interfaces/NotificationData';
-import UserList from './user-list/UserList';
-import UserEditForm from './UserEditForm/UserEditForm';
-import './UserPage.css'
+import { IRootState } from '../../store';
+import { getUsers } from '../../store/user-list-page/thunk';
+import UserListComponent from './user-list-component/UserListComponent';
+import UserPage from './user-page/UserPage';
+import './UserListPage.css'
 
-interface UserPageProps {
+interface UserListPageProps {
     roleId: number;
 }
 
-function UserPage(props: UserPageProps) {
+function UserListPage(props: UserListPageProps) {
 
     const url = 'User';
     const [usersInState, setUsersInState] = useState<User[] | undefined>();
@@ -29,13 +28,12 @@ function UserPage(props: UserPageProps) {
     const confirmLabel = "Да";
     const declineLabel = "нет";
 
-    useEffect(() => {
-        getUsers();
-    }, []);
+    const appState = useSelector((state: IRootState) => state)
+    const dispatch = useDispatch();
 
-    const getUsers = async () => {
-        setUsersInState(await sendGetRequest<User[]>(url, isUserArr))
-    }
+    useEffect(() => {
+        dispatch(getUsers())
+    }, []);
     const refreshUsers = () => {
         setUsersInState(undefined);
         getUsers();
@@ -74,24 +72,24 @@ function UserPage(props: UserPageProps) {
     return (
         <div className="user-page">
             {
-                !usersInState ?
+                appState.userListPage.isDataLoading ?
                     <div>
                         <FontAwesomeIcon icon="spinner" />
                     </div> : (
-                        isEditModeOn
+                        appState.userPage.isEditModeOn
                             ?
-                            <UserEditForm
+                            <UserPage
                                 roleId={props.roleId}
                                 userToEdit={userToEdit}
                                 setIsEditModeOn={setIsEditModeOn}
                                 reviseSending={checkUpdatedUsers}
-                                url={url}></UserEditForm>
+                                url={url}></UserPage>
                             :
-                            <UserList
+                            <UserListComponent
                                 roleId={props.roleId}
-                                users={usersInState}
+                                users={appState.userListPage.userList}
                                 onEditClick={onEditClick}
-                                onDeleteClick={onDeleteClick}></UserList>
+                                onDeleteClick={onDeleteClick}></UserListComponent>
                     )
             }
             <ConfirmationDialog
@@ -104,4 +102,4 @@ function UserPage(props: UserPageProps) {
         </div>
     )
 }
-export default UserPage;
+export default UserListPage;

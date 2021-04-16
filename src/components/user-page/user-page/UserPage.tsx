@@ -13,14 +13,17 @@ import { ErrorMessage } from '@hookform/error-message';
 import NotificationData from '../../../interfaces/NotificationData';
 import { responseHandlers } from '../../../services/response-handler/responseHandler';
 import { UserRegisterEnd, UserUserUpdateIdEnd } from '../../../shared/endpointConsts';
-import './UserEditForm.css';
-import '../UserPage.css';
+import './UserPage.css'
 import '../../../App.css';
 import { User } from '../../../interfaces/User';
 import { UserUpdate } from '../../../interfaces/UserUpdate';
 import { UserRegisterResponse } from '../../../interfaces/UserRegisterResponse';
+import { isUser } from '../../../services/type-guards/user';
+import { isUserRegisterResponse } from '../../../services/type-guards/userRegisterResponse';
+import { useDispatch, useSelector } from 'react-redux';
+import { IRootState } from '../../../store';
 
-interface UserEditFormProps {
+interface UserPageProps {
     roleId: number;
     userToEdit: User | undefined;
     setIsEditModeOn: (mode: boolean) => void;
@@ -28,9 +31,10 @@ interface UserEditFormProps {
     url: string;
 }
 
-function UserEditForm(props: UserEditFormProps) {
+function UserPage(props: UserPageProps) {
 
     const initUser: User = Object.assign({}, props.userToEdit || {
+        id: 0,
         firstName: "",
         lastName: "",
         login: "",
@@ -45,10 +49,13 @@ function UserEditForm(props: UserEditFormProps) {
     const [newUser, setNewUser] = useState<User>(initUser);
     const [isFetching, setIsFetching] = useState(false);
 
+    const dispatch = useDispatch();
+    const pageState = useSelector((state: IRootState) => state)
+
     const { register, formState: { errors }, handleSubmit, getValues, setValue } = useForm<User>({
         mode: 'all',
         criteriaMode: 'all',
-        defaultValues: (() => { if (isFetching === false) { return Object.assign({}, newUser) } })()
+        defaultValues: pageState.userPage.userToEdit
     });
 
     const elementsDefinedByProps = {
@@ -132,19 +139,17 @@ function UserEditForm(props: UserEditFormProps) {
         }
     }
     const sendUser = async (newOrUpdatedUser: User) => {
-        // if (props.userToEdit) {
-        //     reviseSending(await sendPutRequest<UserUpdate>(
-        //         props.url + ('/' + props.userToEdit.id),
-        //         convertUserToUserUpdate(newOrUpdatedUser),
-        //         props.sendNotification,
-        //         responseHandlers[UserUserUpdateIdEnd]))
-        // } else {
-        //     reviseSending(await sendPostRequest<UserRegisterResponse>(
-        //         props.url + '/' + 'register',
-        //         props.sendNotification,
-        //         responseHandlers[UserRegisterEnd],
-        //         convertUserToUserInput(newOrUpdatedUser)));
-        // }
+        if (props.userToEdit) {
+            reviseSending(await sendPutRequest<UserUpdate>(
+                props.url + ('/' + props.userToEdit.id),
+                isUser,
+                convertUserToUserUpdate(newOrUpdatedUser)))
+        } else {
+            reviseSending(await sendPostRequest<UserRegisterResponse>(
+                props.url + '/' + 'register',
+                isUserRegisterResponse,
+                convertUserToUserInput(newOrUpdatedUser)));
+        }
     }
 
     const birthDateOnChange = (date: string) => {
@@ -312,6 +317,6 @@ function UserEditForm(props: UserEditFormProps) {
         )
     }
 }
-export default UserEditForm;
+export default UserPage;
 
 

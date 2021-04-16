@@ -1,6 +1,4 @@
-import { useSelector } from "react-redux";
 import { Dispatch } from "redux";
-import { IRootState } from "..";
 import { Course } from "../../interfaces/Courses";
 import { sendGetRequest } from "../../services/http.service";
 import { isCourseArr } from "../../services/type-guards/courseArr";
