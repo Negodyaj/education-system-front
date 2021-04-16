@@ -19,10 +19,10 @@
 }
 
 button.left, button.right{
-    width:30px;
+    width:50px;
     position: absolute;
     bottom: 20px;
-    right:-15px;
+    right: -30px;
 }
 
 button.right{

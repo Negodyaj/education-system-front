@@ -98,7 +98,7 @@ main {
 
 .button-style{
   height: 40px;
-  min-width: 110px;
+  min-width: 50px;
   border-radius: 25px;
 }
 

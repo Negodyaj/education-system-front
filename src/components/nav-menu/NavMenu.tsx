@@ -56,7 +56,7 @@ let shangeHidden = () => {
                 </nav>
             }
         </div>
-        <button className={isHidden ? "left" : "right"} onClick={shangeHidden} title={isHidden? "развернуть меню":"свернуть меню"}> 
+        <button className={isHidden ? "left button-style" : "right button-style"} onClick={shangeHidden} title={isHidden? "развернуть меню":"свернуть меню"}> 
             <FontAwesomeIcon icon="angle-double-right"/>
             </button> 
 
