@@ -28,7 +28,7 @@ function UserListPage(props: UserListPageProps) {
     const confirmLabel = "Да";
     const declineLabel = "нет";
 
-    const pageState = useSelector((state: IRootState) => state.userListPage)
+    const appState = useSelector((state: IRootState) => state)
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -72,11 +72,11 @@ function UserListPage(props: UserListPageProps) {
     return (
         <div className="user-page">
             {
-                pageState.isDataLoading ?
+                appState.userListPage.isDataLoading ?
                     <div>
                         <FontAwesomeIcon icon="spinner" />
                     </div> : (
-                        isEditModeOn
+                        appState.userPage.isEditModeOn
                             ?
                             <UserPage
                                 roleId={props.roleId}
@@ -87,7 +87,7 @@ function UserListPage(props: UserListPageProps) {
                             :
                             <UserListComponent
                                 roleId={props.roleId}
-                                users={pageState.userList}
+                                users={appState.userListPage.userList}
                                 onEditClick={onEditClick}
                                 onDeleteClick={onDeleteClick}></UserListComponent>
                     )

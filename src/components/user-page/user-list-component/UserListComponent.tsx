@@ -7,6 +7,9 @@ import PaymentForm from "../payment-form/PaymentForm";
 import '../UserListPage.css';
 import '../../../App.css'
 import { User } from "../../../interfaces/User";
+import { useDispatch, useSelector } from "react-redux";
+import { IRootState } from "../../../store";
+import { getUserToEditById } from "../../../store/user-page/thunk";
 
 interface UserListComponentProps {
     roleId: number;
@@ -16,6 +19,9 @@ interface UserListComponentProps {
 }
 
 function UserListComponent(props: UserListComponentProps) {
+
+    const dispatch = useDispatch();
+    const userListPageState = useSelector((state:IRootState)=> state.userListPage)
 
     const lastNameAlphabetSort = (a: string, b: string) => {
         a = a.toLowerCase();
@@ -30,7 +36,7 @@ function UserListComponent(props: UserListComponentProps) {
     }
 
     const [signInvertor, setSignInvertor] = useState(1);
-    const [usersToShow, setUsersToShow] = useState([...props.users]);
+    //const [usersToShow, setUsersToShow] = useState([...props.users]);
     const [userForPayment, setUserForPayment] = useState<User | undefined>(undefined);
     const [paymentFormState, setPaymentFormState] = useState('');
 
@@ -47,19 +53,19 @@ function UserListComponent(props: UserListComponentProps) {
     }
 
     const onPaymentButtonClick = (userId: number | undefined) => {
-        setUserForPayment([...usersToShow].filter(u => u.id === userId)[0]);
+        //setUserForPayment([...usersToShow].filter(u => u.id === userId)[0]);
         setPaymentFormState('visible');
 
     }
 
-    const onEditClick = (userToEditId?: number) => {
-        props.onEditClick(userToEditId);
+    const onEditClick = (userToEditId: number) => {
+        dispatch(getUserToEditById(userToEditId))
     }
 
     const lastNameColumnOnClick = () => {
-        setUsersToShow(usersToShow.sort((a, b) => {
-            return lastNameAlphabetSort(a.lastName, b.lastName);
-        }))
+        // setUsersToShow(usersToShow.sort((a, b) => {
+        //     return lastNameAlphabetSort(a.lastName, b.lastName);
+        // }))
         setSignInvertor(signInvertor + 1);
     }
 
@@ -84,9 +90,7 @@ function UserListComponent(props: UserListComponentProps) {
                 <div className="column"><span title="А-Я">роль</span></div>
             </div>
             {
-                usersToShow?.sort((a, b) => {
-                    return lastNameAlphabetSort(a.lastName, b.lastName);
-                }).map(u => (
+                userListPageState.userList.map(u => (
                     <div className="list + user-list-item" key={u.id}>
                         <div className="column">
                             <img className="user-photo" src={u.userPic} alt="userpic" />
@@ -102,7 +106,7 @@ function UserListComponent(props: UserListComponentProps) {
                         <div className="column">{/*u.groupName*/}</div>
                         <div className="column-button">
                             <div className="column">
-                                <button className="button-round" onClick={() => props.onEditClick(u.id)}>
+                                <button className="button-round" onClick={() => onEditClick(u.id)}>
                                     <FontAwesomeIcon icon="edit" />
                                 </button>
                                 <button className="button-round" onClick={() => props.onDeleteClick(u.id as number)}>

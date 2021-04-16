@@ -20,6 +20,8 @@ import { UserUpdate } from '../../../interfaces/UserUpdate';
 import { UserRegisterResponse } from '../../../interfaces/UserRegisterResponse';
 import { isUser } from '../../../services/type-guards/user';
 import { isUserRegisterResponse } from '../../../services/type-guards/userRegisterResponse';
+import { useDispatch, useSelector } from 'react-redux';
+import { IRootState } from '../../../store';
 
 interface UserPageProps {
     roleId: number;
@@ -32,6 +34,7 @@ interface UserPageProps {
 function UserPage(props: UserPageProps) {
 
     const initUser: User = Object.assign({}, props.userToEdit || {
+        id: 0,
         firstName: "",
         lastName: "",
         login: "",
@@ -46,10 +49,13 @@ function UserPage(props: UserPageProps) {
     const [newUser, setNewUser] = useState<User>(initUser);
     const [isFetching, setIsFetching] = useState(false);
 
+    const dispatch = useDispatch();
+    const pageState = useSelector((state: IRootState) => state)
+
     const { register, formState: { errors }, handleSubmit, getValues, setValue } = useForm<User>({
         mode: 'all',
         criteriaMode: 'all',
-        defaultValues: (() => { if (isFetching === false) { return Object.assign({}, newUser) } })()
+        defaultValues: pageState.userPage.userToEdit
     });
 
     const elementsDefinedByProps = {
