@@ -1,5 +1,5 @@
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faTimes, faEdit, faTrash, faPlus, faMinus, faCheck, faSpinner, faSearch, faInfoCircle, faTimesCircle, faCheckCircle, faExclamationCircle, faRubleSign, faAngleDown, faAngleUp,faAngleDoubleRight, faAngleDoubleLeft  } from '@fortawesome/free-solid-svg-icons';
+import { faTimes, faEdit, faTrash, faPlus, faMinus, faCheck, faSpinner, faSearch, faInfoCircle, faTimesCircle, faCheckCircle, faExclamationCircle, faRubleSign, faAngleDown, faAngleUp, faAngleDoubleRight, faAngleDoubleLeft, faUsers, faUser, faTag, faBookReader, faUniversity, faNewspaper } from '@fortawesome/free-solid-svg-icons';
 
 
-library.add(faTimes, faEdit, faTrash, faPlus, faMinus, faCheck, faSpinner, faSearch, faInfoCircle, faTimesCircle, faCheckCircle, faExclamationCircle, faRubleSign, faAngleDown, faAngleUp,faAngleDoubleRight, faAngleDoubleLeft  );
+library.add(faTimes, faEdit, faTrash, faPlus, faMinus, faCheck, faSpinner, faSearch, faInfoCircle, faTimesCircle, faCheckCircle, faExclamationCircle, faRubleSign, faAngleDown, faAngleUp, faAngleDoubleRight, faAngleDoubleLeft, faUsers, faUser, faTag, faBookReader, faUniversity, faNewspaper);
