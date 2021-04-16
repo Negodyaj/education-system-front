@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { RefObject } from "react";
+import React, { ChangeEventHandler, RefObject, useState } from "react";
 import './SearchComponent.css';
 
 interface ISearchProps {
@@ -7,17 +7,19 @@ interface ISearchProps {
 }
 
 const SearchComponent = (props: ISearchProps) => {
-  let textInput = React.createRef<HTMLInputElement>();
+
+  const [text, setText] = useState('');
   
-  const search = (text: RefObject<HTMLInputElement>) => {
-    props.funcSearch('' + text.current?.value);
+  const search: ChangeEventHandler<HTMLInputElement> = (event) => {
+    setText(event.target.value);
+    props.funcSearch('' + text);
   }
 
   return (
     <div className="search-component">
       <div className="input">
         <FontAwesomeIcon icon='search' />
-        <input type="text" onChange={() => search(textInput)} placeholder='Поиск по темам' ref={ textInput }/>
+        <input type="text" onChange={search} placeholder='Поиск по темам' value={text} />
       </div>
     </div>
   )

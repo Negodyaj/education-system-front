@@ -40,7 +40,6 @@ function CourseEdition(props: CourseEditionProps) {
 
     const getAllThemes = async() => {
         setAllThemes(await sendGetRequest<Themes[]>(CourseThemesEnd, props.sendNewNotification, responseHandlers[CourseThemesEnd]));
-        console.log(allThemes);
     }
 
     const getCourseById = async (id: number) => {
@@ -120,7 +119,6 @@ function CourseEdition(props: CourseEditionProps) {
     const openMaterialsCourse = () => {
         setChangeDisplayingButtonOpenMaterialsCourse(!changeDisplayingButtonOpenMaterialsCourse);
         isClassOnMaterialTheme === ' unvisible' ? setIsClassOnMaterialTheme(' visible') : setIsClassOnMaterialTheme(' unvisible');
-
     }
     
 
@@ -139,7 +137,10 @@ function CourseEdition(props: CourseEditionProps) {
                     <SearchComponent funcSearch={searchFromTheme}/>
                     {
                         allThemes?.filter((item) => {
-                            if (item.name.toLowerCase().includes(searchTurn.toLowerCase())) {
+                            if(!searchTurn) {
+                                return item;
+                            }
+                            else if (item.name.toLowerCase().includes(searchTurn.toLowerCase())) {
                                 return item;
                             } 
                         })
