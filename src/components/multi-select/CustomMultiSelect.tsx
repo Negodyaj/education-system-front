@@ -27,11 +27,11 @@ function CustomMultiSelect(props: SelectProps) {
   }
 
   const SingleSelect = () => (
-    <Select options={props.options}
+    <Select
+      options={props.options}
       isMulti={false}
       value={userOption}
-      //options={props.options}
-      onChange={onSingleSelect}/>
+      onChange={onSingleSelect} />
   )
   const MultiSelect = () => (
     <Select

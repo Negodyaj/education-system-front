@@ -15,13 +15,16 @@ import TagsPage from './components/tags-page/TagsPage';
 import { getToken } from './services/auth.service';
 import { getUser } from './services/test-wretch';
 import UserListPage from './components/user-page/UserListPage';
+import { IRootState } from './store';
+import { useSelector } from 'react-redux';
+import RoleSelector from './components/role-selector/roleSelector';
 
 
 function App() {
+    const appState = useSelector((state:IRootState) => state.app)
     const history = useHistory();
     const token = getToken();
     const [isLoggedIn, setIsLoggedIn] = useState(!!token);
-    const [roleId, setRoleId] = useState(Role.Admin);
 
     const users = [
         { login: 'test', password: 'test', roleId: Role.Test },
@@ -37,8 +40,7 @@ function App() {
         if (securityEntries.length) {
             const entry = securityEntries[0];
             setIsLoggedIn(true);
-            setRoleId(entry.roleId);
-            console.log(roleId);
+            console.log(appState.currentUserRoleId);
         }
     }
 
@@ -67,7 +69,7 @@ function App() {
                 <aside>
                     {
                         isLoggedIn ?
-                            <NavMenu roleId={roleId} />
+                            <NavMenu roleId={appState.currentUserRoleId} />
                             :
                             <h2>Залогиньтесь!</h2>
                     }
@@ -77,13 +79,13 @@ function App() {
                         isLoggedIn ?
                             <Switch>
                                 {
-                                    (roleId === Role.Manager || roleId === Role.Admin) &&
+                                    (appState.currentUserRoleId === Role.Manager || appState.currentUserRoleId === Role.Admin) &&
                                     <Route path="/user-page">
-                                        <UserListPage roleId={roleId}></UserListPage>
+                                        <UserListPage roleId={appState.currentUserRoleId}></UserListPage>
                                     </Route>
                                 }
                                 {
-                                    roleId === Role.Teacher &&
+                                    appState.currentUserRoleId === Role.Teacher &&
                                     <Route path="/courses-page">
                                         <CoursesPage />
                                     </Route>
@@ -92,7 +94,7 @@ function App() {
                                     <CourseEdition idCourse={location.pathname} />)}>
                                 </Route>
                                 {
-                                    roleId !== Role.Student &&
+                                    appState.currentUserRoleId !== Role.Student &&
                                     <Route path="/tags-page">
                                         <TagsPage ></TagsPage>
                                     </Route>
@@ -115,7 +117,11 @@ function App() {
                     }
                     {
                         isLoggedIn && <NotificationContainer />
-
+                        
+                    }
+                    {
+                        (isLoggedIn && appState.currentUserRoleId === 0) &&
+                        <RoleSelector/>
                     }
                 </main>
             </div>

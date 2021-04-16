@@ -24,6 +24,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { IRootState } from '../../../store';
 import { convertRoleIdsToSelectItem } from '../../../shared/converters/roleIdsToSelectItem';
 import { quitEditMode } from '../../../store/user-page/action-creators';
+import { sendUser } from '../../../store/user-page/thunk';
 
 interface UserPageProps {
     roleId: number;
@@ -140,7 +141,7 @@ function UserPage(props: UserPageProps) {
             return;
         }
     }
-    const sendUser = async (newOrUpdatedUser: User) => {
+    const sendUsersdfasd = async (newOrUpdatedUser: User) => {
         if (props.userToEdit) {
             reviseSending(await sendPutRequest<UserUpdate>(
                 props.url + ('/' + props.userToEdit.id),
@@ -161,7 +162,7 @@ function UserPage(props: UserPageProps) {
         setValue('roles', options);
     }
     const onSubmit = (data: User) => {
-        sendUser(data);
+        dispatch(sendUser(data))
     }
     const quitEditModeLocalWrapper = () => {
         dispatch(quitEditMode())

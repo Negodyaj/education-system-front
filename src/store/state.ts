@@ -28,6 +28,10 @@ export interface IRoleSelector {
     isDataLoading: boolean;
 }
 
+export interface IAppState {
+    currentUserRoleId: number;
+}
+
 export interface INotificationContainerState {
     notifications: {
         dismissible: NotificationData[],

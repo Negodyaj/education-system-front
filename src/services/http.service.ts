@@ -10,7 +10,7 @@ export const sendGetRequest = async <T>(path: string, isT: ((data: any) => data 
   return await baseWretch()
     .url(path)
     .get()
-    .json<T>()
+    .json(data => localResponseHandler<T>(data, isT))
     .catch(error => error);
 };
 export const sendPutRequest = async <T>(path: string, isT: ((data: any) => data is T) | undefined,

@@ -10,6 +10,7 @@ import { User } from "../../../interfaces/User";
 import { useDispatch, useSelector } from "react-redux";
 import { IRootState } from "../../../store";
 import { getUserToEditById } from "../../../store/user-page/thunk";
+import { setUserRegisterMode } from "../../../store/user-page/action-creators";
 
 interface UserListComponentProps {
     roleId: number;
@@ -61,6 +62,9 @@ function UserListComponent(props: UserListComponentProps) {
     const onEditClick = (userToEditId: number) => {
         dispatch(getUserToEditById(userToEditId))
     }
+    const onRegisterClick = () => {
+        dispatch(setUserRegisterMode());
+    }
 
     const lastNameColumnOnClick = () => {
         // setUsersToShow(usersToShow.sort((a, b) => {
@@ -77,7 +81,7 @@ function UserListComponent(props: UserListComponentProps) {
         <div className="user-list">
             <div className="column-head">
                 <h4>Пользователи</h4>
-                <button className="button-style" onClick={() => props.onEditClick()}>
+                <button className="button-style" onClick={onRegisterClick}>
                     <FontAwesomeIcon icon="plus" />
                     <span> Добавить</span>
                 </button>

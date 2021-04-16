@@ -11,7 +11,7 @@ import { setUserListFail, setUserListIsLoading, setUserListWasLoaded } from "./a
 export const getUsers = () => {
     return (dispatch: Dispatch) => {
         dispatch(setUserListIsLoading());
-        sendGetRequest<User[]>(usersUrl+'/1', isUserArr)
+        sendGetRequest<User[]>(usersUrl, isUserArr)
             .then(users => {
                 dispatch(setUserListWasLoaded(thunkResponseHandler(dispatch, users)));
             })
