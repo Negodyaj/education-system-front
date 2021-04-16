@@ -22,6 +22,8 @@ import { isUser } from '../../../services/type-guards/user';
 import { isUserRegisterResponse } from '../../../services/type-guards/userRegisterResponse';
 import { useDispatch, useSelector } from 'react-redux';
 import { IRootState } from '../../../store';
+import { convertRoleIdsToSelectItem } from '../../../shared/converters/roleIdsToSelectItem';
+import { quitEditMode } from '../../../store/user-page/action-creators';
 
 interface UserPageProps {
     roleId: number;
@@ -66,9 +68,9 @@ function UserPage(props: UserPageProps) {
                         <label className="form-label">Список ролей</label>
                         <CustomMultiSelect
                             selectType={"multi"}
-                            userOptionsIds={getValues('roles') || undefined}
+                            userOptions={convertRoleIdsToSelectItem(pageState.userPage.userToRegister?.roles||[])||undefined}
                             options={convertEntitiesToSelectItems(getRussianDictionary(convertEnumToDictionary(Role)))}
-                            onSelect={roleOnChange}></CustomMultiSelect>
+                            onMultiSelect={roleOnChange}></CustomMultiSelect>
                     </div>)
             } else {
                 setValue('roles', [Role.Student]);
@@ -161,8 +163,8 @@ function UserPage(props: UserPageProps) {
     const onSubmit = (data: User) => {
         sendUser(data);
     }
-    const setIsEditModeOn = () => {
-        props.setIsEditModeOn(false);
+    const quitEditModeLocalWrapper = () => {
+        dispatch(quitEditMode())
     }
 
     if (isFetching) {
@@ -304,7 +306,7 @@ function UserPage(props: UserPageProps) {
                     </div>
                     <div className="form-row form-row-button">
                         <div className="">
-                            <button className="button-style" onClick={setIsEditModeOn}>отмена</button>
+                            <button className="button-style" type="button" onClick={quitEditModeLocalWrapper}>отмена</button>
                         </div>
                         <div className="button-style">
                             <button

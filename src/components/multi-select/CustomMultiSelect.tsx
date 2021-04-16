@@ -1,13 +1,13 @@
 import { useState } from 'react'
 import Select, { OptionsType } from 'react-select'
-import { SelectItem } from '../interfaces/SelectItem';
+import { SelectItem } from '../../interfaces/SelectItem';
 
 
 interface SelectProps {
   selectType?: string;
   userOptions?: SelectItem[] | undefined;
   userOption?: SelectItem | undefined;
-  options: SelectItem[];
+  options: SelectItem[] | undefined;
   onMultiSelect?: (optionIds: number[]) => void;
   onSingleSelect?: (optionId: number | null) => void;
 }

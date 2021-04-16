@@ -3,13 +3,15 @@ import thunk from "redux-thunk";
 import { coursePageReducer } from './courses-page/reducer';
 import { userListPageReducer } from './user-list-page/reducer';
 import { notificationContainerReducer } from './notifications/reducer';
-import { ICoursePageState, INotificationContainerState, IUserListPage, IUserPage } from './state';
+import { ICoursePageState, INotificationContainerState, IRoleSelector, IUserListPage, IUserPage } from './state';
 import { userPageReducer } from './user-page/reducers';
+import { roleSelectorReducer } from './role-selector/reducer';
 
 export interface IRootState {
     coursePage: ICoursePageState;
     userPage: IUserPage;
     userListPage: IUserListPage;
+    roleSelector: IRoleSelector;
     notificationContainer: INotificationContainerState;
 }
 
@@ -20,6 +22,7 @@ const store = createStore<IRootState, any, any, any>(
         coursePage: coursePageReducer,
         userListPage: userListPageReducer,
         userPage: userPageReducer,
+        roleSelector: roleSelectorReducer,
         notificationContainer: notificationContainerReducer,
     }),
     undefined,

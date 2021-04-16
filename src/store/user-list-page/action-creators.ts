@@ -12,14 +12,12 @@ export const setUserListIsLoading = () => {
         payload: undefined
     } as const);
 }
-
 export const setUserListWasLoaded = (users: User[]) => {
     return ({
         type: USER_LIST_WRETCH_LOADED,
         payload: users
     } as const);
 }
-
 export const setUserListFail = (error: string) => {
     return ({
         type: USER_LIST_WRETCH_FAIL,

@@ -23,6 +23,11 @@ export interface IUserPage {
     isDataLoading: boolean;
 }
 
+export interface IRoleSelector {
+    currentUser: User | undefined;
+    isDataLoading: boolean;
+}
+
 export interface INotificationContainerState {
     notifications: {
         dismissible: NotificationData[],

@@ -1,6 +1,6 @@
 import { User } from "../../interfaces/User";
 import { UserUpdate } from "../../interfaces/UserUpdate";
-import { USER_TO_EDIT_WRETCH_FAIL, USER_TO_EDIT_WRETCH_LOADED, USER_TO_EDIT_WRETCH_LOADING, USER_TO_VIEW_WRETCH_FAIL, USER_TO_VIEW_WRETCH_LOADED, USER_TO_VIEW_WRETCH_LOADING } from "../actionTypes";
+import { USER_EDIT_MODE_WAS_CLOSED, USER_TO_EDIT_WRETCH_FAIL, USER_TO_EDIT_WRETCH_LOADED, USER_TO_EDIT_WRETCH_LOADING, USER_TO_VIEW_WRETCH_FAIL, USER_TO_VIEW_WRETCH_LOADED, USER_TO_VIEW_WRETCH_LOADING } from "../actionTypes";
 
 export type UserPageActions =
     | ReturnType<typeof setUserToViewIsLoading>
@@ -9,6 +9,7 @@ export type UserPageActions =
     | ReturnType<typeof setUserToEditIsLoading>
     | ReturnType<typeof setUserToEditWasLoaded>
     | ReturnType<typeof setUserToEditFail>
+    | ReturnType<typeof quitEditMode>
 
 export const setUserToViewIsLoading = () => {
     return ({
@@ -44,5 +45,11 @@ export const setUserToEditFail = (error: string) => {
     return ({
         type: USER_TO_EDIT_WRETCH_FAIL,
         payload: error
+    } as const);
+}
+export const quitEditMode = () => {
+    return ({
+        type: USER_EDIT_MODE_WAS_CLOSED,
+        payload: undefined
     } as const);
 }

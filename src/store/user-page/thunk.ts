@@ -17,7 +17,6 @@ export const getUserToViewById = (userId: number) => {
             .catch(error => dispatch(setUserListFail(error)));
     }
 }
-
 export const getUserToEditById = (userId: number) => {
     return (dispatch: Dispatch) => {
         dispatch(setUserToEditIsLoading());
