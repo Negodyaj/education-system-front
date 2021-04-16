@@ -1,6 +1,10 @@
 import { baseUrl } from "../shared/consts";
-import wretch from 'wretch';
+import wretch, { WretcherError } from 'wretch';
 import { getToken } from "./auth.service";
+import { Dispatch } from "redux";
+import { setUserListWasLoaded } from "../store/user-list-page/action-creators";
+import { pushNotification } from "../store/notifications/action-creators";
+import { makeNotification } from "../shared/helpers/notificationHelpers";
 
 export const sendGetRequest = async <T>(path: string, isT: ((data: any) => data is T) | undefined) => {
   return await baseWretch()
@@ -49,13 +53,18 @@ export const sendDeleteRequestNoResponse = async (path: string) => {
   return await baseWretch()
     .url(path)
     .delete()
-    .res(response => {return response})
+    .res(response => { return response })
 };
+export const WRONG_DATA_STATUS = -1;
 const localResponseHandler = <T>(data: any, isT: ((data: any) => data is T) | undefined) => {
   if (isT ? isT(data) : true) {
     return data as T;
   } else {
-    return undefined;
+    return {
+      status: WRONG_DATA_STATUS,
+      response: {},
+      text: 'Неверные данные'
+    } as WretcherError
   }
 }
 const baseWretch = () => {
