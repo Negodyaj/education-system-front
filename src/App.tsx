@@ -6,16 +6,15 @@ import LoginForm from './components/login-form/LoginForm';
 import NavMenu from './components/nav-menu/NavMenu';
 import HomeworkPage from './components/homework-page/HomeworkPage';
 import NotificationContainer from './shared/components/notification/NotificationContainer'
-import UserPage from './components/user-page/UserPage';
 import CoursesPage from './components/courses-page/CoursesPage';
 import CourseEdition from './components/courses-page/course-edition/CourseEdition';
 import "./shared/fontawesome/FontawesomeIcons";
 import { Role } from './enums/role';
-import NotificationData from './interfaces/NotificationData';
 import DevTestPage from './components/dev-test-page/DevTestPage';
 import TagsPage from './components/tags-page/TagsPage';
 import { getToken } from './services/auth.service';
 import { getUser } from './services/test-wretch';
+import UserListPage from './components/user-page/UserListPage';
 
 
 function App() {
@@ -80,7 +79,7 @@ function App() {
                                 {
                                     (roleId === Role.Manager || roleId === Role.Admin) &&
                                     <Route path="/user-page">
-                                        <UserPage roleId={roleId}></UserPage>
+                                        <UserListPage roleId={roleId}></UserListPage>
                                     </Route>
                                 }
                                 {
@@ -116,7 +115,7 @@ function App() {
                     }
                     {
                         isLoggedIn && <NotificationContainer />
-                        
+
                     }
                 </main>
             </div>
