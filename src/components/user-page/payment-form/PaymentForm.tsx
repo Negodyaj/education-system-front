@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { sendGetRequest, sendPostRequest } from '../../../services/http.service';
 import { responseHandlers } from '../../../services/response-handler/responseHandler';
@@ -9,7 +9,9 @@ import './PaymentForm.css'
 import '../../../App.css';
 import { stringify } from 'node:querystring';
 import { PaymentInput } from '../../interfaces/PaymentInput';
+import { ErrorMessage } from '@hookform/error-message';
 import { User } from '../../interfaces/User';
+import { format } from 'date-fns';
 
 interface PaymentProps {
     paymentFormState: string;
@@ -20,12 +22,15 @@ interface PaymentProps {
 
 function PaymentForm(props: PaymentProps) {
 
+    var todate = new Date();
+    var formattedDate = format(todate, "dd.mm.yyyy");
+
     const { register, formState: { errors }, handleSubmit, getValues, setValue } = useForm<PaymentInput>({
         mode: 'all',
         criteriaMode: 'all',
         defaultValues: {
             amount: 2500,
-            date: Date(),
+            date: todate.toLocaleDateString('ru-RU'),
             period: "",
             contractNumber: props.userForPayment?.contractNumber
         }
@@ -62,21 +67,72 @@ function PaymentForm(props: PaymentProps) {
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="input-row">
                         <label>Сумма платежа</label>
-                        <input key='amount' {...register("amount")}></input>
+                        <input key='amount' {...register("amount",
+                        {
+                            required: {
+                                value: true,
+                                message: "Ведите сумму платежа"
+                            },
+                            pattern: {
+                                value: /[0-9]/,
+                                    message: "Допустимы только цифры"
+                            }
+                        }
+                        )}></input>
+                        <ErrorMessage
+                            errors={errors}
+                            name={'amount'}
+                            className="bad-feedback"
+                            as="div">
+                        </ErrorMessage>
                     </div>
                     <div className="input-row">
                         <label>Дата платежа</label>
-                        <input key='date' {...register("date")}></input>
+                        <input key='date' {...register("date",)}></input>
                     </div>
                     <div className="input-row">
                         <label>Период оплаты</label>
-                        <input key='period' {...register("period")}></input>
+                        <input key='period' {...register("period", 
+                        {
+                            required: {
+                                value: true,
+                                message: "Ведите период оплаты"
+                            },
+                            pattern: {
+                                value: /\s\d/,
+                                    message: "Период формата 'янв 2010'"
+                            }
+                        }
+                        )}></input>
+                        <ErrorMessage
+                            errors={errors}
+                            name={'period'}
+                            className="bad-feedback"
+                            as="div">
+                        </ErrorMessage>
                     </div>
                     <div className="input-row">
                         <label>Номер договора</label>
-                        <input key='contractNumber' type='number'
-                            {...register("contractNumber")}
+                        <input key='contractNumber' value={props.userForPayment?.contractNumber}
+                            {...register("contractNumber", 
+                            {
+                                required: {
+                                    value: true,
+                                    message: "Ведите номер договора"
+                                },
+                                pattern: {
+                                    value: /[0-9]/,
+                                        message: "Допустимы только цифры"
+                                }
+                            }
+                            )}
                         ></input>
+                        <ErrorMessage
+                            errors={errors}
+                            name={'contractNumber'}
+                            className="bad-feedback"
+                            as="div">
+                        </ErrorMessage>
                     </div>
                     {/* <div className="row input-row ">
                         <label>Оплачено полностью</label>
