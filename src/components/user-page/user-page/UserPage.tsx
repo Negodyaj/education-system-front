@@ -1,6 +1,4 @@
 import CustomMultiSelect from '../../multi-select/CustomMultiSelect';
-import { User } from '../../interfaces/User';
-import { UserRegisterResponse } from '../../interfaces/UserRegisterResponse';
 import React, { useState } from 'react';
 import DatePickerComponent from '../../../shared/components/date-picker/DatePickerComponent';
 import { convertEnumToDictionary, getRussianDictionary } from '../../../shared/converters/enumToDictionaryEntity';
@@ -11,28 +9,32 @@ import { useForm } from 'react-hook-form';
 import { convertEntitiesToSelectItems } from '../../../shared/converters/entityToSelectItemConverter';
 import { getName } from '../../../shared/converters/objectKeyToString';
 import { sendPostRequest, sendPutRequest } from '../../../services/http.service';
-import { UserUpdate } from '../../interfaces/UserUpdate';
 import { ErrorMessage } from '@hookform/error-message';
-import NotificationData from '../../../shared/interfaces/NotificationData';
+import NotificationData from '../../../interfaces/NotificationData';
 import { responseHandlers } from '../../../services/response-handler/responseHandler';
 import { UserRegisterEnd, UserUserUpdateIdEnd } from '../../../shared/endpointConsts';
-import './UserEditForm.css';
-import '../UserPage.css';
+import './UserPage.css'
 import '../../../App.css';
-import { UserInput } from '../../interfaces/UserInput';
+import { User } from '../../../interfaces/User';
+import { UserUpdate } from '../../../interfaces/UserUpdate';
+import { UserRegisterResponse } from '../../../interfaces/UserRegisterResponse';
+import { isUser } from '../../../services/type-guards/user';
+import { isUserRegisterResponse } from '../../../services/type-guards/userRegisterResponse';
+import { useDispatch, useSelector } from 'react-redux';
+import { IRootState } from '../../../store';
 
-interface UserEditFormProps {
+interface UserPageProps {
     roleId: number;
     userToEdit: User | undefined;
     setIsEditModeOn: (mode: boolean) => void;
     reviseSending: () => void;
-    sendNotification: (n: NotificationData | undefined) => void;
     url: string;
 }
 
-function UserEditForm(props: UserEditFormProps) {
+function UserPage(props: UserPageProps) {
 
-    const initUser: UserInput = Object.assign({}, props.userToEdit || {
+    const initUser: User = Object.assign({}, props.userToEdit || {
+        id: 0,
         firstName: "",
         lastName: "",
         login: "",
@@ -41,16 +43,19 @@ function UserEditForm(props: UserEditFormProps) {
         userPic: "",
         phone: "",
         email: "",
-        roleIds: []
+        roles: []
     })
 
-    const [newUser, setNewUser] = useState<UserInput>(initUser);
+    const [newUser, setNewUser] = useState<User>(initUser);
     const [isFetching, setIsFetching] = useState(false);
 
-    const { register, formState: { errors }, handleSubmit, getValues, setValue } = useForm<UserInput>({
+    const dispatch = useDispatch();
+    const pageState = useSelector((state: IRootState) => state)
+
+    const { register, formState: { errors }, handleSubmit, getValues, setValue } = useForm<User>({
         mode: 'all',
         criteriaMode: 'all',
-        defaultValues: (() => { if (isFetching === false) { return Object.assign({}, newUser) } })()
+        defaultValues: pageState.userPage.userToEdit
     });
 
     const elementsDefinedByProps = {
@@ -61,12 +66,12 @@ function UserEditForm(props: UserEditFormProps) {
                         <label className="form-label">Список ролей</label>
                         <CustomMultiSelect
                             selectType={"multi"}
-                            userOptionsIds={getValues('roleIds') || undefined}
+                            userOptionsIds={getValues('roles') || undefined}
                             options={convertEntitiesToSelectItems(getRussianDictionary(convertEnumToDictionary(Role)))}
                             onSelect={roleOnChange}></CustomMultiSelect>
                     </div>)
             } else {
-                setValue('roleIds', [Role.Student]);
+                setValue('roles', [Role.Student]);
             }
         },
         passwordInput: () => {
@@ -85,7 +90,7 @@ function UserEditForm(props: UserEditFormProps) {
                             className="form-input" />
                         <ErrorMessage
                             errors={errors}
-                            name={getName<UserInput>(newUser, o => o.password)}
+                            name={getName<User>(newUser, o => o.password)}
                             className="bad-feedback"
                             as="div">
                         </ErrorMessage>
@@ -115,7 +120,7 @@ function UserEditForm(props: UserEditFormProps) {
                             className="form-input" />
                         <ErrorMessage
                             errors={errors}
-                            name={getName<UserInput>(newUser, o => o.login)}
+                            name={getName<User>(newUser, o => o.login)}
                             className="bad-feedback"
                             as="div">
                         </ErrorMessage>
@@ -137,14 +142,12 @@ function UserEditForm(props: UserEditFormProps) {
         if (props.userToEdit) {
             reviseSending(await sendPutRequest<UserUpdate>(
                 props.url + ('/' + props.userToEdit.id),
-                convertUserToUserUpdate(newOrUpdatedUser),
-                props.sendNotification,
-                responseHandlers[UserUserUpdateIdEnd]))
+                isUser,
+                convertUserToUserUpdate(newOrUpdatedUser)))
         } else {
             reviseSending(await sendPostRequest<UserRegisterResponse>(
                 props.url + '/' + 'register',
-                props.sendNotification,
-                responseHandlers[UserRegisterEnd],
+                isUserRegisterResponse,
                 convertUserToUserInput(newOrUpdatedUser)));
         }
     }
@@ -153,7 +156,7 @@ function UserEditForm(props: UserEditFormProps) {
         setValue('birthDate', date)
     }
     const roleOnChange = (options: number[]) => {
-        setValue('roleIds', options);
+        setValue('roles', options);
     }
     const onSubmit = (data: User) => {
         sendUser(data);
@@ -186,7 +189,7 @@ function UserEditForm(props: UserEditFormProps) {
                             className="form-input" />
                         <ErrorMessage
                             errors={errors}
-                            name={getName<UserInput>(newUser, o => o.firstName)}
+                            name={getName<User>(newUser, o => o.firstName)}
                             className="bad-feedback"
                             as="div">
                         </ErrorMessage>
@@ -208,7 +211,7 @@ function UserEditForm(props: UserEditFormProps) {
                             className="form-input" />
                         <ErrorMessage
                             errors={errors}
-                            name={getName<UserInput>(newUser, o => o.lastName)}
+                            name={getName<User>(newUser, o => o.lastName)}
                             className="bad-feedback"
                             as="div">
                         </ErrorMessage>
@@ -243,7 +246,7 @@ function UserEditForm(props: UserEditFormProps) {
                             className="form-input" />
                         <ErrorMessage
                             errors={errors}
-                            name={getName<UserInput>(newUser, o => o.phone)}
+                            name={getName<User>(newUser, o => o.phone)}
                             className="bad-feedback"
                             as="div">
                         </ErrorMessage>
@@ -270,7 +273,7 @@ function UserEditForm(props: UserEditFormProps) {
                             placeholder="или вставьте ссылку" />
                         <ErrorMessage
                             errors={errors}
-                            name={getName<UserInput>(newUser, o => o.userPic)}
+                            name={getName<User>(newUser, o => o.userPic)}
                             className="bad-feedback"
                             as="div">
                         </ErrorMessage>
@@ -289,7 +292,7 @@ function UserEditForm(props: UserEditFormProps) {
                             className="form-input" />
                         <ErrorMessage
                             errors={errors}
-                            name={getName<UserInput>(newUser, o => o.email)}
+                            name={getName<User>(newUser, o => o.email)}
                             className="bad-feedback"
                             as="div">
                         </ErrorMessage>
@@ -314,6 +317,6 @@ function UserEditForm(props: UserEditFormProps) {
         )
     }
 }
-export default UserEditForm;
+export default UserPage;
 
 

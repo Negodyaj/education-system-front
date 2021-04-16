@@ -1,14 +1,11 @@
-export interface User {
-    id?: number;
+export interface UserInput {
     firstName?: string;
-    lastName: string;
+    lastName?: string;
     birthDate?: string;
-    password?: string;
     login?: string;
     phone?: string;
     userPic?: string;
     email?: string;
-    contractNumber: number;
+    password?: string;
     roles?: number[];
-    roleIds?: number[];
 }

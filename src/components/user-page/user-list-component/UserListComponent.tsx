@@ -3,26 +3,25 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
 import { Role } from "../../../enums/role";
 import { getEnToRuTranslation } from "../../../shared/converters/enumToDictionaryEntity";
-import { User } from "../../interfaces/User";
 import PaymentForm from "../payment-form/PaymentForm";
-import '../UserPage.css';
+import '../UserListPage.css';
 import '../../../App.css'
-import NotificationData from "../../../shared/interfaces/NotificationData";
-import { PaymentResponse } from '../../interfaces/PaymentResponse';
-import { sendGetRequest } from "../../../services/http.service";
-import { responseHandlers } from "../../../services/response-handler/responseHandler";
-import { PaymentEnd } from "../../../shared/endpointConsts";
-import { Console } from "node:console";
+import { User } from "../../../interfaces/User";
+import { useDispatch, useSelector } from "react-redux";
+import { IRootState } from "../../../store";
+import { getUserToEditById } from "../../../store/user-page/thunk";
 
-interface UserListProps {
+interface UserListComponentProps {
     roleId: number;
     users: User[];
     onEditClick: (userToEditId?: number) => void;
     onDeleteClick: (userToDeleteId: number) => void;
-    sendNotification: (newNotification: NotificationData | undefined) => void;
 }
 
-function UserList(props: UserListProps) {
+function UserListComponent(props: UserListComponentProps) {
+
+    const dispatch = useDispatch();
+    const userListPageState = useSelector((state:IRootState)=> state.userListPage)
 
     const lastNameAlphabetSort = (a: string, b: string) => {
         a = a.toLowerCase();
@@ -37,10 +36,10 @@ function UserList(props: UserListProps) {
     }
 
     const [signInvertor, setSignInvertor] = useState(1);
-    const [usersToShow, setUsersToShow] = useState([...props.users]);
+    //const [usersToShow, setUsersToShow] = useState([...props.users]);
     const [userForPayment, setUserForPayment] = useState<User | undefined>(undefined);
     const [paymentFormState, setPaymentFormState] = useState('');
-    
+
     const elementsDefinedByRole = {
         paymentButton: (userId: number | undefined) => {
             return (
@@ -52,36 +51,27 @@ function UserList(props: UserListProps) {
             )
         }
     }
-    
+
     const onPaymentButtonClick = (userId: number | undefined) => {
-        setUserForPayment([...usersToShow].filter(u => u.id === userId)[0]);
+        //setUserForPayment([...usersToShow].filter(u => u.id === userId)[0]);
         setPaymentFormState('visible');
-        //getPayment([...usersToShow].filter(u => u.id === userId)[0].id);
+
     }
 
-    const onEditClick = (userToEditId?: number) => {
-        props.onEditClick(userToEditId);
+    const onEditClick = (userToEditId: number) => {
+        dispatch(getUserToEditById(userToEditId))
     }
 
     const lastNameColumnOnClick = () => {
-        setUsersToShow(usersToShow.sort((a, b) => {
-            return lastNameAlphabetSort(a.lastName, b.lastName);
-        }))
+        // setUsersToShow(usersToShow.sort((a, b) => {
+        //     return lastNameAlphabetSort(a.lastName, b.lastName);
+        // }))
         setSignInvertor(signInvertor + 1);
     }
 
     const onCancelPaymentClick = () => {
         setPaymentFormState('');
     }
-
-    // const getPayment = async (userId?: number) => {
-    //     setUserForPayment(await sendGetRequest<PaymentResponse[] | undefined>(
-    //         'User' + '/' + userId + '/' + 'payment',
-    //         props.sendNotification,
-    //         responseHandlers[PaymentEnd]));
-    //         //console.log('User' + '/' + userId + '/' + 'payment');
-    //     //console.log((userPayment as PaymentResponse[])[0])
-    // }
 
     return (
         <div className="user-list">
@@ -100,9 +90,7 @@ function UserList(props: UserListProps) {
                 <div className="column"><span title="А-Я">роль</span></div>
             </div>
             {
-                usersToShow?.sort((a, b) => {
-                    return lastNameAlphabetSort(a.lastName, b.lastName);
-                }).map(u => (
+                userListPageState.userList.map(u => (
                     <div className="list + user-list-item" key={u.id}>
                         <div className="column">
                             <img className="user-photo" src={u.userPic} alt="userpic" />
@@ -118,12 +106,13 @@ function UserList(props: UserListProps) {
                         <div className="column">{/*u.groupName*/}</div>
                         <div className="column-button">
                             <div className="column">
-                                <button className="button-round" onClick={() => props.onEditClick(u.id)}>
+                                <button className="button-round" onClick={() => onEditClick(u.id)}>
                                     <FontAwesomeIcon icon="edit" />
                                 </button>
                                 <button className="button-round" onClick={() => props.onDeleteClick(u.id as number)}>
                                     <FontAwesomeIcon icon="trash" />
                                 </button>
+
                                 {
                                     elementsDefinedByRole.paymentButton(u.id)
                                 }
@@ -134,12 +123,12 @@ function UserList(props: UserListProps) {
             <PaymentForm
                 paymentFormState={paymentFormState}
                 cancelClick={onCancelPaymentClick}
-                sendNotification={props.sendNotification}
-                userForPayment={userForPayment}
+                userName={userForPayment?.firstName}
+                userLastname={userForPayment?.lastName}
             ></PaymentForm>
         </div>
 
     )
 }
 
-export default UserList;
+export default UserListComponent;

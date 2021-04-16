@@ -1,4 +1,4 @@
-import { DictionaryEntity } from "../../components/interfaces/DictionaryEntity";
+import { DictionaryEntity } from "../../interfaces/DictionaryEntity";
 import { Role } from "../../enums/role";
 
 export const convertEnumToDictionary = (enumArg: any): DictionaryEntity[] => {

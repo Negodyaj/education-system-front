@@ -1,22 +1,24 @@
 import React, { ChangeEventHandler, useEffect, useState } from 'react';
-import { isJSDocReturnTag } from 'typescript';
-import { Tag } from '../interfaces/Tag';
-import TagList from './tag-list/TagList';
 import './TagsPage.css';
-import wretch from 'wretch';
-import { sendGetRequest } from '../../services/http.service';
+import { sendGetRequest, sendPostRequest } from '../../services/http.service';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import SearchComponent from '../../shared/components/search-component/SearchComponent';
+import AddTagModal from './add-tag-modal/AddTagModal';
+import { Tag } from '../../interfaces/Tag';
+import TagList from './tag-list/TagList';
+import { isTagArr } from '../../services/type-guards/tagArr';
 
+interface TagsPageProps {
+}
 
-function TagsPage() {
+function TagsPage(props: TagsPageProps) {
     const url = 'Tag';
-    const [tagsInState, setTagsInState] = useState<Tag[]>([]);
+    const [tagsInState, setTagsInState] = useState<Tag[] | undefined>([]);
     const [searchTurn, setSearchTurn] = useState('');
-    const getTags = async () => {
-        //setTagsInState(await sendGetRequest<Tag[]>(url))
-    };
+    const [hidden, setHidden] = useState('hidden')
 
+    const getTags = async () => {
+        setTagsInState(await sendGetRequest<Tag[]>(url, isTagArr))
+    };
     useEffect(() => {
         getTags();
     }, []);
@@ -25,26 +27,25 @@ function TagsPage() {
         setSearchTurn(e.target.value);
     };
 
-    // const searchFromTags = (str: string) => {
-    //     setSearchTurn(str);
-    // e
-    return (
+    const closeModal = () => setHidden("hidden");
 
-        <div className="table">
-            <div className="header">
-                <div className="input">
-                    <input onChange={tagsFilter} />
-                    
-                        
-                            <button className="add"></button>
-            </div>
+    return (
+        <div className="main">
+            <div className="tag-tittle"> <h4> Теги</h4> </div>
+            <div className="tag-header">
+                <input className="input-search" onChange={tagsFilter} placeholder="Поиск" />
+                <button className="button-style" onClick={() => { setHidden("") }}>
+                    <FontAwesomeIcon icon="plus" />
+                    <span> Добавить</span>
+                </button>
             </div>
             
-                <div className="body">
-                    <div className="tags"> <TagList str={searchTurn} tags={tagsInState}></TagList> </div>
-                </div>
-            </div>
+            <div className="body">
+                <div className="tags-list"> <TagList str={searchTurn} tags={tagsInState} setTagsInState={setTagsInState}></TagList> </div>
 
+            </div>
+            <AddTagModal setTagsInState={setTagsInState} hidden={hidden} setHidden={closeModal} />
+        </div>
     )
 
 
