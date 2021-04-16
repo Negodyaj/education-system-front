@@ -1,4 +1,4 @@
-import { Course } from "../../shared/courses/Courses";
+import { Course } from "../../interfaces/Courses";
 
 export const isCourse = (data: any): data is Course => {
   const dataToCheck = data as Course;

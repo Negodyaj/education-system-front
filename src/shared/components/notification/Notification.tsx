@@ -1,22 +1,29 @@
 import './Notification.css'
-import React, { useState, useEffect, useRef } from 'react'
-import NotificationData from '../../interfaces/NotificationData';
+import React, { useEffect, useRef } from 'react'
+import NotificationData from '../../../interfaces/NotificationData';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useDispatch } from 'react-redux';
+import { removeNotification } from '../../../store/notifications/thunk';
 
 interface NotificationProps {
     notificationData: NotificationData;
-    deleteNotification?: (notificationData: NotificationData) => void;
 }
 
 function Notification(props: NotificationProps) {
-    const [isHidden, setIsHidden] = useState(true);
-    const deleteRef = useRef(props.deleteNotification);
-    deleteRef.current = props.deleteNotification;
+    const dispatch = useDispatch();
+    //const deleteRef = useRef(dispatch(removeNotification));
+    //deleteRef.current = dispatch(removeNotification);
 
-    useEffect(() => {
-        setIsHidden(false);
+    const notificationDomRef = useRef(null);
+    const toggleHidden = () => {
+        const elem = notificationDomRef.current as unknown as HTMLDivElement;
+        elem.classList.toggle("hidden");
+    }
+
+    useEffect(()=>{
+        toggleHidden();
     }, [])
-    
+
     const typeToTimeout = () => {
         switch (props.notificationData.type) {
             case "information":
@@ -45,11 +52,11 @@ function Notification(props: NotificationProps) {
 
     const dismiss = () => {
         if (props.notificationData.isDismissible) {
-            setIsHidden(true);
+            toggleHidden();
             setTimeout(() => {
-                if (deleteRef.current)
-                    deleteRef.current(props.notificationData)
-            }, 300)
+                if (dispatch(removeNotification))
+                    dispatch(removeNotification(props.notificationData));
+            }, 300);
         }
     }
 
@@ -82,9 +89,9 @@ function Notification(props: NotificationProps) {
     }
 
     return (
-        <div className={`notification 
-            ${isHidden ? "hidden" : ""}
+        <div className={`notification hidden
             ${typeToClassName()} `}
+            ref={notificationDomRef}    
         >
             <div className="type-icon">
                 <FontAwesomeIcon icon={typeToIconName()} />

@@ -1,3 +1,50 @@
 .hidden {
     display: none;
     }
+.tags-list {
+   
+    width: 900px;
+}
+.button-style{
+    height: 40px;
+    min-width: 110px;
+    border-radius: 25px;
+    font-family: Montserrat;
+  }
+  .tag-header{
+    display: flex;
+    justify-content: space-between;
+    margin-left: 20px;
+    align-items: center;
+    width: 500px;
+
+  }
+.tag-row{
+    display: flex;
+    justify-content: space-between;
+    min-height: 50px;
+    border-bottom: 1px solid rgba(39, 45, 59, 0.15);
+    text-align: left;
+    font-size: 14px;
+    font-family: Montserrat;
+    margin-left: 20px;
+    align-items: center;
+    width: 500px;
+}
+.block{
+opacity: 0.2;
+}
+.block:hover{
+    cursor: initial;
+}
+
+.tag-tittle{
+    font-family: Montserrat;
+    width: 500px;
+    margin-top: 0;
+    margin-bottom: .5rem;
+    line-height: 1.2;
+    text-align:left;
+    margin-left: 20px;
+}
+

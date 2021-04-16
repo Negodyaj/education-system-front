@@ -1,20 +1,33 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat');
 
 .notification {
+    margin: 0;
     display: flex;
-    max-height: 150px;
     justify-content: space-between;
     align-items: center;
     border-radius: 20px;
-    padding: 10px 20px;
     padding-left: 20px;
-    margin-bottom: 10px;
-    transition: all 0.3s linear;
+    padding-right: 20px;
     overflow: hidden;
     border: none;
     color: white;
     box-shadow: 5px 5px 5px rgba(0,0,0,0.2);
     font-size: 14px;
+    
+    transition: 0.3s all linear;
+    opacity: 1;
+    max-height: 150px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+
+.notification.hidden {
+    opacity: 0;
+    max-height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-bottom: 0;
 }
 
 .notification .type-icon {
@@ -89,13 +102,4 @@
 
 .error-notification {
     background: #FF0041;
-}
-
-
-.hidden {
-    opacity: 0;
-    max-height: 0;
-    padding-top: 0;
-    padding-bottom: 0;
-    margin: 0;
 }

@@ -1,0 +1,322 @@
+import CustomMultiSelect from '../../multi-select/CustomMultiSelect';
+import React, { useState } from 'react';
+import DatePickerComponent from '../../../shared/components/date-picker/DatePickerComponent';
+import { convertEnumToDictionary, getRussianDictionary } from '../../../shared/converters/enumToDictionaryEntity';
+import { convertUserToUserUpdate } from '../../../shared/converters/userToUserUpdate';
+import { convertUserToUserInput } from '../../../shared/converters/userToUserInput';
+import { Role } from '../../../enums/role';
+import { useForm } from 'react-hook-form';
+import { convertEntitiesToSelectItems } from '../../../shared/converters/entityToSelectItemConverter';
+import { getName } from '../../../shared/converters/objectKeyToString';
+import { sendPostRequest, sendPutRequest } from '../../../services/http.service';
+import { ErrorMessage } from '@hookform/error-message';
+import NotificationData from '../../../interfaces/NotificationData';
+import { responseHandlers } from '../../../services/response-handler/responseHandler';
+import { UserRegisterEnd, UserUserUpdateIdEnd } from '../../../shared/endpointConsts';
+import './UserPage.css'
+import '../../../App.css';
+import { User } from '../../../interfaces/User';
+import { UserUpdate } from '../../../interfaces/UserUpdate';
+import { UserRegisterResponse } from '../../../interfaces/UserRegisterResponse';
+import { isUser } from '../../../services/type-guards/user';
+import { isUserRegisterResponse } from '../../../services/type-guards/userRegisterResponse';
+import { useDispatch, useSelector } from 'react-redux';
+import { IRootState } from '../../../store';
+
+interface UserPageProps {
+    roleId: number;
+    userToEdit: User | undefined;
+    setIsEditModeOn: (mode: boolean) => void;
+    reviseSending: () => void;
+    url: string;
+}
+
+function UserPage(props: UserPageProps) {
+
+    const initUser: User = Object.assign({}, props.userToEdit || {
+        id: 0,
+        firstName: "",
+        lastName: "",
+        login: "",
+        password: "",
+        birthDate: new Date().toLocaleDateString('ru-RU'),
+        userPic: "",
+        phone: "",
+        email: "",
+        roles: []
+    })
+
+    const [newUser, setNewUser] = useState<User>(initUser);
+    const [isFetching, setIsFetching] = useState(false);
+
+    const dispatch = useDispatch();
+    const pageState = useSelector((state: IRootState) => state)
+
+    const { register, formState: { errors }, handleSubmit, getValues, setValue } = useForm<User>({
+        mode: 'all',
+        criteriaMode: 'all',
+        defaultValues: pageState.userPage.userToEdit
+    });
+
+    const elementsDefinedByProps = {
+        roleSelector: () => {
+            if (props.roleId === Role.Admin && !props.userToEdit) {
+                return (
+                    <div className="form-row multi">
+                        <label className="form-label">Список ролей</label>
+                        <CustomMultiSelect
+                            selectType={"multi"}
+                            userOptionsIds={getValues('roles') || undefined}
+                            options={convertEntitiesToSelectItems(getRussianDictionary(convertEnumToDictionary(Role)))}
+                            onSelect={roleOnChange}></CustomMultiSelect>
+                    </div>)
+            } else {
+                setValue('roles', [Role.Student]);
+            }
+        },
+        passwordInput: () => {
+            if (props.userToEdit === undefined) {
+                return (
+                    <div className="form-row">
+                        <label className="form-label">Пароль</label>
+                        <input
+                            {...register('password', {
+                                required: {
+                                    value: true,
+                                    message: "Введите пароль"
+                                }
+                            })}
+                            type="text"
+                            className="form-input" />
+                        <ErrorMessage
+                            errors={errors}
+                            name={getName<User>(newUser, o => o.password)}
+                            className="bad-feedback"
+                            as="div">
+                        </ErrorMessage>
+                    </div>
+                )
+            } else {
+                return;
+            }
+        },
+        loginInput: () => {
+            if (props.userToEdit === undefined) {
+                return (
+                    <div className="form-row">
+                        <label className="form-label">Логин</label>
+                        <input
+                            {...register('login', {
+                                required: {
+                                    value: true,
+                                    message: "Введите логин"
+                                },
+                                pattern: {
+                                    value: /[a-z0-9]/,
+                                    message: "Допустимы только строчные буквы и цифры"
+                                }
+                            })}
+                            type="text"
+                            className="form-input" />
+                        <ErrorMessage
+                            errors={errors}
+                            name={getName<User>(newUser, o => o.login)}
+                            className="bad-feedback"
+                            as="div">
+                        </ErrorMessage>
+                    </div>
+                )
+            } else {
+                return;
+            }
+        }
+    }
+    const reviseSending = (newOrUpdatedUser: UserUpdate | undefined) => {
+        if (newOrUpdatedUser) {
+            props.reviseSending()
+        } else {
+            return;
+        }
+    }
+    const sendUser = async (newOrUpdatedUser: User) => {
+        if (props.userToEdit) {
+            reviseSending(await sendPutRequest<UserUpdate>(
+                props.url + ('/' + props.userToEdit.id),
+                isUser,
+                convertUserToUserUpdate(newOrUpdatedUser)))
+        } else {
+            reviseSending(await sendPostRequest<UserRegisterResponse>(
+                props.url + '/' + 'register',
+                isUserRegisterResponse,
+                convertUserToUserInput(newOrUpdatedUser)));
+        }
+    }
+
+    const birthDateOnChange = (date: string) => {
+        setValue('birthDate', date)
+    }
+    const roleOnChange = (options: number[]) => {
+        setValue('roles', options);
+    }
+    const onSubmit = (data: User) => {
+        sendUser(data);
+    }
+    const setIsEditModeOn = () => {
+        props.setIsEditModeOn(false);
+    }
+
+    if (isFetching) {
+        return (<div>loading</div>)
+    } else {
+        return (
+            <div className={"user-edit-form needs-validation was-validated"}>
+                <form onSubmit={handleSubmit(onSubmit)}>
+                    <div className="form-row">
+                        <label className="form-label">Имя</label>
+                        <input
+                            {...register('firstName', {
+                                required: {
+                                    value: true,
+                                    message: "Введите имя"
+                                },
+                                pattern: {
+
+                                    value: /[A-Za-zА-Яа-я]/,
+                                    message: "Допустимы только буквенные символы"
+                                }
+                            })}
+                            type="text"
+                            className="form-input" />
+                        <ErrorMessage
+                            errors={errors}
+                            name={getName<User>(newUser, o => o.firstName)}
+                            className="bad-feedback"
+                            as="div">
+                        </ErrorMessage>
+                    </div>
+                    <div className="form-row">
+                        <label className="form-label">Фамилия</label>
+                        <input
+                            {...register('lastName', {
+                                required: {
+                                    value: true,
+                                    message: "Введите фамилию"
+                                },
+                                pattern: {
+                                    value: /[A-Za-zА-Яа-я]/,
+                                    message: "Допустимы только буквенные символы"
+                                }
+                            })}
+                            type="text"
+                            className="form-input" />
+                        <ErrorMessage
+                            errors={errors}
+                            name={getName<User>(newUser, o => o.lastName)}
+                            className="bad-feedback"
+                            as="div">
+                        </ErrorMessage>
+                    </div>
+                    <div className="form-row">
+                        <label className="form-label">Дата рождения</label>
+                        <DatePickerComponent
+                            {...register('birthDate')}
+                            date={getValues('birthDate')}
+                            onDateChange={birthDateOnChange} />
+                    </div>
+                    {
+                        elementsDefinedByProps.loginInput()
+                    }
+                    {
+                        elementsDefinedByProps.passwordInput()
+                    }
+                    <div className="form-row">
+                        <label className="form-label">Телефон</label>
+                        <input
+                            {...register('phone', {
+                                required: {
+                                    value: true,
+                                    message: "Введите номер телефона"
+                                },
+                                pattern: {
+                                    value: /[0-9]/,
+                                    message: "Допустимы только цифры"
+                                }
+                            })}
+                            type="text"
+                            className="form-input" />
+                        <ErrorMessage
+                            errors={errors}
+                            name={getName<User>(newUser, o => o.phone)}
+                            className="bad-feedback"
+                            as="div">
+                        </ErrorMessage>
+                    </div>
+                    <div className="form-row upl-file">
+                        <label className="form-label">Аватар</label>
+                        <div className="file-upload">
+                            <label><input id="file-input" type="file" name="file" />Выберите файл</label>
+                            <div id="no-file">Файл не выбран</div>
+                        </div>
+                        <input
+                            {...register('userPic', {
+                                required: {
+                                    value: true,
+                                    message: "Добавьте ссылку на изображение  или загрузите файл"
+                                },
+                                pattern: {
+                                    value: /\S/,
+                                    message: "Недопустимый формат ссылки"
+                                }
+                            })}
+                            type="text"
+                            className="form-input"
+                            placeholder="или вставьте ссылку" />
+                        <ErrorMessage
+                            errors={errors}
+                            name={getName<User>(newUser, o => o.userPic)}
+                            className="bad-feedback"
+                            as="div">
+                        </ErrorMessage>
+                        <img src={getValues('userPic')} alt="аватар" />
+                    </div>
+                    <div className="form-row">
+                        <label className="form-label">Почта</label>
+                        <input
+                            {...register('email', {
+                                required: {
+                                    value: true,
+                                    message: "Введите email"
+                                }
+                            })}
+                            type="text"
+                            className="form-input" />
+                        <ErrorMessage
+                            errors={errors}
+                            name={getName<User>(newUser, o => o.email)}
+                            className="bad-feedback"
+                            as="div">
+                        </ErrorMessage>
+                    </div>
+                    <div className="form-row">
+                        {
+                            elementsDefinedByProps.roleSelector()
+                        }
+                    </div>
+                    <div className="form-row form-row-button">
+                        <div className="">
+                            <button className="button-style" onClick={setIsEditModeOn}>отмена</button>
+                        </div>
+                        <div className="button-style">
+                            <button
+                                className="button-style"
+                                type={"submit"}>сохранить</button>
+                        </div>
+                    </div>
+                </form>
+            </div >
+        )
+    }
+}
+export default UserPage;
+
+
