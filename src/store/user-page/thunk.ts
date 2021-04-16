@@ -35,7 +35,7 @@ export const sendUser = (user:User) => {
         sendPutRequest<User>(`${usersUrl}/${user.id}`, isUser, user)
         .then(userUpdateResponse => {
             let response = thunkResponseHandler(dispatch, userUpdateResponse);
-            response && pushNotification(makeNotification('success', `Пользователь ${(response as User).firstName} ${(response as User).lastName} успешно изменён`))
+            response && dispatch(pushNotification(makeNotification('success', `Пользователь ${(response as User).firstName} ${(response as User).lastName} успешно изменён`)))
         })
     }
 

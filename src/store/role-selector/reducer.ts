@@ -7,7 +7,7 @@ const initialState: IRoleSelector = {
     isDataLoading: false
 };
 
-export function roleSelectorReducer(state: IRoleSelector = initialState, action: RoleSelectorActions) {
+export function roleSelectorReducer(state: IRoleSelector = initialState, action: RoleSelectorActions):IRoleSelector {
     switch (action.type) {
         case CURRENT_USER_WRETCH_LOADING:
             return { ...state, isDataLoading: true };
