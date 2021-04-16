@@ -44,11 +44,16 @@ header {
 }
 
 .logo-container,
-aside {
+aside.nothide{
     flex-grow: 0;
     flex-shrink: 0;
     width: 350px;
     border-right: 2px solid salmon;
+}
+
+aside.hide{
+  width:50px;
+  border-right: 2px solid salmon;
 }
 
 aside,

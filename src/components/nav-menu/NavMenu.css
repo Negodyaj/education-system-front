@@ -4,6 +4,11 @@
 
 }
 
+.menu-container{
+    height: 100%;
+    position: relative;
+}
+
 .menu-container nav{
     display: flex;
     flex-direction: column;
@@ -12,3 +17,20 @@
 .menu-container .active button {
     background-color: lightblue;
 }
+
+button.left, button.right{
+    width:30px;
+    position: absolute;
+    bottom: 20px;
+    right:-15px;
+}
+
+button.right{
+    transform:rotateZ(180deg); 
+}
+
+.menu-container .notshow{
+    display:none;
+    width:30px;
+}
+

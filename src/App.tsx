@@ -22,6 +22,7 @@ function App() {
     const token = getToken();
     const [isLoggedIn, setIsLoggedIn] = useState(!!token);
     const [roleId, setRoleId] = useState(Role.Admin);
+    const [isHidden, setHidden] = useState(false);
 
     const users = [
         { login: 'test', password: 'test', roleId: Role.Test },
@@ -47,6 +48,14 @@ function App() {
         history.push("/");
     }
 
+    const onHide = (condition:boolean) => {
+        setHidden(condition);
+    }
+
+    function styleMenu(condition:boolean){
+        if(condition) {return("nothide")} else {return("hide")}
+    }
+
     useEffect(() => {
         getUser()
     }, [])
@@ -64,10 +73,10 @@ function App() {
                 </div>
             </header>
             <div className="main-content">
-                <aside>
+                <aside className={styleMenu(isHidden)}>
                     {
                         isLoggedIn ?
-                            <NavMenu roleId={roleId} />
+                            <NavMenu roleId={roleId} onHide={onHide}/>
                             :
                             <h2>Залогиньтесь!</h2>
                     }

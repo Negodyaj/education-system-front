@@ -1,14 +1,27 @@
-import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { Role } from '../../enums/role';
 import "./NavMenu.css"
+
 interface NavMenuProps {
-    roleId: number
+    roleId: number,
+    onHide:(condition:boolean)=>void
 }
 
 function NavMenu(props: NavMenuProps) {
+    const [isHidden, setHidden] = useState(false);
+    let title="свернуть меню";
+
+let shangeHidden = () => {
+    isHidden? setHidden(false): setHidden(true);
+    props.onHide(isHidden);
+}
+
     return (
         <div className="menu-container">
+
+<div className={isHidden ? "notshow" : "vision"}>
             {
                 props.roleId === Role.Student &&
                 <nav>
@@ -42,6 +55,11 @@ function NavMenu(props: NavMenuProps) {
                         <button> Тэги </button></NavLink>
                 </nav>
             }
+        </div>
+        <button className={isHidden ? "left" : "right"} onClick={shangeHidden} title={isHidden? "развернуть меню":"свернуть меню"}> 
+            <FontAwesomeIcon icon="angle-double-right"/>
+            </button> 
+
         </div>
     )
 }
