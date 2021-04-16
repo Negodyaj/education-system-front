@@ -11,38 +11,41 @@ import { CourseEnd } from '../../shared/endpointConsts';
 import { useDispatch, useSelector } from "react-redux";
 import { IRootState } from '../../store';
 import { isCourse } from '../../services/type-guards/course';
-import { getCourses } from '../../store/courses-page/thunk';
-import { closeModalCreateCourse, showOpenModalCreateCourse, showOpenModalDeleteCourse } from '../../store/courses-page/action-creators';
+import { createCourse, getCourses } from '../../store/courses-page/thunk';
+import { closeModalCreateCourseAction, showOpenModalCreateCourseAction, showOpenModalDeleteCourseAction } from '../../store/courses-page/action-creators';
 
 function CoursesPage() {
 
     const dispatch = useDispatch();
     const pageState = useSelector((state: IRootState) => state.coursePage);
-
+    
     useEffect(() => {
         dispatch(getCourses());
     }, []);
 
-    const addCourse = async (newCourse: DataNewCourse) => {
-        await sendPostRequest<Course>(CourseEnd, isCourse, newCourse);
-        dispatch(getCourses());
-        dispatch(closeModalCreateCourse());
-    }
+    //удалить
+    // const addCourse = async (newCourse: DataNewCourse) => {
+    //     await sendPostRequest<Course>(CourseEnd, isCourse, newCourse);
+    //     dispatch(getCourses());
+    //     dispatch(closeModalCreateCourseAction());
+    // }
     //openModalDelete done
     const openModalDelete = (id: number) => {
-        dispatch(showOpenModalDeleteCourse(id));
+        dispatch(showOpenModalDeleteCourseAction(id));
     }
 
     //OpenModalAdd done
     const openModalAdd = () => {
-        dispatch(showOpenModalCreateCourse());
+        dispatch(showOpenModalCreateCourseAction());
     }
 
     const addNewCourse = (data?: DataNewCourse) => {
         if(data?.name === '' || data?.description === '' || data?.duration === 0) {
             return;
         } else if (data !== undefined) {
-            addCourse(data);
+            dispatch(createCourse(data));
+            dispatch(getCourses());
+            dispatch(closeModalCreateCourseAction());
         }
     }
 

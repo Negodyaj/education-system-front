@@ -6,6 +6,7 @@ import {
     COURSE_LIST_DELETE_COURSE,
     COURSE_LIST_OPEN_MODAL_CREATE_COURSE,
     COURSE_LIST_OPEN_MODAL_DELETE_COURSE,
+    COURSE_LIST_WRETCH_CREATE_COURSE,
     COURSE_LIST_WRETCH_FAIL,
     COURSE_LIST_WRETCH_LOADED,
     COURSE_LIST_WRETCH_LOADING
@@ -30,9 +31,9 @@ export function coursePageReducer(state: ICoursePageState = initialState, action
         case COURSE_LIST_WRETCH_FAIL:
             return { ...state, courseList: [], isDataLoading: false };
         case COURSE_LIST_OPEN_MODAL_CREATE_COURSE:
-            return { ...state, isOpenModalCreateCourse: action.payload };
+            return { ...state, isOpenModalCreateCourse: true };
         case COURSE_LIST_CLOSE_MODAL_CREATE_COURSE:
-            return { ...state, isOpenModalCreateCourse: action.payload };
+            return { ...state, isOpenModalCreateCourse: false };
         case COURSE_LIST_OPEN_MODAL_DELETE_COURSE:
             return { ...state, isModalDelete: true, courseForDeleteId: action.payload };
         case COURSE_LIST_CLOSE_MODAL_DELETE_COURSE:
