@@ -21,7 +21,8 @@ interface UserListComponentProps {
 function UserListComponent(props: UserListComponentProps) {
 
     const dispatch = useDispatch();
-    const userListPageState = useSelector((state:IRootState)=> state.userListPage)
+    const userListPageState = useSelector((state: IRootState) => state.userListPage)
+    const payment1 = useSelector((state: IRootState) => state)
 
     const lastNameAlphabetSort = (a: string, b: string) => {
         a = a.toLowerCase();
@@ -53,8 +54,8 @@ function UserListComponent(props: UserListComponentProps) {
     }
 
     const onPaymentButtonClick = (userId: number | undefined) => {
-        //setUserForPayment([...usersToShow].filter(u => u.id === userId)[0]);
-        setPaymentFormState('visible');
+        setUserForPayment([...userListPageState.userList].filter(u => u.id === userId)[0]);
+        payment1.payment.formVisibility;
 
     }
 
@@ -67,10 +68,6 @@ function UserListComponent(props: UserListComponentProps) {
         //     return lastNameAlphabetSort(a.lastName, b.lastName);
         // }))
         setSignInvertor(signInvertor + 1);
-    }
-
-    const onCancelPaymentClick = () => {
-        setPaymentFormState('');
     }
 
     return (
@@ -122,9 +119,7 @@ function UserListComponent(props: UserListComponentProps) {
             }
             <PaymentForm
                 paymentFormState={paymentFormState}
-                cancelClick={onCancelPaymentClick}
-                userName={userForPayment?.firstName}
-                userLastname={userForPayment?.lastName}
+                userForPayment={userForPayment}
             ></PaymentForm>
         </div>
 

@@ -3,20 +3,21 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { sendGetRequest, sendPostRequest } from '../../../services/http.service';
 import { responseHandlers } from '../../../services/response-handler/responseHandler';
 import {  PaymentAddEnd, PaymentEnd } from '../../../shared/endpointConsts';
-import NotificationData from '../../../shared/interfaces/NotificationData';
 import { PaymentResponse } from '../../interfaces/PaymentResponse';
 import './PaymentForm.css'
 import '../../../App.css';
 import { stringify } from 'node:querystring';
 import { PaymentInput } from '../../interfaces/PaymentInput';
 import { ErrorMessage } from '@hookform/error-message';
-import { User } from '../../interfaces/User';
 import { format } from 'date-fns';
+import { useDispatch, useSelector } from 'react-redux';
+import { sendPayment } from '../../../store/payment/thunk';
+import NotificationData from '../../../interfaces/NotificationData';
+import { User } from '../../../interfaces/User';
+import { IRootState } from '../../../store';
 
 interface PaymentProps {
     paymentFormState: string;
-    cancelClick: () => void;
-    sendNotification: (newNotification: NotificationData | undefined) => void;
     userForPayment: User | undefined;
 }
 
@@ -36,33 +37,31 @@ function PaymentForm(props: PaymentProps) {
         }
     });
 
-    const sendPayment = (newPayment: PaymentInput) => {
-        sendPostRequest<PaymentResponse>(
-            `User/${props.userForPayment?.id}/payment`,
-            props.sendNotification,
-            responseHandlers[PaymentAddEnd],
-            newPayment)
-            
-            console.log(newPayment)
-    }
-    //console.log(props.userPayment?.contractNumber)
+    const dispatch = useDispatch()
+
     const onSubmit: SubmitHandler<PaymentInput> = (data: PaymentInput) => {
-        sendPayment({
+        dispatch(sendPayment(props.userForPayment, {
             amount: +data.amount,
             date: data.date,
             period: data.period,
             contractNumber: +data.contractNumber
-        });
+        }))
     }
 
+const onCancel = () => {
+    //dispatch(sendPayment)
+}
+
+    const paymentFormState = useSelector((state: IRootState) => state.payment)
+
     return (
-        <div className={"payment " + (props.paymentFormState)}>
-            <div className={"inner-payment " + (props.paymentFormState)}>
+        <div className={"payment " + (paymentFormState.formVisibility)}>
+            <div className={"inner-payment " + (paymentFormState.formVisibility)}>
                 <div className="header-payment">
                     <div>Назначить платеж пользователю
                         <div>{props.userForPayment?.firstName} {props.userForPayment?.lastName}</div>
                     </div>
-                    <button className="button-round" onClick={props.cancelClick}>х</button>
+                    <button className="button-round" onClick={onCancel}>х</button>
                 </div>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="input-row">
@@ -75,7 +74,7 @@ function PaymentForm(props: PaymentProps) {
                             },
                             pattern: {
                                 value: /[0-9]/,
-                                    message: "Допустимы только цифры"
+                                message: "Допустимы только цифры"
                             }
                         }
                         )}></input>
@@ -139,7 +138,7 @@ function PaymentForm(props: PaymentProps) {
                         <input className="checkbox" type="checkbox" checked></input>
                     </div> */}
                     <div className="footer-payment">
-                        <button className="button-select" type="button" onClick={props.cancelClick}>Отмена</button>
+                        <button className="button-select" type="button" onClick={onCancel}>Отмена</button>
                         <button className="button-select" type={"submit"}>Подтвердить</button>
                     </div>
                 </form>

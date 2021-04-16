@@ -29,3 +29,7 @@ export interface INotificationContainerState {
         nonDismissible: NotificationData[],
     }
 }
+
+export interface IPaymentFormState {
+    formVisibility: string;
+}

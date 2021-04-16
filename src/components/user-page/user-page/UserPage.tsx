@@ -43,6 +43,7 @@ function UserPage(props: UserPageProps) {
         userPic: "",
         phone: "",
         email: "",
+        contractNumber: 0,
         roles: []
     })
 

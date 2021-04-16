@@ -21,7 +21,7 @@ function App() {
     const history = useHistory();
     const token = getToken();
     const [isLoggedIn, setIsLoggedIn] = useState(!!token);
-    const [roleId, setRoleId] = useState(Role.Admin);
+    const [roleId, setRoleId] = useState(Role.Manager);
 
     const users = [
         { login: 'test', password: 'test', roleId: Role.Test },
