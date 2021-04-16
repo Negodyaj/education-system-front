@@ -22,7 +22,7 @@ function App() {
     const token = getToken();
     const [isLoggedIn, setIsLoggedIn] = useState(!!token);
     const [roleId, setRoleId] = useState(Role.Admin);
-    const [isHidden, setHidden] = useState(false);
+    const [isHidden, setHidden] = useState(true);
 
     const users = [
         { login: 'test', password: 'test', roleId: Role.Test },
