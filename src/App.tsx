@@ -15,13 +15,14 @@ import TagsPage from './components/tags-page/TagsPage';
 import { getToken } from './services/auth.service';
 import { getUser } from './services/test-wretch';
 import UserListPage from './components/user-page/UserListPage';
+import GroupPage from './components/group-page/GroupPage';
 
 
 function App() {
     const history = useHistory();
     const token = getToken();
     const [isLoggedIn, setIsLoggedIn] = useState(!!token);
-    const [roleId, setRoleId] = useState(Role.Admin);
+    const [roleId, setRoleId] = useState(Role.Teacher);
 
     const users = [
         { login: 'test', password: 'test', roleId: Role.Test },
@@ -99,6 +100,9 @@ function App() {
                                 }
                                 <Route path="/homework">
                                     <HomeworkPage />
+                                </Route>
+                                <Route path="/group">
+                                    <GroupPage />
                                 </Route>
                             </Switch>
                             :
