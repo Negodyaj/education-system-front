@@ -1,5 +1,5 @@
 import { User } from "../../interfaces/User";
-import { CLOSE_ROLE_SELECTOR, CURRENT_USER_ROLE_ID_SELECTED, CURRENT_USER_WRETCH_LOADED, CURRENT_USER_WRETCH_LOADING, OPEN_ROLE_SELECTOR } from "../actionTypes"
+import { CLOSE_ROLE_SELECTOR, CURRENT_USER_ROLE_ID_SELECTED, CURRENT_USER_WRETCH_LOADED, CURRENT_USER_WRETCH_LOADING, OPEN_ROLE_SELECTOR, ROLE_SELECTOR_PENDING } from "../actionTypes"
 
 export type RoleSelectorActions =
     | ReturnType<typeof setCurrentUserIsLoading>
@@ -7,6 +7,7 @@ export type RoleSelectorActions =
     | ReturnType<typeof setCurrentUserRoleId>
     | ReturnType<typeof openRoleSelector>
     | ReturnType<typeof closeRoleSelector>
+    | ReturnType<typeof setRoleSelectorPending>
 
 export const setCurrentUserIsLoading = () => {
     return ({
@@ -34,5 +35,10 @@ export const openRoleSelector = () => {
 export const closeRoleSelector = () => {
     return ({
         type: CLOSE_ROLE_SELECTOR,
+    } as const);
+}
+export const setRoleSelectorPending = () => {
+    return ({
+        type: ROLE_SELECTOR_PENDING,
     } as const);
 }

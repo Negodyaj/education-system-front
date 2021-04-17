@@ -13,6 +13,7 @@ export const setToken = (token: string) => {
 }
 
 export const authenticate = (login: string, password: string, dispatch: Dispatch) => {
+    dispatch(openRoleSelector())
     wretch(`${baseUrl}/authentication`)
         .post({ login, password })
         .json(data => {

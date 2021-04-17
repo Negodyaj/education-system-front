@@ -18,6 +18,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setIsLoggedOut } from './store/app/action-creators';
 import LoginRoleSelector from './components/role-selector/LoginRoleSelector';
 import { UNSELECTED_ROLE } from './shared/consts';
+import { setRoleSelectorPending } from './store/role-selector/action-creator';
 
 function App() {
     const dispatch = useDispatch();
@@ -26,6 +27,7 @@ function App() {
 
     const logOut = () => {
         dispatch(setIsLoggedOut());
+        dispatch(setRoleSelectorPending())
         history.push("/");
     }
 
@@ -98,7 +100,7 @@ function App() {
                         appState.app.isLoggedIn && <NotificationContainer />
                     }
                     {
-                        appState.roleSelector.mode === "turnedOn" && <LoginRoleSelector />
+                        (appState.roleSelector.mode === "turnedOn" && !appState.app.isLoggedIn) && <LoginRoleSelector />
                     }
                 </main>
             </div>
