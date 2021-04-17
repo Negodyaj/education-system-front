@@ -2,9 +2,10 @@ import { useState } from 'react'
 import Select, { OptionsType } from 'react-select'
 import { SelectItem } from '../../interfaces/SelectItem';
 
+type selectType = "single"|"multi"
 
 interface SelectProps {
-  selectType?: string;
+  selectType?: selectType;
   userOptions?: SelectItem[] | undefined;
   userOption?: SelectItem | undefined;
   options: SelectItem[] | undefined;

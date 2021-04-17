@@ -24,12 +24,15 @@ export interface IUserPage {
 }
 
 export interface IRoleSelector {
+    mode: "pending"|"turnedOff"|"turnedOn";
     currentUser: User | undefined;
+    currentUserRoleId: number;
+    continueButtonVisibility: "hidden"|"visible";
     isDataLoading: boolean;
 }
 
 export interface IAppState {
-    currentUserRoleId: number;
+    isLoggedIn: boolean;
 }
 
 export interface INotificationContainerState {

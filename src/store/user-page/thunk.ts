@@ -13,8 +13,8 @@ export const getUserToViewById = (userId: number) => {
     return (dispatch: Dispatch) => {
         dispatch(setUserToViewIsLoading());
         sendGetRequest<User>(`${usersUrl}/${userId}`, isUser)
-            .then(user => {
-                dispatch(setUserToViewWasLoaded(thunkResponseHandler(dispatch, user)));
+            .then(response => {
+                dispatch(setUserToViewWasLoaded(thunkResponseHandler(dispatch, response)));
             })
             .catch(error => dispatch(setUserListFail(error)));
     }

@@ -4,7 +4,7 @@ import { sendGetRequest } from "../../services/http.service";
 import { isUser } from "../../services/type-guards/user";
 import { currentUserUrl } from "../../shared/consts";
 import { thunkResponseHandler } from "../thunkResponseHadlers";
-import { setCurrentUserIsLoading, setCurrentUserWasLoaded } from "./action-creator";
+import { openRoleSelector, setCurrentUserIsLoading, setCurrentUserWasLoaded } from "./action-creator";
 
 export const getCurrentUser = () => {
     return (dispatch: Dispatch) => {
