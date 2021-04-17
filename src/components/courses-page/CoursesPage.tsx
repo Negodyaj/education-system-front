@@ -5,12 +5,8 @@ import ModalWindowDelete from './modal-window/ModalWindowDelete';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import NewCourse from './NewCourse';
 import { DataNewCourse } from './NewCourse';
-import { Course } from '../../interfaces/Courses';
-import { sendPostRequest } from '../../services/http.service';
-import { CourseEnd } from '../../shared/endpointConsts';
 import { useDispatch, useSelector } from "react-redux";
 import { IRootState } from '../../store';
-import { isCourse } from '../../services/type-guards/course';
 import { createCourse, getCourses } from '../../store/courses-page/thunk';
 import { closeModalCreateCourseAction, showOpenModalCreateCourseAction, showOpenModalDeleteCourseAction } from '../../store/courses-page/action-creators';
 
@@ -23,12 +19,6 @@ function CoursesPage() {
         dispatch(getCourses());
     }, []);
 
-    //удалить
-    // const addCourse = async (newCourse: DataNewCourse) => {
-    //     await sendPostRequest<Course>(CourseEnd, isCourse, newCourse);
-    //     dispatch(getCourses());
-    //     dispatch(closeModalCreateCourseAction());
-    // }
     //openModalDelete done
     const openModalDelete = (id: number) => {
         dispatch(showOpenModalDeleteCourseAction(id));
@@ -38,16 +28,15 @@ function CoursesPage() {
     const openModalAdd = () => {
         dispatch(showOpenModalCreateCourseAction());
     }
-
-    const addNewCourse = (data?: DataNewCourse) => {
-        if(data?.name === '' || data?.description === '' || data?.duration === 0) {
-            return;
-        } else if (data !== undefined) {
-            dispatch(createCourse(data));
-            dispatch(getCourses());
-            dispatch(closeModalCreateCourseAction());
-        }
-    }
+    //Избавиться от setTimeout
+    // const addNewCourse = (data?: DataNewCourse) => {
+    //     if(pageState.isNameNewCourseFilled && ) {
+    //         return;
+    //     } else if (data !== undefined) {
+    //         dispatch(createCourse(data));
+    //         dispatch(closeModalCreateCourseAction());
+    //     }
+    // }
 
     return (
         <div className="course-container">
@@ -78,7 +67,7 @@ function CoursesPage() {
                             ))
                 }
             </div>
-            { pageState.isOpenModalCreateCourse && <NewCourse dataNewCourse={addNewCourse} /> }
+            { pageState.isOpenModalCreateCourse && <NewCourse /> }
             { pageState.isModalDelete && <ModalWindowDelete />}
         </div>
     )

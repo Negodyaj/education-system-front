@@ -1,9 +1,10 @@
 import './NewCourse.css';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import React, { useState } from 'react';
-import { closeModalCreateCourse } from '../../store/courses-page/action-creators';
+import { closeModalCreateCourseAction, createNewCourseInputModal, unvalidataCourseDescription, unvalidataCourseDuration, unvalidataCourseName, validatedCourseDescription, validatedCourseDuration, validatedCourseName } from '../../store/courses-page/action-creators';
 import { useDispatch, useSelector } from 'react-redux';
 import { IRootState } from '../../store';
+import { createCourse, getCourses } from '../../store/courses-page/thunk';
 
 export interface DataNewCourse { 
     name: string; 
@@ -11,37 +12,44 @@ export interface DataNewCourse {
     duration: number
 }
 
-interface NewCourseProps{
-    dataNewCourse: (data?: DataNewCourse) => void
-}
-
-function NewCourse(props: NewCourseProps) {
+function NewCourse() {
 
     let nameNewCourse = React.createRef<HTMLInputElement>();
     let descriptionNewCourse = React.createRef<HTMLTextAreaElement>();
     let durationNewCourse = React.createRef<HTMLInputElement>();
 
     const dispatch = useDispatch();
-
-    const [isNameNewCourseFilled, setIsNameNewCourseFilled] = useState(false);
-    const [isDescriptionNewCourseFilled, setIsDescriptionNewCourseFilled] = useState(false);
-    const [isDurationNewCourseFilled, setIsDurationNewCourseFilled] = useState(false);
+    const pageState = useSelector((state: IRootState) => state.coursePage);
 
     const closeModalWindow = () => {
-        dispatch(closeModalCreateCourse());
+        dispatch(closeModalCreateCourseAction());
     }
 
     const showDataNewCourse = () => {
-        props.dataNewCourse(
-            {
+        nameNewCourse.current?.value === '' ? dispatch(validatedCourseName()) : dispatch(unvalidataCourseName());
+        descriptionNewCourse.current?.value === '' ? dispatch(validatedCourseDescription()) : dispatch(unvalidataCourseDescription());
+        durationNewCourse.current?.value === '' ? dispatch(validatedCourseDuration()) : dispatch(unvalidataCourseDuration());
+
+        if (
+            nameNewCourse.current?.value === '' ||
+            descriptionNewCourse.current?.value === '' ||
+            Number(durationNewCourse.current?.value) === 0
+        )
+        {
+            return;
+        } else {
+            dispatch(createNewCourseInputModal(
+                {
                 name: `${nameNewCourse.current?.value}`,
                 description: `${descriptionNewCourse.current?.value}`,
                 duration: Number(durationNewCourse.current?.value)
-            }
-        );
-        setIsNameNewCourseFilled(nameNewCourse.current?.value === '' ? true : false);
-        setIsDescriptionNewCourseFilled(descriptionNewCourse.current?.value === '' ? true : false);
-        setIsDurationNewCourseFilled(durationNewCourse.current?.value === '' ? true : false);
+                }
+            )) 
+            dispatch(createCourse(pageState.dataNewCourse));
+            dispatch(getCourses());
+            dispatch(closeModalCreateCourseAction());
+        }
+        
     }
 
     return(
@@ -59,14 +67,14 @@ function NewCourse(props: NewCourseProps) {
                         <input type="text" className="course-name" placeholder="Введите название курса" ref={nameNewCourse} />
                     </div>
                     { 
-                        isNameNewCourseFilled ? <div className="error-no-name">Заполните данное поле</div> : <div></div> 
+                        pageState.isNameNewCourseFilled ? <div className="error-no-name">Заполните данное поле</div> : <div></div> 
                     }
                     <div className='new-course-header'>Описание курса</div>
                     <div className="course-data">
                         <textarea className="course-description" placeholder="Введите описание курса" ref={descriptionNewCourse} />
                     </div>
                     { 
-                        isDescriptionNewCourseFilled ? <div className="error-no-description">Заполните данное поле</div> : <div></div> 
+                        pageState.isDescriptionNewCourseFilled ? <div className="error-no-description">Заполните данное поле</div> : <div></div> 
                     }
                     <div className='new-course-header'>Продолжительность курса</div>
                     <div className="course-data">
@@ -74,7 +82,7 @@ function NewCourse(props: NewCourseProps) {
                         <div className="duration-course-text">месяца(ов)</div>
                     </div>
                     { 
-                        isDurationNewCourseFilled ? <div className="error-no-duration">Заполните данное поле</div> : <div></div> 
+                        pageState.isDurationNewCourseFilled ? <div className="error-no-duration">Заполните данное поле</div> : <div></div> 
                     }
                 </div>
                 <div className="select-delete">

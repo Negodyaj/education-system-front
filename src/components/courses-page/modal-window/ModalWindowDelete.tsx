@@ -6,7 +6,6 @@ import { deleteCourse, getCourses } from '../../../store/courses-page/thunk'
 import './ModalWindowDelete.css';
 
 function ModalWindowDelete() {
-  
   const dispatch = useDispatch();
   const courseId = useSelector((state: IRootState) => state.coursePage.courseForDeleteId);
 
@@ -14,14 +13,13 @@ function ModalWindowDelete() {
     dispatch(closeModalDeleteCourseAction());
   }
 
+  //  //Избавиться от setTimeout
   const deleteCourseById = () => {
     dispatch(deleteCourse(courseId));
     //dispatch(getCourses());
     dispatch(closeModalDeleteCourseAction());
     setTimeout(() => {dispatch(getCourses())}, 200);
   }
-
-
 
   return (
     <div className="modal-back">

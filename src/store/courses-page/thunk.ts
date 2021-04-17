@@ -5,7 +5,7 @@ import { sendDeleteRequest, sendGetRequest, sendPostRequest } from "../../servic
 import { isCourse } from "../../services/type-guards/course";
 import { isCourseArr } from "../../services/type-guards/courseArr";
 import { coursesUrl } from "../../shared/consts";
-import { closeModalDeleteCourseAction, createCourseAction, setCoursesListFailAction, setCoursesListIsLoadingAction, setCoursesListWasLoadedAction } from "./action-creators";
+import { closeModalCreateCourseAction, createCourseAction, setCoursesListFailAction, setCoursesListIsLoadingAction, setCoursesListWasLoadedAction } from "./action-creators";
 
 
 const url = 'url';
@@ -22,17 +22,13 @@ export const getCourses = () => {
 export const deleteCourse =  (id: number) => {
     return (dispatch: Dispatch) => {
         sendDeleteRequest<Course>(`${coursesUrl}/${id}`, isCourse)
-            .then(course => {
-                
-                return course
-            })
+            .then(course => { return course })
             .catch(error => console.log(error))
     }
 }
 
 export const createCourse = (newCourse: DataNewCourse) => {
     return (dispatch: Dispatch) => {
-        dispatch(setCoursesListIsLoadingAction());
         sendPostRequest<Course>(`${coursesUrl}`, isCourse, newCourse)
             .then(course => { return dispatch(createCourseAction(course)) })
             .catch(error => console.log(error))

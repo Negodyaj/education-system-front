@@ -1,3 +1,4 @@
+import { DataNewCourse } from "../components/courses-page/NewCourse";
 import { Course } from "../interfaces/Courses";
 import NotificationData from "../interfaces/NotificationData";
 import { User } from "../interfaces/User";
@@ -11,6 +12,10 @@ export interface ICoursePageState {
     isCourseDeleting: boolean
     isDataLoading: boolean
     courseForDeleteId: number
+    isNameNewCourseFilled: boolean
+    isDescriptionNewCourseFilled: boolean
+    isDurationNewCourseFilled: boolean
+    dataNewCourse: DataNewCourse
 }
 
 export interface IUserListPage {
