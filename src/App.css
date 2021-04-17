@@ -88,7 +88,7 @@ main {
   margin:0 5px;
   width: 40px;
   height: 40px;
-  border-radius: 25px;
+  border-radius: 50%;
 }
 
 .button-style{
@@ -125,4 +125,13 @@ main {
   position: absolute;
   bottom: 10px;
   right: 10px;
+}
+
+.mini-button{
+  height: 12px;
+  width: 12px;
+  align-self: center;
+  text-align: center;
+  font-size: 9px;
+  padding: 0px;
 }

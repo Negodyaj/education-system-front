@@ -56,10 +56,10 @@ function UserList(props: UserListProps) {
             )
         },
         deleteRoleButton: (user: User, roleId: number) => {
-         
-            
+
+
             return (
-             (props.roleId === Role.Admin && user.roles!= undefined && user.roles.length > 1)
+                (props.roleId === Role.Admin && user.roles && user.roles.length > 1)
                 &&
                 <button className='button-round mini-button' onClick={() => onDeleteRoleClick(user, roleId)}>
                     <FontAwesomeIcon icon="times" />
@@ -84,11 +84,10 @@ function UserList(props: UserListProps) {
         }))
         setSignInvertor(signInvertor + 1);
     }
-    const titleOnDelete = 'Удаление роли';
-    const[ confirmationDeleteMessage, setConfirmationDeleteMessage] = useState('Вы уверены?')
 
-    const confirmLabel = 'Да';
-    const declineLabel = 'Нет';
+    const [confirmationDeleteMessage, setConfirmationDeleteMessage] = useState('Вы уверены?')
+
+
 
     const onCancelPaymentClick = () => {
         setPaymentFormState('');
@@ -98,20 +97,14 @@ function UserList(props: UserListProps) {
     const onDeleteRoleClick = (user: User, roleId: number) => {
         setUserID(user.id as number);
         setRoleID(roleId);
-        setConfirmationDeleteMessage ( "Вы точно хотите избавить пользователя " + user.lastName + '( ' + user.login + ')' + " от роли " + Role[roleId] + "? ")
-        console.log(userID, roleID)
+        setConfirmationDeleteMessage(`Вы точно хотите избавить пользователя ${user.lastName}( ${user.login}) от роли ${Role[roleId]}?`)
         setIsModalShow(true);
-        console.log(user.lastName, user.login)
-        console.log(confirmationDeleteMessage)
-
     }
 
     const deleteRole = async (decision: boolean) => {
         if (decision) {
-            //console.log()
-            console.log('User' + '/' + userID + '/' + 'role' + '/' + roleID)
-            if(await sendDeleteRequestNoResponse('User' + '/' + userID + '/' + 'role' + '/' + roleID, props.sendNotification, responseHandlers[RoleDeleteEnd]))
-            props.refreshUsers();
+            if (await sendDeleteRequestNoResponse(`User/${userID}/role/${roleID}`, props.sendNotification, responseHandlers[RoleDeleteEnd]))
+                props.refreshUsers();
         }
         setIsModalShow(false);
     }
@@ -168,10 +161,10 @@ function UserList(props: UserListProps) {
                         </div>
                         <ConfirmationDialog
                             isShown={isModalShow}
-                            confirmLabel={confirmLabel}
-                            declineLabel={declineLabel}
+                            confirmLabel='Да'
+                            declineLabel='Нет'
                             message={confirmationDeleteMessage}
-                            title={titleOnDelete}
+                            title='Удаление роли'
                             callback={deleteRole}></ConfirmationDialog>
                     </div>
                 ))
