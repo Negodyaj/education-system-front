@@ -4,8 +4,8 @@ import { useEffect, useState } from 'react'
 import Select, { NonceProvider, OptionsType } from 'react-select'
 import { getJSDocReadonlyTag, reduceEachTrailingCommentRange } from 'typescript';
 import { Role } from '../../enums/role';
+import { SelectItem } from '../../interfaces/SelectItem';
 import { getEnToRuTranslation } from '../../shared/converters/enumToDictionaryEntity';
-import { SelectItem } from '../interfaces/SelectItem';
 
 
 interface SelectProps {

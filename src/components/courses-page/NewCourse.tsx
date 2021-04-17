@@ -1,9 +1,6 @@
 import './NewCourse.css';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import React, { useState } from 'react';
-import Select from 'react-select/src/Select';
-import { SelectItem } from '../interfaces/SelectItem';
-import CustomMultiSelect from '../multi-select/CustomMultiSelect';
 
 export interface DataNewCourse { 
     name: string; 

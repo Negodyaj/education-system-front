@@ -2,17 +2,21 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import ConfirmationDialog from "../../shared/components/confirmation-dialog/ConfirmationDialog";
 import { generateTestNotification } from "../../shared/components/notification/generateTestNotification";
+import NotificationData from "../../interfaces/NotificationData";
+import { useDispatch } from "react-redux";
+import { sendNotification } from "../../store/notifications/thunk";
 import NotificationData from "../../shared/interfaces/NotificationData";
 import { SelectItem } from "../interfaces/SelectItem";
 import CustomMultiSelect from "../multi-select/CustomMultiSelect";
 
 interface DevTestPageProps {
-    sendNotification: (newNotification: NotificationData) => void;
 }
 
 function DevTestPage (props: DevTestPageProps) {
+    const dispatch = useDispatch();
     const [dialogShown, setDialogShown] = useState(false);
     const [counter, setCounter] = useState(0);
+
 
     const counterCallback = (decision: boolean) => {
         if (decision) {
@@ -40,9 +44,9 @@ function DevTestPage (props: DevTestPageProps) {
         <div>
             <h1>secret test page</h1>
 
-            <button onClick={() => props.sendNotification(generateTestNotification(true))}>
+            <button onClick={()=>dispatch(sendNotification(generateTestNotification(true)))} >
                 Test dismissible notification</button>
-            <button onClick={() => props.sendNotification(generateTestNotification(false))}>
+            <button onClick={()=>dispatch(sendNotification(generateTestNotification(false)))} >
                 Test non-dismissible notification</button>
 
             <div>
