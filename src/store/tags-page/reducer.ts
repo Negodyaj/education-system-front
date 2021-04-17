@@ -6,7 +6,6 @@ const initialState: ITagsPageState = {
     tagList: [],
     isDataLoading: false,
     filterTagsList: [],
-    tagsFilter: "",
     isTagsModalHidden: true
 };
 
@@ -14,10 +13,9 @@ export function tagsPageReducer(state: ITagsPageState = initialState, action: Ta
     switch (action.type) {
         
         case TAGS_LIST_WRETCH_LOADED:
-            return { ...state, tagList: action.payload, isDataLoading: false };
+            return { ...state, tagList: action.payload, filterTagsList: action.payload, isDataLoading: false };
         case TAGS_LIST_FILTERED:
-            return { ...state, filterTagsList: 
-            //    name.toLowerCase().includes(str.toLowerCase()), isDataLoading: false }; 
+            return { ...state, filterTagsList: state.tagList.filter(tag => tag.name.toLowerCase().includes(action.payload.toLowerCase()))
             };
         default:
             return state;

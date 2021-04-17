@@ -17,7 +17,6 @@ export interface INotificationContainerState {
 export interface ITagsPageState {
     tagList: Tag[],
     filterTagsList: Tag[],
-    tagsFilter: string,
     isTagsModalHidden: boolean,
     isDataLoading: boolean,
 }

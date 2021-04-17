@@ -9,7 +9,6 @@ import { IRootState } from "../../../store";
 
 
 interface TagListProps {
-    tags: Tag[] | undefined;
     setTagsInState: (uptags: Tag[] | undefined) => void;
     str: string;
 }
@@ -31,17 +30,17 @@ function TagList(props: TagListProps) {
     return (
         <>
             {
-                pageState.tagList.map((item) => {
-                    if (item.name.toLowerCase().includes(props.str.toLowerCase())) {
-                        return (
-                            <div className="tag-row">
-                                <div className="tag"> {item.name} </div>
-                                <button className='button-round' onClick={() => deleteTag(item.id)}>
-                                    <FontAwesomeIcon icon="trash" />
-                                </button>
-                            </div>
-                        )
-                    }
+                pageState.filterTagsList.map((item) => {
+
+                    (
+                        <div className="tag-row">
+                            <div className="tag"> {item.name} </div>
+                            <button className='button-round' onClick={() => deleteTag(item.id)}>
+                                <FontAwesomeIcon icon="trash" />
+                            </button>
+                        </div>
+                    )
+
                 })
             }
         </>

@@ -9,6 +9,7 @@ import { isTagArr } from '../../services/type-guards/tagArr';
 import { useDispatch, useSelector } from 'react-redux';
 import { getTags } from '../../store/tags-page/thunk';
 import { IRootState } from '../../store';
+import { doFilteringTags } from '../../store/tags-page/action-creators';
 
 interface TagsPageProps {
 }
@@ -17,11 +18,13 @@ function TagsPage(props: TagsPageProps) {
     const url = 'Tag';
     const [tagsInState, setTagsInState] = useState<Tag[] | undefined>([]);
     const [searchTurn, setSearchTurn] = useState('');
-    const [hidden, setHidden] = useState('hidden')
+    const [hidden, setHidden] = useState('hidden');
+    const dispatch = useDispatch();
     
 
     const filterTags: ChangeEventHandler<HTMLInputElement> = (e) => {
         setSearchTurn(e.target.value);
+       dispatch(doFilteringTags(e.target.value));
     };
 
     const closeModal = () => setHidden("hidden");
@@ -38,7 +41,7 @@ function TagsPage(props: TagsPageProps) {
             </div>
             
             <div className="body">
-                <div className="tags-list"> <TagList str={searchTurn} tags={tagsInState} setTagsInState={setTagsInState}></TagList> </div>
+                <div className="tags-list"> <TagList str={searchTurn} setTagsInState={setTagsInState}></TagList> </div>
 
             </div>
             <AddTagModal setTagsInState={setTagsInState} hidden={hidden} setHidden={closeModal} />
