@@ -1,0 +1,41 @@
+.role-selector.page, .role-selector.action, .role-selector.select-btn-container {
+    display: flex;
+}
+
+.role-selector.page {
+    justify-content: center;
+    width: 100%;
+    width: 100%;
+}
+
+.role-selector.container {
+    width: 272px;
+}
+
+.css-2b097c-container {}
+
+.role-selector.action {
+    justify-content: flex-start;
+    font-family: Montserrat;
+    font-weight: bold;
+}
+
+@keyframes appearence {
+    to {
+        opacity: 1;
+    }
+}
+
+.role-selector.select-btn-container {
+    justify-content: center;
+    padding-top: 10px;
+}
+
+.role-selector.select-btn-container.hidden{
+    transition: .5s ease;
+    opacity:0;
+}
+.role-selector.select-btn-container.visible {
+    transition: .5s ease;
+    opacity: 1;
+}

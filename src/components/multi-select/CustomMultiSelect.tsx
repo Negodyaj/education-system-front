@@ -1,43 +1,48 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import Select, { OptionsType } from 'react-select'
-import { Role } from '../../enums/role';
 import { SelectItem } from '../../interfaces/SelectItem';
-import { getEnToRuTranslation } from '../../shared/converters/enumToDictionaryEntity';
 
+type selectType = "single"|"multi"
 
 interface SelectProps {
-  selectType?: string;
-  userOptionsIds: number[] | undefined;
-  options: SelectItem[];
-  onSelect: (optionIds: number[]) => void;
+  selectType?: selectType;
+  userOptions?: SelectItem[] | undefined;
+  userOption?: SelectItem | undefined;
+  options: SelectItem[] | undefined;
+  onMultiSelect?: (optionIds: number[]) => void;
+  onSingleSelect?: (optionId: number | null) => void;
 }
 
 function CustomMultiSelect(props: SelectProps) {
-  const[userOptions, setUserOptions] = useState<SelectItem[]>(props.userOptionsIds?.map(optionId => {
-    return {
-      value: optionId,
-      label: getEnToRuTranslation(Role[optionId])
-    }
-  }) as SelectItem[]);
-
-  const onSelect = (selectedOptions: OptionsType<object>) => {
+  const [userOptions, setUserOptions] = useState<SelectItem[] | undefined>(props.userOptions?.length ? [...props.userOptions] : undefined);
+  const [userOption, setUserOption] = useState<SelectItem | undefined>(props.userOption || undefined)
+  const onMultiSelect = (selectedOptions: OptionsType<object>) => {
     setUserOptions(selectedOptions as SelectItem[])
     let roleIds = (selectedOptions as SelectItem[]).map(i => i.value)
-    props.onSelect(roleIds);
+    props.onMultiSelect && props.onMultiSelect(roleIds);
+  }
+
+  const onSingleSelect = (selectedOption: SelectItem | null) => {
+    setUserOption(selectedOption as SelectItem)
+    props.onSingleSelect && props.onSingleSelect(selectedOption?.value || null)
   }
 
   const SingleSelect = () => (
-    <Select options={props.options} />
+    <Select
+      options={props.options}
+      isMulti={false}
+      value={userOption}
+      onChange={onSingleSelect} />
   )
   const MultiSelect = () => (
     <Select
-      isMulti
+      isMulti={true}
       name="Role"
       options={props.options}
       value={userOptions}
       className="basic-multi-select"
       classNamePrefix="select"
-      onChange={onSelect}
+      onChange={onMultiSelect}
     />
   )
   return (

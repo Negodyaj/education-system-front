@@ -23,6 +23,18 @@ export interface IUserPage {
     isDataLoading: boolean;
 }
 
+export interface IRoleSelector {
+    mode: "pending"|"turnedOff"|"turnedOn";
+    currentUser: User | undefined;
+    currentUserRoleId: number;
+    continueButtonVisibility: "hidden"|"visible";
+    isDataLoading: boolean;
+}
+
+export interface IAppState {
+    isLoggedIn: boolean;
+}
+
 export interface INotificationContainerState {
     notifications: {
         dismissible: NotificationData[],
