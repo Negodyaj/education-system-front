@@ -19,8 +19,8 @@ export function roleSelectorReducer(state: IRoleSelector = initialState, action:
             return {
                 ...state,
                 currentUser: action.payload,
-                currentUserRoleId: state.currentUser?.roles ? (state.currentUser?.roles.length === 1 ? state.currentUser?.roles[0] : UNSELECTED_ROLE) : UNSELECTED_ROLE,
-                mode: state.currentUser?.roles ? (state.currentUser?.roles.length === 1 ? "turnedOff" : "turnedOn") : "pending"
+                currentUserRoleId: action.payload.roles ? (action.payload.roles.length === 1 ? action.payload.roles[0] : UNSELECTED_ROLE) : UNSELECTED_ROLE,
+                mode: action.payload.roles ? (action.payload.roles.length === 1 ? "turnedOff" : "turnedOn") : "pending"
             };
         case CURRENT_USER_ROLE_ID_SELECTED:
             return {

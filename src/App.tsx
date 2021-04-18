@@ -39,7 +39,7 @@ function App() {
                 </div>
                 <div className="header-user-actions">
                     {
-                        (appState.app.isLoggedIn || appState.roleSelector.mode !== "pending")
+                        (appState.app.isLoggedIn || appState.roleSelector.mode !== "pending")   
                         &&
                         <button onClick={logOut}>Log out</button>
                     }
@@ -100,7 +100,7 @@ function App() {
                         appState.app.isLoggedIn && <NotificationContainer />
                     }
                     {
-                        (appState.roleSelector.mode === "turnedOn" && !appState.app.isLoggedIn) && <LoginRoleSelector />
+                        appState.roleSelector.mode === "turnedOn" && <LoginRoleSelector />
                     }
                 </main>
             </div>
