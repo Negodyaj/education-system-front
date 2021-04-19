@@ -1,3 +1,4 @@
+import { DataNewCourse } from "../components/courses-page/NewCourse";
 import { Course } from "../interfaces/Courses";
 import NotificationData from "../interfaces/NotificationData";
 import { User } from "../interfaces/User";
@@ -5,8 +6,16 @@ import { UserInput } from "../interfaces/UserInput";
 import { UserUpdate } from "../interfaces/UserUpdate";
 
 export interface ICoursePageState {
-    courseList: Course[],
-    isDataLoading: boolean,
+    courseList: Course[]
+    isOpenModalCreateCourse: boolean
+    isModalDelete: boolean
+    isCourseDeleting: boolean
+    isDataLoading: boolean
+    courseForDeleteId: number
+    isNameNewCourseFilled: boolean
+    isDescriptionNewCourseFilled: boolean
+    isDurationNewCourseFilled: boolean
+    dataNewCourse: DataNewCourse
 }
 
 export interface IUserListPage {
@@ -28,4 +37,8 @@ export interface INotificationContainerState {
         dismissible: NotificationData[],
         nonDismissible: NotificationData[],
     }
+}
+
+export interface IModalDeleteCourse {
+    courseForDeleteId: number
 }
