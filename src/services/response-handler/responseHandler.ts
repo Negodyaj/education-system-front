@@ -1,11 +1,9 @@
-import { User } from "../../components/interfaces/User";
-import { UserDelete } from "../../components/interfaces/UserDelete";
-import { UserRegisterResponse } from "../../components/interfaces/UserRegisterResponse";
-import { Course } from "../../shared/courses/Courses";
-import { CourseAddEnd, CourseCourseIdEnd, CourseDeleteEnd, CourseEnd, CourseIdThemeIdAddEnd, CourseIdThemeIdDeleteEnd, CourseThemesEnd, RoleDeleteEnd, TagAddEnd, TagDeleteEnd, TagEnd, UserEnd, UserRegisterEnd, UserUserDeleteIdEnd, UserUserUpdateIdEnd } from "../../shared/endpointConsts";
-import { makeErrorText, makeNotification } from "../../shared/helpers/noficationHelpers";
-import NotificationData from "../../shared/interfaces/NotificationData";
-import { Themes } from "../../shared/themes/Themes";
+
+import { Course } from "../../interfaces/Courses";
+import { CourseAddEnd, CourseCourseIdEnd, CourseDeleteEnd, CourseEnd, CourseIdThemeIdAddEnd, CourseIdThemeIdDeleteEnd, CourseThemesEnd, TagAddEnd, TagDeleteEnd, TagEnd, UserEnd, UserRegisterEnd, UserUserDeleteIdEnd, UserUserUpdateIdEnd } from "../../shared/endpointConsts";
+import { makeErrorText, makeNotification } from "../../shared/helpers/notificationHelpers";
+import NotificationData from "../../interfaces/NotificationData";
+import { Themes } from "../../interfaces/Themes";
 import { isCourse } from "../type-guards/course";
 import { isCourseArr } from "../type-guards/courseArr";
 import { isCourseDelete } from "../type-guards/courseDelete";
@@ -15,10 +13,12 @@ import { isUser } from "../type-guards/user";
 import { isUserArr } from "../type-guards/userArray";
 import { isUserDelete } from "../type-guards/userDelete";
 import { isUserRegisterResponse } from "../type-guards/userRegisterResponse";
-import { isString } from "../type-guards/string";
-import { Tag } from "../../components/interfaces/Tag";
 import { isTagArr } from "../type-guards/tagArr";
 import { isTag } from "../type-guards/tag";
+import { User } from "../../interfaces/User";
+import { UserRegisterResponse } from "../../interfaces/UserRegisterResponse";
+import { UserDelete } from "../../interfaces/UserDelete";
+import { Tag } from "../../interfaces/Tag";
 
 export enum nType {
     Error = 'error',
@@ -166,7 +166,7 @@ export const responseHandlers: responseHandler = {
         notifications: (response?: any) => {
             return ({
                 [nType.Error]: makeNotification(nType.Error, makeErrorText(response)),
-                [nType.Success]: makeNotification(nType.Success, ('Тег ' + (response as Tag).name + ' удален'))
+                [nType.Success]: makeNotification(nType.Success, ('Тег удален'))
             })
         },
         isT: undefined
