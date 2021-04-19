@@ -19,14 +19,14 @@ export function notificationContainerReducer(
                 return {
                     notifications: {
                         ...state.notifications,
-                        dismissible: [...state.notifications.dismissible, action.payload],
+                        dismissible: [action.payload, ...state.notifications.dismissible],
                     }
                 }
             } else {
                 return {
                     notifications: {
                         ...state.notifications,
-                        nonDismissible: [...state.notifications.nonDismissible, action.payload],
+                        nonDismissible: [action.payload, ...state.notifications.nonDismissible],
                     }
                 }
             }

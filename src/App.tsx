@@ -19,6 +19,7 @@ import { setIsLoggedOut } from './store/app/action-creators';
 import LoginRoleSelector from './components/role-selector/LoginRoleSelector';
 import { UNSELECTED_ROLE } from './shared/consts';
 import { setRoleSelectorPending } from './store/role-selector/action-creator';
+import GroupPage from './components/group-page/GroupPage';
 
 function App() {
     const dispatch = useDispatch();
@@ -78,6 +79,9 @@ function App() {
                                 }
                                 <Route path="/homework">
                                     <HomeworkPage />
+                                </Route>
+                                <Route path="/group">
+                                    <GroupPage />
                                 </Route>
                             </Switch>
                             :

@@ -1,5 +1,9 @@
+import { faFileExport } from '@fortawesome/free-solid-svg-icons';
+import { NONAME } from 'node:dns';
+import { useEffect, useState } from 'react'
+import Select, { NonceProvider, OptionsType } from 'react-select'
+import { getJSDocReadonlyTag, reduceEachTrailingCommentRange } from 'typescript';
 import { useState } from 'react'
-import Select, { OptionsType } from 'react-select'
 import { SelectItem } from '../../interfaces/SelectItem';
 
 type selectType = "single"|"multi"
@@ -32,6 +36,8 @@ function CustomMultiSelect(props: SelectProps) {
       options={props.options}
       isMulti={false}
       value={userOption}
+      styles={customStyles}
+      placeholder='Выберите опцию'
       onChange={onSingleSelect} />
   )
   const MultiSelect = () => (
@@ -42,6 +48,9 @@ function CustomMultiSelect(props: SelectProps) {
       value={userOptions}
       className="basic-multi-select"
       classNamePrefix="select"
+      styles={customStyles}
+      placeholder='Выберите опцию'
+      noOptionsMessage={() => 'Опций больше нет'}
       onChange={onMultiSelect}
     />
   )
