@@ -83,7 +83,7 @@ function App() {
                             :
                             <Switch>
                                 {
-                                    (!appState.app.isLoggedIn && appState.roleSelector.mode === "pending")
+                                    (appState.roleSelector.mode === "pending")
                                     &&
                                     <Route exact path="/">
                                         <LoginForm />

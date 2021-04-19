@@ -32,6 +32,8 @@
 }
 
 .role-selector.select-btn-container.hidden{
+    height: 0px;
+    overflow: hidden;
     transition: .5s ease;
     opacity:0;
 }
