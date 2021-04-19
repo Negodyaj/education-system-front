@@ -18,6 +18,5 @@ export const authenticate = (login: string, password: string, dispatch: Dispatch
         .json(data => {
             setToken(data.token);
             dispatch(openRoleSelector())
-            window.location.reload();
         })
 }
