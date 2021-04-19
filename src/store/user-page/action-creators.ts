@@ -10,7 +10,7 @@ export type UserPageActions =
     | ReturnType<typeof setUserToEditIsLoading>
     | ReturnType<typeof setUserToEditWasLoaded>
     | ReturnType<typeof setUserToEditFail>
-    | ReturnType<typeof quitEditMode>
+    | ReturnType<typeof quitUserPage>
     | ReturnType<typeof setUserIsSending>
     | ReturnType<typeof setUserRegisterMode>
 
@@ -38,7 +38,7 @@ export const setUserToEditIsLoading = () => {
         payload: undefined
     } as const);
 }
-export const setUserToEditWasLoaded = (user: UserUpdate) => {
+export const setUserToEditWasLoaded = (user: User) => {
     return ({
         type: USER_TO_EDIT_WRETCH_LOADED,
         payload: user
@@ -50,7 +50,7 @@ export const setUserToEditFail = (error: string) => {
         payload: error
     } as const);
 }
-export const quitEditMode = () => {
+export const quitUserPage = () => {
     return ({
         type: USER_EDIT_MODE_WAS_CLOSED,
         payload: undefined

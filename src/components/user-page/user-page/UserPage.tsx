@@ -2,41 +2,32 @@ import CustomMultiSelect from '../../multi-select/CustomMultiSelect';
 import React, { useState } from 'react';
 import DatePickerComponent from '../../../shared/components/date-picker/DatePickerComponent';
 import { convertEnumToDictionary, getRussianDictionary } from '../../../shared/converters/enumToDictionaryEntity';
-import { convertUserToUserUpdate } from '../../../shared/converters/userToUserUpdate';
-import { convertUserToUserInput } from '../../../shared/converters/userToUserInput';
 import { Role } from '../../../enums/role';
 import { useForm } from 'react-hook-form';
 import { convertEntitiesToSelectItems } from '../../../shared/converters/entityToSelectItemConverter';
 import { getName } from '../../../shared/converters/objectKeyToString';
 import { sendPostRequest, sendPutRequest } from '../../../services/http.service';
 import { ErrorMessage } from '@hookform/error-message';
-import NotificationData from '../../../interfaces/NotificationData';
-import { responseHandlers } from '../../../services/response-handler/responseHandler';
-import { UserRegisterEnd, UserUserUpdateIdEnd } from '../../../shared/endpointConsts';
 import './UserPage.css'
 import '../../../App.css';
 import { User } from '../../../interfaces/User';
 import { UserUpdate } from '../../../interfaces/UserUpdate';
 import { UserRegisterResponse } from '../../../interfaces/UserRegisterResponse';
-import { isUser } from '../../../services/type-guards/user';
-import { isUserRegisterResponse } from '../../../services/type-guards/userRegisterResponse';
 import { useDispatch, useSelector } from 'react-redux';
 import { IRootState } from '../../../store';
 import { convertRoleIdsToSelectItem } from '../../../shared/converters/roleIdsToSelectItem';
-import { quitEditMode } from '../../../store/user-page/action-creators';
+import { quitUserPage } from '../../../store/user-page/action-creators';
 import { sendUser } from '../../../store/user-page/thunk';
+import { Link } from 'react-router-dom';
 
 interface UserPageProps {
-    roleId: number;
-    userToEdit: User | undefined;
-    setIsEditModeOn: (mode: boolean) => void;
-    reviseSending: () => void;
-    url: string;
 }
 
 function UserPage(props: UserPageProps) {
 
-    const initUser: User = Object.assign({}, props.userToEdit || {
+    const dispatch = useDispatch();
+    const appState = useSelector((state: IRootState) => state)
+    const initUser: User = Object.assign({}, appState.userPage.userToEdit || {
         id: 0,
         firstName: "",
         lastName: "",
@@ -52,24 +43,22 @@ function UserPage(props: UserPageProps) {
     const [newUser, setNewUser] = useState<User>(initUser);
     const [isFetching, setIsFetching] = useState(false);
 
-    const dispatch = useDispatch();
-    const pageState = useSelector((state: IRootState) => state)
 
     const { register, formState: { errors }, handleSubmit, getValues, setValue } = useForm<User>({
         mode: 'all',
         criteriaMode: 'all',
-        defaultValues: pageState.userPage.userToEdit
+        defaultValues: appState.userPage.userToEdit
     });
 
     const elementsDefinedByProps = {
         roleSelector: () => {
-            if (props.roleId === Role.Admin && !props.userToEdit) {
+            if (appState.roleSelector.currentUserRoleId === Role.Admin && !appState.userPage.userToEditId) {
                 return (
                     <div className="form-row multi">
                         <label className="form-label">Список ролей</label>
                         <CustomMultiSelect
                             selectType={"multi"}
-                            userOptions={convertRoleIdsToSelectItem(pageState.userPage.userToRegister?.roles||[])||undefined}
+                            userOptions={convertRoleIdsToSelectItem(appState.userPage.userToRegister?.roles || []) || undefined}
                             options={convertEntitiesToSelectItems(getRussianDictionary(convertEnumToDictionary(Role)))}
                             onMultiSelect={roleOnChange}></CustomMultiSelect>
                     </div>)
@@ -78,7 +67,7 @@ function UserPage(props: UserPageProps) {
             }
         },
         passwordInput: () => {
-            if (props.userToEdit === undefined) {
+            if (appState.userPage.userToEdit === undefined) {
                 return (
                     <div className="form-row">
                         <label className="form-label">Пароль</label>
@@ -104,7 +93,7 @@ function UserPage(props: UserPageProps) {
             }
         },
         loginInput: () => {
-            if (props.userToEdit === undefined) {
+            if (appState.userPage.userToEdit === undefined) {
                 return (
                     <div className="form-row">
                         <label className="form-label">Логин</label>
@@ -136,22 +125,22 @@ function UserPage(props: UserPageProps) {
     }
     const reviseSending = (newOrUpdatedUser: UserUpdate | undefined) => {
         if (newOrUpdatedUser) {
-            props.reviseSending()
+            //props.reviseSending()
         } else {
             return;
         }
     }
     const sendUsersdfasd = async (newOrUpdatedUser: User) => {
-        if (props.userToEdit) {
-            reviseSending(await sendPutRequest<UserUpdate>(
-                props.url + ('/' + props.userToEdit.id),
-                isUser,
-                convertUserToUserUpdate(newOrUpdatedUser)))
+        if (appState.userPage.userToEdit) {
+            // reviseSending(await sendPutRequest<UserUpdate>(
+            //     props.url + ('/' + props.userToEdit.id),
+            //     isUser,
+            //     convertUserToUserUpdate(newOrUpdatedUser)))
         } else {
-            reviseSending(await sendPostRequest<UserRegisterResponse>(
-                props.url + '/' + 'register',
-                isUserRegisterResponse,
-                convertUserToUserInput(newOrUpdatedUser)));
+            // reviseSending(await sendPostRequest<UserRegisterResponse>(
+            //     props.url + '/' + 'register',
+            //     isUserRegisterResponse,
+            //     convertUserToUserInput(newOrUpdatedUser)));
         }
     }
 
@@ -164,8 +153,8 @@ function UserPage(props: UserPageProps) {
     const onSubmit = (data: User) => {
         dispatch(sendUser(data))
     }
-    const quitEditModeLocalWrapper = () => {
-        dispatch(quitEditMode())
+    const closeUserPage = () => {
+        dispatch(quitUserPage())
     }
 
     if (isFetching) {
@@ -306,14 +295,10 @@ function UserPage(props: UserPageProps) {
                         }
                     </div>
                     <div className="form-row form-row-button">
-                        <div className="">
-                            <button className="button-style" type="button" onClick={quitEditModeLocalWrapper}>отмена</button>
-                        </div>
-                        <div className="button-style">
-                            <button
-                                className="button-style"
-                                type={"submit"}>сохранить</button>
-                        </div>
+                        <Link to="/user-list">
+                            <button className="button-style" type="button" onClick={closeUserPage}>отмена</button>
+                        </Link>
+                        <button className="button-style" type={"submit"}>сохранить</button>
                     </div>
                 </form>
             </div >

@@ -11,18 +11,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { IRootState } from "../../../store";
 import { getUserToEditById } from "../../../store/user-page/thunk";
 import { setUserRegisterMode } from "../../../store/user-page/action-creators";
+import { Link } from "react-router-dom";
 
 interface UserListComponentProps {
-    roleId: number;
-    users: User[];
-    onEditClick: (userToEditId?: number) => void;
-    onDeleteClick: (userToDeleteId: number) => void;
 }
 
 function UserListComponent(props: UserListComponentProps) {
 
     const dispatch = useDispatch();
-    const userListPageState = useSelector((state:IRootState)=> state.userListPage)
+    const appState = useSelector((state: IRootState) => state)
 
     const lastNameAlphabetSort = (a: string, b: string) => {
         a = a.toLowerCase();
@@ -44,7 +41,7 @@ function UserListComponent(props: UserListComponentProps) {
     const elementsDefinedByRole = {
         paymentButton: (userId: number | undefined) => {
             return (
-                props.roleId === Role.Manager
+                appState.roleSelector.currentUserRoleId === Role.Manager
                 &&
                 <button className="button-round" onClick={() => onPaymentButtonClick(userId)}>
                     <FontAwesomeIcon icon="ruble-sign" />
@@ -81,10 +78,12 @@ function UserListComponent(props: UserListComponentProps) {
         <div className="user-list">
             <div className="column-head">
                 <h4>Пользователи</h4>
-                <button className="button-style" onClick={onRegisterClick}>
-                    <FontAwesomeIcon icon="plus" />
-                    <span> Добавить</span>
-                </button>
+                <Link to="/user-page">
+                    <button className="button-style" onClick={onRegisterClick}>
+                        <FontAwesomeIcon icon="plus" />
+                        <span> Добавить</span>
+                    </button>
+                </Link>
             </div>
             <div className="list + user-list-head">
                 <div className="column"> </div>
@@ -94,7 +93,7 @@ function UserListComponent(props: UserListComponentProps) {
                 <div className="column"><span title="А-Я">роль</span></div>
             </div>
             {
-                userListPageState.userList.map(u => (
+                appState.userListPage.userList.map(u => (
                     <div className="list + user-list-item" key={u.id}>
                         <div className="column">
                             <img className="user-photo" src={u.userPic} alt="userpic" />
@@ -110,10 +109,12 @@ function UserListComponent(props: UserListComponentProps) {
                         <div className="column">{/*u.groupName*/}</div>
                         <div className="column-button">
                             <div className="column">
-                                <button className="button-round" onClick={() => onEditClick(u.id)}>
-                                    <FontAwesomeIcon icon="edit" />
-                                </button>
-                                <button className="button-round" onClick={() => props.onDeleteClick(u.id as number)}>
+                                <Link to="/user-page">
+                                    <button className="button-round" onClick={() => onEditClick(u.id)}>
+                                        <FontAwesomeIcon icon="edit" />
+                                    </button>
+                                </Link>
+                                <button className="button-round" onClick={() => { }/*props.onDeleteClick(u.id as number)*/}>
                                     <FontAwesomeIcon icon="trash" />
                                 </button>
 

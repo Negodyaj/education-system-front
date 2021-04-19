@@ -16,10 +16,10 @@ export interface IUserListPage {
 
 export interface IUserPage {
     userToView: User | undefined;
-    userToEdit: UserUpdate | undefined;
+    userToEdit: User | undefined;
     userToEditId: number | undefined;
     userToRegister: UserInput | undefined;
-    isEditModeOn: boolean;
+    isUserPageOpened: boolean;
     isDataLoading: boolean;
 }
 

@@ -20,7 +20,7 @@ const initialState: IUserPage = {
     userToEditId: undefined,
     userToEdit: undefined,
     userToRegister: INIT_USER_TO_REGISTER,
-    isEditModeOn: false,
+    isUserPageOpened: false,
     isDataLoading: false
 };
 export function userPageReducer(state: IUserPage = initialState, action: UserPageActions): IUserPage {
@@ -45,20 +45,20 @@ export function userPageReducer(state: IUserPage = initialState, action: UserPag
                 userToView: undefined,
                 userToEdit: action.payload,
                 userToRegister: undefined,
-                isEditModeOn: true,
+                isUserPageOpened: true,
                 isDataLoading: false
             };
         case USER_TO_EDIT_WRETCH_FAIL:
             return { ...state, isDataLoading: false };
         case USER_EDIT_MODE_WAS_CLOSED:
-            return { ...state, isEditModeOn: false };
+            return { ...state, isUserPageOpened: false };
         case USER_REGISTER_MODE_IS_ON:
             return {
                 ...state,
                 userToView: undefined,
                 userToEdit: undefined,
                 userToRegister: INIT_USER_TO_REGISTER,
-                isEditModeOn: true,
+                isUserPageOpened: true,
                 isDataLoading: false
             }
         case USER_IS_SENDING:

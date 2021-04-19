@@ -11,11 +11,7 @@ import UserListComponent from './user-list-component/UserListComponent';
 import UserPage from './user-page/UserPage';
 import './UserListPage.css'
 
-interface UserListPageProps {
-    roleId: number;
-}
-
-function UserListPage(props: UserListPageProps) {
+function UserListPage() {
 
     const url = 'User';
     const [usersInState, setUsersInState] = useState<User[] | undefined>();
@@ -72,25 +68,13 @@ function UserListPage(props: UserListPageProps) {
     return (
         <div className="user-page">
             {
-                appState.userListPage.isDataLoading ?
+                appState.userListPage.isDataLoading
+                    ?
                     <div>
                         <FontAwesomeIcon icon="spinner" />
-                    </div> : (
-                        appState.userPage.isEditModeOn
-                            ?
-                            <UserPage
-                                roleId={props.roleId}
-                                userToEdit={userToEdit}
-                                setIsEditModeOn={setIsEditModeOn}
-                                reviseSending={checkUpdatedUsers}
-                                url={url}></UserPage>
-                            :
-                            <UserListComponent
-                                roleId={props.roleId}
-                                users={appState.userListPage.userList}
-                                onEditClick={onEditClick}
-                                onDeleteClick={onDeleteClick}></UserListComponent>
-                    )
+                    </div>
+                    :
+                    <UserListComponent></UserListComponent>
             }
             <ConfirmationDialog
                 isShown={isModalShown}

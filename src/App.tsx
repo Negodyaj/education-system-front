@@ -20,6 +20,7 @@ import LoginRoleSelector from './components/role-selector/LoginRoleSelector';
 import { UNSELECTED_ROLE } from './shared/consts';
 import { setRoleSelectorPending } from './store/role-selector/action-creator';
 import GroupPage from './components/group-page/GroupPage';
+import UserPage from './components/user-page/user-page/UserPage';
 
 function App() {
     const dispatch = useDispatch();
@@ -40,7 +41,7 @@ function App() {
                 </div>
                 <div className="header-user-actions">
                     {
-                        (appState.app.isLoggedIn || appState.roleSelector.mode !== "pending")   
+                        (appState.app.isLoggedIn || appState.roleSelector.mode !== "pending")
                         &&
                         <button onClick={logOut}>Log out</button>
                     }
@@ -57,9 +58,21 @@ function App() {
                         appState.app.isLoggedIn ?
                             <Switch>
                                 {
-                                    (appState.roleSelector.currentUserRoleId === Role.Manager || appState.roleSelector.currentUserRoleId === Role.Admin) &&
+                                    appState.roleSelector.currentUserRoleId === Role.Manager
+                                    ||
+                                    appState.roleSelector.currentUserRoleId === Role.Admin
+                                    &&
+                                    <Route path="/user-list">
+                                        <UserListPage></UserListPage>
+                                    </Route>
+                                }
+                                {
+                                    appState.roleSelector.currentUserRoleId !== Role.Student
+                                    &&
+                                    appState.userPage.isUserPageOpened
+                                    &&
                                     <Route path="/user-page">
-                                        <UserListPage roleId={appState.roleSelector.currentUserRoleId}></UserListPage>
+                                        <UserPage></UserPage>
                                     </Route>
                                 }
                                 {
