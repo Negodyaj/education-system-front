@@ -1,7 +1,7 @@
 import './NewCourse.css';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import React, { useState } from 'react';
-import { closeModalCreateCourseAction, createNewCourseInputModal, unvalidataCourseDescription, unvalidataCourseDuration, unvalidataCourseName, validatedCourseDescription, validatedCourseDuration, validatedCourseName } from '../../store/courses-page/action-creators';
+import { closeModalCreateCourseAction, unvalidataCourseDescription, unvalidataCourseDuration, unvalidataCourseName, validatedCourseDescription, validatedCourseDuration, validatedCourseName } from '../../store/courses-page/action-creators';
 import { useDispatch, useSelector } from 'react-redux';
 import { IRootState } from '../../store';
 import { createCourse, getCourses } from '../../store/courses-page/thunk';
@@ -38,15 +38,14 @@ function NewCourse() {
         {
             return;
         } else {
-            dispatch(createNewCourseInputModal(
+            dispatch(createCourse(
                 {
                 name: `${nameNewCourse.current?.value}`,
                 description: `${descriptionNewCourse.current?.value}`,
                 duration: Number(durationNewCourse.current?.value)
                 }
             )) 
-            dispatch(createCourse(pageState.dataNewCourse));
-            dispatch(getCourses());
+            setTimeout(dispatch(getCourses()), 200);
             dispatch(closeModalCreateCourseAction());
         }
         

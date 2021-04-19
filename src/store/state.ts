@@ -15,7 +15,6 @@ export interface ICoursePageState {
     isNameNewCourseFilled: boolean
     isDescriptionNewCourseFilled: boolean
     isDurationNewCourseFilled: boolean
-    dataNewCourse: DataNewCourse
 }
 
 export interface IUserListPage {

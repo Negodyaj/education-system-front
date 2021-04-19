@@ -4,11 +4,10 @@ import './CoursesPage.css';
 import ModalWindowDelete from './modal-window/ModalWindowDelete';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import NewCourse from './NewCourse';
-import { DataNewCourse } from './NewCourse';
 import { useDispatch, useSelector } from "react-redux";
 import { IRootState } from '../../store';
-import { createCourse, getCourses } from '../../store/courses-page/thunk';
-import { closeModalCreateCourseAction, showOpenModalCreateCourseAction, showOpenModalDeleteCourseAction } from '../../store/courses-page/action-creators';
+import { getCourses } from '../../store/courses-page/thunk';
+import { showOpenModalCreateCourseAction, showOpenModalDeleteCourseAction } from '../../store/courses-page/action-creators';
 
 function CoursesPage() {
 
@@ -19,24 +18,13 @@ function CoursesPage() {
         dispatch(getCourses());
     }, []);
 
-    //openModalDelete done
     const openModalDelete = (id: number) => {
         dispatch(showOpenModalDeleteCourseAction(id));
     }
 
-    //OpenModalAdd done
     const openModalAdd = () => {
         dispatch(showOpenModalCreateCourseAction());
     }
-    //Избавиться от setTimeout
-    // const addNewCourse = (data?: DataNewCourse) => {
-    //     if(pageState.isNameNewCourseFilled && ) {
-    //         return;
-    //     } else if (data !== undefined) {
-    //         dispatch(createCourse(data));
-    //         dispatch(closeModalCreateCourseAction());
-    //     }
-    // }
 
     return (
         <div className="course-container">

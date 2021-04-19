@@ -14,7 +14,6 @@ export type CoursePageActions =
     | ReturnType<typeof validatedCourseName>
     | ReturnType<typeof validatedCourseDescription>
     | ReturnType<typeof validatedCourseDuration>
-    | ReturnType<typeof createNewCourseInputModal>
     | ReturnType<typeof unvalidataCourseName>
     | ReturnType<typeof unvalidataCourseDescription>
     | ReturnType<typeof unvalidataCourseDuration>
@@ -93,13 +92,6 @@ export const validatedCourseDuration = () => {
     return ({
         type: COURSE_CREATE_NO_DURATION_VALIDATED,
         payload: false
-    } as const)
-}
-
-export const createNewCourseInputModal = (inputDataNewCourse: DataNewCourse) => {
-    return ({
-        type: COURSE_CREATE_INPUT_DATA_NEW_COURSE,
-        payload: inputDataNewCourse
     } as const)
 }
 

@@ -32,7 +32,6 @@ const initialState: ICoursePageState = {
     isDescriptionNewCourseFilled: false,
     isDurationNewCourseFilled: false,
     courseForDeleteId: intialCourseForDeleteId,
-    dataNewCourse: {} as DataNewCourse
 };
 export function coursePageReducer(state: ICoursePageState = initialState, action: CoursePageActions): ICoursePageState {
     switch (action.type) {
@@ -64,8 +63,6 @@ export function coursePageReducer(state: ICoursePageState = initialState, action
             return { ...state, isDescriptionNewCourseFilled: true };
         case COURSE_CREATE_NO_DURATION_VALIDATED:
             return { ...state, isDurationNewCourseFilled: true };
-        case COURSE_CREATE_INPUT_DATA_NEW_COURSE:
-            return { ...state, dataNewCourse: action.payload };
         case COURSE_CREATE_CREATE_MODAL_UNVALIDATE_INPUT_NAME:
             return { ...state, isNameNewCourseFilled: false}
         case COURSE_CREATE_CREATE_MODAL_UNVALIDATE_INPUT_DESCRIPTION:
