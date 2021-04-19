@@ -1,6 +1,6 @@
 
 import { Course } from "../../interfaces/Courses";
-import { CourseAddEnd, CourseCourseIdEnd, CourseDeleteEnd, CourseEnd, CourseIdThemeIdAddEnd, CourseIdThemeIdDeleteEnd, CourseThemesEnd, TagAddEnd, TagDeleteEnd, TagEnd, UserEnd, UserRegisterEnd, UserUserDeleteIdEnd, UserUserUpdateIdEnd } from "../../shared/endpointConsts";
+import { CourseAddEnd, CourseCourseIdEnd, CourseDeleteEnd, CourseEnd, CourseIdThemeIdAddEnd, CourseIdThemeIdDeleteEnd, CourseThemesEnd, RoleDeleteEnd, TagAddEnd, TagDeleteEnd, TagEnd, UserEnd, UserRegisterEnd, UserUserDeleteIdEnd, UserUserUpdateIdEnd } from "../../shared/endpointConsts";
 import { makeErrorText, makeNotification } from "../../shared/helpers/notificationHelpers";
 import NotificationData from "../../interfaces/NotificationData";
 import { Themes } from "../../interfaces/Themes";
@@ -135,15 +135,7 @@ export const responseHandlers: responseHandler = {
         },
         isT: (data: any): data is Themes => isThemeDelete(data)
     },
-    [RoleDeleteEnd]: {
-        notifications: (response?: any) => {
-            return ({
-                [nType.Error]: makeNotification(nType.Error, makeErrorText(response)),
-                [nType.Success]: makeNotification(nType.Success, ('Роль удалена'))
-            })
-        },
-        isT: (data: any): data is String => isString(data)  
-    },
+   
     [TagEnd]: {
         notifications: (response?: any) => {
             return ({
