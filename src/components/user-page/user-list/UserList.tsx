@@ -12,13 +12,13 @@ import { sendDeleteRequest, sendDeleteRequestNoResponse } from "../../../service
 import NotificationData from "../../../shared/interfaces/NotificationData";
 import { responseHandlers } from "../../../services/response-handler/responseHandler";
 import { RoleDeleteEnd } from "../../../shared/endpointConsts";
+import { isPropertySignature } from "typescript";
 
 interface UserListProps {
     roleId: number;
     users: User[];
     onEditClick: (userToEditId?: number) => void;
     onDeleteClick: (userToDeleteId: number) => void;
-    refreshUsers: () => void;
     sendNotification: (newNotification: NotificationData | undefined) => void;
 }
 
@@ -43,7 +43,7 @@ function UserList(props: UserListProps) {
     const [paymentFormState, setPaymentFormState] = useState('');
     const [roleID, setRoleID] = useState(0);
     const [userID, setUserID] = useState(0);
-    const [currentUser, setCurrentUser]= useState<User>();
+
 
 
     const elementsDefinedByRole = {
@@ -101,90 +101,91 @@ function UserList(props: UserListProps) {
         setConfirmationDeleteMessage(`Вы точно хотите избавить пользователя ${user.lastName}( ${user.login}) от роли ${Role[roleId]}?`)
         setIsModalShow(true);
     }
-
-    const refreshCurrentUser = () => {
-           setCurrentUser(props.users.find(u=>u.id===userID))
-        let userCopy = { ...currentUser as User, roles: currentUser?.roles?.filter(r=> r!= roleID)}
-        setCurrentUser(userCopy)
+    const refreshUser = () => {
+        const newUsers = [...usersToShow];
+        const index = newUsers.findIndex(u => u.id === userID)
+        newUsers[index] = { ...newUsers[index], roles: newUsers[index].roles?.filter(r => r !== roleID) };
+        setUsersToShow(newUsers)
     }
 
-    const deleteRole = async (decision: boolean) => {
-        if (decision) {
-            if (await sendDeleteRequestNoResponse(`User/${userID}/role/${roleID}`, props.sendNotification, responseHandlers[RoleDeleteEnd]))
-                refreshCurrentUser();
+
+const deleteRole = async (decision: boolean) => {
+    if (decision) {
+        if (await sendDeleteRequestNoResponse(`User/${userID}/role/${roleID}`, props.sendNotification, responseHandlers[RoleDeleteEnd]))
+                refreshUser();
         }
-        setIsModalShow(false);
-    }
+    setIsModalShow(false);
+}
 
-    return (
-        <div className="user-list">
-            <div className="column-head">
-                <h4>Пользователи</h4>
-                <button className="button-style" onClick={() => props.onEditClick()}>
-                    <FontAwesomeIcon icon="plus" />
-                    <span> Добавить</span>
-                </button>
-            </div>
-            <div className="list + user-list-head">
-                <div className="column"> </div>
-                <div className="column"><span title="А-Я" onClick={lastNameColumnOnClick}>фамилия</span></div>
-                <div className="column"><span title="А-Я">имя</span></div>
-                <div className="column"><span title="А-Я">логин</span></div>
-                <div className="column"><span title="А-Я">роль</span></div>
-            </div>
-            {
-                usersToShow?.sort((a, b) => {
-                    return lastNameAlphabetSort(a.lastName, b.lastName);
-                }).map(u => (
-                    <div className="list + user-list-item" key={u.id}>
+return (
+    <div className="user-list">
+        <div className="column-head">
+            <h4>Пользователи</h4>
+            <button className="button-style" onClick={() => props.onEditClick()}>
+                <FontAwesomeIcon icon="plus" />
+                <span> Добавить</span>
+            </button>
+        </div>
+        <div className="list + user-list-head">
+            <div className="column"> </div>
+            <div className="column"><span title="А-Я" onClick={lastNameColumnOnClick}>фамилия</span></div>
+            <div className="column"><span title="А-Я">имя</span></div>
+            <div className="column"><span title="А-Я">логин</span></div>
+            <div className="column"><span title="А-Я">роль</span></div>
+        </div>
+        {
+            usersToShow?.sort((a, b) => {
+                return lastNameAlphabetSort(a.lastName, b.lastName);
+            }).map(u => (
+                <div className="list + user-list-item" key={u.id}>
+                    <div className="column">
+                        <img className="user-photo" src={u.userPic} alt="userpic" />
+                    </div>
+                    <div className="column break-word" lang="ru">{u.lastName}</div>
+                    <div className="column break-word">{u.firstName}</div>
+                    <div className="column">{u.login}</div>
+                    <div className="column multiline">
+                        {
+                            u.roles?.map(r => (<div className='role'>
+                                {elementsDefinedByRole.deleteRoleButton(u, r)}
+                                <div>{getEnToRuTranslation(Role[r])}</div>
+                            </div>))
+                        }
+                    </div>
+                    <div className="column">{/*u.groupName*/}</div>
+                    <div className="column-button">
                         <div className="column">
-                            <img className="user-photo" src={u.userPic} alt="userpic" />
-                        </div>
-                        <div className="column break-word" lang="ru">{u.lastName}</div>
-                        <div className="column break-word">{u.firstName}</div>
-                        <div className="column">{u.login}</div>
-                        <div className="column multiline">
+                            <button className="button-round" onClick={() => props.onEditClick(u.id)}>
+                                <FontAwesomeIcon icon="edit" />
+                            </button>
+                            <button className="button-round" onClick={() => props.onDeleteClick(u.id as number)}>
+                                <FontAwesomeIcon icon="trash" />
+                            </button>
+
                             {
-                                u.roles?.map(r => (<div className='role'>
-                                    {elementsDefinedByRole.deleteRoleButton(u, r)}
-                                    <div>{getEnToRuTranslation(Role[r])}</div>
-                                </div>))
+                                elementsDefinedByRole.paymentButton(u.id)
                             }
                         </div>
-                        <div className="column">{/*u.groupName*/}</div>
-                        <div className="column-button">
-                            <div className="column">
-                                <button className="button-round" onClick={() => props.onEditClick(u.id)}>
-                                    <FontAwesomeIcon icon="edit" />
-                                </button>
-                                <button className="button-round" onClick={() => props.onDeleteClick(u.id as number)}>
-                                    <FontAwesomeIcon icon="trash" />
-                                </button>
-
-                                {
-                                    elementsDefinedByRole.paymentButton(u.id)
-                                }
-                            </div>
-                        </div>
-                        <ConfirmationDialog
-                            isShown={isModalShow}
-                            confirmLabel='Да'
-                            declineLabel='Нет'
-                            message={confirmationDeleteMessage}
-                            title='Удаление роли'
-                            callback={deleteRole}></ConfirmationDialog>
                     </div>
-                ))
-            }
-            <PaymentForm
-                paymentFormState={paymentFormState}
-                cancelClick={onCancelPaymentClick}
-                userName={userForPayment?.firstName}
-                userLastname={userForPayment?.lastName}
-            ></PaymentForm>
-        </div>
+                    <ConfirmationDialog
+                        isShown={isModalShow}
+                        confirmLabel='Да'
+                        declineLabel='Нет'
+                        message={confirmationDeleteMessage}
+                        title='Удаление роли'
+                        callback={deleteRole}></ConfirmationDialog>
+                </div>
+            ))
+        }
+        <PaymentForm
+            paymentFormState={paymentFormState}
+            cancelClick={onCancelPaymentClick}
+            userName={userForPayment?.firstName}
+            userLastname={userForPayment?.lastName}
+        ></PaymentForm>
+    </div>
 
-    )
+)
 }
 
 export default UserList;

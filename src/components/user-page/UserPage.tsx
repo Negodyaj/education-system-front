@@ -45,6 +45,8 @@ function UserPage(props: UserPageProps) {
         refreshUsers();
         setIsEditModeOn(false)
     }
+  
+
     const getUserToUpdate = (userToEditId: number) => {
         //actualize user before UserEditForm rendering
     }
@@ -95,7 +97,7 @@ function UserPage(props: UserPageProps) {
                                 onEditClick={onEditClick}
                                 onDeleteClick={onDeleteClick}
                                 sendNotification={props.sendNotification}
-                                refreshUsers ={refreshUsers}></UserList>
+                                ></UserList>
                     )
             }
             <ConfirmationDialog
