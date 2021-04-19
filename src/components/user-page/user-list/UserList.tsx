@@ -43,6 +43,7 @@ function UserList(props: UserListProps) {
     const [paymentFormState, setPaymentFormState] = useState('');
     const [roleID, setRoleID] = useState(0);
     const [userID, setUserID] = useState(0);
+    const [currentUser, setCurrentUser]= useState<User>();
 
 
     const elementsDefinedByRole = {
@@ -101,10 +102,16 @@ function UserList(props: UserListProps) {
         setIsModalShow(true);
     }
 
+    const refreshCurrentUser = () => {
+           setCurrentUser(props.users.find(u=>u.id===userID))
+        let userCopy = { ...currentUser as User, roles: currentUser?.roles?.filter(r=> r!= roleID)}
+        setCurrentUser(userCopy)
+    }
+
     const deleteRole = async (decision: boolean) => {
         if (decision) {
             if (await sendDeleteRequestNoResponse(`User/${userID}/role/${roleID}`, props.sendNotification, responseHandlers[RoleDeleteEnd]))
-                props.refreshUsers();
+                refreshCurrentUser();
         }
         setIsModalShow(false);
     }
