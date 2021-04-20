@@ -12,18 +12,10 @@
     width: 272px;
 }
 
-.css-2b097c-container {}
-
 .role-selector.action {
     justify-content: flex-start;
     font-family: Montserrat;
     font-weight: bold;
-}
-
-@keyframes appearence {
-    to {
-        opacity: 1;
-    }
 }
 
 .role-selector.select-btn-container {
@@ -31,12 +23,13 @@
     padding-top: 10px;
 }
 
-.role-selector.select-btn-container.hidden{
+.role-selector.select-btn-container.hidden {
     height: 0px;
     overflow: hidden;
     transition: .5s ease;
-    opacity:0;
+    opacity: 0;
 }
+
 .role-selector.select-btn-container.visible {
     transition: .5s ease;
     opacity: 1;

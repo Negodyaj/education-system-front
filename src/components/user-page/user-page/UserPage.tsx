@@ -10,9 +10,6 @@ import { convertEntitiesToSelectItems } from '../../../shared/converters/entityT
 import { getName } from '../../../shared/converters/objectKeyToString';
 import { sendPostRequest, sendPutRequest } from '../../../services/http.service';
 import { ErrorMessage } from '@hookform/error-message';
-import NotificationData from '../../../interfaces/NotificationData';
-import { responseHandlers } from '../../../services/response-handler/responseHandler';
-import { UserRegisterEnd, UserUserUpdateIdEnd } from '../../../shared/endpointConsts';
 import './UserPage.css'
 import '../../../App.css';
 import { User } from '../../../interfaces/User';
@@ -22,9 +19,9 @@ import { isUser } from '../../../services/type-guards/user';
 import { isUserRegisterResponse } from '../../../services/type-guards/userRegisterResponse';
 import { useDispatch, useSelector } from 'react-redux';
 import { IRootState } from '../../../store';
-import { convertRoleIdsToSelectItem } from '../../../shared/converters/roleIdsToSelectItem';
 import { quitEditMode } from '../../../store/user-page/action-creators';
 import { sendUser } from '../../../store/user-page/thunk';
+import { convertRoleIdsToSelectItems } from '../../../shared/converters/roleIdsToSelectItems';
 
 interface UserPageProps {
     roleId: number;
@@ -69,7 +66,7 @@ function UserPage(props: UserPageProps) {
                         <label className="form-label">Список ролей</label>
                         <CustomMultiSelect
                             selectType={"multi"}
-                            userOptions={convertRoleIdsToSelectItem(pageState.userPage.userToRegister?.roles||[])||undefined}
+                            selectedOptions={convertRoleIdsToSelectItems(pageState.userPage.userToRegister?.roles||[])||undefined}
                             options={convertEntitiesToSelectItems(getRussianDictionary(convertEnumToDictionary(Role)))}
                             onMultiSelect={roleOnChange}></CustomMultiSelect>
                     </div>)

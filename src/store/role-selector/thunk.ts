@@ -3,15 +3,18 @@ import { User } from "../../interfaces/User";
 import { sendGetRequest } from "../../services/http.service";
 import { isUser } from "../../services/type-guards/user";
 import { currentUserUrl } from "../../shared/consts";
+import { setIsLoggedIn } from "../app/action-creators";
 import { thunkResponseHandler } from "../thunkResponseHadlers";
-import { openRoleSelector, setCurrentUserIsLoading, setCurrentUserWasLoaded } from "./action-creator";
+import { toggleRoleSelector, setCurrentUserIsLoading, setCurrentUserWasLoaded } from "./action-creator";
 
-export const getCurrentUser = () => {
+const getCurrentUser = () => {
     return (dispatch: Dispatch) => {
         dispatch(setCurrentUserIsLoading());
         sendGetRequest<User>(currentUserUrl, isUser)
-            .then(currentUser => {
+        .then(currentUser => {
                 dispatch(setCurrentUserWasLoaded(thunkResponseHandler(dispatch, currentUser)));
+                dispatch(setIsLoggedIn())
+                dispatch(toggleRoleSelector())
             })
     }
 }
