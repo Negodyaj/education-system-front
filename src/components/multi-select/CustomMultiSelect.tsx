@@ -9,16 +9,16 @@ type selectType = "single"|"multi"
 
 interface SelectProps {
   selectType?: selectType;
-  userOptions?: SelectItem[] | undefined;
-  userOption?: SelectItem | undefined;
+  selectedOptions?: SelectItem[] | undefined;
+  selectedOption?: SelectItem | undefined;
   options: SelectItem[] | undefined;
   onMultiSelect?: (optionIds: number[]) => void;
   onSingleSelect?: (optionId: number | null) => void;
 }
 
 function CustomMultiSelect(props: SelectProps) {
-  const [userOptions, setUserOptions] = useState<SelectItem[] | undefined>(props.userOptions?.length ? [...props.userOptions] : undefined);
-  const [userOption, setUserOption] = useState<SelectItem | undefined>(props.userOption || undefined)
+  const [userOptions, setUserOptions] = useState<SelectItem[] | undefined>(props.selectedOptions?.length ? [...props.selectedOptions] : undefined);
+  const [userOption, setUserOption] = useState<SelectItem | undefined>(props.selectedOption || undefined)
   const onMultiSelect = (selectedOptions: OptionsType<object>) => {
     setUserOptions(selectedOptions as SelectItem[])
     let roleIds = (selectedOptions as SelectItem[]).map(i => i.value)

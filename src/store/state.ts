@@ -24,10 +24,9 @@ export interface IUserPage {
 }
 
 export interface IRoleSelector {
-    mode: "pending"|"turnedOff"|"turnedOn";
+    isTurnedOn: boolean;
     currentUser: User | undefined;
     currentUserRoleId: number;
-    continueButtonVisibility: "hidden"|"visible";
     isDataLoading: boolean;
 }
 

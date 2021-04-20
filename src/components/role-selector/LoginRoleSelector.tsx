@@ -1,46 +1,38 @@
-import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { UNSELECTED_ROLE } from "../../shared/consts";
-import { convertRoleIdsToSelectItem } from "../../shared/converters/roleIdsToSelectItem";
+import { convertRoleIdsToSelectItems } from "../../shared/converters/roleIdsToSelectItems";
+import { convertRoleIdToSelectItem } from "../../shared/converters/roleIdToSelectItem";
 import { IRootState } from "../../store";
-import { setIsLoggedIn } from "../../store/app/action-creators";
-import { closeRoleSelector, setCurrentUserRoleId } from "../../store/role-selector/action-creator";
-import { getCurrentUser } from "../../store/role-selector/thunk";
+import { setCurrentUserRoleId } from "../../store/role-selector/action-creator";
 import CustomMultiSelect from "../multi-select/CustomMultiSelect";
 import './LoginRoleSelector.css';
 
 export function LoginRoleSelector() {
 
     const dispatch = useDispatch()
-    const roleSelectorState = useSelector((state: IRootState) => state)
+    const appState = useSelector((state: IRootState) => state)
 
-    useEffect(() => {
-        dispatch(getCurrentUser())
-    }, []
-    )
-
-    const onSingleSelect = (roleId: number | null) => dispatch(setCurrentUserRoleId(roleId || UNSELECTED_ROLE))
-    const login = () => {
-        dispatch(setIsLoggedIn())
-        dispatch(closeRoleSelector())
+    const onSingleSelect = (roleId: number | null) => {
+        dispatch(setCurrentUserRoleId(roleId || 0));
     }
 
     return (
-        <div className="role-selector page">
+        appState.roleSelector.isDataLoading
+            ?
+            <div>LOADING</div>
+            :
             <div className="role-selector container">
-                <div className="role-selector action">
+                <div className="role-selector label">
                     <div>Выберите роль</div>
                 </div>
-                <CustomMultiSelect
-                    selectType="single"
-                    onSingleSelect={onSingleSelect}
-                    options={convertRoleIdsToSelectItem(roleSelectorState.roleSelector.currentUser?.roles) || undefined}
-                ></CustomMultiSelect>
-                <div className={"role-selector select-btn-container " + roleSelectorState.roleSelector.continueButtonVisibility}>
-                    <button className="button-style" onClick={login}>Продолжить</button>
+                <div className="role-selector single-select">
+                    <CustomMultiSelect
+                        selectType="single"
+                        onSingleSelect={onSingleSelect}
+                        selectedOption={convertRoleIdToSelectItem(appState.roleSelector.currentUserRoleId)}
+                        options={convertRoleIdsToSelectItems(appState.roleSelector.currentUser?.roles) || undefined}
+                    ></CustomMultiSelect>
                 </div>
             </div>
-        </div>
     )
 }
 

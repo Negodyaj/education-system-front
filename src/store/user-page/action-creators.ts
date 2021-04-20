@@ -1,4 +1,3 @@
-import { NumericLiteral } from "typescript";
 import { User } from "../../interfaces/User";
 import { UserUpdate } from "../../interfaces/UserUpdate";
 import { USER_EDIT_MODE_WAS_CLOSED, USER_IS_SENDING, USER_REGISTER_MODE_IS_ON, USER_SENDING_SUCCESS, USER_TO_EDIT_WRETCH_FAIL, USER_TO_EDIT_WRETCH_LOADED, USER_TO_EDIT_WRETCH_LOADING, USER_TO_VIEW_WRETCH_FAIL, USER_TO_VIEW_WRETCH_LOADED, USER_TO_VIEW_WRETCH_LOADING } from "../actionTypes";

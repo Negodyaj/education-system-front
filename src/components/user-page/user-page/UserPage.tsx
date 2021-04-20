@@ -15,9 +15,9 @@ import { UserUpdate } from '../../../interfaces/UserUpdate';
 import { UserRegisterResponse } from '../../../interfaces/UserRegisterResponse';
 import { useDispatch, useSelector } from 'react-redux';
 import { IRootState } from '../../../store';
-import { convertRoleIdsToSelectItem } from '../../../shared/converters/roleIdsToSelectItem';
 import { quitUserPage } from '../../../store/user-page/action-creators';
 import { sendUser } from '../../../store/user-page/thunk';
+import { convertRoleIdsToSelectItems } from '../../../shared/converters/roleIdsToSelectItems';
 import { Link } from 'react-router-dom';
 
 interface UserPageProps {
@@ -58,7 +58,7 @@ function UserPage(props: UserPageProps) {
                         <label className="form-label">Список ролей</label>
                         <CustomMultiSelect
                             selectType={"multi"}
-                            userOptions={convertRoleIdsToSelectItem(appState.userPage.userToRegister?.roles || []) || undefined}
+                            selectedOptions={convertRoleIdsToSelectItems(pageState.userPage.userToRegister?.roles||[])||undefined}
                             options={convertEntitiesToSelectItems(getRussianDictionary(convertEnumToDictionary(Role)))}
                             onMultiSelect={roleOnChange}></CustomMultiSelect>
                     </div>)
@@ -123,27 +123,6 @@ function UserPage(props: UserPageProps) {
             }
         }
     }
-    const reviseSending = (newOrUpdatedUser: UserUpdate | undefined) => {
-        if (newOrUpdatedUser) {
-            //props.reviseSending()
-        } else {
-            return;
-        }
-    }
-    const sendUsersdfasd = async (newOrUpdatedUser: User) => {
-        if (appState.userPage.userToEdit) {
-            // reviseSending(await sendPutRequest<UserUpdate>(
-            //     props.url + ('/' + props.userToEdit.id),
-            //     isUser,
-            //     convertUserToUserUpdate(newOrUpdatedUser)))
-        } else {
-            // reviseSending(await sendPostRequest<UserRegisterResponse>(
-            //     props.url + '/' + 'register',
-            //     isUserRegisterResponse,
-            //     convertUserToUserInput(newOrUpdatedUser)));
-        }
-    }
-
     const birthDateOnChange = (date: string) => {
         setValue('birthDate', date)
     }

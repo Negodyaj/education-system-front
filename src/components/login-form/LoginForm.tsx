@@ -1,7 +1,6 @@
 import { ChangeEvent, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { authenticate } from '../../services/auth.service';
-import { openRoleSelector } from '../../store/role-selector/action-creator';
+import { authenticate } from '../../store/login-form/thunk';
 import './LoginForm.css';
 
 function LoginForm() {
@@ -10,7 +9,7 @@ function LoginForm() {
     const dispatch = useDispatch();
 
     const loginButtonOnClick = () => {
-        authenticate(login, password, dispatch)
+        dispatch(authenticate(login, password))
     }
 
     const handleloginChange = (event: ChangeEvent<HTMLInputElement>) => {
