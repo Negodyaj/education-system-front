@@ -1,6 +1,7 @@
 import { DataNewCourse } from "../components/courses-page/NewCourse";
 import { Course } from "../interfaces/Courses";
 import NotificationData from "../interfaces/NotificationData";
+import { Themes } from "../interfaces/Themes";
 import { User } from "../interfaces/User";
 import { UserInput } from "../interfaces/UserInput";
 import { UserUpdate } from "../interfaces/UserUpdate";
@@ -16,6 +17,15 @@ export interface ICoursePageState {
     isDescriptionNewCourseFilled: boolean
     isDurationNewCourseFilled: boolean
     dataNewCourse: DataNewCourse
+}
+
+export interface ICourseEditionState {
+    course: Course;
+    themes: Themes[];
+    nameThemesCourse: string[];
+    isDataLoading: boolean;
+    isDisplayingButtonOpenProgramCourse: boolean;
+    isDisplayingButtonOpenMaterialsCourse: boolean;
 }
 
 export interface IUserListPage {

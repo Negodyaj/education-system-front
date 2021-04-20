@@ -88,9 +88,7 @@ function App() {
                                         <CoursesPage />
                                     </Route>
                                 }
-                                <Route path="/course-edition/:id" render={({ location, history }) => (
-                                    <CourseEdition idCourse={location.pathname} />)}>
-                                </Route>
+                                    <Route path="/course/:id/edition" children={<CourseEdition />} />
                                 {
                                     roleId !== Role.Student &&
                                     <Route path="/tags-page">
