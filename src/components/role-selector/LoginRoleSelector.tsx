@@ -20,11 +20,11 @@ export function LoginRoleSelector() {
             ?
             <div>LOADING</div>
             :
-            <div className="role-selector page">
-                <div className="role-selector container">
-                    <div className="role-selector action">
-                        <div>Выберите роль</div>
-                    </div>
+            <div className="role-selector container">
+                <div className="role-selector label">
+                    <div>Выберите роль</div>
+                </div>
+                <div className="role-selector single-select">
                     <CustomMultiSelect
                         selectType="single"
                         onSingleSelect={onSingleSelect}

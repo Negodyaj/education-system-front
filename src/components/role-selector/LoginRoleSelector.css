@@ -1,21 +1,23 @@
-.role-selector.page, .role-selector.action, .role-selector.select-btn-container {
+.role-selector.container {
+    margin: 0;
+    width: 450px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.role-selector.label, .role-selector.select-btn-container {
     display: flex;
 }
 
-.role-selector.page {
-    justify-content: center;
-    width: 100%;
-    width: 100%;
-}
-
-.role-selector.container {
-    width: 272px;
-}
-
-.role-selector.action {
+.role-selector.label {
     justify-content: flex-start;
     font-family: Montserrat;
     font-weight: bold;
+}
+
+.single-select {
+    width: 272px;
 }
 
 .role-selector.select-btn-container {

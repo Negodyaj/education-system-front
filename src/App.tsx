@@ -17,7 +17,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setIsLoggedOut } from './store/app/action-creators';
 import LoginRoleSelector from './components/role-selector/LoginRoleSelector';
 import GroupPage from './components/group-page/GroupPage';
-import { toggleRoleSelector } from './store/role-selector/action-creator';
+import { toggleRoleSelector, unsetCurrentUser } from './store/role-selector/action-creator';
+import { unsetToken } from './services/auth.service';
 
 function App() {
     const dispatch = useDispatch();
@@ -25,7 +26,9 @@ function App() {
     const history = useHistory();
     const logOut = () => {
         dispatch(setIsLoggedOut());
-        dispatch(toggleRoleSelector())
+        dispatch(toggleRoleSelector());
+        dispatch(unsetCurrentUser());
+        unsetToken();
         history.push("/");
     }
 
@@ -37,6 +40,9 @@ function App() {
                 </div>
                 <div className="header-user-actions">
                     {
+                        appState.roleSelector.isTurnedOn && <LoginRoleSelector />
+                    }
+                    {
                         appState.app.isLoggedIn
                         &&
                         <button onClick={logOut}>Log out</button>
@@ -46,7 +52,7 @@ function App() {
             <div className="main-content">
                 <aside>
                     {
-                        (appState.app.isLoggedIn && !appState.roleSelector.isTurnedOn)
+                        (appState.app.isLoggedIn)
                         &&
                         <NavMenu roleId={appState.roleSelector.currentUserRoleId} />
                     }
@@ -104,9 +110,6 @@ function App() {
                     }
                     {
                         appState.app.isLoggedIn && <NotificationContainer />
-                    }
-                    {
-                        appState.roleSelector.isTurnedOn && <LoginRoleSelector />
                     }
                 </main>
             </div>

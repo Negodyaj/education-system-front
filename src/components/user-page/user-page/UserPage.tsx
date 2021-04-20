@@ -131,27 +131,6 @@ function UserPage(props: UserPageProps) {
             }
         }
     }
-    const reviseSending = (newOrUpdatedUser: UserUpdate | undefined) => {
-        if (newOrUpdatedUser) {
-            props.reviseSending()
-        } else {
-            return;
-        }
-    }
-    const sendUsersdfasd = async (newOrUpdatedUser: User) => {
-        if (props.userToEdit) {
-            reviseSending(await sendPutRequest<UserUpdate>(
-                props.url + ('/' + props.userToEdit.id),
-                isUser,
-                convertUserToUserUpdate(newOrUpdatedUser)))
-        } else {
-            reviseSending(await sendPostRequest<UserRegisterResponse>(
-                props.url + '/' + 'register',
-                isUserRegisterResponse,
-                convertUserToUserInput(newOrUpdatedUser)));
-        }
-    }
-
     const birthDateOnChange = (date: string) => {
         setValue('birthDate', date)
     }
