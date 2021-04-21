@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import './styles.css';
 import ConfirmationDialog from "../../shared/components/confirmation-dialog/ConfirmationDialog";
 import { generateTestNotification } from "../../shared/components/notification/generateTestNotification";
 import NotificationData from "../../interfaces/NotificationData";
@@ -43,34 +44,35 @@ function DevTestPage (props: DevTestPageProps) {
         <div>
             <h1>secret test page</h1>
 
-            <button onClick={()=>dispatch(sendNotification(generateTestNotification(true)))} >
-                Test dismissible notification</button>
-            <button onClick={()=>dispatch(sendNotification(generateTestNotification(false)))} >
-                Test non-dismissible notification</button>
-
-            <div>
-                <span>{counter}</span>
-                <button onClick={() => {setDialogShown(true)}}>+1</button> 
+            <div className="grid-container">
+                <div className="grid-item"></div>
+                <div className="grid-item"></div>
+                <div className="grid-item"></div>
+                <div className="grid-item"></div>
+                <div className="grid-item"></div>
+                <div className="grid-item"></div>
             </div>
 
-            <ConfirmationDialog 
-                isShown={dialogShown} 
-                title={'Увеличить счетчик на 1?'}
-                message={`Новое значение: ${counter+1}`}
-                callback={counterCallback}/>
-
-            <CustomMultiSelect
-                userOptionsIds={[]}
-                options={selectItems}
-                onSelect={()=>{}}
-            />
-            <br/>
-            <CustomMultiSelect
-                selectType='multi'
-                userOptionsIds={[]}
-                options={selectItems}
-                onSelect={()=>{}}
-            />
+            <section>
+                <div className="section-item">
+                    <div className="test-image">
+                        <div className="image"></div>
+                    </div>
+                    <div className="item-content">
+                        <h2>Some header</h2>
+                        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Omnis eaque repudiandae maiores soluta voluptates officia recusandae debitis! Quibusdam, recusandae eligendi provident magnam error voluptas explicabo architecto unde dolorem corporis officia!</p>
+                    </div>
+                </div>
+                <div className="section-item">
+                    <div className="item-content">
+                        <h2>Some header</h2>
+                        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Omnis eaque repudiandae maiores soluta voluptates officia recusandae debitis! Quibusdam, recusandae eligendi provident magnam error voluptas explicabo architecto unde dolorem corporis officia!</p>
+                    </div>
+                    <div className="test-image">
+                        <div className="image"></div>
+                    </div>
+                </div>
+            </section>
 
             <div className="test-page-link"><Link to="/">back to login</Link></div>
         </div>
