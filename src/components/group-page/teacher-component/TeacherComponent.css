@@ -1,0 +1,13 @@
+.list{
+    border:none;
+    grid-template-columns: 60px 300px;
+    margin: 2px 0;
+    align-self: center;
+}
+
+.column{
+    display: flex;
+    align-self: center;
+    font-size: 14px;
+    margin-bottom: 3px;
+}

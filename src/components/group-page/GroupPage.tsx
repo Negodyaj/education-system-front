@@ -1,4 +1,5 @@
 import "./GroupPage.css"
+import TeacherGroupList from "./teacher-group-list/TeacherGroupList"
 
 
 function GroupPage () {
@@ -6,8 +7,10 @@ function GroupPage () {
         <div>
           <div className = "group-header"> Nav menu component</div>
           <div className="group-body">
-          <div> base info component </div>
-          <div> List component </div>
+          <div className='base-info'> base info component </div>
+          <div> 
+            <TeacherGroupList/>
+             </div>
           </div>
         </div>
     )
