@@ -23,11 +23,11 @@ export function courseEditionPageReducer(state: ICourseEditionState = initialSta
         case COURSE_EDITION_NAME_ALL_THEMES_IN_COURSE:
             return {...state, nameThemesCourse: action.payload}
         case COURSE_EDITION_CHANGE_DISPLAYING_BUTTON_OPEN_PROGRAM_COURSE:
-            return {...state, isDisplayingButtonOpenProgramCourse: !action.payload}
-        case COURSE_EDITION_CHANGE_DISPLAYING_BUTTON_OPEN_MATERIALS_COURSE:
-            return {...state, isDisplayingButtonOpenMaterialsCourse: action.payload}
+            return {...state, isDisplayingButtonOpenProgramCourse: action.payload}
         case COURSE_EDITION_CHANGE_DISPLAYING_BUTTON_CLOSE_PROGRAM_COURSE:
             return {...state, isDisplayingButtonOpenProgramCourse: action.payload}
+        case COURSE_EDITION_CHANGE_DISPLAYING_BUTTON_OPEN_MATERIALS_COURSE:
+            return {...state, isDisplayingButtonOpenMaterialsCourse: action.payload}
         case COURSE_EDITION_CHANGE_DISPLAYING_BUTTON_CLOSE_MATERIALS_COURSE:
             return {...state, isDisplayingButtonOpenMaterialsCourse: action.payload}
         default:

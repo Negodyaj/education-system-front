@@ -43,13 +43,6 @@ export const setNameAllThemesInCourse = (nameArr: string[]) => {
 export const setChangeDisplayingButtonOpenProgramCourse = () => {
     return({
         type: COURSE_EDITION_CHANGE_DISPLAYING_BUTTON_OPEN_PROGRAM_COURSE,
-        payload: false
-    } as const)
-}
-
-export const setChangeDisplayingButtonOpenMaterialsCourse = () => {
-    return({
-        type: COURSE_EDITION_CHANGE_DISPLAYING_BUTTON_OPEN_MATERIALS_COURSE,
         payload: true
     } as const)
 }
@@ -58,6 +51,13 @@ export const setChangeDisplayingButtonCloseProgramCourse = () => {
     return({
         type: COURSE_EDITION_CHANGE_DISPLAYING_BUTTON_CLOSE_PROGRAM_COURSE,
         payload: false
+    } as const)
+}
+
+export const setChangeDisplayingButtonOpenMaterialsCourse = () => {
+    return({
+        type: COURSE_EDITION_CHANGE_DISPLAYING_BUTTON_OPEN_MATERIALS_COURSE,
+        payload: true
     } as const)
 }
 

@@ -121,59 +121,8 @@
     outline: none;
 }
 
-@keyframes accordionEffectOpen {
-    to {
-        opacity: 1;
-        height: max-content;
-        margin-top: 0;
-    }
-}
-
-@keyframes accordionEffectClose {
-    to {
-        margin-top: -70px;
-        opacity: 0;
-        height: 0;
-    }
-}
-
-@keyframes accordionEffectOpenMaterial {
-    to {
-        opacity: 1;
-        height: max-content;
-        margin-top: 0;
-    }
-}
-
-@keyframes accordionEffectCloseMaterial {
-    to {
-        margin-top: -70px;
-        opacity: 0;
-        height: 0;
-    }
-}
-
-.program-course.visible{
-    margin-top: -50px;
-    animation: .6s forwards accordionEffectOpen;
-}
-
-.program-course.unvisible{
-    animation: .3s forwards accordionEffectClose;  
-}
-
-.materials-course-header.visible {
-    margin-top: -50px;
-    animation: .6s forwards accordionEffectOpenMaterial;
-}
-
-.materials-course-header.unvisible {
-    animation: .3s forwards accordionEffectOpenMaterial;  
-}
-
 .program-course{
     width: 600px;
-    margin-top: -50px;
 }
 
 .theme {

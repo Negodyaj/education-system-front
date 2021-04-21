@@ -20,20 +20,24 @@ export const getThemes = () => {
 export const getCourseById = (id: number) => {
     return (dispatch: Dispatch) => {
         sendGetRequest<Course>(`${coursesUrl}/${id}`, isCourse)
-            .then(course => {return dispatch(getCourseByIdLoaded(course))})
+            .then(course => {dispatch(getCourseByIdLoaded(course))})
     }
 }
 
 export const addThemeInCourse = (newTheme: NewThemeCourse) => {
-    return (dispatch: Dispatch) => {
+    return (dispatch: Dispatch<any>) => {
         sendPostRequestNoResponse(`${coursesUrl}/${newTheme.idCourse}/theme/${newTheme.idTheme}`)
-        .then(data => {getCourseById(newTheme.idCourse)})
+        .then(data => {
+            dispatch(getCourseById(newTheme.idCourse));
+        })
     }
 }
 
 export const deleteThemeCourse = (newTheme: NewThemeCourse) => {
-    return (dispatch: Dispatch) => {
+    return (dispatch: Dispatch<any>) => {
         sendDeleteRequestNoResponse(`${coursesUrl}/${newTheme.idCourse}/theme/${newTheme.idTheme}`)
-        .then(data => {getCourseById(newTheme.idCourse)})
+        .then(data => {
+            dispatch(getCourseById(newTheme.idCourse));
+        })
     }
 }
