@@ -27,21 +27,21 @@ export const deleteCourse =  (id: number) => {
         sendDeleteRequest<Course>(`${coursesUrl}/${id}`, isCourse)
         .then(course => {
             let response = thunkResponseHandler(dispatch, course);
-            getCourses();
+            response && dispatch(pushNotification(makeNotification('success', `Курс ${(response as Course).name} успешно удален`)));
             dispatch(closeModalDeleteCourseAction());
-            response && dispatch(pushNotification(makeNotification('success', `Курс ${(response as Course).name} успешно удален`)))
         })
+        .catch(error => thunkResponseHandler(dispatch, error));
     }
 }
 
 export const createCourse = (newCourse: DataNewCourse) => {
     return (dispatch: Dispatch) => {
         sendPostRequest<Course>(`${coursesUrl}`, isCourse, newCourse)
-        .then(course => {
-            let response = thunkResponseHandler(dispatch, course);
-            getCourses();
-            dispatch(closeModalCreateCourseAction());
-            response && dispatch(pushNotification(makeNotification('success', `Курс ${(response as Course).name} успешно создан`)))
-        })
+            .then(course => {
+                let response = thunkResponseHandler(dispatch, course);
+                response && dispatch(pushNotification(makeNotification('success', `Курс ${(response as Course).name} успешно создан`)));
+                dispatch(closeModalCreateCourseAction());
+            })
+            .catch(error => thunkResponseHandler(dispatch, error));
     }
 }

@@ -5,6 +5,7 @@ import { closeModalCreateCourseAction, unvalidataCourseDescription, unvalidataCo
 import { useDispatch, useSelector } from 'react-redux';
 import { IRootState } from '../../store';
 import { createCourse, getCourses } from '../../store/courses-page/thunk';
+import { Course } from '../../interfaces/Courses';
 
 export interface DataNewCourse { 
     name: string; 
@@ -45,8 +46,7 @@ function NewCourse() {
                 duration: Number(durationNewCourse.current?.value)
                 }
             )) 
-            // dispatch(getCourses());
-            // dispatch(closeModalCreateCourseAction());
+            dispatch(getCourses());
         }
         
     }
@@ -63,7 +63,7 @@ function NewCourse() {
                 <div className="create-course">
                     <div className='new-course-header'>Название курса</div>
                     <div className="course-data">
-                        <input type="text" className="course-name" placeholder="Введите название курса" ref={nameNewCourse} />
+                        <input type="text" className="course-name" ref={nameNewCourse} />
                     </div>
                     { 
                         pageState.isNameNewCourseFilled ? <div className="error-no-name">Заполните данное поле</div> : <div></div> 
