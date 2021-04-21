@@ -16,9 +16,7 @@ function ModalWindowDelete() {
   //  //Избавиться от setTimeout
   const deleteCourseById = () => {
     dispatch(deleteCourse(courseId));
-    //dispatch(getCourses());
-    dispatch(closeModalDeleteCourseAction());
-    setTimeout(() => {dispatch(getCourses())}, 200);
+    //dispatch(closeModalDeleteCourseAction());
   }
 
   return (

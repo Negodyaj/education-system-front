@@ -5,7 +5,10 @@ import { sendDeleteRequest, sendGetRequest, sendPostRequest } from "../../servic
 import { isCourse } from "../../services/type-guards/course";
 import { isCourseArr } from "../../services/type-guards/courseArr";
 import { coursesUrl } from "../../shared/consts";
-import { closeModalCreateCourseAction, createCourseAction, setCoursesListFailAction, setCoursesListIsLoadingAction, setCoursesListWasLoadedAction } from "./action-creators";
+import { makeNotification } from "../../shared/helpers/notificationHelpers";
+import { pushNotification } from "../notifications/action-creators";
+import { thunkResponseHandler } from "../thunkResponseHadlers";
+import { closeModalCreateCourseAction, closeModalDeleteCourseAction, createCourseAction, setCoursesListFailAction, setCoursesListIsLoadingAction, setCoursesListWasLoadedAction } from "./action-creators";
 
 
 const url = 'url';
@@ -22,15 +25,23 @@ export const getCourses = () => {
 export const deleteCourse =  (id: number) => {
     return (dispatch: Dispatch) => {
         sendDeleteRequest<Course>(`${coursesUrl}/${id}`, isCourse)
-            .then(course => { return course })
-            .catch(error => console.log(error))
+        .then(course => {
+            let response = thunkResponseHandler(dispatch, course);
+            getCourses();
+            dispatch(closeModalDeleteCourseAction());
+            response && dispatch(pushNotification(makeNotification('success', `Курс ${(response as Course).name} успешно удален`)))
+        })
     }
 }
 
 export const createCourse = (newCourse: DataNewCourse) => {
     return (dispatch: Dispatch) => {
         sendPostRequest<Course>(`${coursesUrl}`, isCourse, newCourse)
-            .then(course => { return dispatch(createCourseAction(course)) })
-            .catch(error => console.log(error))
+        .then(course => {
+            let response = thunkResponseHandler(dispatch, course);
+            getCourses();
+            dispatch(closeModalCreateCourseAction());
+            response && dispatch(pushNotification(makeNotification('success', `Курс ${(response as Course).name} успешно создан`)))
+        })
     }
 }

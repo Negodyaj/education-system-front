@@ -45,8 +45,8 @@ function NewCourse() {
                 duration: Number(durationNewCourse.current?.value)
                 }
             )) 
-            setTimeout(dispatch(getCourses()), 200);
-            dispatch(closeModalCreateCourseAction());
+            // dispatch(getCourses());
+            // dispatch(closeModalCreateCourseAction());
         }
         
     }
