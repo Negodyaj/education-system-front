@@ -1,6 +1,6 @@
 import './NewCourse.css';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import React, { useState } from 'react';
+import React from 'react';
 import { closeModalCreateCourseAction, unvalidataCourseDescription, unvalidataCourseDuration, unvalidataCourseName, validatedCourseDescription, validatedCourseDuration, validatedCourseName } from '../../store/courses-page/action-creators';
 import { useDispatch, useSelector } from 'react-redux';
 import { IRootState } from '../../store';
