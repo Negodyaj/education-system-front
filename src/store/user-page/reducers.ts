@@ -1,10 +1,10 @@
-import { User } from "../../interfaces/User";
+import { UserInput } from "../../interfaces/UserInput";
 import { UNSET_USER_ID_FOR_USER_PAGE } from "../../shared/consts";
-import { USER_TO_EDIT_WRETCH_FAIL, USER_TO_EDIT_WRETCH_LOADED, USER_TO_EDIT_WRETCH_LOADING, USER_IS_SENDING, USER_REGISTER_MODE_IS_ON, USER_FOR_USER_PAGE_ID } from "../actionTypes";
+import { USER_TO_EDIT_WRETCH_FAIL, USER_TO_EDIT_WRETCH_LOADED, USER_TO_EDIT_WRETCH_LOADING, USER_IS_SENDING, USER_FOR_USER_PAGE_ID } from "../actionTypes";
 import { IUserPage } from "../state";
 import { UserPageActions } from "./action-creators";
 
-export const INIT_USER_TO_REGISTER: User = {
+export const INIT_USER_TO_REGISTER: UserInput = {
     id: 0,
     firstName: "",
     lastName: "",
@@ -20,7 +20,7 @@ export const INIT_USER_TO_REGISTER: User = {
 const initialState: IUserPage = {
     userForUserPage: INIT_USER_TO_REGISTER,
     userForUserPageId: UNSET_USER_ID_FOR_USER_PAGE,
-    isDataLoading: false
+    isDataLoading: true
 };
 export function userPageReducer(state: IUserPage = initialState, action: UserPageActions): IUserPage {
     switch (action.type) {
@@ -36,12 +36,6 @@ export function userPageReducer(state: IUserPage = initialState, action: UserPag
             };
         case USER_TO_EDIT_WRETCH_FAIL:
             return { ...state, isDataLoading: false };
-        case USER_REGISTER_MODE_IS_ON:
-            return {
-                ...state,
-                userForUserPage: INIT_USER_TO_REGISTER,
-                isDataLoading: false
-            }
         case USER_IS_SENDING:
             return { ...state, isDataLoading: true };
         default:

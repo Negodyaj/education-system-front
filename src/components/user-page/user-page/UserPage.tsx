@@ -16,20 +16,26 @@ import { quitUserPage } from '../../../store/user-page/action-creators';
 import { getUserToEditById, sendUser } from '../../../store/user-page/thunk';
 import { convertRoleIdsToSelectItems } from '../../../shared/converters/roleIdsToSelectItems';
 import { Link } from 'react-router-dom';
+import { UserInput } from '../../../interfaces/UserInput';
 
 
 function UserPage() {
 
     const dispatch = useDispatch();
     const appState = useSelector((state: IRootState) => state)
-    useEffect(()=>{
-    dispatch(getUserToEditById(appState.userPage.userForUserPageId))
-    },[])
+    useEffect(() => {
+        dispatch(getUserToEditById(appState.userPage.userForUserPageId))
+    }, [])
 
-    const { register, formState: { errors }, handleSubmit, getValues, setValue } = useForm<User>({
+    useEffect(() => {
+        Object.keys(appState.userPage.userForUserPage).map(key => {
+            setValue(key as keyof UserInput, appState.userPage.userForUserPage[key as keyof UserInput])
+        })
+    }, [appState.userPage.userForUserPage])
+
+    const { register, formState: { errors }, handleSubmit, getValues, setValue } = useForm<UserInput>({
         mode: 'all',
-        criteriaMode: 'all',
-        defaultValues: { ...appState.userPage.userForUserPage}
+        criteriaMode: 'all'
     });
 
     const elementsDefinedByProps = {
@@ -40,7 +46,7 @@ function UserPage() {
                         <label className="form-label">Список ролей</label>
                         <CustomMultiSelect
                             selectType={"multi"}
-                            selectedOptions={convertRoleIdsToSelectItems(appState.userPage.userForUserPage.roles || []) || undefined}
+                            selectedOptions={convertRoleIdsToSelectItems(appState.userPage.userForUserPage?.roles || []) || undefined}
                             options={convertEntitiesToSelectItems(getRussianDictionary(convertEnumToDictionary(Role)))}
                             onMultiSelect={roleOnChange}></CustomMultiSelect>
                     </div>)
@@ -64,7 +70,7 @@ function UserPage() {
                             className="form-input" />
                         <ErrorMessage
                             errors={errors}
-                            name={getName<User>(appState.userPage.userForUserPage, o => o.password)}
+                            name={"password"}
                             className="bad-feedback"
                             as="div">
                         </ErrorMessage>
@@ -94,7 +100,7 @@ function UserPage() {
                             className="form-input" />
                         <ErrorMessage
                             errors={errors}
-                            name={getName<User>(appState.userPage.userForUserPage, o => o.login)}
+                            name={"login"}
                             className="bad-feedback"
                             as="div">
                         </ErrorMessage>
@@ -134,7 +140,6 @@ function UserPage() {
                                     message: "Введите имя"
                                 },
                                 pattern: {
-
                                     value: /[A-Za-zА-Яа-я]/,
                                     message: "Допустимы только буквенные символы"
                                 }
@@ -143,7 +148,7 @@ function UserPage() {
                             className="form-input" />
                         <ErrorMessage
                             errors={errors}
-                            name={getName<User>(appState.userPage.userForUserPage, o => o.firstName)}
+                            name={"firstName"}
                             className="bad-feedback"
                             as="div">
                         </ErrorMessage>
@@ -165,7 +170,7 @@ function UserPage() {
                             className="form-input" />
                         <ErrorMessage
                             errors={errors}
-                            name={getName<User>(appState.userPage.userForUserPage, o => o.lastName)}
+                            name={"lastName"}
                             className="bad-feedback"
                             as="div">
                         </ErrorMessage>
@@ -200,7 +205,7 @@ function UserPage() {
                             className="form-input" />
                         <ErrorMessage
                             errors={errors}
-                            name={getName<User>(appState.userPage.userForUserPage, o => o.phone)}
+                            name={"phone"}
                             className="bad-feedback"
                             as="div">
                         </ErrorMessage>
@@ -227,7 +232,7 @@ function UserPage() {
                             placeholder="или вставьте ссылку" />
                         <ErrorMessage
                             errors={errors}
-                            name={getName<User>(appState.userPage.userForUserPage, o => o.userPic)}
+                            name={"userPic"}
                             className="bad-feedback"
                             as="div">
                         </ErrorMessage>
@@ -246,7 +251,7 @@ function UserPage() {
                             className="form-input" />
                         <ErrorMessage
                             errors={errors}
-                            name={getName<User>(appState.userPage.userForUserPage, o => o.email)}
+                            name={"email"}
                             className="bad-feedback"
                             as="div">
                         </ErrorMessage>

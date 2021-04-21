@@ -15,7 +15,7 @@ export interface IUserListPage {
 }
 
 export interface IUserPage {
-    userForUserPage: User,
+    userForUserPage: UserInput,
     userForUserPageId: number;
     isDataLoading: boolean;
 }

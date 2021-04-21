@@ -10,7 +10,7 @@ import { User } from "../../../interfaces/User";
 import { useDispatch, useSelector } from "react-redux";
 import { IRootState } from "../../../store";
 import { getUserToEditById } from "../../../store/user-page/thunk";
-import { setUserForUserPageId, setUserRegisterMode } from "../../../store/user-page/action-creators";
+import { setUserForUserPageId } from "../../../store/user-page/action-creators";
 import { Link } from "react-router-dom";
 import { getUsers } from "../../../store/user-list-page/thunk";
 
@@ -59,7 +59,6 @@ function UserListComponent(props: UserListComponentProps) {
         dispatch(setUserForUserPageId(userToEditId))
     }
     const onRegisterClick = () => {
-        dispatch(setUserRegisterMode());
     }
 
     const lastNameColumnOnClick = () => {
