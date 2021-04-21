@@ -15,6 +15,7 @@ import TagsPage from './components/tags-page/TagsPage';
 import { getToken } from './services/auth.service';
 import { getUser } from './services/test-wretch';
 import UserListPage from './components/user-page/UserListPage';
+import GroupPage from './components/group-page/GroupPage';
 
 
 function App() {
@@ -108,6 +109,9 @@ function App() {
                                 }
                                 <Route path="/homework">
                                     <HomeworkPage />
+                                </Route>
+                                <Route path="/group">
+                                    <GroupPage />
                                 </Route>
                             </Switch>
                             :

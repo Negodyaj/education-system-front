@@ -1,10 +1,7 @@
 import { baseUrl } from "../shared/consts";
 import wretch, { WretcherError } from 'wretch';
 import { getToken } from "./auth.service";
-import { Dispatch } from "redux";
-import { setUserListWasLoaded } from "../store/user-list-page/action-creators";
-import { pushNotification } from "../store/notifications/action-creators";
-import { makeNotification } from "../shared/helpers/notificationHelpers";
+
 
 export const sendGetRequest = async <T>(path: string, isT: ((data: any) => data is T) | undefined) => {
   return await baseWretch()
