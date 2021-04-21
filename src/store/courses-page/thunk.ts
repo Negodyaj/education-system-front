@@ -13,6 +13,14 @@ import { closeModalCreateCourseAction, closeModalDeleteCourseAction, createCours
 
 const url = 'url';
 
+// const _getCourses = (dispatch: Dispatch) => {
+//     dispatch(setCoursesListIsLoadingAction());
+//     sendGetRequest<Course[]>(coursesUrl, isCourseArr)
+//         .then(courses => dispatch(setCoursesListWasLoadedAction(courses)))
+//         .catch(error => dispatch(setCoursesListFailAction(error)))
+
+// }
+
 export const getCourses = () => {
     return (dispatch: Dispatch) => {
         dispatch(setCoursesListIsLoadingAction());
@@ -23,24 +31,26 @@ export const getCourses = () => {
 }
 
 export const deleteCourse =  (id: number) => {
-    return (dispatch: Dispatch) => {
+    return (dispatch: Dispatch<any>) => {
         sendDeleteRequest<Course>(`${coursesUrl}/${id}`, isCourse)
         .then(course => {
             let response = thunkResponseHandler(dispatch, course);
             response && dispatch(pushNotification(makeNotification('success', `Курс ${(response as Course).name} успешно удален`)));
             dispatch(closeModalDeleteCourseAction());
+            dispatch(getCourses());
         })
         .catch(error => thunkResponseHandler(dispatch, error));
     }
 }
 
 export const createCourse = (newCourse: DataNewCourse) => {
-    return (dispatch: Dispatch) => {
+    return (dispatch: Dispatch<any>) => {
         sendPostRequest<Course>(`${coursesUrl}`, isCourse, newCourse)
             .then(course => {
                 let response = thunkResponseHandler(dispatch, course);
                 response && dispatch(pushNotification(makeNotification('success', `Курс ${(response as Course).name} успешно создан`)));
                 dispatch(closeModalCreateCourseAction());
+                dispatch(getCourses());
             })
             .catch(error => thunkResponseHandler(dispatch, error));
     }
