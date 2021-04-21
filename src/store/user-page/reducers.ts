@@ -1,9 +1,11 @@
-import { UserInput } from "../../interfaces/UserInput";
-import { USER_EDIT_MODE_WAS_CLOSED, USER_TO_EDIT_WRETCH_FAIL, USER_TO_EDIT_WRETCH_LOADED, USER_TO_EDIT_WRETCH_LOADING, USER_TO_VIEW_WRETCH_FAIL, USER_TO_VIEW_WRETCH_LOADED, USER_TO_VIEW_WRETCH_LOADING, USER_IS_SENDING, USER_REGISTER_MODE_IS_ON } from "../actionTypes";
+import { User } from "../../interfaces/User";
+import { UNSET_USER_ID_FOR_USER_PAGE } from "../../shared/consts";
+import { USER_TO_EDIT_WRETCH_FAIL, USER_TO_EDIT_WRETCH_LOADED, USER_TO_EDIT_WRETCH_LOADING, USER_IS_SENDING, USER_REGISTER_MODE_IS_ON, USER_FOR_USER_PAGE_ID } from "../actionTypes";
 import { IUserPage } from "../state";
 import { UserPageActions } from "./action-creators";
 
-const INIT_USER_TO_REGISTER: UserInput = {
+export const INIT_USER_TO_REGISTER: User = {
+    id: 0,
     firstName: "",
     lastName: "",
     birthDate: "",
@@ -16,49 +18,28 @@ const INIT_USER_TO_REGISTER: UserInput = {
 }
 
 const initialState: IUserPage = {
-    userToView: undefined,
-    userToEditId: undefined,
-    userToEdit: undefined,
-    userToRegister: INIT_USER_TO_REGISTER,
-    isUserPageOpened: false,
+    userForUserPage: INIT_USER_TO_REGISTER,
+    userForUserPageId: UNSET_USER_ID_FOR_USER_PAGE,
     isDataLoading: false
 };
 export function userPageReducer(state: IUserPage = initialState, action: UserPageActions): IUserPage {
     switch (action.type) {
-        case USER_TO_VIEW_WRETCH_LOADING:
-            return { ...state, isDataLoading: true }
-        case USER_TO_VIEW_WRETCH_LOADED:
-            return {
-                ...state,
-                userToView: action.payload,
-                userToEdit: undefined,
-                userToRegister: undefined,
-                isDataLoading: false
-            };
-        case USER_TO_VIEW_WRETCH_FAIL:
-            return { ...state, isDataLoading: false };
+        case USER_FOR_USER_PAGE_ID:
+            return { ...state, userForUserPageId: action.payload, isDataLoading: true }
         case USER_TO_EDIT_WRETCH_LOADING:
             return { ...state, isDataLoading: true };
         case USER_TO_EDIT_WRETCH_LOADED:
             return {
                 ...state,
-                userToView: undefined,
-                userToEdit: action.payload,
-                userToRegister: undefined,
-                isUserPageOpened: true,
+                userForUserPage: { ...action.payload },
                 isDataLoading: false
             };
         case USER_TO_EDIT_WRETCH_FAIL:
             return { ...state, isDataLoading: false };
-        case USER_EDIT_MODE_WAS_CLOSED:
-            return { ...state, isUserPageOpened: false };
         case USER_REGISTER_MODE_IS_ON:
             return {
                 ...state,
-                userToView: undefined,
-                userToEdit: undefined,
-                userToRegister: INIT_USER_TO_REGISTER,
-                isUserPageOpened: true,
+                userForUserPage: INIT_USER_TO_REGISTER,
                 isDataLoading: false
             }
         case USER_IS_SENDING:

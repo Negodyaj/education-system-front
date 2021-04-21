@@ -67,10 +67,13 @@ function App() {
                                         ||
                                         appState.roleSelector.currentUserRoleId === Role.Admin)
                                     &&
-                                    <Route path="/user-page">
-                                        <UserPage></UserPage>
+                                    <Route path="/user-list">
+                                        <UserListPage></UserListPage>
                                     </Route>
                                 }
+                                <Route path="/user-page">
+                                    <UserPage></UserPage>
+                                </Route>
                                 {
                                     appState.roleSelector.currentUserRoleId === Role.Teacher &&
                                     <Route path="/courses-page">

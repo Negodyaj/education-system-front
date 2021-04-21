@@ -10,14 +10,15 @@ import { User } from "../../../interfaces/User";
 import { useDispatch, useSelector } from "react-redux";
 import { IRootState } from "../../../store";
 import { getUserToEditById } from "../../../store/user-page/thunk";
-import { setUserRegisterMode } from "../../../store/user-page/action-creators";
+import { setUserForUserPageId, setUserRegisterMode } from "../../../store/user-page/action-creators";
 import { Link } from "react-router-dom";
+import { getUsers } from "../../../store/user-list-page/thunk";
 
 interface UserListComponentProps {
 }
 
 function UserListComponent(props: UserListComponentProps) {
-
+    
     const dispatch = useDispatch();
     const appState = useSelector((state: IRootState) => state)
 
@@ -49,15 +50,13 @@ function UserListComponent(props: UserListComponentProps) {
             )
         }
     }
-
     const onPaymentButtonClick = (userId: number | undefined) => {
         //setUserForPayment([...usersToShow].filter(u => u.id === userId)[0]);
         setPaymentFormState('visible');
 
     }
-
     const onEditClick = (userToEditId: number) => {
-        dispatch(getUserToEditById(userToEditId))
+        dispatch(setUserForUserPageId(userToEditId))
     }
     const onRegisterClick = () => {
         dispatch(setUserRegisterMode());
@@ -75,64 +74,69 @@ function UserListComponent(props: UserListComponentProps) {
     }
 
     return (
-        <div className="user-list">
-            <div className="column-head">
-                <h4>Пользователи</h4>
-                <Link to="/user-page">
-                    <button className="button-style" onClick={onRegisterClick}>
-                        <FontAwesomeIcon icon="plus" />
-                        <span> Добавить</span>
-                    </button>
-                </Link>
-            </div>
-            <div className="list + user-list-head">
-                <div className="column"> </div>
-                <div className="column"><span title="А-Я" onClick={lastNameColumnOnClick}>фамилия</span></div>
-                <div className="column"><span title="А-Я">имя</span></div>
-                <div className="column"><span title="А-Я">логин</span></div>
-                <div className="column"><span title="А-Я">роль</span></div>
-            </div>
-            {
-                appState.userListPage.userList.map(u => (
-                    <div className="list + user-list-item" key={u.id}>
-                        <div className="column">
-                            <img className="user-photo" src={u.userPic} alt="userpic" />
-                        </div>
-                        <div className="column break-word" lang="ru">{u.lastName}</div>
-                        <div className="column break-word">{u.firstName}</div>
-                        <div className="column">{u.login}</div>
-                        <div className="column multiline">
-                            {
-                                u.roles?.map(r => (<div>{getEnToRuTranslation(Role[r])}</div>))
-                            }
-                        </div>
-                        <div className="column">{/*u.groupName*/}</div>
-                        <div className="column-button">
-                            <div className="column">
-                                <Link to="/user-page">
-                                    <button className="button-round" onClick={() => onEditClick(u.id)}>
-                                        <FontAwesomeIcon icon="edit" />
-                                    </button>
-                                </Link>
-                                <button className="button-round" onClick={() => { }/*props.onDeleteClick(u.id as number)*/}>
-                                    <FontAwesomeIcon icon="trash" />
-                                </button>
+        appState.userListPage.isDataLoading
+            ?
+            <div>LOADING</div>
+            :
+            <>
+                <div className="user-list">
+                    <div className="column-head">
+                        <h4>Пользователи</h4>
+                        <Link to="/user-page">
+                            <button className="button-style" onClick={onRegisterClick}>
+                                <FontAwesomeIcon icon="plus" />
+                                <span> Добавить</span>
+                            </button>
+                        </Link>
+                    </div>
+                    <div className="list + user-list-head">
+                        <div className="column"> </div>
+                        <div className="column"><span title="А-Я" onClick={lastNameColumnOnClick}>фамилия</span></div>
+                        <div className="column"><span title="А-Я">имя</span></div>
+                        <div className="column"><span title="А-Я">логин</span></div>
+                        <div className="column"><span title="А-Я">роль</span></div>
+                    </div>
+                    {
+                        appState.userListPage.userList.map(u => (
+                            <div className="list + user-list-item" key={u.id}>
+                                <div className="column">
+                                    <img className="user-photo" src={u.userPic} alt="userpic" />
+                                </div>
+                                <div className="column break-word" lang="ru">{u.lastName}</div>
+                                <div className="column break-word">{u.firstName}</div>
+                                <div className="column">{u.login}</div>
+                                <div className="column multiline">
+                                    {
+                                        u.roles?.map(r => (<div>{getEnToRuTranslation(Role[r])}</div>))
+                                    }
+                                </div>
+                                <div className="column">{/*u.groupName*/}</div>
+                                <div className="column-button">
+                                    <div className="column">
+                                        <Link to="/user-page">
+                                            <button className="button-round" onClick={() => onEditClick(u.id)}>
+                                                <FontAwesomeIcon icon="edit" />
+                                            </button>
+                                        </Link>
+                                        <button className="button-round" onClick={() => { }/*props.onDeleteClick(u.id as number)*/}>
+                                            <FontAwesomeIcon icon="trash" />
+                                        </button>
 
-                                {
-                                    elementsDefinedByRole.paymentButton(u.id)
-                                }
-                            </div>
-                        </div>
-                    </div>))
-            }
-            <PaymentForm
-                paymentFormState={paymentFormState}
-                cancelClick={onCancelPaymentClick}
-                userName={userForPayment?.firstName}
-                userLastname={userForPayment?.lastName}
-            ></PaymentForm>
-        </div>
-
+                                        {
+                                            elementsDefinedByRole.paymentButton(u.id)
+                                        }
+                                    </div>
+                                </div>
+                            </div>))
+                    }
+                    <PaymentForm
+                        paymentFormState={paymentFormState}
+                        cancelClick={onCancelPaymentClick}
+                        userName={userForPayment?.firstName}
+                        userLastname={userForPayment?.lastName}
+                    ></PaymentForm>
+                </div>
+            </>
     )
 }
 

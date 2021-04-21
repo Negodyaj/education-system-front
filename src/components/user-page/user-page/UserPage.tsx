@@ -1,64 +1,46 @@
 import CustomMultiSelect from '../../multi-select/CustomMultiSelect';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import DatePickerComponent from '../../../shared/components/date-picker/DatePickerComponent';
 import { convertEnumToDictionary, getRussianDictionary } from '../../../shared/converters/enumToDictionaryEntity';
 import { Role } from '../../../enums/role';
 import { useForm } from 'react-hook-form';
 import { convertEntitiesToSelectItems } from '../../../shared/converters/entityToSelectItemConverter';
 import { getName } from '../../../shared/converters/objectKeyToString';
-import { sendPostRequest, sendPutRequest } from '../../../services/http.service';
 import { ErrorMessage } from '@hookform/error-message';
 import './UserPage.css'
 import '../../../App.css';
 import { User } from '../../../interfaces/User';
-import { UserUpdate } from '../../../interfaces/UserUpdate';
-import { UserRegisterResponse } from '../../../interfaces/UserRegisterResponse';
 import { useDispatch, useSelector } from 'react-redux';
 import { IRootState } from '../../../store';
 import { quitUserPage } from '../../../store/user-page/action-creators';
-import { sendUser } from '../../../store/user-page/thunk';
+import { getUserToEditById, sendUser } from '../../../store/user-page/thunk';
 import { convertRoleIdsToSelectItems } from '../../../shared/converters/roleIdsToSelectItems';
 import { Link } from 'react-router-dom';
 
-interface UserPageProps {
-}
 
-function UserPage(props: UserPageProps) {
+function UserPage() {
 
     const dispatch = useDispatch();
     const appState = useSelector((state: IRootState) => state)
-    const initUser: User = Object.assign({}, appState.userPage.userToEdit || {
-        id: 0,
-        firstName: "",
-        lastName: "",
-        login: "",
-        password: "",
-        birthDate: new Date().toLocaleDateString('ru-RU'),
-        userPic: "",
-        phone: "",
-        email: "",
-        roles: []
-    })
-
-    const [newUser, setNewUser] = useState<User>(initUser);
-    const [isFetching, setIsFetching] = useState(false);
-
+    useEffect(()=>{
+    dispatch(getUserToEditById(appState.userPage.userForUserPageId))
+    },[])
 
     const { register, formState: { errors }, handleSubmit, getValues, setValue } = useForm<User>({
         mode: 'all',
         criteriaMode: 'all',
-        defaultValues: appState.userPage.userToEdit
+        defaultValues: { ...appState.userPage.userForUserPage}
     });
 
     const elementsDefinedByProps = {
         roleSelector: () => {
-            if (appState.roleSelector.currentUserRoleId === Role.Admin && !appState.userPage.userToEditId) {
+            if (appState.roleSelector.currentUserRoleId === Role.Admin) {
                 return (
                     <div className="form-row multi">
                         <label className="form-label">Список ролей</label>
                         <CustomMultiSelect
                             selectType={"multi"}
-                            selectedOptions={convertRoleIdsToSelectItems(pageState.userPage.userToRegister?.roles||[])||undefined}
+                            selectedOptions={convertRoleIdsToSelectItems(appState.userPage.userForUserPage.roles || []) || undefined}
                             options={convertEntitiesToSelectItems(getRussianDictionary(convertEnumToDictionary(Role)))}
                             onMultiSelect={roleOnChange}></CustomMultiSelect>
                     </div>)
@@ -67,7 +49,7 @@ function UserPage(props: UserPageProps) {
             }
         },
         passwordInput: () => {
-            if (appState.userPage.userToEdit === undefined) {
+            if (appState.userPage.userForUserPage === undefined) {
                 return (
                     <div className="form-row">
                         <label className="form-label">Пароль</label>
@@ -82,7 +64,7 @@ function UserPage(props: UserPageProps) {
                             className="form-input" />
                         <ErrorMessage
                             errors={errors}
-                            name={getName<User>(newUser, o => o.password)}
+                            name={getName<User>(appState.userPage.userForUserPage, o => o.password)}
                             className="bad-feedback"
                             as="div">
                         </ErrorMessage>
@@ -93,7 +75,7 @@ function UserPage(props: UserPageProps) {
             }
         },
         loginInput: () => {
-            if (appState.userPage.userToEdit === undefined) {
+            if (appState.userPage.userForUserPage === undefined) {
                 return (
                     <div className="form-row">
                         <label className="form-label">Логин</label>
@@ -112,7 +94,7 @@ function UserPage(props: UserPageProps) {
                             className="form-input" />
                         <ErrorMessage
                             errors={errors}
-                            name={getName<User>(newUser, o => o.login)}
+                            name={getName<User>(appState.userPage.userForUserPage, o => o.login)}
                             className="bad-feedback"
                             as="div">
                         </ErrorMessage>
@@ -136,10 +118,11 @@ function UserPage(props: UserPageProps) {
         dispatch(quitUserPage())
     }
 
-    if (isFetching) {
-        return (<div>loading</div>)
-    } else {
-        return (
+    return (
+        appState.userPage.isDataLoading
+            ?
+            <div>Loading</div>
+            :
             <div className={"user-edit-form needs-validation was-validated"}>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="form-row">
@@ -160,7 +143,7 @@ function UserPage(props: UserPageProps) {
                             className="form-input" />
                         <ErrorMessage
                             errors={errors}
-                            name={getName<User>(newUser, o => o.firstName)}
+                            name={getName<User>(appState.userPage.userForUserPage, o => o.firstName)}
                             className="bad-feedback"
                             as="div">
                         </ErrorMessage>
@@ -182,7 +165,7 @@ function UserPage(props: UserPageProps) {
                             className="form-input" />
                         <ErrorMessage
                             errors={errors}
-                            name={getName<User>(newUser, o => o.lastName)}
+                            name={getName<User>(appState.userPage.userForUserPage, o => o.lastName)}
                             className="bad-feedback"
                             as="div">
                         </ErrorMessage>
@@ -217,7 +200,7 @@ function UserPage(props: UserPageProps) {
                             className="form-input" />
                         <ErrorMessage
                             errors={errors}
-                            name={getName<User>(newUser, o => o.phone)}
+                            name={getName<User>(appState.userPage.userForUserPage, o => o.phone)}
                             className="bad-feedback"
                             as="div">
                         </ErrorMessage>
@@ -244,7 +227,7 @@ function UserPage(props: UserPageProps) {
                             placeholder="или вставьте ссылку" />
                         <ErrorMessage
                             errors={errors}
-                            name={getName<User>(newUser, o => o.userPic)}
+                            name={getName<User>(appState.userPage.userForUserPage, o => o.userPic)}
                             className="bad-feedback"
                             as="div">
                         </ErrorMessage>
@@ -263,7 +246,7 @@ function UserPage(props: UserPageProps) {
                             className="form-input" />
                         <ErrorMessage
                             errors={errors}
-                            name={getName<User>(newUser, o => o.email)}
+                            name={getName<User>(appState.userPage.userForUserPage, o => o.email)}
                             className="bad-feedback"
                             as="div">
                         </ErrorMessage>
@@ -281,8 +264,7 @@ function UserPage(props: UserPageProps) {
                     </div>
                 </form>
             </div >
-        )
-    }
+    )
 }
 export default UserPage;
 

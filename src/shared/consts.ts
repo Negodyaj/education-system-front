@@ -6,3 +6,4 @@ export const currentUserUrl: string = 'User/current';
 
 //initials
 export const UNSELECTED_ROLE:number = 0;
+export const UNSET_USER_ID_FOR_USER_PAGE:number = -1;

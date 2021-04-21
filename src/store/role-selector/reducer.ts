@@ -1,5 +1,5 @@
 import { UNSELECTED_ROLE } from "../../shared/consts";
-import { CURRENT_USER_ROLE_ID_SELECTED, CURRENT_USER_WAS_LOADED, CURRENT_USER_IS_LOADING, TOGGLE_ROLE_SELECTOR, ROLE_SELECTOR_PENDING, CURRENT_USER_UNSET } from "../actionTypes";
+import { CURRENT_USER_ROLE_ID_SELECTED, CURRENT_USER_WAS_LOADED, CURRENT_USER_IS_LOADING, TOGGLE_ROLE_SELECTOR, CURRENT_USER_UNSET } from "../actionTypes";
 import { IRoleSelector } from "../state";
 import { RoleSelectorActions } from "./action-creator";
 
@@ -28,7 +28,7 @@ export function roleSelectorReducer(state: IRoleSelector = initialState, action:
                 currentUserRoleId: action.payload
             };
         case TOGGLE_ROLE_SELECTOR:
-            return { ...state, isTurnedOn: !state.currentUser ? (state.isTurnedOn ? false : true) : false };
+            return { ...state, isTurnedOn: state.currentUser ? !state.isTurnedOn : false };
         case CURRENT_USER_UNSET:
             return { ...initialState }
         default:
