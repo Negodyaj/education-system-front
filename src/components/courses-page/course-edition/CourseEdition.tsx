@@ -60,7 +60,7 @@ function CourseEdition() {
     } 
 
     const checkThemes = () => {
-        pageState.course.themes.map((theme) => (
+        pageState.course.themes?.map((theme) => (
             nameThemesCourse.push(theme.name)
         ))
         dispatch(setNameAllThemesInCourse(nameThemesCourse));
