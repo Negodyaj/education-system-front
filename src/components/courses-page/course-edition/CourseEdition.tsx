@@ -32,7 +32,6 @@ function CourseEdition() {
         dispatch(getCourseById(idCourse));
         closeProgramCourse();
         closeMaterialsCourse();
-        checkThemes();
     }, []);
 
     useEffect(() => {
