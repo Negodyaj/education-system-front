@@ -15,12 +15,20 @@ export interface IUserListPage {
 }
 
 export interface IUserPage {
-    userToView: User | undefined;
-    userToEdit: UserUpdate | undefined;
-    userToEditId: number | undefined;
-    userToRegister: UserInput | undefined;
-    isEditModeOn: boolean;
+    userForUserPage: UserInput,
+    userForUserPageId: number;
     isDataLoading: boolean;
+}
+
+export interface IRoleSelector {
+    isTurnedOn: boolean;
+    currentUser: User | undefined;
+    currentUserRoleId: number;
+    isDataLoading: boolean;
+}
+
+export interface IAppState {
+    isLoggedIn: boolean;
 }
 
 export interface INotificationContainerState {

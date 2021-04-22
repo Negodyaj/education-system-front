@@ -10,20 +10,16 @@ import { User } from "../../../interfaces/User";
 import { useDispatch, useSelector } from "react-redux";
 import { IRootState } from "../../../store";
 import { getUserToEditById } from "../../../store/user-page/thunk";
-import { sendDeleteRequestNoResponse } from "../../../services/http.service";
+import { setUserForUserPageId } from "../../../store/user-page/action-creators";
+import { Link } from "react-router-dom";
+import { getUsers } from "../../../store/user-list-page/thunk";
 import ConfirmationDialog from "../../../shared/components/confirmation-dialog/ConfirmationDialog";
+import { sendDeleteRequestNoResponse } from "../../../services/http.service";
 
-interface UserListComponentProps {
-    roleId: number;
-    users: User[];
-    onEditClick: (userToEditId?: number) => void;
-    onDeleteClick: (userToDeleteId: number) => void;
-}
-
-function UserListComponent(props: UserListComponentProps) {
+function UserListComponent() {
 
     const dispatch = useDispatch();
-    const userListPageState = useSelector((state:IRootState)=> state.userListPage)
+    const appState = useSelector((state: IRootState) => state)
 
     const lastNameAlphabetSort = (a: string, b: string) => {
         a = a.toLowerCase();
@@ -38,18 +34,17 @@ function UserListComponent(props: UserListComponentProps) {
     }
 
     const [signInvertor, setSignInvertor] = useState(1);
-    const [usersToShow, setUsersToShow] = useState([...props.users]);
     const [userForPayment, setUserForPayment] = useState<User | undefined>(undefined);
     const [paymentFormState, setPaymentFormState] = useState('');
     const [roleID, setRoleID] = useState(0);
     const [userID, setUserID] = useState(0);
-    const [isModalShow, setIsModalShow] = useState(false); 
+    const [isModalShow, setIsModalShow] = useState(false);
     const [confirmationDeleteMessage, setConfirmationDeleteMessage] = useState('Вы уверены?')
 
     const elementsDefinedByRole = {
         paymentButton: (userId: number | undefined) => {
             return (
-                props.roleId === Role.Manager
+                appState.roleSelector.currentUserRoleId === Role.Manager
                 &&
                 <button className="button-round" onClick={() => onPaymentButtonClick(userId)}>
                     <FontAwesomeIcon icon="ruble-sign" />
@@ -58,7 +53,7 @@ function UserListComponent(props: UserListComponentProps) {
         },
         deleteRoleButton: (user: User, roleId: number) => {
             return (
-                (props.roleId === Role.Admin && user.roles && user.roles.length > 1)
+                (appState.roleSelector.currentUserRoleId === Role.Admin && user.roles && user.roles.length > 1)
                 &&
                 <button className='button-round mini-button' onClick={() => onDeleteRoleClick(user, roleId)}>
                     <FontAwesomeIcon icon="times" />
@@ -67,15 +62,15 @@ function UserListComponent(props: UserListComponentProps) {
         }
 
     }
-
     const onPaymentButtonClick = (userId: number | undefined) => {
         //setUserForPayment([...usersToShow].filter(u => u.id === userId)[0]);
         setPaymentFormState('visible');
 
     }
-
     const onEditClick = (userToEditId: number) => {
-        dispatch(getUserToEditById(userToEditId))
+        dispatch(setUserForUserPageId(userToEditId))
+    }
+    const onRegisterClick = () => {
     }
 
     const lastNameColumnOnClick = () => {
@@ -92,89 +87,98 @@ function UserListComponent(props: UserListComponentProps) {
         setIsModalShow(true);
     }
     const refreshUser = () => {
-        const newUsers = [...userListPageState.userList];
+        const newUsers = [...appState.userListPage.userList];
         const index = newUsers.findIndex(u => u.id === userID)
         newUsers[index] = { ...newUsers[index], roles: newUsers[index].roles?.filter(r => r !== roleID) };
-        userListPageState.userList=newUsers;
+        appState.userListPage.userList = newUsers;
     }
 
 
-const deleteRole = async (decision: boolean) => {
-    if (decision) {
-        if (await sendDeleteRequestNoResponse(`User/${userID}/role/${roleID}`))
+    const deleteRole = async (decision: boolean) => {
+        if (decision) {
+            if (await sendDeleteRequestNoResponse(`User/${userID}/role/${roleID}`))
                 refreshUser();
         }
-    setIsModalShow(false);
-}
+        setIsModalShow(false);
+    }
 
     const onCancelPaymentClick = () => {
         setPaymentFormState('');
     }
 
     return (
-        <div className="user-list">
-            <div className="column-head">
-                <h4>Пользователи</h4>
-                <button className="button-style" onClick={() => props.onEditClick()}>
-                    <FontAwesomeIcon icon="plus" />
-                    <span> Добавить</span>
-                </button>
-            </div>
-            <div className="list + user-list-head">
-                <div className="column"> </div>
-                <div className="column"><span title="А-Я" onClick={lastNameColumnOnClick}>фамилия</span></div>
-                <div className="column"><span title="А-Я">имя</span></div>
-                <div className="column"><span title="А-Я">логин</span></div>
-                <div className="column"><span title="А-Я">роль</span></div>
-            </div>
-            {
-                userListPageState.userList.map(u => (
-                    <div className="list + user-list-item" key={u.id}>
-                        <div className="column">
-                            <img className="user-photo" src={u.userPic} alt="userpic" />
-                        </div>
-                        <div className="column break-word" lang="ru">{u.lastName}</div>
-                        <div className="column break-word">{u.firstName}</div>
-                        <div className="column">{u.login}</div>
-                        <div className="column multiline">
-                        {
-                            u.roles?.map(r => (<div className='role'>
-                                {elementsDefinedByRole.deleteRoleButton(u, r)}
-                                <div>{getEnToRuTranslation(Role[r])}</div>
-                            </div>))
-                        }
-                        </div>
-                        <div className="column">{/*u.groupName*/}</div>
-                        <div className="column-button">
-                            <div className="column">
-                                <button className="button-round" onClick={() => onEditClick(u.id)}>
-                                    <FontAwesomeIcon icon="edit" />
-                                </button>
-                                <button className="button-round" onClick={() => props.onDeleteClick(u.id as number)}>
-                                    <FontAwesomeIcon icon="trash" />
-                                </button>
+        appState.userListPage.isDataLoading
+            ?
+            <div>LOADING</div>
+            :
+            
+                <div className="user-list">
+                    <div className="column-head">
+                        <h4>Пользователи</h4>
+                        <Link to="/user-page">
+                            <button className="button-style" onClick={onRegisterClick}>
+                                <FontAwesomeIcon icon="plus" />
+                                <span> Добавить</span>
+                            </button>
+                        </Link>
+                    </div>
+                    <div className="list + user-list-head">
+                        <div className="column"> </div>
+                        <div className="column"><span title="А-Я" onClick={lastNameColumnOnClick}>фамилия</span></div>
+                        <div className="column"><span title="А-Я">имя</span></div>
+                        <div className="column"><span title="А-Я">логин</span></div>
+                        <div className="column"><span title="А-Я">роль</span></div>
+                    </div>
+                    {
+                        appState.userListPage.userList.map(u => (
+                            <div className="list + user-list-item" key={u.id}>
+                                <div className="column">
+                                    <img className="user-photo" src={u.userPic} alt="userpic" />
+                                </div>
+                                <div className="column break-word" lang="ru">{u.lastName}</div>
+                                <div className="column break-word">{u.firstName}</div>
+                                <div className="column">{u.login}</div>
+                                <div className="column multiline">
+                                    {
+                                        u.roles?.map(r => (<div className='role'>
+                                            <div>{getEnToRuTranslation(Role[r])}</div>
+                                            {elementsDefinedByRole.deleteRoleButton(u, r)}
+                                            
+                                        </div>))}
+                                </div>
+                                <div className="column">{/*u.groupName*/}</div>
+                                <div className="column-button">
+                                        <div className="column">
+                                            <Link to="/user-page">
+                                    <button className="button-round" onClick={() => onEditClick(u.id)}>
+                                                <FontAwesomeIcon icon="edit" />
+                                            </button>
+                                        </Link>
+                                        <button className="button-round" onClick={() => { }/*props.onDeleteClick(u.id as number)*/}>
+                                            <FontAwesomeIcon icon="trash" />
+                                        </button>
 
-                                {
-                                    elementsDefinedByRole.paymentButton(u.id)
-                                }
+                                        {
+                                            elementsDefinedByRole.paymentButton(u.id)
+                                        }
                             </div>
-                        </div>
-                        <ConfirmationDialog
-                        isShown={isModalShow}
-                        confirmLabel='Да'
-                        declineLabel='Нет'
-                        message={confirmationDeleteMessage}
-                        title='Удаление роли'
-                        callback={deleteRole}></ConfirmationDialog>
-                    </div>))
-            }
-            <PaymentForm
-                paymentFormState={paymentFormState}
-                cancelClick={onCancelPaymentClick}
-                userName={userForPayment?.firstName}
-                userLastname={userForPayment?.lastName}
-            ></PaymentForm>
-        </div>
+                                </div>
+                                <ConfirmationDialog
+                                    isShown={isModalShow}
+                                    confirmLabel='Да'
+                                    declineLabel='Нет'
+                                    message={confirmationDeleteMessage}
+                                    title='Удаление роли'
+                                    callback={deleteRole}></ConfirmationDialog>
+                            </div>))
+                    }
+                    <PaymentForm
+                        paymentFormState={paymentFormState}
+                        cancelClick={onCancelPaymentClick}
+                        userName={userForPayment?.firstName}
+                        userLastname={userForPayment?.lastName}
+                    ></PaymentForm>
+                </div>
 
     )
 }

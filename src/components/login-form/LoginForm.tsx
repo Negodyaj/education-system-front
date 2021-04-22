@@ -1,18 +1,15 @@
 import { ChangeEvent, useState } from 'react';
-import { authenticate } from '../../services/auth.service';
+import { useDispatch } from 'react-redux';
+import { authenticate } from '../../store/login-form/thunk';
 import './LoginForm.css';
 
-interface LoginFormProps {
-    onLoginClick: (login: string, password: string) => void
-}
-
-function LoginForm(props: LoginFormProps) {
+function LoginForm() {
     const [login, setLogin] = useState('');
     const [password, setPassword] = useState('');
+    const dispatch = useDispatch();
 
     const loginButtonOnClick = () => {
-        authenticate(login, password);
-        //props.onLoginClick(login, password);
+        dispatch(authenticate(login, password))
     }
 
     const handleloginChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -27,11 +24,11 @@ function LoginForm(props: LoginFormProps) {
         <div className="login-form">
             <label className="form-field">
                 <span>Login:</span>
-                <input type="text" value={login} onChange={handleloginChange}/>
+                <input type="text" value={login} onChange={handleloginChange} />
             </label>
             <label className="form-field">
                 <span>Password</span>
-                <input type="password" value={password} onChange={handlePasswordChange}/>
+                <input type="password" value={password} onChange={handlePasswordChange} />
             </label>
             <button className="login-btn" onClick={loginButtonOnClick}>Log in</button>
         </div>
