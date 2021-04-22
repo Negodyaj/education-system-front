@@ -1,31 +1,29 @@
 .login-form {
-    width: 40%;
+    width: 300px;
+    height: 301px;
     margin: 0 auto;
-    border: 1px solid salmon;
-    border-radius: 6px;
+    border-radius: 20px;
+    box-shadow: 0 3px 6px #272d3b36;
     padding: 15px;
-}
-
-.form-field {
     display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 25%;
+    left: 40%;
 }
 
-.form-field span {
-    flex-shrink: 0;
-    width: 100px;
+.login-form span {
+    height: 37px;
     text-align: left;
+    font-size: 28px;
+    margin-bottom: 13px;
+    font-family: 'Montserrat';
+    font-weight: 700;
+}
+.form-label{
+    font-size: 12px;
+}
+.form-input{
+    margin-bottom: 11px;
 }
 
-.form-field input {
-    flex-grow: 1;
-    border: 1px solid salmon;
-}
-
-.login-btn {
-    width: 150px;
-    text-align: center;
-    background-color: salmon;
-    color: white;
-    margin: 0 auto;
-    display: block;
-}

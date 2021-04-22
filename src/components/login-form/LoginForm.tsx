@@ -2,6 +2,7 @@ import { ChangeEvent, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { authenticate } from '../../store/login-form/thunk';
 import './LoginForm.css';
+import '../../App.css'
 
 function LoginForm() {
     const [login, setLogin] = useState('');
@@ -22,15 +23,16 @@ function LoginForm() {
 
     return (
         <div className="login-form">
-            <label className="form-field">
-                <span>Login:</span>
-                <input type="text" value={login} onChange={handleloginChange} />
+            <span>Sing In</span>
+            <label className="form-label">
+                Login
             </label>
-            <label className="form-field">
-                <span>Password</span>
-                <input type="password" value={password} onChange={handlePasswordChange} />
+            <input className='form-input' type="text" value={login} onChange={handleloginChange} />
+            <label className="form-label">
+                Password              
             </label>
-            <button className="login-btn" onClick={loginButtonOnClick}>Log in</button>
+            <input className='form-input' type="password" value={password} onChange={handlePasswordChange} />
+            <button className="button-style" onClick={loginButtonOnClick}>Log in</button>
         </div>
     )
 }

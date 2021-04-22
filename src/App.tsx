@@ -64,7 +64,7 @@ function App() {
                     {
                         appState.app.isLoggedIn
                         &&
-                        <button onClick={logOut}>Log out</button>
+                        <button className='button-style' onClick={logOut}>Log out</button>
                     }
                 </div>
             </header>
