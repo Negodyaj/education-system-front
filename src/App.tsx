@@ -15,6 +15,8 @@ import TagsPage from './components/tags-page/TagsPage';
 import { getToken } from './services/auth.service';
 import { getUser } from './services/test-wretch';
 import UserListPage from './components/user-page/UserListPage';
+import GroupPage from './components/group-page/GroupPage';
+import { Helmet } from "react-helmet";
 
 
 function App() {
@@ -22,6 +24,7 @@ function App() {
     const token = getToken();
     const [isLoggedIn, setIsLoggedIn] = useState(!!token);
     const [roleId, setRoleId] = useState(Role.Manager);
+    const [isHidden, setHidden] = useState(true);
 
     const users = [
         { login: 'test', password: 'test', roleId: Role.Test },
@@ -47,12 +50,24 @@ function App() {
         history.push("/");
     }
 
+    const onHide = (condition: boolean) => {
+        setHidden(condition);
+    }
+
+    function styleMenu(condition: boolean) {
+        if (condition) { return ("nothide") } else { return ("hide") }
+    }
+
     useEffect(() => {
         getUser()
     }, [])
 
     return (
         <div className="App">
+            <Helmet>
+                <title>Самый лучший сайт на свете</title>
+                <meta name="description" content="Helmet application" />
+            </Helmet>
             <header>
                 <div className="logo-container">
                     <img src={logo} className="app-logo" alt="logo" />
@@ -64,11 +79,12 @@ function App() {
                 </div>
             </header>
             <div className="main-content">
-                <aside>
+                <aside className={styleMenu(isHidden)}>
                     {
                         isLoggedIn ?
-                            <NavMenu roleId={roleId} />
+                            <NavMenu roleId={roleId} onHide={onHide} />
                             :
+
                             <h2>Залогиньтесь!</h2>
                     }
                 </aside>
@@ -80,12 +96,18 @@ function App() {
                                     (roleId === Role.Manager || roleId === Role.Admin) &&
                                     <Route path="/user-page">
                                         <UserListPage roleId={roleId}></UserListPage>
+                                        <Helmet>
+                                            <title>Юзеры</title>
+                                        </Helmet>
                                     </Route>
                                 }
                                 {
                                     roleId === Role.Teacher &&
                                     <Route path="/courses-page">
                                         <CoursesPage />
+                                        <Helmet>
+                                            <title>Курсы</title>
+                                        </Helmet> 
                                     </Route>
                                 }
                                 <Route path="/course-edition/:id" render={({ location, history }) => (
@@ -95,10 +117,22 @@ function App() {
                                     roleId !== Role.Student &&
                                     <Route path="/tags-page">
                                         <TagsPage ></TagsPage>
+                                        <Helmet>
+                                            <title>Тэги</title>
+                                        </Helmet>                                        
                                     </Route>
                                 }
                                 <Route path="/homework">
                                     <HomeworkPage />
+                                    <Helmet>
+                                            <title>Домашки</title>
+                                        </Helmet> 
+                                </Route>
+                                <Route path="/group">
+                                    <GroupPage />
+                                    <Helmet>
+                                            <title>Группы</title>
+                                        </Helmet> 
                                 </Route>
                             </Switch>
                             :

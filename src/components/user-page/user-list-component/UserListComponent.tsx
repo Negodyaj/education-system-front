@@ -10,6 +10,8 @@ import { User } from "../../../interfaces/User";
 import { useDispatch, useSelector } from "react-redux";
 import { IRootState } from "../../../store";
 import { getUserToEditById } from "../../../store/user-page/thunk";
+import { sendDeleteRequestNoResponse } from "../../../services/http.service";
+import ConfirmationDialog from "../../../shared/components/confirmation-dialog/ConfirmationDialog";
 
 interface UserListComponentProps {
     roleId: number;
@@ -37,9 +39,13 @@ function UserListComponent(props: UserListComponentProps) {
     }
 
     const [signInvertor, setSignInvertor] = useState(1);
-    //const [usersToShow, setUsersToShow] = useState([...props.users]);
+    const [usersToShow, setUsersToShow] = useState([...props.users]);
     const [userForPayment, setUserForPayment] = useState<User | undefined>(undefined);
     const [paymentFormState, setPaymentFormState] = useState('');
+    const [roleID, setRoleID] = useState(0);
+    const [userID, setUserID] = useState(0);
+    const [isModalShow, setIsModalShow] = useState(false); 
+    const [confirmationDeleteMessage, setConfirmationDeleteMessage] = useState('Вы уверены?')
 
     const elementsDefinedByRole = {
         paymentButton: (userId: number | undefined) => {
@@ -50,7 +56,17 @@ function UserListComponent(props: UserListComponentProps) {
                     <FontAwesomeIcon icon="ruble-sign" />
                 </button>
             )
+        },
+        deleteRoleButton: (user: User, roleId: number) => {
+            return (
+                (props.roleId === Role.Admin && user.roles && user.roles.length > 1)
+                &&
+                <button className='button-round mini-button' onClick={() => onDeleteRoleClick(user, roleId)}>
+                    <FontAwesomeIcon icon="times" />
+                </button>
+            )
         }
+
     }
 
     const onPaymentButtonClick = (userId: number | undefined) => {
@@ -68,6 +84,32 @@ function UserListComponent(props: UserListComponentProps) {
         //     return lastNameAlphabetSort(a.lastName, b.lastName);
         // }))
         setSignInvertor(signInvertor + 1);
+    }
+
+    const onDeleteRoleClick = (user: User, roleId: number) => {
+        setUserID(user.id as number);
+        setRoleID(roleId);
+        setConfirmationDeleteMessage(`Вы точно хотите избавить пользователя ${user.lastName}( ${user.login}) от роли ${Role[roleId]}?`)
+        setIsModalShow(true);
+    }
+    const refreshUser = () => {
+        const newUsers = [...userListPageState.userList];
+        const index = newUsers.findIndex(u => u.id === userID)
+        newUsers[index] = { ...newUsers[index], roles: newUsers[index].roles?.filter(r => r !== roleID) };
+        userListPageState.userList=newUsers;
+    }
+
+
+const deleteRole = async (decision: boolean) => {
+    if (decision) {
+        if (await sendDeleteRequestNoResponse(`User/${userID}/role/${roleID}`))
+                refreshUser();
+        }
+    setIsModalShow(false);
+}
+
+    const onCancelPaymentClick = () => {
+        setPaymentFormState('');
     }
 
     return (
@@ -96,9 +138,12 @@ function UserListComponent(props: UserListComponentProps) {
                         <div className="column break-word">{u.firstName}</div>
                         <div className="column">{u.login}</div>
                         <div className="column multiline">
-                            {
-                                u.roles?.map(r => (<div>{getEnToRuTranslation(Role[r])}</div>))
-                            }
+                        {
+                            u.roles?.map(r => (<div className='role'>
+                                {elementsDefinedByRole.deleteRoleButton(u, r)}
+                                <div>{getEnToRuTranslation(Role[r])}</div>
+                            </div>))
+                        }
                         </div>
                         <div className="column">{/*u.groupName*/}</div>
                         <div className="column-button">
@@ -115,6 +160,13 @@ function UserListComponent(props: UserListComponentProps) {
                                 }
                             </div>
                         </div>
+                        <ConfirmationDialog
+                        isShown={isModalShow}
+                        confirmLabel='Да'
+                        declineLabel='Нет'
+                        message={confirmationDeleteMessage}
+                        title='Удаление роли'
+                        callback={deleteRole}></ConfirmationDialog>
                     </div>))
             }
             <PaymentForm
