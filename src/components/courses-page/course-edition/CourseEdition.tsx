@@ -3,12 +3,6 @@ import { useEffect, useState } from 'react';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import { Themes } from '../../../interfaces/Themes';
 import SearchComponent from '../../../shared/components/search-component/SearchComponent';
-import { Course } from '../../../interfaces/Courses';
-import { sendDeleteRequest, sendDeleteRequestNoResponse, sendGetRequest, sendPostRequestNoResponse } from '../../../services/http.service';
-import { CourseCourseIdEnd, CourseIdThemeIdDeleteEnd, CourseIdThemeIdAddEnd, CourseThemesEnd } from '../../../shared/endpointConsts';
-import { responseHandlers } from '../../../services/response-handler/responseHandler';
-import { isThemesArr } from '../../../services/type-guards/themesArr';
-import { isCourse } from '../../../services/type-guards/course';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { IRootState } from '../../../store';
@@ -28,8 +22,8 @@ function CourseEdition() {
 
     const dispatch = useDispatch();
     const pageState = useSelector(((state: IRootState) => state.courseEditionPage));
-    
     let { id } = useParams<ParamTypes>();
+    
     let nameThemesCourse: string[] = [];
     let idCourse = Number(id);
 
@@ -38,7 +32,12 @@ function CourseEdition() {
         dispatch(getCourseById(idCourse));
         closeProgramCourse();
         closeMaterialsCourse();
+        checkThemes();
     }, []);
+
+    useEffect(() => {
+        checkThemes();
+    }, [pageState.course.themes]);
 
     const [searchTurn, setSearchTurn] = useState('');
 
@@ -46,7 +45,6 @@ function CourseEdition() {
         if (checkTheThemeInTheCourse(theme) === 0) { 
             let newTheme: NewThemeCourse = {idCourse: idCourse, idTheme: theme.id};
             dispatch(addThemeInCourse(newTheme));
-            checkThemes();
             openProgramCourse();
         }
     }
@@ -66,14 +64,12 @@ function CourseEdition() {
         pageState.course.themes.map((theme) => (
             nameThemesCourse.push(theme.name)
         ))
-        console.log(nameThemesCourse);
         dispatch(setNameAllThemesInCourse(nameThemesCourse));
     }
 
     const deleteThemeFromCourse = (theme: Themes) => {
         let newTheme: NewThemeCourse = {idCourse: idCourse, idTheme: theme.id};
         dispatch(deleteThemeCourse(newTheme));
-        checkThemes();
     } 
 
     const searchFromTheme = (str: string) => {
