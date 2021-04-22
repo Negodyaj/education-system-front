@@ -27,17 +27,24 @@ export function TeacherGroupList() {
     return (
         <div>
             <div className='list-header'> Учителя:</div>
-            <div className='list-group'>
-{users.map(u=> (
-  
-                <TeacherComponent userPic={u.userPic}
-                    lastName={u.lastName}
-                    firstName={u.firstName}
-                    login={u.login} />
-                    
+                <div className='list-group'>
+                    {users.map(u => (
+                        <TeacherComponent userPic={u.userPic}
+                            lastName={u.lastName}
+                            firstName={u.firstName}
+                            login={u.login} />
                     ))}
-                    </div>
-        </div>
+                </div>
+                <div className='list-header'> Студенты:</div>
+                <div className='list-group'>
+                    {users.map(u => (
+                        <TeacherComponent userPic={u.userPic}
+                            lastName={u.lastName}
+                            firstName={u.firstName}
+                            login={u.login} />
+                    ))}
+                </div>
+            </div>
     )
 }
 

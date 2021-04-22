@@ -3,6 +3,8 @@ import TeacherGroupList from "./teacher-group-list/TeacherGroupList"
 
 
 function GroupPage () {
+
+  
     return(
         <div>
           <div className = "group-header"> Nav menu component</div>
