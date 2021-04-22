@@ -1,5 +1,5 @@
 import './CourseEdition.css';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import { Themes } from '../../../interfaces/Themes';
 import SearchComponent from '../../../shared/components/search-component/SearchComponent';
@@ -9,6 +9,7 @@ import { CourseCourseIdEnd, CourseIdThemeIdDeleteEnd, CourseIdThemeIdAddEnd, Cou
 import { responseHandlers } from '../../../services/response-handler/responseHandler';
 import { isThemesArr } from '../../../services/type-guards/themesArr';
 import { isCourse } from '../../../services/type-guards/course';
+import AddTheme from './AddTheme';
 
 interface NewThemeCourse {
     idCourse: number;
@@ -119,6 +120,14 @@ function CourseEdition(props: CourseEditionProps) {
         isClassOnMaterialTheme === ' unvisible' ? setIsClassOnMaterialTheme(' visible') : setIsClassOnMaterialTheme(' unvisible');
 
     }
+
+    const [isModal, setModal] = useState(false);
+    const onClose = () => setModal(false);
+    const onThemeChange = () =>{
+        setAllThemes(allThemes);
+    }
+
+
     
 
     return (
@@ -128,9 +137,11 @@ function CourseEdition(props: CourseEditionProps) {
             <div className='new-themes-course'>
                 <div className="new-themes-course-header">
                     <div className="new-themes-header-text">Темы для курса</div>
-                    <button className="new-themes-header-button-add">
+                    <button className="new-themes-header-button-add" onClick={() => setModal(true)}>
                         <FontAwesomeIcon icon="plus" />
+                        
                     </button>
+                    <AddTheme dataCourse={allThemes} onThemeChange={onThemeChange} setModal={isModal} onClose={onClose}/>
                 </div>
                 <div className="new-themes-container">
                     <SearchComponent funcSearch={searchFromTheme}/>
