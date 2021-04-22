@@ -20,6 +20,8 @@ import GroupPage from './components/group-page/GroupPage';
 import { toggleRoleSelector, unsetCurrentUser } from './store/role-selector/action-creator';
 import { unsetToken } from './services/auth.service';
 import UserPage from './components/user-page/user-page/UserPage';
+import { FormProvider, useForm } from 'react-hook-form';
+import { UserInput } from './interfaces/UserInput';
 
 function App() {
     const dispatch = useDispatch();
@@ -32,8 +34,9 @@ function App() {
         unsetToken();
         history.push("/");
     }
-
+    const methods = useForm<UserInput>();
     return (
+        <FormProvider {...methods} >
         <div className="App">
             <header>
                 <div className="logo-container">
@@ -118,6 +121,7 @@ function App() {
                 </main>
             </div>
         </div>
+        </FormProvider>
     );
 }
 

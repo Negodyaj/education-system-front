@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import DatePickerComponent from '../../../shared/components/date-picker/DatePickerComponent';
 import { convertEnumToDictionary, getRussianDictionary } from '../../../shared/converters/enumToDictionaryEntity';
 import { Role } from '../../../enums/role';
-import { useForm } from 'react-hook-form';
+import { FormProvider } from 'react-hook-form';
 import { convertEntitiesToSelectItems } from '../../../shared/converters/entityToSelectItemConverter';
 import { getName } from '../../../shared/converters/objectKeyToString';
 import { ErrorMessage } from '@hookform/error-message';
@@ -17,6 +17,10 @@ import { getUserToEditById, sendUser } from '../../../store/user-page/thunk';
 import { convertRoleIdsToSelectItems } from '../../../shared/converters/roleIdsToSelectItems';
 import { Link } from 'react-router-dom';
 import { UserInput } from '../../../interfaces/UserInput';
+import ConnectForm from '../../../shared/components/connect-form/ConnectForm';
+import { useUserForm } from '../hooks/useUserForm';
+import TextInput from '../form-elements/text-input';
+import FormElement, {  } from '../form-elements/FormElement';
 
 
 function UserPage() {
@@ -33,10 +37,12 @@ function UserPage() {
         })
     }, [appState.userPage.userForUserPage])
 
-    const { register, formState: { errors }, handleSubmit, getValues, setValue } = useForm<UserInput>({
-        mode: 'all',
-        criteriaMode: 'all'
-    });
+    const { register, formState, handleSubmit, getValues, setValue, ...methods } = useUserForm();
+
+
+    //function formSection2({ register }:UseFormRegisterReturn) {}
+
+
 
     const elementsDefinedByProps = {
         roleSelector: () => {
@@ -69,7 +75,7 @@ function UserPage() {
                             type="text"
                             className="form-input" />
                         <ErrorMessage
-                            errors={errors}
+                            errors={formState.errors}
                             name={"password"}
                             className="bad-feedback"
                             as="div">
@@ -99,7 +105,7 @@ function UserPage() {
                             type="text"
                             className="form-input" />
                         <ErrorMessage
-                            errors={errors}
+                            errors={formState.errors}
                             name={"login"}
                             className="bad-feedback"
                             as="div">
@@ -129,146 +135,135 @@ function UserPage() {
             ?
             <div>Loading</div>
             :
-            <div className={"user-edit-form needs-validation was-validated"}>
-                <form onSubmit={handleSubmit(onSubmit)}>
-                    <div className="form-row">
-                        <label className="form-label">Имя</label>
-                        <input
-                            {...register('firstName', {
-                                required: {
-                                    value: true,
-                                    message: "Введите имя"
-                                },
-                                pattern: {
-                                    value: /[A-Za-zА-Яа-я]/,
-                                    message: "Допустимы только буквенные символы"
-                                }
-                            })}
-                            type="text"
-                            className="form-input" />
-                        <ErrorMessage
-                            errors={errors}
-                            name={"firstName"}
-                            className="bad-feedback"
-                            as="div">
-                        </ErrorMessage>
-                    </div>
-                    <div className="form-row">
-                        <label className="form-label">Фамилия</label>
-                        <input
-                            {...register('lastName', {
-                                required: {
-                                    value: true,
-                                    message: "Введите фамилию"
-                                },
-                                pattern: {
-                                    value: /[A-Za-zА-Яа-я]/,
-                                    message: "Допустимы только буквенные символы"
-                                }
-                            })}
-                            type="text"
-                            className="form-input" />
-                        <ErrorMessage
-                            errors={errors}
-                            name={"lastName"}
-                            className="bad-feedback"
-                            as="div">
-                        </ErrorMessage>
-                    </div>
-                    <div className="form-row">
-                        <label className="form-label">Дата рождения</label>
-                        <DatePickerComponent
-                            {...register('birthDate')}
-                            date={getValues('birthDate')}
-                            onDateChange={birthDateOnChange} />
-                    </div>
-                    {
-                        elementsDefinedByProps.loginInput()
-                    }
-                    {
-                        elementsDefinedByProps.passwordInput()
-                    }
-                    <div className="form-row">
-                        <label className="form-label">Телефон</label>
-                        <input
-                            {...register('phone', {
-                                required: {
-                                    value: true,
-                                    message: "Введите номер телефона"
-                                },
-                                pattern: {
-                                    value: /[0-9]/,
-                                    message: "Допустимы только цифры"
-                                }
-                            })}
-                            type="text"
-                            className="form-input" />
-                        <ErrorMessage
-                            errors={errors}
-                            name={"phone"}
-                            className="bad-feedback"
-                            as="div">
-                        </ErrorMessage>
-                    </div>
-                    <div className="form-row upl-file">
-                        <label className="form-label">Аватар</label>
-                        <div className="file-upload">
-                            <label><input id="file-input" type="file" name="file" />Выберите файл</label>
-                            <div id="no-file">Файл не выбран</div>
-                        </div>
-                        <input
-                            {...register('userPic', {
-                                required: {
-                                    value: true,
-                                    message: "Добавьте ссылку на изображение  или загрузите файл"
-                                },
-                                pattern: {
-                                    value: /\S/,
-                                    message: "Недопустимый формат ссылки"
-                                }
-                            })}
-                            type="text"
-                            className="form-input"
-                            placeholder="или вставьте ссылку" />
-                        <ErrorMessage
-                            errors={errors}
-                            name={"userPic"}
-                            className="bad-feedback"
-                            as="div">
-                        </ErrorMessage>
-                        <img src={getValues('userPic')} alt="аватар" />
-                    </div>
-                    <div className="form-row">
-                        <label className="form-label">Почта</label>
-                        <input
-                            {...register('email', {
-                                required: {
-                                    value: true,
-                                    message: "Введите email"
-                                }
-                            })}
-                            type="text"
-                            className="form-input" />
-                        <ErrorMessage
-                            errors={errors}
-                            name={"email"}
-                            className="bad-feedback"
-                            as="div">
-                        </ErrorMessage>
-                    </div>
-                    <div className="form-row">
+            <FormProvider
+                register={register}
+                formState={formState}
+                handleSubmit={handleSubmit}
+                getValues={getValues} setValue={setValue} {...methods}>
+                <div className={"user-edit-form needs-validation was-validated"}>
+                    <form onSubmit={handleSubmit(onSubmit)}>
                         {
-                            elementsDefinedByProps.roleSelector()
+                            Object.keys(appState.userPage.userForUserPage).map(key => {
+                                return <FormElement name={key}></FormElement>
+                            })
                         }
-                    </div>
-                    <div className="form-row form-row-button">
-                        <Link to="/user-list">
-                            <button className="button-style" type="button" onClick={closeUserPage}>отмена</button>
-                        </Link>
-                        <button className="button-style" type={"submit"}>сохранить</button>
-                    </div>
-                </form>
-            </div >
+                        {/* <div className="form-row">
+                            <label className="form-label">Фамилия</label>
+                            <input
+                                {...register('lastName', {
+                                    required: {
+                                        value: true,
+                                        message: "Введите фамилию"
+                                    },
+                                    pattern: {
+                                        value: /[A-Za-zА-Яа-я]/,
+                                        message: "Допустимы только буквенные символы"
+                                    }
+                                })}
+                                type="text"
+                                className="form-input" />
+                            <ErrorMessage
+                                errors={formState.errors}
+                                name={"lastName"}
+                                className="bad-feedback"
+                                as="div">
+                            </ErrorMessage>
+                        </div>
+                        <div className="form-row">
+                            <label className="form-label">Дата рождения</label>
+                            <DatePickerComponent
+                                {...register('birthDate')}
+                                date={getValues('birthDate')}
+                                onDateChange={birthDateOnChange} />
+                        </div>
+                        {
+                            elementsDefinedByProps.loginInput()
+                        }
+                        {
+                            elementsDefinedByProps.passwordInput()
+                        }
+                        <div className="form-row">
+                            <label className="form-label">Телефон</label>
+                            <input
+                                {...register('phone', {
+                                    required: {
+                                        value: true,
+                                        message: "Введите номер телефона"
+                                    },
+                                    pattern: {
+                                        value: /[0-9]/,
+                                        message: "Допустимы только цифры"
+                                    }
+                                })}
+                                type="text"
+                                className="form-input" />
+                            <ErrorMessage
+                                errors={formState.errors}
+                                name={"phone"}
+                                className="bad-feedback"
+                                as="div">
+                            </ErrorMessage>
+                        </div>
+                        <div className="form-row upl-file">
+                            <label className="form-label">Аватар</label>
+                            <div className="file-upload">
+                                <label><input id="file-input" type="file" name="file" />Выберите файл</label>
+                                <div id="no-file">Файл не выбран</div>
+                            </div>
+                            <input
+                                {...register('userPic', {
+                                    required: {
+                                        value: true,
+                                        message: "Добавьте ссылку на изображение  или загрузите файл"
+                                    },
+                                    pattern: {
+                                        value: /\S/,
+                                        message: "Недопустимый формат ссылки"
+                                    }
+                                })}
+                                type="text"
+                                className="form-input"
+                                placeholder="или вставьте ссылку" />
+                            <ErrorMessage
+                                errors={formState.errors}
+                                name={"userPic"}
+                                className="bad-feedback"
+                                as="div">
+                            </ErrorMessage>
+                            <img src={appState.userPage.userForUserPage.userPic} alt="аватар" />
+                        </div>
+                        <div className="form-row">
+                            <label className="form-label">Почта</label>
+                            <input
+                                {...register('email', {
+                                    required: {
+                                        value: true,
+                                        message: "Введите email"
+                                    }
+                                })}
+                                type="text"
+                                className="form-input" />
+                            <ErrorMessage
+                                errors={formState.errors}
+                                name={"email"}
+                                className="bad-feedback"
+                                as="div">
+                            </ErrorMessage>
+                        </div>
+                        <div className="form-row">
+                            {
+                                elementsDefinedByProps.roleSelector()
+                            }
+                        </div> */}
+                        <div className="form-row form-row-button">
+                            <Link to="/user-list">
+                                <button className="button-style" type="button" onClick={closeUserPage}>отмена</button>
+                            </Link>
+                            <button className="button-style" type={"submit"}>сохранить</button>
+                        </div>
+                    </form>
+                </div >
+            </FormProvider>
     )
 }
 export default UserPage;

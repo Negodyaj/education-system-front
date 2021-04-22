@@ -9,14 +9,6 @@ import { setIsLoggedIn } from '../app/action-creators';
 import { setCurrentUserIsLoading, setCurrentUserWasLoaded } from '../role-selector/action-creator';
 import { thunkResponseHandler } from '../thunkResponseHadlers';
 
-const _getCurrentUser = (dispatch: Dispatch) => {
-    dispatch(setCurrentUserIsLoading());
-    sendGetRequest<User>(currentUserUrl, isUser)
-        .then(currentUser => {
-            dispatch(setCurrentUserWasLoaded(thunkResponseHandler(dispatch, currentUser)));
-            dispatch(setIsLoggedIn())
-        })
-}
 export const authenticate = (login: string, password: string) => {
     return (dispatch: Dispatch) => {
         wretch(`${baseUrl}/authentication`)
@@ -26,6 +18,14 @@ export const authenticate = (login: string, password: string) => {
                 _getCurrentUser(dispatch)
             })
     }
+}
+const _getCurrentUser = (dispatch: Dispatch) => {
+    dispatch(setCurrentUserIsLoading());
+    sendGetRequest<User>(currentUserUrl, isUser)
+        .then(currentUser => {
+            dispatch(setCurrentUserWasLoaded(thunkResponseHandler(dispatch, currentUser)));
+            dispatch(setIsLoggedIn())
+        })
 }
 export const getCurrentUser = () => {
     return (dispatch: Dispatch) => {
