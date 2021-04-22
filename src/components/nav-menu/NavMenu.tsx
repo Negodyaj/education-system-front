@@ -29,7 +29,7 @@ function NavMenu(props: NavMenuProps) {
                         <button className="button-update"><FontAwesomeIcon icon="newspaper" /></button>
                             <button className="navigation"> Мои новости </button>
                         </NavLink>
-                        <NavLink activeClassName="active" to="/groups-list" >
+                        <NavLink activeClassName="active" to="/group-page" >
                         <button className="button-update"><FontAwesomeIcon icon="users" /></button>
                             <button className="navigation"> Мои группы </button>
                         </NavLink>
@@ -51,10 +51,14 @@ function NavMenu(props: NavMenuProps) {
                         <button className="button-update"><FontAwesomeIcon icon="user" /></button>
                             <button className="navigation"> Users </button>
                         </Link>
+                        <NavLink activeClassName="active" to="/group-page" >
+                        <button className="button-update"><FontAwesomeIcon icon="users" /></button>
+                            <button className="navigation"> Группы </button>
+                        </NavLink>
                     </nav>
                 }
                 {
-                    (props.roleId === Role.Teacher || props.roleId === Role.Methodist) &&
+                    (props.roleId === Role.Teacher || props.roleId === Role.Methodist || props.roleId === Role.Tutor) &&
                     <nav>
                         <Link to="/homework">
                         <button className="button-update"><FontAwesomeIcon icon="book-reader" /></button>
@@ -64,6 +68,10 @@ function NavMenu(props: NavMenuProps) {
                             <button className="button-update"> <FontAwesomeIcon icon="university" /> </button>
                             <button className="navigation"> Страница курсов </button>
                         </Link>
+                        <NavLink activeClassName="active" to="/group-page" >
+                        <button className="button-update"><FontAwesomeIcon icon="users" /></button>
+                            <button className="navigation"> Мои группы </button>
+                        </NavLink>
                     </nav>
                 }
                 {props.roleId !== Role.Student &&
