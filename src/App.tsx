@@ -23,7 +23,7 @@ function App() {
     const history = useHistory();
     const token = getToken();
     const [isLoggedIn, setIsLoggedIn] = useState(!!token);
-    const [roleId, setRoleId] = useState(Role.Teacher);
+    const [roleId, setRoleId] = useState(Role.Student);
     const [isHidden, setHidden] = useState(true);
 
     const users = [
@@ -128,7 +128,7 @@ function App() {
                                             <title>Домашки</title>
                                         </Helmet> 
                                 </Route>
-                                <Route path="/group">
+                                <Route path="/group-page">
                                     <GroupPage />
                                     <Helmet>
                                             <title>Группы</title>

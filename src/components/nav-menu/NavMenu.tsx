@@ -29,7 +29,7 @@ function NavMenu(props: NavMenuProps) {
                         <button className="button-update"><FontAwesomeIcon icon="newspaper" /></button>
                             <button className="navigation"> Мои новости </button>
                         </NavLink>
-                        <NavLink activeClassName="active" to="/groups-list" >
+                        <NavLink activeClassName="active" to="/group-page" >
                         <button className="button-update"><FontAwesomeIcon icon="users" /></button>
                             <button className="navigation"> Мои группы </button>
                         </NavLink>
