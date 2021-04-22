@@ -17,16 +17,19 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setIsLoggedOut } from './store/app/action-creators';
 import LoginRoleSelector from './components/role-selector/LoginRoleSelector';
 import GroupPage from './components/group-page/GroupPage';
+import { Helmet } from "react-helmet";
 import { toggleRoleSelector, unsetCurrentUser } from './store/role-selector/action-creator';
 import { unsetToken } from './services/auth.service';
 import UserPage from './components/user-page/user-page/UserPage';
 import { FormProvider, useForm } from 'react-hook-form';
 import { UserInput } from './interfaces/UserInput';
+import { useState } from 'react';
 
 function App() {
     const dispatch = useDispatch();
     const appState = useSelector((state: IRootState) => state)
     const history = useHistory();
+    const [isHidden, setHidden] = useState(true);
     const logOut = () => {
         dispatch(setIsLoggedOut());
         dispatch(toggleRoleSelector());
@@ -35,9 +38,21 @@ function App() {
         history.push("/");
     }
     const methods = useForm<UserInput>();
+
+    const onHide = (condition: boolean) => {
+        setHidden(condition);
+    }
+
+    function styleMenu(condition: boolean) {
+        if (condition) { return ("nothide") } else { return ("hide") }
+    }
     return (
         <FormProvider {...methods} >
         <div className="App">
+            <Helmet>
+                <title>Самый лучший сайт на свете</title>
+                <meta name="description" content="Helmet application" />
+            </Helmet>
             <header>
                 <div className="logo-container">
                     <img src={logo} className="app-logo" alt="logo" />
@@ -54,11 +69,11 @@ function App() {
                 </div>
             </header>
             <div className="main-content">
-                <aside>
+                <aside className={styleMenu(isHidden)}>
                     {
                         (appState.app.isLoggedIn)
                         &&
-                        <NavMenu roleId={appState.roleSelector.currentUserRoleId} />
+                        <NavMenu roleId={appState.roleSelector.currentUserRoleId} onHide={onHide}/>
                     }
                 </aside>
                 <main>
@@ -72,6 +87,9 @@ function App() {
                                     &&
                                     <Route path="/user-list">
                                         <UserListPage></UserListPage>
+                                        <Helmet>
+                                            <title>Юзеры</title>
+                                        </Helmet>
                                     </Route>
                                 }
                                 <Route path="/user-page">
@@ -81,6 +99,9 @@ function App() {
                                     appState.roleSelector.currentUserRoleId === Role.Teacher &&
                                     <Route path="/courses-page">
                                         <CoursesPage />
+                                        <Helmet>
+                                            <title>Курсы</title>
+                                        </Helmet> 
                                     </Route>
                                 }
                                 <Route path="/course-edition/:id" render={({ location, history }) => (
@@ -90,13 +111,22 @@ function App() {
                                     appState.roleSelector.currentUserRoleId !== Role.Student &&
                                     <Route path="/tags-page">
                                         <TagsPage ></TagsPage>
+                                        <Helmet>
+                                            <title>Тэги</title>
+                                        </Helmet>                                        
                                     </Route>
                                 }
                                 <Route path="/homework">
                                     <HomeworkPage />
+                                    <Helmet>
+                                            <title>Домашки</title>
+                                        </Helmet> 
                                 </Route>
                                 <Route path="/group">
                                     <GroupPage />
+                                    <Helmet>
+                                            <title>Группы</title>
+                                        </Helmet> 
                                 </Route>
                             </Switch>
                             :
