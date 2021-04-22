@@ -17,7 +17,7 @@ function TagList(props: TagListProps) {
     const [deletedTag, setdeleteTag] = useState('');
     const dispatch = useDispatch()
     const pageState = useSelector((state: IRootState) => state.tagsPage);
-
+console.log (pageState)
     useEffect(() => {
         dispatch(getTags());
     }, []);
@@ -30,7 +30,7 @@ function TagList(props: TagListProps) {
     return (
         <>
             {
-                pageState.filterTagsList.map((item) => {
+                pageState.tagList.map((item) => 
 
                     (
                         <div className="tag-row">
@@ -41,8 +41,8 @@ function TagList(props: TagListProps) {
                         </div>
                     )
 
-                })
-            }
+                )
+            } 
         </>
     )
 }

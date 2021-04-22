@@ -9,7 +9,7 @@ import { isTagArr } from '../../services/type-guards/tagArr';
 import { useDispatch, useSelector } from 'react-redux';
 import { getTags } from '../../store/tags-page/thunk';
 import { IRootState } from '../../store';
-import { doFilteringTags } from '../../store/tags-page/action-creators';
+import { doFilteringTags, toggleModalHidden } from '../../store/tags-page/action-creators';
 
 interface TagsPageProps {
 }
@@ -18,23 +18,21 @@ function TagsPage(props: TagsPageProps) {
     const url = 'Tag';
     const [tagsInState, setTagsInState] = useState<Tag[] | undefined>([]);
     const [searchTurn, setSearchTurn] = useState('');
-    const [hidden, setHidden] = useState('hidden');
     const dispatch = useDispatch();
-    
+    const pageState = useSelector((state: IRootState) => state.tagsPage);
 
     const filterTags: ChangeEventHandler<HTMLInputElement> = (e) => {
         setSearchTurn(e.target.value);
        dispatch(doFilteringTags(e.target.value));
     };
 
-    const closeModal = () => setHidden("hidden");
-
+    
     return (
         <div className="main">
             <div className="tag-tittle"> <h4> Теги</h4> </div>
             <div className="tag-header">
                 <input className="input-search" onChange={filterTags} placeholder="Поиск" /> <FontAwesomeIcon icon='search' />
-                <button className="button-style" onClick={() => { setHidden("") }}>
+                <button className="button-style" onClick={() => { dispatch(toggleModalHidden()) }}>
                     <FontAwesomeIcon icon="plus" />
                     <span> Добавить</span>
                 </button>
@@ -44,7 +42,7 @@ function TagsPage(props: TagsPageProps) {
                 <div className="tags-list"> <TagList str={searchTurn} setTagsInState={setTagsInState}></TagList> </div>
 
             </div>
-            <AddTagModal setTagsInState={setTagsInState} hidden={hidden} setHidden={closeModal} />
+            <AddTagModal setTagsInState={setTagsInState} hidden={pageState.isTagsModalHidden} />
         </div>
     )
 

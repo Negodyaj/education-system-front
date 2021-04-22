@@ -1,21 +1,22 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import React, { ChangeEventHandler, useState } from "react"
+import { useDispatch } from "react-redux";
 import { Tag } from "../../../interfaces/Tag";
 import { sendGetRequest, sendPostRequest } from "../../../services/http.service"
 import { isTag } from "../../../services/type-guards/tag";
 import { isTagArr } from "../../../services/type-guards/tagArr";
+import { toggleModalHidden } from "../../../store/tags-page/action-creators";
 
 
 interface AddTagModalProps {
     setTagsInState: (uptags: Tag[]|undefined) => void;
-    setHidden: () => void;
-    hidden: string;
+    hidden: boolean;
 }
 
 function AddTagModal(props: AddTagModalProps) {
     const [nameNewTag, setNameNewTag] = useState('');
-
-    const closeModalWindow = () => { (props.setHidden()) };
+    const dispatch = useDispatch();
+    const closeModalWindow = () => {dispatch(toggleModalHidden())};
     const tagOnChange: ChangeEventHandler<HTMLInputElement> = (e) => {
         setNameNewTag(e.target.value);
         if (e.target.value.length > 2) {
@@ -35,7 +36,7 @@ function AddTagModal(props: AddTagModalProps) {
     const [isDisabled, setIsDisabled] = useState(true);
     const [block, setBlock] = useState("block")
     return (
-        <div className={"modal-back " + (props.hidden)}>
+        <div className={`modal-back ${props.hidden && 'hidden'}`}>
             <div className="modal">
                 <div className="head-modal"><h4>Введите новый тег</h4></div>
                 <button className="button-close" onClick={closeModalWindow}>

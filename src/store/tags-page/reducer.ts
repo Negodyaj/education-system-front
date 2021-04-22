@@ -1,4 +1,4 @@
-import { TAGS_LIST_FILTERED, TAGS_LIST_WRETCH_LOADED } from "../actionTypes";
+import { MODAL_HIDDEN_IS_CHECK, TAGS_LIST_FILTERED, TAGS_LIST_WRETCH_LOADED } from "../actionTypes";
 import { ITagsPageState } from "../state";
 import { TagsPageActions } from "./action-creators";
 
@@ -9,14 +9,16 @@ const initialState: ITagsPageState = {
     isTagsModalHidden: true
 };
 
-export function tagsPageReducer(state: ITagsPageState = initialState, action: TagsPageActions):ITagsPageState {
+export function tagsPageReducer(state: ITagsPageState = initialState, action: TagsPageActions): ITagsPageState {
     switch (action.type) {
-        
+
         case TAGS_LIST_WRETCH_LOADED:
             return { ...state, tagList: action.payload, filterTagsList: action.payload, isDataLoading: false };
         case TAGS_LIST_FILTERED:
-            return { ...state, filterTagsList: state.tagList.filter(tag => tag.name.toLowerCase().includes(action.payload.toLowerCase()))
+            return {...state, filterTagsList: state.tagList.filter(tag => tag.name.toLowerCase().includes(action.payload.toLowerCase()))
             };
+        case MODAL_HIDDEN_IS_CHECK:
+            return { ...state, isTagsModalHidden: !state.isTagsModalHidden };
         default:
             return state;
     }
