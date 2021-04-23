@@ -40,6 +40,8 @@ export interface INotificationContainerState {
 
 export interface IModalDeleteCourse {
     courseForDeleteId: number
+}
+
 export interface IPaymentFormState {
     formVisibility: string;
     userForPayment: User | undefined

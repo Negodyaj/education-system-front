@@ -16,8 +16,6 @@ import { setUserForUserPageId } from "../../../store/user-page/action-creators";
 import { Link } from "react-router-dom";
 import { getUsers } from "../../../store/user-list-page/thunk";
 import ConfirmationDialog from "../../../shared/components/confirmation-dialog/ConfirmationDialog";
-import { sendDeleteRequestNoResponse } from "../../../services/http.service";
-import { setPaymentFormOpen } from "../../../store/payment/action-creators";
 
 function UserListComponent() {
 
@@ -164,9 +162,6 @@ function UserListComponent() {
                                         {
                                             elementsDefinedByRole.paymentButton(u)
                                         }
-                                {
-                                    elementsDefinedByRole.paymentButton(u.id)
-                                }
                             </div>
                         </div>
                         <ConfirmationDialog

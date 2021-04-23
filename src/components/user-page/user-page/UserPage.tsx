@@ -12,15 +12,14 @@ import '../../../App.css';
 import { User } from '../../../interfaces/User';
 import { useDispatch, useSelector } from 'react-redux';
 import { IRootState } from '../../../store';
-import { quitUserPage } from '../../../store/user-page/action-creators';
 import { getUserToEditById, sendUser } from '../../../store/user-page/thunk';
 import { convertRoleIdsToSelectItems } from '../../../shared/converters/roleIdsToSelectItems';
 import { Link } from 'react-router-dom';
 import { UserInput } from '../../../interfaces/UserInput';
-import ConnectForm from '../../../shared/components/connect-form/ConnectForm';
 import { useUserForm } from '../hooks/useUserForm';
 import TextInput from '../form-elements/text-input';
 import FormElement, {  } from '../form-elements/FormElement';
+import { quitUserPage } from '../../../store/user-page/action-creators';
 
 
 function UserPage() {
@@ -51,8 +50,8 @@ function UserPage() {
         })
     }, [appState.userPage.userForUserPage])
 
-    const [newUser, setNewUser] = useState<User>(initUser);
-    const [isFetching, setIsFetching] = useState(false);
+    // const [newUser, setNewUser] = useState<User>(initUser);
+    // const [isFetching, setIsFetching] = useState(false);
 
     const { register, formState, handleSubmit, getValues, setValue, ...methods } = useUserForm();
 
@@ -146,7 +145,7 @@ function UserPage() {
     const closeUserPage = () => {
         dispatch(quitUserPage())
     }
-
+    
     return (
         appState.userPage.isDataLoading
             ?

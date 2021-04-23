@@ -1,10 +1,10 @@
 import { User } from "../../interfaces/User";
-import { PAYMENT_FORM_TOGGLE, PAYMENT_FORM_VISIBLE, PAYMENT_SEND_SUCCESS } from "../actionTypes";
+import { PAYMENT_FORM_CLOSE, PAYMENT_FORM_VISIBLE, PAYMENT_SEND_SUCCESS } from "../actionTypes";
 
 export type PaymentFormActions =
     | ReturnType<typeof setPaymentSendSuccess>
     | ReturnType<typeof setPaymentFormOpen>
-    | ReturnType<typeof setPaymentClose>
+    | ReturnType<typeof setPaymentFormCLose>
  
 export const setPaymentSendSuccess = () => {
     return ({
@@ -20,9 +20,9 @@ export const setPaymentFormOpen = (user: User) => {
     } as const);
 }
 
-export const setPaymentTogle =(visible: string)=>{
+export const setPaymentFormCLose =()=>{
     return({
-        type: PAYMENT_FORM_TOGGLE,
-        payload: visible
+        type: PAYMENT_FORM_CLOSE,
+        payload: undefined
     } as const)
 }

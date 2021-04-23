@@ -1,21 +1,15 @@
-import React, { useEffect, useState } from 'react';
+
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { sendGetRequest, sendPostRequest } from '../../../services/http.service';
-import { responseHandlers } from '../../../services/response-handler/responseHandler';
-import { PaymentAddEnd, PaymentEnd } from '../../../shared/endpointConsts';
-import { PaymentResponse } from '../../interfaces/PaymentResponse';
 import './PaymentForm.css'
 import '../../../App.css';
-import { stringify } from 'node:querystring';
-import { PaymentInput } from '../../interfaces/PaymentInput';
 import { ErrorMessage } from '@hookform/error-message';
 import { format } from 'date-fns';
 import { useDispatch, useSelector } from 'react-redux';
-import { sendPayment } from '../../../store/payment/thunk';
-import NotificationData from '../../../interfaces/NotificationData';
 import { User } from '../../../interfaces/User';
 import { IRootState } from '../../../store';
-import { setPaymentFormOpen } from '../../../store/payment/action-creators';
+import { PaymentInput } from '../../interfaces/PaymentInput';
+import { sendPayment } from '../../../store/payment/thunk';
+import { setPaymentFormCLose, setPaymentFormOpen } from '../../../store/payment/action-creators';
 
 interface PaymentProps {
     paymentFormState: string;
@@ -51,9 +45,8 @@ function PaymentForm(props: PaymentProps) {
     }
 
     const onCancel = () => {
-        //dispatch(setPaymentFormOpen())
+        dispatch(setPaymentFormCLose())
     }
-
 
     const paymentFormState = useSelector((state: IRootState) => state.payment)
 
