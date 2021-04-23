@@ -4,23 +4,19 @@ import {
     COURSE_CREATE_CREATE_MODAL_UNVALIDATE_INPUT_DESCRIPTION,
     COURSE_CREATE_CREATE_MODAL_UNVALIDATE_INPUT_DURATION,
     COURSE_CREATE_CREATE_MODAL_UNVALIDATE_INPUT_NAME,
-    COURSE_CREATE_INPUT_DATA_NEW_COURSE,
     COURSE_CREATE_NO_DESCRIPTION_VALIDATED,
     COURSE_CREATE_NO_DURATION_VALIDATED,
     COURSE_CREATE_NO_NAME_VALIDATED,
-    COURSE_LIST_CLOSE_MODAL_CREATE_COURSE,
-    COURSE_LIST_CLOSE_MODAL_DELETE_COURSE,
-    COURSE_LIST_DELETE_COURSE,
-    COURSE_LIST_OPEN_MODAL_CREATE_COURSE,
-    COURSE_LIST_OPEN_MODAL_DELETE_COURSE,
+    COURSE_LIST_TOOGLE_MODAL_CREATE_COURSE,
     COURSE_LIST_WRETCH_CREATE_COURSE,
     COURSE_LIST_WRETCH_FAIL,
     COURSE_LIST_WRETCH_LOADED,
-    COURSE_LIST_WRETCH_LOADING
+    COURSE_LIST_WRETCH_LOADING,
+    COURSE_LIST_TOOGLE_MODAL_DELETE_COURSE
 } from "../actionTypes";
 import { DataNewCourse } from "../../components/courses-page/NewCourse";
 
-const intialCourseForDeleteId = 0;
+const baseInitialStateIdCourseForDelete = 0;
 
 const initialState: ICoursePageState = {
     courseList: [],
@@ -31,7 +27,8 @@ const initialState: ICoursePageState = {
     isNameNewCourseFilled: false,
     isDescriptionNewCourseFilled: false,
     isDurationNewCourseFilled: false,
-    courseForDeleteId: intialCourseForDeleteId,
+    idCourseForDelete: baseInitialStateIdCourseForDelete,
+    createCourseInputModel: {} as DataNewCourse
 };
 export function coursePageReducer(state: ICoursePageState = initialState, action: CoursePageActions): ICoursePageState {
     switch (action.type) {
@@ -41,20 +38,16 @@ export function coursePageReducer(state: ICoursePageState = initialState, action
             return { ...state, courseList: action.payload, isDataLoading: false };
         case COURSE_LIST_WRETCH_FAIL:
             return { ...state, courseList: [], isDataLoading: false };
-        case COURSE_LIST_OPEN_MODAL_CREATE_COURSE:
-            return { ...state, isOpenModalCreateCourse: true };
-        case COURSE_LIST_CLOSE_MODAL_CREATE_COURSE:
+        case COURSE_LIST_TOOGLE_MODAL_CREATE_COURSE:
             return {
                 ...state,
-                isOpenModalCreateCourse: false,
+                isOpenModalCreateCourse: !state.isOpenModalCreateCourse,
                 isNameNewCourseFilled: false,
                 isDescriptionNewCourseFilled: false,
                 isDurationNewCourseFilled: false
             };
-        case COURSE_LIST_OPEN_MODAL_DELETE_COURSE:
-            return { ...state, isModalDelete: true, courseForDeleteId: action.payload };
-        case COURSE_LIST_CLOSE_MODAL_DELETE_COURSE:
-            return { ...state, isModalDelete: false };
+        case COURSE_LIST_TOOGLE_MODAL_DELETE_COURSE:
+            return { ...state, isModalDelete: !state.isModalDelete, idCourseForDelete: action.payload};
         case COURSE_LIST_WRETCH_CREATE_COURSE:
             return { ...state, isDataLoading: false };
         case COURSE_CREATE_NO_NAME_VALIDATED:

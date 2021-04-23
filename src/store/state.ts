@@ -11,10 +11,11 @@ export interface ICoursePageState {
     isModalDelete: boolean
     isCourseDeleting: boolean
     isDataLoading: boolean
-    courseForDeleteId: number
     isNameNewCourseFilled: boolean
     isDescriptionNewCourseFilled: boolean
     isDurationNewCourseFilled: boolean
+    createCourseInputModel: DataNewCourse
+    idCourseForDelete: number
 }
 
 export interface IUserListPage {

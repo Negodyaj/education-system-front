@@ -1,15 +1,26 @@
 import { Course } from "../../interfaces/Courses";
-import { COURSE_LIST_WRETCH_LOADING, COURSE_LIST_WRETCH_LOADED, COURSE_LIST_WRETCH_FAIL, COURSE_LIST_OPEN_MODAL_CREATE_COURSE, COURSE_LIST_CLOSE_MODAL_CREATE_COURSE, COURSE_LIST_CLOSE_MODAL_DELETE_COURSE, COURSE_LIST_OPEN_MODAL_DELETE_COURSE, COURSE_LIST_DELETE_COURSE, COURSE_LIST_WRETCH_CREATE_COURSE, COURSE_CREATE_NO_NAME_VALIDATED, COURSE_CREATE_NO_DESCRIPTION_VALIDATED, COURSE_CREATE_NO_DURATION_VALIDATED, COURSE_CREATE_INPUT_DATA_NEW_COURSE, COURSE_CREATE_CREATE_MODAL_UNVALIDATE_INPUT_NAME, COURSE_CREATE_CREATE_MODAL_UNVALIDATE_INPUT_DESCRIPTION, COURSE_CREATE_CREATE_MODAL_UNVALIDATE_INPUT_DURATION } from "../actionTypes"
+import {
+    COURSE_LIST_WRETCH_LOADING,
+    COURSE_LIST_WRETCH_LOADED,
+    COURSE_LIST_WRETCH_FAIL,
+    COURSE_LIST_TOOGLE_MODAL_CREATE_COURSE,
+    COURSE_LIST_TOOGLE_MODAL_DELETE_COURSE,
+    COURSE_LIST_WRETCH_CREATE_COURSE,
+    COURSE_CREATE_NO_NAME_VALIDATED,
+    COURSE_CREATE_NO_DESCRIPTION_VALIDATED,
+    COURSE_CREATE_NO_DURATION_VALIDATED,
+    COURSE_CREATE_CREATE_MODAL_UNVALIDATE_INPUT_NAME,
+    COURSE_CREATE_CREATE_MODAL_UNVALIDATE_INPUT_DESCRIPTION,
+    COURSE_CREATE_CREATE_MODAL_UNVALIDATE_INPUT_DURATION
+} from "../actionTypes"
 import { DataNewCourse } from "../../components/courses-page/NewCourse";
 
 export type CoursePageActions =
     | ReturnType<typeof setCoursesListIsLoadingAction>
     | ReturnType<typeof setCoursesListWasLoadedAction>
     | ReturnType<typeof setCoursesListFailAction>
-    | ReturnType<typeof showOpenModalCreateCourseAction>
-    | ReturnType<typeof closeModalCreateCourseAction>
-    | ReturnType<typeof showOpenModalDeleteCourseAction>
-    | ReturnType<typeof closeModalDeleteCourseAction>
+    | ReturnType<typeof showToogleModalCreateCourseAction>
+    | ReturnType<typeof showToogleModalDeleteCourseAction>
     | ReturnType<typeof createCourseAction>
     | ReturnType<typeof validatedCourseName>
     | ReturnType<typeof validatedCourseDescription>
@@ -39,31 +50,17 @@ export const setCoursesListFailAction = (error: string) => {
     } as const);
 }
 
-export const showOpenModalCreateCourseAction = () => {
+export const showToogleModalCreateCourseAction = () => {
     return ({
-        type: COURSE_LIST_OPEN_MODAL_CREATE_COURSE,
-        payload: true
+        type: COURSE_LIST_TOOGLE_MODAL_CREATE_COURSE,
+        payload: true,
     } as const);
 }
 
-export const closeModalCreateCourseAction = () => {
+export const showToogleModalDeleteCourseAction = (id: number) => {
     return ({
-        type: COURSE_LIST_CLOSE_MODAL_CREATE_COURSE,
-        payload: false
-    } as const);
-}
-
-export const showOpenModalDeleteCourseAction = (courseDeleteId: number) => {
-    return ({
-        type: COURSE_LIST_OPEN_MODAL_DELETE_COURSE,
-        payload: courseDeleteId
-    } as const);
-}
-
-export const closeModalDeleteCourseAction = () => {
-    return ({
-        type: COURSE_LIST_CLOSE_MODAL_DELETE_COURSE,
-        payload: false
+        type: COURSE_LIST_TOOGLE_MODAL_DELETE_COURSE,
+        payload: id,
     } as const);
 }
 

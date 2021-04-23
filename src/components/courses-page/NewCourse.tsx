@@ -1,11 +1,12 @@
 import './NewCourse.css';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import React, { useState } from 'react';
-import { closeModalCreateCourseAction, unvalidataCourseDescription, unvalidataCourseDuration, unvalidataCourseName, validatedCourseDescription, validatedCourseDuration, validatedCourseName } from '../../store/courses-page/action-creators';
+import { showToogleModalCreateCourseAction, unvalidataCourseDescription, unvalidataCourseDuration, unvalidataCourseName, validatedCourseDescription, validatedCourseDuration, validatedCourseName } from '../../store/courses-page/action-creators';
 import { useDispatch, useSelector } from 'react-redux';
 import { IRootState } from '../../store';
 import { createCourse, getCourses } from '../../store/courses-page/thunk';
 import { Course } from '../../interfaces/Courses';
+import { idText } from 'typescript';
 
 export interface DataNewCourse { 
     name: string; 
@@ -23,14 +24,11 @@ function NewCourse() {
     const pageState = useSelector((state: IRootState) => state.coursePage);
 
     const closeModalWindow = () => {
-        dispatch(closeModalCreateCourseAction());
+        dispatch(showToogleModalCreateCourseAction());
+        console.log(pageState.isOpenModalCreateCourse)
     }
 
     const showDataNewCourse = () => {
-        nameNewCourse.current?.value === '' ? dispatch(validatedCourseName()) : dispatch(unvalidataCourseName());
-        descriptionNewCourse.current?.value === '' ? dispatch(validatedCourseDescription()) : dispatch(unvalidataCourseDescription());
-        durationNewCourse.current?.value === '' ? dispatch(validatedCourseDuration()) : dispatch(unvalidataCourseDuration());
-
         if (
             nameNewCourse.current?.value === '' ||
             descriptionNewCourse.current?.value === '' ||
@@ -51,6 +49,12 @@ function NewCourse() {
         
     }
 
+    const validationInpuuts = () => {
+        nameNewCourse.current?.value === '' ? dispatch(validatedCourseName()) : dispatch(unvalidataCourseName());
+        descriptionNewCourse.current?.value === '' ? dispatch(validatedCourseDescription()) : dispatch(unvalidataCourseDescription());
+        durationNewCourse.current?.value === '' ? dispatch(validatedCourseDuration()) : dispatch(unvalidataCourseDuration());
+    }
+
     return(
         <div className="modal-back">
             <div className="modal-add-course">
@@ -63,21 +67,21 @@ function NewCourse() {
                 <div className="create-course">
                     <div className='new-course-header'>Название курса</div>
                     <div className="course-data">
-                        <input type="text" className="course-name" ref={nameNewCourse} />
+                        <input type="text" className="course-name" onChange={validationInpuuts} ref={nameNewCourse} placeholder='Введите название курса' required />
                     </div>
                     { 
                         pageState.isNameNewCourseFilled ? <div className="error-no-name">Заполните данное поле</div> : <div></div> 
                     }
                     <div className='new-course-header'>Описание курса</div>
                     <div className="course-data">
-                        <textarea className="course-description" placeholder="Введите описание курса" ref={descriptionNewCourse} />
+                        <textarea className="course-description" onChange={validationInpuuts} placeholder="Введите описание курса" ref={descriptionNewCourse} required />
                     </div>
                     { 
-                        pageState.isDescriptionNewCourseFilled ? <div className="error-no-description">Заполните данное поле</div> : <div></div> 
+                        pageState.isDescriptionNewCourseFilled ? <div className="error-no-description">Заполните данное поле</div> : <div></div>
                     }
                     <div className='new-course-header'>Продолжительность курса</div>
                     <div className="course-data">
-                        <input type="number" min={1} className="course-duration" ref={durationNewCourse} />
+                        <input type="number" min={1} onChange={validationInpuuts} className="course-duration" ref={durationNewCourse} required />
                         <div className="duration-course-text">месяца(ов)</div>
                     </div>
                     { 

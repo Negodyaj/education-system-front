@@ -7,7 +7,7 @@ import NewCourse from './NewCourse';
 import { useDispatch, useSelector } from "react-redux";
 import { IRootState } from '../../store';
 import { getCourses } from '../../store/courses-page/thunk';
-import { showOpenModalCreateCourseAction, showOpenModalDeleteCourseAction } from '../../store/courses-page/action-creators';
+import { showToogleModalCreateCourseAction, showToogleModalDeleteCourseAction } from '../../store/courses-page/action-creators';
 
 function CoursesPage() {
 
@@ -18,12 +18,13 @@ function CoursesPage() {
         dispatch(getCourses());
     }, []);
 
-    const openModalDelete = (id: number) => {
-        dispatch(showOpenModalDeleteCourseAction(id));
+    const openModalDelete = (idCourse: number) => {
+        dispatch(showToogleModalDeleteCourseAction(idCourse));
     }
 
     const openModalAdd = () => {
-        dispatch(showOpenModalCreateCourseAction());
+        dispatch(showToogleModalCreateCourseAction());
+        console.log(pageState.idCourseForDelete)
     }
 
     return (
@@ -47,7 +48,7 @@ function CoursesPage() {
                                                 <FontAwesomeIcon icon="edit" />
                                             </button>
                                         </Link>
-                                        <button onClick={() => {openModalDelete(item.id)}} className='button-delete'>
+                                        <button onClick={() => { openModalDelete(item.id) }} className='button-delete'>
                                             <FontAwesomeIcon icon="trash" /> 
                                         </button>
                                     </div>

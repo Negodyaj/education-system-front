@@ -8,7 +8,7 @@ import { coursesUrl } from "../../shared/consts";
 import { makeNotification } from "../../shared/helpers/notificationHelpers";
 import { pushNotification } from "../notifications/action-creators";
 import { thunkResponseHandler } from "../thunkResponseHadlers";
-import { closeModalCreateCourseAction, closeModalDeleteCourseAction, createCourseAction, setCoursesListFailAction, setCoursesListIsLoadingAction, setCoursesListWasLoadedAction } from "./action-creators";
+import { setCoursesListFailAction, setCoursesListIsLoadingAction, setCoursesListWasLoadedAction, showToogleModalCreateCourseAction, showToogleModalDeleteCourseAction } from "./action-creators";
 
 
 const url = 'url';
@@ -36,7 +36,7 @@ export const deleteCourse =  (id: number) => {
         .then(course => {
             let response = thunkResponseHandler(dispatch, course);
             response && dispatch(pushNotification(makeNotification('success', `Курс ${(response as Course).name} успешно удален`)));
-            dispatch(closeModalDeleteCourseAction());
+            dispatch(showToogleModalDeleteCourseAction(response.id));
             dispatch(getCourses());
         })
         .catch(error => thunkResponseHandler(dispatch, error));
@@ -49,7 +49,7 @@ export const createCourse = (newCourse: DataNewCourse) => {
             .then(course => {
                 let response = thunkResponseHandler(dispatch, course);
                 response && dispatch(pushNotification(makeNotification('success', `Курс ${(response as Course).name} успешно создан`)));
-                dispatch(closeModalCreateCourseAction());
+                dispatch(showToogleModalCreateCourseAction());
                 dispatch(getCourses());
             })
             .catch(error => thunkResponseHandler(dispatch, error));

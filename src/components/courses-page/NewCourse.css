@@ -84,7 +84,6 @@
 
 .create-course {
     display: grid;
-    grid-template-rows: 45px 50px 15px 45px 160px 15px 45px 50px 15px;
     width: 70%;
     margin: 0 auto;
 }
@@ -120,6 +119,7 @@
     font-family: 'Montserrat';
     font-weight: 400;
     font-size: 12px;
+    z-index: 0;
 }
 
 .course-description {

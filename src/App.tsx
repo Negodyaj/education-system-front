@@ -88,7 +88,7 @@ function App() {
                                         <CoursesPage />
                                     </Route>
                                 }
-                                <Route path="/course-edition/:id" render={({ location, history }) => (
+                                <Route path="/course/:id/edition" render={({ location, history }) => (
                                     <CourseEdition idCourse={location.pathname} />)}>
                                 </Route>
                                 {
