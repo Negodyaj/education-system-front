@@ -32,7 +32,6 @@ export interface INotificationContainerState {
 }
 
 export interface IGroupPage{
-    groupList: Group[] | undefined;
     groupToView: Group | undefined;
     isDataLoading: boolean;
 }

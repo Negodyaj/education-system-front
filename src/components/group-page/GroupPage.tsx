@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { IRootState } from "../../store";
 import { getGroupToViewById } from "../../store/group-page/thunk";
-import BaseGroupInfoComponent from "./base-group-info-component/BaseGroupInfoComponent";
+import BaseGroupInfoComponent from "./group-info-component/base-group-info-component/BaseGroupInfoComponent";
 import "./GroupPage.css"
 
 
@@ -13,19 +13,15 @@ function GroupPage() {
   useEffect(() => {
     dispatch(getGroupToViewById(15))
   }, []);
-
+const isModeOn: boolean= false
 
   return (
     <div>
-      <div className="group-header"> Nav menu component</div>
-      <div className="group-body">
-        <div>
-          <BaseGroupInfoComponent courseName={groupPageState.groupToView?.course.name}
-            startDate={groupPageState.groupToView?.startDate}
-            duration={groupPageState.groupToView?.course.duration} />
-        </div>
-        <div> List component </div>
-      </div>
+{
+  isModeOn ?
+  <div></div>:
+  <GroupInfoComponent />
+}
     </div>
   )
 }

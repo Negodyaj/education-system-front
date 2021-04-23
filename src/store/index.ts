@@ -3,16 +3,17 @@ import thunk from "redux-thunk";
 import { coursePageReducer } from './courses-page/reducer';
 import { userListPageReducer } from './user-list-page/reducer';
 import { notificationContainerReducer } from './notifications/reducer';
-import { ICoursePageState, IGroupPage, INotificationContainerState, IUserListPage, IUserPage } from './state';
+import { ICoursePageState, IGroupInfoComponent, INotificationContainerState, IUserListPage, IUserPage } from './state';
 import { userPageReducer } from './user-page/reducers';
-import { groupPageReducer } from './group-page/reducer';
+import { groupInfoComponentReducer } from './group-info-component/reducer';
+
 
 export interface IRootState {
     coursePage: ICoursePageState;
     userPage: IUserPage;
     userListPage: IUserListPage;
     notificationContainer: INotificationContainerState;
-    groupPage: IGroupPage
+    groupInfoComponent: IGroupInfoComponent
 }
 
 const middlewares = [thunk];
@@ -23,7 +24,7 @@ const store = createStore<IRootState, any, any, any>(
         userListPage: userListPageReducer,
         userPage: userPageReducer,
         notificationContainer: notificationContainerReducer,
-        groupPage: groupPageReducer,
+        groupInfoComponent: groupInfoComponentReducer,
     }),
     undefined,
     applyMiddleware(...middlewares));

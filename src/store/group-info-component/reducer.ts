@@ -1,16 +1,15 @@
 import { Group } from "../../interfaces/Group";
 import { GROUP_TO_VIEW_WRETCH_FAIL, GROUP_TO_VIEW_WRETCH_LOADED, GROUP_TO_VIEW_WRETCH_LOADING } from "../actionTypes";
-import { IGroupPage } from "../state";
+import { IGroupInfoComponent} from "../state";
 import { GroupPageActions } from "./action-creaters";
 
 
-const initialState: IGroupPage = {
-    groupList: undefined,
+const initialState: IGroupInfoComponent = {
     groupToView: undefined,
     isDataLoading: false
 };
 
-export function groupPageReducer(state: IGroupPage = initialState, action: GroupPageActions): IGroupPage {
+export function groupInfoComponentReducer(state: IGroupInfoComponent = initialState, action: GroupPageActions): IGroupInfoComponent {
     switch (action.type) {
         case GROUP_TO_VIEW_WRETCH_LOADING:
             return { ...state, isDataLoading: true }
