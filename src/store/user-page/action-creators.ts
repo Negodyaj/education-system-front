@@ -21,10 +21,10 @@ export const setUserToEditIsLoading = () => {
         payload: undefined
     } as const);
 }
-export const setUserToEditWasLoaded = (user: User) => {
+export const setUserToEditWasLoaded = (user?: User) => {
     return ({
         type: USER_TO_EDIT_WRETCH_LOADED,
-        payload: user
+        payload: user || undefined
     } as const);
 }
 export const setUserToEditFail = (error: string) => {

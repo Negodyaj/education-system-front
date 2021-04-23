@@ -1,4 +1,3 @@
-import { getIsLoggedInFormStorage } from "../../services/auth.service";
 import { CURRENT_USER_LOGGED_IN, CURRENT_USER_LOGGED_OUT } from "../actionTypes";
 import { IAppState } from "../state";
 import { AppActions } from "./action-creators"

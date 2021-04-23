@@ -115,7 +115,7 @@ function UserListComponent() {
             <div className="user-list">
                 <div className="column-head">
                     <h4>Пользователи</h4>
-                    <Link to="/user-page">
+                    <Link to="/user-page/register">
                         <button className="common-button" onClick={onRegisterClick}>
                             <FontAwesomeIcon icon="plus" />
                             <span> Добавить</span>

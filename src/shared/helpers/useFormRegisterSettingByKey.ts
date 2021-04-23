@@ -1,11 +1,11 @@
 import { RegisterOptions } from "react-hook-form";
 import { InputNames } from "../../enums/inputNames";
-export interface InputSettings {
+export interface FormElementSettings {
     label: string;
     name: InputNames;
     options?: RegisterOptions;
 }
-export const getRegisterSettings = (key: InputNames): InputSettings => {
+export const getRegisterSettings = (key: InputNames): FormElementSettings => {
     switch (key) {
         case InputNames.Id:
             return {

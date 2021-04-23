@@ -1,5 +1,3 @@
-
-import Input from "react-select/src/components/Input";
 import { InputNames } from "../../enums/inputNames";
 
 export const getValidationPattern = (key: InputNames) => {

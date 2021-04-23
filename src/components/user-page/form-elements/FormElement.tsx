@@ -1,15 +1,30 @@
-import React from "react";
-import { InputSettings } from "../../../shared/helpers/useFormRegisterSettingByKey";
+
+import { RegisterOptions } from "react-hook-form";
+import { FormElementSettings } from "../../../shared/helpers/useFormRegisterSettingByKey";
 import { getValidationPattern } from "../../../shared/validation-rules/validationPatterns";
 import TextInput from "./TextInput";
 
-function FormElement(inputProps: {
-    settings: InputSettings
+export interface InputSettings {
+    name: string;
+    options: RegisterOptions;
+}
+
+function FormElement(props: {
+    formElementSettings: FormElementSettings
 }) {
-    return (<TextInput name={inputProps.settings.name} label={inputProps.settings.label} options={{
-        required: inputProps.settings.options?.required,
-        pattern: getValidationPattern(inputProps.settings.name)
-    }}></TextInput>)
+    const inputSettings: InputSettings = {
+        name: props.formElementSettings.name,
+        options: {
+            ...props.formElementSettings.options,
+            pattern: getValidationPattern(props.formElementSettings.name)
+        }
+    }
+    return (
+        <div className="form-row">
+            <label className="form-label">{props.formElementSettings.label}</label>
+            <TextInput inputSettings={inputSettings}></TextInput>
+        </div>
+    )
 }
 
 export default FormElement;

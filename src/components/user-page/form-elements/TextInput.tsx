@@ -1,33 +1,25 @@
-import { UserInput } from "../../../interfaces/UserInput";
 import { ErrorMessage } from '@hookform/error-message';
-import { RegisterOptions, useFormContext } from "react-hook-form";
-import { InputNames } from "../../../enums/inputNames";
+import { useFormContext } from 'react-hook-form';
+import { InputSettings } from './FormElement';
 
-interface TextInputProps {
-    name: InputNames;
-    label: string;
-    options? :RegisterOptions;
-}
-
-
-
-function TextInput(props: TextInputProps) {
+function TextInput(props: {
+    inputSettings: InputSettings
+}) {
+    console.log(props.inputSettings)
     const formContext = useFormContext()
     return (
-        <div className="form-row">
-            <label className="form-label">{props.label}</label>
+        <>
             <input
-                {...formContext.register(props.name, props.options)}
+                {...formContext.register(props.inputSettings.name, props.inputSettings.options)}
                 type="text"
                 className="form-input" />
             <ErrorMessage
                 errors={formContext.formState.errors}
-                name={props.name}
+                name={props.inputSettings.name}
                 className="bad-feedback"
                 as="div">
             </ErrorMessage>
-        </div>
+        </>
     )
 }
-
 export default TextInput;

@@ -8,14 +8,19 @@ import { pushNotification } from "../notifications/action-creators";
 import { thunkResponseHandler } from "../thunkResponseHadlers";
 import { setUserIsSending, setUserToEditFail, setUserToEditIsLoading, setUserToEditWasLoaded } from "./action-creators";
 
-export const getUserToEditById = (userId: string | undefined) => {
+export const getUserToEditById = (userId?: string) => {
     return (dispatch: Dispatch) => {
-        dispatch(setUserToEditIsLoading());
-        sendGetRequest<User>(`${usersUrl}/${userId}`, isUser)
-            .then(user => {
-                dispatch(setUserToEditWasLoaded(thunkResponseHandler(dispatch, user)));
-            })
-            .catch(error => dispatch(setUserToEditFail(error)));
+        if (userId) {
+            dispatch(setUserToEditIsLoading());
+            sendGetRequest<User>(`${usersUrl}/${userId}`, isUser)
+                .then(user => {
+                    dispatch(setUserToEditWasLoaded(thunkResponseHandler(dispatch, user)));
+                })
+                .catch(error => dispatch(setUserToEditFail(error)));
+        } else {
+            dispatch(setUserToEditWasLoaded())
+        }
+
     }
 }
 export const sendUser = (user: User) => {

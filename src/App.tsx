@@ -94,9 +94,11 @@ function App() {
                                                 </Helmet>
                                             </Route>
                                         }
+                                        <Route path="/user-page/register">
+                                            <UserPage></UserPage>
+                                        </Route>
                                         <Route path="/user-page/:id/edit">
                                             <UserPage></UserPage>
-
                                         </Route>
                                         {
                                             appState.roleSelector.currentUserRoleId === Role.Teacher &&

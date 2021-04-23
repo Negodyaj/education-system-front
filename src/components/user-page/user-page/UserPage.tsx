@@ -64,30 +64,7 @@ function UserPage() {
         },
         loginInput: () => {
             if (appState.userPage.userForUserPage === undefined) {
-                // return (
-                //     <div className="form-row">
-                //         <label className="form-label">Логин</label>
-                //         <input
-                //             {...register('login', {
-                //                 required: {
-                //                     value: true,
-                //                     message: "Введите логин"
-                //                 },
-                //                 pattern: {
-                //                     value: /[a-z0-9]/,
-                //                     message: "Допустимы только строчные буквы и цифры"
-                //                 }
-                //             })}
-                //             type="text"
-                //             className="form-input" />
-                //         <ErrorMessage
-                //             errors={formState.errors}
-                //             name={"login"}
-                //             className="bad-feedback"
-                //             as="div">
-                //         </ErrorMessage>
-                //     </div>
-                // )
+                
             } else {
                 return;
             }
@@ -120,7 +97,7 @@ function UserPage() {
                     <form onSubmit={handleSubmit(onSubmit)}>
                         {
                             Object.keys(appState.userPage.userForUserPage).map(key => {
-                                return <FormElement settings={getRegisterSettings(key as InputNames)}></FormElement>
+                                return <FormElement formElementSettings={getRegisterSettings(key as InputNames)}></FormElement>
                             })
                         }
                         {
@@ -132,13 +109,6 @@ function UserPage() {
                                 date={getValues('birthDate')}
                                 onDateChange={birthDateOnChange} />
                         </div>
-                        {
-                            elementsDefinedByProps.loginInput()
-                        }
-                        {
-                            elementsDefinedByProps.passwordInput()
-                        }
-                        
                         <div className="form-row upl-file">
                             <label className="form-label">Аватар</label>
                             <div className="file-upload">
