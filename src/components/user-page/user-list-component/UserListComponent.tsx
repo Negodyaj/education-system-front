@@ -46,7 +46,7 @@ function UserListComponent() {
             return (
                 appState.roleSelector.currentUserRoleId === Role.Manager
                 &&
-                <button className="button-round" onClick={() => onPaymentButtonClick(userId)}>
+                <button className="round-button" onClick={() => onPaymentButtonClick(userId)}>
                     <FontAwesomeIcon icon="ruble-sign" />
                 </button>
             )
@@ -55,7 +55,7 @@ function UserListComponent() {
             return (
                 (appState.roleSelector.currentUserRoleId === Role.Admin && user.roles && user.roles.length > 1)
                 &&
-                <button className='button-round mini-button' onClick={() => onDeleteRoleClick(user, roleId)}>
+                <button className='round-button mini-button' onClick={() => onDeleteRoleClick(user, roleId)}>
                     <FontAwesomeIcon icon="times" />
                 </button>
             )
@@ -116,7 +116,7 @@ function UserListComponent() {
                     <div className="column-head">
                         <h4>Пользователи</h4>
                         <Link to="/user-page">
-                            <button className="button-style" onClick={onRegisterClick}>
+                            <button className="common-button" onClick={onRegisterClick}>
                                 <FontAwesomeIcon icon="plus" />
                                 <span> Добавить</span>
                             </button>
@@ -149,12 +149,12 @@ function UserListComponent() {
                                 <div className="column">{/*u.groupName*/}</div>
                                 <div className="column-button">
                                         <div className="column">
-                                            <Link to="/user-page">
-                                    <button className="button-round" onClick={() => onEditClick(u.id)}>
+                                            <Link className="round-button" to="/user-page">
+                                    <button className="round-button" onClick={() => onEditClick(u.id)}>
                                                 <FontAwesomeIcon icon="edit" />
                                             </button>
                                         </Link>
-                                        <button className="button-round" onClick={() => { }/*props.onDeleteClick(u.id as number)*/}>
+                                        <button className="round-button" onClick={() => { }/*props.onDeleteClick(u.id as number)*/}>
                                             <FontAwesomeIcon icon="trash" />
                                         </button>
 

@@ -34,7 +34,7 @@ function TagsPage(props: TagsPageProps) {
             <div className="tag-tittle"> <h4> Теги</h4> </div>
             <div className="tag-header">
                 <input className="input-search" onChange={tagsFilter} placeholder="Поиск" />
-                <button className="button-style" onClick={() => { setHidden("") }}>
+                <button className="common-button" onClick={() => { setHidden("") }}>
                     <FontAwesomeIcon icon="plus" />
                     <span> Добавить</span>
                 </button>

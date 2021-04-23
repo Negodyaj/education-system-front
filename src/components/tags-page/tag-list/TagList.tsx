@@ -26,7 +26,7 @@ function TagList(props: TagListProps) {
                         return (
                             <span className="tag-row">
                                 <div className="tag"> {item.name} </div>
-                                <button className='button-round' onClick={() => deleteTag(item.id)}>
+                                <button className='round-button' onClick={() => deleteTag(item.id)}>
                                     <FontAwesomeIcon icon="trash" />
                                 </button>
                             </span>

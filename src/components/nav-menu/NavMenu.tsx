@@ -23,46 +23,37 @@ function NavMenu(props: NavMenuProps) {
 
             <div className={isHidden ? "notshow" : "vision"}>
                 {
-                    props.roleId === Role.Student &&
-                    <nav>
-                        <NavLink exact activeClassName="active" to="/">
-                        <button className="button-update"><FontAwesomeIcon icon="newspaper" /></button>
-                            <button className="navigation"> Мои новости </button>
-                        </NavLink>
-                        <NavLink activeClassName="active" to="/groups-list" >
-                        <button className="button-update"><FontAwesomeIcon icon="users" /></button>
-                            <button className="navigation"> Мои группы </button>
-                        </NavLink>
-                        <NavLink activeClassName="active" to="/courses-list">
-                        <button className="button-update"><FontAwesomeIcon icon="university" /></button>
-                            <button className="navigation"> Мои курсы </button>
-                        </NavLink>
-                        <NavLink activeClassName="active" to="homework-list">
-                        <button className="button-update"><FontAwesomeIcon icon="book-reader" /></button>
-                            <button className="navigation"> Мои Домашки </button>
-                        </NavLink>
-
-                    </nav>
+                    (props.roleId === Role.Student || props.roleId === Role.Teacher || props.roleId === Role.Tutor) &&
+                    <NavLink activeClassName="active" to="/group-page" >
+                        <span className="button-update"><FontAwesomeIcon icon="users" /></span>
+                        <span className="navigation"> Мои группы </span>
+                    </NavLink>
                 }
                 {
                     (props.roleId === Role.Admin || props.roleId === Role.Manager) &&
                     <nav>
-                        <Link to="/user-list">
-                        <button className="button-update"><FontAwesomeIcon icon="user" /></button>
+                            <button className="button-update"><FontAwesomeIcon icon="user" /></button>
                             <button className="navigation"> Users </button>
+                        <Link to="/user-list">
+                        <span className="button-update"><FontAwesomeIcon icon="user" /></span>
+                            <span className="navigation"> Users </span>
                         </Link>
+                        <NavLink activeClassName="active" to="/group-page" >
+                            <button className="button-update"><FontAwesomeIcon icon="users" /></button>
+                            <button className="navigation"> Группы </button>
+                        </NavLink>
                     </nav>
                 }
                 {
-                    (props.roleId === Role.Teacher || props.roleId === Role.Methodist) &&
+                    (props.roleId === Role.Teacher || props.roleId === Role.Methodist || props.roleId === Role.Tutor) &&
                     <nav>
                         <Link to="/homework">
-                        <button className="button-update"><FontAwesomeIcon icon="book-reader" /></button>
-                            <button className="navigation"> Homeworks </button>
+                        <span className="button-update"><FontAwesomeIcon icon="book-reader" /></span>
+                            <span className="navigation"> Homeworks </span>
                         </Link>
                         <Link to="/courses-page">
-                            <button className="button-update"> <FontAwesomeIcon icon="university" /> </button>
-                            <button className="navigation"> Страница курсов </button>
+                            <span className="button-update"> <FontAwesomeIcon icon="university" /> </span>
+                            <span className="navigation"> Страница курсов </span>
                         </Link>
                     </nav>
                 }
@@ -70,8 +61,8 @@ function NavMenu(props: NavMenuProps) {
                     <nav>
 
                         <NavLink activeClassName="active" to="/tags-page">
-                        <button className="button-update"><FontAwesomeIcon icon="tag" /></button>
-                            <button className="navigation"> Тэги </button>
+                        <span className="button-update"><FontAwesomeIcon icon="tag" /></span>
+                            <span className="navigation"> Тэги </span>
                         </NavLink>
                     </nav>
                 }
