@@ -37,7 +37,7 @@ function CustomMultiSelect(props: SelectProps) {
     borderLight: '#E0E7FF',
     borderDark: '#ABADB3'
   }
-  const customStyleHeight = 40;
+  const customStyleHeight = 80;
 
   const customStyles = {
     control: (baseStyles: any, state: any) => ({

@@ -18,7 +18,7 @@ import { Link, useParams } from 'react-router-dom';
 import { UserInput } from '../../../interfaces/UserInput';
 import { useUserForm } from '../hooks/useUserForm';
 import FormElement, { } from '../form-elements/FormElement';
-import { getRegisterSettings } from '../../../shared/helpers/useFormRegisterSettingByKey';
+import { getFormElementSettings } from '../../../shared/helpers/useFormRegisterSettingByKey';
 import { InputNames } from '../../../enums/inputNames';
 
 
@@ -64,17 +64,11 @@ function UserPage() {
         },
         loginInput: () => {
             if (appState.userPage.userForUserPage === undefined) {
-                
+
             } else {
                 return;
             }
         }
-    }
-    const birthDateOnChange = (date: string) => {
-        //setValue('birthDate', date)
-    }
-    const roleOnChange = (options: number[]) => {
-        //setValue('roles', options);
     }
     const onSubmit = (data: User) => {
         dispatch(sendUser(data))
@@ -97,18 +91,11 @@ function UserPage() {
                     <form onSubmit={handleSubmit(onSubmit)}>
                         {
                             Object.keys(appState.userPage.userForUserPage).map(key => {
-                                return <FormElement formElementSettings={getRegisterSettings(key as InputNames)}></FormElement>
+                                return <FormElement formElementSettings={getFormElementSettings(key as InputNames)}></FormElement>
                             })
                         }
                         {
                         /*
-                        <div className="form-row">
-                            <label className="form-label">Дата рождения</label>
-                            <DatePickerComponent
-                                {...register('birthDate')}
-                                date={getValues('birthDate')}
-                                onDateChange={birthDateOnChange} />
-                        </div>
                         <div className="form-row upl-file">
                             <label className="form-label">Аватар</label>
                             <div className="file-upload">

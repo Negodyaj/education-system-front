@@ -8,11 +8,12 @@ const initUserUpdate: UserUpdate = {
     userPic: "",
     phone: "",
     email: "",
+    roles:[]
 }
 
 export const convertUserToUserUpdate = (UpdatedUser: User) => {
     Object.keys(initUserUpdate).map(k => {
-        initUserUpdate[k as keyof UserUpdate] = UpdatedUser[k as keyof UserUpdate]
+        (initUserUpdate as any)[k] = UpdatedUser[k as keyof UserUpdate]
     })
     return initUserUpdate;
 }
