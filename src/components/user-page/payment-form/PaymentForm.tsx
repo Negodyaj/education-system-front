@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { sendGetRequest, sendPostRequest } from '../../../services/http.service';
 import { responseHandlers } from '../../../services/response-handler/responseHandler';
-import {  PaymentAddEnd, PaymentEnd } from '../../../shared/endpointConsts';
+import { PaymentAddEnd, PaymentEnd } from '../../../shared/endpointConsts';
 import { PaymentResponse } from '../../interfaces/PaymentResponse';
 import './PaymentForm.css'
 import '../../../App.css';
@@ -15,11 +15,13 @@ import { sendPayment } from '../../../store/payment/thunk';
 import NotificationData from '../../../interfaces/NotificationData';
 import { User } from '../../../interfaces/User';
 import { IRootState } from '../../../store';
+import { setPaymentFormOpen } from '../../../store/payment/action-creators';
 
 interface PaymentProps {
     paymentFormState: string;
     userForPayment: User | undefined;
 }
+
 
 function PaymentForm(props: PaymentProps) {
 
@@ -48,9 +50,10 @@ function PaymentForm(props: PaymentProps) {
         }))
     }
 
-const onCancel = () => {
-    //dispatch(sendPayment)
-}
+    const onCancel = () => {
+        //dispatch(setPaymentFormOpen())
+    }
+
 
     const paymentFormState = useSelector((state: IRootState) => state.payment)
 
@@ -67,16 +70,16 @@ const onCancel = () => {
                     <div className="input-row">
                         <label>Сумма платежа</label>
                         <input key='amount' {...register("amount",
-                        {
-                            required: {
-                                value: true,
-                                message: "Ведите сумму платежа"
-                            },
-                            pattern: {
-                                value: /[0-9]/,
-                                message: "Допустимы только цифры"
+                            {
+                                required: {
+                                    value: true,
+                                    message: "Ведите сумму платежа"
+                                },
+                                pattern: {
+                                    value: /[0-9]/,
+                                    message: "Допустимы только цифры"
+                                }
                             }
-                        }
                         )}></input>
                         <ErrorMessage
                             errors={errors}
@@ -91,17 +94,17 @@ const onCancel = () => {
                     </div>
                     <div className="input-row">
                         <label>Период оплаты</label>
-                        <input key='period' {...register("period", 
-                        {
-                            required: {
-                                value: true,
-                                message: "Ведите период оплаты"
-                            },
-                            pattern: {
-                                value: /\s\d/,
+                        <input key='period' {...register("period",
+                            {
+                                required: {
+                                    value: true,
+                                    message: "Ведите период оплаты"
+                                },
+                                pattern: {
+                                    value: /\s\d/,
                                     message: "Период формата 'янв 2010'"
+                                }
                             }
-                        }
                         )}></input>
                         <ErrorMessage
                             errors={errors}
@@ -112,18 +115,18 @@ const onCancel = () => {
                     </div>
                     <div className="input-row">
                         <label>Номер договора</label>
-                        <input key='contractNumber' value={props.userForPayment?.contractNumber}
-                            {...register("contractNumber", 
-                            {
-                                required: {
-                                    value: true,
-                                    message: "Ведите номер договора"
-                                },
-                                pattern: {
-                                    value: /[0-9]/,
+                        <input key='contractNumber' value={paymentFormState.userForPayment?.contractNumber}
+                            {...register("contractNumber",
+                                {
+                                    required: {
+                                        value: true,
+                                        message: "Ведите номер договора"
+                                    },
+                                    pattern: {
+                                        value: /[0-9]/,
                                         message: "Допустимы только цифры"
+                                    }
                                 }
-                            }
                             )}
                         ></input>
                         <ErrorMessage

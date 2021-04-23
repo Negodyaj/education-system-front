@@ -17,6 +17,7 @@ import { Link } from "react-router-dom";
 import { getUsers } from "../../../store/user-list-page/thunk";
 import ConfirmationDialog from "../../../shared/components/confirmation-dialog/ConfirmationDialog";
 import { sendDeleteRequestNoResponse } from "../../../services/http.service";
+import { setPaymentFormOpen } from "../../../store/payment/action-creators";
 
 function UserListComponent() {
 
@@ -64,10 +65,9 @@ function UserListComponent() {
         }
 
     }
-    const onPaymentButtonClick = (userId: number | undefined) => {
+    const onPaymentButtonClick = (user: User) => {
+        dispatch(setPaymentFormOpen(user))
         setPaymentFormState('visible');
-        setUserForPayment([...userListPageState.userList].filter(u => u.id === userId)[0]);
-        payment1.payment.formVisibility;
 
     }
     const onEditClick = (userToEditId: number) => {
@@ -162,7 +162,7 @@ function UserListComponent() {
                                         </button>
 
                                         {
-                                            elementsDefinedByRole.paymentButton(u.id)
+                                            elementsDefinedByRole.paymentButton(u)
                                         }
                                 {
                                     elementsDefinedByRole.paymentButton(u.id)

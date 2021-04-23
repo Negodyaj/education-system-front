@@ -1,6 +1,6 @@
 
 import { Course } from "../../interfaces/Courses";
-import { CourseAddEnd, CourseCourseIdEnd, CourseDeleteEnd, CourseEnd, CourseIdThemeIdAddEnd, CourseIdThemeIdDeleteEnd, CourseThemesEnd, RoleDeleteEnd, TagAddEnd, TagDeleteEnd, TagEnd, UserEnd, UserRegisterEnd, UserUserDeleteIdEnd, UserUserUpdateIdEnd } from "../../shared/endpointConsts";
+import { CourseAddEnd, CourseCourseIdEnd, CourseDeleteEnd, CourseEnd, CourseIdThemeIdAddEnd, CourseIdThemeIdDeleteEnd, CourseThemesEnd, PaymentAddEnd, PaymentEnd, RoleDeleteEnd, TagAddEnd, TagDeleteEnd, TagEnd, UserEnd, UserRegisterEnd, UserUserDeleteIdEnd, UserUserUpdateIdEnd } from "../../shared/endpointConsts";
 import { makeErrorText, makeNotification } from "../../shared/helpers/notificationHelpers";
 import NotificationData from "../../interfaces/NotificationData";
 import { Themes } from "../../interfaces/Themes";
@@ -165,27 +165,6 @@ export const responseHandlers: responseHandler = {
             })
         },
         isT: undefined
-    },
-    [PaymentAddEnd]: {
-        notifications: (response?: any) => {
-            return ({
-                [nType.Error]: makeNotification(nType.Error, makeErrorText(response)),
-                [nType.Success]: makeNotification(nType.Success, ('Оплата пользователю ' 
-                + (response as PaymentResponse)?.user?.firstName 
-                + (response as PaymentResponse)?.user?.lastName 
-                + ' назначена'))
-            })
-        },
-        isT: (data: any): data is PaymentResponse => isPaymentResponse(data)
-    },
-    [PaymentEnd]: {
-        notifications: (response?: any) => {
-            return ({
-                [nType.Error]: makeNotification(nType.Error, makeErrorText(response)),
-                [nType.Success]: undefined
-            })
-        },
-        isT: (data: any): data is PaymentResponse[] => isPaymentResponseArr(data)
     }
     // [PaymentAddEnd]: {
     //     notifications: (response?: any) => {

@@ -25,21 +25,6 @@ import FormElement, {  } from '../form-elements/FormElement';
 
 function UserPage() {
 
-<<<<<<< Updated upstream
-    const initUser: User = Object.assign({}, props.userToEdit || {
-        id: 0,
-        firstName: "",
-        lastName: "",
-        login: "",
-        password: "",
-        birthDate: new Date().toLocaleDateString('ru-RU'),
-        userPic: "",
-        phone: "",
-        email: "",
-        contractNumber: 0,
-        roles: []
-    })
-=======
     // const initUser: User = Object.assign({}, props.userToEdit || {
     //     id: 0,
     //     firstName: "",
