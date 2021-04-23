@@ -2,9 +2,9 @@ import { useEffect, useState } from 'react';
 import DatePicker, { registerLocale } from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import './DatePickerComponent.css';
-import ru from "date-fns/locale/ru"; 
+import ru from "date-fns/locale/ru";
 import { runInContext } from 'node:vm';
-registerLocale("ru",  ru); 
+registerLocale("ru", ru);
 
 interface DatePickerComponentProps {
   date: string | undefined,
@@ -18,7 +18,7 @@ function DatePickerComponent(props: DatePickerComponentProps) {
   date.push(Number.parseInt(dateConstructorArg ? dateConstructorArg[1] : new Date().getMonth().toString()));
   date.push(Number.parseInt(dateConstructorArg ? dateConstructorArg[0] : new Date().getDate().toString()));
 
-  const [startDate, setStartDate] = useState(new Date(date[0], date[1], date[2]));
+  const [startDate, setStartDate] = useState(props.date ? new Date(date[0], date[1], date[2]) : new Date());
   const handleDateChange = (date: Date | [Date, Date] | null) => {
     if (date instanceof Date) {
       setStartDate(date);
@@ -26,7 +26,7 @@ function DatePickerComponent(props: DatePickerComponentProps) {
     }
   }
   return (
-    <DatePicker selected={startDate} onChange={handleDateChange} locale="ru"/>
+    <DatePicker selected={startDate} onChange={handleDateChange} locale="ru" />
   );
 };
 

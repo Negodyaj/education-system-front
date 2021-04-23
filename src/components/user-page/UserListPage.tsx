@@ -7,21 +7,14 @@ import { isUserArr } from '../../services/type-guards/userArray';
 import ConfirmationDialog from '../../shared/components/confirmation-dialog/ConfirmationDialog';
 import { IRootState } from '../../store';
 import { getUsers } from '../../store/user-list-page/thunk';
+import { getUserToEditById } from '../../store/user-page/thunk';
 import UserListComponent from './user-list-component/UserListComponent';
 import UserPage from './user-page/UserPage';
 import './UserListPage.css'
 
-interface UserListPageProps {
-    roleId: number;
-}
-
-function UserListPage(props: UserListPageProps) {
+function UserListPage() {
 
     const url = 'User';
-    const [usersInState, setUsersInState] = useState<User[] | undefined>();
-    const [isEditModeOn, setIsEditModeOn] = useState(false);
-    const [userToEdit, setUserToEdit] = useState<User | undefined>();
-    const [userToDeleteId, setUserToDeleteId] = useState<number>();
     const [isModalShown, setIsModalShown] = useState(false);
     const confirmationDeleteMessage = "Вы действительно хотите удалить пользователя?";
     const confirmationDeleteTitle = "Удаление пользователя";
@@ -34,63 +27,19 @@ function UserListPage(props: UserListPageProps) {
     useEffect(() => {
         dispatch(getUsers())
     }, []);
-    const refreshUsers = () => {
-        setUsersInState(undefined);
-        getUsers();
-    }
-    const checkUpdatedUsers = () => {
-        refreshUsers();
-        setIsEditModeOn(false)
-    }
-    const getUserToUpdate = (userToEditId: number) => {
-        //actualize user before UserEditForm rendering
-    }
     const deleteUser = async (decision: boolean) => {
-        // if (decision === true) {
-        //     if (await sendDeleteRequest<UserDelete[]>(
-        //         url + '/' + userToDeleteId,
-        //         props.sendNotification,
-        //         responseHandlers[UserUserDeleteIdEnd])) {
-        //         refreshUsers()
-        //     };
-        // }
-        // setIsModalShown(false)
-    }
-    const onEditClick = (userToEditId?: number) => {
-        if (userToEditId) {
-            setUserToEdit([...usersInState as User[]].filter(u => u.id === userToEditId)[0]);
-        } else {
-            setUserToEdit(undefined);
-        }
-        setIsEditModeOn(true);
-    }
-    const onDeleteClick = (userToDeleteIdArg: number) => {
-        setUserToDeleteId(userToDeleteIdArg);
-        setIsModalShown(true);
     }
 
     return (
         <div className="user-page">
             {
-                appState.userListPage.isDataLoading ?
+                appState.userListPage.isDataLoading
+                    ?
                     <div>
                         <FontAwesomeIcon icon="spinner" />
-                    </div> : (
-                        appState.userPage.isEditModeOn
-                            ?
-                            <UserPage
-                                roleId={props.roleId}
-                                userToEdit={userToEdit}
-                                setIsEditModeOn={setIsEditModeOn}
-                                reviseSending={checkUpdatedUsers}
-                                url={url}></UserPage>
-                            :
-                            <UserListComponent
-                                roleId={props.roleId}
-                                users={appState.userListPage.userList}
-                                onEditClick={onEditClick}
-                                onDeleteClick={onDeleteClick}></UserListComponent>
-                    )
+                    </div>
+                    :
+                    <UserListComponent></UserListComponent>
             }
             <ConfirmationDialog
                 isShown={isModalShown}

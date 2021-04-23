@@ -40,7 +40,6 @@
 header {
     display: flex;
     height: 100px;
-    border-bottom: 2px solid salmon;
 }
 
 .logo-container,
@@ -48,7 +47,6 @@ aside.nothide{
     flex-grow: 0;
     flex-shrink: 0;
     width: 350px;
-    border-right: 2px solid salmon;
 }
 
 aside.hide{

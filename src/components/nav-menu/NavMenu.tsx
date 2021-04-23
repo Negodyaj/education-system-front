@@ -47,7 +47,7 @@ function NavMenu(props: NavMenuProps) {
                 {
                     (props.roleId === Role.Admin || props.roleId === Role.Manager) &&
                     <nav>
-                        <Link to="/user-page">
+                        <Link to="/user-list">
                         <button className="button-update"><FontAwesomeIcon icon="user" /></button>
                             <button className="navigation"> Users </button>
                         </Link>

@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import { Switch, Route, useHistory, Link } from 'react-router-dom';
@@ -12,43 +11,33 @@ import "./shared/fontawesome/FontawesomeIcons";
 import { Role } from './enums/role';
 import DevTestPage from './components/dev-test-page/DevTestPage';
 import TagsPage from './components/tags-page/TagsPage';
-import { getToken } from './services/auth.service';
-import { getUser } from './services/test-wretch';
 import UserListPage from './components/user-page/UserListPage';
+import { IRootState } from './store';
+import { useDispatch, useSelector } from 'react-redux';
+import { setIsLoggedOut } from './store/app/action-creators';
+import LoginRoleSelector from './components/role-selector/LoginRoleSelector';
 import GroupPage from './components/group-page/GroupPage';
 import { Helmet } from "react-helmet";
-
+import { toggleRoleSelector, unsetCurrentUser } from './store/role-selector/action-creator';
+import { unsetToken } from './services/auth.service';
+import UserPage from './components/user-page/user-page/UserPage';
+import { FormProvider, useForm } from 'react-hook-form';
+import { UserInput } from './interfaces/UserInput';
+import { useState } from 'react';
 
 function App() {
+    const dispatch = useDispatch();
+    const appState = useSelector((state: IRootState) => state)
     const history = useHistory();
-    const token = getToken();
-    const [isLoggedIn, setIsLoggedIn] = useState(!!token);
-    const [roleId, setRoleId] = useState(Role.Manager);
     const [isHidden, setHidden] = useState(true);
-
-    const users = [
-        { login: 'test', password: 'test', roleId: Role.Test },
-        { login: 'student', password: 'qwerty', roleId: Role.Student },
-        { login: 'manager', password: 'manager', roleId: Role.Manager },
-        { login: 'admin', password: 'admin', roleId: Role.Admin },
-        { login: 'methodist', password: 'methodist', roleId: Role.Methodist },
-        { login: 'teacher', password: 'teacher', roleId: Role.Teacher }
-    ];
-
-    const loginHandler = (email: string, password: string) => {
-        const securityEntries = users.filter(item => item.login === email && item.password === password);
-        if (securityEntries.length) {
-            const entry = securityEntries[0];
-            setIsLoggedIn(true);
-            setRoleId(entry.roleId);
-            console.log(roleId);
-        }
-    }
-
     const logOut = () => {
-        setIsLoggedIn(false);
+        dispatch(setIsLoggedOut());
+        dispatch(toggleRoleSelector());
+        dispatch(unsetCurrentUser());
+        unsetToken();
         history.push("/");
     }
+    const methods = useForm<UserInput>();
 
     const onHide = (condition: boolean) => {
         setHidden(condition);
@@ -57,12 +46,8 @@ function App() {
     function styleMenu(condition: boolean) {
         if (condition) { return ("nothide") } else { return ("hide") }
     }
-
-    useEffect(() => {
-        getUser()
-    }, [])
-
     return (
+        <FormProvider {...methods} >
         <div className="App">
             <Helmet>
                 <title>Самый лучший сайт на свете</title>
@@ -74,35 +59,44 @@ function App() {
                 </div>
                 <div className="header-user-actions">
                     {
-                        isLoggedIn && <button onClick={logOut}>Log out</button>
+                        appState.roleSelector.isTurnedOn && <LoginRoleSelector />
+                    }
+                    {
+                        appState.app.isLoggedIn
+                        &&
+                        <button onClick={logOut}>Log out</button>
                     }
                 </div>
             </header>
             <div className="main-content">
                 <aside className={styleMenu(isHidden)}>
                     {
-                        isLoggedIn ?
-                            <NavMenu roleId={roleId} onHide={onHide} />
-                            :
-
-                            <h2>Залогиньтесь!</h2>
+                        (appState.app.isLoggedIn)
+                        &&
+                        <NavMenu roleId={appState.roleSelector.currentUserRoleId} onHide={onHide}/>
                     }
                 </aside>
                 <main>
                     {
-                        isLoggedIn ?
+                        appState.app.isLoggedIn ?
                             <Switch>
                                 {
-                                    (roleId === Role.Manager || roleId === Role.Admin) &&
-                                    <Route path="/user-page">
-                                        <UserListPage roleId={roleId}></UserListPage>
+                                    (appState.roleSelector.currentUserRoleId === Role.Manager
+                                        ||
+                                        appState.roleSelector.currentUserRoleId === Role.Admin)
+                                    &&
+                                    <Route path="/user-list">
+                                        <UserListPage></UserListPage>
                                         <Helmet>
                                             <title>Юзеры</title>
                                         </Helmet>
                                     </Route>
                                 }
+                                <Route path="/user-page">
+                                    <UserPage></UserPage>
+                                </Route>
                                 {
-                                    roleId === Role.Teacher &&
+                                    appState.roleSelector.currentUserRoleId === Role.Teacher &&
                                     <Route path="/courses-page">
                                         <CoursesPage />
                                         <Helmet>
@@ -114,7 +108,7 @@ function App() {
                                     <CourseEdition idCourse={location.pathname} />)}>
                                 </Route>
                                 {
-                                    roleId !== Role.Student &&
+                                    appState.roleSelector.currentUserRoleId !== Role.Student &&
                                     <Route path="/tags-page">
                                         <TagsPage ></TagsPage>
                                         <Helmet>
@@ -137,10 +131,14 @@ function App() {
                             </Switch>
                             :
                             <Switch>
-                                <Route exact path="/">
-                                    <LoginForm onLoginClick={loginHandler} />
-                                    <div className="test-page-link"><Link to="/dev-test-page">secret test page</Link></div>
-                                </Route>
+                                {
+                                    !appState.app.isLoggedIn
+                                    &&
+                                    <Route exact path="/">
+                                        <LoginForm />
+                                        <div className="test-page-link"><Link to="/dev-test-page">secret test page</Link></div>
+                                    </Route>
+                                }
                                 <Route path="/dev-test-page">
                                     <DevTestPage />
                                     <NotificationContainer />
@@ -148,12 +146,12 @@ function App() {
                             </Switch>
                     }
                     {
-                        isLoggedIn && <NotificationContainer />
-
+                        appState.app.isLoggedIn && <NotificationContainer />
                     }
                 </main>
             </div>
         </div>
+        </FormProvider>
     );
 }
 
