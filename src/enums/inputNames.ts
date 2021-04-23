@@ -8,5 +8,6 @@ export enum InputNames {
     UserPic = "userPic",
     Email = "email",
     Password = "password",
+    ContractNumber = "contractNumber",
     Roles = "roles"
 }

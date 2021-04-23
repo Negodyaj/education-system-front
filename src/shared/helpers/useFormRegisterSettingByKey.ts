@@ -1,6 +1,5 @@
 import { RegisterOptions } from "react-hook-form";
 import { InputNames } from "../../enums/inputNames";
-import { getValidationRule } from "../validation-rules/validationRules";
 export interface InputSettings {
     label: string;
     name: InputNames;
@@ -44,6 +43,37 @@ export const getRegisterSettings = (key: InputNames): InputSettings => {
                 options: {
                     required: "Введите пароль"
                 }
+            }
+        case InputNames.UserPic:
+            return {
+                label: "Аватар",
+                name: key,
+                options: {
+                    required: "Вставьте ссылку на изображение"
+                }
+            }
+        case InputNames.Phone:
+            return {
+                label: "Телефон",
+                name: key,
+                options: {
+                    required: "Введите номер телефона"
+                }
+            }
+        case InputNames.BirthDate:
+            return {
+                label: "Дата рождения",
+                name: key
+            }
+        case InputNames.Roles:
+            return {
+                label: "Роли",
+                name: key
+            }
+        case InputNames.ContractNumber:
+            return {
+                label: "номер договора",
+                name: key
             }
         default: return {
             label: key,

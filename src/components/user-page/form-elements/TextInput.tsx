@@ -5,6 +5,7 @@ import { InputNames } from "../../../enums/inputNames";
 
 interface TextInputProps {
     name: InputNames;
+    label: string;
     options? :RegisterOptions;
 }
 
@@ -14,14 +15,14 @@ function TextInput(props: TextInputProps) {
     const formContext = useFormContext()
     return (
         <div className="form-row">
-            <label className="form-label">Имя</label>
+            <label className="form-label">{props.label}</label>
             <input
                 {...formContext.register(props.name, props.options)}
                 type="text"
                 className="form-input" />
             <ErrorMessage
                 errors={formContext.formState.errors}
-                name={"firstName"}
+                name={props.name}
                 className="bad-feedback"
                 as="div">
             </ErrorMessage>

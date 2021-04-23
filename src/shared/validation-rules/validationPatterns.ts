@@ -2,7 +2,7 @@
 import Input from "react-select/src/components/Input";
 import { InputNames } from "../../enums/inputNames";
 
-export const getValidationRule = (key: InputNames) => {
+export const getValidationPattern = (key: InputNames) => {
     switch (key) {
         case InputNames.FirstName || InputNames.LastName:
             return {

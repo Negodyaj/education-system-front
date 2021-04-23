@@ -1,6 +1,5 @@
 import CustomMultiSelect from '../../multi-select/CustomMultiSelect';
 import React, { useEffect, useState } from 'react';
-import DatePickerComponent from '../../../shared/components/date-picker/DatePickerComponent';
 import { convertEnumToDictionary, getRussianDictionary } from '../../../shared/converters/enumToDictionaryEntity';
 import { Role } from '../../../enums/role';
 import { FormProvider } from 'react-hook-form';
@@ -17,10 +16,10 @@ import { getUserToEditById, sendUser } from '../../../store/user-page/thunk';
 import { convertRoleIdsToSelectItems } from '../../../shared/converters/roleIdsToSelectItems';
 import { Link } from 'react-router-dom';
 import { UserInput } from '../../../interfaces/UserInput';
-import ConnectForm from '../../../shared/components/connect-form/ConnectForm';
 import { useUserForm } from '../hooks/useUserForm';
-import TextInput from '../form-elements/text-input';
 import FormElement, {  } from '../form-elements/FormElement';
+import { getRegisterSettings } from '../../../shared/helpers/useFormRegisterSettingByKey';
+import { InputNames } from '../../../enums/inputNames';
 
 
 function UserPage() {
@@ -39,89 +38,84 @@ function UserPage() {
 
     const { register, formState, handleSubmit, getValues, setValue, ...methods } = useUserForm();
 
-
-    //function formSection2({ register }:UseFormRegisterReturn) {}
-
-
-
     const elementsDefinedByProps = {
         roleSelector: () => {
             if (appState.roleSelector.currentUserRoleId === Role.Admin) {
-                return (
-                    <div className="form-row multi">
-                        <label className="form-label">Список ролей</label>
-                        <CustomMultiSelect
-                            selectType={"multi"}
-                            selectedOptions={convertRoleIdsToSelectItems(appState.userPage.userForUserPage?.roles || []) || undefined}
-                            options={convertEntitiesToSelectItems(getRussianDictionary(convertEnumToDictionary(Role)))}
-                            onMultiSelect={roleOnChange}></CustomMultiSelect>
-                    </div>)
+                // return (
+                //     <div className="form-row multi">
+                //         <label className="form-label">Список ролей</label>
+                //         <CustomMultiSelect
+                //             selectType={"multi"}
+                //             selectedOptions={convertRoleIdsToSelectItems(appState.userPage.userForUserPage?.roles || []) || undefined}
+                //             options={convertEntitiesToSelectItems(getRussianDictionary(convertEnumToDictionary(Role)))}
+                //             onMultiSelect={roleOnChange}></CustomMultiSelect>
+                //     </div>)
             } else {
-                setValue('roles', [Role.Student]);
+                //setValue('roles', [Role.Student]);
             }
         },
         passwordInput: () => {
             if (appState.userPage.userForUserPage === undefined) {
-                return (
-                    <div className="form-row">
-                        <label className="form-label">Пароль</label>
-                        <input
-                            {...register('password', {
-                                required: {
-                                    value: true,
-                                    message: "Введите пароль"
-                                }
-                            })}
-                            type="text"
-                            className="form-input" />
-                        <ErrorMessage
-                            errors={formState.errors}
-                            name={"password"}
-                            className="bad-feedback"
-                            as="div">
-                        </ErrorMessage>
-                    </div>
-                )
+                // return (
+                //     <div className="form-row">
+                //         <label className="form-label">Пароль</label>
+                //         <input
+                //             {...register('password', {
+                //                 required: {
+                //                     value: true,
+                //                     message: "Введите пароль"
+                //                 }
+                //             })}
+                //             type="text"
+                //             className="form-input" />
+                //         <ErrorMessage
+                //             errors={formState.errors}
+                //             name={"password"}
+                //             className="bad-feedback"
+                //             as="div">
+                //         </ErrorMessage>
+                //     </div>
+                // )
             } else {
                 return;
             }
         },
         loginInput: () => {
             if (appState.userPage.userForUserPage === undefined) {
-                return (
-                    <div className="form-row">
-                        <label className="form-label">Логин</label>
-                        <input
-                            {...register('login', {
-                                required: {
-                                    value: true,
-                                    message: "Введите логин"
-                                },
-                                pattern: {
-                                    value: /[a-z0-9]/,
-                                    message: "Допустимы только строчные буквы и цифры"
-                                }
-                            })}
-                            type="text"
-                            className="form-input" />
-                        <ErrorMessage
-                            errors={formState.errors}
-                            name={"login"}
-                            className="bad-feedback"
-                            as="div">
-                        </ErrorMessage>
-                    </div>
-                )
+                // return (
+                //     <div className="form-row">
+                //         <label className="form-label">Логин</label>
+                //         <input
+                //             {...register('login', {
+                //                 required: {
+                //                     value: true,
+                //                     message: "Введите логин"
+                //                 },
+                //                 pattern: {
+                //                     value: /[a-z0-9]/,
+                //                     message: "Допустимы только строчные буквы и цифры"
+                //                 }
+                //             })}
+                //             type="text"
+                //             className="form-input" />
+                //         <ErrorMessage
+                //             errors={formState.errors}
+                //             name={"login"}
+                //             className="bad-feedback"
+                //             as="div">
+                //         </ErrorMessage>
+                //     </div>
+                // )
             } else {
                 return;
             }
         }
     }
     const birthDateOnChange = (date: string) => {
-        setValue('birthDate', date)
+        //setValue('birthDate', date)
     }
     const roleOnChange = (options: number[]) => {
-        setValue('roles', options);
+        //setValue('roles', options);
     }
     const onSubmit = (data: User) => {
         dispatch(sendUser(data))
@@ -144,7 +138,8 @@ function UserPage() {
                     <form onSubmit={handleSubmit(onSubmit)}>
                         {
                             Object.keys(appState.userPage.userForUserPage).map(key => {
-                                return <FormElement name={key}></FormElement>
+                                console.log(getRegisterSettings(key as InputNames))
+                                return <FormElement settings={getRegisterSettings(key as InputNames)}></FormElement>
                             })
                         }
                         {/* <div className="form-row">
