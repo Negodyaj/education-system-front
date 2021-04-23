@@ -187,5 +187,26 @@ export const responseHandlers: responseHandler = {
         },
         isT: (data: any): data is PaymentResponse[] => isPaymentResponseArr(data)
     }
+    // [PaymentAddEnd]: {
+    //     notifications: (response?: any) => {
+    //         return ({
+    //             [nType.Error]: makeNotification(nType.Error, makeErrorText(response)),
+    //             [nType.Success]: makeNotification(nType.Success, ('Оплата пользователю ' 
+    //             + (response as PaymentResponse)?.user?.firstName 
+    //             + (response as PaymentResponse)?.user?.lastName 
+    //             + ' назначена'))
+    //         })
+    //     },
+    //     isT: (data: any): data is PaymentResponse => isPaymentResponse(data)
+    // },
+    // [PaymentEnd]: {
+    //     notifications: (response?: any) => {
+    //         return ({
+    //             [nType.Error]: makeNotification(nType.Error, makeErrorText(response)),
+    //             [nType.Success]: undefined
+    //         })
+    //     },
+    //     isT: (data: any): data is PaymentResponse[] => isPaymentResponseArr(data)
+    // }
 
 }

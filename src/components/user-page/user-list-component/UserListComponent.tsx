@@ -10,6 +10,8 @@ import { User } from "../../../interfaces/User";
 import { useDispatch, useSelector } from "react-redux";
 import { IRootState } from "../../../store";
 import { getUserToEditById } from "../../../store/user-page/thunk";
+import { setPaymentFormOpen } from "../../../store/payment/action-creators";
+import { sendDeleteRequestNoResponse } from "../../../services/http.service";
 import { setUserForUserPageId } from "../../../store/user-page/action-creators";
 import { Link } from "react-router-dom";
 import { getUsers } from "../../../store/user-list-page/thunk";
@@ -42,11 +44,11 @@ function UserListComponent() {
     const [confirmationDeleteMessage, setConfirmationDeleteMessage] = useState('Вы уверены?')
 
     const elementsDefinedByRole = {
-        paymentButton: (userId: number | undefined) => {
+        paymentButton: (user: User) => {
             return (
                 appState.roleSelector.currentUserRoleId === Role.Manager
                 &&
-                <button className="button-round" onClick={() => onPaymentButtonClick(userId)}>
+                <button className="button-round" onClick={() => onPaymentButtonClick(user)}>
                     <FontAwesomeIcon icon="ruble-sign" />
                 </button>
             )
@@ -63,6 +65,7 @@ function UserListComponent() {
 
     }
     const onPaymentButtonClick = (userId: number | undefined) => {
+        setPaymentFormState('visible');
         setUserForPayment([...userListPageState.userList].filter(u => u.id === userId)[0]);
         payment1.payment.formVisibility;
 
@@ -161,6 +164,9 @@ function UserListComponent() {
                                         {
                                             elementsDefinedByRole.paymentButton(u.id)
                                         }
+                                {
+                                    elementsDefinedByRole.paymentButton(u.id)
+                                }
                             </div>
                         </div>
                         <ConfirmationDialog

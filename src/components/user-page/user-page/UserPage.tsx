@@ -25,6 +25,7 @@ import FormElement, {  } from '../form-elements/FormElement';
 
 function UserPage() {
 
+<<<<<<< Updated upstream
     const initUser: User = Object.assign({}, props.userToEdit || {
         id: 0,
         firstName: "",
@@ -38,6 +39,21 @@ function UserPage() {
         contractNumber: 0,
         roles: []
     })
+=======
+    // const initUser: User = Object.assign({}, props.userToEdit || {
+    //     id: 0,
+    //     firstName: "",
+    //     lastName: "",
+    //     login: "",
+    //     password: "",
+    //     birthDate: new Date().toLocaleDateString('ru-RU'),
+    //     userPic: "",
+    //     phone: "",
+    //     email: "",
+    //     contractNumber: 0,
+    //     roles: []
+    // })
+
     const dispatch = useDispatch();
     const appState = useSelector((state: IRootState) => state)
     useEffect(() => {
@@ -49,6 +65,9 @@ function UserPage() {
             setValue(key as keyof UserInput, appState.userPage.userForUserPage[key as keyof UserInput])
         })
     }, [appState.userPage.userForUserPage])
+
+    const [newUser, setNewUser] = useState<User>(initUser);
+    const [isFetching, setIsFetching] = useState(false);
 
     const { register, formState, handleSubmit, getValues, setValue, ...methods } = useUserForm();
 

@@ -3,14 +3,15 @@ import { IPaymentFormState } from "../state";
 import { PaymentFormActions } from "./action-creators";
 
 const initialState: IPaymentFormState = {
-    formVisibility: ""
+    formVisibility: "",
+    userForPayment: undefined
 };
 export function paymentReducer(state: IPaymentFormState = initialState, action: PaymentFormActions): IPaymentFormState {
     switch (action.type) {
         case PAYMENT_SEND_SUCCESS:
             return { ...state, formVisibility: '' };
         case PAYMENT_FORM_VISIBLE:
-            return { ...state, formVisibility: 'visible' };
+            return { ...state, formVisibility: 'visible', userForPayment: action.payload};
         default: return state;
     }
 }

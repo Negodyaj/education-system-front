@@ -59,7 +59,7 @@ const onCancel = () => {
             <div className={"inner-payment " + (paymentFormState.formVisibility)}>
                 <div className="header-payment">
                     <div>Назначить платеж пользователю
-                        <div>{props.userForPayment?.firstName} {props.userForPayment?.lastName}</div>
+                        <div>{paymentFormState.userForPayment?.firstName} {paymentFormState.userForPayment?.lastName}</div>
                     </div>
                     <button className="button-round" onClick={onCancel}>х</button>
                 </div>
