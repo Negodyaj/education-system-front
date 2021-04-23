@@ -23,38 +23,29 @@ function NavMenu(props: NavMenuProps) {
 
             <div className={isHidden ? "notshow" : "vision"}>
                 {
-                    props.roleId === Role.Student &&
-                    <nav>
-                        <NavLink exact activeClassName="active" to="/">
-                        <span className="button-update"><FontAwesomeIcon icon="newspaper" /></span>
-                            <span className="navigation"> Мои новости </span>
-                        </NavLink>
-                        <NavLink activeClassName="active" to="/groups-list" >
+                    (props.roleId === Role.Student || props.roleId === Role.Teacher || props.roleId === Role.Tutor) &&
+                    <NavLink activeClassName="active" to="/group-page" >
                         <span className="button-update"><FontAwesomeIcon icon="users" /></span>
-                            <span className="navigation"> Мои группы </span>
-                        </NavLink>
-                        <NavLink activeClassName="active" to="/courses-list">
-                        <span className="button-update"><FontAwesomeIcon icon="university" /></span>
-                            <span className="navigation"> Мои курсы </span>
-                        </NavLink>
-                        <NavLink activeClassName="active" to="homework-list">
-                        <span className="button-update"><FontAwesomeIcon icon="book-reader" /></span>
-                            <span className="navigation"> Мои Домашки </span>
-                        </NavLink>
-
-                    </nav>
+                        <span className="navigation"> Мои группы </span>
+                    </NavLink>
                 }
                 {
                     (props.roleId === Role.Admin || props.roleId === Role.Manager) &&
                     <nav>
+                            <button className="button-update"><FontAwesomeIcon icon="user" /></button>
+                            <button className="navigation"> Users </button>
                         <Link to="/user-list">
                         <span className="button-update"><FontAwesomeIcon icon="user" /></span>
                             <span className="navigation"> Users </span>
                         </Link>
+                        <NavLink activeClassName="active" to="/group-page" >
+                            <button className="button-update"><FontAwesomeIcon icon="users" /></button>
+                            <button className="navigation"> Группы </button>
+                        </NavLink>
                     </nav>
                 }
                 {
-                    (props.roleId === Role.Teacher || props.roleId === Role.Methodist) &&
+                    (props.roleId === Role.Teacher || props.roleId === Role.Methodist || props.roleId === Role.Tutor) &&
                     <nav>
                         <Link to="/homework">
                         <span className="button-update"><FontAwesomeIcon icon="book-reader" /></span>
