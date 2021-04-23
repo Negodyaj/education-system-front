@@ -12,12 +12,12 @@ function GroupPage() {
   useEffect(() => {
     //dispatch(getGroupToViewById(15))
   }, []);
-const isRoleManagerModeOn: boolean= false
+
 
   return (
     <div>
-{
-  isRoleManagerModeOn?
+{ (appState.roleSelector.currentUserRoleId === 1 || appState.roleSelector.currentUserRoleId === 2)
+  ?
   <div>GroupListComponent for Admin and Manager</div>
   :
   <GroupInfoComponent />
