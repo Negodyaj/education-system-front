@@ -1,40 +1,21 @@
-.App {
-  text-align: center;
-}
-
 .app-logo {
-  width: 50%;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+    width: 50%;
+    pointer-events: none;
 }
 
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+    background-color: #282c34;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    color: white;
 }
 
 .App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+    color: #61dafb;
 }
 
 header {
@@ -43,15 +24,15 @@ header {
 }
 
 .logo-container,
-aside.nothide{
+aside.nothide {
     flex-grow: 0;
     flex-shrink: 0;
     width: 350px;
 }
 
-aside.hide{
-  width:50px;
-  border-right: 2px solid salmon;
+aside.hide {
+    width: 50px;
+    border-right: 2px solid salmon;
 }
 
 aside,
@@ -76,68 +57,79 @@ main {
     height: calc(100vh - 100px);
 }
 
-.button-style, .button-round {
-  background-color: #00CCF2;
-  color: #FFFF;
-  font-weight: 700;
-  border: none;
-  text-align: center;
-  outline: none;
-  font-family: Montserrat;
-  margin:0 5px;
+.common-button,
+.round-button {
+    background-color: #00ccf2;
+    color: #ffff;
+    border: none;
+    text-align: center;
+    outline: none;
+    cursor: pointer;
 }
 
-.button-round{
-  margin:0 5px;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
+.common-button + .common-button,
+.round-button + .round-button {
+    margin-left: 10px;
 }
 
-.button-style{
-  height: 40px;
-  min-width: 50px;
-  border-radius: 25px;
+.round-button {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
 }
 
-.list{
-  display: grid;
-  min-height: 50px;
-  border-bottom: 1px solid rgba(39, 45, 59, 0.15);
-  text-align: left;
-  font-size: 14px;
-  font-family: Montserrat;
+.common-button {
+    height: 40px;
+    border-radius: 25px;
+    min-width: 110px;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 0 25px;
 }
 
-.form-label{
-  height: 16px;
-  margin-bottom: 7px;
-  font-family: 'Montserrat';
-  text-align: left;
-  line-height: 16px;
+.list {
+    display: grid;
+    min-height: 50px;
+    border-bottom: 1px solid rgba(39, 45, 59, 0.15);
+    text-align: left;
+    font-size: 14px;
 }
 
-.form-input{
-  height: 40px;
-  width: 272px;
-  border: 1px solid #E0E7FF;
-  border-radius: 5px;
-  margin-bottom: 11px;
-  font-family: 'Montserrat';
-  outline: none;
+.form-control + .form-control {
+    margin-top: 11px;
+}
+
+.form-label {
+    font-size: 12px;
+    margin-bottom: 7px;
+    display: inline-block;
+    height: 16px;
+    line-height: 16px;
+}
+
+.form-input {
+    height: 40px;
+    width: 272px;
+    border: 1px solid #e0e7ff;
+    border-radius: 5px;
+    margin-bottom: 11px;
+    outline: none;
+    font-size: 14px;
+    padding: 0 13px;
+    font-weight: 600;
 }
 
 .test-page-link {
-  position: absolute;
-  bottom: 10px;
-  right: 10px;
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
 }
 
-.mini-button{
-  height: 12px;
-  width: 12px;
-  align-self: center;
-  text-align: center;
-  font-size: 9px;
-  padding: 0px;
+.mini-button {
+    height: 12px;
+    width: 12px;
+    align-self: center;
+    text-align: center;
+    font-size: 9px;
+    padding: 0px;
 }

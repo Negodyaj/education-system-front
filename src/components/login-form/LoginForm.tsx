@@ -23,16 +23,16 @@ function LoginForm() {
 
     return (
         <div className="login-form">
-            <span>Sing In</span>
-            <label className="form-label">
-                Login
-            </label>
-            <input className='form-input' type="text" value={login} onChange={handleloginChange} />
-            <label className="form-label">
-                Password              
-            </label>
-            <input className='form-input' type="password" value={password} onChange={handlePasswordChange} />
-            <button className="button-style" onClick={loginButtonOnClick}>Log in</button>
+            <h2>Залогиньтеся</h2>
+            <div className="form-control">
+                <label className="form-label">Логин</label>
+                <input className='form-input' type="text" value={login} onChange={handleloginChange} />
+            </div>
+            <div className="form-control">
+                <label className="form-label">Пароль</label>
+                <input className='form-input' type="password" value={password} onChange={handlePasswordChange} />
+            </div>
+            <button className="common-button" onClick={loginButtonOnClick}>Войти</button>
         </div>
     )
 }

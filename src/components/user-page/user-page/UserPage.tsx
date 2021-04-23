@@ -257,9 +257,9 @@ function UserPage() {
                         </div> */}
                         <div className="form-row form-row-button">
                             <Link to="/user-list">
-                                <button className="button-style" type="button" onClick={closeUserPage}>отмена</button>
+                                <button className="common-button" type="button" onClick={closeUserPage}>отмена</button>
                             </Link>
-                            <button className="button-style" type={"submit"}>сохранить</button>
+                            <button className="common-button" type={"submit"}>сохранить</button>
                         </div>
                     </form>
                 </div >
