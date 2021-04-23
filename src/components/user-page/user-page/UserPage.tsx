@@ -56,26 +56,7 @@ function UserPage() {
         },
         passwordInput: () => {
             if (appState.userPage.userForUserPage === undefined) {
-                // return (
-                //     <div className="form-row">
-                //         <label className="form-label">Пароль</label>
-                //         <input
-                //             {...register('password', {
-                //                 required: {
-                //                     value: true,
-                //                     message: "Введите пароль"
-                //                 }
-                //             })}
-                //             type="text"
-                //             className="form-input" />
-                //         <ErrorMessage
-                //             errors={formState.errors}
-                //             name={"password"}
-                //             className="bad-feedback"
-                //             as="div">
-                //         </ErrorMessage>
-                //     </div>
-                // )
+                
             } else {
                 return;
             }
@@ -138,32 +119,11 @@ function UserPage() {
                     <form onSubmit={handleSubmit(onSubmit)}>
                         {
                             Object.keys(appState.userPage.userForUserPage).map(key => {
-                                console.log(getRegisterSettings(key as InputNames))
                                 return <FormElement settings={getRegisterSettings(key as InputNames)}></FormElement>
                             })
                         }
-                        {/* <div className="form-row">
-                            <label className="form-label">Фамилия</label>
-                            <input
-                                {...register('lastName', {
-                                    required: {
-                                        value: true,
-                                        message: "Введите фамилию"
-                                    },
-                                    pattern: {
-                                        value: /[A-Za-zА-Яа-я]/,
-                                        message: "Допустимы только буквенные символы"
-                                    }
-                                })}
-                                type="text"
-                                className="form-input" />
-                            <ErrorMessage
-                                errors={formState.errors}
-                                name={"lastName"}
-                                className="bad-feedback"
-                                as="div">
-                            </ErrorMessage>
-                        </div>
+                        {
+                        /*
                         <div className="form-row">
                             <label className="form-label">Дата рождения</label>
                             <DatePickerComponent
@@ -177,28 +137,7 @@ function UserPage() {
                         {
                             elementsDefinedByProps.passwordInput()
                         }
-                        <div className="form-row">
-                            <label className="form-label">Телефон</label>
-                            <input
-                                {...register('phone', {
-                                    required: {
-                                        value: true,
-                                        message: "Введите номер телефона"
-                                    },
-                                    pattern: {
-                                        value: /[0-9]/,
-                                        message: "Допустимы только цифры"
-                                    }
-                                })}
-                                type="text"
-                                className="form-input" />
-                            <ErrorMessage
-                                errors={formState.errors}
-                                name={"phone"}
-                                className="bad-feedback"
-                                as="div">
-                            </ErrorMessage>
-                        </div>
+                        
                         <div className="form-row upl-file">
                             <label className="form-label">Аватар</label>
                             <div className="file-upload">
@@ -227,24 +166,7 @@ function UserPage() {
                             </ErrorMessage>
                             <img src={appState.userPage.userForUserPage.userPic} alt="аватар" />
                         </div>
-                        <div className="form-row">
-                            <label className="form-label">Почта</label>
-                            <input
-                                {...register('email', {
-                                    required: {
-                                        value: true,
-                                        message: "Введите email"
-                                    }
-                                })}
-                                type="text"
-                                className="form-input" />
-                            <ErrorMessage
-                                errors={formState.errors}
-                                name={"email"}
-                                className="bad-feedback"
-                                as="div">
-                            </ErrorMessage>
-                        </div>
+                        
                         <div className="form-row">
                             {
                                 elementsDefinedByProps.roleSelector()

@@ -1,5 +1,5 @@
 import { User } from "../../interfaces/User";
-import { USER_EDIT_MODE_WAS_CLOSED, USER_FOR_USER_PAGE_ID, USER_IS_SENDING, USER_SENDING_SUCCESS, USER_TO_EDIT_WRETCH_FAIL, USER_TO_EDIT_WRETCH_LOADED, USER_TO_EDIT_WRETCH_LOADING } from "../actionTypes";
+import { USER_EDIT_MODE_WAS_CLOSED, USER_IS_SENDING, USER_SENDING_SUCCESS, USER_TO_EDIT_ID_FOR_USER_PAGE, USER_TO_EDIT_WRETCH_FAIL, USER_TO_EDIT_WRETCH_LOADED, USER_TO_EDIT_WRETCH_LOADING } from "../actionTypes";
 
 export type UserPageActions =
     | ReturnType<typeof setUserForUserPageId>
@@ -11,7 +11,7 @@ export type UserPageActions =
 
 export const setUserForUserPageId = (userId: number) => {
     return ({
-        type: USER_FOR_USER_PAGE_ID,
+        type: USER_TO_EDIT_ID_FOR_USER_PAGE,
         payload: userId
     } as const);
 }
