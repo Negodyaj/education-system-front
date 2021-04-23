@@ -1,5 +1,5 @@
 import './BaseGroupInfo.css'
-import '../../../App.css'
+import '../../../../App.css'
 
 interface BaseGroupInfoProps {
     courseName?: string

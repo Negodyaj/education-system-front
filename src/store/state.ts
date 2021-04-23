@@ -39,7 +39,7 @@ export interface INotificationContainerState {
     }
 }
 
-export interface IGroupPage{
+export interface IGroupInfoComponent{
     groupToView: Group | undefined;
     isDataLoading: boolean;
 }

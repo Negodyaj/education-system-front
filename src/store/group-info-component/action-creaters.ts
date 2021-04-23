@@ -1,7 +1,7 @@
 import { Group } from "../../interfaces/Group";
 import { GROUP_TO_VIEW_WRETCH_FAIL, GROUP_TO_VIEW_WRETCH_LOADED, GROUP_TO_VIEW_WRETCH_LOADING } from "../actionTypes"
 
-export type GroupPageActions =
+export type GroupInfoComponentActions =
     | ReturnType<typeof setGroupToViewIsLoading>
     | ReturnType<typeof setGroupToViewWasLoaded>
     | ReturnType<typeof setGroupToViewFailed>

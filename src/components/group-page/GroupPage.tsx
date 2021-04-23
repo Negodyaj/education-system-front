@@ -1,25 +1,25 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { IRootState } from "../../store";
-import { getGroupToViewById } from "../../store/group-page/thunk";
-import BaseGroupInfoComponent from "./group-info-component/base-group-info-component/BaseGroupInfoComponent";
+import GroupInfoComponent from "./group-info-component/GroupInfoComponent";
 import "./GroupPage.css"
 
 
 function GroupPage() {
   const dispatch = useDispatch();
-  const groupPageState = useSelector((state: IRootState) => state.groupPage)
+  const appState = useSelector((state: IRootState) => state)
 
   useEffect(() => {
-    dispatch(getGroupToViewById(15))
+    //dispatch(getGroupToViewById(15))
   }, []);
-const isModeOn: boolean= false
+const isRoleManagerModeOn: boolean= false
 
   return (
     <div>
 {
-  isModeOn ?
-  <div></div>:
+  isRoleManagerModeOn?
+  <div>GroupListComponent for Admin and Manager</div>
+  :
   <GroupInfoComponent />
 }
     </div>

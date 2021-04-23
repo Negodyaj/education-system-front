@@ -1,7 +1,8 @@
 import { Group } from "../../interfaces/Group";
 import { GROUP_TO_VIEW_WRETCH_FAIL, GROUP_TO_VIEW_WRETCH_LOADED, GROUP_TO_VIEW_WRETCH_LOADING } from "../actionTypes";
-import { IGroupInfoComponent} from "../state";
-import { GroupPageActions } from "./action-creaters";
+import { IGroupInfoComponent } from "../state";
+import { GroupInfoComponentActions } from "./action-creaters";
+
 
 
 const initialState: IGroupInfoComponent = {
@@ -9,7 +10,7 @@ const initialState: IGroupInfoComponent = {
     isDataLoading: false
 };
 
-export function groupInfoComponentReducer(state: IGroupInfoComponent = initialState, action: GroupPageActions): IGroupInfoComponent {
+export function groupInfoComponentReducer(state: IGroupInfoComponent = initialState, action: GroupInfoComponentActions): IGroupInfoComponent {
     switch (action.type) {
         case GROUP_TO_VIEW_WRETCH_LOADING:
             return { ...state, isDataLoading: true }

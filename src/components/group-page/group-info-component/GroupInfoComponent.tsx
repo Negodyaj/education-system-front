@@ -3,10 +3,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { IRootState } from "../../../store";
 import { getGroupToViewById } from "../../../store/group-info-component/thunk";
 import BaseGroupInfoComponent from "./base-group-info-component/BaseGroupInfoComponent";
+import '../../../App.css'
+import './GroupInfoComponent.css'
 
 function GroupInfoComponent() {
     const dispatch = useDispatch();
-    const groupInfoComponentState = useSelector((state: IRootState) => state.groupInfoComponent)
+    const appState = useSelector((state: IRootState) => state)
   
     useEffect(() => {
       dispatch(getGroupToViewById(15))
@@ -18,9 +20,9 @@ function GroupInfoComponent() {
         <div className="group-header"> Nav menu component</div>
         <div className="group-body">
           <div>
-            <BaseGroupInfoComponent courseName={groupInfoComponentState.groupToView?.course.name}
-              startDate={groupInfoComponentState.groupToView?.startDate}
-              duration={groupInfoComponentState.groupToView?.course.duration} />
+            <BaseGroupInfoComponent courseName={appState.groupInfoComponent.groupToView?.course.name}
+              startDate={appState.groupInfoComponent.groupToView?.startDate}
+              duration={appState.groupInfoComponent.groupToView?.course.duration} />
           </div>
           <div> List component </div>
         </div>
