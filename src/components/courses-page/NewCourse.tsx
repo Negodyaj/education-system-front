@@ -30,26 +30,26 @@ function NewCourse() {
 
     const showDataNewCourse = () => {
         if (
-            nameNewCourse.current?.value === '' ||
-            descriptionNewCourse.current?.value === '' ||
-            Number(durationNewCourse.current?.value) === 0
-        )
-        {
+            nameNewCourse.current?.value !== '' ||
+            descriptionNewCourse.current?.value !== '' ||
+            Number(durationNewCourse.current?.value) !== 0
+            )
+            {
+                dispatch(createCourse(
+                    {
+                    name: `${nameNewCourse.current?.value}`,
+                    description: `${descriptionNewCourse.current?.value}`,
+                    duration: Number(durationNewCourse.current?.value)
+                    }
+                )) 
+                dispatch(getCourses());
+            } else {
             return;
-        } else {
-            dispatch(createCourse(
-                {
-                name: `${nameNewCourse.current?.value}`,
-                description: `${descriptionNewCourse.current?.value}`,
-                duration: Number(durationNewCourse.current?.value)
-                }
-            )) 
-            dispatch(getCourses());
         }
         
     }
 
-    const validationInpuuts = () => {
+    const validationInputs = () => {
         nameNewCourse.current?.value === '' ? dispatch(validatedCourseName()) : dispatch(unvalidataCourseName());
         descriptionNewCourse.current?.value === '' ? dispatch(validatedCourseDescription()) : dispatch(unvalidataCourseDescription());
         durationNewCourse.current?.value === '' ? dispatch(validatedCourseDuration()) : dispatch(unvalidataCourseDuration());
@@ -67,21 +67,21 @@ function NewCourse() {
                 <div className="create-course">
                     <div className='new-course-header'>Название курса</div>
                     <div className="course-data">
-                        <input type="text" className="course-name" onChange={validationInpuuts} ref={nameNewCourse} placeholder='Введите название курса' required />
+                        <input type="text" className="course-name" onChange={validationInputs} ref={nameNewCourse} placeholder='Введите название курса' required />
                     </div>
                     { 
                         pageState.isNameNewCourseFilled ? <div className="error-no-name">Заполните данное поле</div> : <div></div> 
                     }
                     <div className='new-course-header'>Описание курса</div>
                     <div className="course-data">
-                        <textarea className="course-description" onChange={validationInpuuts} placeholder="Введите описание курса" ref={descriptionNewCourse} required />
+                        <textarea className="course-description" onChange={validationInputs} placeholder="Введите описание курса" ref={descriptionNewCourse} required />
                     </div>
                     { 
                         pageState.isDescriptionNewCourseFilled ? <div className="error-no-description">Заполните данное поле</div> : <div></div>
                     }
                     <div className='new-course-header'>Продолжительность курса</div>
                     <div className="course-data">
-                        <input type="number" min={1} onChange={validationInpuuts} className="course-duration" ref={durationNewCourse} required />
+                        <input type="number" min={1} onChange={validationInputs} className="course-duration" ref={durationNewCourse} required />
                         <div className="duration-course-text">месяца(ов)</div>
                     </div>
                     { 
