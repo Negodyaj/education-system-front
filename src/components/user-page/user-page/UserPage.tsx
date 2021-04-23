@@ -14,10 +14,10 @@ import { IRootState } from '../../../store';
 import { quitUserPage } from '../../../store/user-page/action-creators';
 import { getUserToEditById, sendUser } from '../../../store/user-page/thunk';
 import { convertRoleIdsToSelectItems } from '../../../shared/converters/roleIdsToSelectItems';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { UserInput } from '../../../interfaces/UserInput';
 import { useUserForm } from '../hooks/useUserForm';
-import FormElement, {  } from '../form-elements/FormElement';
+import FormElement, { } from '../form-elements/FormElement';
 import { getRegisterSettings } from '../../../shared/helpers/useFormRegisterSettingByKey';
 import { InputNames } from '../../../enums/inputNames';
 
@@ -26,8 +26,9 @@ function UserPage() {
 
     const dispatch = useDispatch();
     const appState = useSelector((state: IRootState) => state)
+    const { id } = useParams<{ id?: string; }>();
     useEffect(() => {
-        dispatch(getUserToEditById(appState.userPage.userForUserPageId))
+        dispatch(getUserToEditById(id))
     }, [])
 
     useEffect(() => {
@@ -56,7 +57,7 @@ function UserPage() {
         },
         passwordInput: () => {
             if (appState.userPage.userForUserPage === undefined) {
-                
+
             } else {
                 return;
             }

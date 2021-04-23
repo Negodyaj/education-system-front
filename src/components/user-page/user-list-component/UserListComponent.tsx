@@ -111,74 +111,72 @@ function UserListComponent() {
             ?
             <div>LOADING</div>
             :
-            
-                <div className="user-list">
-                    <div className="column-head">
-                        <h4>Пользователи</h4>
-                        <Link to="/user-page">
-                            <button className="common-button" onClick={onRegisterClick}>
-                                <FontAwesomeIcon icon="plus" />
-                                <span> Добавить</span>
-                            </button>
-                        </Link>
-                    </div>
-                    <div className="list + user-list-head">
-                        <div className="column"> </div>
-                        <div className="column"><span title="А-Я" onClick={lastNameColumnOnClick}>фамилия</span></div>
-                        <div className="column"><span title="А-Я">имя</span></div>
-                        <div className="column"><span title="А-Я">логин</span></div>
-                        <div className="column"><span title="А-Я">роль</span></div>
-                    </div>
-                    {
-                        appState.userListPage.userList.map(u => (
-                            <div className="list + user-list-item" key={u.id}>
-                                <div className="column">
-                                    <img className="user-photo" src={u.userPic} alt="userpic" />
-                                </div>
-                                <div className="column break-word" lang="ru">{u.lastName}</div>
-                                <div className="column break-word">{u.firstName}</div>
-                                <div className="column">{u.login}</div>
-                                <div className="column multiline">
-                                    {
-                                        u.roles?.map(r => (<div className='role'>
-                                            <div>{getEnToRuTranslation(Role[r])}</div>
-                                            {elementsDefinedByRole.deleteRoleButton(u, r)}
-                                            
-                                        </div>))}
-                                </div>
-                                <div className="column">{/*u.groupName*/}</div>
-                                <div className="column-button">
-                                        <div className="column">
-                                            <Link className="round-button" to="/user-page">
-                                    <button className="round-button" onClick={() => onEditClick(u.id)}>
-                                                <FontAwesomeIcon icon="edit" />
-                                            </button>
-                                        </Link>
-                                        <button className="round-button" onClick={() => { }/*props.onDeleteClick(u.id as number)*/}>
-                                            <FontAwesomeIcon icon="trash" />
-                                        </button>
 
-                                        {
-                                            elementsDefinedByRole.paymentButton(u.id)
-                                        }
-                            </div>
-                                </div>
-                                <ConfirmationDialog
-                                    isShown={isModalShow}
-                                    confirmLabel='Да'
-                                    declineLabel='Нет'
-                                    message={confirmationDeleteMessage}
-                                    title='Удаление роли'
-                                    callback={deleteRole}></ConfirmationDialog>
-                            </div>))
-                    }
-                    <PaymentForm
-                        paymentFormState={paymentFormState}
-                        cancelClick={onCancelPaymentClick}
-                        userName={userForPayment?.firstName}
-                        userLastname={userForPayment?.lastName}
-                    ></PaymentForm>
+            <div className="user-list">
+                <div className="column-head">
+                    <h4>Пользователи</h4>
+                    <Link to="/user-page">
+                        <button className="common-button" onClick={onRegisterClick}>
+                            <FontAwesomeIcon icon="plus" />
+                            <span> Добавить</span>
+                        </button>
+                    </Link>
                 </div>
+                <div className="list + user-list-head">
+                    <div className="column"> </div>
+                    <div className="column"><span title="А-Я" onClick={lastNameColumnOnClick}>фамилия</span></div>
+                    <div className="column"><span title="А-Я">имя</span></div>
+                    <div className="column"><span title="А-Я">логин</span></div>
+                    <div className="column"><span title="А-Я">роль</span></div>
+                </div>
+                {
+                    appState.userListPage.userList.map(u => (
+                        <div className="list + user-list-item" key={u.id}>
+                            <div className="column">
+                                <img className="user-photo" src={u.userPic} alt="userpic" />
+                            </div>
+                            <div className="column break-word" lang="ru">{u.lastName}</div>
+                            <div className="column break-word">{u.firstName}</div>
+                            <div className="column">{u.login}</div>
+                            <div className="column multiline">
+                                {
+                                    u.roles?.map(r => (<div className='role'>
+                                        <div>{getEnToRuTranslation(Role[r])}</div>
+                                        {elementsDefinedByRole.deleteRoleButton(u, r)}
+
+                                    </div>))}
+                            </div>
+                            <div className="column">{/*u.groupName*/}</div>
+                            <div className="column-button">
+                                <div className="column">
+                                    <Link className="round-button" to={`/user-page/${u.id}/edit`}>
+                                        <FontAwesomeIcon icon="edit" />
+                                    </Link>
+                                    <button className="round-button" onClick={() => { }/*props.onDeleteClick(u.id as number)*/}>
+                                        <FontAwesomeIcon icon="trash" />
+                                    </button>
+
+                                    {
+                                        elementsDefinedByRole.paymentButton(u.id)
+                                    }
+                                </div>
+                            </div>
+                            <ConfirmationDialog
+                                isShown={isModalShow}
+                                confirmLabel='Да'
+                                declineLabel='Нет'
+                                message={confirmationDeleteMessage}
+                                title='Удаление роли'
+                                callback={deleteRole}></ConfirmationDialog>
+                        </div>))
+                }
+                <PaymentForm
+                    paymentFormState={paymentFormState}
+                    cancelClick={onCancelPaymentClick}
+                    userName={userForPayment?.firstName}
+                    userLastname={userForPayment?.lastName}
+                ></PaymentForm>
+            </div>
 
     )
 }

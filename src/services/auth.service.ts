@@ -1,11 +1,27 @@
+import { User } from "../interfaces/User";
 import { getFromStorage, removeFromStorage, store } from "./local-storage.service";
 
-export const getToken = () => {
+//token
+export const getToken = (): string => {
     return getFromStorage('token');
 }
 export const setToken = (token: string) => {
     store('token', token);
 }
 export const unsetToken = () => {
-    removeFromStorage ('token');
+    removeFromStorage('token');
+}
+//current user
+export const setCurrentUserInStorage = (user: User) => {
+    store('user', JSON.stringify(user))
+}
+export const getCurrentUserFromStorage = (): User => {
+    return JSON.parse(getFromStorage('user'))
+}
+//app
+export const setIsLoggedInInStorage = (isLoggedIn: boolean) => {
+    store('isLoggedIn', JSON.stringify({ isLoggedIn: isLoggedIn }));
+}
+export const getIsLoggedInFormStorage = (): { isLoggedIn: boolean } => {
+    return JSON.parse(getFromStorage('isLoggedIn'))
 }

@@ -1,6 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 import { Switch, Route, useHistory, Link } from 'react-router-dom';
+import Router from 'react-router'
 import LoginForm from './components/login-form/LoginForm';
 import NavMenu from './components/nav-menu/NavMenu';
 import HomeworkPage from './components/homework-page/HomeworkPage';
@@ -19,7 +20,7 @@ import LoginRoleSelector from './components/role-selector/LoginRoleSelector';
 import GroupPage from './components/group-page/GroupPage';
 import { Helmet } from "react-helmet";
 import { toggleRoleSelector, unsetCurrentUser } from './store/role-selector/action-creator';
-import { unsetToken } from './services/auth.service';
+import { getToken, unsetToken } from './services/auth.service';
 import UserPage from './components/user-page/user-page/UserPage';
 import { FormProvider, useForm } from 'react-hook-form';
 import { UserInput } from './interfaces/UserInput';
@@ -48,109 +49,106 @@ function App() {
     }
     return (
         <FormProvider {...methods} >
-        <div className="App">
-            <Helmet>
-                <title>Самый лучший сайт на свете</title>
-                <meta name="description" content="Helmet application" />
-            </Helmet>
-            <header>
-                <div className="logo-container">
-                    <img src={logo} className="app-logo" alt="logo" />
-                </div>
-                <div className="header-user-actions">
-                    {
-                        appState.roleSelector.isTurnedOn && <LoginRoleSelector />
-                    }
-                    {
-                        appState.app.isLoggedIn
-                        &&
-                        <button className='common-button' onClick={logOut}>Log out</button>
-                    }
-                </div>
-            </header>
-            <div className="main-content">
-                <aside className={styleMenu(isHidden)}>
-                    {
-                        (appState.app.isLoggedIn)
-                        &&
-                        <NavMenu roleId={appState.roleSelector.currentUserRoleId} onHide={onHide}/>
-                    }
-                </aside>
-                <main>
-                    {
-                        appState.app.isLoggedIn ?
-                            <Switch>
-                                {
-                                    (appState.roleSelector.currentUserRoleId === Role.Manager
-                                        ||
-                                        appState.roleSelector.currentUserRoleId === Role.Admin)
-                                    &&
-                                    <Route path="/user-list">
-                                        <UserListPage></UserListPage>
-                                        <Helmet>
-                                            <title>Юзеры</title>
-                                        </Helmet>
-                                    </Route>
-                                }
-                                <Route path="/user-page">
-                                    <UserPage></UserPage>
-                                </Route>
-                                {
-                                    appState.roleSelector.currentUserRoleId === Role.Teacher &&
-                                    <Route path="/courses-page">
-                                        <CoursesPage />
-                                        <Helmet>
-                                            <title>Курсы</title>
-                                        </Helmet> 
-                                    </Route>
-                                }
-                                <Route path="/course-edition/:id" render={({ location, history }) => (
-                                    <CourseEdition idCourse={location.pathname} />)}>
-                                </Route>
-                                {
-                                    appState.roleSelector.currentUserRoleId !== Role.Student &&
-                                    <Route path="/tags-page">
-                                        <TagsPage ></TagsPage>
-                                        <Helmet>
-                                            <title>Тэги</title>
-                                        </Helmet>                                        
-                                    </Route>
-                                }
-                                <Route path="/homework">
-                                    <HomeworkPage />
-                                    <Helmet>
-                                            <title>Домашки</title>
-                                        </Helmet> 
-                                </Route>
-                                <Route path="/group">
-                                    <GroupPage />
-                                    <Helmet>
-                                            <title>Группы</title>
-                                        </Helmet> 
-                                </Route>
-                            </Switch>
-                            :
-                            <Switch>
-                                {
-                                    !appState.app.isLoggedIn
-                                    &&
+            <div className="App">
+                <Helmet>
+                    <title>Самый лучший сайт на свете</title>
+                    <meta name="description" content="Helmet application" />
+                </Helmet>
+                <header>
+                    <div className="logo-container">
+                        <img src={logo} className="app-logo" alt="logo" />
+                    </div>
+                    <div className="header-user-actions">
+                        {
+                            appState.roleSelector.isTurnedOn && <LoginRoleSelector />
+                        }
+                        {
+                            !!getToken()
+                            &&
+                            <button className='common-button' onClick={logOut}>Log out</button>
+                        }
+                    </div>
+                </header>
+                <div className="main-content">
+                    <aside className={styleMenu(isHidden)}>
+                        {
+                            !!getToken()
+                            &&
+                            <NavMenu roleId={appState.roleSelector.currentUserRoleId} onHide={onHide} />
+                        }
+                    </aside>
+                    <main>
+                        {
+                            !!getToken() ?
+                                <>
+                                    <Switch>
+                                        {
+                                            (appState.roleSelector.currentUserRoleId === Role.Manager
+                                                ||
+                                                appState.roleSelector.currentUserRoleId === Role.Admin)
+                                            &&
+                                            <Route path="/user-list">
+                                                <UserListPage></UserListPage>
+                                                <Helmet>
+                                                    <title>Юзеры</title>
+                                                </Helmet>
+                                            </Route>
+                                        }
+                                        <Route path="/user-page/:id/edit">
+                                            <UserPage></UserPage>
+
+                                        </Route>
+                                        {
+                                            appState.roleSelector.currentUserRoleId === Role.Teacher &&
+                                            <Route path="/courses-page">
+                                                <CoursesPage />
+                                                <Helmet>
+                                                    <title>Курсы</title>
+                                                </Helmet>
+                                            </Route>
+                                        }
+                                        <Route path="/course-edition/:id" render={({ location, history }) => (
+                                            <CourseEdition idCourse={location.pathname} />)}>
+                                        </Route>
+                                        {
+                                            appState.roleSelector.currentUserRoleId !== Role.Student &&
+                                            <Route path="/tags-page">
+                                                <TagsPage ></TagsPage>
+                                                <Helmet>
+                                                    <title>Тэги</title>
+                                                </Helmet>
+                                            </Route>
+                                        }
+                                        <Route path="/homework">
+                                            <HomeworkPage />
+                                            <Helmet>
+                                                <title>Домашки</title>
+                                            </Helmet>
+                                        </Route>
+                                        <Route path="/group">
+                                            <GroupPage />
+                                            <Helmet>
+                                                <title>Группы</title>
+                                            </Helmet>
+                                        </Route>
+                                    </Switch>
+                                    <NotificationContainer />
+                                </>
+                                :
+                                <Switch>
                                     <Route exact path="/">
                                         <LoginForm />
                                         <div className="test-page-link"><Link to="/dev-test-page">secret test page</Link></div>
                                     </Route>
-                                }
-                                <Route path="/dev-test-page">
-                                    <DevTestPage />
-                                    <NotificationContainer />
-                                </Route>
-                            </Switch>
-                    }
-                    {
-                        appState.app.isLoggedIn && <NotificationContainer />
-                    }
-                </main>
+                                    <Route path="/dev-test-page">
+                                        <DevTestPage />
+                                        <NotificationContainer />
+                                    </Route>
+                                </Switch>
+                        }
+                    </main>
+                </div>
             </div>
-        </div>
         </FormProvider>
     );
 }

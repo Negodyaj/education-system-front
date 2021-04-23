@@ -1,3 +1,4 @@
+import { getCurrentUserFromStorage } from "../../services/auth.service";
 import { UNSELECTED_ROLE } from "../../shared/consts";
 import { CURRENT_USER_ROLE_ID_SELECTED, CURRENT_USER_WAS_LOADED, CURRENT_USER_IS_LOADING, TOGGLE_ROLE_SELECTOR, CURRENT_USER_UNSET } from "../actionTypes";
 import { IRoleSelector } from "../state";
@@ -5,8 +6,8 @@ import { RoleSelectorActions } from "./action-creator";
 
 const initialState: IRoleSelector = {
     isTurnedOn: false,
-    currentUser: undefined,
-    currentUserRoleId: UNSELECTED_ROLE,
+    currentUser: getCurrentUserFromStorage(),
+    currentUserRoleId: getCurrentUserFromStorage().roles[0],
     isDataLoading: false
 };
 
@@ -17,9 +18,9 @@ export function roleSelectorReducer(state: IRoleSelector = initialState, action:
         case CURRENT_USER_WAS_LOADED:
             return {
                 ...state,
-                currentUser: action.payload,
-                currentUserRoleId: action.payload.roles[0],
-                isTurnedOn: action.payload.roles.length === 1 ? false : true,
+                currentUser: getCurrentUserFromStorage(),
+                currentUserRoleId: getCurrentUserFromStorage().roles[0],
+                isTurnedOn: getCurrentUserFromStorage().roles.length === 1 ? false : true,
                 isDataLoading: false
             };
         case CURRENT_USER_ROLE_ID_SELECTED:
