@@ -1,12 +1,39 @@
-import { faFileExport } from '@fortawesome/free-solid-svg-icons';
-import { NONAME } from 'node:dns';
-import { useEffect, useState } from 'react'
-import Select, { NonceProvider, OptionsType } from 'react-select'
-import { getJSDocReadonlyTag, reduceEachTrailingCommentRange } from 'typescript';
+import { useState } from 'react'
+import Select, { ActionMeta, OptionsType } from 'react-select'
 import { SelectItem } from '../../interfaces/SelectItem';
+import { customStyles } from './multiSelectCosnts';
 
-type selectType = "single"|"multi"
+type selectType = "single" | "multi"
 
+export const MultiSelect = (
+  options: SelectItem[] | undefined,
+  value: SelectItem[] | undefined,
+  onChange: (((value: OptionsType<any>, actionMeta: ActionMeta<any>) => void) & ((value: OptionsType<any>, action: ActionMeta<any>) => void)) | undefined) => (
+  <Select
+    isMulti={true}
+    name="Role"
+    options={options}
+    value={value}
+    className="basic-multi-select"
+    classNamePrefix="select"
+    styles={customStyles}
+    placeholder='Выберите опцию'
+    noOptionsMessage={() => 'Опций больше нет'}
+    onChange={onChange}
+  />
+)
+export const SingleSelect = (
+  options: SelectItem[] | undefined,
+  value: any,
+  onChange: (((value: any, actionMeta: ActionMeta<any>) => void) & ((value: any, action: ActionMeta<any>) => void)) | undefined) => (
+  <Select
+    options={options}
+    isMulti={false}
+    value={value}
+    styles={customStyles}
+    placeholder='Выберите опцию'
+    onChange={onChange} />
+)
 interface SelectProps {
   selectType?: selectType;
   selectedOptions?: SelectItem[] | undefined;
@@ -15,143 +42,23 @@ interface SelectProps {
   onMultiSelect?: (optionIds: number[]) => void;
   onSingleSelect?: (optionId: number | null) => void;
 }
-
 function CustomMultiSelect(props: SelectProps) {
-  const [userOptions, setUserOptions] = useState<SelectItem[] | undefined>(props.selectedOptions?.length ? [...props.selectedOptions] : undefined);
-  const [userOption, setUserOption] = useState<SelectItem | undefined>(props.selectedOption || undefined)
+  const [selectedOptions, setSelectedOptions] = useState<SelectItem[] | undefined>(props.selectedOptions?.length ? [...props.selectedOptions] : undefined);
+  const [selectedOption, setSelectedOption] = useState<SelectItem | undefined>(props.selectedOption || undefined)
   const onMultiSelect = (selectedOptions: OptionsType<object>) => {
-    setUserOptions(selectedOptions as SelectItem[])
+    setSelectedOptions(selectedOptions as SelectItem[])
     let roleIds = (selectedOptions as SelectItem[]).map(i => i.value)
     props.onMultiSelect && props.onMultiSelect(roleIds);
   }
-
   const onSingleSelect = (selectedOption: SelectItem | null) => {
-    setUserOption(selectedOption as SelectItem)
+    setSelectedOption(selectedOption as SelectItem)
     props.onSingleSelect && props.onSingleSelect(selectedOption?.value || null)
   }
-
-  const customStyleColors = {
-    main: '#00CCF2',
-    light: '#BEF1F9',
-    shadow: '#272D3B26',
-    borderLight: '#E0E7FF',
-    borderDark: '#ABADB3'
-  }
-  const customStyleHeight = 80;
-
-  const customStyles = {
-    control: (baseStyles: any, state: any) => ({
-      ...baseStyles,
-      height: customStyleHeight,
-      border: state.isFocused 
-        ? "1px solid " + customStyleColors.borderDark 
-        : "1px solid " + customStyleColors.borderLight,
-      ':hover': {
-        border: state.isFocused 
-          ? "1px solid " + customStyleColors.borderDark 
-          : "1px solid " + customStyleColors.borderLight,
-      },
-      borderRadius: 5,
-      boxShadow: 'none',
-      padding: "0px 5px",
-      outline: 'none',
-      caretColor: 'transparent',
-    }),
-    singleValue: () => ({
-      padding: "0px 5px"
-    }),
-    valueContainer: (baseStyles: any) => ({
-      ...baseStyles,
-      padding: 0,
-      height: customStyleHeight,
-    }),
-    input: (baseStyles: any) => ({
-      ...baseStyles,
-      height: customStyleHeight,
-      padding: 0,
-    }),
-    option: (baseStyles: any, state: any) => ({
-      ...baseStyles,
-      borderRadius: 5,
-      height: customStyleHeight,
-      color: state.isSelected
-        ? 'white' 
-        : 'black',
-      backgroundColor: state.isSelected
-        ? customStyleColors.main
-        : state.isFocused 
-        ? customStyleColors.light 
-        : 'white',
-    }),
-    menu: (baseStyles: any) => ({
-      ...baseStyles,
-      margin: 0,
-      borderRadius: 5,
-    }),
-    menuList: (baseStyles: any) => ({
-      ...baseStyles,
-      padding: 0,
-    }),
-    multiValue: (baseStyles: any) => ({
-      ...baseStyles,
-      backgroundColor: customStyleColors.light,
-      height: 28,
-      borderRadius: 5,
-      padding: "0px 5px",
-      ':hover': {
-        backgroundColor: customStyleColors.main,
-      },
-      ':hover div': {
-        color: 'white',
-      },
-    }),
-    multiValueLabel: (baseStyles: any) => ({
-      ...baseStyles,
-    }),
-    multiValueRemove: (baseStyles: any) => ({
-      ...baseStyles,
-      cursor: 'pointer',
-      ':hover': {
-        background: 'none',
-      }
-    }),
-    placeholder: () => ({
-      padding: "0px 5px",
-      color: 'lightgray',
-    })
-  }
-
-
-  const SingleSelect = () => (
-    <Select
-      options={props.options}
-      isMulti={false}
-      value={userOption}
-      styles={customStyles}
-      placeholder='Выберите опцию'
-      onChange={onSingleSelect} />
-  )
-  const MultiSelect = () => (
-    <Select
-      isMulti={true}
-      name="Role"
-      options={props.options}
-      value={userOptions}
-      className="basic-multi-select"
-      classNamePrefix="select"
-      styles={customStyles}
-      placeholder='Выберите опцию'
-      noOptionsMessage={() => 'Опций больше нет'}
-      onChange={onMultiSelect}
-    />
-  )
   return (
     <div>
-      {
-        props.selectType === 'multi' ? MultiSelect() : SingleSelect()
-      }
+      { props.selectType === 'multi' && MultiSelect(props.options, selectedOptions, onMultiSelect)}
+      { props.selectType === 'single' && SingleSelect(props.options, selectedOption, onSingleSelect)}
     </div>
   )
 }
-
 export default CustomMultiSelect;

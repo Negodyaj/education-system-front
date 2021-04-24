@@ -49,37 +49,6 @@ function UserPage() {
                                 return <FormElement formElementSettings={getFormElementSettings(key as InputNames)}></FormElement>
                             })
                         }
-                        {
-                        /*
-                        <div className="form-row upl-file">
-                            <label className="form-label">Аватар</label>
-                            <div className="file-upload">
-                                <label><input id="file-input" type="file" name="file" />Выберите файл</label>
-                                <div id="no-file">Файл не выбран</div>
-                            </div>
-                            <input
-                                {...register('userPic', {
-                                    required: {
-                                        value: true,
-                                        message: "Добавьте ссылку на изображение  или загрузите файл"
-                                    },
-                                    pattern: {
-                                        value: /\S/,
-                                        message: "Недопустимый формат ссылки"
-                                    }
-                                })}
-                                type="text"
-                                className="form-input"
-                                placeholder="или вставьте ссылку" />
-                            <ErrorMessage
-                                errors={formState.errors}
-                                name={"userPic"}
-                                className="bad-feedback"
-                                as="div">
-                            </ErrorMessage>
-                            <img src={appState.userPage.userForUserPage.userPic} alt="аватар" />
-                        </div>
-                       */}
                         <div className="form-row form-row-button">
                             <Link to="/user-list">
                                 <button className="common-button" type="button" onClick={closeUserPage}>отмена</button>

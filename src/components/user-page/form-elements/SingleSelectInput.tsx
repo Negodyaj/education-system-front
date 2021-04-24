@@ -3,10 +3,10 @@ import { convertEntitiesToSelectItems } from "../../../shared/converters/entityT
 import { convertEnumToDictionary, getRussianDictionary } from "../../../shared/converters/enumToDictionaryEntity";
 import { convertRoleIdsToSelectItems } from "../../../shared/converters/roleIdsToSelectItems";
 import { ExternalInputSettings } from "../../../shared/helpers/useFormRegisterSettingByKey";
-import { MultiSelect } from "../../multi-select/CustomMultiSelect";
+import { MultiSelect, SingleSelect } from "../../multi-select/CustomMultiSelect";
 
 
-function MultiSelectInput(props: {
+function SingleSelectInput(props: {
     inputSettings: ExternalInputSettings
 }) {
     const formContext = useFormContext()
@@ -15,12 +15,12 @@ function MultiSelectInput(props: {
             control={formContext.control}
             name={props.inputSettings.name}
             render={({ field: { onChange, value, } }) => {
-                return MultiSelect(
+                return SingleSelect(
                     convertEntitiesToSelectItems(
                         getRussianDictionary(convertEnumToDictionary(props.inputSettings.selectOptions))
                     ),
-                    (value !== undefined ? value[0]?.label ? value : convertRoleIdsToSelectItems(value) : undefined),
+                    (value !== undefined ? value?.label ? value : convertRoleIdsToSelectItems(value) : undefined),
                     onChange)
             }} />)
 }
-export default MultiSelectInput;
+export default SingleSelectInput;

@@ -60,7 +60,7 @@ function App() {
                     </div>
                     <div className="header-user-actions">
                         {
-                            appState.roleSelector.isTurnedOn && <LoginRoleSelector />
+                            !!getToken() && <LoginRoleSelector />
                         }
                         {
                             !!getToken()
