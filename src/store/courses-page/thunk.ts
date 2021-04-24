@@ -8,18 +8,10 @@ import { coursesUrl } from "../../shared/consts";
 import { makeNotification } from "../../shared/helpers/notificationHelpers";
 import { pushNotification } from "../notifications/action-creators";
 import { thunkResponseHandler } from "../thunkResponseHadlers";
-import { setCoursesListFailAction, setCoursesListIsLoadingAction, setCoursesListWasLoadedAction, showToogleModalCreateCourseAction, showToogleModalDeleteCourseAction } from "./action-creators";
+import { setCoursesListFailAction, setCoursesListIsLoadingAction, setCoursesListWasLoadedAction, showToggleModalCreateCourseAction, showToggleModalDeleteCourseAction } from "./action-creators";
 
 
 const url = 'url';
-
-// const _getCourses = (dispatch: Dispatch) => {
-//     dispatch(setCoursesListIsLoadingAction());
-//     sendGetRequest<Course[]>(coursesUrl, isCourseArr)
-//         .then(courses => dispatch(setCoursesListWasLoadedAction(courses)))
-//         .catch(error => dispatch(setCoursesListFailAction(error)))
-
-// }
 
 export const getCourses = () => {
     return (dispatch: Dispatch) => {
@@ -36,7 +28,7 @@ export const deleteCourse =  (id: number) => {
         .then(course => {
             let response = thunkResponseHandler(dispatch, course);
             response && dispatch(pushNotification(makeNotification('success', `Курс ${(response as Course).name} успешно удален`)));
-            dispatch(showToogleModalDeleteCourseAction(response.id));
+            dispatch(showToggleModalDeleteCourseAction(response.id));
             dispatch(getCourses());
         })
         .catch(error => thunkResponseHandler(dispatch, error));
@@ -49,7 +41,7 @@ export const createCourse = (newCourse: DataNewCourse) => {
             .then(course => {
                 let response = thunkResponseHandler(dispatch, course);
                 response && dispatch(pushNotification(makeNotification('success', `Курс ${(response as Course).name} успешно создан`)));
-                dispatch(showToogleModalCreateCourseAction());
+                dispatch(showToggleModalCreateCourseAction());
                 dispatch(getCourses());
             })
             .catch(error => thunkResponseHandler(dispatch, error));

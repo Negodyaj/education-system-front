@@ -1,12 +1,9 @@
 import './NewCourse.css';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import React, { useState } from 'react';
-import { showToogleModalCreateCourseAction, unvalidataCourseDescription, unvalidataCourseDuration, unvalidataCourseName, validatedCourseDescription, validatedCourseDuration, validatedCourseName } from '../../store/courses-page/action-creators';
-import { useDispatch, useSelector } from 'react-redux';
-import { IRootState } from '../../store';
-import { createCourse, getCourses } from '../../store/courses-page/thunk';
-import { Course } from '../../interfaces/Courses';
-import { idText } from 'typescript';
+import { showToggleModalCreateCourseAction } from '../../store/courses-page/action-creators';
+import { useDispatch } from 'react-redux';
+import { createCourse } from '../../store/courses-page/thunk';
+import { useForm } from 'react-hook-form';
 
 export interface DataNewCourse { 
     name: string; 
@@ -15,44 +12,26 @@ export interface DataNewCourse {
 }
 
 function NewCourse() {
-
-    let nameNewCourse = React.createRef<HTMLInputElement>();
-    let descriptionNewCourse = React.createRef<HTMLTextAreaElement>();
-    let durationNewCourse = React.createRef<HTMLInputElement>();
-
     const dispatch = useDispatch();
-    const pageState = useSelector((state: IRootState) => state.coursePage);
+    const { register, formState: { errors }, handleSubmit} = useForm<DataNewCourse>({
+        defaultValues:
+        {
+            name: undefined,
+            description: undefined,
+            duration: 1
+        }
+    });
 
     const closeModalWindow = () => {
-        dispatch(showToogleModalCreateCourseAction());
-        console.log(pageState.isOpenModalCreateCourse)
+        dispatch(showToggleModalCreateCourseAction());
     }
 
-    const showDataNewCourse = () => {
-        if (
-            nameNewCourse.current?.value !== '' ||
-            descriptionNewCourse.current?.value !== '' ||
-            Number(durationNewCourse.current?.value) !== 0
-            )
-            {
-                dispatch(createCourse(
-                    {
-                    name: `${nameNewCourse.current?.value}`,
-                    description: `${descriptionNewCourse.current?.value}`,
-                    duration: Number(durationNewCourse.current?.value)
-                    }
-                )) 
-                dispatch(getCourses());
-            } else {
-            return;
-        }
-        
+    const showDataNewCourse = (dataNewCourse: DataNewCourse) => {
+        dispatch(createCourse(dataNewCourse)) 
     }
 
-    const validationInputs = () => {
-        nameNewCourse.current?.value === '' ? dispatch(validatedCourseName()) : dispatch(unvalidataCourseName());
-        descriptionNewCourse.current?.value === '' ? dispatch(validatedCourseDescription()) : dispatch(unvalidataCourseDescription());
-        durationNewCourse.current?.value === '' ? dispatch(validatedCourseDuration()) : dispatch(unvalidataCourseDuration());
+    const onSubmit = (dataCourse: DataNewCourse) => {
+        showDataNewCourse(dataCourse);
     }
 
     return(
@@ -64,33 +43,49 @@ function NewCourse() {
                         <FontAwesomeIcon icon='times'/>
                     </button>
                 </div>
-                <div className="create-course">
-                    <div className='new-course-header'>Название курса</div>
-                    <div className="course-data">
-                        <input type="text" className="course-name" onChange={validationInputs} ref={nameNewCourse} placeholder='Введите название курса' required />
+                <form onSubmit={handleSubmit(onSubmit)}>
+                    <div className="create-course">
+                        <div className='new-course-header'>Название курса</div>
+                        <div className="course-data">
+                            <input
+                                {...register('name', {
+                                    required: true,
+                                    minLength: 2
+                                })}
+                                type="text"
+                                className="course-name"
+                                placeholder='Введите название курса'
+                            />
+                        </div>
+                        { errors.name ? <div className="error-no-name">Заполните данное поле</div> : <div></div> }
+                        <div className='new-course-header'>Описание курса</div>
+                        <div className="course-data">
+                            <textarea
+                                {...register('description', {
+                                    required: true,
+                                    minLength: 2
+                                })}
+                                className="course-description"
+                                placeholder="Введите описание курса"
+                            />
+                        </div>
+                        { errors.description ? <div className="error-no-description">Заполните данное поле</div> : <div></div>} 
+                        <div className='new-course-header'>Продолжительность курса</div>
+                        <div className="course-data">
+                            <input
+                                {...register('duration', {
+                                    required: true,
+                                })}
+                                type="number"
+                                className="course-duration"
+                            />
+                            <div className="duration-course-text">месяца(ов)</div>
+                        </div>
                     </div>
-                    { 
-                        pageState.isNameNewCourseFilled ? <div className="error-no-name">Заполните данное поле</div> : <div></div> 
-                    }
-                    <div className='new-course-header'>Описание курса</div>
-                    <div className="course-data">
-                        <textarea className="course-description" onChange={validationInputs} placeholder="Введите описание курса" ref={descriptionNewCourse} required />
-                    </div>
-                    { 
-                        pageState.isDescriptionNewCourseFilled ? <div className="error-no-description">Заполните данное поле</div> : <div></div>
-                    }
-                    <div className='new-course-header'>Продолжительность курса</div>
-                    <div className="course-data">
-                        <input type="number" min={1} onChange={validationInputs} className="course-duration" ref={durationNewCourse} required />
-                        <div className="duration-course-text">месяца(ов)</div>
-                    </div>
-                    { 
-                        pageState.isDurationNewCourseFilled ? <div className="error-no-duration">Заполните данное поле</div> : <div></div> 
-                    }
-                </div>
+                </form>
                 <div className="select-delete">
                     <button className="button-select" onClick={closeModalWindow}>Отменить</button>
-                    <button className="button-select" onClick={showDataNewCourse}>Добавить</button>
+                    <button className="button-select" onClick={handleSubmit(onSubmit)}>Добавить</button>
                 </div>
             </div>
         </div>

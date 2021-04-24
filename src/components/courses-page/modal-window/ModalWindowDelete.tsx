@@ -2,17 +2,16 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { IRootState } from '../../../store';
-import { showToogleModalDeleteCourseAction } from '../../../store/courses-page/action-creators';
+import { showToggleModalDeleteCourseAction } from '../../../store/courses-page/action-creators';
 import { deleteCourse, getCourses } from '../../../store/courses-page/thunk'
 import './ModalWindowDelete.css';
 
 function ModalWindowDelete() {
   const dispatch = useDispatch();
   const deleteId = useSelector((state: IRootState) => state.coursePage.idCourseForDelete);
-  const { id } = useParams<any>();
 
   const closeModalWindow = () => {
-    dispatch(showToogleModalDeleteCourseAction(deleteId));
+    dispatch(showToggleModalDeleteCourseAction(deleteId));
   }
 
   const deleteCourseById = () => {

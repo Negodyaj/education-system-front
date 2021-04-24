@@ -7,7 +7,7 @@ import NewCourse from './NewCourse';
 import { useDispatch, useSelector } from "react-redux";
 import { IRootState } from '../../store';
 import { getCourses } from '../../store/courses-page/thunk';
-import { showToogleModalCreateCourseAction, showToogleModalDeleteCourseAction } from '../../store/courses-page/action-creators';
+import { showToggleModalCreateCourseAction, showToggleModalDeleteCourseAction } from '../../store/courses-page/action-creators';
 
 function CoursesPage() {
 
@@ -19,12 +19,11 @@ function CoursesPage() {
     }, []);
 
     const openModalDelete = (idCourse: number) => {
-        dispatch(showToogleModalDeleteCourseAction(idCourse));
+        dispatch(showToggleModalDeleteCourseAction(idCourse));
     }
 
     const openModalAdd = () => {
-        dispatch(showToogleModalCreateCourseAction());
-        console.log(pageState.idCourseForDelete)
+        dispatch(showToggleModalCreateCourseAction());
     }
 
     return (
