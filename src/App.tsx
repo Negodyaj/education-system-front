@@ -38,9 +38,7 @@ function App() {
         unsetToken();
         history.push("/");
     }
-    const methods = useForm<UserInput>({
-        defaultValues:appState.userPage.userForUserPage
-    });
+    
 
     const onHide = (condition: boolean) => {
         setHidden(condition);
@@ -50,7 +48,7 @@ function App() {
         if (condition) { return ("nothide") } else { return ("hide") }
     }
     return (
-        <FormProvider {...methods} >
+        
             <div className="App">
                 <Helmet>
                     <title>Самый лучший сайт на свете</title>
@@ -153,7 +151,6 @@ function App() {
                     </main>
                 </div>
             </div>
-        </FormProvider>
     );
 }
 
