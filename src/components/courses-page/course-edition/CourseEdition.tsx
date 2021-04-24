@@ -7,9 +7,9 @@ import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { IRootState } from '../../../store';
 import { addThemeInCourse, deleteThemeCourse, getCourseById, getThemes } from '../../../store/course-edition/thunk';
-import { setNameAllThemesInCourse, setChangeDisplayingButtonOpenProgramCourse, setChangeDisplayingButtonOpenMaterialsCourse, setChangeDisplayingButtonCloseProgramCourse, setChangeDisplayingButtonCloseMaterialsCourse } from '../../../store/course-edition/action-creators';
+import { setAllThemesInCourse, setChangeDisplayingButtonOpenProgramCourse, setChangeDisplayingButtonOpenMaterialsCourse } from '../../../store/course-edition/action-creators';
 
-export interface NewThemeCourse {
+export interface CourseTheme {
     idCourse: number;
     idTheme: number;
 }
@@ -24,73 +24,57 @@ function CourseEdition() {
     const pageState = useSelector(((state: IRootState) => state.courseEditionPage));
     let { id } = useParams<ParamTypes>();
     
-    let nameThemesCourse: string[] = [];
-    let idCourse = Number(id);
+    let themesInCourse: number[] = [];
+    const idCourse = +id;
 
     useEffect(() => {
         dispatch(getThemes());
         dispatch(getCourseById(idCourse));
-        closeProgramCourse();
-        closeMaterialsCourse();
     }, []);
 
     useEffect(() => {
         checkThemes();
     }, [pageState.course.themes]);
 
-    const [searchTurn, setSearchTurn] = useState('');
+    const [searchWord, setSearchWord] = useState('');
 
     const addNewThemeInProgramCourse = (theme: Themes) => {
-        if (checkTheThemeInTheCourse(theme) === 0) { 
-            let newTheme: NewThemeCourse = {idCourse: idCourse, idTheme: theme.id};
-            dispatch(addThemeInCourse(newTheme));
-            openProgramCourse();
+        if (checkTheThemeInTheCourse(theme.id)) { 
+            const courseTheme: CourseTheme = {idCourse: idCourse, idTheme: theme.id};
+            dispatch(addThemeInCourse(courseTheme));
+            !pageState.isDisplayingButtonOpenProgramCourse && openProgramCourse();
         }
     }
 
-    const checkTheThemeInTheCourse = (theme: Themes): number => {
-        let count = 0;
-        for (let item of pageState.course.themes) {
-            if (item.name === theme.name) {
-                count++;
-                break;
-            }
-        }
-        return count;
+    const checkTheThemeInTheCourse = (themeId: number): boolean => {
+        const theme = pageState.course.themes.find(t => t.id === themeId);
+        return theme === undefined;
     } 
 
     const checkThemes = () => {
         pageState.course.themes?.map((theme) => (
-            nameThemesCourse.push(theme.name)
+            themesInCourse.push(theme.id)
         ))
-        dispatch(setNameAllThemesInCourse(nameThemesCourse));
+        dispatch(setAllThemesInCourse(themesInCourse));
     }
 
     const deleteThemeFromCourse = (theme: Themes) => {
-        let newTheme: NewThemeCourse = {idCourse: idCourse, idTheme: theme.id};
-        dispatch(deleteThemeCourse(newTheme));
+        const courseTheme: CourseTheme = {idCourse: idCourse, idTheme: theme.id};
+        dispatch(deleteThemeCourse(courseTheme));
     } 
 
-    const searchFromTheme = (str: string) => {
-        setSearchTurn(str);
+    const searchInThemes = (str: string) => {
+        setSearchWord(str);
     }
 
     const openProgramCourse = () => {
         dispatch(setChangeDisplayingButtonOpenProgramCourse());
     }
 
-    const closeProgramCourse = () => {
-        dispatch(setChangeDisplayingButtonCloseProgramCourse());
-    }
-
     const openMaterialsCourse = () => {
         dispatch(setChangeDisplayingButtonOpenMaterialsCourse());
     }
 
-    const closeMaterialsCourse = () => {
-        dispatch(setChangeDisplayingButtonCloseMaterialsCourse());
-    }
-    
     return (
     <div className="course-edition-container">
         <h3 className="current-course-header-name">{ 'Курс ' + pageState.course.name }</h3>
@@ -103,20 +87,16 @@ function CourseEdition() {
                     </button>
                 </div>
                 <div className="new-themes-container">
-                    <SearchComponent funcSearch={searchFromTheme}/>
+                    <SearchComponent funcSearch={searchInThemes}/>
                     {
-                        pageState.themes?.filter((item) => {
-                            if (item.name.toLowerCase().includes(searchTurn.toLowerCase())) {
-                                return item;
-                            } 
-                        })
+                        pageState.themes?.filter(item => item.name.toLowerCase().includes(searchWord.toLowerCase()))
                         .map((item) => (
                             <div key={item.id} className={"new-theme "}>
                                 <div className="new-theme-name">{item.name}</div>
                                 <div className="new-theme-add">
                                     <button onClick={() => addNewThemeInProgramCourse(item)} className="button-add-theme">
                                     {
-                                        pageState.nameThemesCourse.includes(item.name) ? <FontAwesomeIcon icon="check" /> : <FontAwesomeIcon icon="plus" />
+                                        pageState.idThemesCourse.includes(item.id) ? <FontAwesomeIcon icon="check" /> : <FontAwesomeIcon icon="plus" />
                                     }
                                     </button>
                                 </div>
@@ -128,18 +108,14 @@ function CourseEdition() {
             <div className="current-course-container">
                 <div className="program-current-course-container">
                         <div className="program-course-header">
-                            { pageState.isDisplayingButtonOpenProgramCourse ?
-                                <button onClick={closeProgramCourse} className="program-course-header-button-open">
-                                    <FontAwesomeIcon icon="angle-down" />
-                                </button>
-                                :
-                                <button onClick={openProgramCourse} className="program-course-header-button-open">
-                                    <FontAwesomeIcon icon="angle-up" />
-                                </button>
-                            }
+                            <button onClick={openProgramCourse} className="program-course-header-button-open">
+                                { 
+                                    pageState.isDisplayingButtonOpenProgramCourse ? <FontAwesomeIcon icon="angle-down" /> : <FontAwesomeIcon icon="angle-up" /> 
+                                }
+                            </button>
                             <div className="program-course-header-text">Программа курса</div>
                         </div>
-                    <div className={"program-course"}>
+                    <div className="program-course">
                         { pageState.isDisplayingButtonOpenProgramCourse &&
                             pageState.course.themes?.map((theme) => (
                                 <div key={theme.id} className="theme">
@@ -156,15 +132,11 @@ function CourseEdition() {
                 </div>
                 <div className="materials-current-course-container">
                     <div className={"materials-course-header"}>
-                        { pageState.isDisplayingButtonOpenMaterialsCourse ?
-                            <button onClick={closeMaterialsCourse} className="materials-course-header-button-open">
-                                <FontAwesomeIcon icon="angle-down" />
-                            </button>
-                            :
-                            <button onClick={openMaterialsCourse} className="materials-course-header-button-open">
-                                <FontAwesomeIcon icon="angle-up" />
-                            </button>
-                        }
+                        <button onClick={openMaterialsCourse} className="materials-course-header-button-open">
+                            { 
+                                pageState.isDisplayingButtonOpenMaterialsCourse ? <FontAwesomeIcon icon="angle-down" /> : <FontAwesomeIcon icon="angle-up" /> 
+                            }
+                        </button>
                         <div className="materials-course-header-text">Материалы курса</div>
                     </div>
                 </div>

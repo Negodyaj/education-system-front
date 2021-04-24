@@ -22,7 +22,7 @@ export interface ICoursePageState {
 export interface ICourseEditionState {
     course: Course;
     themes: Themes[];
-    nameThemesCourse: string[];
+    idThemesCourse: number[];
     isDataLoading: boolean;
     isDisplayingButtonOpenProgramCourse: boolean;
     isDisplayingButtonOpenMaterialsCourse: boolean;

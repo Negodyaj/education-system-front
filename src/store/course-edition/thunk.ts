@@ -6,7 +6,7 @@ import { isCourse } from "../../services/type-guards/course";
 import { isThemesArr } from "../../services/type-guards/themesArr";
 import { coursesUrl, themesUrl } from "../../shared/consts";
 import { getCourseByIdLoaded, setCourseEditionIsLoadingAction, setCourseEditionWasLoadedAction } from "./action-creators";
-import { NewThemeCourse } from "../../components/courses-page/course-edition/CourseEdition";
+import { CourseTheme } from "../../components/courses-page/course-edition/CourseEdition";
 import { thunkResponseHandler } from "../thunkResponseHadlers";
 import { pushNotification } from "../notifications/action-creators";
 import { makeNotification } from "../../shared/helpers/notificationHelpers";
@@ -32,7 +32,7 @@ export const getCourseById = (id: number) => {
     }
 }
 
-export const addThemeInCourse = (newTheme: NewThemeCourse) => {
+export const addThemeInCourse = (newTheme: CourseTheme) => {
     return (dispatch: Dispatch<any>) => {
         sendPostRequestNoResponse(`${coursesUrl}/${newTheme.idCourse}/theme/${newTheme.idTheme}`)
         .then(data => {
@@ -43,7 +43,7 @@ export const addThemeInCourse = (newTheme: NewThemeCourse) => {
     }
 }
 
-export const deleteThemeCourse = (newTheme: NewThemeCourse) => {
+export const deleteThemeCourse = (newTheme: CourseTheme) => {
     return (dispatch: Dispatch<any>) => {
         sendDeleteRequestNoResponse(`${coursesUrl}/${newTheme.idCourse}/theme/${newTheme.idTheme}`)
         .then(data => {
