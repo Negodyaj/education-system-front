@@ -1,6 +1,6 @@
 import { Dispatch } from "redux";
 import { User } from "../../interfaces/User";
-import { setCurrentUserInStorage, setIsLoggedInInStorage } from "../../services/auth.service";
+import { setCurrentUserInStorage } from "../../services/auth.service";
 import { sendGetRequest } from "../../services/http.service";
 import { isUser } from "../../services/type-guards/user";
 import { currentUserUrl } from "../../shared/consts";
@@ -15,7 +15,6 @@ export const getCurrentUser = () => {
             .then(currentUser => {
                 setCurrentUserInStorage(thunkResponseHandler(dispatch, currentUser))
                 dispatch(setCurrentUserWasLoaded());
-                setIsLoggedInInStorage(true)
                 dispatch(setIsLoggedIn())
             })
     }

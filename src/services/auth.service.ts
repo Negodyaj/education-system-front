@@ -18,10 +18,3 @@ export const setCurrentUserInStorage = (user: User) => {
 export const getCurrentUserFromStorage = (): User => {
     return JSON.parse(getFromStorage('user'))
 }
-//app
-export const setIsLoggedInInStorage = (isLoggedIn: boolean) => {
-    store('isLoggedIn', JSON.stringify({ isLoggedIn: isLoggedIn }));
-}
-export const getIsLoggedInFormStorage = (): { isLoggedIn: boolean } => {
-    return JSON.parse(getFromStorage('isLoggedIn'))
-}

@@ -1,10 +1,18 @@
 import { RegisterOptions } from "react-hook-form";
 import { InputNames } from "../../enums/inputNames";
-export interface InputSettings {
+import { Role } from "../../enums/role";
+export interface BaseInputSettings {
     name: string;
-    inputType: 'text' | 'date' | 'singleSelect' | 'multiSelect';
-    options?: RegisterOptions;
+    registerOptions?: RegisterOptions;
 }
+export  interface InternalInputSettings extends BaseInputSettings {
+    inputType: 'text' | 'date';
+}
+export interface ExternalInputSettings extends BaseInputSettings {
+    inputType: 'singleSelect' | 'multiSelect';
+    selectOptions: { [index: number]: string }
+}
+export type InputSettings = InternalInputSettings | ExternalInputSettings;
 export interface FormElementSettings {
     label: string;
     inputSettings: InputSettings;
@@ -26,7 +34,7 @@ export const getFormElementSettings = (key: InputNames): FormElementSettings => 
                 inputSettings: {
                     name: key,
                     inputType: 'text',
-                    options: {
+                    registerOptions: {
                         required: "Введите имя"
                     }
                 }
@@ -37,7 +45,7 @@ export const getFormElementSettings = (key: InputNames): FormElementSettings => 
                 inputSettings: {
                     name: key,
                     inputType: 'text',
-                    options: {
+                    registerOptions: {
                         required: "Введите фамилию"
                     }
                 }
@@ -48,7 +56,7 @@ export const getFormElementSettings = (key: InputNames): FormElementSettings => 
                 inputSettings: {
                     name: key,
                     inputType: 'text',
-                    options: {
+                    registerOptions: {
                         required: "Введите логин"
                     }
                 }
@@ -59,7 +67,7 @@ export const getFormElementSettings = (key: InputNames): FormElementSettings => 
                 inputSettings: {
                     name: key,
                     inputType: 'text',
-                    options: {
+                    registerOptions: {
                         required: "Введите пароль"
                     }
                 }
@@ -70,7 +78,7 @@ export const getFormElementSettings = (key: InputNames): FormElementSettings => 
                 inputSettings: {
                     name: key,
                     inputType: 'text',
-                    options: {
+                    registerOptions: {
                         required: "Вставьте ссылку на изображение"
                     }
                 }
@@ -81,7 +89,7 @@ export const getFormElementSettings = (key: InputNames): FormElementSettings => 
                 inputSettings: {
                     name: key,
                     inputType: 'text',
-                    options: {
+                    registerOptions: {
                         required: "Введите номер телефона"
                     }
                 }
@@ -99,6 +107,7 @@ export const getFormElementSettings = (key: InputNames): FormElementSettings => 
                 label: "Роли",
                 inputSettings: {
                     inputType: 'multiSelect',
+                    selectOptions: Role,
                     name: key
                 }
             }

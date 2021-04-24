@@ -7,7 +7,7 @@ function TextInput(props: {
     const formContext = useFormContext()
     return (
         <input
-            {...formContext.register(props.inputSettings.name, props.inputSettings.options)}
+            {...formContext.register(props.inputSettings.name, props.inputSettings.registerOptions)}
             type="text"
             className="form-input" />
     )

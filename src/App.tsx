@@ -38,7 +38,9 @@ function App() {
         unsetToken();
         history.push("/");
     }
-    const methods = useForm<UserInput>();
+    const methods = useForm<UserInput>({
+        defaultValues:appState.userPage.userForUserPage
+    });
 
     const onHide = (condition: boolean) => {
         setHidden(condition);
