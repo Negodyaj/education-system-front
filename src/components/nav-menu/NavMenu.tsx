@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { Role } from '../../enums/role';
-import NavMenuDropdownLink from './components/NavMenuDropdownLink';
+import NavMenuDropdownLink, { DropdownLinkParams } from './components/NavMenuDropdownLink';
 import NavMenuSimpleLink from './components/NavMenuSimpleLink';
 import "./NavMenu.css"
 
@@ -17,6 +17,12 @@ function NavMenu(props: NavMenuProps) {
     let changeHidden = () => {
         isHidden ? setHidden(false) : setHidden(true);
         props.onHide(isHidden);
+    }
+    
+    const defaultShowFilter = (link: DropdownLinkParams) => {
+        if (link.routeParam == "1" || link.routeParam == "2")
+            return true;
+        return false;
     }
 
     return (
@@ -42,11 +48,13 @@ function NavMenu(props: NavMenuProps) {
                     props.roleId == Role.Admin &&
                     <NavMenuDropdownLink route="group" faIcon="user" label="Группы"
                     dropdownLinks={[
-                        {label:"one", routeParam: "1", showByDefault: true},
-                        {label:"two", routeParam: "2", showByDefault: true},
-                        {label:"three", routeParam: "3", showByDefault: false},
-                        {label:"four", routeParam: "4", showByDefault: false},
-                    ]}/>
+                        {label:"one", routeParam: "1"},
+                        {label:"two", routeParam: "2"},
+                        {label:"three", routeParam: "3"},
+                        {label:"four", routeParam: "4"},
+                    ]}
+                    alwaysShowAll={false}
+                    defaultShowFilter={defaultShowFilter}/>
                 }
             </nav>
             <button className={isHidden ? "left button-update" : "right button-update"} onClick={changeHidden} title={isHidden ? "развернуть меню" : "свернуть меню"}>
