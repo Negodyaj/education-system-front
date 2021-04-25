@@ -25,9 +25,10 @@ export const sendPayment =(userForPayment: User | undefined, newPayment: Payment
 
 export const getPayment = (userId: number |undefined) => {
     return (dispatch: Dispatch) => {
+        console.log(userId);
         dispatch(setPaymentListIsLoading());
-        sendGetRequest<PaymentResponse[]>(`${userId}/payment`, isPaymentResponseArr)
-            .then(payment => dispatch(setPaymentListWasLoaded(payment)))
+        sendGetRequest<PaymentResponse[]>(`User/${userId}/payment`, isPaymentResponseArr)
+            .then(payment => dispatch(setPaymentListWasLoaded(thunkResponseHandler(dispatch, payment))))
             .catch(error => dispatch(setPaymentListFail(error)))
     }
 }

@@ -25,7 +25,7 @@ function PaymentForm(props: PaymentProps) {
     useEffect(() => {
         dispatch(getPayment(paymentFormState.userForPayment?.id));
     }, []);
-
+    
     var todate = new Date();
     var formattedDate = format(todate, "dd.mm.yyyy");
 
