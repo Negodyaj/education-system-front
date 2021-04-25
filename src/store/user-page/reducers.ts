@@ -3,7 +3,7 @@ import { UserInput } from "../../interfaces/UserInput";
 import { UNSET_USER_ID_FOR_USER_PAGE } from "../../shared/consts";
 import { convertUserToUserInput } from "../../shared/converters/userToUserInput";
 import { convertUserToUserUpdate } from "../../shared/converters/userToUserUpdate";
-import { USER_TO_EDIT_WRETCH_FAIL, USER_TO_EDIT_WRETCH_LOADED, USER_TO_EDIT_WRETCH_LOADING, USER_IS_SENDING, USER_FOR_USER_PAGE_ID, USER_TO_EDIT_ID_FOR_USER_PAGE, USER_SENDING_SUCCESS } from "../actionTypes";
+import { USER_IS_SENDING, USER_FOR_USER_PAGE_ID, USER_TO_EDIT_ID_FOR_USER_PAGE, USER_SENDING_SUCCESS, USER_TO_EDIT_LOADING, USER_TO_EDIT_LOADED, USER_TO_EDIT_FAIL, USER_SENDING_FAIL } from "../actionTypes";
 import { IUserPage } from "../state";
 import { UserPageActions } from "./action-creators";
 
@@ -30,9 +30,9 @@ export function userPageReducer(state: IUserPage = initialState, action: UserPag
     switch (action.type) {
         case USER_TO_EDIT_ID_FOR_USER_PAGE:
             return { ...state, userForUserPageId: action.payload, isDataLoading: true }
-        case USER_TO_EDIT_WRETCH_LOADING:
+        case USER_TO_EDIT_LOADING:
             return { ...state, isDataLoading: true };
-        case USER_TO_EDIT_WRETCH_LOADED:
+        case USER_TO_EDIT_LOADED:
             return {
                 ...state,
                 userForUserPage: action.payload
@@ -43,11 +43,13 @@ export function userPageReducer(state: IUserPage = initialState, action: UserPag
                 userForUserPageId: action.payload?.id as number,
                 isDataLoading: false
             };
-        case USER_TO_EDIT_WRETCH_FAIL:
+        case USER_TO_EDIT_FAIL:
             return { ...state, isDataLoading: false };
         case USER_IS_SENDING:
             return { ...state, isDataLoading: true };
         case USER_SENDING_SUCCESS:
+            return { ...state, isDataLoading: false };
+        case USER_SENDING_FAIL:
             return { ...state, isDataLoading: false };
         default:
             return state;

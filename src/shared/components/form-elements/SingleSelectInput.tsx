@@ -1,6 +1,6 @@
 import { useFormContext } from "react-hook-form";
-import { ExternalInputSettings } from "../../../shared/helpers/useFormRegisterSettingByKey";
-import CustomMultiSelect from "../../multi-select/CustomMultiSelect";
+import { ExternalInputSettings } from "../../helpers/useFormRegisterSettingByKey";
+import CustomMultiSelect from "../../../components/multi-select/CustomMultiSelect";
 
 
 function SingleSelectInput(props: {

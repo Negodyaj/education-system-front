@@ -34,7 +34,7 @@ function UserListComponent() {
     }
 
     const [signInvertor, setSignInvertor] = useState(1);
-    const [userForPayment, setUserForPayment] = useState<User | undefined>(undefined);
+    const [userForPayment] = useState<User | undefined>(undefined);
     const [paymentFormState, setPaymentFormState] = useState('');
     const [roleID, setRoleID] = useState(0);
     const [userID, setUserID] = useState(0);
@@ -72,14 +72,12 @@ function UserListComponent() {
     }
     const onRegisterClick = () => {
     }
-
     const lastNameColumnOnClick = () => {
         // setUsersToShow(usersToShow.sort((a, b) => {
         //     return lastNameAlphabetSort(a.lastName, b.lastName);
         // }))
         setSignInvertor(signInvertor + 1);
     }
-
     const onDeleteRoleClick = (user: User, roleId: number) => {
         setUserID(user.id as number);
         setRoleID(roleId);
@@ -92,8 +90,6 @@ function UserListComponent() {
         newUsers[index] = { ...newUsers[index], roles: newUsers[index].roles?.filter(r => r !== roleID) };
         appState.userListPage.userList = newUsers;
     }
-
-
     const deleteRole = async (decision: boolean) => {
         if (decision) {
             if (await sendDeleteRequestNoResponse(`User/${userID}/role/${roleID}`))
@@ -101,7 +97,6 @@ function UserListComponent() {
         }
         setIsModalShow(false);
     }
-
     const onCancelPaymentClick = () => {
         setPaymentFormState('');
     }
@@ -111,7 +106,6 @@ function UserListComponent() {
             ?
             <div>LOADING</div>
             :
-
             <div className="user-list">
                 <div className="column-head">
                     <h4>Пользователи</h4>
@@ -179,7 +173,6 @@ function UserListComponent() {
                     userLastname={userForPayment?.lastName}
                 ></PaymentForm>
             </div>
-
     )
 }
 

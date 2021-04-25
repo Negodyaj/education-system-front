@@ -20,6 +20,7 @@ function DatePickerComponent(props: DatePickerComponentProps) {
     if (date instanceof Date) {
       setStartDate(date);
       props.onDateChange && props.onDateChange(date.toLocaleDateString());
+      props.inputSettings && props.formContext?.setValue(props.inputSettings.name, date.toLocaleDateString())
     }
   }
   return (
@@ -28,8 +29,8 @@ function DatePickerComponent(props: DatePickerComponentProps) {
       <Controller
         control={props.formContext?.control}
         name={props.inputSettings.name}
-        render={({ field: { onChange, value, } }) => (
-          <DatePicker selected={convertStringToDate(value)} onChange={onChange} locale="ru" />
+        render={({ field: { value, } }) => (
+          <DatePicker selected={convertStringToDate(value)} onChange={handleDateChange} locale="ru" />
         )} />
       :
       <DatePicker selected={startDate} onChange={handleDateChange} locale="ru" />

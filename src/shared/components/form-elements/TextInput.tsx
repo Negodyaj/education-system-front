@@ -1,5 +1,5 @@
 import { useFormContext } from 'react-hook-form';
-import { InputSettings } from '../../../shared/helpers/useFormRegisterSettingByKey';
+import { InputSettings } from '../../helpers/useFormRegisterSettingByKey';
 
 function TextInput(props: {
     inputSettings: InputSettings;

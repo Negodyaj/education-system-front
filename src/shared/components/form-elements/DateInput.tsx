@@ -1,7 +1,7 @@
 import "react-datepicker/dist/react-datepicker.css";
 import { useFormContext } from 'react-hook-form';
-import { ExternalInputSettings } from '../../../shared/helpers/useFormRegisterSettingByKey';
-import DatePickerComponent from '../../../shared/components/date-picker/DatePickerComponent';
+import { ExternalInputSettings } from '../../helpers/useFormRegisterSettingByKey';
+import DatePickerComponent from '../date-picker/DatePickerComponent';
 function DateInput(props: {
     inputSettings: ExternalInputSettings
 }) {

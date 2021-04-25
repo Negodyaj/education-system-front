@@ -1,8 +1,8 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { useFormContext } from "react-hook-form";
 import { InputNames } from "../../../enums/inputNames";
-import { ExternalInputSettings, FormElementSettings } from "../../../shared/helpers/useFormRegisterSettingByKey";
-import { getValidationPattern } from "../../../shared/validation-rules/validationPatterns";
+import { ExternalInputSettings, FormElementSettings } from "../../helpers/useFormRegisterSettingByKey";
+import { getValidationPattern } from "../../validation-rules/validationPatterns";
 import DateInput from "./DateInput";
 import MultiSelectInput from "./MultiSelectInput";
 import PictureInput from "./PictureInput";

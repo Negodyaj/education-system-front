@@ -56,10 +56,12 @@ function CustomMultiSelect(props: SelectProps) {
     setSelectedOptions(selectedOptions as SelectItem[])
     let roleIds = (selectedOptions as SelectItem[]).map(i => i.value)
     props.onMultiSelect && props.onMultiSelect(roleIds);
+    props.inputSettings && props.formContext?.setValue(props.inputSettings.name, roleIds)
   }
   const onSingleSelect = (selectedOption: SelectItem | null) => {
     setSelectedOption(selectedOption as SelectItem)
     props.onSingleSelect && props.onSingleSelect(selectedOption?.value || null)
+    props.inputSettings && props.formContext?.setValue(props.inputSettings.name, selectedOption?.value || null)
   }
   return (
     props.inputSettings
@@ -67,7 +69,7 @@ function CustomMultiSelect(props: SelectProps) {
       <Controller
         control={props.formContext?.control}
         name={props.inputSettings.name}
-        render={({ field: { onChange, value, } }) => {
+        render={({ field: { value, } }) => {
           return props.selectType === 'multi'
             ?
             MultiSelect(
@@ -75,14 +77,14 @@ function CustomMultiSelect(props: SelectProps) {
                 getRussianDictionary(convertEnumToDictionary(props.inputSettings?.selectOptions))
               ),
               (value !== undefined ? value[0]?.label ? value : convertRoleIdsToSelectItems(value) : undefined),
-              onChange)
+              onMultiSelect)
             :
             SingleSelect(
               convertEntitiesToSelectItems(
                 getRussianDictionary(convertEnumToDictionary(props.inputSettings?.selectOptions))
               ),
               (value !== undefined ? value?.label ? value : convertRoleIdsToSelectItems(value) : undefined),
-              onChange)
+              onSingleSelect)
         }} />
       :
       <div>

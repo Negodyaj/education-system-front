@@ -8,7 +8,7 @@ import { IRootState } from '../../../store';
 import { getUserToEditById, sendUser } from '../../../store/user-page/thunk';
 import { useHistory, useParams } from 'react-router-dom';
 import { UserInput } from '../../../interfaces/UserInput';
-import FormElement, { } from '../form-elements/FormElement';
+import FormElement, { } from '../../../shared/components/form-elements/FormElement';
 import { getFormElementSettings } from '../../../shared/helpers/useFormRegisterSettingByKey';
 import { InputNames } from '../../../enums/inputNames';
 

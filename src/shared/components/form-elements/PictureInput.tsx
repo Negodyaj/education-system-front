@@ -1,5 +1,5 @@
 import { Controller, useFormContext } from "react-hook-form";
-import { ExternalInputSettings } from "../../../shared/helpers/useFormRegisterSettingByKey";
+import { ExternalInputSettings } from "../../helpers/useFormRegisterSettingByKey";
 import TextInput from "./TextInput";
 
 function PictureInput(props: {

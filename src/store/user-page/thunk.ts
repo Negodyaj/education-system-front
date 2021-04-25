@@ -1,14 +1,18 @@
 import { Dispatch } from "redux";
 import { User } from "../../interfaces/User";
-import { sendGetRequest, sendPutRequest } from "../../services/http.service";
+import { UserRegisterResponse } from "../../interfaces/UserRegisterResponse";
+import { sendGetRequest, sendPostRequest, sendPutRequest } from "../../services/http.service";
 import { isUser } from "../../services/type-guards/user";
-import { usersUrl } from "../../shared/consts";
+import { isUserRegisterResponse } from "../../services/type-guards/userRegisterResponse";
+import { UNSET_USER_ID_FOR_USER_PAGE, userRegisterUrl, usersUrl } from "../../shared/consts";
+import { convertUserToUserInput } from "../../shared/converters/userToUserInput";
 import { makeNotification } from "../../shared/helpers/notificationHelpers";
 import { pushNotification } from "../notifications/action-creators";
 import { thunkResponseHandler } from "../thunkResponseHadlers";
-import { setUserIsSending, setUserToEditFail, setUserToEditIsLoading, setUserToEditWasLoaded, setUserUpdateResponse } from "./action-creators";
+import { setUserIsSending, setUserSendingFail, setUserToEditFail, setUserToEditIsLoading, setUserToEditWasLoaded, setUserUpdateResponse } from "./action-creators";
 
 export const getUserToEditById = (userId?: string) => {
+
     return (dispatch: Dispatch) => {
         if (userId) {
             dispatch(setUserToEditIsLoading());
@@ -20,10 +24,28 @@ export const getUserToEditById = (userId?: string) => {
         } else {
             dispatch(setUserToEditWasLoaded())
         }
-
     }
 }
-export const sendUser = (user: User, userId: number, history:any) => {
+export const sendUser = (user: User, userId: number, history: any) => {
+    return (dispatch: Dispatch<any>) => {
+        if (userId && userId !== UNSET_USER_ID_FOR_USER_PAGE) dispatch(updateUser(user, userId, history))
+        else {
+            dispatch(setUserIsSending());
+            sendPostRequest<UserRegisterResponse>(userRegisterUrl, isUserRegisterResponse, convertUserToUserInput(user))
+                .then(userUpdateResponse => {
+                    let response = thunkResponseHandler(dispatch, userUpdateResponse);
+                    if (response) {
+                        dispatch(pushNotification(makeNotification('success', `Пользователь ${(response as User).firstName} ${(response as User).lastName} успешно зарегистрирован`)))
+                        dispatch(setUserUpdateResponse());
+                        history.push('/user-list')
+                    } else {
+                        dispatch(setUserSendingFail())
+                    }
+                })
+        }
+    }
+}
+const updateUser = (user: User, userId: number, history: any) => {
     return (dispatch: Dispatch) => {
         dispatch(setUserIsSending());
         sendPutRequest<User>(`${usersUrl}/${userId}`, isUser, user)
@@ -33,9 +55,9 @@ export const sendUser = (user: User, userId: number, history:any) => {
                     dispatch(pushNotification(makeNotification('success', `Пользователь ${(response as User).firstName} ${(response as User).lastName} успешно изменён`)))
                     dispatch(setUserUpdateResponse());
                     history.push('/user-list')
+                } else {
+                    dispatch(setUserSendingFail())
                 }
             })
     }
-
-
 }
