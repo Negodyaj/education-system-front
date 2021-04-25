@@ -5,8 +5,8 @@ import { generateTestNotification } from "../../shared/components/notification/g
 import NotificationData from "../../interfaces/NotificationData";
 import { useDispatch } from "react-redux";
 import { sendNotification } from "../../store/notifications/thunk";
-import CustomMultiSelect from "../multi-select/CustomMultiSelect";
 import { SelectItem } from "../../interfaces/SelectItem";
+import CustomMultiSelect from "../../shared/components/multi-select/CustomMultiSelect";
 
 interface DevTestPageProps {
 }

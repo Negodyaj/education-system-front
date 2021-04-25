@@ -1,6 +1,5 @@
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Role } from "../../../enums/role";
 import { getEnToRuTranslation } from "../../../shared/converters/enumToDictionaryEntity";
 import PaymentForm from "../payment-form/PaymentForm";
@@ -9,37 +8,31 @@ import '../../../App.css'
 import { User } from "../../../interfaces/User";
 import { useDispatch, useSelector } from "react-redux";
 import { IRootState } from "../../../store";
-import { getUserToEditById } from "../../../store/user-page/thunk";
-import { setUserForUserPageId } from "../../../store/user-page/action-creators";
-import { Link } from "react-router-dom";
-import { getUsers } from "../../../store/user-list-page/thunk";
+import { useHistory, useParams } from "react-router-dom";
 import ConfirmationDialog from "../../../shared/components/confirmation-dialog/ConfirmationDialog";
 import { sendDeleteRequestNoResponse } from "../../../services/http.service";
+import { deleteUserRequest } from "../../../store/user-list-page/thunk";
 
 function UserListComponent() {
 
+    const appState = useSelector((state: IRootState) => state);
     const dispatch = useDispatch();
-    const appState = useSelector((state: IRootState) => state)
-
-    const lastNameAlphabetSort = (a: string, b: string) => {
-        a = a.toLowerCase();
-        b = b.toLowerCase();
-        if (b > a) {
-            return Math.pow(-1, signInvertor);
-        }
-        if (b < a) {
-            return Math.pow(-1, signInvertor - 1);
-        }
-        return 0;
-    }
-
-    const [signInvertor, setSignInvertor] = useState(1);
     const [userForPayment] = useState<User | undefined>(undefined);
     const [paymentFormState, setPaymentFormState] = useState('');
     const [roleID, setRoleID] = useState(0);
     const [userID, setUserID] = useState(0);
     const [isModalShow, setIsModalShow] = useState(false);
-    const [confirmationDeleteMessage, setConfirmationDeleteMessage] = useState('Вы уверены?')
+    const [confirmationMessage, setConfirmationMessage] = useState('Вы уверены?')
+    const history = useHistory();
+    const { id } = useParams<{ id?: string; }>();
+
+    useEffect(() => {
+        if (id) {
+            setIsModalShow(true);
+            let userToDelete = appState.userListPage.userList.filter(u => u.id === Number.parseInt(id))[0]
+            setConfirmationMessage(`Вы действительно хотите удалить пользователя ${userToDelete.firstName} ${userToDelete.lastName}?`)
+        }
+    })
 
     const elementsDefinedByRole = {
         paymentButton: (userId: number | undefined) => {
@@ -60,29 +53,34 @@ function UserListComponent() {
                 </button>
             )
         }
-
     }
     const onPaymentButtonClick = (userId: number | undefined) => {
         //setUserForPayment([...usersToShow].filter(u => u.id === userId)[0]);
         setPaymentFormState('visible');
-
     }
     const onEditClick = (userToEditId: number) => {
-        dispatch(setUserForUserPageId(userToEditId))
+        history.push(`/user-page/${userToEditId}/edit`)
     }
+    const deleteUser = (decision: boolean) => {
+        if (decision) {
+            dispatch(deleteUserRequest(id || "", history));
+        } else {
+            setIsModalShow(false);
+        }
+    }
+    const onDeleteClick = (userToDelete: User) => {
+        history.push(`/user-list/${userToDelete.id}`)
+    }
+    const [modalCallBack, setModalCallBack] = useState<(decision: boolean) => void>(deleteUser);
     const onRegisterClick = () => {
-    }
-    const lastNameColumnOnClick = () => {
-        // setUsersToShow(usersToShow.sort((a, b) => {
-        //     return lastNameAlphabetSort(a.lastName, b.lastName);
-        // }))
-        setSignInvertor(signInvertor + 1);
+        history.push("/user-page/register");
     }
     const onDeleteRoleClick = (user: User, roleId: number) => {
         setUserID(user.id as number);
         setRoleID(roleId);
-        setConfirmationDeleteMessage(`Вы точно хотите избавить пользователя ${user.lastName}( ${user.login}) от роли ${Role[roleId]}?`)
+        setConfirmationMessage(`Вы точно хотите избавить пользователя ${user.lastName}( ${user.login}) от роли ${Role[roleId]}?`)
         setIsModalShow(true);
+        setModalCallBack(deleteRole);
     }
     const refreshUser = () => {
         const newUsers = [...appState.userListPage.userList];
@@ -109,16 +107,14 @@ function UserListComponent() {
             <div className="user-list">
                 <div className="column-head">
                     <h4>Пользователи</h4>
-                    <Link to="/user-page/register">
-                        <button className="common-button" onClick={onRegisterClick}>
-                            <FontAwesomeIcon icon="plus" />
-                            <span> Добавить</span>
-                        </button>
-                    </Link>
+                    <button className="common-button" onClick={onRegisterClick}>
+                        <FontAwesomeIcon icon="plus" />
+                        <span> Добавить</span>
+                    </button>
                 </div>
                 <div className="list + user-list-head">
                     <div className="column"> </div>
-                    <div className="column"><span title="А-Я" onClick={lastNameColumnOnClick}>фамилия</span></div>
+                    <div className="column"><span title="А-Я">фамилия</span></div>
                     <div className="column"><span title="А-Я">имя</span></div>
                     <div className="column"><span title="А-Я">логин</span></div>
                     <div className="column"><span title="А-Я">роль</span></div>
@@ -145,10 +141,10 @@ function UserListComponent() {
                             <div className="column">{/*u.groupName*/}</div>
                             <div className="column-button">
                                 <div className="column">
-                                    <Link className="round-button" to={`/user-page/${u.id}/edit`}>
+                                    <button className="round-button" onClick={() => onEditClick(u.id)}>
                                         <FontAwesomeIcon icon="edit" />
-                                    </Link>
-                                    <button className="round-button" onClick={() => { }/*props.onDeleteClick(u.id as number)*/}>
+                                    </button>
+                                    <button className="round-button" onClick={() => onDeleteClick(u)}>
                                         <FontAwesomeIcon icon="trash" />
                                     </button>
 
@@ -161,9 +157,9 @@ function UserListComponent() {
                                 isShown={isModalShow}
                                 confirmLabel='Да'
                                 declineLabel='Нет'
-                                message={confirmationDeleteMessage}
+                                message={confirmationMessage}
                                 title='Удаление роли'
-                                callback={deleteRole}></ConfirmationDialog>
+                                callback={deleteUser}></ConfirmationDialog>
                         </div>))
                 }
                 <PaymentForm

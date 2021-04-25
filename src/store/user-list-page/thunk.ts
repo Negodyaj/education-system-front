@@ -1,12 +1,12 @@
 import { Dispatch } from "redux";
-import { WretcherError } from "wretch";
 import { User } from "../../interfaces/User";
-import { sendGetRequest } from "../../services/http.service";
-import { isUser } from "../../services/type-guards/user";
+import { UserDelete } from "../../interfaces/UserDelete";
+import { sendDeleteRequest, sendGetRequest } from "../../services/http.service";
 import { isUserArr } from "../../services/type-guards/userArray";
+import { isUserDelete } from "../../services/type-guards/userDelete";
 import { usersUrl } from "../../shared/consts";
 import { thunkResponseHandler } from "../thunkResponseHadlers";
-import { setUserListFail, setUserListIsLoading, setUserListWasLoaded } from "./action-creators";
+import { setUserDeleting, setUserDeletingFail, setUserDeletingSuccess, setUserListFail, setUserListIsLoading, setUserListWasLoaded } from "./action-creators";
 
 export const getUsers = () => {
     return (dispatch: Dispatch) => {
@@ -16,5 +16,21 @@ export const getUsers = () => {
                 dispatch(setUserListWasLoaded(thunkResponseHandler(dispatch, users)));
             })
             .catch(error => dispatch(setUserListFail(error)));
+    }
+}
+export const deleteUserRequest = (userToDeleteId: string, history: any) => {
+    console.log(userToDeleteId)
+    return (dispatch: Dispatch) => {
+        dispatch(setUserDeleting());
+        sendDeleteRequest<UserDelete>(`${usersUrl}/${userToDeleteId}`, isUserDelete)
+            .then(response => {
+                const deletedUser = thunkResponseHandler(dispatch, response);
+                if (deletedUser) {
+                    dispatch(setUserDeletingSuccess(deletedUser));
+                    history.push(`/user-list`);
+                } else {
+                    dispatch(setUserDeletingFail())
+                }
+            })
     }
 }

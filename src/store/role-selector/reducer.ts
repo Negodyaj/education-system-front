@@ -1,5 +1,4 @@
 import { getCurrentUserFromStorage } from "../../services/auth.service";
-import { UNSELECTED_ROLE } from "../../shared/consts";
 import { CURRENT_USER_ROLE_ID_SELECTED, CURRENT_USER_WAS_LOADED, CURRENT_USER_IS_LOADING, TOGGLE_ROLE_SELECTOR, CURRENT_USER_UNSET } from "../actionTypes";
 import { IRoleSelector } from "../state";
 import { RoleSelectorActions } from "./action-creator";

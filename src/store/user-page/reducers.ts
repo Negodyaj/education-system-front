@@ -1,9 +1,8 @@
 import { User } from "../../interfaces/User";
-import { UserInput } from "../../interfaces/UserInput";
 import { UNSET_USER_ID_FOR_USER_PAGE } from "../../shared/consts";
 import { convertUserToUserInput } from "../../shared/converters/userToUserInput";
 import { convertUserToUserUpdate } from "../../shared/converters/userToUserUpdate";
-import { USER_IS_SENDING, USER_FOR_USER_PAGE_ID, USER_TO_EDIT_ID_FOR_USER_PAGE, USER_SENDING_SUCCESS, USER_TO_EDIT_LOADING, USER_TO_EDIT_LOADED, USER_TO_EDIT_FAIL, USER_SENDING_FAIL } from "../actionTypes";
+import { USER_IS_SENDING, USER_TO_EDIT_ID_FOR_USER_PAGE, USER_SENDING_SUCCESS, USER_TO_EDIT_LOADING, USER_TO_EDIT_LOADED, USER_TO_EDIT_FAIL, USER_SENDING_FAIL } from "../actionTypes";
 import { IUserPage } from "../state";
 import { UserPageActions } from "./action-creators";
 

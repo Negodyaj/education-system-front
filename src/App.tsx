@@ -87,12 +87,20 @@ function App() {
                                                 ||
                                                 appState.roleSelector.currentUserRoleId === Role.Admin)
                                             &&
-                                            <Route path="/user-list">
+                                            <>
+                                            <Route exact path="/user-list">
                                                 <UserListPage></UserListPage>
                                                 <Helmet>
                                                     <title>Юзеры</title>
                                                 </Helmet>
                                             </Route>
+                                            <Route path="/user-list/:id">
+                                                <UserListPage></UserListPage>
+                                                <Helmet>
+                                                    <title>Юзеры</title>
+                                                </Helmet>
+                                            </Route>
+                                            </>
                                         }
                                         <Route path="/user-page/register">
                                             <UserPage></UserPage>

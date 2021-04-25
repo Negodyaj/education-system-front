@@ -1,5 +1,3 @@
-import { User } from "../../interfaces/User";
-import { getCurrentUserFromStorage } from "../../services/auth.service";
 import { CURRENT_USER_ROLE_ID_SELECTED, CURRENT_USER_WAS_LOADED, CURRENT_USER_IS_LOADING, TOGGLE_ROLE_SELECTOR, CURRENT_USER_UNSET } from "../actionTypes"
 
 export type RoleSelectorActions =
