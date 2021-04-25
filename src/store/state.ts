@@ -45,4 +45,6 @@ export interface IModalDeleteCourse {
 export interface IPaymentFormState {
     formVisibility: string;
     userForPayment: User | undefined
+    paymentList: PaymentResponse[],
+    isDataLoading: boolean
 }

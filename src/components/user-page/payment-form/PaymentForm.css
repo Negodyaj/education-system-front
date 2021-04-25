@@ -87,3 +87,10 @@
     text-align: left;
 }
 
+.list{
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.payment-history h4{
+    text-align: left;
+}

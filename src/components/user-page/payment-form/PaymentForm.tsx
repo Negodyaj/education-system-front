@@ -19,6 +19,8 @@ interface PaymentProps {
 
 function PaymentForm(props: PaymentProps) {
 
+    const paymentFormState = useSelector((state: IRootState) => state.payment)
+
     var todate = new Date();
     var formattedDate = format(todate, "dd.mm.yyyy");
 
@@ -29,7 +31,7 @@ function PaymentForm(props: PaymentProps) {
             amount: 2500,
             date: todate.toLocaleDateString('ru-RU'),
             period: "",
-            contractNumber: props.userForPayment?.contractNumber
+            contractNumber: paymentFormState.userForPayment?.contractNumber
         }
     });
 
@@ -48,7 +50,6 @@ function PaymentForm(props: PaymentProps) {
         dispatch(setPaymentFormCLose())
     }
 
-    const paymentFormState = useSelector((state: IRootState) => state.payment)
 
     return (
         <div className={"payment " + (paymentFormState.formVisibility)}>
@@ -108,7 +109,7 @@ function PaymentForm(props: PaymentProps) {
                     </div>
                     <div className="input-row">
                         <label>Номер договора</label>
-                        <input key='contractNumber' value={paymentFormState.userForPayment?.contractNumber}
+                        <input key='contractNumber' //value={paymentFormState.userForPayment?.contractNumber}
                             {...register("contractNumber",
                                 {
                                     required: {
@@ -129,10 +130,19 @@ function PaymentForm(props: PaymentProps) {
                             as="div">
                         </ErrorMessage>
                     </div>
-                    {/* <div className="row input-row ">
-                        <label>Оплачено полностью</label>
-                        <input className="checkbox" type="checkbox" checked></input>
-                    </div> */}
+                    <div className='payment-history'>
+                        <h4>История оплат:</h4>
+                        <div className="list payment-list-head">
+                            <span>сумма</span>
+                            <span>дата</span>
+                            <span>период</span>
+                            <span>номер</span>
+                        </div>
+                        <div className = "list payment-list-body">
+
+                        </div>
+                    </div>
+                    <p></p>
                     <div className="footer-payment">
                         <button className="button-select" type="button" onClick={onCancel}>Отмена</button>
                         <button className="button-select" type={"submit"}>Подтвердить</button>
@@ -140,6 +150,7 @@ function PaymentForm(props: PaymentProps) {
                 </form>
 
             </div>
+
         </div >
     )
 }
