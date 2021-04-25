@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { Role } from '../../enums/role';
+import NavMenuDropdownLink from './components/NavMenuDropdownLink';
 import NavMenuSimpleLink from './components/NavMenuSimpleLink';
 import "./NavMenu.css"
 
@@ -36,6 +37,16 @@ function NavMenu(props: NavMenuProps) {
                 {
                     props.roleId !== Role.Student &&
                     <NavMenuSimpleLink route="tags-page" faIcon="tag" label="Тэги"/>
+                }
+                {
+                    props.roleId == Role.Admin &&
+                    <NavMenuDropdownLink route="group" faIcon="user" label="Группы"
+                    dropdownLinks={[
+                        {label:"one", route: "group/1", showByDefault: true},
+                        {label:"two", route: "group/2", showByDefault: true},
+                        {label:"three", route: "group/3", showByDefault: false},
+                        {label:"four", route: "group/4", showByDefault: false},
+                    ]}/>
                 }
             </nav>
             <button className={isHidden ? "left button-update" : "right button-update"} onClick={changeHidden} title={isHidden ? "развернуть меню" : "свернуть меню"}>
