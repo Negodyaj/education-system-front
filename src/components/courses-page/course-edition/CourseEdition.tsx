@@ -6,12 +6,18 @@ import SearchComponent from '../../../shared/components/search-component/SearchC
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { IRootState } from '../../../store';
-import { addThemeInCourse, deleteThemeCourse, getCourseById, getThemes } from '../../../store/course-edition/thunk';
+import { addThemeInCourse, deleteMaterialCourse, deleteThemeCourse, getCourseById, getThemes } from '../../../store/course-edition/thunk';
 import { setAllThemesInCourse, setChangeDisplayingButtonOpenProgramCourse, setChangeDisplayingButtonOpenMaterialsCourse } from '../../../store/course-edition/action-creators';
+import { Material } from '../../../interfaces/Materials';
 
 export interface CourseTheme {
     idCourse: number;
     idTheme: number;
+}
+
+export interface CourseMaterial {
+    idCourse: number;
+    idMaterial: number;
 }
 
 interface ParamTypes {
@@ -63,6 +69,11 @@ function CourseEdition() {
         dispatch(deleteThemeCourse(courseTheme));
     } 
 
+    const deleteMaterialFromCourse = (material: Material) => {
+        const courseMaterial: CourseMaterial = {idCourse: idCourse, idMaterial: material.id};
+        dispatch(deleteMaterialCourse(courseMaterial));
+    } 
+
     const searchInThemes = (str: string) => {
         setSearchWord(str);
     }
@@ -91,7 +102,7 @@ function CourseEdition() {
                     {
                         pageState.themes?.filter(item => item.name.toLowerCase().includes(searchWord.toLowerCase()))
                         .map((item) => (
-                            <div key={item.id} className={"new-theme "}>
+                            <div key={item.id} className="new-theme ">
                                 <div className="new-theme-name">{item.name}</div>
                                 <div className="new-theme-add">
                                     <button onClick={() => addNewThemeInProgramCourse(item)} className="button-add-theme">
@@ -138,6 +149,22 @@ function CourseEdition() {
                             }
                         </button>
                         <div className="materials-course-header-text">Материалы курса</div>
+                    </div>
+                    <div className="materials-course">
+                        { pageState.isDisplayingButtonOpenMaterialsCourse &&
+                            pageState.course.materials?.map((material) => (
+                                <div key={material.id} className="material">
+                                    <div className="material-content">
+                                        <a href={material.link} title={material.link} target="_blank" className="link-material">{material.description}</ a>
+                                    </div>
+                                    <div className="material-delete">
+                                        <button onClick={() => deleteMaterialFromCourse(material)} className='button-material-delete'>
+                                            <FontAwesomeIcon icon="minus" />
+                                        </button>
+                                    </div>
+                                </div>
+                            ))
+                        }
                     </div>
                 </div>
             </div>
