@@ -11,7 +11,7 @@ interface NavMenuSimpleLinkProps {
 
 function NavMenuSimpleLink (props: NavMenuSimpleLinkProps) {
     return (
-        <NavLink to={"/"+props.route} activeClassName="selected">
+        <NavLink to={`/${props.route}`} activeClassName="selected">
             <span className="icon-container"><FontAwesomeIcon icon={props.faIcon} /></span>
             <span className="label-container">{props.label}</span>
         </NavLink>
