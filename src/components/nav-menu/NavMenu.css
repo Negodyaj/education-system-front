@@ -1,16 +1,16 @@
 .menu-container{
-    
+    background: #2D62ED;
     position: relative;
     width:100%;
     left:0;
     height: 100%;
     overflow: none;
+    border-bottom-left-radius: 16px;
 }
 
 .navigation{
     height: 30px;
     border:none;
-    background-color: white;
 }
 
 .menu-container nav{
@@ -39,3 +39,4 @@ button.right{
 .menu-container .notshow button.navigation{
     display:none;
 }
+
