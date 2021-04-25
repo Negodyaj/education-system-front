@@ -12,7 +12,6 @@ interface NavMenuProps {
 
 function NavMenu(props: NavMenuProps) {
     const [isHidden, setHidden] = useState(false);
-    let title = "свернуть меню";
 
     let changeHidden = () => {
         isHidden ? setHidden(false) : setHidden(true);
@@ -21,8 +20,7 @@ function NavMenu(props: NavMenuProps) {
 
     return (
         <div className="menu-container">
-
-            <div className={isHidden ? "notshow" : "vision"}>
+            <nav className={isHidden ? "notshow" : "vision"}>
                 {
                     (props.roleId === Role.Admin || props.roleId === Role.Manager) &&
                     <NavMenuSimpleLink route="user-list" faIcon="user" label="Пользователи"/>
@@ -39,7 +37,7 @@ function NavMenu(props: NavMenuProps) {
                     props.roleId !== Role.Student &&
                     <NavMenuSimpleLink route="tags-page" faIcon="tag" label="Тэги"/>
                 }
-            </div>
+            </nav>
             <button className={isHidden ? "left button-update" : "right button-update"} onClick={changeHidden} title={isHidden ? "развернуть меню" : "свернуть меню"}>
                 <FontAwesomeIcon icon="angle-double-right" />
             </button>

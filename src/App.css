@@ -37,11 +37,11 @@ aside {
 aside.nothide {
     flex-grow: 0;
     flex-shrink: 0;
-    width: 350px;
+    width: 240px;
 }
 
 aside.hide {
-    width: 50px;
+    width: 72px;
 }
 
 aside,
