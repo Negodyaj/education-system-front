@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-import { Switch, Route, useHistory, Link } from 'react-router-dom';
+import { Switch, Route, useHistory, Link, Redirect } from 'react-router-dom';
 import LoginForm from './components/login-form/LoginForm';
 import NavMenu from './components/nav-menu/NavMenu';
 import HomeworkPage from './components/homework-page/HomeworkPage';
@@ -122,11 +122,14 @@ function App() {
                                             <title>Домашки</title>
                                         </Helmet> 
                                 </Route>
-                                <Route path="/group">
+                                <Route exact path="/group">
+                                    <Redirect to="/group/1" />
+                                </Route>
+                                <Route path="/group/:id">
                                     <GroupPage />
                                     <Helmet>
-                                            <title>Группы</title>
-                                        </Helmet> 
+                                        <title>Группы</title>
+                                    </Helmet> 
                                 </Route>
                             </Switch>
                             :
