@@ -42,10 +42,10 @@ function NavMenu(props: NavMenuProps) {
                     props.roleId == Role.Admin &&
                     <NavMenuDropdownLink route="group" faIcon="user" label="Группы"
                     dropdownLinks={[
-                        {label:"one", route: "group/1", showByDefault: true},
-                        {label:"two", route: "group/2", showByDefault: true},
-                        {label:"three", route: "group/3", showByDefault: false},
-                        {label:"four", route: "group/4", showByDefault: false},
+                        {label:"one", routeParam: "1", showByDefault: true},
+                        {label:"two", routeParam: "2", showByDefault: true},
+                        {label:"three", routeParam: "3", showByDefault: false},
+                        {label:"four", routeParam: "4", showByDefault: false},
                     ]}/>
                 }
             </nav>

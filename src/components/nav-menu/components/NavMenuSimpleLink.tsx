@@ -13,7 +13,7 @@ function NavMenuSimpleLink (props: NavMenuSimpleLinkProps) {
     return (
         <NavLink to={"/"+props.route} className="main-link" activeClassName="selected">
             <span className="icon-container"><FontAwesomeIcon icon={props.faIcon} /></span>
-            <span className="label-container">{props.label}</span>
+            <span className="text-container">{props.label}</span>
         </NavLink>
     )
 }
