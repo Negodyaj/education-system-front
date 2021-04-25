@@ -17,7 +17,7 @@ function PaymentForm(props: PaymentProps) {
                     <div>Назначить платеж пользователю
                         <div>{props.userName} {props.userLastname}</div>
                     </div>
-                    <button className="button-round" onClick={props.cancelClick}>х</button>
+                    <button className="round-button" onClick={props.cancelClick}>х</button>
                 </div>
                 <form>
                     <div className="input-row">
