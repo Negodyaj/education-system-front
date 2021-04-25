@@ -3,7 +3,7 @@ import { UserInput } from "../../interfaces/UserInput";
 import { UNSET_USER_ID_FOR_USER_PAGE } from "../../shared/consts";
 import { convertUserToUserInput } from "../../shared/converters/userToUserInput";
 import { convertUserToUserUpdate } from "../../shared/converters/userToUserUpdate";
-import { USER_TO_EDIT_WRETCH_FAIL, USER_TO_EDIT_WRETCH_LOADED, USER_TO_EDIT_WRETCH_LOADING, USER_IS_SENDING, USER_FOR_USER_PAGE_ID, USER_TO_EDIT_ID_FOR_USER_PAGE } from "../actionTypes";
+import { USER_TO_EDIT_WRETCH_FAIL, USER_TO_EDIT_WRETCH_LOADED, USER_TO_EDIT_WRETCH_LOADING, USER_IS_SENDING, USER_FOR_USER_PAGE_ID, USER_TO_EDIT_ID_FOR_USER_PAGE, USER_SENDING_SUCCESS } from "../actionTypes";
 import { IUserPage } from "../state";
 import { UserPageActions } from "./action-creators";
 
@@ -36,16 +36,19 @@ export function userPageReducer(state: IUserPage = initialState, action: UserPag
             return {
                 ...state,
                 userForUserPage: action.payload
-                ?
-                { ...convertUserToUserUpdate(action.payload) }
-                :
-                { ...convertUserToUserInput(INIT_USER)},
+                    ?
+                    { ...convertUserToUserUpdate(action.payload) }
+                    :
+                    { ...convertUserToUserInput(INIT_USER) },
+                userForUserPageId: action.payload?.id as number,
                 isDataLoading: false
             };
         case USER_TO_EDIT_WRETCH_FAIL:
             return { ...state, isDataLoading: false };
         case USER_IS_SENDING:
             return { ...state, isDataLoading: true };
+        case USER_SENDING_SUCCESS:
+            return { ...state, isDataLoading: false };
         default:
             return state;
     }

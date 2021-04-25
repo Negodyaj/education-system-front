@@ -6,7 +6,7 @@ import { usersUrl } from "../../shared/consts";
 import { makeNotification } from "../../shared/helpers/notificationHelpers";
 import { pushNotification } from "../notifications/action-creators";
 import { thunkResponseHandler } from "../thunkResponseHadlers";
-import { setUserIsSending, setUserToEditFail, setUserToEditIsLoading, setUserToEditWasLoaded } from "./action-creators";
+import { setUserIsSending, setUserToEditFail, setUserToEditIsLoading, setUserToEditWasLoaded, setUserUpdateResponse } from "./action-creators";
 
 export const getUserToEditById = (userId?: string) => {
     return (dispatch: Dispatch) => {
@@ -23,13 +23,17 @@ export const getUserToEditById = (userId?: string) => {
 
     }
 }
-export const sendUser = (user: User) => {
+export const sendUser = (user: User, userId: number, history:any) => {
     return (dispatch: Dispatch) => {
         dispatch(setUserIsSending());
-        sendPutRequest<User>(`${usersUrl}/${user.id}`, isUser, user)
+        sendPutRequest<User>(`${usersUrl}/${userId}`, isUser, user)
             .then(userUpdateResponse => {
                 let response = thunkResponseHandler(dispatch, userUpdateResponse);
-                response && dispatch(pushNotification(makeNotification('success', `Пользователь ${(response as User).firstName} ${(response as User).lastName} успешно изменён`)))
+                if (response) {
+                    dispatch(pushNotification(makeNotification('success', `Пользователь ${(response as User).firstName} ${(response as User).lastName} успешно изменён`)))
+                    dispatch(setUserUpdateResponse());
+                    history.push('/user-list')
+                }
             })
     }
 

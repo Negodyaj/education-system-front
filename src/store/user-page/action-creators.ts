@@ -8,6 +8,7 @@ export type UserPageActions =
     | ReturnType<typeof setUserToEditFail>
     | ReturnType<typeof quitUserPage>
     | ReturnType<typeof setUserIsSending>
+    | ReturnType<typeof setUserUpdateResponse>
 
 export const setUserForUserPageId = (userId: number) => {
     return ({
@@ -45,9 +46,9 @@ export const setUserIsSending = () => {
         payload: undefined
     } as const);
 }
-export const setUserUpdateResponse = (userResponse: User) => {
+export const setUserUpdateResponse = () => {
     return ({
         type: USER_SENDING_SUCCESS,
-        payload: userResponse
+        payload: undefined
     } as const);
 }

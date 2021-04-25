@@ -38,7 +38,7 @@ function PaymentForm(props: PaymentProps) {
                     </div>
                     <div className="row input-row ">
                         <label>Оплачено полностью</label>
-                        <input className="checkbox" type="checkbox" checked></input>
+                        {/* <input className="checkbox" type="checkbox" checked></input> */}
                     </div>
                 </form>
                 <div className="footer-payment">

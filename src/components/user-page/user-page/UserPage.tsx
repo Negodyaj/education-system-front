@@ -1,13 +1,12 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import './UserPage.css'
 import '../../../App.css';
 import { User } from '../../../interfaces/User';
 import { useDispatch, useSelector } from 'react-redux';
 import { IRootState } from '../../../store';
-import { quitUserPage } from '../../../store/user-page/action-creators';
 import { getUserToEditById, sendUser } from '../../../store/user-page/thunk';
-import { Link, useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { UserInput } from '../../../interfaces/UserInput';
 import FormElement, { } from '../form-elements/FormElement';
 import { getFormElementSettings } from '../../../shared/helpers/useFormRegisterSettingByKey';
@@ -17,6 +16,7 @@ function UserPage() {
     const dispatch = useDispatch();
     const appState = useSelector((state: IRootState) => state)
     const { id } = useParams<{ id?: string; }>();
+    const history = useHistory()
     useEffect(() => {
         dispatch(getUserToEditById(id))
     }, [])
@@ -26,10 +26,10 @@ function UserPage() {
         })
     }, [appState.userPage.userForUserPage])
     const onSubmit = (data: User) => {
-        dispatch(sendUser(data))
+        dispatch(sendUser(data, appState.userPage.userForUserPageId, history));
     }
     const closeUserPage = () => {
-        dispatch(quitUserPage())
+        history.push('/user-list')
     }
     const { register, formState, handleSubmit, getValues, setValue, ...methods } = useForm<UserInput>();
     return (
@@ -52,9 +52,7 @@ function UserPage() {
                             })
                         }
                         <div className="form-row form-row-button">
-                            <Link to="/user-list">
-                                <button className="common-button" type="button" onClick={closeUserPage}>отмена</button>
-                            </Link>
+                            <button className="common-button" type="button" onClick={closeUserPage}>отмена</button>
                             <button className="common-button" type={"submit"}>сохранить</button>
                         </div>
                     </form>

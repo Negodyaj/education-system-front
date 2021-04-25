@@ -1,4 +1,3 @@
-import React from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import { ExternalInputSettings } from "../../../shared/helpers/useFormRegisterSettingByKey";
 import TextInput from "./TextInput";
@@ -7,9 +6,7 @@ function PictureInput(props: {
     inputSettings: ExternalInputSettings
 }) {
     const formContext = useFormContext();
-    console.log(formContext.getValues(props.inputSettings.name));
     return (
-
         <Controller
             control={formContext.control}
             name={props.inputSettings.name}
@@ -22,5 +19,4 @@ function PictureInput(props: {
                 )
             }} />)
 }
-
 export default PictureInput;
