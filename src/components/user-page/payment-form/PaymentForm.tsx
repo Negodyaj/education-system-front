@@ -8,8 +8,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { User } from '../../../interfaces/User';
 import { IRootState } from '../../../store';
 import { PaymentInput } from '../../interfaces/PaymentInput';
-import { sendPayment } from '../../../store/payment/thunk';
+import { getPayment, sendPayment } from '../../../store/payment/thunk';
 import { setPaymentFormCLose, setPaymentFormOpen } from '../../../store/payment/action-creators';
+import { useEffect } from 'react';
 
 interface PaymentProps {
     paymentFormState: string;
@@ -20,6 +21,10 @@ interface PaymentProps {
 function PaymentForm(props: PaymentProps) {
 
     const paymentFormState = useSelector((state: IRootState) => state.payment)
+
+    useEffect(() => {
+        dispatch(getPayment(paymentFormState.userForPayment?.id));
+    }, []);
 
     var todate = new Date();
     var formattedDate = format(todate, "dd.mm.yyyy");
@@ -49,6 +54,7 @@ function PaymentForm(props: PaymentProps) {
     const onCancel = () => {
         dispatch(setPaymentFormCLose())
     }
+
 
 
     return (
@@ -138,8 +144,21 @@ function PaymentForm(props: PaymentProps) {
                             <span>период</span>
                             <span>номер</span>
                         </div>
-                        <div className = "list payment-list-body">
-
+                        <div className="list payment-list-body">
+                            {
+                                paymentFormState.isDataLoading
+                                    ?
+                                    <>LOADING</>
+                                    :
+                                    paymentFormState.paymentList?.map(item => (
+                                        <div>
+                                            <div>{item.amount}</div>
+                                            <div></div>
+                                            <div></div>
+                                            <div></div>
+                                        </div>
+                                    ))
+                            }
                         </div>
                     </div>
                     <p></p>

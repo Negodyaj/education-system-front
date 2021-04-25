@@ -3,6 +3,7 @@ import NotificationData from "../interfaces/NotificationData";
 import { User } from "../interfaces/User";
 import { UserInput } from "../interfaces/UserInput";
 import { UserUpdate } from "../interfaces/UserUpdate";
+import { PaymentResponse } from "../components/interfaces/PaymentResponse";
 
 export interface ICoursePageState {
     courseList: Course[],

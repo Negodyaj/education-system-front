@@ -1,4 +1,5 @@
 import { User } from "../../interfaces/User";
+import { PaymentResponse } from "../../components/interfaces/PaymentResponse";
 import { PAYMENT_FORM_CLOSE, PAYMENT_FORM_VISIBLE, PAYMENT_LIST_WRETCH_FAIL, PAYMENT_LIST_WRETCH_LOADED, PAYMENT_LIST_WRETCH_LOADING, PAYMENT_SEND_SUCCESS } from "../actionTypes";
 
 export type PaymentFormActions =

@@ -1,14 +1,3 @@
-// export const getUserToViewById = (userId: number) => {
-//     return (dispatch: Dispatch) => {
-//         dispatch(setUserToViewIsLoading());
-//         sendGetRequest<User>(`${usersUrl}/${userId}`, isUser)
-//             .then(user => {
-//                 dispatch(setUserToViewWasLoaded(thunkResponseHandler(dispatch, user)));
-//             })
-//             .catch(error => dispatch(setUserListFail(error)));
-//     }
-// }
-
 import { Dispatch } from "redux"
 import { Payment } from "../../components/interfaces/Payment";
 import { PaymentInput } from "../../components/interfaces/PaymentInput";
@@ -34,7 +23,7 @@ export const sendPayment =(userForPayment: User | undefined, newPayment: Payment
     }
 }
 
-export const getPayment = (userId: number) => {
+export const getPayment = (userId: number |undefined) => {
     return (dispatch: Dispatch) => {
         dispatch(setPaymentListIsLoading());
         sendGetRequest<PaymentResponse[]>(`${userId}/payment`, isPaymentResponseArr)
