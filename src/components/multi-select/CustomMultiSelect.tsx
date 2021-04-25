@@ -1,6 +1,11 @@
 import { useState } from 'react'
+import { Controller, FieldValues, UseFormReturn } from 'react-hook-form';
 import Select, { ActionMeta, OptionsType } from 'react-select'
 import { SelectItem } from '../../interfaces/SelectItem';
+import { convertEntitiesToSelectItems } from '../../shared/converters/entityToSelectItemConverter';
+import { convertEnumToDictionary, getRussianDictionary } from '../../shared/converters/enumToDictionaryEntity';
+import { convertRoleIdsToSelectItems } from '../../shared/converters/roleIdsToSelectItems';
+import { ExternalInputSettings } from '../../shared/helpers/useFormRegisterSettingByKey';
 import { customStyles } from './multiSelectCosnts';
 
 type selectType = "single" | "multi"
@@ -35,12 +40,14 @@ export const SingleSelect = (
     onChange={onChange} />
 )
 interface SelectProps {
-  selectType?: selectType;
+  selectType: selectType;
   selectedOptions?: SelectItem[] | undefined;
   selectedOption?: SelectItem | undefined;
-  options: SelectItem[] | undefined;
+  options?: SelectItem[] | undefined;
   onMultiSelect?: (optionIds: number[]) => void;
   onSingleSelect?: (optionId: number | null) => void;
+  inputSettings?: ExternalInputSettings;
+  formContext?: UseFormReturn<FieldValues>
 }
 function CustomMultiSelect(props: SelectProps) {
   const [selectedOptions, setSelectedOptions] = useState<SelectItem[] | undefined>(props.selectedOptions?.length ? [...props.selectedOptions] : undefined);
@@ -55,10 +62,33 @@ function CustomMultiSelect(props: SelectProps) {
     props.onSingleSelect && props.onSingleSelect(selectedOption?.value || null)
   }
   return (
-    <div>
-      { props.selectType === 'multi' && MultiSelect(props.options, selectedOptions, onMultiSelect)}
-      { props.selectType === 'single' && SingleSelect(props.options, selectedOption, onSingleSelect)}
-    </div>
+    props.inputSettings
+      ?
+      <Controller
+        control={props.formContext?.control}
+        name={props.inputSettings.name}
+        render={({ field: { onChange, value, } }) => {
+          return props.selectType === 'multi'
+            ?
+            MultiSelect(
+              convertEntitiesToSelectItems(
+                getRussianDictionary(convertEnumToDictionary(props.inputSettings?.selectOptions))
+              ),
+              (value !== undefined ? value[0]?.label ? value : convertRoleIdsToSelectItems(value) : undefined),
+              onChange)
+            :
+            SingleSelect(
+              convertEntitiesToSelectItems(
+                getRussianDictionary(convertEnumToDictionary(props.inputSettings?.selectOptions))
+              ),
+              (value !== undefined ? value?.label ? value : convertRoleIdsToSelectItems(value) : undefined),
+              onChange)
+        }} />
+      :
+      <div>
+        {props.selectType === 'multi' && MultiSelect(props.options, selectedOptions, onMultiSelect)}
+        {props.selectType === 'single' && SingleSelect(props.options, selectedOption, onSingleSelect)}
+      </div>
   )
 }
 export default CustomMultiSelect;

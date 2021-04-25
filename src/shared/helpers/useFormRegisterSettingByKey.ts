@@ -6,7 +6,7 @@ export interface BaseInputSettings {
     registerOptions?: RegisterOptions;
 }
 export  interface InternalInputSettings extends BaseInputSettings {
-    inputType: 'text' | 'date';
+    inputType: 'text' | 'date' | 'picture';
 }
 export interface ExternalInputSettings extends BaseInputSettings {
     inputType: 'singleSelect' | 'multiSelect';
@@ -77,7 +77,7 @@ export const getFormElementSettings = (key: InputNames): FormElementSettings => 
                 label: "Аватар",
                 inputSettings: {
                     name: key,
-                    inputType: 'text',
+                    inputType: 'picture',
                     registerOptions: {
                         required: "Вставьте ссылку на изображение"
                     }

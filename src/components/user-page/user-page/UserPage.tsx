@@ -46,7 +46,9 @@ function UserPage() {
                     <form onSubmit={handleSubmit(onSubmit)}>
                         {
                             Object.keys(appState.userPage.userForUserPage).map(key => {
-                                return <FormElement formElementSettings={getFormElementSettings(key as InputNames)}></FormElement>
+                                return <FormElement
+                                    formElementSettings={getFormElementSettings(key as InputNames)}
+                                    key={key}></FormElement>
                             })
                         }
                         <div className="form-row form-row-button">

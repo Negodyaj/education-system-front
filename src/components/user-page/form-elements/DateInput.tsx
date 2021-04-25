@@ -1,22 +1,15 @@
-import DatePicker, { registerLocale } from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
-import ru from "date-fns/locale/ru";
-import { Controller, useFormContext } from 'react-hook-form';
-import './DatePickerComponent.css';
+import { useFormContext } from 'react-hook-form';
 import { ExternalInputSettings } from '../../../shared/helpers/useFormRegisterSettingByKey';
-import { convertStringToDate } from '../../../shared/converters/stringToDateConverter';
-registerLocale("ru", ru);
+import DatePickerComponent from '../../../shared/components/date-picker/DatePickerComponent';
 function DateInput(props: {
     inputSettings: ExternalInputSettings
 }) {
     const formContext = useFormContext()
     return (
-        <Controller
-            control={formContext.control}
-            name={props.inputSettings.name}
-            render={({ field: { onChange, value, } }) => (
-                <DatePicker selected={convertStringToDate(value)} onChange={onChange} locale="ru" />
-            )} />
+        <DatePickerComponent
+            inputSettings={props.inputSettings}
+            formContext={formContext}></DatePickerComponent>
     )
 }
 export default DateInput;

@@ -1,9 +1,6 @@
-import { Controller, useFormContext } from "react-hook-form";
-import { convertEntitiesToSelectItems } from "../../../shared/converters/entityToSelectItemConverter";
-import { convertEnumToDictionary, getRussianDictionary } from "../../../shared/converters/enumToDictionaryEntity";
-import { convertRoleIdsToSelectItems } from "../../../shared/converters/roleIdsToSelectItems";
+import { useFormContext } from "react-hook-form";
 import { ExternalInputSettings } from "../../../shared/helpers/useFormRegisterSettingByKey";
-import { MultiSelect } from "../../multi-select/CustomMultiSelect";
+import CustomMultiSelect, { MultiSelect } from "../../multi-select/CustomMultiSelect";
 
 
 function MultiSelectInput(props: {
@@ -11,16 +8,10 @@ function MultiSelectInput(props: {
 }) {
     const formContext = useFormContext()
     return (
-        <Controller
-            control={formContext.control}
-            name={props.inputSettings.name}
-            render={({ field: { onChange, value, } }) => {
-                return MultiSelect(
-                    convertEntitiesToSelectItems(
-                        getRussianDictionary(convertEnumToDictionary(props.inputSettings.selectOptions))
-                    ),
-                    (value !== undefined ? value[0]?.label ? value : convertRoleIdsToSelectItems(value) : undefined),
-                    onChange)
-            }} />)
+        <CustomMultiSelect
+            selectType="multi"
+            inputSettings={props.inputSettings}
+            formContext={formContext}></CustomMultiSelect>
+    )
 }
 export default MultiSelectInput;

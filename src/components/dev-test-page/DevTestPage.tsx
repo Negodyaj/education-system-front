@@ -11,7 +11,7 @@ import { SelectItem } from "../../interfaces/SelectItem";
 interface DevTestPageProps {
 }
 
-function DevTestPage (props: DevTestPageProps) {
+function DevTestPage(props: DevTestPageProps) {
     const dispatch = useDispatch();
     const [dialogShown, setDialogShown] = useState(false);
     const [counter, setCounter] = useState(0);
@@ -19,12 +19,12 @@ function DevTestPage (props: DevTestPageProps) {
 
     const counterCallback = (decision: boolean) => {
         if (decision) {
-            setCounter(counter+1);
+            setCounter(counter + 1);
         }
         setDialogShown(false);
     }
 
-    const selectItems:SelectItem[]= [
+    const selectItems: SelectItem[] = [
         {
             value: 1,
             label: "aaa"
@@ -43,33 +43,34 @@ function DevTestPage (props: DevTestPageProps) {
         <div>
             <h1>secret test page</h1>
 
-            <button onClick={()=>dispatch(sendNotification(generateTestNotification(true)))} >
+            <button onClick={() => dispatch(sendNotification(generateTestNotification(true)))} >
                 Test dismissible notification</button>
-            <button onClick={()=>dispatch(sendNotification(generateTestNotification(false)))} >
+            <button onClick={() => dispatch(sendNotification(generateTestNotification(false)))} >
                 Test non-dismissible notification</button>
 
             <div>
                 <span>{counter}</span>
-                <button onClick={() => {setDialogShown(true)}}>+1</button> 
+                <button onClick={() => { setDialogShown(true) }}>+1</button>
             </div>
 
-            <ConfirmationDialog 
-                isShown={dialogShown} 
+            <ConfirmationDialog
+                isShown={dialogShown}
                 title={'Увеличить счетчик на 1?'}
-                message={`Новое значение: ${counter+1}`}
-                callback={counterCallback}/>
+                message={`Новое значение: ${counter + 1}`}
+                callback={counterCallback} />
 
-            <CustomMultiSelect
-                selectedOptions={[]}
-                options={selectItems}
-                onSingleSelect={()=>{}}
-            />
-            <br/>
             <CustomMultiSelect
                 selectType='multi'
                 selectedOptions={[]}
                 options={selectItems}
-                onMultiSelect={()=>{}}
+                onSingleSelect={() => { }}
+            />
+            <br />
+            <CustomMultiSelect
+                selectType='multi'
+                selectedOptions={[]}
+                options={selectItems}
+                onMultiSelect={() => { }}
             />
 
             <div className="test-page-link"><Link to="/">back to login</Link></div>

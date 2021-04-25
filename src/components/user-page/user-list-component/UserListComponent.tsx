@@ -140,11 +140,13 @@ function UserListComponent() {
                             <div className="column">{u.login}</div>
                             <div className="column multiline">
                                 {
-                                    u.roles?.map(r => (<div className='role'>
-                                        <div>{getEnToRuTranslation(Role[r])}</div>
-                                        {elementsDefinedByRole.deleteRoleButton(u, r)}
+                                    u.roles?.map(r => (
+                                        <div className='role' key={r}>
+                                            <div>{getEnToRuTranslation(Role[r])}</div>
+                                            {elementsDefinedByRole.deleteRoleButton(u, r)}
 
-                                    </div>))}
+                                        </div>
+                                    ))}
                             </div>
                             <div className="column">{/*u.groupName*/}</div>
                             <div className="column-button">

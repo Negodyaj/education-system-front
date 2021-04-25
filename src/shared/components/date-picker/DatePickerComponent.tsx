@@ -1,26 +1,38 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import DatePicker, { registerLocale } from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import './DatePickerComponent.css';
 import ru from "date-fns/locale/ru";
+import { ExternalInputSettings } from '../../helpers/useFormRegisterSettingByKey';
+import { Controller, FieldValues, UseFormReturn } from 'react-hook-form';
+import { convertStringToDate } from '../../converters/stringToDateConverter';
 registerLocale("ru", ru);
 
 interface DatePickerComponentProps {
-  date: Date,
-  onDateChange: (date: string) => void
+  date?: Date,
+  onDateChange?: (date: string) => void,
+  inputSettings?: ExternalInputSettings,
+  formContext?: UseFormReturn<FieldValues>
 }
-
 function DatePickerComponent(props: DatePickerComponentProps) {
-
   const [startDate, setStartDate] = useState(props.date);
   const handleDateChange = (date: Date | [Date, Date] | null) => {
     if (date instanceof Date) {
       setStartDate(date);
-      props.onDateChange(date.toLocaleDateString());
+      props.onDateChange && props.onDateChange(date.toLocaleDateString());
     }
   }
   return (
-    <DatePicker selected={startDate} onChange={handleDateChange} locale="ru" />
+    props.inputSettings
+      ?
+      <Controller
+        control={props.formContext?.control}
+        name={props.inputSettings.name}
+        render={({ field: { onChange, value, } }) => (
+          <DatePicker selected={convertStringToDate(value)} onChange={onChange} locale="ru" />
+        )} />
+      :
+      <DatePicker selected={startDate} onChange={handleDateChange} locale="ru" />
   );
 };
 

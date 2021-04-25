@@ -2,14 +2,23 @@ import { useFormContext } from 'react-hook-form';
 import { InputSettings } from '../../../shared/helpers/useFormRegisterSettingByKey';
 
 function TextInput(props: {
-    inputSettings: InputSettings
+    inputSettings: InputSettings;
+    onChange?: (...event: any[]) => void
 }) {
     const formContext = useFormContext()
     return (
-        <input
-            {...formContext.register(props.inputSettings.name, props.inputSettings.registerOptions)}
-            type="text"
-            className="form-input" />
+        !props.onChange
+            ?
+            <input
+                {...formContext.register(props.inputSettings.name, props.inputSettings.registerOptions)}
+                type="text"
+                className="form-input" />
+            :
+            <input
+                {...formContext.register(props.inputSettings.name, props.inputSettings.registerOptions)}
+                onChange={props.onChange}
+                type="text"
+                className="form-input" />
     )
 }
 export default TextInput;
