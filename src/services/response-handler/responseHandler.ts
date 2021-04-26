@@ -135,6 +135,7 @@ export const responseHandlers: responseHandler = {
         },
         isT: (data: any): data is Themes => isThemeDelete(data)
     },
+   
     [TagEnd]: {
         notifications: (response?: any) => {
             return ({
