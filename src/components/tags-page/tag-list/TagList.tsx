@@ -4,7 +4,7 @@ import { isTagArr } from "../../../services/type-guards/tagArr";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Tag } from "../../../interfaces/Tag";
 import { useDispatch, useSelector } from "react-redux";
-import { getTags } from "../../../store/tags-page/thunk";
+import { deleteTagThunk, getTags } from "../../../store/tags-page/thunk";
 import { IRootState } from "../../../store";
 
 
@@ -17,20 +17,18 @@ function TagList(props: TagListProps) {
     const [deletedTag, setdeleteTag] = useState('');
     const dispatch = useDispatch()
     const pageState = useSelector((state: IRootState) => state.tagsPage);
-console.log (pageState)
+
     useEffect(() => {
         dispatch(getTags());
     }, []);
 
-    const deleteTag = async (tagId: number) => {
-        if (await sendDeleteRequestNoResponse(`Tag/${tagId}`))
-            props.setTagsInState(await sendGetRequest<Tag[]>('Tag', isTagArr))
-    }
-
-    return (
-        <>
-            {
-                pageState.tagList.map((item) => 
+    const deleteTag = (id: number) => {
+        dispatch(deleteTagThunk(id))}
+        
+        return (
+            <>
+                {
+                    pageState.tagList.map((item) =>
 
                     (
                         <div className="tag-row">
@@ -41,10 +39,10 @@ console.log (pageState)
                         </div>
                     )
 
-                )
-            } 
-        </>
-    )
-}
+                    )
+                }
+            </>
+        )}
+    
 
-export default TagList
+    export default TagList

@@ -4,12 +4,12 @@ import { sendGetRequest, sendPostRequest } from '../../services/http.service';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import AddTagModal from './add-tag-modal/AddTagModal';
 import { Tag } from '../../interfaces/Tag';
-import TagList from './tag-list/TagList';
 import { isTagArr } from '../../services/type-guards/tagArr';
 import { useDispatch, useSelector } from 'react-redux';
 import { getTags } from '../../store/tags-page/thunk';
 import { IRootState } from '../../store';
 import { doFilteringTags, toggleModalHidden } from '../../store/tags-page/action-creators';
+import TagList from './tag-list/TagList';
 
 interface TagsPageProps {
 }

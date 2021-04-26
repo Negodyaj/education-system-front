@@ -1,4 +1,4 @@
-import { MODAL_HIDDEN_IS_CHECK, TAGS_LIST_FILTERED, TAGS_LIST_WRETCH_LOADED } from "../actionTypes";
+import { MODAL_HIDDEN_IS_CHECK, TAGS_LIST_FILTERED, TAGS_LIST_WRETCH_ADD_TAG, TAGS_LIST_WRETCH_DELETE_TAG, TAGS_LIST_WRETCH_FAIL, TAGS_LIST_WRETCH_LOADED, TAGS_LIST_WRETCH_LOADING } from "../actionTypes";
 import { ITagsPageState } from "../state";
 import { TagsPageActions } from "./action-creators";
 
@@ -19,6 +19,14 @@ export function tagsPageReducer(state: ITagsPageState = initialState, action: Ta
             };
         case MODAL_HIDDEN_IS_CHECK:
             return { ...state, isTagsModalHidden: !state.isTagsModalHidden };
+        case TAGS_LIST_WRETCH_ADD_TAG:
+            return { ...state, isDataLoading: false}
+        case TAGS_LIST_WRETCH_DELETE_TAG:
+            return { ...state, isDataLoading: false } 
+        case TAGS_LIST_WRETCH_LOADING:
+            return { ...state, isDataLoading:true }
+        case TAGS_LIST_WRETCH_FAIL:
+            return { ...state, tagList: [], isDataLoading: false };
         default:
             return state;
     }

@@ -6,6 +6,7 @@ import { sendGetRequest, sendPostRequest } from "../../../services/http.service"
 import { isTag } from "../../../services/type-guards/tag";
 import { isTagArr } from "../../../services/type-guards/tagArr";
 import { toggleModalHidden } from "../../../store/tags-page/action-creators";
+import { addTag } from "../../../store/tags-page/thunk";
 
 
 interface AddTagModalProps {
@@ -28,10 +29,12 @@ function AddTagModal(props: AddTagModalProps) {
             setBlock("block")
         }
     };
-    const AddNewTag = async () => {
-        let a;
-        if (a=!!await sendPostRequest<Tag>('Tag', isTag, {name: nameNewTag}))
-       props.setTagsInState(await sendGetRequest<Tag[]>('Tag', isTagArr)) 
+
+   
+    const AddNewTag = () => {dispatch(addTag(nameNewTag))
+    //     let a;
+    //     if (a=!!await sendPostRequest<Tag>('Tag', isTag, {name: nameNewTag}))
+    //    props.setTagsInState(await sendGetRequest<Tag[]>('Tag', isTagArr)) 
     };
     const [isDisabled, setIsDisabled] = useState(true);
     const [block, setBlock] = useState("block")
