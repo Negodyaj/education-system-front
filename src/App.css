@@ -23,16 +23,25 @@ header {
     height: 100px;
 }
 
+.logo-container {
+    border-top-left-radius: 16px;
+    background: #2D62ED;
+}
+
+aside {
+    border-bottom-left-radius: 16px;
+    background: #2D62ED;
+}
+
 .logo-container,
 aside.nothide {
     flex-grow: 0;
     flex-shrink: 0;
-    width: 350px;
+    width: 240px;
 }
 
 aside.hide {
-    width: 50px;
-    border-right: 2px solid salmon;
+    width: 72px;
 }
 
 aside,
