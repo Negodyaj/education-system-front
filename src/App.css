@@ -33,8 +33,7 @@ aside {
     background: #2D62ED;
 }
 
-.logo-container,
-aside.nothide {
+.logo-container, aside.nothide {
     flex-grow: 0;
     flex-shrink: 0;
     width: 240px;
@@ -44,13 +43,15 @@ aside.hide {
     width: 72px;
 }
 
-aside,
-main {
+aside, main {
     padding-top: 30px;
+    height: 100%;
 }
 
 main {
     flex-grow: 1;
+    padding-left: 32px;
+    overflow-y: scroll;
 }
 
 .header-user-actions {
@@ -61,13 +62,17 @@ main {
     padding: 0 20px;
 }
 
+.page-title {
+    margin: 0px;
+    font-size: 26px;
+}
+
 .main-content {
     display: flex;
     height: calc(100vh - 100px);
 }
 
-.common-button,
-.round-button {
+.common-button, .round-button {
     background-color: #00ccf2;
     color: #ffff;
     border: none;
@@ -76,8 +81,7 @@ main {
     cursor: pointer;
 }
 
-.common-button + .common-button,
-.round-button + .round-button {
+.common-button+.common-button, .round-button+.round-button {
     margin-left: 10px;
 }
 
@@ -104,7 +108,7 @@ main {
     font-size: 14px;
 }
 
-.form-control + .form-control {
+.form-control+.form-control {
     margin-top: 11px;
 }
 
