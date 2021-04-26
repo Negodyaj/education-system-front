@@ -12,6 +12,7 @@ import { useHistory, useParams } from "react-router-dom";
 import ConfirmationDialog from "../../../shared/components/confirmation-dialog/ConfirmationDialog";
 import { sendDeleteRequestNoResponse } from "../../../services/http.service";
 import { deleteUserRequest } from "../../../store/user-list-page/thunk";
+import { userEditUrl, userListUrl, userRegisterFormUrl } from "../../../shared/consts";
 
 function UserListComponent() {
 
@@ -24,12 +25,12 @@ function UserListComponent() {
     const [isModalShow, setIsModalShow] = useState(false);
     const [confirmationMessage, setConfirmationMessage] = useState('Вы уверены?')
     const history = useHistory();
-    const { id } = useParams<{ id?: string; }>();
+    const { idToDelete } = useParams<{ idToDelete?: string; }>();
 
     useEffect(() => {
-        if (id) {
+        if (idToDelete) {
             setIsModalShow(true);
-            let userToDelete = appState.userListPage.userList.filter(u => u.id === Number.parseInt(id))[0]
+            let userToDelete = appState.userListPage.userList.filter(u => u.id === Number.parseInt(idToDelete))[0]
             setConfirmationMessage(`Вы действительно хотите удалить пользователя ${userToDelete.firstName} ${userToDelete.lastName}?`)
         }
     })
@@ -59,28 +60,27 @@ function UserListComponent() {
         setPaymentFormState('visible');
     }
     const onEditClick = (userToEditId: number) => {
-        history.push(`/user-page/${userToEditId}/edit`)
+        history.push(`/${userEditUrl}/${userToEditId}/edit`)
     }
     const deleteUser = (decision: boolean) => {
-        if (decision) {
-            dispatch(deleteUserRequest(id || "", history));
-        } else {
+        if (decision === true) {
+            dispatch(deleteUserRequest(idToDelete || "", history));
+        } else if (decision === false) {
             setIsModalShow(false);
+            history.push(`/${userListUrl}`)
         }
     }
     const onDeleteClick = (userToDelete: User) => {
-        history.push(`/user-list/${userToDelete.id}`)
+        history.push(`/${userListUrl}/${userToDelete.id}`)
     }
-    const [modalCallBack, setModalCallBack] = useState<(decision: boolean) => void>(deleteUser);
     const onRegisterClick = () => {
-        history.push("/user-page/register");
+        history.push(`/${userRegisterFormUrl}`);
     }
     const onDeleteRoleClick = (user: User, roleId: number) => {
         setUserID(user.id as number);
         setRoleID(roleId);
         setConfirmationMessage(`Вы точно хотите избавить пользователя ${user.lastName}( ${user.login}) от роли ${Role[roleId]}?`)
         setIsModalShow(true);
-        setModalCallBack(deleteRole);
     }
     const refreshUser = () => {
         const newUsers = [...appState.userListPage.userList];
@@ -159,7 +159,7 @@ function UserListComponent() {
                                 declineLabel='Нет'
                                 message={confirmationMessage}
                                 title='Удаление роли'
-                                callback={deleteUser}></ConfirmationDialog>
+                                callback={idToDelete ? deleteUser : deleteRole}></ConfirmationDialog>
                         </div>))
                 }
                 <PaymentForm

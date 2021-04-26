@@ -4,7 +4,7 @@ import { UserRegisterResponse } from "../../interfaces/UserRegisterResponse";
 import { sendGetRequest, sendPostRequest, sendPutRequest } from "../../services/http.service";
 import { isUser } from "../../services/type-guards/user";
 import { isUserRegisterResponse } from "../../services/type-guards/userRegisterResponse";
-import { UNSET_USER_ID_FOR_USER_PAGE, userRegisterUrl, usersUrl } from "../../shared/consts";
+import { UNSET_USER_ID_FOR_USER_PAGE, userListUrl, userRegisterUrl, usersUrl } from "../../shared/consts";
 import { convertUserToUserInput } from "../../shared/converters/userToUserInput";
 import { makeNotification } from "../../shared/helpers/notificationHelpers";
 import { pushNotification } from "../notifications/action-creators";
@@ -35,9 +35,10 @@ export const sendUser = (user: User, userId: number, history: any) => {
                 .then(userUpdateResponse => {
                     let response = thunkResponseHandler(dispatch, userUpdateResponse);
                     if (response) {
-                        dispatch(pushNotification(makeNotification('success', `Пользователь ${(response as User).firstName} ${(response as User).lastName} успешно зарегистрирован`)))
+                        let user = { ...response } as User;
+                        dispatch(pushNotification(makeNotification('success', `Пользователь ${user.firstName} ${user.lastName} успешно зарегистрирован`)))
                         dispatch(setUserUpdateResponse());
-                        history.push('/user-list')
+                        history.push(`/${userListUrl}`)
                     } else {
                         dispatch(setUserSendingFail())
                     }
@@ -54,7 +55,7 @@ const updateUser = (user: User, userId: number, history: any) => {
                 if (response) {
                     dispatch(pushNotification(makeNotification('success', `Пользователь ${(response as User).firstName} ${(response as User).lastName} успешно изменён`)))
                     dispatch(setUserUpdateResponse());
-                    history.push('/user-list')
+                    history.push(`/${userListUrl}`)
                 } else {
                     dispatch(setUserSendingFail())
                 }

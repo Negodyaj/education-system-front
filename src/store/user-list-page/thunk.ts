@@ -4,7 +4,9 @@ import { UserDelete } from "../../interfaces/UserDelete";
 import { sendDeleteRequest, sendGetRequest } from "../../services/http.service";
 import { isUserArr } from "../../services/type-guards/userArray";
 import { isUserDelete } from "../../services/type-guards/userDelete";
-import { usersUrl } from "../../shared/consts";
+import { userListUrl, usersUrl } from "../../shared/consts";
+import { makeNotification } from "../../shared/helpers/notificationHelpers";
+import { pushNotification } from "../notifications/action-creators";
 import { thunkResponseHandler } from "../thunkResponseHadlers";
 import { setUserDeleting, setUserDeletingFail, setUserDeletingSuccess, setUserListFail, setUserListIsLoading, setUserListWasLoaded } from "./action-creators";
 
@@ -24,10 +26,12 @@ export const deleteUserRequest = (userToDeleteId: string, history: any) => {
         dispatch(setUserDeleting());
         sendDeleteRequest<UserDelete>(`${usersUrl}/${userToDeleteId}`, isUserDelete)
             .then(response => {
-                const deletedUser = thunkResponseHandler(dispatch, response);
+                let deletedUser = thunkResponseHandler(dispatch, response);
                 if (deletedUser) {
+                    deletedUser = { ...deletedUser } as UserDelete;
                     dispatch(setUserDeletingSuccess(deletedUser));
-                    history.push(`/user-list`);
+                    dispatch(pushNotification(makeNotification('success', `Пользователь ${response.firstName} ${response.lastName} успешно удалён`)))
+                    history.push(`/${userListUrl}`);
                 } else {
                     dispatch(setUserDeletingFail())
                 }

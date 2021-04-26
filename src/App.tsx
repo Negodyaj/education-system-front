@@ -25,6 +25,7 @@ import UserPage from './components/user-page/user-page/UserPage';
 import { FormProvider, useForm } from 'react-hook-form';
 import { UserInput } from './interfaces/UserInput';
 import { useState } from 'react';
+import { userEditUrl, userListUrl, userRegisterFormUrl } from './shared/consts';
 
 function App() {
     const dispatch = useDispatch();
@@ -38,7 +39,7 @@ function App() {
         unsetToken();
         history.push("/");
     }
-    
+
 
     const onHide = (condition: boolean) => {
         setHidden(condition);
@@ -48,117 +49,117 @@ function App() {
         if (condition) { return ("nothide") } else { return ("hide") }
     }
     return (
-        
-            <div className="App">
-                <Helmet>
-                    <title>Самый лучший сайт на свете</title>
-                    <meta name="description" content="Helmet application" />
-                </Helmet>
-                <header>
-                    <div className="logo-container">
-                        <img src={logo} className="app-logo" alt="logo" />
-                    </div>
-                    <div className="header-user-actions">
-                        {
-                            !!getToken() && <LoginRoleSelector />
-                        }
-                        {
-                            !!getToken()
-                            &&
-                            <button className='common-button' onClick={logOut}>Log out</button>
-                        }
-                    </div>
-                </header>
-                <div className="main-content">
-                    <aside className={styleMenu(isHidden)}>
-                        {
-                            !!getToken()
-                            &&
-                            <NavMenu roleId={appState.roleSelector.currentUserRoleId} onHide={onHide} />
-                        }
-                    </aside>
-                    <main>
-                        {
-                            !!getToken() ?
-                                <>
-                                    <Switch>
-                                        {
-                                            (appState.roleSelector.currentUserRoleId === Role.Manager
-                                                ||
-                                                appState.roleSelector.currentUserRoleId === Role.Admin)
-                                            &&
-                                            <>
-                                            <Route exact path="/user-list">
-                                                <UserListPage></UserListPage>
-                                                <Helmet>
-                                                    <title>Юзеры</title>
-                                                </Helmet>
-                                            </Route>
-                                            <Route path="/user-list/:id">
-                                                <UserListPage></UserListPage>
-                                                <Helmet>
-                                                    <title>Юзеры</title>
-                                                </Helmet>
-                                            </Route>
-                                            </>
-                                        }
-                                        <Route path="/user-page/register">
-                                            <UserPage></UserPage>
-                                        </Route>
-                                        <Route path="/user-page/:id/edit">
-                                            <UserPage></UserPage>
-                                        </Route>
-                                        {
-                                            appState.roleSelector.currentUserRoleId === Role.Teacher &&
-                                            <Route path="/courses-page">
-                                                <CoursesPage />
-                                                <Helmet>
-                                                    <title>Курсы</title>
-                                                </Helmet>
-                                            </Route>
-                                        }
-                                        <Route path="/course-edition/:id" render={({ location, history }) => (
-                                            <CourseEdition idCourse={location.pathname} />)}>
-                                        </Route>
-                                        {
-                                            appState.roleSelector.currentUserRoleId !== Role.Student &&
-                                            <Route path="/tags-page">
-                                                <TagsPage ></TagsPage>
-                                                <Helmet>
-                                                    <title>Тэги</title>
-                                                </Helmet>
-                                            </Route>
-                                        }
-                                        <Route path="/homework">
-                                            <HomeworkPage />
-                                            <Helmet>
-                                                <title>Домашки</title>
-                                            </Helmet>
-                                        </Route>
-                                        <Route path="/group">
-                                            <GroupPage />
-                                            <Helmet>
-                                                <title>Группы</title>
-                                            </Helmet>
-                                        </Route>
-                                    </Switch>
-                                    <NotificationContainer />
-                                </>
-                                :
+
+        <div className="App">
+            <Helmet>
+                <title>Самый лучший сайт на свете</title>
+                <meta name="description" content="Helmet application" />
+            </Helmet>
+            <header>
+                <div className="logo-container">
+                    <img src={logo} className="app-logo" alt="logo" />
+                </div>
+                <div className="header-user-actions">
+                    {
+                        !!getToken() && <LoginRoleSelector />
+                    }
+                    {
+                        !!getToken()
+                        &&
+                        <button className='common-button' onClick={logOut}>Log out</button>
+                    }
+                </div>
+            </header>
+            <div className="main-content">
+                <aside className={styleMenu(isHidden)}>
+                    {
+                        !!getToken()
+                        &&
+                        <NavMenu roleId={appState.roleSelector.currentUserRoleId} onHide={onHide} />
+                    }
+                </aside>
+                <main>
+                    {
+                        !!getToken() ?
+                            <>
                                 <Switch>
-                                    <Route exact path="/">
-                                        <LoginForm />
-                                        <div className="test-page-link"><Link to="/dev-test-page">secret test page</Link></div>
+                                    {
+                                        (appState.roleSelector.currentUserRoleId === Role.Manager
+                                            ||
+                                            appState.roleSelector.currentUserRoleId === Role.Admin)
+                                        &&
+                                        <>
+                                            <Route exact path={`/${userListUrl}`}>
+                                                <UserListPage></UserListPage>
+                                                <Helmet>
+                                                    <title>Юзеры</title>
+                                                </Helmet>
+                                            </Route>
+                                            <Route path={`/${userListUrl}/:idToDelete`}>
+                                                <UserListPage></UserListPage>
+                                                <Helmet>
+                                                    <title>Юзеры</title>
+                                                </Helmet>
+                                            </Route>
+                                            <Route path={`/${userRegisterFormUrl}`}>
+                                                <UserPage></UserPage>
+                                            </Route>
+                                            <Route path={`/${userEditUrl}/:idToEdit/edit`}>
+                                                <UserPage></UserPage>
+                                            </Route>
+                                        </>
+                                    }
+                                    {
+                                        appState.roleSelector.currentUserRoleId === Role.Teacher &&
+                                        <Route path="/courses-page">
+                                            <CoursesPage />
+                                            <Helmet>
+                                                <title>Курсы</title>
+                                            </Helmet>
+                                        </Route>
+                                    }
+                                    <Route path="/course-edition/:id" render={({ location, history }) => (
+                                        <CourseEdition idCourse={location.pathname} />)}>
                                     </Route>
-                                    <Route path="/dev-test-page">
-                                        <DevTestPage />
-                                        <NotificationContainer />
+                                    {
+                                        appState.roleSelector.currentUserRoleId !== Role.Student &&
+                                        <Route path="/tags-page">
+                                            <TagsPage ></TagsPage>
+                                            <Helmet>
+                                                <title>Тэги</title>
+                                            </Helmet>
+                                        </Route>
+                                    }
+                                    <Route path="/homework">
+                                        <HomeworkPage />
+                                        <Helmet>
+                                            <title>Домашки</title>
+                                        </Helmet>
+                                    </Route>
+                                    <Route path="/group">
+                                        <GroupPage />
+                                        <Helmet>
+                                            <title>Группы</title>
+                                        </Helmet>
                                     </Route>
                                 </Switch>
-                        }
-                    </main>
-                </div>
+                                <NotificationContainer />
+                            </>
+                            :
+                            <Switch>
+                                <Route exact path="/">
+                                    <LoginForm />
+                                    <div className="test-page-link"><Link to="/dev-test-page">secret test page</Link></div>
+                                </Route>
+                                <Route path="/dev-test-page">
+                                    <DevTestPage />
+                                    <NotificationContainer />
+                                </Route>
+                            </Switch>
+                    }
+                </main>
             </div>
+        </div>
     );
 }
 

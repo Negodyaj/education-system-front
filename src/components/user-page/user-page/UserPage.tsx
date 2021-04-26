@@ -15,10 +15,10 @@ import { InputNames } from '../../../enums/inputNames';
 function UserPage() {
     const dispatch = useDispatch();
     const appState = useSelector((state: IRootState) => state)
-    const { id } = useParams<{ id?: string; }>();
+    const { idToEdit } = useParams<{ idToEdit?: string; }>();
     const history = useHistory()
     useEffect(() => {
-        dispatch(getUserToEditById(id))
+        dispatch(getUserToEditById(idToEdit))
     }, [])
     useEffect(() => {
         Object.keys(appState.userPage.userForUserPage).map(key => {
