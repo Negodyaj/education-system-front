@@ -13,6 +13,7 @@ import { setPaymentListFail, setPaymentListIsLoading, setPaymentListWasLoaded, s
 
 export const sendPayment =(userForPayment: User | undefined, newPayment: PaymentInput)=>{
     return (dispatch: Dispatch) => {
+        console.log(newPayment, "asdfghj",userForPayment);
         sendPostRequest<PaymentResponse>(`User/${userForPayment?.id}/payment`, isPaymentResponse, newPayment)
             .then(response =>{
                 dispatch(setPaymentSendSuccess());

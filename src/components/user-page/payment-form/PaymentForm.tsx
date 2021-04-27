@@ -17,12 +17,12 @@ interface PaymentProps {
     userForPayment: User | undefined;
 }
 
-
 function PaymentForm(props: PaymentProps) {
 
     const paymentFormState = useSelector((state: IRootState) => state.payment)
 
     useEffect(() => {
+        console.log('pf',paymentFormState.userForPayment?.id)
         dispatch(getPayment(paymentFormState.userForPayment?.id));
     }, []);
     
@@ -139,23 +139,23 @@ function PaymentForm(props: PaymentProps) {
                     <div className='payment-history'>
                         <h4>История оплат:</h4>
                         <div className="list payment-list-head">
-                            <span>сумма</span>
-                            <span>дата</span>
-                            <span>период</span>
-                            <span>номер</span>
+                            <span className='column'>сумма</span>
+                            <span className='column'>дата</span>
+                            <span className='column'>период</span>
+                            <span className='column'>номер</span>
                         </div>
-                        <div className="list payment-list-body">
+                        <div className="payment-list-body">
                             {
                                 paymentFormState.isDataLoading
                                     ?
                                     <>LOADING</>
                                     :
                                     paymentFormState.paymentList?.map(item => (
-                                        <div>
-                                            <div>{item.amount}</div>
-                                            <div></div>
-                                            <div></div>
-                                            <div></div>
+                                        <div className="list" key={item.id}>
+                                            <div className='column'>{item.amount}</div>
+                                            <div className='column'>{item.date}</div>
+                                            <div className='column'>{item.period}</div>
+                                            <div className='column'>{item.contractNumber}</div>
                                         </div>
                                     ))
                             }
