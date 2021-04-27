@@ -138,9 +138,7 @@ function App() {
                                         </Helmet> 
                                     </Route>
                                 }    
-                            </Switch>
-                            :
-                            <Switch>
+
                                 {
                                     !appState.app.isLoggedIn
                                     &&
@@ -148,18 +146,21 @@ function App() {
                                         <LoginForm />
                                         <div className="test-page-link"><Link to="/dev-test-page">secret test page</Link></div>
                                     </Route>
-                                    {
-                                         (appState.roleSelector.currentUserRoleId === Role.Teacher || 
-                                            appState.roleSelector.currentUserRoleId === Role.Tutor ||
-                                            appState.roleSelector.currentUserRoleId === Role.Student)&&
-                                        <Route path="/group-page">
-                                            <GroupPage />
-                                            <Helmet>
-                                                <title>Группы</title>
-                                            </Helmet>
-                                        </Route>
-                                    }
-                                </Switch>
+                                }
+                                {
+                                    (appState.roleSelector.currentUserRoleId === Role.Teacher || 
+                                        appState.roleSelector.currentUserRoleId === Role.Tutor ||
+                                        appState.roleSelector.currentUserRoleId === Role.Student)&&
+                                    <Route path="/group-page">
+                                        <GroupPage />
+                                        <Helmet>
+                                            <title>Группы</title>
+                                        </Helmet>
+                                    </Route>
+                                }
+                            </Switch>
+
+
                                 :
                                 <Switch>
                                     {
