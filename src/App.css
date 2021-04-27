@@ -1,3 +1,8 @@
+.App {
+    display: flex;
+    flex-direction: row;
+}
+
 .app-logo {
     width: 50%;
     pointer-events: none;
@@ -23,17 +28,13 @@ header {
     height: 100px;
 }
 
-.logo-container {
-    border-top-left-radius: 16px;
-    background: #2D62ED;
-}
-
 aside {
+    border-top-left-radius: 16px;
     border-bottom-left-radius: 16px;
     background: #2D62ED;
+    position: relative;
 }
 
-.logo-container,
 aside.nothide {
     flex-grow: 0;
     flex-shrink: 0;
@@ -44,17 +45,13 @@ aside.hide {
     width: 72px;
 }
 
-aside,
-main {
-    padding-top: 30px;
-}
-
-main {
+.right-section, main {
     flex-grow: 1;
 }
 
 .header-user-actions {
     display: flex;
+    height: 100px;
     justify-content: flex-end;
     align-items: center;
     flex-grow: 1;
@@ -63,7 +60,9 @@ main {
 
 .main-content {
     display: flex;
+    flex-direction: column;
     height: calc(100vh - 100px);
+    flex-grow: 1;
 }
 
 .common-button,
@@ -141,4 +140,19 @@ main {
     text-align: center;
     font-size: 9px;
     padding: 0px;
+}
+
+.logo-container {
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo-container svg {
+    stroke: white;
+}
+
+.nothide .logo-container svg {
+    transform: scale(2);
 }
