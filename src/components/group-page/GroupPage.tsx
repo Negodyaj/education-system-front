@@ -16,10 +16,7 @@ function GroupPage() {
 
   return (
     <div>
-{ (appState.roleSelector.currentUserRoleId === 1 || appState.roleSelector.currentUserRoleId === 2)
-  ?
-  <div>GroupListComponent for Admin and Manager</div>
-  :
+{
   <GroupInfoComponent />
 }
     </div>

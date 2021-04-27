@@ -11,7 +11,7 @@ function GroupInfoComponent() {
     const appState = useSelector((state: IRootState) => state)
   
     useEffect(() => {
-      dispatch(getGroupToViewById(15))
+      dispatch(getGroupToViewById(14))
     }, []);
   
   
