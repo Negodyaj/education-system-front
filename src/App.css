@@ -28,14 +28,11 @@ header {
     height: 100px;
 }
 
-.logo-container {
-    border-top-left-radius: 16px;
-    background: #2D62ED;
-}
-
 aside {
+    border-top-left-radius: 16px;
     border-bottom-left-radius: 16px;
     background: #2D62ED;
+    position: relative;
 }
 
 aside.nothide {
