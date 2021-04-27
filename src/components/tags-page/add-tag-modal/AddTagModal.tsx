@@ -10,8 +10,7 @@ import { addTag } from "../../../store/tags-page/thunk";
 
 
 interface AddTagModalProps {
-    setTagsInState: (uptags: Tag[]|undefined) => void;
-    hidden: boolean;
+       hidden: boolean;
 }
 
 function AddTagModal(props: AddTagModalProps) {
@@ -29,13 +28,8 @@ function AddTagModal(props: AddTagModalProps) {
             setBlock("block")
         }
     };
-
-   
-    const AddNewTag = () => {dispatch(addTag(nameNewTag))
-    //     let a;
-    //     if (a=!!await sendPostRequest<Tag>('Tag', isTag, {name: nameNewTag}))
-    //    props.setTagsInState(await sendGetRequest<Tag[]>('Tag', isTagArr)) 
-    };
+  
+    const AddNewTag = () => {dispatch(addTag({name: nameNewTag}))};
     const [isDisabled, setIsDisabled] = useState(true);
     const [block, setBlock] = useState("block")
     return (

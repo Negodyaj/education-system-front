@@ -1,6 +1,7 @@
 import { Dispatch } from "redux";
 import { Tag } from "../../interfaces/Tag";
-import { sendDeleteRequest, sendGetRequest, sendPostRequest } from "../../services/http.service";
+import { TagInput } from "../../interfaces/TagInput";
+import { sendDeleteRequest, sendDeleteRequestNoResponse, sendGetRequest, sendPostRequest } from "../../services/http.service";
 import { isTag } from "../../services/type-guards/tag";
 import { isTagArr } from "../../services/type-guards/tagArr";
 import { tagsUrl } from "../../shared/consts";
@@ -16,7 +17,7 @@ export const getTags = () => {
     }
 }
 
-export const addTag = (newTag: string) =>{
+export const addTag = (newTag: TagInput) =>{
     return (dispatch: Dispatch<any>) => {  
         sendPostRequest<Tag> (`${tagsUrl}`,isTag, newTag)
         .then(tag => {
@@ -28,15 +29,16 @@ export const addTag = (newTag: string) =>{
     }
 }
 
-export const deleteTagThunk =  (id: number) => {
+export const deleteTagThunk =  (id: number, tagName: string) => {
     return (dispatch: Dispatch<any>)=> {  
-        sendDeleteRequest<Tag> (`${tagsUrl}/${id}`, isTag)
-        .then(tag => {
-            let response = thunkResponseHandler(dispatch, tag);
-            response && dispatch(pushNotification(makeNotification('success', `Тег ${(response as Tag).name} успешно удален`)));
+        sendDeleteRequestNoResponse(`${tagsUrl}/${id}`)
+         .then(tag => {
+            if (tag.status> 204)
+            thunkResponseHandler(dispatch,tag)
+            else 
+           dispatch(pushNotification(makeNotification('success', `Тег ${tagName} успешно удален`)));
             dispatch(getTags());
         })
-        .catch(error => thunkResponseHandler(dispatch, error));
     }
 }
 

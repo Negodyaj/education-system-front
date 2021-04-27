@@ -9,12 +9,10 @@ import { IRootState } from "../../../store";
 
 
 interface TagListProps {
-    setTagsInState: (uptags: Tag[] | undefined) => void;
-    str: string;
+       str: string;
 }
 
 function TagList(props: TagListProps) {
-    const [deletedTag, setdeleteTag] = useState('');
     const dispatch = useDispatch()
     const pageState = useSelector((state: IRootState) => state.tagsPage);
 
@@ -22,18 +20,18 @@ function TagList(props: TagListProps) {
         dispatch(getTags());
     }, []);
 
-    const deleteTag = (id: number) => {
-        dispatch(deleteTagThunk(id))}
+    const deleteTag = (tag: Tag) => {
+        dispatch(deleteTagThunk(tag.id, tag.name))}
         
         return (
             <>
                 {
-                    pageState.tagList.map((item) =>
+                    pageState.filterTagsList.map((item) =>
 
                     (
                         <div className="tag-row">
                             <div className="tag"> {item.name} </div>
-                            <button className='button-round' onClick={() => deleteTag(item.id)}>
+                            <button className='button-round' onClick={() => deleteTag(item)}>
                                 <FontAwesomeIcon icon="trash" />
                             </button>
                         </div>

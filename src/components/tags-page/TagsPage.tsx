@@ -11,12 +11,9 @@ import { IRootState } from '../../store';
 import { doFilteringTags, toggleModalHidden } from '../../store/tags-page/action-creators';
 import TagList from './tag-list/TagList';
 
-interface TagsPageProps {
-}
 
-function TagsPage(props: TagsPageProps) {
+function TagsPage() {
     const url = 'Tag';
-    const [tagsInState, setTagsInState] = useState<Tag[] | undefined>([]);
     const [searchTurn, setSearchTurn] = useState('');
     const dispatch = useDispatch();
     const pageState = useSelector((state: IRootState) => state.tagsPage);
@@ -39,10 +36,10 @@ function TagsPage(props: TagsPageProps) {
             </div>
             
             <div className="body">
-                <div className="tags-list"> <TagList str={searchTurn} setTagsInState={setTagsInState}></TagList> </div>
+                <div className="tags-list"> <TagList str={searchTurn} ></TagList> </div>
 
             </div>
-            <AddTagModal setTagsInState={setTagsInState} hidden={pageState.isTagsModalHidden} />
+            <AddTagModal hidden={pageState.isTagsModalHidden} />
         </div>
     )
 
