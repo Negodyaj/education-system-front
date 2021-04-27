@@ -122,7 +122,7 @@ function App() {
                                             <title>Домашки</title>
                                         </Helmet> 
                                 </Route>
-                                <Route path="/group">
+                                <Route path="/group-page">
                                     <GroupPage />
                                     <Helmet>
                                             <title>Группы</title>
