@@ -4,9 +4,10 @@ import { makeNotification } from "../shared/helpers/notificationHelpers";
 import { pushNotification } from "./notifications/action-creators";
 
 export const thunkResponseHandler = (dispatch: Dispatch, response: any) => {
-    if (!!response.status && !response.login) {
-        dispatch(pushNotification(makeNotification('error', response.status === WRONG_DATA_STATUS ? 'неверные данные' : response.status )))
+    if (!!response.status) {
+        dispatch(pushNotification(makeNotification('error', response.status === WRONG_DATA_STATUS ? 'неверные данные' : response.status)));
+        return undefined;
     } else {
-       return response;
+        return response;
     }
 }

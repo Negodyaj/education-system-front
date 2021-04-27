@@ -1,47 +1,51 @@
-import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { Role } from '../../enums/role';
+import NavMenuSimpleLink from './components/NavMenuSimpleLink';
 import "./NavMenu.css"
+
 interface NavMenuProps {
-    roleId: number
+    roleId: number,
+    onHide: (condition: boolean) => void
 }
 
 function NavMenu(props: NavMenuProps) {
+    const [isHidden, setHidden] = useState(false);
+
+    let changeHidden = () => {
+        isHidden ? setHidden(false) : setHidden(true);
+        props.onHide(isHidden);
+    }
+
     return (
         <div className="menu-container">
-            {
-                props.roleId === Role.Student &&
-                <nav>
-                    <NavLink exact activeClassName="active" to="/">
-                        <button> Мои новости </button></NavLink>
-                    <NavLink activeClassName="active" to="/groups-list" >
-                        <button> Мои группы </button></NavLink>
-                    <NavLink activeClassName="active" to="/courses-list">
-                        <button> Мои курсы </button></NavLink>
-                    <NavLink activeClassName="active" to="homework-list">
-                        <button> Мои Домашки </button></NavLink>
-                    
-                </nav>
-            }
-            {
-                (props.roleId === Role.Admin || props.roleId=== Role.Manager) &&
-                <nav> 
-                    <Link to="/user-page">Users</Link>
-                </nav>
-            }
-            {
-                (props.roleId === Role.Teacher  || props.roleId === Role.Methodist) &&
-                <nav>
-                    <Link to="/homework">Homeworks</Link>
-                    <Link to="/courses-page">Страница курсов</Link>
-                </nav>
-            }
-            { props.roleId !== Role.Student &&
-                <nav>
-                    <NavLink activeClassName="active" to="/tags-page">
-                        <button> Тэги </button></NavLink>
-                </nav>
-            }
+            <nav className={isHidden ? "notshow" : "vision"}>
+                {
+                    (props.roleId === Role.Admin || props.roleId === Role.Manager) &&
+                    <NavMenuSimpleLink route="user-list" faIcon="user" label="Пользователи" />
+                }
+                {
+                    (props.roleId === Role.Teacher || props.roleId === Role.Methodist) &&
+                    <NavMenuSimpleLink route="homework" faIcon="book-reader" label="Домашки" />
+                }
+                {
+                    (props.roleId === Role.Teacher || props.roleId === Role.Student || props.roleId===Role.Tutor) &&
+                    <NavMenuSimpleLink route="group-page" faIcon="book-reader" label="Группы" />
+                }
+                {
+                    (props.roleId === Role.Teacher || props.roleId === Role.Methodist) &&
+                    <NavMenuSimpleLink route="courses-page" faIcon="university" label="Курсы" />
+                }
+                {
+                    props.roleId !== Role.Student &&
+                    <NavMenuSimpleLink route="tags-page" faIcon="tag" label="Тэги" />
+                }
+            </nav>
+            <button className={isHidden ? "left button-update" : "right button-update"} onClick={changeHidden} title={isHidden ? "развернуть меню" : "свернуть меню"}>
+                <FontAwesomeIcon icon="angle-double-right" />
+            </button>
+
         </div>
     )
 }

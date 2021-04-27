@@ -60,16 +60,16 @@ function DevTestPage (props: DevTestPageProps) {
                 callback={counterCallback}/>
 
             <CustomMultiSelect
-                userOptionsIds={[]}
+                selectedOptions={[]}
                 options={selectItems}
-                onSelect={()=>{}}
+                onSingleSelect={()=>{}}
             />
             <br/>
             <CustomMultiSelect
                 selectType='multi'
-                userOptionsIds={[]}
+                selectedOptions={[]}
                 options={selectItems}
-                onSelect={()=>{}}
+                onMultiSelect={()=>{}}
             />
 
             <div className="test-page-link"><Link to="/">back to login</Link></div>
