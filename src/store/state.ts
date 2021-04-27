@@ -1,4 +1,5 @@
 import { Course } from "../interfaces/Courses";
+import { Lesson } from "../interfaces/Lesson";
 import NotificationData from "../interfaces/NotificationData";
 import { User } from "../interfaces/User";
 import { UserInput } from "../interfaces/UserInput";
@@ -36,4 +37,9 @@ export interface INotificationContainerState {
         dismissible: NotificationData[],
         nonDismissible: NotificationData[],
     }
+}
+
+export interface ILesson {
+    lessonList: Lesson[];
+    isDataLoading: boolean;
 }
