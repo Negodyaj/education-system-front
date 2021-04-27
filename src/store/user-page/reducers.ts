@@ -16,6 +16,7 @@ export const INIT_USER: User = {
     phone: "",
     userPic: "",
     email: "",
+    contractNumber: 0,
     roles: []
 }
 
