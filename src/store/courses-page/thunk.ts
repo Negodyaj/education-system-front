@@ -25,13 +25,13 @@ export const getCourses = () => {
 export const deleteCourse =  (id: number) => {
     return (dispatch: Dispatch<any>) => {
         sendDeleteRequest<Course>(`${coursesUrl}/${id}`, isCourse)
-        .then(course => {
-            let response = thunkResponseHandler(dispatch, course);
-            response && dispatch(pushNotification(makeNotification('success', `Курс ${(response as Course).name} успешно удален`)));
-            dispatch(showToggleModalDeleteCourseAction(response.id));
-            dispatch(getCourses());
-        })
-        .catch(error => thunkResponseHandler(dispatch, error));
+            .then(course => {
+                let response = thunkResponseHandler(dispatch, course);
+                response && dispatch(pushNotification(makeNotification('success', `Курс ${(response as Course).name} успешно удален`)));
+                dispatch(showToggleModalDeleteCourseAction(response.id));
+                dispatch(getCourses());
+            })
+            .catch(error => dispatch(setCoursesListFailAction(error)));
     }
 }
 
@@ -44,6 +44,6 @@ export const createCourse = (newCourse: DataNewCourse) => {
                 dispatch(showToggleModalCreateCourseAction());
                 dispatch(getCourses());
             })
-            .catch(error => thunkResponseHandler(dispatch, error));
+            .catch(error => dispatch(setCoursesListFailAction(error)));
     }
 }
