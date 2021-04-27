@@ -42,7 +42,6 @@ function CustomMultiSelect(props: SelectProps) {
   const customStyles = {
     control: (baseStyles: any, state: any) => ({
       ...baseStyles,
-      height: customStyleHeight,
       border: state.isFocused 
         ? "1px solid " + customStyleColors.borderDark 
         : "1px solid " + customStyleColors.borderLight,
@@ -62,12 +61,6 @@ function CustomMultiSelect(props: SelectProps) {
     }),
     valueContainer: (baseStyles: any) => ({
       ...baseStyles,
-      padding: 0,
-      height: customStyleHeight,
-    }),
-    input: (baseStyles: any) => ({
-      ...baseStyles,
-      height: customStyleHeight,
       padding: 0,
     }),
     option: (baseStyles: any, state: any) => ({
@@ -96,6 +89,7 @@ function CustomMultiSelect(props: SelectProps) {
       ...baseStyles,
       backgroundColor: customStyleColors.light,
       height: 28,
+      lineHeight: "22px",
       borderRadius: 5,
       padding: "0px 5px",
       ':hover': {
@@ -116,11 +110,9 @@ function CustomMultiSelect(props: SelectProps) {
       }
     }),
     placeholder: () => ({
-      padding: "0px 5px",
       color: 'lightgray',
     })
   }
-
 
   const SingleSelect = () => (
     <Select
