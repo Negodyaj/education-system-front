@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useHistory } from "react-router-dom";
 import { userRegisterFormUrl } from "../../../shared/consts";
 
-function ListHeader() {
+function ListHeaderWide() {
     const history = useHistory();
     const onRegisterClick = () => {
         history.push(`/${userRegisterFormUrl}`);
@@ -26,4 +26,4 @@ function ListHeader() {
         </>
     )
 }
-export default ListHeader;
+export default ListHeaderWide;

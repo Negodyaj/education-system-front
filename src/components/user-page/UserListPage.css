@@ -7,6 +7,10 @@
 
 .user-list {}
 
+.narrow-user-list{
+    width: 300px;
+}
+
 .user-list-head {
     font-weight: 700;
     font-size: 14px;
@@ -19,6 +23,12 @@
 
 .user-list-item, .user-list-head {
     grid-template-columns: 60px 20% 13% 10% 150px 15% 150px;
+    margin: 2px 0;
+    height: max-content;
+}
+
+.narrow-user-list-item, .narrow-user-list-head {
+    grid-template-columns: 60px 32% 35% 60px;
     margin: 2px 0;
     height: max-content;
 }
