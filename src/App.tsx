@@ -24,6 +24,7 @@ import UserPage from './components/user-page/user-page/UserPage';
 import { FormProvider, useForm } from 'react-hook-form';
 import { UserInput } from './interfaces/UserInput';
 import { useState } from 'react';
+import { ReactComponent as Logo } from './img/devedu.svg';
 
 function App() {
     const dispatch = useDispatch();
@@ -55,7 +56,7 @@ function App() {
             </Helmet>
             <aside className={`left-section ${styleMenu(isHidden)}`}>
                 <div className="logo-container">
-                    <img src={logo} className="app-logo" alt="logo" />
+                    <Logo />
                 </div>
                 <div className="nav-menu">
                     {
