@@ -1,6 +1,6 @@
 import { ConfirmationDialogProps } from "./ConfirmationDialog";
 
-function ConfirmationDialogContent (props: ConfirmationDialogProps) {
+function ConfirmationDialogContent(props: ConfirmationDialogProps) {
     const confirm = () => {
         props.callback(true);
     }
@@ -10,7 +10,7 @@ function ConfirmationDialogContent (props: ConfirmationDialogProps) {
     }
 
     return (
-        <div className = "confirmation-dialog-content">
+        <div className="confirmation-dialog-content">
             <div className="confirmation-dialog-header">
                 <h2>{props.title ?? "Вы уверены?"}</h2>
             </div>
@@ -18,9 +18,9 @@ function ConfirmationDialogContent (props: ConfirmationDialogProps) {
                 <span>{props.message ?? ""}</span>
             </div>
             <div className="confirmation-dialog-footer">
-                <button onClick={confirm}>{props.confirmLabel ?? "да"}</button>
                 <button onClick={decline}>{props.declineLabel ?? "нет"}</button>
-            </div>            
+                <button onClick={confirm}>{props.confirmLabel ?? "да"}</button>
+            </div>
         </div>
     )
 }
