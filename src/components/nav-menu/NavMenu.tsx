@@ -33,6 +33,10 @@ function NavMenu(props: NavMenuProps) {
                     (props.roleId === Role.Teacher || props.roleId === Role.Methodist) &&
                     <NavMenuSimpleLink route="courses-page" faIcon="university" label="Курсы"/>
                 }
+                                {
+                    (props.roleId === Role.Teacher || props.roleId === Role.Methodist) &&
+                    <NavMenuSimpleLink route="group-journal" faIcon="university" label="Журнал в разработке"/>
+                }
                 {
                     props.roleId !== Role.Student &&
                     <NavMenuSimpleLink route="tags-page" faIcon="tag" label="Тэги"/>

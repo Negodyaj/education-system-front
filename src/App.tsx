@@ -121,7 +121,7 @@ function App() {
                                     <HomeworkPage />
                                     <Helmet>
                                             <title>Домашки</title>
-                                        </Helmet> 
+                                    </Helmet> 
                                 </Route>
                                 <Route path="/group">
                                     <GroupPage />
