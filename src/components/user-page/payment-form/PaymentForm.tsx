@@ -22,9 +22,9 @@ function PaymentForm(props: PaymentProps) {
     const paymentFormState = useSelector((state: IRootState) => state.payment)
 
     useEffect(() => {
-        console.log('pf',paymentFormState.userForPayment?.id)
+        setValue('contractNumber', paymentFormState.userForPayment?.contractNumber || 0)
         dispatch(getPayment(paymentFormState.userForPayment?.id));
-    }, []);
+    }, [paymentFormState.userForPayment]);
     
     var todate = new Date();
     var formattedDate = format(todate, "dd.mm.yyyy");
@@ -43,7 +43,7 @@ function PaymentForm(props: PaymentProps) {
     const dispatch = useDispatch()
 
     const onSubmit: SubmitHandler<PaymentInput> = (data: PaymentInput) => {
-        dispatch(sendPayment(props.userForPayment, {
+        dispatch(sendPayment(paymentFormState.userForPayment, {
             amount: +data.amount,
             date: data.date,
             period: data.period,

@@ -29,7 +29,8 @@ export const getPayment = (userId: number |undefined) => {
         console.log(userId);
         dispatch(setPaymentListIsLoading());
         sendGetRequest<PaymentResponse[]>(`User/${userId}/payment`, isPaymentResponseArr)
-            .then(payment => dispatch(setPaymentListWasLoaded(thunkResponseHandler(dispatch, payment))))
-            .catch(error => dispatch(setPaymentListFail(error)))
+            .then(payment =>{ dispatch(setPaymentListWasLoaded(thunkResponseHandler(dispatch, payment)))
+            console.log('пеймент',payment)})
+            //.catch(error => dispatch(setPaymentListFail(error)))
     }
 }
