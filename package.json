@@ -20,6 +20,7 @@
     "@types/react-router-dom": "^5.1.7",
     "@types/react-select": "^4.0.13",
     "@types/redux-thunk": "^2.1.0",
+    "@types/styled-components": "^5.1.9",
     "date-fns": "^2.20.3",
     "react": "^17.0.1",
     "react-datepicker": "^3.6.0",
@@ -31,7 +32,7 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
     "react-select": "^4.2.1",
-    "react-side-effect": "^2.1.0",
+    "styled-components": "^5.2.3",
     "typescript": "^4.2.2",
     "web-vitals": "^1.1.0",
     "wretch": "^1.7.4"

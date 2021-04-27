@@ -62,3 +62,4 @@ const updateUser = (user: User, userId: number, history: any) => {
             })
     }
 }
+
