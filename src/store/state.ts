@@ -48,4 +48,5 @@ export interface ILesson {
 export interface IGroupInfoComponent{
     groupToView: Group;
     isDataLoading: boolean;
+    studentsGroup: User[];
 }
