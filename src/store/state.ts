@@ -40,6 +40,6 @@ export interface INotificationContainerState {
 }
 
 export interface IGroupInfoComponent{
-    groupToView: Group | undefined;
+    groupToView: Group;
     isDataLoading: boolean;
 }

@@ -3,10 +3,16 @@ import { GROUP_TO_VIEW_WRETCH_FAIL, GROUP_TO_VIEW_WRETCH_LOADED, GROUP_TO_VIEW_W
 import { IGroupInfoComponent } from "../state";
 import { GroupInfoComponentActions } from "./action-creaters";
 
-
+export const INIT_GROUP: Group={
+    startDate: '',
+    groupStatus: '',
+    students: [],
+    teachers: [],
+    tutors: []
+}
 
 const initialState: IGroupInfoComponent = {
-    groupToView: undefined,
+    groupToView: INIT_GROUP,
     isDataLoading: false
 };
 
