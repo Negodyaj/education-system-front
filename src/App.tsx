@@ -53,10 +53,19 @@ function App() {
                 <title>Самый лучший сайт на свете</title>
                 <meta name="description" content="Helmet application" />
             </Helmet>
-            <header>
+            <aside className={`left-section ${styleMenu(isHidden)}`}>
                 <div className="logo-container">
                     <img src={logo} className="app-logo" alt="logo" />
                 </div>
+                <div className="nav-menu">
+                    {
+                        (appState.app.isLoggedIn)
+                        &&
+                        <NavMenu roleId={appState.roleSelector.currentUserRoleId} onHide={onHide}/>
+                    }
+                </div>
+            </aside>
+            <div className="right-section">
                 <div className="header-user-actions">
                     {
                         appState.roleSelector.isTurnedOn && <LoginRoleSelector />
@@ -67,16 +76,7 @@ function App() {
                         <button className='common-button' onClick={logOut}>Log out</button>
                     }
                 </div>
-            </header>
-            <div className="main-content">
-                <aside className={styleMenu(isHidden)}>
-                    {
-                        (appState.app.isLoggedIn)
-                        &&
-                        <NavMenu roleId={appState.roleSelector.currentUserRoleId} onHide={onHide}/>
-                    }
-                </aside>
-                <main>
+                <main className="main-content">
                     {
                         appState.app.isLoggedIn ?
                             <Switch>

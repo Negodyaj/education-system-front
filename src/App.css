@@ -1,3 +1,8 @@
+.App {
+    display: flex;
+    flex-direction: row;
+}
+
 .app-logo {
     width: 50%;
     pointer-events: none;
@@ -33,7 +38,6 @@ aside {
     background: #2D62ED;
 }
 
-.logo-container,
 aside.nothide {
     flex-grow: 0;
     flex-shrink: 0;
@@ -44,17 +48,13 @@ aside.hide {
     width: 72px;
 }
 
-aside,
-main {
-    padding-top: 30px;
-}
-
-main {
+.right-section, main {
     flex-grow: 1;
 }
 
 .header-user-actions {
     display: flex;
+    height: 100px;
     justify-content: flex-end;
     align-items: center;
     flex-grow: 1;
@@ -63,7 +63,9 @@ main {
 
 .main-content {
     display: flex;
+    flex-direction: column;
     height: calc(100vh - 100px);
+    flex-grow: 1;
 }
 
 .common-button,
