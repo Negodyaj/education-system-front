@@ -16,5 +16,5 @@ export const setCurrentUserInStorage = (user: User) => {
     store('user', JSON.stringify(user))
 }
 export const getCurrentUserFromStorage = (): User => {
-    return JSON.parse(getFromStorage('user'))
+    return getFromStorage('user') ? JSON.parse(getFromStorage('user')) : undefined
 }
