@@ -1,14 +1,14 @@
-import './TeacherComponent.css'
+import './GroupMemberComponent.css'
 import '../../../App.css'
 
-interface TeacherComponentProps {
+interface GroupMemberComponentProps {
     userPic: string
     firstName: string
     lastName: string
     login: string
 }
 
-function TeacherComponent(props: TeacherComponentProps) {
+function GroupMemberComponent(props: GroupMemberComponentProps) {
     return (
         <div className='list'>
             <div className='column'>
@@ -21,4 +21,4 @@ function TeacherComponent(props: TeacherComponentProps) {
     )
 }
 
-export default TeacherComponent
+export default GroupMemberComponent

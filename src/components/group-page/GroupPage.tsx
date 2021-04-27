@@ -1,5 +1,6 @@
 import "./GroupPage.css"
-import TeacherGroupList from "./teacher-group-list/TeacherGroupList"
+import  GroupMembersList  from "./group-members-list/GroupMembersList"
+import React from "react";
 
 
 function GroupPage () {
@@ -11,7 +12,7 @@ function GroupPage () {
           <div className="group-body">
           <div className='base-info'> base info component </div>
           <div> 
-            <TeacherGroupList/>
+            <GroupMembersList/>
              </div>
           </div>
         </div>

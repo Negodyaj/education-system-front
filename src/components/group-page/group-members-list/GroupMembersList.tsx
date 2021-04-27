@@ -1,20 +1,9 @@
-import TeacherComponent from "../teacher-component/TeacherComponent"
 import '../../../App.css'
-import './TeacherGroupList.css'
+import './GroupMembersList.css'
+import React from "react"
+import GroupMemberComponent from '../group-member-component/GroupMemberComponent'
 
 const users = [
-    {
-        userPic: 'http://via.placeholder.com/350x150',
-        firstName: 'Николай',
-        lastName: 'Цискаридзе',
-        login: 'ciskaridze777'
-    },
-    {
-        userPic: 'http://via.placeholder.com/350x150',
-        firstName: 'Николай',
-        lastName: 'Цискаридзе',
-        login: 'ciskaridze777'
-    },
     {
         userPic: 'http://via.placeholder.com/350x150',
         firstName: 'Николай',
@@ -23,13 +12,13 @@ const users = [
     }
 ]
 
-export function TeacherGroupList() {
+export function GroupMembersList() {
     return (
         <div>
             <div className='list-header'> Учителя:</div>
                 <div className='list-group'>
                     {users.map(u => (
-                        <TeacherComponent userPic={u.userPic}
+                        <GroupMemberComponent userPic={u.userPic}
                             lastName={u.lastName}
                             firstName={u.firstName}
                             login={u.login} />
@@ -38,7 +27,7 @@ export function TeacherGroupList() {
                 <div className='list-header'> Студенты:</div>
                 <div className='list-group'>
                     {users.map(u => (
-                        <TeacherComponent userPic={u.userPic}
+                        <GroupMemberComponent userPic={u.userPic}
                             lastName={u.lastName}
                             firstName={u.firstName}
                             login={u.login} />
@@ -48,4 +37,4 @@ export function TeacherGroupList() {
     )
 }
 
-export default TeacherGroupList
+export default GroupMembersList
