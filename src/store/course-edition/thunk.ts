@@ -5,7 +5,7 @@ import { sendDeleteRequestNoResponse, sendGetRequest, sendPostRequest, sendPostR
 import { isCourse } from "../../services/type-guards/course";
 import { isThemesArr } from "../../services/type-guards/themesArr";
 import { coursesUrl, themesUrl } from "../../shared/consts";
-import { getCourseByIdLoaded, setCourseEditionIsLoadingAction, setCourseEditionWasLoadedAction } from "./action-creators";
+import { getCourseByIdLoaded, setCourseEditionFailAction, setCourseEditionIsLoadingAction, setCourseEditionWasLoadedAction } from "./action-creators";
 import { CourseMaterial, CourseTheme } from "../../components/courses-page/course-edition/CourseEdition";
 import { thunkResponseHandler } from "../thunkResponseHadlers";
 import { pushNotification } from "../notifications/action-creators";
@@ -16,9 +16,9 @@ export const getThemes = () => {
         dispatch(setCourseEditionIsLoadingAction());
         sendGetRequest<Themes[]>(themesUrl, isThemesArr)
         .then(themes => {
-            dispatch(setCourseEditionWasLoadedAction(themes));
+            dispatch(setCourseEditionWasLoadedAction(thunkResponseHandler(dispatch, themes)));
         })
-        .catch(error => thunkResponseHandler(dispatch, error));
+        .catch(error => dispatch(setCourseEditionFailAction(error)));
     }
 } 
 
@@ -26,9 +26,9 @@ export const getCourseById = (id: number) => {
     return (dispatch: Dispatch) => {
         sendGetRequest<Course>(`${coursesUrl}/${id}`, isCourse)
         .then(course => {
-            dispatch(getCourseByIdLoaded(course));
+            dispatch(getCourseByIdLoaded(thunkResponseHandler(dispatch, course)));
         })
-        .catch(error => thunkResponseHandler(dispatch, error));
+        .catch(error => dispatch(setCourseEditionFailAction(error)));
     }
 }
 
@@ -39,7 +39,7 @@ export const addThemeInCourse = (courseTheme: CourseTheme) => {
             dispatch(getCourseById(courseTheme.idCourse));
             dispatch(pushNotification(makeNotification('success', `Тема успешно добавлена в курс`)));
         })
-        .catch(error => thunkResponseHandler(dispatch, error));
+        .catch(error => dispatch(setCourseEditionFailAction(error)));
     }
 }
 
@@ -50,7 +50,7 @@ export const deleteThemeCourse = (courseTheme: CourseTheme) => {
             dispatch(getCourseById(courseTheme.idCourse));
             dispatch(pushNotification(makeNotification('success', `Тема успешно удалена из курса`)));
         })
-        .catch(error => thunkResponseHandler(dispatch, error));
+        .catch(error => dispatch(setCourseEditionFailAction(error)));
     }
 }
 
@@ -61,6 +61,6 @@ export const deleteMaterialCourse = (courseMaterial: CourseMaterial) => {
             dispatch(getCourseById(courseMaterial.idCourse));
             dispatch(pushNotification(makeNotification('success', `Материал успешно удален из курса`)));
         })
-        .catch(error => thunkResponseHandler(dispatch, error));
+        .catch(error => dispatch(setCourseEditionFailAction(error)));
     }
 }
