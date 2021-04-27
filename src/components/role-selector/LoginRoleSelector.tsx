@@ -1,9 +1,9 @@
 import { useDispatch, useSelector } from "react-redux";
+import CustomMultiSelect from "../../shared/components/multi-select/CustomMultiSelect";
 import { convertRoleIdsToSelectItems } from "../../shared/converters/roleIdsToSelectItems";
 import { convertRoleIdToSelectItem } from "../../shared/converters/roleIdToSelectItem";
 import { IRootState } from "../../store";
 import { setCurrentUserRoleId } from "../../store/role-selector/action-creator";
-import CustomMultiSelect from "../multi-select/CustomMultiSelect";
 import './LoginRoleSelector.css';
 
 export function LoginRoleSelector() {

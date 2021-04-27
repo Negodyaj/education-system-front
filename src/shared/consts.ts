@@ -1,8 +1,12 @@
 //urls
 export const baseUrl: string = 'https://80.78.240.16:7070/api';
 export const coursesUrl: string = 'Course';
-export const usersUrl: string = 'User'
+export const usersUrl: string = 'User';
+export const userListUrl: string = "user-list";
 export const currentUserUrl: string = 'User/current';
+export const userRegisterUrl: string = 'User/register';
+export const userRegisterFormUrl:string = "user-page/register";
+export const userEditUrl: string = "user-page";
 
 //initials
 export const UNSELECTED_ROLE:number = 0;

@@ -1,31 +1,27 @@
 .login-form {
-    width: 40%;
+    width: 300px;
     margin: 0 auto;
-    border: 1px solid salmon;
-    border-radius: 6px;
-    padding: 15px;
-}
-
-.form-field {
+    border-radius: 20px;
+    box-shadow: 0 3px 6px #272d3b36;
+    padding: 35px 16px 20px 16px;
     display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    position: absolute;
+    top: 25%;
+    left: 40%;
 }
 
-.form-field span {
-    flex-shrink: 0;
-    width: 100px;
-    text-align: left;
+.login-form h2 {
+    margin-top: 0;
+    margin-bottom: 13px;
+    font-weight: bold;
+    font-size: 26px;
 }
 
-.form-field input {
-    flex-grow: 1;
-    border: 1px solid salmon;
+.login-form .common-button {
+    margin-top: 16px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
-.login-btn {
-    width: 150px;
-    text-align: center;
-    background-color: salmon;
-    color: white;
-    margin: 0 auto;
-    display: block;
-}
