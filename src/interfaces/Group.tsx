@@ -1,9 +1,13 @@
 import { Course } from "./Courses";
+import { User } from "./User";
 
 export interface Group {
-    id: number
+    id?: number
     startDate: string
-    course: Course
+    course?: Course
     groupStatus: string
-    groupStatusId: number
+    groupStatusId?: number
+    students: User[]
+    teachers: User[]
+    tutors: User[]
 }

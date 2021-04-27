@@ -11,11 +11,11 @@ export function BaseGroupInfoComponent(props: BaseGroupInfoProps){
     return(
         <div className='base-info'>
         <div className='title'>Курс:</div>
-        <div className='list'>{props.courseName}</div>
+        <div className='info'>{props.courseName}</div>
         <div className='title'>Дата начала: </div>
-        <div className='list'>{props.startDate}</div>
+        <div className='info'>{props.startDate}</div>
         <div className='title'>Длительность: </div>
-        <div className='list'>{props.duration}</div>
+        <div className='info'>{props.duration}</div>
         <div className='title'> Расписание:</div>
         </div>
     )
