@@ -1,4 +1,5 @@
 import { Course } from "../interfaces/Courses";
+import { Group } from "../interfaces/Group";
 import NotificationData from "../interfaces/NotificationData";
 import { User } from "../interfaces/User";
 import { UserInput } from "../interfaces/UserInput";
@@ -36,4 +37,9 @@ export interface INotificationContainerState {
         dismissible: NotificationData[],
         nonDismissible: NotificationData[],
     }
+}
+
+export interface IGroupInfoComponent{
+    groupToView: Group;
+    isDataLoading: boolean;
 }
