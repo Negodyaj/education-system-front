@@ -62,7 +62,7 @@ function App() {
                 </div>
                 <div className="nav-menu">
                     {
-                        (appState.app.isLoggedIn)
+                        !!getToken()
                         &&
                         <NavMenu roleId={appState.roleSelector.currentUserRoleId} onHide={onHide}/>
                     }
