@@ -1,12 +1,13 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { IRootState } from "../../../store";
-import ListHeader from "./ListHeader";
+import ListHeaderVerticalNarrow from "./ListHeaderVerticalNarrow";
+import ListHeaderWide from "./ListHeaderWide";
 import UserListBodyVerticalNarrow from "./UserListBodyVerticalNarrow";
 import UserListBodyWide from "./UserListBodyWide";
 
-type modeValues = "mobile" | "desktop";
 function UserListComponent() {
+    type modeValues = "mobile" | "desktop";
     const [mode, setMode] = useState<modeValues>(window.innerWidth > 900 ? "desktop" : "mobile");
     useEffect(() => {
         window.addEventListener("resize", (e) => resizeHandler(e));
@@ -27,11 +28,14 @@ function UserListComponent() {
             mode === "desktop"
                 ?
                 <div className="user-list">
-                    <ListHeader />
+                    <ListHeaderWide />
                     <UserListBodyWide></UserListBodyWide>
                 </div>
                 :
-                <UserListBodyVerticalNarrow />
+                <div className="narrow-user-list">
+                    <ListHeaderVerticalNarrow />
+                    <UserListBodyVerticalNarrow />
+                </div>
 
     )
 }
