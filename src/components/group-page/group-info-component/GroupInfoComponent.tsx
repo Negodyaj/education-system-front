@@ -26,9 +26,7 @@ function GroupInfoComponent() {
               duration={state.groupToView.course?.duration} />
           </div>
           <div> 
-            <GroupMembersList students= {state.groupToView.students}
-            teachers={state.groupToView.teachers}
-            tutors={state.groupToView.tutors} />
+            <GroupMembersList />
              </div>
         </div>
       </div>

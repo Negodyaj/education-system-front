@@ -3,21 +3,25 @@ import './GroupMembersList.css'
 import React from "react"
 import GroupMemberComponent from '../group-member-component/GroupMemberComponent'
 import { User } from '../../../../interfaces/User'
+import { useDispatch, useSelector } from 'react-redux'
+import { IRootState } from '../../../../store'
+import { useEffect } from 'react'
+import { getGroupToViewById } from '../../../../store/group-info-component/thunk'
 
 
-interface GroupMembersListProps{
-    students: User[]
-    teachers: User[]
-    tutors: User[]
-}
-
-export function GroupMembersList(props: GroupMembersListProps) {
+export function GroupMembersList() {
+    const dispatch = useDispatch();
+    const groupState = useSelector((state: IRootState) => state.groupInfoComponent)
+  
+    useEffect(() => {
+      dispatch(getGroupToViewById(14))
+    }, []);
     return (
         <div className='group-members-list'>
             <div className='list-header'> Учителя:</div>
                 <div className='list-group'>
                     {
-                    props.teachers.map(t => (
+                groupState.groupToView.teachers.map(t => (
                         <GroupMemberComponent userPic={t.userPic}
                             lastName={t.lastName}
                             firstName={t.firstName}
@@ -27,7 +31,7 @@ export function GroupMembersList(props: GroupMembersListProps) {
                 <div className='list-header'> Тьюторы:</div>
                 <div className='list-group'>
                     {
-                    props.tutors.map(t => (
+                     groupState.groupToView.tutors.map(t => (
                         <GroupMemberComponent userPic={t.userPic}
                             lastName={t.lastName}
                             firstName={t.firstName}
@@ -36,7 +40,7 @@ export function GroupMembersList(props: GroupMembersListProps) {
                 </div>
                 <div className='list-header'> Студенты:</div>
                 <div className='list-group'>
-                    {props.students.map(s => (
+                    { groupState.groupToView.students.map(s => (
                         <GroupMemberComponent userPic={s.userPic}
                             lastName={s.lastName}
                             firstName={s.firstName}
