@@ -1,6 +1,5 @@
 import { User } from "../../interfaces/User";
 import { UserInput } from "../../interfaces/UserInput";
-
 const initUserInput: UserInput = {
     firstName: "",
     lastName: "",
@@ -12,7 +11,6 @@ const initUserInput: UserInput = {
     password: "",
     roles: []
 }
-
 export const convertUserToUserInput = (UpdatedUser: User) => {
     Object.keys(initUserInput).map(k => {
         initUserInput[k as keyof UserInput] = (UpdatedUser as any)[k]

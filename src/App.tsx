@@ -1,6 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 import { Switch, Route, useHistory, Link } from 'react-router-dom';
+import Router from 'react-router'
 import LoginForm from './components/login-form/LoginForm';
 import NavMenu from './components/nav-menu/NavMenu';
 import HomeworkPage from './components/homework-page/HomeworkPage';
@@ -11,7 +12,7 @@ import "./shared/fontawesome/FontawesomeIcons";
 import { Role } from './enums/role';
 import DevTestPage from './components/dev-test-page/DevTestPage';
 import TagsPage from './components/tags-page/TagsPage';
-import UserListPage from './components/user-page/UserListPage';
+import UserListPage from './components/user-list-page/UserListPage';
 import { IRootState } from './store';
 import { useDispatch, useSelector } from 'react-redux';
 import { setIsLoggedOut } from './store/app/action-creators';
@@ -19,11 +20,12 @@ import LoginRoleSelector from './components/role-selector/LoginRoleSelector';
 import GroupPage from './components/group-page/GroupPage';
 import { Helmet } from "react-helmet";
 import { toggleRoleSelector, unsetCurrentUser } from './store/role-selector/action-creator';
-import { unsetToken } from './services/auth.service';
-import UserPage from './components/user-page/user-page/UserPage';
+import { getToken, unsetToken } from './services/auth.service';
 import { FormProvider, useForm } from 'react-hook-form';
 import { UserInput } from './interfaces/UserInput';
-import { useState } from 'react';
+import React, { useState } from 'react';
+import { userEditUrl, userListUrl, userRegisterFormUrl } from './shared/consts';
+import UserPage from './components/user-page/UserPage';
 import { ReactComponent as Logo } from './img/devedu.svg';
 
 function App() {
@@ -38,7 +40,7 @@ function App() {
         unsetToken();
         history.push("/");
     }
-    const methods = useForm<UserInput>();
+
 
     const onHide = (condition: boolean) => {
         setHidden(condition);
@@ -48,7 +50,7 @@ function App() {
         if (condition) { return ("nothide") } else { return ("hide") }
     }
     return (
-        <FormProvider {...methods} >
+
         <div className="App">
             <Helmet>
                 <title>Самый лучший сайт на свете</title>
@@ -69,88 +71,95 @@ function App() {
             <div className="right-section">
                 <div className="header-user-actions">
                     {
-                        appState.roleSelector.isTurnedOn && <LoginRoleSelector />
+                        !!getToken() && <LoginRoleSelector />
                     }
                     {
-                        appState.app.isLoggedIn
+                        !!getToken()
                         &&
                         <button className='common-button' onClick={logOut}>Log out</button>
                     }
                 </div>
                 <main className="main-content">
                     {
-                        appState.app.isLoggedIn ?
-                            <Switch>
-                                {
-                                    (appState.roleSelector.currentUserRoleId === Role.Manager
-                                        ||
-                                        appState.roleSelector.currentUserRoleId === Role.Admin)
-                                    &&
-                                    <Route path="/user-list">
-                                        <UserListPage></UserListPage>
+                        !!getToken()
+                        &&
+                        <NavMenu roleId={appState.roleSelector.currentUserRoleId} onHide={onHide} />
+                    }
+                </aside>
+                <main>
+                    {
+                        !!getToken() ?
+                            <>
+                                <Switch>
+                                    {
+                                        (appState.roleSelector.currentUserRoleId === Role.Manager
+                                            ||
+                                            appState.roleSelector.currentUserRoleId === Role.Admin)
+                                        &&
+                                        <>
+                                            <Route exact path={`/${userListUrl}`}>
+                                                <UserListPage></UserListPage>
+                                                <Helmet>
+                                                    <title>Юзеры</title>
+                                                </Helmet>
+                                            </Route>
+                                            <Route path={`/${userRegisterFormUrl}`}>
+                                                <UserPage></UserPage>
+                                            </Route>
+                                            <Route path={`/${userEditUrl}/:idToEdit/edit`}>
+                                                <UserPage></UserPage>
+                                            </Route>
+                                        </>
+                                    }
+                                    {
+                                        appState.roleSelector.currentUserRoleId === Role.Teacher &&
+                                        <Route path="/courses-page">
+                                            <CoursesPage />
+                                            <Helmet>
+                                                <title>Курсы</title>
+                                            </Helmet>
+                                        </Route>
+                                    }
+                                    <Route path="/course/:id/edition" children={<CourseEdition />} />
+                                    {
+                                        appState.roleSelector.currentUserRoleId !== Role.Student &&
+                                        <Route path="/tags-page">
+                                            <TagsPage ></TagsPage>
+                                            <Helmet>
+                                                <title>Тэги</title>
+                                            </Helmet>
+                                        </Route>
+                                    }
+                                    <Route path="/homework">
+                                        <HomeworkPage />
                                         <Helmet>
-                                            <title>Юзеры</title>
+                                            <title>Домашки</title>
                                         </Helmet>
                                     </Route>
-                                }
-                                <Route path="/user-page">
-                                    <UserPage></UserPage>
-                                </Route>
-                                {
-                                    appState.roleSelector.currentUserRoleId === Role.Teacher &&
-                                    <Route path="/courses-page">
-                                        <CoursesPage />
+                                    <Route path="/group-page">
+                                        <GroupPage />
                                         <Helmet>
-                                            <title>Курсы</title>
-                                        </Helmet> 
-                                    </Route>
-                                }
-                                    <Route path="/course/:id/edition" children={<CourseEdition />} />
-                                {
-                                    appState.roleSelector.currentUserRoleId !== Role.Student &&
-                                    <Route path="/tags-page">
-                                        <TagsPage ></TagsPage>
-                                        <Helmet>
-                                            <title>Тэги</title>
-                                        </Helmet>                                        
-                                    </Route>
-                                }
-                                <Route path="/homework">
-                                    <HomeworkPage />
-                                    <Helmet>
-                                            <title>Домашки</title>
-                                        </Helmet> 
-                                </Route>
-                                <Route path="/group-page">
-                                    <GroupPage />
-                                    <Helmet>
                                             <title>Группы</title>
-                                        </Helmet> 
-                                </Route>
-                            </Switch>
+                                        </Helmet>
+                                    </Route>
+                                </Switch>
+                                <NotificationContainer />
+                            </>
                             :
                             <Switch>
-                                {
-                                    !appState.app.isLoggedIn
-                                    &&
-                                    <Route exact path="/">
-                                        <LoginForm />
-                                        <div className="test-page-link"><Link to="/dev-test-page">secret test page</Link></div>
-                                    </Route>
-                                }
+                                <Route exact path="/">
+                                    <LoginForm />
+                                    <div className="test-page-link"><Link to="/dev-test-page">secret test page</Link></div>
+                                </Route>
                                 <Route path="/dev-test-page">
                                     <DevTestPage />
                                     <NotificationContainer />
                                 </Route>
                             </Switch>
                     }
-                    {
-                        appState.app.isLoggedIn && <NotificationContainer />
-                    }
                 </main>
             </div>
         </div>
-        </FormProvider>
     );
 }
 

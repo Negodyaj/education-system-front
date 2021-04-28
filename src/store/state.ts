@@ -6,6 +6,7 @@ import { Themes } from "../interfaces/Themes";
 import { User } from "../interfaces/User";
 import { UserInput } from "../interfaces/UserInput";
 import { UserUpdate } from "../interfaces/UserUpdate";
+import { PaymentResponse } from "../components/interfaces/PaymentResponse";
 
 export interface ICoursePageState {
     courseList: Course[]
@@ -31,12 +32,14 @@ export interface ICourseEditionState {
 
 export interface IUserListPage {
     userList: User[];
+    userToDelete: User;
     isDataLoading: boolean;
 }
 
 export interface IUserPage {
     userForUserPage: UserInput,
     userForUserPageId: number;
+    isReadonly: boolean;
     isDataLoading: boolean;
 }
 
@@ -56,6 +59,17 @@ export interface INotificationContainerState {
         dismissible: NotificationData[],
         nonDismissible: NotificationData[],
     }
+}
+
+export interface IModalDeleteCourse {
+    courseForDeleteId: number
+}
+
+export interface IPaymentFormState {
+    formVisibility: string;
+    userForPayment: User | undefined
+    paymentList: PaymentResponse[],
+    isDataLoading: boolean
 }
 
 export interface IGroupInfoComponent{

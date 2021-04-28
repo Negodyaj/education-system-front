@@ -1,5 +1,5 @@
 .payment{
-    position: fixed;
+    position: absolute;
     top: 0;
     left: 0;
     width: 100vw;
@@ -83,3 +83,21 @@
     justify-content: space-between;
 }
 
+.bad-feedback{
+    text-align: left;
+}
+
+.list{
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.payment-history h4{
+    text-align: left;
+}
+
+.column{
+    display: flex;
+    align-self: center;
+    font-size: 14px;
+    margin-bottom: 3px;
+}
