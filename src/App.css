@@ -149,10 +149,10 @@ aside.hide {
     align-items: center;
 }
 
-.logo-container svg {
-    stroke: white;
+.nothide .logo-container svg {
+    transform: scale(1.5);
 }
 
-.nothide .logo-container svg {
-    transform: scale(2);
+aside.hide .logo-container svg {
+    transform: scale(0.75);
 }

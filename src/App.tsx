@@ -105,9 +105,7 @@ function App() {
                                         </Helmet> 
                                     </Route>
                                 }
-                                <Route path="/course-edition/:id" render={({ location, history }) => (
-                                    <CourseEdition idCourse={location.pathname} />)}>
-                                </Route>
+                                    <Route path="/course/:id/edition" children={<CourseEdition />} />
                                 {
                                     appState.roleSelector.currentUserRoleId !== Role.Student &&
                                     <Route path="/tags-page">
