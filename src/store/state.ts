@@ -1,5 +1,6 @@
 import { DataNewCourse } from "../components/courses-page/NewCourse";
 import { Course } from "../interfaces/Courses";
+import { Group } from "../interfaces/Group";
 import NotificationData from "../interfaces/NotificationData";
 import { Themes } from "../interfaces/Themes";
 import { User } from "../interfaces/User";
@@ -34,12 +35,20 @@ export interface IUserListPage {
 }
 
 export interface IUserPage {
-    userToView: User | undefined;
-    userToEdit: UserUpdate | undefined;
-    userToEditId: number | undefined;
-    userToRegister: UserInput | undefined;
-    isEditModeOn: boolean;
+    userForUserPage: UserInput,
+    userForUserPageId: number;
     isDataLoading: boolean;
+}
+
+export interface IRoleSelector {
+    isTurnedOn: boolean;
+    currentUser: User | undefined;
+    currentUserRoleId: number;
+    isDataLoading: boolean;
+}
+
+export interface IAppState {
+    isLoggedIn: boolean;
 }
 
 export interface INotificationContainerState {
@@ -49,6 +58,7 @@ export interface INotificationContainerState {
     }
 }
 
-export interface IModalDeleteCourse {
-    courseForDeleteId: number
+export interface IGroupInfoComponent{
+    groupToView: Group | undefined;
+    isDataLoading: boolean;
 }

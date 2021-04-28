@@ -5,6 +5,8 @@ import { generateTestNotification } from "../../shared/components/notification/g
 import NotificationData from "../../interfaces/NotificationData";
 import { useDispatch } from "react-redux";
 import { sendNotification } from "../../store/notifications/thunk";
+import CustomMultiSelect from "../multi-select/CustomMultiSelect";
+import { SelectItem } from "../../interfaces/SelectItem";
 
 interface DevTestPageProps {
 }
@@ -21,6 +23,21 @@ function DevTestPage (props: DevTestPageProps) {
         }
         setDialogShown(false);
     }
+
+    const selectItems:SelectItem[]= [
+        {
+            value: 1,
+            label: "aaa"
+        },
+        {
+            value: 2,
+            label: "bbb"
+        },
+        {
+            value: 3,
+            label: "ccc"
+        }
+    ]
 
     return (
         <div>
@@ -41,6 +58,19 @@ function DevTestPage (props: DevTestPageProps) {
                 title={'Увеличить счетчик на 1?'}
                 message={`Новое значение: ${counter+1}`}
                 callback={counterCallback}/>
+
+            <CustomMultiSelect
+                selectedOptions={[]}
+                options={selectItems}
+                onSingleSelect={()=>{}}
+            />
+            <br/>
+            <CustomMultiSelect
+                selectType='multi'
+                selectedOptions={[]}
+                options={selectItems}
+                onMultiSelect={()=>{}}
+            />
 
             <div className="test-page-link"><Link to="/">back to login</Link></div>
         </div>

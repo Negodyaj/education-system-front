@@ -33,7 +33,7 @@ export const setCoursesListWasLoadedAction = (courses: Course[]) => {
     } as const);
 }
 
-export const setCoursesListFailAction = (error: string) => {
+export const setCoursesListFail = (error: string) => {
     return ({
         type: COURSE_LIST_WRETCH_FAIL,
         payload: error
