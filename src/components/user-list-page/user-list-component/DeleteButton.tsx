@@ -1,12 +1,11 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import React, { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { useHistory, useParams } from "react-router-dom";
 import { User } from "../../../interfaces/User";
 import ConfirmationDialog from "../../../shared/components/confirmation-dialog/ConfirmationDialog";
-import { userListUrl } from "../../../shared/consts";
 import { IRootState } from "../../../store";
+import { setUserToDelete } from "../../../store/user-list-page/action-creators";
 import { deleteUserRequest } from "../../../store/user-list-page/thunk";
 
 function DeleteButton(props: { user: User }) {
@@ -14,25 +13,17 @@ function DeleteButton(props: { user: User }) {
     const [isModalShow, setIsModalShow] = useState(false);
     const appState = useSelector((state: IRootState) => state);
     const [confirmationMessage, setConfirmationMessage] = useState('Вы уверены?')
-    const { idToDelete } = useParams<{ idToDelete?: string; }>();
-    const history = useHistory();
-    useEffect(() => {
-        if (idToDelete) {
-            setIsModalShow(true);
-            let userToDelete = appState.userListPage.userList.filter(u => u.id === Number.parseInt(idToDelete))[0]
-            setConfirmationMessage(`Вы действительно хотите удалить пользователя ${userToDelete.firstName} ${userToDelete.lastName}?`)
-        }
-    })
     const deleteUser = (decision: boolean) => {
         if (decision === true) {
-            dispatch(deleteUserRequest(idToDelete || "", history));
+            dispatch(deleteUserRequest(appState.userListPage.userToDelete.id));
         } else if (decision === false) {
             setIsModalShow(false);
-            history.push(`/${userListUrl}`)
         }
     }
     const onDeleteClick = (userToDelete: User) => {
-        history.push(`/${userListUrl}/${userToDelete.id}`)
+        dispatch(setUserToDelete(userToDelete))
+        setConfirmationMessage(`Вы действительно хотите удалить пользователя ${userToDelete?.firstName} ${userToDelete?.lastName}?`)
+        setIsModalShow(true);
     }
     return (
         <>

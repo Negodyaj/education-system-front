@@ -20,9 +20,9 @@ export const getUsers = () => {
             .catch(error => dispatch(setUserListFail(error)));
     }
 }
-export const deleteUserRequest = (userToDeleteId: string, history: any) => {
+export const deleteUserRequest = (userToDeleteId: number) => {
     console.log(userToDeleteId)
-    return (dispatch: Dispatch) => {
+    return (dispatch: Dispatch<any>) => {
         dispatch(setUserDeleting());
         sendDeleteRequest<UserDelete>(`${usersUrl}/${userToDeleteId}`, isUserDelete)
             .then(response => {
@@ -31,7 +31,7 @@ export const deleteUserRequest = (userToDeleteId: string, history: any) => {
                     deletedUser = { ...deletedUser } as UserDelete;
                     dispatch(setUserDeletingSuccess(deletedUser));
                     dispatch(pushNotification(makeNotification('success', `Пользователь ${response.firstName} ${response.lastName} успешно удалён`)))
-                    history.push(`/${userListUrl}`);
+                    dispatch(getUsers());
                 } else {
                     dispatch(setUserDeletingFail())
                 }

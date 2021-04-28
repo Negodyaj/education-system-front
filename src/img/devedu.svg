@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 70 36" style="width: 80px; height: 45px;">
+
+<path d="m60 12v14.5" stroke="url(#d)" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+<circle cx="60" cy="32.5" r="2" stroke="url(#c)" stroke-width="2"/>
+<path d="M50 14.8379V29.0645L33 34L16 29.0645V14.8379" stroke="url(#b)" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+<path d="M37 2L64 9.83871L37 17.6774M29 2L2 9.83871L29 17.6774" stroke="url(#a)" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+<defs>
+<linearGradient id="d" x1="60.5" x2="60.5" y1="12" y2="28.5" gradientUnits="userSpaceOnUse">
+<stop stop-color="#fff" offset="0"/>
+<stop stop-color="#fff" offset=".80729"/>
+</linearGradient>
+<linearGradient id="c" x1="60" x2="60" y1="30.5" y2="34.5" gradientUnits="userSpaceOnUse">
+<stop stop-color="#fff" offset="0"/>
+<stop stop-color="#fff" offset=".80729"/>
+</linearGradient>
+<linearGradient id="b" x1="33" x2="33" y1="14.838" y2="34" gradientUnits="userSpaceOnUse">
+<stop stop-color="#fff" offset="0"/>
+<stop stop-color="#fff" offset=".80729"/>
+</linearGradient>
+<linearGradient id="a" x1="33" x2="33" y1="2" y2="17.677" gradientUnits="userSpaceOnUse">
+<stop stop-color="#fff" offset="0"/>
+<stop stop-color="#fff" offset=".81771"/>
+</linearGradient>
+</defs>
+</svg>

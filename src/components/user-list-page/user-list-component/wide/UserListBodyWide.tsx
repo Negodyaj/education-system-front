@@ -1,11 +1,11 @@
 import { useSelector } from "react-redux";
-import { Role } from "../../../enums/role";
-import { getEnToRuTranslation } from "../../../shared/converters/enumToDictionaryEntity";
-import { IRootState } from "../../../store";
-import DeleteButton from "./DeleteButton";
-import DeleteRoleButton from "./DeleteRoleButton";
-import EditButton from "./EditButton";
-import PaymentButton from "./PaymentButton";
+import { Role } from "../../../../enums/role";
+import { getEnToRuTranslation } from "../../../../shared/converters/enumToDictionaryEntity";
+import { IRootState } from "../../../../store";
+import DeleteButton from "../DeleteButton";
+import DeleteRoleButton from "../DeleteRoleButton";
+import EditButton from "../EditButton";
+import PaymentButton from "../../payment-form/PaymentButton";
 function UserListBodyWide() {
     const appState = useSelector((state: IRootState) => state);
     return (

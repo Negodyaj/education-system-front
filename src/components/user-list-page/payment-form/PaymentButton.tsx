@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { User } from "../../../interfaces/User";
 import { IRootState } from "../../../store";
 import { setPaymentFormOpen } from "../../../store/payment/action-creators";
-import PaymentForm from "../payment-form/PaymentForm";
+import PaymentForm from "./PaymentForm";
 
 function PaymentButton(props: { user: User }) {
     const dispatch = useDispatch();
