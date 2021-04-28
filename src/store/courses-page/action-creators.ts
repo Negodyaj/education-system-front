@@ -5,7 +5,7 @@ import { DataNewCourse } from "../../components/courses-page/NewCourse";
 export type CoursePageActions =
     | ReturnType<typeof setCoursesListIsLoadingAction>
     | ReturnType<typeof setCoursesListWasLoadedAction>
-    | ReturnType<typeof setCoursesListFailAction>
+    | ReturnType<typeof setCoursesListFail>
     | ReturnType<typeof showOpenModalCreateCourseAction>
     | ReturnType<typeof closeModalCreateCourseAction>
     | ReturnType<typeof showOpenModalDeleteCourseAction>
@@ -33,7 +33,7 @@ export const setCoursesListWasLoadedAction = (courses: Course[]) => {
     } as const);
 }
 
-export const setCoursesListFailAction = (error: string) => {
+export const setCoursesListFail = (error: string) => {
     return ({
         type: COURSE_LIST_WRETCH_FAIL,
         payload: error

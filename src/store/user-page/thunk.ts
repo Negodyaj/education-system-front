@@ -1,30 +1,65 @@
 import { Dispatch } from "redux";
 import { User } from "../../interfaces/User";
-import { sendGetRequest } from "../../services/http.service";
+import { UserRegisterResponse } from "../../interfaces/UserRegisterResponse";
+import { sendGetRequest, sendPostRequest, sendPutRequest } from "../../services/http.service";
 import { isUser } from "../../services/type-guards/user";
-import { usersUrl } from "../../shared/consts";
+import { isUserRegisterResponse } from "../../services/type-guards/userRegisterResponse";
+import { UNSET_USER_ID_FOR_USER_PAGE, userListUrl, userRegisterUrl, usersUrl } from "../../shared/consts";
+import { convertUserToUserInput } from "../../shared/converters/userToUserInput";
+import { makeNotification } from "../../shared/helpers/notificationHelpers";
+import { pushNotification } from "../notifications/action-creators";
 import { thunkResponseHandler } from "../thunkResponseHadlers";
-import { setUserListFail } from "../user-list-page/action-creators";
-import { setUserToEditFail, setUserToEditIsLoading, setUserToEditWasLoaded, setUserToViewIsLoading, setUserToViewWasLoaded } from "./action-creators";
+import { setUserIsSending, setUserSendingFail, setUserToEditFail, setUserToEditIsLoading, setUserToEditWasLoaded, setUserUpdateResponse } from "./action-creators";
 
-export const getUserToViewById = (userId: number) => {
+export const getUserToEditById = (userId?: string) => {
+
     return (dispatch: Dispatch) => {
-        dispatch(setUserToViewIsLoading());
-        sendGetRequest<User>(`${usersUrl}/${userId}`, isUser)
-            .then(user => {
-                dispatch(setUserToViewWasLoaded(thunkResponseHandler(dispatch, user)));
+        if (userId) {
+            dispatch(setUserToEditIsLoading());
+            sendGetRequest<User>(`${usersUrl}/${userId}`, isUser)
+                .then(user => {
+                    dispatch(setUserToEditWasLoaded(thunkResponseHandler(dispatch, user)));
+                })
+                .catch(error => dispatch(setUserToEditFail(error)));
+        } else {
+            dispatch(setUserToEditWasLoaded())
+        }
+    }
+}
+export const sendUser = (user: User, userId: number, history: any) => {
+    return (dispatch: Dispatch<any>) => {
+        if (userId && userId !== UNSET_USER_ID_FOR_USER_PAGE) dispatch(updateUser(user, userId, history))
+        else {
+            dispatch(setUserIsSending());
+            sendPostRequest<UserRegisterResponse>(userRegisterUrl, isUserRegisterResponse, convertUserToUserInput(user))
+                .then(userUpdateResponse => {
+                    let response = thunkResponseHandler(dispatch, userUpdateResponse);
+                    if (response) {
+                        let user = { ...response } as User;
+                        dispatch(pushNotification(makeNotification('success', `Пользователь ${user.firstName} ${user.lastName} успешно зарегистрирован`)))
+                        dispatch(setUserUpdateResponse());
+                        history.push(`/${userListUrl}`)
+                    } else {
+                        dispatch(setUserSendingFail())
+                    }
+                })
+        }
+    }
+}
+const updateUser = (user: User, userId: number, history: any) => {
+    return (dispatch: Dispatch) => {
+        dispatch(setUserIsSending());
+        sendPutRequest<User>(`${usersUrl}/${userId}`, isUser, user)
+            .then(userUpdateResponse => {
+                let response = thunkResponseHandler(dispatch, userUpdateResponse);
+                if (response) {
+                    dispatch(pushNotification(makeNotification('success', `Пользователь ${(response as User).firstName} ${(response as User).lastName} успешно изменён`)))
+                    dispatch(setUserUpdateResponse());
+                    history.push(`/${userListUrl}`)
+                } else {
+                    dispatch(setUserSendingFail())
+                }
             })
-            .catch(error => dispatch(setUserListFail(error)));
     }
 }
 
-export const getUserToEditById = (userId: number) => {
-    return (dispatch: Dispatch) => {
-        dispatch(setUserToEditIsLoading());
-        sendGetRequest<User>(`${usersUrl}/${userId}`, isUser)
-            .then(user => {
-                dispatch(setUserToEditWasLoaded(thunkResponseHandler(dispatch, user)));
-            })
-            .catch(error => dispatch(setUserToEditFail(error)));
-    }
-}

@@ -1,20 +1,20 @@
-import { baseUrl } from "../shared/consts";
-import { getFromStorage, store } from "./local-storage.service";
-import wretch from 'wretch';
+import { User } from "../interfaces/User";
+import { getFromStorage, removeFromStorage, store } from "./local-storage.service";
 
-export const getToken = () => {
+//token
+export const getToken = (): string => {
     return getFromStorage('token');
 }
-
 export const setToken = (token: string) => {
     store('token', token);
 }
-
-export const authenticate = (login: string, password: string) => {
-    wretch(`${baseUrl}/authentication`)
-        .post({ login, password })
-        .json(data => {
-            setToken(data.token);
-            window.location.reload();
-        })
+export const unsetToken = () => {
+    removeFromStorage('token');
+}
+//current user
+export const setCurrentUserInStorage = (user: User) => {
+    store('user', JSON.stringify(user))
+}
+export const getCurrentUserFromStorage = (): User => {
+    return getFromStorage('user') ? JSON.parse(getFromStorage('user')) : undefined
 }

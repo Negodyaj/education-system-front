@@ -54,7 +54,7 @@ function CoursesPage() {
                                 <div key={item.id} className="course">
                                     <div className="current-course-name">{item.name}</div>
                                     <div className="course-update-delete">
-                                        <Link to={"/course-edition/" + item.id}>
+                                        <Link to={`/course/${item.id}/edition`}>
                                             <button className='button-update'>
                                                 <FontAwesomeIcon icon="edit" />
                                             </button>
