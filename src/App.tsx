@@ -27,6 +27,7 @@ import React, { useState } from 'react';
 import { userEditUrl, userListUrl, userRegisterFormUrl } from './shared/consts';
 import UserPage from './components/user-page/UserPage';
 import { ReactComponent as Logo } from './img/devedu.svg';
+import CoursePage from './components/courses-page/course-page/CoursePage';
 
 function App() {
     const dispatch = useDispatch();
@@ -114,6 +115,7 @@ function App() {
                                         </Route>
                                     }
                                     <Route path="/course/:id/edition" children={<CourseEdition />} />
+                                    <Route path="/course/:id" children={<CoursePage />} />
                                     {
                                         appState.roleSelector.currentUserRoleId !== Role.Student &&
                                         <Route path="/tags-page">
