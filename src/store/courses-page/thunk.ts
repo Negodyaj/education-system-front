@@ -5,7 +5,7 @@ import { sendDeleteRequest, sendGetRequest, sendPostRequest } from "../../servic
 import { isCourse } from "../../services/type-guards/course";
 import { isCourseArr } from "../../services/type-guards/courseArr";
 import { coursesUrl } from "../../shared/consts";
-import { closeModalCreateCourseAction, createCourseAction, setCoursesListFailAction, setCoursesListIsLoadingAction, setCoursesListWasLoadedAction } from "./action-creators";
+import { closeModalCreateCourseAction, createCourseAction, setCoursesListFail, setCoursesListIsLoadingAction, setCoursesListWasLoadedAction } from "./action-creators";
 
 
 const url = 'url';
@@ -15,7 +15,7 @@ export const getCourses = () => {
         dispatch(setCoursesListIsLoadingAction());
         sendGetRequest<Course[]>(coursesUrl, isCourseArr)
             .then(courses => dispatch(setCoursesListWasLoadedAction(courses)))
-            .catch(error => dispatch(setCoursesListFailAction(error)))
+            .catch(error => dispatch(setCoursesListFail(error)))
     }
 }
 

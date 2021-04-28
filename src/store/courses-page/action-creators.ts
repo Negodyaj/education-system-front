@@ -5,7 +5,7 @@ import { DataNewCourse } from "../../components/courses-page/NewCourse";
 export type CoursePageActions =
     | ReturnType<typeof setCoursesListIsLoadingAction>
     | ReturnType<typeof setCoursesListWasLoadedAction>
-    | ReturnType<typeof setCoursesListFailAction>
+    | ReturnType<typeof setCoursesListFail>
     | ReturnType<typeof showOpenModalCreateCourseAction>
     | ReturnType<typeof closeModalCreateCourseAction>
     | ReturnType<typeof showOpenModalDeleteCourseAction>
