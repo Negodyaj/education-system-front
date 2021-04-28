@@ -1,32 +1,51 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { IRootState } from "../../../../store";
-import './hamburgers.css';
-import { MouseEventHandler, useRef, useState } from "react";
+import ChevronArrow from "../buttons/ChevronArrow";
+import { openListItem } from "../../../../store/user-list-page/action-creators";
+import { getEnToRuTranslation } from "../../../../shared/converters/enumToDictionaryEntity";
+import { Role } from "../../../../enums/role";
+import DeleteButton from "../buttons/DeleteButton";
+import EditButton from "../buttons/EditButton";
 function UserListBodyVerticalNarrow() {
-    const ACTIVE = "hamburger hamburger--elastic is-active";
-    const NOT_ACTIVE = "hamburger hamburger--elastic";
+    const ACTIVE = "is-active";
+    const NOT_ACTIVE = "";
+    const dispatch = useDispatch();
     const appState = useSelector((state: IRootState) => state);
-    const hamburgerOnClick: MouseEventHandler<HTMLButtonElement> = (e) => {
-        let isActiveClass = e.currentTarget.className;
-        e.currentTarget.className = isActiveClass === ACTIVE ? NOT_ACTIVE : ACTIVE;
+    const hamburgerOnClick = (id: number) => {
+        dispatch(openListItem(appState.userListPage.openedItemId === id ? 0 : id))
     }
     return (
-        <>{
-            appState.userListPage.userList.map(u => (
-                <div className="list narrow-user-list-item" key={u.id}>
-                    <div className="column">
-                        <img className="user-photo" src={u.userPic} alt="userpic" />
+        <>
+            {
+                appState.userListPage.userList.map(u => (
+                    <div className="narrow user-list-item" key={u.id}>
+                        <div className="header">
+                            <img className="user-photo" src={u.userPic} alt="userpic" />
+                            <div>{u.lastName}</div>
+                            <div>{u.firstName}</div>
+                        </div>
+                        <div className="control">
+                            <button
+                                className={appState.userListPage.openedItemId === u.id ? ACTIVE : NOT_ACTIVE}
+                                type="button"
+                                onClick={() => hamburgerOnClick(u.id)}>
+                                <ChevronArrow />
+                            </button>
+                        </div>
+                        <div className={`content ${appState.userListPage.openedItemId === u.id ? ACTIVE : NOT_ACTIVE}`}>
+                            <p>{u.login}</p>
+                            <p>{u.roles.map(roleId => (
+                                <div>{getEnToRuTranslation(Role[roleId])}</div>
+                            ))}</p>
+                            <p>
+                                <span><EditButton user={u} /></span>
+                                <span><DeleteButton user={u} /></span>
+                            </p>
+                        </div>
                     </div>
-                    <div className="column break-word" lang="ru">{u.lastName}</div>
-                    <div className="column break-word">{u.firstName}</div>
-                    <div className="column">
-                        <button className={NOT_ACTIVE} type="button" name={u.lastName} onClick={hamburgerOnClick}>
-                            <span className="hamburger-box">
-                                <span className="hamburger-inner"></span>
-                            </span>
-                        </button>
-                    </div>
-
-                </div>))}</>)
+                ))
+            }
+        </>
+    )
 }
 export default UserListBodyVerticalNarrow;

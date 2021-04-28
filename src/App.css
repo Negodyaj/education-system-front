@@ -47,8 +47,11 @@ aside.hide {
 
 .right-section, main {
     flex-grow: 1;
-    padding-left: 32px;
     overflow-y: scroll;
+}
+
+.right-section {
+    padding-left: 32px;
 }
 
 .header-user-actions {
