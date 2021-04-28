@@ -35,8 +35,8 @@ const store = createStore<IRootState, any, any, any>(
         roleSelector: roleSelectorReducer,
         app: appReducer,
         notificationContainer: notificationContainerReducer,
-        payment: paymentReducer
-        groupInfoComponent: groupInfoComponentReducer,
+        payment: paymentReducer,
+        groupInfoComponent: groupInfoComponentReducer
     }),
     undefined,
     applyMiddleware(...middlewares));

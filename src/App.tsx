@@ -81,13 +81,6 @@ function App() {
                 </div>
                 <main className="main-content">
                     {
-                        !!getToken()
-                        &&
-                        <NavMenu roleId={appState.roleSelector.currentUserRoleId} onHide={onHide} />
-                    }
-                </aside>
-                <main>
-                    {
                         !!getToken() ?
                             <>
                                 <Switch>
