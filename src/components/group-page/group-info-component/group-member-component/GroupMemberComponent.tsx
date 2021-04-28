@@ -10,7 +10,7 @@ interface GroupMemberComponentProps {
 
 function GroupMemberComponent(props: GroupMemberComponentProps) {
     return (
-        <div className='list'>
+        <div className='list one-row'>
             <div className='column'>
                 <img className="user-photo" src={props.userPic} alt="userpic" />
             </div>
