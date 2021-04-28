@@ -40,9 +40,11 @@ function CoursesPage() {
                         :
                             pageState.courseList?.map(item => (
                                 <div key={item.id} className="course">
-                                    <div className="current-course-name">{item.name}</div>
+                                    <Link className="current-course-name" to={`/course/${item.id}`}>
+                                        <div >{item.name}</div>
+                                    </Link>
                                     <div className="course-update-delete">
-                                        <Link to={"/course-edition/" + item.id}>
+                                    <Link to={`/course/${item.id}/edition`}>
                                             <button className='button-update'>
                                                 <FontAwesomeIcon icon="edit" />
                                             </button>
