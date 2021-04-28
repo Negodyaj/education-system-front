@@ -2,19 +2,22 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { IRootState } from "../../../store";
 import { getGroupToViewById } from "../../../store/group-info-component/thunk";
+import { getAttendanceByLessons } from "../../../store/group-page/attendance/thunk";
 import { getLessonsByGroup } from "../../../store/group-page/lesson/thunk";
-import "../group-journal/GroupJournal.css";
+import "./Attendance.css";
 
 const GroupJournal = () => {
   const dispatch = useDispatch();
   const studentGroup = useSelector((state: IRootState) => state.groupInfoComponent.studentsGroup);
   const lessonDataForColumnName = useSelector((state: IRootState) => state.lessonByGroup.lessonList);
+  const attendance = useSelector((state: IRootState) => state.attendanceList);
 
   useEffect(() => {
     dispatch(getGroupToViewById(14))
     dispatch(getLessonsByGroup());
+    // dispatch(getAttendanceByLessons(attendance.lessonList))
   }, [])
-  
+
     return(
         <div className='journal-container'>
           <div className="journal-head">

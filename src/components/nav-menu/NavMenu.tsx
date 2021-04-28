@@ -39,7 +39,7 @@ function NavMenu(props: NavMenuProps) {
                 }
                                 {
                     (props.roleId === Role.Teacher || props.roleId === Role.Methodist) &&
-                    <NavMenuSimpleLink route="group-journal" faIcon="university" label="Журнал в разработке"/>
+                    <NavMenuSimpleLink route="attendance" faIcon="university" label="Журнал в разработке"/>
                 }
                 {
                     (props.roleId === Role.Teacher || props.roleId === Role.Methodist) &&

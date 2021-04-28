@@ -25,7 +25,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { UserInput } from './interfaces/UserInput';
 import { useState } from 'react';
 import LessonList from './components/group-page/lesson-list-component/LessonList';
-import GroupJournal from './components/group-page/group-journal/GroupJournal';
+import Attendance from './components/group-page/attendance/Attendance';
 
 function App() {
     const dispatch = useDispatch();
@@ -144,8 +144,8 @@ function App() {
                                 </Route>
                                 {
                                     appState.roleSelector.currentUserRoleId === Role.Teacher &&
-                                    <Route path="/group-journal">
-                                        <GroupJournal />
+                                    <Route path="/attendance">
+                                        <Attendance />
                                         <Helmet>
                                             <title>Журнал разработка</title>
                                         </Helmet> 

@@ -1,3 +1,4 @@
+import { Attendance } from "../interfaces/Attendance";
 import { Course } from "../interfaces/Courses";
 import { Group } from "../interfaces/Group";
 import { Lesson } from "../interfaces/Lesson";
@@ -49,4 +50,11 @@ export interface IGroupInfoComponent{
     groupToView: Group;
     isDataLoading: boolean;
     studentsGroup: User[];
+}
+
+export interface IAttendance {
+    lessonList: Lesson[]
+    attendance: Attendance[]
+    studentsByGroup: User[]
+    isDataLoading: boolean
 }
