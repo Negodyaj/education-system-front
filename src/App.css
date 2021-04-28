@@ -94,6 +94,12 @@ aside.hide {
     border-radius: 50%;
 }
 
+.narrow .round-button {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+}
+
 .common-button {
     height: 40px;
     border-radius: 25px;

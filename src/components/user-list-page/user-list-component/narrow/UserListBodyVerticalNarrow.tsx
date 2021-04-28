@@ -6,6 +6,7 @@ import { getEnToRuTranslation } from "../../../../shared/converters/enumToDictio
 import { Role } from "../../../../enums/role";
 import DeleteButton from "../buttons/DeleteButton";
 import EditButton from "../buttons/EditButton";
+import PaymentButton from "../../payment-form/PaymentButton";
 function UserListBodyVerticalNarrow() {
     const ACTIVE = "is-active";
     const NOT_ACTIVE = "";
@@ -20,27 +21,39 @@ function UserListBodyVerticalNarrow() {
                 appState.userListPage.userList.map(u => (
                     <div className="narrow user-list-item" key={u.id}>
                         <div className="header">
-                            <img className="user-photo" src={u.userPic} alt="userpic" />
-                            <div>{u.lastName}</div>
-                            <div>{u.firstName}</div>
-                        </div>
-                        <div className="control">
-                            <button
-                                className={appState.userListPage.openedItemId === u.id ? ACTIVE : NOT_ACTIVE}
-                                type="button"
-                                onClick={() => hamburgerOnClick(u.id)}>
-                                <ChevronArrow />
-                            </button>
+                            <div className="base-data">
+                                <img className="user-photo" src={u.userPic} alt="userpic" />
+                                <div>{u.lastName} {u.firstName}</div>
+                            </div>
+                            <div className="control">
+                                <button
+                                    className={appState.userListPage.openedItemId === u.id ? ACTIVE : NOT_ACTIVE}
+                                    type="button"
+                                    onClick={() => hamburgerOnClick(u.id)}>
+                                    <ChevronArrow />
+                                </button>
+                            </div>
                         </div>
                         <div className={`content ${appState.userListPage.openedItemId === u.id ? ACTIVE : NOT_ACTIVE}`}>
-                            <p>{u.login}</p>
-                            <p>{u.roles.map(roleId => (
-                                <div>{getEnToRuTranslation(Role[roleId])}</div>
-                            ))}</p>
-                            <p>
-                                <span><EditButton user={u} /></span>
-                                <span><DeleteButton user={u} /></span>
-                            </p>
+                            <div className="row">
+                                <div>Логин:</div>
+                                <div>{u.login}</div>
+                            </div>
+                            <div className="row">
+                                <div>Роли:</div>
+                                <div>
+                                    {
+                                        u.roles.map(roleId => (
+                                            <p>{getEnToRuTranslation(Role[roleId])}</p>
+                                        ))
+                                    }
+                                </div>
+                            </div>
+                            <div className="buttons">
+                                <EditButton user={u} />
+                                <DeleteButton user={u} />
+                                {appState.roleSelector.currentUserRoleId === Role.Manager && <PaymentButton user={u} />}
+                            </div>
                         </div>
                     </div>
                 ))
