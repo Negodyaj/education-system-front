@@ -12,7 +12,7 @@ import "./shared/fontawesome/FontawesomeIcons";
 import { Role } from './enums/role';
 import DevTestPage from './components/dev-test-page/DevTestPage';
 import TagsPage from './components/tags-page/TagsPage';
-import UserListPage from './components/user-page/UserListPage';
+import UserListPage from './components/user-list-page/UserListPage';
 import { IRootState } from './store';
 import { useDispatch, useSelector } from 'react-redux';
 import { setIsLoggedOut } from './store/app/action-creators';
@@ -21,11 +21,11 @@ import GroupPage from './components/group-page/GroupPage';
 import { Helmet } from "react-helmet";
 import { toggleRoleSelector, unsetCurrentUser } from './store/role-selector/action-creator';
 import { getToken, unsetToken } from './services/auth.service';
-import UserPage from './components/user-page/user-page/UserPage';
 import { FormProvider, useForm } from 'react-hook-form';
 import { UserInput } from './interfaces/UserInput';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { userEditUrl, userListUrl, userRegisterFormUrl } from './shared/consts';
+import UserPage from './components/user-page/UserPage';
 
 function App() {
     const dispatch = useDispatch();
@@ -90,12 +90,6 @@ function App() {
                                         &&
                                         <>
                                             <Route exact path={`/${userListUrl}`}>
-                                                <UserListPage></UserListPage>
-                                                <Helmet>
-                                                    <title>Юзеры</title>
-                                                </Helmet>
-                                            </Route>
-                                            <Route path={`/${userListUrl}/:idToDelete`}>
                                                 <UserListPage></UserListPage>
                                                 <Helmet>
                                                     <title>Юзеры</title>

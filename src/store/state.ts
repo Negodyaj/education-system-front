@@ -12,6 +12,7 @@ export interface ICoursePageState {
 
 export interface IUserListPage {
     userList: User[];
+    userToDelete: User;
     isDataLoading: boolean;
 }
 

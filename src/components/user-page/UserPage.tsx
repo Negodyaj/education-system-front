@@ -1,16 +1,16 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import './UserPage.css'
-import '../../../App.css';
-import { User } from '../../../interfaces/User';
+import '../../App.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { IRootState } from '../../../store';
-import { getUserToEditById, sendUser } from '../../../store/user-page/thunk';
 import { useHistory, useParams } from 'react-router-dom';
-import { UserInput } from '../../../interfaces/UserInput';
-import FormElement, { } from '../../../shared/components/form-elements/FormElement';
-import { getFormElementSettings } from '../../../shared/helpers/useFormRegisterSettingByKey';
-import { InputNames } from '../../../enums/inputNames';
+import { IRootState } from '../../store';
+import { getUserToEditById, sendUser } from '../../store/user-page/thunk';
+import { UserInput } from '../../interfaces/UserInput';
+import { User } from '../../interfaces/User';
+import FormElement from '../../shared/components/form-elements/FormElement';
+import { getFormElementSettings } from '../../shared/helpers/useFormRegisterSettingByKey';
+import { InputNames } from '../../enums/inputNames';
 
 function UserPage() {
     const dispatch = useDispatch();
