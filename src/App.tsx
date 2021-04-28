@@ -26,6 +26,7 @@ import { UserInput } from './interfaces/UserInput';
 import React, { useState } from 'react';
 import { userEditUrl, userListUrl, userRegisterFormUrl } from './shared/consts';
 import UserPage from './components/user-page/UserPage';
+import { ReactComponent as Logo } from './img/devedu.svg';
 
 function App() {
     const dispatch = useDispatch();
@@ -55,10 +56,19 @@ function App() {
                 <title>Самый лучший сайт на свете</title>
                 <meta name="description" content="Helmet application" />
             </Helmet>
-            <header>
+            <aside className={`left-section ${styleMenu(isHidden)}`}>
                 <div className="logo-container">
-                    <img src={logo} className="app-logo" alt="logo" />
+                    <Logo />
                 </div>
+                <div className="nav-menu">
+                    {
+                        (appState.app.isLoggedIn)
+                        &&
+                        <NavMenu roleId={appState.roleSelector.currentUserRoleId} onHide={onHide}/>
+                    }
+                </div>
+            </aside>
+            <div className="right-section">
                 <div className="header-user-actions">
                     {
                         !!getToken() && <LoginRoleSelector />
@@ -69,9 +79,7 @@ function App() {
                         <button className='common-button' onClick={logOut}>Log out</button>
                     }
                 </div>
-            </header>
-            <div className="main-content">
-                <aside className={styleMenu(isHidden)}>
+                <main className="main-content">
                     {
                         !!getToken()
                         &&
@@ -112,9 +120,7 @@ function App() {
                                             </Helmet>
                                         </Route>
                                     }
-                                    <Route path="/course-edition/:id" render={({ location, history }) => (
-                                        <CourseEdition idCourse={location.pathname} />)}>
-                                    </Route>
+                                    <Route path="/course/:id/edition" children={<CourseEdition />} />
                                     {
                                         appState.roleSelector.currentUserRoleId !== Role.Student &&
                                         <Route path="/tags-page">
@@ -130,7 +136,7 @@ function App() {
                                             <title>Домашки</title>
                                         </Helmet>
                                     </Route>
-                                    <Route path="/group">
+                                    <Route path="/group-page">
                                         <GroupPage />
                                         <Helmet>
                                             <title>Группы</title>
