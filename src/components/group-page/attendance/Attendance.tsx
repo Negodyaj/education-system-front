@@ -1,8 +1,9 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { isTypeNode } from "typescript";
 import { IRootState } from "../../../store";
 import { getGroupToViewById } from "../../../store/group-info-component/thunk";
-import { getAttendanceByLessons } from "../../../store/group-page/attendance/thunk";
+import { getAttendanceByLessonId } from "../../../store/group-page/attendance/thunk";
 import { getLessonsByGroup } from "../../../store/group-page/lesson/thunk";
 import "./Attendance.css";
 
@@ -10,7 +11,7 @@ const GroupJournal = () => {
   const dispatch = useDispatch();
   const studentGroup = useSelector((state: IRootState) => state.groupInfoComponent.studentsGroup);
   const lessonDataForColumnName = useSelector((state: IRootState) => state.lessonByGroup.lessonList);
-  const attendance = useSelector((state: IRootState) => state.attendanceList);
+  const attendance = useSelector((state: IRootState) => state.attendanceList.attendanceList);
 
   useEffect(() => {
     dispatch(getGroupToViewById(14))
@@ -31,15 +32,20 @@ const GroupJournal = () => {
                 <th>%</th>
                 {
                   lessonDataForColumnName.map(item => (
-                    <th>{ item.lessonDate }</th>
+                    <th>
+                      {item.lessonDate}
+                      {/* {dispatch(getAttendanceByLessonId(item.id))} */}
+                    </th>
                   ))
                 }
               </tr>
             {
-              studentGroup.map(item => (
+              attendance.map(item => (
                 <tr className='row-journal'>
-                  <td>{ item.id }</td>
-                  <td>{`${item.firstName} ${item.lastName}`}</td>
+                  <td>{ item.user.id }</td>
+                  <td>{`${item.user.firstName} ${item.user.lastName}`}</td>
+                  <td>{ lessonDataForColumnName.length }</td>
+                  <td>{`${item.isAbsent}`}</td>
                 </tr>
               ))
             }

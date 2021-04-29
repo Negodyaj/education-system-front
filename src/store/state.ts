@@ -53,8 +53,7 @@ export interface IGroupInfoComponent{
 }
 
 export interface IAttendance {
-    lessonList: Lesson[]
-    attendance: Attendance[]
+    attendanceList: Attendance[]
     studentsByGroup: User[]
     isDataLoading: boolean
 }

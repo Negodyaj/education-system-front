@@ -4,7 +4,7 @@ export const coursesUrl: string = 'Course';
 export const usersUrl: string = 'User'
 export const currentUserUrl: string = 'User/current';
 export const lessonsUrl: string = 'Lesson/by-group';
-export const attendanceUrl: string = 'Lesson/';
+export const lessonAttendance: string = 'Lesson/';
 
 //initials
 export const UNSELECTED_ROLE:number = 0;

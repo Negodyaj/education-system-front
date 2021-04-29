@@ -1,4 +1,25 @@
-.row-journal{
-    border-left: 1px black solid;
-    border-bottom: 1px black solid;
+.row-journal {
+    border-left: 1px solid rgba(39, 45, 59, .15);
+    border-bottom: 1px solid rgba(39, 45, 59, .15);
+}
+
+table {
+    text-align: center;
+    margin: 0 auto;
+    font-size: 16px;
+    border-spacing: 0;
+}
+
+.table-head {
+    background-color: rgb(152, 215, 238);
+    color: rgb(20, 24, 34);
+    border-radius: 5px;
+}
+
+.journal-visible {
+    padding-top: 10px;
+    border-radius: 20px;
+    box-shadow: 0 3px 6px #272d3b36;
+    margin: 20px 20px auto;
+    min-height: 100px;
 }

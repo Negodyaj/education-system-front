@@ -1,4 +1,4 @@
-import { Lesson } from "../../../interfaces/Lesson";
+import { Attendance } from "../../../interfaces/Attendance";
 import { ATTENDANCE_WRETCH_FAIL, ATTENDANCE_WRETCH_LOADED, ATTENDANCE_WRETCH_LOADING } from "../../actionTypes";
 
 
@@ -13,10 +13,10 @@ export const setAttendanceListIsLoading = () => {
         payload: undefined
     } as const);
 }
-export const setAttendanceListWasLoaded = (lessons: Lesson[]) => {
+export const setAttendanceListWasLoaded = (attendance: Attendance[]) => {
     return ({
         type: ATTENDANCE_WRETCH_LOADED,
-        payload: lessons
+        payload: attendance
     } as const);
 }
 
