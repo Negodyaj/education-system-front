@@ -36,9 +36,10 @@ export const deleteTagThunk = (id: number, tagName: string) => {
             .then(tag => {
                 if (tag.status >= 400)
                     thunkResponseHandler(dispatch, tag)
-                else
+                else{
                 dispatch(pushNotification(makeNotification('success', `Тег ${tagName} успешно удален`)));
                 dispatch(getTags());
+                }
             })
     }
 }
