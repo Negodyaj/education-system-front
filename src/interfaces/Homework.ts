@@ -12,7 +12,7 @@ export interface Homework {
         id: number,
         startDate: string,
         course: {
-            id: 4,
+            id: number,
             name: string,
             description: string,
             duration: number,

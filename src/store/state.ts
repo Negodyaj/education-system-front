@@ -54,7 +54,7 @@ export interface IRoleSelector {
     isDataLoading: boolean;
 }
 
-export type HomeworksByCourse = {[courseId: number]: Homework[]}
+export type HomeworksByCourse = {[courseName: string]: Homework[]}
 export interface IHomeworkPageState {
     homeworkListDefault: Homework[];
     homeworkListMethodist: HomeworksByCourse;

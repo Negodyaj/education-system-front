@@ -1,18 +1,20 @@
 .course-item {
-    height: 58px;
+    height: 158px;
 }
-
+.course-item .title {
+    font-weight: 700;
+}
 .homework-item+.homework-item {
     margin-top: 10px;
 }
 
 .homework-item .row {
     height: 29px;
-    width: 200px;
+    width: 400px;
     display: flex;
     justify-content: start;
 }
 
 .homework-item .row div:first-child {
-    width: 100px;
+    width: 400px;
 }

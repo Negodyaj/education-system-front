@@ -63,5 +63,36 @@ export const homeworkList: Homework[] = [
                 tags:[]
             }
         ]
+    },
+    {
+    id: 5,
+        description: "Релизовать паттерн состояние",
+        startDate: "27.04.2021",
+        deadlineDate: "29.05.2021",
+        isOptional: false,
+        group: {
+            id: 14,
+            startDate: "09.04.2021",
+            course: {
+                id: 114,
+                name: "C# base",
+                description: "",
+                duration: 0,
+                themes: [],
+                materials: []
+            },
+            groupStatus: GroupStatuses[GroupStatuses.Colloquium],
+            groupStatusId: GroupStatuses.Colloquium
+        },
+        tags: [],
+        homeworkAttempts: [],
+        themes: [
+            {
+                isDeleted: false,
+                id: 10,
+                name: "Паттерны. Состояние.",
+                tags:[]
+            }
+        ]
     }
 ]
