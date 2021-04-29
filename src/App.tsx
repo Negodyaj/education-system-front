@@ -27,7 +27,7 @@ import React, { useState } from 'react';
 import { userEditUrl, userListUrl, userRegisterFormUrl } from './shared/consts';
 import UserPage from './components/user-page/UserPage';
 import { ReactComponent as Logo } from './img/devedu.svg';
-import LessonList from './components/group-page/lesson-list-component/LessonList';
+import LessonsByGroup from './components/group-page/lesson-list-component/LessonsByGroup';
 
 function App() {
     const dispatch = useDispatch();
@@ -118,7 +118,7 @@ function App() {
                                     {
                                         appState.roleSelector.currentUserRoleId === Role.Teacher &&
                                         <Route path="/lessons">
-                                            <LessonList />
+                                            <LessonsByGroup />
                                             <Helmet>
                                                 <title>Занятия</title>
                                             </Helmet> 
