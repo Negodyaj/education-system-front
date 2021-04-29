@@ -2,6 +2,7 @@ import { DataNewCourse } from "../components/courses-page/NewCourse";
 import { Course } from "../interfaces/Courses";
 import { Group } from "../interfaces/Group";
 import NotificationData from "../interfaces/NotificationData";
+import { Tag } from "../interfaces/Tag";
 import { Themes } from "../interfaces/Themes";
 import { User } from "../interfaces/User";
 import { UserInput } from "../interfaces/UserInput";
@@ -59,6 +60,13 @@ export interface INotificationContainerState {
         dismissible: NotificationData[],
         nonDismissible: NotificationData[],
     }
+}
+
+export interface ITagsPageState {
+    tagList: Tag[],
+    filterTagsList: Tag[],
+    isTagsModalHidden: boolean,
+    isDataLoading: boolean,
 }
 
 export interface IModalDeleteCourse {

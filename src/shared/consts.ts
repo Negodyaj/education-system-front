@@ -12,3 +12,4 @@ export const userEditUrl: string = "user-page";
 //initials
 export const UNSELECTED_ROLE:number = 0;
 export const UNSET_USER_ID_FOR_USER_PAGE:number = -1;
+export const tagsUrl: string = 'Tag';
