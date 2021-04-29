@@ -3,13 +3,14 @@ import thunk from "redux-thunk";
 import { coursePageReducer } from './courses-page/reducer';
 import { userListPageReducer } from './user-list-page/reducer';
 import { notificationContainerReducer } from './notifications/reducer';
-import { IAppState, ICourseEditionState, ICoursePageState, IGroupInfoComponent, INotificationContainerState, IPaymentFormState, IRoleSelector, IUserListPage, IUserPage } from './state';
+import { IAppState, ICourseEditionState, ICoursePageState, IGroupInfoComponent, IHomeworkPageState, INotificationContainerState, IPaymentFormState, IRoleSelector, IUserListPage, IUserPage } from './state';
 import { userPageReducer } from './user-page/reducers';
 import { courseEditionPageReducer } from './course-edition/reducer';
 import { roleSelectorReducer } from './role-selector/reducer';
 import { appReducer } from './app/reducer';
 import { paymentReducer } from './payment/reducer';
 import { groupInfoComponentReducer } from './group-info-component/reducer';
+import { homeworkPageReducer } from './homework-page/reducer';
 
 
 export interface IRootState {
@@ -21,7 +22,8 @@ export interface IRootState {
     app: IAppState;
     notificationContainer: INotificationContainerState;
     payment: IPaymentFormState;
-    groupInfoComponent: IGroupInfoComponent
+    groupInfoComponent: IGroupInfoComponent;
+    homeworkPage: IHomeworkPageState
 }
 
 const middlewares = [thunk];
@@ -36,7 +38,8 @@ const store = createStore<IRootState, any, any, any>(
         app: appReducer,
         notificationContainer: notificationContainerReducer,
         payment: paymentReducer,
-        groupInfoComponent: groupInfoComponentReducer
+        groupInfoComponent: groupInfoComponentReducer,
+        homeworkPage: homeworkPageReducer
     }),
     undefined,
     applyMiddleware(...middlewares));

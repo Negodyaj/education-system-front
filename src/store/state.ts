@@ -7,7 +7,11 @@ import { User } from "../interfaces/User";
 import { UserInput } from "../interfaces/UserInput";
 import { UserUpdate } from "../interfaces/UserUpdate";
 import { PaymentResponse } from "../components/interfaces/PaymentResponse";
+import { Homework } from "../interfaces/Homework";
 
+export interface IAppState {
+    isLoggedIn: boolean;
+}
 export interface ICoursePageState {
     courseList: Course[]
     isOpenModalCreateCourse: boolean
@@ -50,10 +54,11 @@ export interface IRoleSelector {
     isDataLoading: boolean;
 }
 
-export interface IAppState {
-    isLoggedIn: boolean;
+export type HomeworksByCourse = {[courseId: number]: Homework[]}
+export interface IHomeworkPageState {
+    homeworkListDefault: Homework[];
+    homeworkListMethodist: HomeworksByCourse;
 }
-
 export interface INotificationContainerState {
     notifications: {
         dismissible: NotificationData[],
@@ -72,7 +77,7 @@ export interface IPaymentFormState {
     isDataLoading: boolean
 }
 
-export interface IGroupInfoComponent{
+export interface IGroupInfoComponent {
     groupToView: Group | undefined;
     isDataLoading: boolean;
 }

@@ -5,8 +5,6 @@ import { RoleSelectorActions } from "./action-creator";
 
 const initialState: IRoleSelector = {
     isTurnedOn: false,
-    //currentUser: undefined,
-    //currentUserRoleId: 0,
     currentUser: getCurrentUserFromStorage(),
     currentUserRoleId: getCurrentUserFromStorage() ? getCurrentUserFromStorage().roles[0] : 0,
     isDataLoading: false

@@ -1,3 +1,18 @@
-.container{
-    text-align: left;
+.course-item {
+    height: 58px;
+}
+
+.homework-item+.homework-item {
+    margin-top: 10px;
+}
+
+.homework-item .row {
+    height: 29px;
+    width: 200px;
+    display: flex;
+    justify-content: start;
+}
+
+.homework-item .row div:first-child {
+    width: 100px;
 }
