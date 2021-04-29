@@ -8,5 +8,6 @@ export interface User {
     phone: string;
     userPic: string;
     email: string;
+    contractNumber: number;
     roles: number[];
 }

@@ -1,3 +1,8 @@
+.App {
+    display: flex;
+    flex-direction: row;
+}
+
 .app-logo {
     width: 50%;
     pointer-events: none;
@@ -23,17 +28,13 @@ header {
     height: 100px;
 }
 
-.logo-container {
-    border-top-left-radius: 16px;
-    background: #2D62ED;
-}
-
 aside {
+    border-top-left-radius: 16px;
     border-bottom-left-radius: 16px;
     background: #2D62ED;
+    position: relative;
 }
 
-.logo-container,
 aside.nothide {
     flex-grow: 0;
     flex-shrink: 0;
@@ -44,30 +45,34 @@ aside.hide {
     width: 72px;
 }
 
-aside,
-main {
-    padding-top: 30px;
-}
-
-main {
+.right-section, main {
     flex-grow: 1;
+    padding-left: 32px;
+    overflow-y: scroll;
 }
 
 .header-user-actions {
     display: flex;
+    height: 100px;
     justify-content: flex-end;
     align-items: center;
     flex-grow: 1;
     padding: 0 20px;
 }
 
-.main-content {
-    display: flex;
-    height: calc(100vh - 100px);
+.page-title {
+    margin: 0px;
+    font-size: 26px;
 }
 
-.common-button,
-.round-button {
+.main-content {
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 100px);
+    flex-grow: 1;
+}
+
+.common-button, .round-button {
     background-color: #00ccf2;
     color: #ffff;
     border: none;
@@ -76,8 +81,7 @@ main {
     cursor: pointer;
 }
 
-.common-button + .common-button,
-.round-button + .round-button {
+.common-button+.common-button, .round-button+.round-button {
     margin-left: 10px;
 }
 
@@ -104,7 +108,7 @@ main {
     font-size: 14px;
 }
 
-.form-control + .form-control {
+.form-control+.form-control {
     margin-top: 11px;
 }
 
@@ -141,4 +145,19 @@ main {
     text-align: center;
     font-size: 9px;
     padding: 0px;
+}
+
+.logo-container {
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.nothide .logo-container svg {
+    transform: scale(1.5);
+}
+
+aside.hide .logo-container svg {
+    transform: scale(0.75);
 }

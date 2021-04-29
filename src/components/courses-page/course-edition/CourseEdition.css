@@ -64,10 +64,9 @@
     grid-template-columns: 1fr 50px;
 }
 
-.theme:hover{
+.theme:hover, .new-theme:hover, .material:hover{
     background-color: rgba(0, 211, 248, 0.15);
     border-radius: 5px;
-    cursor: pointer;
 } 
 .new-themes-header-text, .program-course-header, .materials-course-header {
     display: flex;
@@ -101,12 +100,6 @@
     border-bottom: 1px solid rgba(39, 45, 59, .15);
 }
 
-.new-theme:hover{
-    background-color: rgba(0, 211, 248, 0.15);
-    border-radius: 5px;
-    cursor: pointer;
-} 
-
 .button-add-theme {
     background-color: rgba(255, 255, 255, 0);
     background-size: contain;
@@ -121,62 +114,11 @@
     outline: none;
 }
 
-@keyframes accordionEffectOpen {
-    to {
-        opacity: 1;
-        height: max-content;
-        margin-top: 0;
-    }
-}
-
-@keyframes accordionEffectClose {
-    to {
-        margin-top: -70px;
-        opacity: 0;
-        height: 0;
-    }
-}
-
-@keyframes accordionEffectOpenMaterial {
-    to {
-        opacity: 1;
-        height: max-content;
-        margin-top: 0;
-    }
-}
-
-@keyframes accordionEffectCloseMaterial {
-    to {
-        margin-top: -70px;
-        opacity: 0;
-        height: 0;
-    }
-}
-
-.program-course.visible{
-    margin-top: -50px;
-    animation: .6s forwards accordionEffectOpen;
-}
-
-.program-course.unvisible{
-    animation: .3s forwards accordionEffectClose;  
-}
-
-.materials-course-header.visible {
-    margin-top: -50px;
-    animation: .6s forwards accordionEffectOpenMaterial;
-}
-
-.materials-course-header.unvisible {
-    animation: .3s forwards accordionEffectOpenMaterial;  
-}
-
-.program-course{
+.program-course, .materials-course{
     width: 600px;
-    margin-top: -50px;
 }
 
-.theme {
+.theme, .material {
     display: grid;
     grid-template-columns: 90% 10%;
     width: inherit;
@@ -187,20 +129,20 @@
     font-size: 16px;
 }
 
-.theme-name {
+.theme-name, .material-content {
     display: flex;
     justify-content: flex-start;
     padding-left: 10px;
     align-items: center;
 }
 
-.theme-delete {
+.theme-delete, .material-delete {
     display: flex;
     justify-content: center;
     align-items: center;
 } 
 
-.button-theme-delete {
+.button-theme-delete, .button-material-delete {
     background-color: rgba(255, 255, 255, 0);
     background-size: contain;
     width: 40px;
@@ -209,8 +151,13 @@
     border: none;
 }
 
-.button-theme-delete:focus {
+.button-theme-delete:focus, .button-material-delete:focus {
     border: none;
     outline: none;
+}
+
+.link-material {
+    text-decoration: none;
+    color: black;
 }
 
