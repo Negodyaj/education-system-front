@@ -7,6 +7,7 @@ import { IRootState } from "../../../store";
 import { RoundButton } from "../buttonStyledComponent";
 
 
+
 interface TagListProps {
        str: string;
 }
@@ -30,9 +31,9 @@ function TagList(props: TagListProps) {
                     (
                         <div className="tag-row">
                             <div className="tag"> {item.name} </div>
-                            <button className='button-round' onClick={() => deleteTag(item)}>
+                            <RoundButton as="button" onClick={() => deleteTag(item)}>
                                 <FontAwesomeIcon icon="trash" />
-                            </button>
+                            </RoundButton>
                         </div>
                     )
 

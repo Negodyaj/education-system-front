@@ -4,8 +4,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import AddTagModal from './add-tag-modal/AddTagModal';
 import { useDispatch, useSelector } from 'react-redux';
 import { IRootState } from '../../store';
-import { doFilteringTags, toggleModalHidden } from '../../store/tags-page/action-creators';
 import TagList from './tag-list/TagList';
+import { doFilteringTags, toggleModalHidden } from '../../store/tags-page/action-creators';
+import { CommonButton } from './buttonStyledComponent';
 
 
 function TagsPage() {
@@ -25,10 +26,10 @@ function TagsPage() {
             <div className="tag-tittle"> <h4> Теги</h4> </div>
             <div className="tag-header">
                 <input className="input-search" onChange={filterTags} placeholder="Поиск" /> <FontAwesomeIcon icon='search' />
-                <button className="button-style" onClick={() => { dispatch(toggleModalHidden()) }}>
+                <CommonButton as="button" onClick={() => { dispatch(toggleModalHidden()) }}>
                     <FontAwesomeIcon icon="plus" />
                     <span> Добавить</span>
-                </button>
+                </CommonButton>
             </div>
             
             <div className="body">

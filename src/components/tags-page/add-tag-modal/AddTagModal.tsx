@@ -3,6 +3,8 @@ import React, { ChangeEventHandler, useState } from "react"
 import { useDispatch } from "react-redux";
 import { toggleModalHidden } from "../../../store/tags-page/action-creators";
 import { addTag } from "../../../store/tags-page/thunk";
+import { CommonButton, RoundButton } from "../buttonStyledComponent";
+
 
 
 interface AddTagModalProps {
@@ -32,9 +34,9 @@ function AddTagModal(props: AddTagModalProps) {
         <div className={`modal-back ${props.hidden && 'hidden'}`}>
             <div className="modal">
                 <div className="head-modal"><h4>Введите новый тег</h4></div>
-                <button className="button-close" onClick={closeModalWindow}>
+                <RoundButton as="button" onClick={closeModalWindow}>
                     <FontAwesomeIcon icon='times' />
-                </button>
+                </RoundButton>
 
                 <div className="create-tag">
                     <div className="tag-data">
@@ -42,7 +44,7 @@ function AddTagModal(props: AddTagModalProps) {
                     </div>
                 </div>
                 <div className="select-delete">
-                    <button className="button-select" onClick={closeModalWindow}>Отмена</button>
+                    <CommonButton as="button" onClick={closeModalWindow}>Отмена</CommonButton>
                     <button className={"button-select " + block} onClick={AddNewTag} disabled={isDisabled}>Ок</button>
                 </div>
             </div>
