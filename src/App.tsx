@@ -116,6 +116,15 @@ function App() {
                                     }
                                     <Route path="/course/:id/edition" children={<CourseEdition />} />
                                     {
+                                        appState.roleSelector.currentUserRoleId === Role.Teacher &&
+                                        <Route path="/lessons">
+                                            <LessonList />
+                                            <Helmet>
+                                                <title>Занятия</title>
+                                            </Helmet> 
+                                        </Route>
+                                    }
+                                    {
                                         appState.roleSelector.currentUserRoleId !== Role.Student &&
                                         <Route path="/tags-page">
                                             <TagsPage ></TagsPage>
@@ -139,15 +148,6 @@ function App() {
                                 </Switch>
                                 <NotificationContainer />
                             </>
-                                {
-                                    appState.roleSelector.currentUserRoleId === Role.Teacher &&
-                                    <Route path="/lessons">
-                                        <LessonList />
-                                        <Helmet>
-                                            <title>Занятия</title>
-                                        </Helmet> 
-                                    </Route>
-                                }
                             :
                             <Switch>
                                 <Route exact path="/">
