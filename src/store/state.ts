@@ -53,6 +53,7 @@ export interface IRoleSelector {
 
 export interface IAppState {
     isLoggedIn: boolean;
+    loadersCount: number;
 }
 
 export interface INotificationContainerState {
