@@ -3,6 +3,7 @@ import { sendDeleteRequest, sendDeleteRequestNoResponse, sendGetRequest } from "
 import { isTagArr } from "../../../services/type-guards/tagArr";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Tag } from "../../../interfaces/Tag";
+import { RoundButton } from "../buttonStyledComponent";
 
 
 interface TagListProps {
@@ -26,9 +27,9 @@ function TagList(props: TagListProps) {
                         return (
                             <span className="tag-row">
                                 <div className="tag"> {item.name} </div>
-                                <button className='round-button' onClick={() => deleteTag(item.id)}>
+                                <RoundButton as='button' onClick={() => deleteTag(item.id)}>
                                     <FontAwesomeIcon icon="trash" />
-                                </button>
+                                </RoundButton>
                             </span>
                         )
                     }
