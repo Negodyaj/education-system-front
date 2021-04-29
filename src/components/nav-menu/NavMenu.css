@@ -1,5 +1,4 @@
 .menu-container{
-    position: relative;
     width:100%;
     left:0;
     height: 100%;
@@ -52,7 +51,8 @@
 }
 
 button.left, button.right{
-    width:30px;
+    width: 35px;
+    height: 35px;
     position: absolute;
     bottom: 20px;
     right: -15px;
