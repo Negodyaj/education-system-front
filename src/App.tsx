@@ -27,6 +27,7 @@ import React, { useState } from 'react';
 import { userEditUrl, userListUrl, userRegisterFormUrl } from './shared/consts';
 import UserPage from './components/user-page/UserPage';
 import { ReactComponent as Logo } from './img/devedu.svg';
+import Loader from './shared/components/loader/Loader';
 
 function App() {
     const dispatch = useDispatch();
@@ -152,7 +153,8 @@ function App() {
                     }
                 </main>
             </div>
-        </div>
+            <Loader/>
+       </div>
     );
 }
 

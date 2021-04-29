@@ -19,8 +19,10 @@ export function appReducer(state: IAppState = initialState, action: AppActions) 
         case CURRENT_USER_LOGGED_IN:
             return { ...state, isLoggedIn: true };
         case INCREASE_LOADERS_COUNT:
+            console.log("Loading...");
             return { ...state, loadersCount: state.loadersCount + 1 }
         case DECREASE_LOADERS_COUNT:
+            console.log("Finished loading");
             return { ...state, loadersCount: state.loadersCount > 0 ? state.loadersCount - 1 : state.loadersCount}
         default:
             return state;
