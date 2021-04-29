@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import { IRootState } from "../../../store";
 import { setChangeDisplayingButtonOpenMaterialsCourse, setChangeDisplayingButtonOpenProgramCourse } from "../../../store/course-edition/action-creators";
 import { getCourseById } from "../../../store/course-edition/thunk";
+import './CoursePage.css';
 
 interface ParamTypes {
     id: string;
@@ -31,43 +32,43 @@ function Course() {
     }
     
     return(
-        <div className="course-edition-container">
-            <h3 className="current-course-header-name">{ 'Курс ' + pageState.course.name }</h3>
-            <div className="current-course-container">
-                    <div className="program-current-course-container">
-                            <div className="program-course-header">
-                                <button onClick={openProgramCourse} className="program-course-header-button-open">
+        <div className="course-read-only-container">
+            <h3 className="course-read-only-header">{ 'Курс ' + pageState.course.name }</h3>
+            <div className="course-read-only">
+                    <div className="program-course-read-only-container">
+                            <div className="program-course-read-only-header">
+                                <button onClick={openProgramCourse} className="program-course-read-only-header-button-open">
                                     { 
                                         pageState.isDisplayingButtonOpenProgramCourse ? <FontAwesomeIcon icon="angle-down" /> : <FontAwesomeIcon icon="angle-up" /> 
                                     }
                                 </button>
-                                <div className="program-course-header-text">Программа курса</div>
+                                <div className="program-course-read-only-header-text">Программа курса</div>
                             </div>
-                        <div className="program-course">
+                        <div className="program-course-read-only">
                             { pageState.isDisplayingButtonOpenProgramCourse &&
                                 pageState.course.themes?.map((theme) => (
-                                    <div key={theme.id} className="theme">
-                                        <div className="theme-name">{theme.name}</div>
+                                    <div key={theme.id} className="theme-course-read-only">
+                                        <div className="theme-name-course-read-only">{theme.name}</div>
                                     </div>
                                 ))
                             }
                         </div>
                     </div>
-                    <div className="materials-current-course-container">
-                        <div className={"materials-course-header"}>
-                            <button onClick={openMaterialsCourse} className="materials-course-header-button-open">
+                    <div className="materials-course-read-only-container">
+                        <div className={"materials-course-read-only-header"}>
+                            <button onClick={openMaterialsCourse} className="materials-course-read-only-header-button-open">
                                 { 
                                     pageState.isDisplayingButtonOpenMaterialsCourse ? <FontAwesomeIcon icon="angle-down" /> : <FontAwesomeIcon icon="angle-up" /> 
                                 }
                             </button>
-                            <div className="materials-course-header-text">Материалы курса</div>
+                            <div className="materials-course-read-only-header-text">Материалы курса</div>
                         </div>
-                        <div className="materials-course">
+                        <div className="materials-course-read-only">
                             { pageState.isDisplayingButtonOpenMaterialsCourse &&
                                 pageState.course.materials?.map((material) => (
-                                    <div key={material.id} className="material">
-                                        <div className="material-content">
-                                            <a href={material.link} title={material.link} target="_blank" className="link-material">{material.description}</ a>
+                                    <div key={material.id} className="material-course-read-only">
+                                        <div className="material-content-course-read-only">
+                                            <a href={material.link} title={material.link} target="_blank" className="link-material-course-read-only">{material.description}</ a>
                                         </div>
                                     </div>
                                 ))
