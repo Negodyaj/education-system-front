@@ -8,11 +8,13 @@ import { userPageReducer } from './user-page/reducers';
 import { courseEditionPageReducer } from './course-edition/reducer';
 import { roleSelectorReducer } from './role-selector/reducer';
 import { appReducer } from './app/reducer';
+import { tagsPageReducer } from './tags-page/reducer';
 import { paymentReducer } from './payment/reducer';
 import { groupInfoComponentReducer } from './group-info-component/reducer';
 
 
 export interface IRootState {
+    tagsPage: ITagsPageState
     coursePage: ICoursePageState;
     courseEditionPage: ICourseEditionState;
     userPage: IUserPage;
@@ -35,6 +37,7 @@ const store = createStore<IRootState, any, any, any>(
         roleSelector: roleSelectorReducer,
         app: appReducer,
         notificationContainer: notificationContainerReducer,
+        tagsPage: tagsPageReducer
         payment: paymentReducer,
         groupInfoComponent: groupInfoComponentReducer
     }),
