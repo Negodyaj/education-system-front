@@ -3,7 +3,7 @@ import thunk from "redux-thunk";
 import { coursePageReducer } from './courses-page/reducer';
 import { userListPageReducer } from './user-list-page/reducer';
 import { notificationContainerReducer } from './notifications/reducer';
-import { IAppState, ICourseEditionState, ICoursePageState, IGroupInfoComponent, INotificationContainerState, IPaymentFormState, IRoleSelector, ITagsPageState, IUserListPage, IUserPage } from './state';
+import { IAppState, IAttendance, ICourseEditionState, ICoursePageState, IGroupInfoComponent, ILesson, INotificationContainerState, IPaymentFormState, IRoleSelector, ITagsPageState, IUserListPage, IUserPage } from './state';
 import { userPageReducer } from './user-page/reducers';
 import { courseEditionPageReducer } from './course-edition/reducer';
 import { roleSelectorReducer } from './role-selector/reducer';
@@ -43,9 +43,8 @@ const store = createStore<IRootState, any, any, any>(
         notificationContainer: notificationContainerReducer,
         tagsPage: tagsPageReducer,
         payment: paymentReducer,
-        groupInfoComponent: groupInfoComponentReducer
-        lessonByGroup: lessonByGroupReducer,
         groupInfoComponent: groupInfoComponentReducer,
+        lessonByGroup: lessonByGroupReducer,
         attendanceList: attendanceReducer
     }),
     undefined,
