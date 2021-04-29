@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { sendDeleteRequest, sendDeleteRequestNoResponse, sendGetRequest } from "../../../services/http.service";
-import { isTagArr } from "../../../services/type-guards/tagArr";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Tag } from "../../../interfaces/Tag";
 import { useDispatch, useSelector } from "react-redux";

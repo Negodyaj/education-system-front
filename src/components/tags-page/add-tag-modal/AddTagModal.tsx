@@ -1,10 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import React, { ChangeEventHandler, useState } from "react"
 import { useDispatch } from "react-redux";
-import { Tag } from "../../../interfaces/Tag";
-import { sendGetRequest, sendPostRequest } from "../../../services/http.service"
-import { isTag } from "../../../services/type-guards/tag";
-import { isTagArr } from "../../../services/type-guards/tagArr";
 import { toggleModalHidden } from "../../../store/tags-page/action-creators";
 import { addTag } from "../../../store/tags-page/thunk";
 
