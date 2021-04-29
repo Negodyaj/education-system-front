@@ -1,8 +1,8 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { IRootState } from '../../../store';
 import { getLessonsByGroup } from '../../../store/group-page/lesson/thunk';
-import { LessonsTable, ColumnHeaderLessonsTable, LessonsContainer } from './LessonListComponentStyled';
+import { LessonsTable, LessonsContainer, ColumnLessonsTable, HeaderColumnLessonsTable, ContentColumnLessonsTable, HeaderLessonsTable } from './LessonListComponentStyled';
 
 function LessonList() {
 
@@ -18,11 +18,23 @@ function LessonList() {
     return (
         <LessonsContainer>
             <LessonsTable>
-                <ColumnHeaderLessonsTable>Дата</ColumnHeaderLessonsTable>
-                <ColumnHeaderLessonsTable>Описание</ColumnHeaderLessonsTable>
-                <ColumnHeaderLessonsTable>Список тем</ColumnHeaderLessonsTable>
-                <ColumnHeaderLessonsTable>Ссылка на запись</ColumnHeaderLessonsTable>
-                <ColumnHeaderLessonsTable>Действия</ColumnHeaderLessonsTable>
+                <HeaderLessonsTable>
+                    <HeaderColumnLessonsTable>Дата</HeaderColumnLessonsTable> 
+                    <HeaderColumnLessonsTable>Описание</HeaderColumnLessonsTable> 
+                    <HeaderColumnLessonsTable>Список тем</HeaderColumnLessonsTable>
+                    <HeaderColumnLessonsTable>Ссылка на запись</HeaderColumnLessonsTable>  
+                    <HeaderColumnLessonsTable>Действия</HeaderColumnLessonsTable> 
+                </HeaderLessonsTable>
+                {pageState.lessonList.map(lesson => (
+                    <ContentColumnLessonsTable>
+                        <ColumnLessonsTable>{lesson.lessonDate}</ColumnLessonsTable>
+                        <ColumnLessonsTable>{lesson.description}</ColumnLessonsTable>
+                        <ColumnLessonsTable>{lesson.themes}</ColumnLessonsTable>
+                        <ColumnLessonsTable>{lesson.recordLink}</ColumnLessonsTable>
+                        <ColumnLessonsTable></ColumnLessonsTable>
+                    </ContentColumnLessonsTable>  
+                ))
+                }
             </LessonsTable>
         </LessonsContainer>
     )

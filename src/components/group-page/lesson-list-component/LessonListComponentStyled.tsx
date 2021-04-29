@@ -7,15 +7,31 @@ export const LessonsContainer = styled.div`
 
 export const LessonsTable = styled.div`
     display: grid;
-    grid-template-columns: 10% 30% 20% 20% 20%;
+    grid-template-rows: 50px 1fr;
     width: 1200px;
 `
 
-export const ColumnHeaderLessonsTable = styled.div`
+export const HeaderLessonsTable = styled.div`
+    display: grid;
+    grid-template-columns: 10% 30% 20% 20% 20%;
+`
+
+export const HeaderColumnLessonsTable = styled.div`
     display: flex;
     justify-content: center;
     font-family: 'Montserrat';
     font-weight: 600;
-    border-right: 1px solid black;
-    border-bottom: 1px solid black;
+`
+
+export const ContentColumnLessonsTable = styled.div`
+    display: grid;
+    grid-template-columns: 10% 30% 20% 20% 20%;
+`
+
+export const ColumnLessonsTable = styled.div`
+    display: flex;
+    justify-content: center;
+    font-family: 'Montserrat';
+    font-weight: 400;
+    height: 40px;
 `
