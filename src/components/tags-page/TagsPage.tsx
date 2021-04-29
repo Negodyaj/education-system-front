@@ -1,50 +1,41 @@
 import React, { ChangeEventHandler, useEffect, useState } from 'react';
 import './TagsPage.css';
-import { sendGetRequest, sendPostRequest } from '../../services/http.service';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import AddTagModal from './add-tag-modal/AddTagModal';
-import { Tag } from '../../interfaces/Tag';
+import { useDispatch, useSelector } from 'react-redux';
+import { IRootState } from '../../store';
+import { doFilteringTags, toggleModalHidden } from '../../store/tags-page/action-creators';
 import TagList from './tag-list/TagList';
-import { isTagArr } from '../../services/type-guards/tagArr';
 
-interface TagsPageProps {
-}
 
-function TagsPage(props: TagsPageProps) {
+function TagsPage() {
     const url = 'Tag';
-    const [tagsInState, setTagsInState] = useState<Tag[] | undefined>([]);
     const [searchTurn, setSearchTurn] = useState('');
-    const [hidden, setHidden] = useState('hidden')
+    const dispatch = useDispatch();
+    const pageState = useSelector((state: IRootState) => state.tagsPage);
 
-    const getTags = async () => {
-        setTagsInState(await sendGetRequest<Tag[]>(url, isTagArr))
-    };
-    useEffect(() => {
-        getTags();
-    }, []);
-
-    const tagsFilter: ChangeEventHandler<HTMLInputElement> = (e) => {
+    const filterTags: ChangeEventHandler<HTMLInputElement> = (e) => {
         setSearchTurn(e.target.value);
+       dispatch(doFilteringTags(e.target.value));
     };
 
-    const closeModal = () => setHidden("hidden");
-
+    
     return (
         <div className="main">
             <div className="tag-tittle"> <h4> Теги</h4> </div>
             <div className="tag-header">
-                <input className="input-search" onChange={tagsFilter} placeholder="Поиск" />
-                <button className="common-button" onClick={() => { setHidden("") }}>
+                <input className="input-search" onChange={filterTags} placeholder="Поиск" /> <FontAwesomeIcon icon='search' />
+                <button className="button-style" onClick={() => { dispatch(toggleModalHidden()) }}>
                     <FontAwesomeIcon icon="plus" />
                     <span> Добавить</span>
                 </button>
             </div>
             
             <div className="body">
-                <div className="tags-list"> <TagList str={searchTurn} tags={tagsInState} setTagsInState={setTagsInState}></TagList> </div>
+                <div className="tags-list"> <TagList str={searchTurn} ></TagList> </div>
 
             </div>
-            <AddTagModal setTagsInState={setTagsInState} hidden={hidden} setHidden={closeModal} />
+            <AddTagModal hidden={pageState.isTagsModalHidden} />
         </div>
     )
 

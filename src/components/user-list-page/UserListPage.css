@@ -1,0 +1,72 @@
+.user-page {
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+    text-align: left;
+}
+
+.user-list {}
+
+.narrow-user-list{
+    width: 300px;
+}
+
+.user-list-head {
+    font-weight: 700;
+    font-size: 14px;
+    text-transform: uppercase;
+}
+
+.user-list-head .column span {
+    cursor: pointer;
+}
+
+.user-list-item, .user-list-head {
+    grid-template-columns: 60px 20% 13% 10% 150px 15% 150px;
+    margin: 2px 0;
+    height: max-content;
+}
+
+.narrow-user-list-item, .narrow-user-list-head {
+    grid-template-columns: 60px 32% 35% 60px;
+    margin: 2px 0;
+    height: max-content;
+}
+
+.column, .column-head, .column-button {
+    display: flex;
+    align-self: center;
+    font-size: 14px;
+    margin-bottom: 3px;
+}
+
+.column-head {
+    justify-content: space-between;
+    height: 32px;
+}
+
+.column-button {
+    justify-content: center;
+}
+
+.user-photo {
+    width: 40px;
+    height: 40px;
+    border-radius: 25px;
+    margin: 0px;
+}
+
+.break-word {
+    word-wrap: break-word;
+    word-break: break-all;
+}
+
+.multiline {
+    display: flex;
+    flex-direction: column;
+}
+
+.role {
+    display: flex;
+    flex-direction: row-reverse;
+}
