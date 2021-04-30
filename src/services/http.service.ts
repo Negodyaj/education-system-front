@@ -70,6 +70,6 @@ const baseWretch = () => {
     .auth(`Bearer ${getToken()}`)
     .catcher(401, error => error)
     .catcher(403, error => error)
-    .catcher(404, error => error)
+    .catcher(404, error => console.log(error))
     .catcher(409, error => error)
 }

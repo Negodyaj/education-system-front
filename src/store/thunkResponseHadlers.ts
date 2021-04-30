@@ -20,6 +20,7 @@ export const thunkResponseHandler = (dispatch: Dispatch, response: any) => {
         );
         return undefined;
     } else {
+
         return response;
     }
 }
