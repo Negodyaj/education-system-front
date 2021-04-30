@@ -17,6 +17,9 @@ const GroupJournal = () => {
     dispatch(getGroupToViewById(14))
     dispatch(getLessonsByGroup());
     // dispatch(getAttendanceByLessons(attendance.lessonList))
+    lessonDataForColumnName.map((item) => {
+        dispatch(getAttendanceByLessonId(item.id))
+    })
   }, [])
 
     return(

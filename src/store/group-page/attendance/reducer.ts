@@ -12,7 +12,8 @@ export function attendanceReducer(state: IAttendance = initialState, action: Att
         case ATTENDANCE_WRETCH_LOADING:
             return { ...state, isDataLoading: true}
         case ATTENDANCE_WRETCH_LOADED:
-            return { ...state, attendanceList: action.payload, isDataLoading: false };
+            state.attendanceList.push(action.payload)
+            return { ...state, isDataLoading: false };
         case ATTENDANCE_WRETCH_FAIL:
             return { ...state, attendanceList: [], isDataLoading: false };
         default:

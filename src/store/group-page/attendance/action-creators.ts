@@ -13,7 +13,7 @@ export const setAttendanceListIsLoading = () => {
         payload: undefined
     } as const);
 }
-export const setAttendanceListWasLoaded = (attendance: Attendance[]) => {
+export const setAttendanceListWasLoaded = (attendance: Attendance) => {
     return ({
         type: ATTENDANCE_WRETCH_LOADED,
         payload: attendance
