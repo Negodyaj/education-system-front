@@ -92,6 +92,12 @@ export const homeworkList: Homework[] = [
                 id: 10,
                 name: "Паттерны. Состояние.",
                 tags:[]
+            },
+            {
+                isDeleted: false,
+                id: 11,
+                name: "ООП",
+                tags:[]
             }
         ]
     }
