@@ -1,29 +1,30 @@
+import React from "react"
 import { useSelector } from "react-redux"
 import { IRootState } from "../../../store"
 import { HomeworksByCourse } from "../../../store/state"
+import { CourseItem, CourseName, HomeworkItem, HomeworkSelectorContainer } from "../styled-components/consts"
 
 export function HomeworkSelector() {
     const appState = useSelector((state: IRootState) => state)
     return (
-        <div className="selector">
+        <HomeworkSelectorContainer>
             {
                 Object.keys(appState.homeworkPage.homeworkListMethodist).map(courseName =>
-                    <div className="course-item">
-                        <div className="title">{courseName}</div>
+                    <CourseItem>
+                        <CourseName>{courseName}</CourseName>
                         {
                             appState.homeworkPage.homeworkListMethodist[courseName as keyof HomeworksByCourse].map(hw => {
                                 return (
-                                    <div className="homework-item">
-                                        <div className="row">
+                                    <HomeworkItem>
                                             <div>{hw.description}</div>
-                                        </div>
-                                    </div>
+                                            <div>{hw.isOptional ? "без проверки" : "с проверкой"}</div>
+                                    </HomeworkItem>
                                 )
                             })
                         }
-                    </div>
+                    </CourseItem>
                 )
             }
-        </div>
+        </HomeworkSelectorContainer>
     )
 }

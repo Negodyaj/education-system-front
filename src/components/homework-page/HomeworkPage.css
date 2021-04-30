@@ -4,6 +4,7 @@
 .course-item .title {
     font-weight: 700;
 }
+
 .homework-item+.homework-item {
     margin-top: 10px;
 }

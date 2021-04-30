@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { homeworkList } from "../../shared/tmp-mock-data/hw/homeworkList";
 import { loadHomeworkSuccess } from "../../store/homework-page/action-creators";
 import { HomeworkSelector } from "./homework-selector/HomeworkSelector";
-import './HomeworkPage.css';
+import { HomeworkPageContainer } from "./styled-components/consts";
 
 function HomeworkPage() {
   const dispatch = useDispatch();
@@ -11,9 +11,9 @@ function HomeworkPage() {
     dispatch(loadHomeworkSuccess(homeworkList));
   }, [])
   return (
-    <div className="homework-page">
+    <HomeworkPageContainer>
       <HomeworkSelector />
-    </div>
+    </HomeworkPageContainer>
   )
 }
 export default HomeworkPage;

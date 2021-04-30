@@ -6,12 +6,12 @@ import { Tag } from "../interfaces/Tag";
 import { Themes } from "../interfaces/Themes";
 import { User } from "../interfaces/User";
 import { UserInput } from "../interfaces/UserInput";
-import { UserUpdate } from "../interfaces/UserUpdate";
 import { PaymentResponse } from "../components/interfaces/PaymentResponse";
 import { Homework } from "../interfaces/Homework";
 
 export interface IAppState {
     isLoggedIn: boolean;
+    loadersCount: number;
 }
 export interface ICoursePageState {
     courseList: Course[]
@@ -56,13 +56,10 @@ export interface IRoleSelector {
     isDataLoading: boolean;
 }
 
-export type HomeworksByCourse = {[courseName: string]: Homework[]}
+export type HomeworksByCourse = { [courseName: string]: Homework[] }
 export interface IHomeworkPageState {
     homeworkListDefault: Homework[];
     homeworkListMethodist: HomeworksByCourse;
-export interface IAppState {
-    isLoggedIn: boolean;
-    loadersCount: number;
 }
 export interface INotificationContainerState {
     notifications: {
