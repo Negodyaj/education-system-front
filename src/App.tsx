@@ -1,7 +1,5 @@
-import logo from './logo.svg';
 import './App.css';
 import { Switch, Route, useHistory, Link } from 'react-router-dom';
-import Router from 'react-router'
 import LoginForm from './components/login-form/LoginForm';
 import NavMenu from './components/nav-menu/NavMenu';
 import HomeworkPage from './components/homework-page/HomeworkPage';
@@ -21,8 +19,6 @@ import GroupPage from './components/group-page/GroupPage';
 import { Helmet } from "react-helmet";
 import { toggleRoleSelector, unsetCurrentUser } from './store/role-selector/action-creator';
 import { getToken, unsetToken } from './services/auth.service';
-import { FormProvider, useForm } from 'react-hook-form';
-import { UserInput } from './interfaces/UserInput';
 import React, { useState } from 'react';
 import { userEditUrl, userListUrl, userRegisterFormUrl } from './shared/consts';
 import UserPage from './components/user-page/UserPage';

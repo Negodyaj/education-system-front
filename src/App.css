@@ -1,6 +1,5 @@
 .App {
     display: flex;
-    flex-direction: row;
 }
 
 .app-logo {
@@ -169,4 +168,61 @@ aside.hide {
 
 aside.hide .logo-container svg {
     transform: scale(0.75);
+}
+
+@media (max-width: 900px) {
+    .App {
+        flex-direction: column;
+    }
+
+    aside {
+        padding: 0 15px;
+        border-top-left-radius: 0px;
+        border-bottom-left-radius: 6px;
+        border-bottom-right-radius: 6px;
+    }
+
+    aside.hide,
+    aside.nothide {
+        width: 100%;
+    }
+
+    .logo-container {
+        height: 56px;
+        justify-content: flex-start;
+    }
+
+    .nothide .logo-container svg,
+    aside.hide .logo-container svg {
+        transform: scale(1);
+    }
+
+    .right-section .common-button {
+        position: absolute;
+        top: 8px;
+        color: #00ccf2;
+        width: 0;
+        min-width: 0;
+        font-size: 0;
+        padding: 0;
+        right: 50px;
+    }
+
+    .right-section .common-button::before {
+        content: '';
+        background-image: url('./img/logout.svg');
+        display: inline-block;
+        width: 30px;
+        height: 30px;
+        background-size: contain;
+    }
+    
+    .nav-menu {
+        transition: all 0.3s ease;
+        max-height: 600px;
+    }
+
+    .left-section.hide .nav-menu {
+        max-height: 0;
+    }
 }
