@@ -1,11 +1,11 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import { Role } from "../../../enums/role";
-import { User } from "../../../interfaces/User";
-import { sendDeleteRequestNoResponse } from "../../../services/http.service";
-import ConfirmationDialog from "../../../shared/components/confirmation-dialog/ConfirmationDialog";
-import { IRootState } from "../../../store";
+import { Role } from "../../../../enums/role";
+import { User } from "../../../../interfaces/User";
+import { sendDeleteRequestNoResponse } from "../../../../services/http.service";
+import ConfirmationDialog from "../../../../shared/components/confirmation-dialog/ConfirmationDialog";
+import { IRootState } from "../../../../store";
 
 function DeleteRoleButton(props: { user: User, roleId: number }) {
     const appState = useSelector((state: IRootState) => state);

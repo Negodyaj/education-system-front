@@ -34,6 +34,7 @@ export interface ICourseEditionState {
 export interface IUserListPage {
     userList: User[];
     userToDelete: User;
+    openedItemId: number;
     isDataLoading: boolean;
 }
 
