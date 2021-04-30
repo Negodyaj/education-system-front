@@ -2,6 +2,7 @@ import { DataNewCourse } from "../components/courses-page/NewCourse";
 import { Course } from "../interfaces/Courses";
 import { Group } from "../interfaces/Group";
 import NotificationData from "../interfaces/NotificationData";
+import { Tag } from "../interfaces/Tag";
 import { Themes } from "../interfaces/Themes";
 import { User } from "../interfaces/User";
 import { UserInput } from "../interfaces/UserInput";
@@ -37,6 +38,7 @@ export interface ICourseEditionState {
 export interface IUserListPage {
     userList: User[];
     userToDelete: User;
+    openedItemId: number;
     isDataLoading: boolean;
 }
 
@@ -58,12 +60,22 @@ export type HomeworksByCourse = {[courseName: string]: Homework[]}
 export interface IHomeworkPageState {
     homeworkListDefault: Homework[];
     homeworkListMethodist: HomeworksByCourse;
+export interface IAppState {
+    isLoggedIn: boolean;
+    loadersCount: number;
 }
 export interface INotificationContainerState {
     notifications: {
         dismissible: NotificationData[],
         nonDismissible: NotificationData[],
     }
+}
+
+export interface ITagsPageState {
+    tagList: Tag[],
+    filterTagsList: Tag[],
+    isTagsModalHidden: boolean,
+    isDataLoading: boolean,
 }
 
 export interface IModalDeleteCourse {

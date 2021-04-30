@@ -1,6 +1,6 @@
 import { User } from "../../interfaces/User";
 import { UserDelete } from "../../interfaces/UserDelete";
-import { USER_DELETING, USER_DELETING_FAIL, USER_DELETING_SUCCESS, USER_LIST_LOADING_AWAIT, USER_LIST_LOADING_FAIL, USER_LIST_LOADING_SUCCESS, USER_TO_DELETE } from "../actionTypes";
+import { USER_DELETING, USER_DELETING_FAIL, USER_DELETING_SUCCESS, USER_LIST_LOADING_AWAIT, USER_LIST_LOADING_FAIL, USER_LIST_LOADING_SUCCESS, USER_OPEN_LIST_ITEM, USER_TO_DELETE } from "../actionTypes";
 
 
 export type UserListPageActions =
@@ -11,6 +11,7 @@ export type UserListPageActions =
     | ReturnType<typeof setUserDeleting>
     | ReturnType<typeof setUserDeletingSuccess>
     | ReturnType<typeof setUserDeletingFail>
+    | ReturnType<typeof openListItem>
 
 export const setUserListIsLoading = () => {
     return ({
@@ -52,5 +53,11 @@ export const setUserDeletingFail = () => {
     return ({
         type: USER_DELETING_FAIL,
         payload: undefined
+    } as const);
+}
+export const openListItem = (id: number) => {
+    return ({
+        type: USER_OPEN_LIST_ITEM,
+        payload: id
     } as const);
 }
