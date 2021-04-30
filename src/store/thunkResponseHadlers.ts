@@ -4,6 +4,8 @@ import { WRONG_DATA_STATUS } from "../services/http.service";
 import { makeNotification } from "../shared/helpers/notificationHelpers";
 import { pushNotification } from "./notifications/action-creators";
 
+const ERROR_MESSAGE = JSON.stringify({message:"Ошибка"})
+
 export const thunkResponseHandler = (dispatch: Dispatch, response: any) => {
     if (!!response.status && !!response.text) {
         let error = { ...response } as WretcherError;
@@ -14,7 +16,7 @@ export const thunkResponseHandler = (dispatch: Dispatch, response: any) => {
                     ?
                     'неверные данные'
                     :
-                    `${error.status} ${JSON.parse(error.text || `$/{Message:"Ошибка"}`).Message}`
+                    `${error.status} ${JSON.parse(error.text || ERROR_MESSAGE).Message}`
                 )
             )
         );

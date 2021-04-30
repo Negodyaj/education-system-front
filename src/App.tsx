@@ -65,7 +65,7 @@ function App() {
                     {
                         !!getToken()
                         &&
-                        <NavMenu roleId={appState.roleSelector.currentUserRoleId} onHide={onHide}/>
+                        <NavMenu roleId={appState.roleSelector.currentUserRoleId} onHide={onHide} />
                     }
                 </div>
             </aside>
@@ -153,8 +153,8 @@ function App() {
                     }
                 </main>
             </div>
-            <Loader/>
-       </div>
+            <Loader />
+        </div>
     );
 }
 
