@@ -137,7 +137,6 @@ function App() {
                                         </Helmet>
                                     </Route>
                                 </Switch>
-                                <NotificationContainer />
                             </>
                             :
                             <Switch>
@@ -151,6 +150,7 @@ function App() {
                                 </Route>
                             </Switch>
                     }
+                    <NotificationContainer />
                 </main>
             </div>
             <Loader />
