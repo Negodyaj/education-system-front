@@ -18,7 +18,9 @@ const Wrapper = styled.div<{ active: boolean }>`
     align-items: center;
     transition: opacity 0.1s linear;
     opacity: ${props => +props.active };
-    pointer-events: none;
+    pointer-events: ${
+        props => props.active ? "all" : "none"
+    };
 `;
 
 const LoaderBox = styled.div`
