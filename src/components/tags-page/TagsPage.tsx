@@ -17,10 +17,10 @@ function TagsPage() {
 
     const filterTags: ChangeEventHandler<HTMLInputElement> = (e) => {
         setSearchTurn(e.target.value);
-       dispatch(doFilteringTags(e.target.value));
+        dispatch(doFilteringTags(e.target.value));
     };
 
-    
+
     return (
         <div className="main">
             <div className="tag-tittle"> <h4> Теги</h4> </div>
@@ -31,12 +31,12 @@ function TagsPage() {
                     <span> Добавить</span>
                 </CommonButton>
             </div>
-            
-            <div className="body">
-                <div className="tags-list"> <TagList str={searchTurn} ></TagList> </div>
 
+            <div className="body">
+                <div className="tags-list"> <TagList str={searchTurn} ></TagList>
+                    <AddTagModal hidden={pageState.isTagsModalHidden} />
+                </div>
             </div>
-            <AddTagModal hidden={pageState.isTagsModalHidden} />
         </div>
     )
 

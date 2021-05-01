@@ -3,7 +3,7 @@ import React, { ChangeEventHandler, useState } from "react"
 import { useDispatch } from "react-redux";
 import { toggleModalHidden } from "../../../store/tags-page/action-creators";
 import { addTag } from "../../../store/tags-page/thunk";
-import { CommonButton, RoundButton } from "../buttonStyledComponent";
+import { CommonButton, DisabledButton, RoundButton } from "../buttonStyledComponent";
 
 
 
@@ -19,25 +19,23 @@ function AddTagModal(props: AddTagModalProps) {
         setNameNewTag(e.target.value);
         if (e.target.value.length > 2) {
             setIsDisabled(false)
-            setBlock("")
-        }
+           }
         else {
             setIsDisabled(true)
-            setBlock("block")
         }
     };
   
     const AddNewTag = () => {dispatch(addTag({name: nameNewTag}))};
     const [isDisabled, setIsDisabled] = useState(true);
-    const [block, setBlock] = useState("block")
+  
     return (
         <div className={`modal-back ${props.hidden && 'hidden'}`}>
             <div className="modal">
-                <div className="head-modal"><h4>Введите новый тег</h4></div>
+                <div className="head-modal"><h4>Введите новый тег</h4>
                 <RoundButton as="button" onClick={closeModalWindow}>
                     <FontAwesomeIcon icon='times' />
                 </RoundButton>
-
+                </div>
                 <div className="create-tag">
                     <div className="tag-data">
                         <input type="text" className="tag-name" value={nameNewTag} onChange={tagOnChange} />
@@ -45,7 +43,7 @@ function AddTagModal(props: AddTagModalProps) {
                 </div>
                 <div className="select-delete">
                     <CommonButton as="button" onClick={closeModalWindow}>Отмена</CommonButton>
-                    <button className={"button-select " + block} onClick={AddNewTag} disabled={isDisabled}>Ок</button>
+                    <DisabledButton as="button"  onClick={AddNewTag} disabled={isDisabled}>Ок</DisabledButton>
                 </div>
             </div>
         </div>

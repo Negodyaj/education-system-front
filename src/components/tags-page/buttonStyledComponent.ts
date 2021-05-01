@@ -9,6 +9,7 @@ export const Button = styled.button`
     text-align: center;
     outline: none;
     cursor: pointer;
+    & + & {margin-left: 10px};
 `;
 
 export const RoundButton = styled(Button)`
@@ -24,4 +25,9 @@ export const CommonButton = styled(Button)`
     font-size: 16px;
     font-weight: 600;
     padding: 0 25px;
+    
+`;
+
+export const DisabledButton = styled(CommonButton)<{disabled:boolean}>`
+opacity: ${props=>props.disabled? "0.2":"1"} 
 `;
