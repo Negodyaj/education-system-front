@@ -23,6 +23,8 @@ import { toggleRoleSelector, unsetCurrentUser } from './store/role-selector/acti
 import { getToken, unsetToken } from './services/auth.service';
 import { FormProvider, useForm } from 'react-hook-form';
 import { UserInput } from './interfaces/UserInput';
+import LessonList from './components/group-page/lesson-list-component/LessonList';
+import Attendance from './components/group-page/attendance/Attendance';
 import React, { useState } from 'react';
 import { userEditUrl, userListUrl, userRegisterFormUrl } from './shared/consts';
 import UserPage from './components/user-page/UserPage';
@@ -147,19 +149,12 @@ function App() {
                                             <title>Группы</title>
                                         </Helmet>
                                     </Route>
-                                }
-                                <Route path="/course/:id/edition" render={({ location, history }) => (
-                                    <CourseEdition idCourse={location.pathname} />)}>
-                                </Route>
-                                {
-                                    roleId !== Role.Student &&
-                                    <Route path="/tags-page">
-                                        <TagsPage ></TagsPage>
+                                    <Route path="/attendance">
+                                        <Attendance />
+                                        <Helmet>
+                                            <title>Журнал в разработке</title>
+                                        </Helmet>
                                     </Route>
-                                }
-                                <Route path="/homework">
-                                    <HomeworkPage />
-                                </Route>
                                 </Switch>
                                 <NotificationContainer />
                             </>

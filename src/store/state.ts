@@ -1,8 +1,10 @@
 import { DataNewCourse } from "../components/courses-page/NewCourse";
+import { Attendance } from "../interfaces/Attendance";
 import { Course } from "../interfaces/Courses";
 import { Group } from "../interfaces/Group";
 import { Lesson } from "../interfaces/Lesson";
 import NotificationData from "../interfaces/NotificationData";
+import { Tag } from "../interfaces/Tag";
 import { Themes } from "../interfaces/Themes";
 import { User } from "../interfaces/User";
 import { UserInput } from "../interfaces/UserInput";
@@ -62,6 +64,13 @@ export interface INotificationContainerState {
     }
 }
 
+export interface ITagsPageState {
+    tagList: Tag[],
+    filterTagsList: Tag[],
+    isTagsModalHidden: boolean,
+    isDataLoading: boolean,
+}
+
 export interface IModalDeleteCourse {
     courseForDeleteId: number
 }
@@ -73,12 +82,19 @@ export interface IPaymentFormState {
     isDataLoading: boolean
 }
 
-export interface IGroupInfoComponent{
-    groupToView: Group | undefined;
-    isDataLoading: boolean;
-}
-
 export interface ILesson {
     lessonList: Lesson[];
     isDataLoading: boolean;
+}
+
+export interface IGroupInfoComponent{
+    groupToView: Group;
+    isDataLoading: boolean;
+    studentsGroup: User[];
+}
+
+export interface IAttendance {
+    attendanceList: Attendance[]
+    studentsByGroup: User[]
+    isDataLoading: boolean
 }

@@ -37,6 +37,10 @@ function NavMenu(props: NavMenuProps) {
                     (props.roleId === Role.Teacher || props.roleId === Role.Methodist) &&
                     <NavMenuSimpleLink route="courses-page" faIcon="university" label="Курсы" />
                 }
+                                {
+                    (props.roleId === Role.Teacher || props.roleId === Role.Methodist) &&
+                    <NavMenuSimpleLink route="attendance" faIcon="university" label="Журнал в разработке"/>
+                }
                 {
                     (props.roleId === Role.Teacher || props.roleId === Role.Methodist) &&
                     <NavMenuSimpleLink route="lessons" faIcon="university" label="Занятия"/>

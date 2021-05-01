@@ -9,7 +9,9 @@ export const userRegisterUrl: string = 'User/register';
 export const userRegisterFormUrl:string = "user-page/register";
 export const userEditUrl: string = "user-page";
 export const lessonsUrl: string = 'Lesson/by-group';
+export const lessonAttendance: string = 'Lesson/';
 
 //initials
 export const UNSELECTED_ROLE:number = 0;
 export const UNSET_USER_ID_FOR_USER_PAGE:number = -1;
+export const tagsUrl: string = 'Tag';

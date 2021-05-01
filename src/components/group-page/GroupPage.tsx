@@ -2,7 +2,8 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { IRootState } from "../../store";
 import GroupInfoComponent from "./group-info-component/GroupInfoComponent";
-import "./GroupPage.css"
+
+
 
 
 function GroupPage() {
