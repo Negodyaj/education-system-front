@@ -1,6 +1,7 @@
 import { DataNewCourse } from "../components/courses-page/NewCourse";
 import { Course } from "../interfaces/Courses";
 import { Group } from "../interfaces/Group";
+import { Lesson } from "../interfaces/Lesson";
 import NotificationData from "../interfaces/NotificationData";
 import { Themes } from "../interfaces/Themes";
 import { User } from "../interfaces/User";
@@ -74,5 +75,10 @@ export interface IPaymentFormState {
 
 export interface IGroupInfoComponent{
     groupToView: Group | undefined;
+    isDataLoading: boolean;
+}
+
+export interface ILesson {
+    lessonList: Lesson[];
     isDataLoading: boolean;
 }

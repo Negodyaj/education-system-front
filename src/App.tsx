@@ -27,6 +27,7 @@ import React, { useState } from 'react';
 import { userEditUrl, userListUrl, userRegisterFormUrl } from './shared/consts';
 import UserPage from './components/user-page/UserPage';
 import { ReactComponent as Logo } from './img/devedu.svg';
+import LessonsByGroup from './components/group-page/lesson-list-component/LessonsByGroup';
 import CoursePage from './components/courses-page/course-page/CoursePage';
 
 function App() {
@@ -63,7 +64,7 @@ function App() {
                 </div>
                 <div className="nav-menu">
                     {
-                        (appState.app.isLoggedIn)
+                        !!getToken()
                         &&
                         <NavMenu roleId={appState.roleSelector.currentUserRoleId} onHide={onHide}/>
                     }
@@ -116,6 +117,15 @@ function App() {
                                     }
                                     <Route path="/course/:id/edition" children={<CourseEdition />} />
                                     <Route path="/course/:id" children={<CoursePage />} />
+                                    {
+                                        appState.roleSelector.currentUserRoleId === Role.Teacher &&
+                                        <Route path="/lessons">
+                                            <LessonsByGroup />
+                                            <Helmet>
+                                                <title>Занятия</title>
+                                            </Helmet> 
+                                        </Route>
+                                    }
                                     {
                                         appState.roleSelector.currentUserRoleId !== Role.Student &&
                                         <Route path="/tags-page">
