@@ -27,6 +27,7 @@ import React, { useState } from 'react';
 import { userEditUrl, userListUrl, userRegisterFormUrl } from './shared/consts';
 import UserPage from './components/user-page/UserPage';
 import { ReactComponent as Logo } from './img/devedu.svg';
+import Loader from './shared/components/loader/Loader';
 
 function App() {
     const dispatch = useDispatch();
@@ -64,7 +65,7 @@ function App() {
                     {
                         !!getToken()
                         &&
-                        <NavMenu roleId={appState.roleSelector.currentUserRoleId} onHide={onHide}/>
+                        <NavMenu roleId={appState.roleSelector.currentUserRoleId} onHide={onHide} />
                     }
                 </div>
             </aside>
@@ -136,7 +137,6 @@ function App() {
                                         </Helmet>
                                     </Route>
                                 </Switch>
-                                <NotificationContainer />
                             </>
                             :
                             <Switch>
@@ -150,8 +150,10 @@ function App() {
                                 </Route>
                             </Switch>
                     }
+                    <NotificationContainer />
                 </main>
             </div>
+            <Loader />
         </div>
     );
 }
