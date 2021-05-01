@@ -48,3 +48,8 @@ opacity: 0.2;
     margin-left: 20px;
 }
 
+.tags-list .select-delete {
+    display: flex;
+    justify-content: space-around;
+    height: 55px;
+}

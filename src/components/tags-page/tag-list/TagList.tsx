@@ -4,6 +4,9 @@ import { Tag } from "../../../interfaces/Tag";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteTagThunk, getTags } from "../../../store/tags-page/thunk";
 import { IRootState } from "../../../store";
+import { RoundButton, CommonButton } from "../buttonStyledComponent";
+
+
 
 
 interface TagListProps {
@@ -25,16 +28,14 @@ function TagList(props: TagListProps) {
             <>
                 {
                     pageState.filterTagsList.map((item) =>
-
                     (
                         <div className="tag-row">
                             <div className="tag"> {item.name} </div>
-                            <button className='button-round' onClick={() => deleteTag(item)}>
+                            <RoundButton as='button' onClick={() => deleteTag(item)}>
                                 <FontAwesomeIcon icon="trash" />
-                            </button>
+                            </RoundButton>
                         </div>
                     )
-
                     )
                 }
             </>
