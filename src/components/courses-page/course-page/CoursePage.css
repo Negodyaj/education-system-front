@@ -1,0 +1,91 @@
+.course-read-only-container {
+    display: grid;
+    grid-template-rows: 70px 1fr;
+    width: 1050px;
+    margin: 0 auto;
+}
+
+.course-read-only-header {
+    font-family: 'Montserrat';
+    font-weight: 600;
+    font-size: 20px;
+    border-bottom: 1px solid rgba(39, 45, 59, .15);
+    text-align: center;
+}
+
+.course-read-only {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.program-course-read-only-container, .materials-course-read-only-container {
+    display: grid;
+    grid-template-rows: 60px 1fr;
+}
+
+.program-course-read-only-header-button-open, .materials-course-read-only-header-button-open {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    outline: none;
+    border: none;
+    background-color: #00CCF2;
+    margin-right: 20px;
+    cursor: pointer;
+    color: #F5FBFF;
+}
+
+.program-course-read-only-header-button-open:focus, .materials-course-read-only-header-button-open:focus {
+    outline: none;
+    border: none;
+}
+
+
+.theme:hover, .material:hover{
+    background-color: rgba(0, 211, 248, 0.15);
+    border-radius: 5px;
+} 
+.program-course-read-only-header, .materials-course-read-only-header {
+    display: flex;
+    justify-content: flex-start;
+    padding-left: 20px;
+    align-items: center;
+    height: 40px;
+    border-radius: 20px;
+    font-family: 'Montserrat';
+    font-weight: 400;
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+.program-course-read-only, .materials-course-read-only {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 900px;
+    margin: 0 auto;
+}
+
+.theme-course-read-only, .material-course-read-only {
+    display: grid;
+    grid-template-columns: 90% 10%;
+    width: inherit;
+    height: 50px;
+    border-bottom: 1px solid rgba(39, 45, 59, .15);
+    font-family: 'Montserrat';
+    font-weight: 400;
+    font-size: 16px;
+}
+
+.theme-name-course-read-only, .material-content-course-read-only {
+    display: flex;
+    justify-content: flex-start;
+    padding-left: 10px;
+    align-items: center;
+}
+
+.link-material-course-read-only {
+    text-decoration: none;
+    color: black;
+}

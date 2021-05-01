@@ -97,3 +97,8 @@
     border: none;
 }
 
+.current-course-name { 
+    text-decoration: none; 
+    color: black; 
+} 
+

@@ -1,6 +1,6 @@
 
 import { Course } from "../../interfaces/Courses";
-import { CourseAddEnd, CourseCourseIdEnd, CourseDeleteEnd, CourseEnd, CourseIdThemeIdAddEnd, CourseIdThemeIdDeleteEnd, CourseThemesEnd, TagAddEnd, TagDeleteEnd, TagEnd, UserEnd, UserRegisterEnd, UserUserDeleteIdEnd, UserUserUpdateIdEnd } from "../../shared/endpointConsts";
+import { CourseAddEnd, CourseCourseIdEnd, CourseDeleteEnd, CourseEnd, CourseIdThemeIdAddEnd, CourseIdThemeIdDeleteEnd, CourseThemesEnd, PaymentAddEnd, PaymentEnd, RoleDeleteEnd, TagAddEnd, TagDeleteEnd, TagEnd, UserEnd, UserRegisterEnd, UserUserDeleteIdEnd, UserUserUpdateIdEnd } from "../../shared/endpointConsts";
 import { makeErrorText, makeNotification } from "../../shared/helpers/notificationHelpers";
 import NotificationData from "../../interfaces/NotificationData";
 import { Themes } from "../../interfaces/Themes";
@@ -19,17 +19,20 @@ import { User } from "../../interfaces/User";
 import { UserRegisterResponse } from "../../interfaces/UserRegisterResponse";
 import { UserDelete } from "../../interfaces/UserDelete";
 import { Tag } from "../../interfaces/Tag";
+import { PaymentResponse } from "../../components/interfaces/PaymentResponse";
+import { isPaymentResponseArr } from "../type-guards/paymentResponseArr";
+import { isPaymentResponse } from "../type-guards/paymentResponse";
 
 export enum nType {
     Error = 'error',
     Success = 'success'
 }
-export interface responseHandlerItem {
+export interface ResponseHandlerItem {
     readonly notifications: (response?: any) => { [key in nType]: NotificationData | undefined },
     readonly isT: ((data: any) => data is any) | undefined;
 }
 export interface responseHandler {
-    readonly [url: string]: responseHandlerItem
+    readonly [url: string]: ResponseHandlerItem
 }
 export const responseHandlers: responseHandler = {
     [UserEnd]: {
@@ -135,6 +138,7 @@ export const responseHandlers: responseHandler = {
         },
         isT: (data: any): data is Themes => isThemeDelete(data)
     },
+   
     [TagEnd]: {
         notifications: (response?: any) => {
             return ({
@@ -162,5 +166,26 @@ export const responseHandlers: responseHandler = {
         },
         isT: undefined
     }
+    // [PaymentAddEnd]: {
+    //     notifications: (response?: any) => {
+    //         return ({
+    //             [nType.Error]: makeNotification(nType.Error, makeErrorText(response)),
+    //             [nType.Success]: makeNotification(nType.Success, ('Оплата пользователю ' 
+    //             + (response as PaymentResponse)?.user?.firstName 
+    //             + (response as PaymentResponse)?.user?.lastName 
+    //             + ' назначена'))
+    //         })
+    //     },
+    //     isT: (data: any): data is PaymentResponse => isPaymentResponse(data)
+    // },
+    // [PaymentEnd]: {
+    //     notifications: (response?: any) => {
+    //         return ({
+    //             [nType.Error]: makeNotification(nType.Error, makeErrorText(response)),
+    //             [nType.Success]: undefined
+    //         })
+    //     },
+    //     isT: (data: any): data is PaymentResponse[] => isPaymentResponseArr(data)
+    // }
 
 }

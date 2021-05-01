@@ -1,9 +1,13 @@
-import { UserInput } from "../../interfaces/UserInput";
-import { USER_TO_EDIT_WRETCH_FAIL, USER_TO_EDIT_WRETCH_LOADED, USER_TO_EDIT_WRETCH_LOADING, USER_TO_VIEW_WRETCH_FAIL, USER_TO_VIEW_WRETCH_LOADED, USER_TO_VIEW_WRETCH_LOADING } from "../actionTypes";
+import { User } from "../../interfaces/User";
+import { UNSET_USER_ID_FOR_USER_PAGE } from "../../shared/consts";
+import { convertUserToUserInput } from "../../shared/converters/userToUserInput";
+import { convertUserToUserUpdate } from "../../shared/converters/userToUserUpdate";
+import { USER_IS_SENDING, USER_TO_EDIT_ID_FOR_USER_PAGE, USER_SENDING_SUCCESS, USER_TO_EDIT_LOADING, USER_TO_EDIT_LOADED, USER_TO_EDIT_FAIL, USER_SENDING_FAIL } from "../actionTypes";
 import { IUserPage } from "../state";
 import { UserPageActions } from "./action-creators";
 
-const INIT_USER_TO_REGISTER: UserInput = {
+export const INIT_USER: User = {
+    id: 0,
     firstName: "",
     lastName: "",
     birthDate: "",
@@ -12,30 +16,40 @@ const INIT_USER_TO_REGISTER: UserInput = {
     phone: "",
     userPic: "",
     email: "",
+    contractNumber: 0,
     roles: []
 }
 
 const initialState: IUserPage = {
-    userToView: undefined,
-    userToEditId: undefined,
-    userToEdit: undefined,
-    userToRegister: INIT_USER_TO_REGISTER,
-    isEditModeOn: false,
-    isDataLoading: false
+    userForUserPage: INIT_USER,
+    userForUserPageId: UNSET_USER_ID_FOR_USER_PAGE,
+    isReadonly: false,
+    isDataLoading: true
 };
 export function userPageReducer(state: IUserPage = initialState, action: UserPageActions): IUserPage {
     switch (action.type) {
-        case USER_TO_VIEW_WRETCH_LOADING:
-            return { ...state, isDataLoading: true }
-        case USER_TO_VIEW_WRETCH_LOADED:
-            return { ...state, userToView: action.payload, isDataLoading: false };
-        case USER_TO_VIEW_WRETCH_FAIL:
-            return { ...state, isDataLoading: false };
-        case USER_TO_EDIT_WRETCH_LOADING:
+        case USER_TO_EDIT_ID_FOR_USER_PAGE:
+            return { ...state, userForUserPageId: action.payload, isDataLoading: true }
+        case USER_TO_EDIT_LOADING:
             return { ...state, isDataLoading: true };
-        case USER_TO_EDIT_WRETCH_LOADED:
-            return { ...state, userToEdit: action.payload, isEditModeOn: true, isDataLoading: false };
-        case USER_TO_EDIT_WRETCH_FAIL:
+        case USER_TO_EDIT_LOADED:
+            return {
+                ...state,
+                userForUserPage: action.payload
+                    ?
+                    { ...convertUserToUserUpdate(action.payload) }
+                    :
+                    { ...convertUserToUserInput(INIT_USER) },
+                userForUserPageId: action.payload?.id as number,
+                isDataLoading: false
+            };
+        case USER_TO_EDIT_FAIL:
+            return { ...state, isDataLoading: false };
+        case USER_IS_SENDING:
+            return { ...state, isDataLoading: true };
+        case USER_SENDING_SUCCESS:
+            return { ...state, isDataLoading: false };
+        case USER_SENDING_FAIL:
             return { ...state, isDataLoading: false };
         default:
             return state;

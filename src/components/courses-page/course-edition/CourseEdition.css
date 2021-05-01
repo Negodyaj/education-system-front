@@ -1,6 +1,6 @@
 .course-edition-container {
     display: grid;
-    grid-template-rows: 50px 1fr;
+    grid-template-rows: 70px 1fr;
     width: 1050px;
     margin: 0 auto;
 }
@@ -10,6 +10,7 @@
     font-weight: 600;
     font-size: 20px;
     border-bottom: 1px solid rgba(39, 45, 59, .15);
+    text-align: center;
 }
 
 .course-update {
@@ -28,18 +29,6 @@
 .new-themes-course, .program-current-course-container, .materials-current-course-container {
     display: grid;
     grid-template-rows: 60px 1fr;
-}
-
-.program-course-header{
-    cursor: pointer;
-    z-index: 1;
-    background-color: white;
-}
-
-.materials-course-header {
-    cursor: pointer;
-    z-index: 1;
-    background-color: white;
 }
 
 .program-course-header-button-open, .materials-course-header-button-open, .new-themes-header-button-add {
@@ -64,11 +53,6 @@
     grid-template-columns: 1fr 50px;
 }
 
-.theme:hover{
-    background-color: rgba(0, 211, 248, 0.15);
-    border-radius: 5px;
-    cursor: pointer;
-} 
 .new-themes-header-text, .program-course-header, .materials-course-header {
     display: flex;
     justify-content: flex-start;
@@ -101,82 +85,7 @@
     border-bottom: 1px solid rgba(39, 45, 59, .15);
 }
 
-.new-theme:hover{
-    background-color: rgba(0, 211, 248, 0.15);
-    border-radius: 5px;
-    cursor: pointer;
-} 
-
-.button-add-theme {
-    background-color: rgba(255, 255, 255, 0);
-    background-size: contain;
-    width: 32px;
-    height: 32px;
-    outline: none;
-    border: none;
-}
-
-.button-add-theme:focus {
-    border: none;
-    outline: none;
-}
-
-@keyframes accordionEffectOpen {
-    to {
-        opacity: 1;
-        height: max-content;
-        margin-top: 0;
-    }
-}
-
-@keyframes accordionEffectClose {
-    to {
-        margin-top: -70px;
-        opacity: 0;
-        height: 0;
-    }
-}
-
-@keyframes accordionEffectOpenMaterial {
-    to {
-        opacity: 1;
-        height: max-content;
-        margin-top: 0;
-    }
-}
-
-@keyframes accordionEffectCloseMaterial {
-    to {
-        margin-top: -70px;
-        opacity: 0;
-        height: 0;
-    }
-}
-
-.program-course.visible{
-    margin-top: -50px;
-    animation: .6s forwards accordionEffectOpen;
-}
-
-.program-course.unvisible{
-    animation: .3s forwards accordionEffectClose;  
-}
-
-.materials-course-header.visible {
-    margin-top: -50px;
-    animation: .6s forwards accordionEffectOpenMaterial;
-}
-
-.materials-course-header.unvisible {
-    animation: .3s forwards accordionEffectOpenMaterial;  
-}
-
-.program-course{
-    width: 600px;
-    margin-top: -50px;
-}
-
-.theme {
+.theme, .material {
     display: grid;
     grid-template-columns: 90% 10%;
     width: inherit;
@@ -187,30 +96,60 @@
     font-size: 16px;
 }
 
-.theme-name {
+.theme:hover, .new-theme:hover, .material:hover{
+    background-color: rgba(0, 211, 248, 0.15);
+    border-radius: 5px;
+} 
+
+.button-add-theme {
+    background-color: rgba(255, 255, 255, 0);
+    background-size: contain;
+    width: 32px;
+    height: 32px;
+    outline: none;
+    border: none;
+    cursor: pointer;
+}
+
+.button-add-theme:focus {
+    border: none;
+    outline: none;
+}
+
+.program-course, .materials-course{
+    width: 600px;
+}
+
+.theme-name, .material-content {
     display: flex;
     justify-content: flex-start;
     padding-left: 10px;
     align-items: center;
 }
 
-.theme-delete {
+.theme-delete, .material-delete {
     display: flex;
     justify-content: center;
     align-items: center;
 } 
 
-.button-theme-delete {
+.button-theme-delete, .button-material-delete {
     background-color: rgba(255, 255, 255, 0);
     background-size: contain;
     width: 40px;
     height: 40px;
     outline: none;
     border: none;
+    cursor: pointer;
 }
 
-.button-theme-delete:focus {
+.button-theme-delete:focus, .button-material-delete:focus {
     border: none;
     outline: none;
+}
+
+.link-material {
+    text-decoration: none;
+    color: black;
 }
 

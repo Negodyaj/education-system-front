@@ -1,0 +1,38 @@
+.role-selector.container {
+    margin: 0;
+    width: 450px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.role-selector.label, .role-selector.select-btn-container {
+    display: flex;
+}
+
+.role-selector.label {
+    justify-content: flex-start;
+    font-family: Montserrat;
+    font-weight: bold;
+}
+
+.single-select {
+    width: 272px;
+}
+
+.role-selector.select-btn-container {
+    justify-content: center;
+    padding-top: 10px;
+}
+
+.role-selector.select-btn-container.hidden {
+    height: 0px;
+    overflow: hidden;
+    transition: .5s ease;
+    opacity: 0;
+}
+
+.role-selector.select-btn-container.visible {
+    transition: .5s ease;
+    opacity: 1;
+}

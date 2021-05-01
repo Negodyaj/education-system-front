@@ -18,7 +18,7 @@ export const getCourses = () => {
         dispatch(setCoursesListIsLoadingAction());
         sendGetRequest<Course[]>(coursesUrl, isCourseArr)
             .then(courses => dispatch(setCoursesListWasLoadedAction(courses)))
-            .catch(error => dispatch(setCoursesListFailAction(error)))
+            .catch(error => dispatch(setCoursesListFail(error)))
     }
 }
 
