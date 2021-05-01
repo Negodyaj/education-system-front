@@ -1,4 +1,4 @@
-function ChevronArrow() {
+function ChevronArrowSVG() {
     return (
         <svg
             width="20"
@@ -10,4 +10,4 @@ function ChevronArrow() {
         </svg>
     )
 }
-export default ChevronArrow;
+export default ChevronArrowSVG;

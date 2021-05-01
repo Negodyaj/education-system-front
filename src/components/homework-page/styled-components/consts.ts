@@ -8,30 +8,39 @@ export const HomeworkPageHeader = styled.div`
 `;
 export const HomeworkSelectorContainer = styled.div``;
 export const CourseItem = styled.div`
-    height: 158px;
+    min-height: 0px;
+    width: max-content;
+    border-bottom: 1px solid rgba(39, 45, 59, 0.15);
+    border-radius: 20px;
+    padding: 24px;
+    & + & {
+        margin-top: 10px;
+    }
 `;
+export const CourseItemHeader = styled.div`
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    height: 68px;
+    align-content: center;
+`
 export const CourseName = styled.div`
     font-weight: 700;
 `;
 export const HomeworkItem = styled.div`
-    height: 29px;
-    
-    & + & {
-        margin-top: 10px;
-    }
-    
-    & :nth-child(2) {
-        display: flex;
-        flex-direction: column;
-    }
-
+    height: 50px;
     display:grid;
-    grid-template-columns: 500px 200px 100px 100px 100px;
+    grid-template-columns: 410px 150px 100px max-content;
+    border-bottom: 1px solid rgba(39, 45, 59, 0.15);
+    padding-right: 3px;
 `;
+export const HomeworkProp = styled.div`
+    display: flex;
+    align-items: center;
+`
 export const HomeworkThemeName = styled.p`
-    margin: 0;
-
-    & + & {
-        margin-top: 5px;
-    }
+    margin: 0;    
+    display: flex;
+    flex-direction: column;
+    align-self: center;
 `;

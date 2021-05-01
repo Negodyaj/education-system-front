@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { IRootState } from "../../../../store";
-import ChevronArrow from "../buttons/ChevronArrow";
+//import ChevronArrow from "../buttons/ChevronArrowSVG";
 import { openListItem } from "../../../../store/user-list-page/action-creators";
 import { getEnToRuTranslation } from "../../../../shared/converters/enumToDictionaryEntity";
 import { Role } from "../../../../enums/role";
@@ -30,7 +30,7 @@ function UserListBodyVerticalNarrow() {
                                     className={appState.userListPage.openedItemId === u.id ? ACTIVE : NOT_ACTIVE}
                                     type="button"
                                     onClick={() => hamburgerOnClick(u.id)}>
-                                    <ChevronArrow />
+                                    {/* <ChevronArrow /> */}
                                 </button>
                             </div>
                         </div>

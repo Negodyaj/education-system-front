@@ -1,5 +1,7 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
+import { CommonButton } from "../../shared/styled-components/buttonStyledComponent";
 import { PageTitle } from "../../shared/styled-components/consts";
 import { homeworkList } from "../../shared/tmp-mock-data/hw/homeworkList";
 import { loadHomeworkSuccess } from "../../store/homework-page/action-creators";
@@ -15,7 +17,10 @@ function HomeworkPage() {
     <HomeworkPageContainer>
       <HomeworkPageHeader>
         <PageTitle>Домашние задания</PageTitle>
-        <button>Создать</button>
+        <CommonButton>
+          <FontAwesomeIcon icon="plus" />
+          <span> Добавить</span>
+        </CommonButton>
       </HomeworkPageHeader>
       <HomeworkSelector />
     </HomeworkPageContainer>
