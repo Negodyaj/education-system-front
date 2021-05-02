@@ -60,6 +60,7 @@ export type HomeworksByCourse = { [courseName: string]: Homework[] }
 export interface IHomeworkPageState {
     homeworkListDefault: Homework[];
     homeworkListMethodist: HomeworksByCourse;
+    openedCourseName: string[];
 }
 export interface INotificationContainerState {
     notifications: {

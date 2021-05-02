@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { ACTIVE } from "../../../shared/styled-components/consts";
 export const HomeworkPageContainer = styled.div`
     font-size: 14px;
 `;
@@ -9,13 +10,16 @@ export const HomeworkPageHeader = styled.div`
 export const HomeworkSelectorContainer = styled.div``;
 export const CourseItem = styled.div`
     min-height: 0px;
+    overflow: hidden;
     width: max-content;
     border-bottom: 1px solid rgba(39, 45, 59, 0.15);
     border-radius: 20px;
     padding: 24px;
+    transition: 0.52s;
     & + & {
         margin-top: 10px;
     }
+    ${props => props.className === ACTIVE ? "max-height: 500px" : "max-height: 20px"}
 `;
 export const CourseItemHeader = styled.div`
     display: flex;
@@ -28,7 +32,7 @@ export const CourseName = styled.div`
     font-weight: 700;
 `;
 export const HomeworkItem = styled.div`
-    height: 50px;
+    min-height: 50px;
     display:grid;
     grid-template-columns: 410px 150px 100px max-content;
     border-bottom: 1px solid rgba(39, 45, 59, 0.15);
