@@ -33,10 +33,10 @@ function LessonsTableByGroup() {
                     <ColumnLessonsTable>
                         <ButtonActions>
                             <RoundButton>
-                                <FontAwesomeIcon icon="edit" />
+                                <FontAwesomeIcon icon="trash" />
                             </RoundButton>
                             <RoundButton>
-                                <FontAwesomeIcon icon="trash" />
+                                <FontAwesomeIcon icon="edit" />
                             </RoundButton>
                         </ButtonActions>
                     </ColumnLessonsTable>

@@ -1,10 +1,11 @@
-import { LESSON_LIST_WRETCH_FAIL, LESSON_LIST_WRETCH_LOADED, LESSON_LIST_WRETCH_LOADING } from "../../actionTypes";
+import { LESSON_LIST_WRETCH_FAIL, LESSON_LIST_WRETCH_LOADED, LESSON_LIST_WRETCH_LOADING, LESSON_TOGGLE_MODAL_ATTENDANCE } from "../../actionTypes";
 import { ILesson } from "../../state";
 import { LessonListActions } from "./action-creators";
 
 const initialState: ILesson = {
     lessonList: [],
-    isDataLoading: false
+    isDataLoading: false,
+    isOpenModalAttendance: false
 };
 export function lessonByGroupReducer(state: ILesson = initialState, action: LessonListActions): ILesson {
     switch (action.type) {
@@ -14,6 +15,8 @@ export function lessonByGroupReducer(state: ILesson = initialState, action: Less
             return { ...state, lessonList: action.payload, isDataLoading: false };
         case LESSON_LIST_WRETCH_FAIL:
             return { ...state, lessonList: [], isDataLoading: false };
+        case LESSON_TOGGLE_MODAL_ATTENDANCE:
+            return { ...state, isOpenModalAttendance: !state.isOpenModalAttendance };
         default:
             return state;
     }

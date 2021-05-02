@@ -81,4 +81,5 @@ export interface IGroupInfoComponent{
 export interface ILesson {
     lessonList: Lesson[];
     isDataLoading: boolean;
+    isOpenModalAttendance: boolean;
 }

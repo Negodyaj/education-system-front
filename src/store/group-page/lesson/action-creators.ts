@@ -1,10 +1,11 @@
 import { Lesson } from "../../../interfaces/Lesson";
-import { LESSON_LIST_WRETCH_FAIL, LESSON_LIST_WRETCH_LOADED, LESSON_LIST_WRETCH_LOADING } from "../../actionTypes";
+import { LESSON_LIST_WRETCH_FAIL, LESSON_LIST_WRETCH_LOADED, LESSON_LIST_WRETCH_LOADING, LESSON_TOGGLE_MODAL_ATTENDANCE } from "../../actionTypes";
 
 export type LessonListActions =
     | ReturnType<typeof setLessonListIsLoading>
     | ReturnType<typeof setLessonListWasLoaded>
     | ReturnType<typeof setLessonListFail>
+    | ReturnType<typeof setIsOpenModalAttendance>
 
 export const setLessonListIsLoading = () => {
     return ({
@@ -24,4 +25,11 @@ export const setLessonListFail = (error: string) => {
         type: LESSON_LIST_WRETCH_FAIL,
         payload: error
     } as const);
+}
+
+export const setIsOpenModalAttendance = () => {
+    return ({
+        type: LESSON_TOGGLE_MODAL_ATTENDANCE,
+        payload: undefined
+    } as const)
 }
