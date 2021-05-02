@@ -1,5 +1,5 @@
 import { Dispatch } from "redux";
-import { DataNewCourse } from "../../components/courses-page/NewCourse";
+import { CourseInput } from "../../interfaces/CourseInput";
 import { Course } from "../../interfaces/Courses";
 import { sendDeleteRequest, sendGetRequest, sendPostRequest } from "../../services/http.service";
 import { isCourse } from "../../services/type-guards/course";
@@ -8,7 +8,13 @@ import { coursesUrl } from "../../shared/consts";
 import { makeNotification } from "../../shared/helpers/notificationHelpers";
 import { pushNotification } from "../notifications/action-creators";
 import { thunkResponseHandler } from "../thunkResponseHadlers";
-import { setCoursesListFailAction, setCoursesListIsLoadingAction, setCoursesListWasLoadedAction, showToggleModalCreateCourseAction, showToggleModalDeleteCourseAction } from "./action-creators";
+import {
+    setCoursesListFail,
+    setCoursesListIsLoadingAction,
+    setCoursesListWasLoadedAction,
+    showToggleModalCreateCourseAction,
+    showToggleModalDeleteCourseAction
+} from "./action-creators";
 
 
 const url = 'url';
@@ -31,19 +37,19 @@ export const deleteCourse =  (id: number) => {
                 dispatch(showToggleModalDeleteCourseAction(response.id));
                 dispatch(getCourses());
             })
-            .catch(error => dispatch(setCoursesListFailAction(error)));
+            .catch(error => dispatch(setCoursesListFail(error)));
     }
 }
 
-export const createCourse = (newCourse: DataNewCourse) => {
+export const createCourse = (newCourse: CourseInput) => {
     return (dispatch: Dispatch<any>) => {
-        sendPostRequest<Course>(`${coursesUrl}`, isCourse, newCourse)
+        sendPostRequest<Course>(`${coursesUrl}`, isCourse, {...newCourse, duration: +newCourse.duration})
             .then(course => {
                 let response = thunkResponseHandler(dispatch, course);
                 response && dispatch(pushNotification(makeNotification('success', `Курс ${(response as Course).name} успешно создан`)));
                 dispatch(showToggleModalCreateCourseAction());
                 dispatch(getCourses());
             })
-            .catch(error => dispatch(setCoursesListFailAction(error)));
+            .catch(error => dispatch(setCoursesListFail(error)));
     }
 }

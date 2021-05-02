@@ -1,4 +1,3 @@
-import { DataNewCourse } from "../components/courses-page/NewCourse";
 import { Attendance } from "../interfaces/Attendance";
 import { Course } from "../interfaces/Courses";
 import { Group } from "../interfaces/Group";
@@ -10,6 +9,7 @@ import { User } from "../interfaces/User";
 import { UserInput } from "../interfaces/UserInput";
 import { UserUpdate } from "../interfaces/UserUpdate";
 import { PaymentResponse } from "../components/interfaces/PaymentResponse";
+import { CourseInput } from "../interfaces/CourseInput";
 
 export interface ICoursePageState {
     courseList: Course[]
@@ -17,10 +17,7 @@ export interface ICoursePageState {
     isModalDelete: boolean
     isCourseDeleting: boolean
     isDataLoading: boolean
-    isNameNewCourseFilled: boolean
-    isDescriptionNewCourseFilled: boolean
-    isDurationNewCourseFilled: boolean
-    createCourseInputModel: DataNewCourse
+    createCourseInputModel: CourseInput
     idCourseForDelete: number
 }
 

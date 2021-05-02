@@ -6,7 +6,7 @@ export interface BaseInputSettings {
     registerOptions?: RegisterOptions;
 }
 export  interface InternalInputSettings extends BaseInputSettings {
-    inputType: 'text' | 'date' | 'picture';
+    inputType: 'text' | 'date' | 'picture' | 'number';
 }
 export interface ExternalInputSettings extends BaseInputSettings {
     inputType: 'singleSelect' | 'multiSelect';
@@ -119,11 +119,52 @@ export const getFormElementSettings = (key: InputNames): FormElementSettings => 
                     inputType: 'text'
                 }
             }
+        case InputNames.CourseName:
+            return {
+                label: "Название курса",
+                inputSettings: {
+                    name: key,
+                    inputType: "text",
+                    registerOptions: {
+                        required: "Введите название курса",
+                        min: {
+                            value: 2,
+                            message: 'Минимальное колличество символов 2'
+                        }
+                    }
+                }
+            }
+        case InputNames.CourseDescription:
+            return {
+                label: "Описание курса",
+                inputSettings: {
+                    name: key,
+                    inputType: "text",
+                    registerOptions: {
+                        required: "Введите описание курса",
+                        min: {
+                            value: 2,
+                            message: 'Минимальное колличество символов 2'
+                        }
+                    }
+                }
+            }
+        case InputNames.CourseDuration:
+            return {
+                label: "Продолжительность курса",
+                inputSettings: {
+                    name: key,
+                    inputType: "number",
+                    registerOptions: {
+                        required: "Введите продолжительность курса"
+                    }
+                }
+            }
         default: return {
             label: key,
             inputSettings: {
                 name: key,
-                inputType: 'text'
+                inputType: "text"
             }
         }
     }

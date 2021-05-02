@@ -1,37 +1,32 @@
 import './NewCourse.css';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import { showToggleModalCreateCourseAction } from '../../store/courses-page/action-creators';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { createCourse } from '../../store/courses-page/thunk';
-import { useForm } from 'react-hook-form';
-
-export interface DataNewCourse { 
-    name: string; 
-    description: string;
-    duration: number
-}
+import FormElement from '../../shared/components/form-elements/FormElement';
+import { InputNames } from '../../enums/inputNames';
+import { IRootState } from '../../store';
+import { CourseInput } from '../../interfaces/CourseInput';
+import { getFormElementSettings } from '../../shared/helpers/useFormRegisterSettingByKey';
+import { useEffect } from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
 
 function NewCourse() {
     const dispatch = useDispatch();
-    const { register, formState: { errors }, handleSubmit} = useForm<DataNewCourse>({
-        defaultValues:
-        {
-            name: undefined,
-            description: undefined,
-            duration: 1
-        }
-    });
+    const appState = useSelector((state: IRootState) => state)
+    const { register, formState, handleSubmit, getValues, setValue, ...methods } = useForm<CourseInput>();
 
     const closeModalWindow = () => {
         dispatch(showToggleModalCreateCourseAction());
     }
 
-    const showDataNewCourse = (dataNewCourse: DataNewCourse) => {
+    const createDataNewCourse = (dataNewCourse: CourseInput) => {
         dispatch(createCourse(dataNewCourse)) 
     }
 
-    const onSubmit = (dataCourse: DataNewCourse) => {
-        showDataNewCourse(dataCourse);
+    const onSubmit = (dataCourse: CourseInput) => {
+        createDataNewCourse(dataCourse);
+        console.log(dataCourse);
     }
 
     return(
@@ -43,46 +38,21 @@ function NewCourse() {
                         <FontAwesomeIcon icon='times'/>
                     </button>
                 </div>
-                <form onSubmit={handleSubmit(onSubmit)}>
-                    <div className="create-course">
-                        <div className='new-course-header'>Название курса</div>
-                        <div className="course-data">
-                            <input
-                                {...register('name', {
-                                    required: true,
-                                    minLength: 2
-                                })}
-                                type="text"
-                                className="course-name"
-                                placeholder='Введите название курса'
-                            />
-                        </div>
-                        { errors.name ? <div className="error-no-name">Заполните данное поле</div> : <div></div> }
-                        <div className='new-course-header'>Описание курса</div>
-                        <div className="course-data">
-                            <textarea
-                                {...register('description', {
-                                    required: true,
-                                    minLength: 2
-                                })}
-                                className="course-description"
-                                placeholder="Введите описание курса"
-                            />
-                        </div>
-                        { errors.description ? <div className="error-no-description">Заполните данное поле</div> : <div></div>} 
-                        <div className='new-course-header'>Продолжительность курса</div>
-                        <div className="course-data">
-                            <input
-                                {...register('duration', {
-                                    required: true,
-                                })}
-                                type="number"
-                                className="course-duration"
-                            />
-                            <div className="duration-course-text">месяца(ов)</div>
-                        </div>
+                <FormProvider
+                    register={register}
+                    formState={formState}
+                    handleSubmit={handleSubmit}
+                    getValues={getValues} setValue={setValue} {...methods}>
+                    <div>
+                        <form onSubmit={handleSubmit(onSubmit)}>
+                        {
+                            Object.keys(appState.coursePage.createCourseInputModel).map(key => {
+                                   return <FormElement key={key} formElementSettings={getFormElementSettings(key as InputNames)}></FormElement>
+                            })
+                        }
+                        </form>
                     </div>
-                </form>
+                </FormProvider>
                 <div className="select-delete">
                     <button className="button-select" onClick={closeModalWindow}>Отменить</button>
                     <button className="button-select" onClick={handleSubmit(onSubmit)}>Добавить</button>

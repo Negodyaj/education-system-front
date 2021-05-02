@@ -5,9 +5,11 @@ import { ExternalInputSettings, FormElementSettings } from "../../helpers/useFor
 import { getValidationPattern } from "../../validation-rules/validationPatterns";
 import DateInput from "./DateInput";
 import MultiSelectInput from "./MultiSelectInput";
+import NumberInput from "./NumberInput";
 import PictureInput from "./PictureInput";
 import SingleSelectInput from "./SingleSelectInput";
 import TextInput from "./TextInput";
+
 
 function FormElement(props: {
     formElementSettings: FormElementSettings;
@@ -23,6 +25,7 @@ function FormElement(props: {
         <div className="form-row">
             <label className="form-label">{props.formElementSettings.label}</label>
             {inputType === 'text' && <TextInput inputSettings={inputSettings}></TextInput>}
+            {inputType === 'number' && <NumberInput inputSettings={inputSettings}></NumberInput>}
             {inputType === 'date' && <DateInput inputSettings={inputSettings as ExternalInputSettings}></DateInput>}
             {inputType === 'multiSelect' && <MultiSelectInput inputSettings={inputSettings as ExternalInputSettings}></MultiSelectInput>}
             {inputType === 'singleSelect' && <SingleSelectInput inputSettings={inputSettings as ExternalInputSettings}></SingleSelectInput>}

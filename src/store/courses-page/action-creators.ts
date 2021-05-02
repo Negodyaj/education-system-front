@@ -1,3 +1,4 @@
+import { CourseInput } from "../../interfaces/CourseInput";
 import { Course } from "../../interfaces/Courses";
 import {
     COURSE_LIST_WRETCH_LOADING,
@@ -7,12 +8,11 @@ import {
     COURSE_LIST_TOGGLE_MODAL_DELETE_COURSE,
     COURSE_LIST_WRETCH_CREATE_COURSE,
 } from "../actionTypes"
-import { DataNewCourse } from "../../components/courses-page/NewCourse";
 
 export type CoursePageActions =
     | ReturnType<typeof setCoursesListIsLoadingAction>
     | ReturnType<typeof setCoursesListWasLoadedAction>
-    | ReturnType<typeof setCoursesListFailAction>
+    | ReturnType<typeof setCoursesListFail>
     | ReturnType<typeof showToggleModalCreateCourseAction>
     | ReturnType<typeof showToggleModalDeleteCourseAction>
     | ReturnType<typeof createCourseAction>
@@ -52,7 +52,7 @@ export const showToggleModalDeleteCourseAction = (id: number) => {
     } as const);
 }
 
-export const createCourseAction = (newCourse: DataNewCourse) => {
+export const createCourseAction = (newCourse: CourseInput) => {
     return ({
         type: COURSE_LIST_WRETCH_CREATE_COURSE,
         payload: newCourse

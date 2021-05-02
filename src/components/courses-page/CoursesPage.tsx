@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './CoursesPage.css';
 import ModalWindowDelete from './modal-window/ModalWindowDelete';
@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { IRootState } from '../../store';
 import { getCourses } from '../../store/courses-page/thunk';
 import { showToggleModalCreateCourseAction, showToggleModalDeleteCourseAction } from '../../store/courses-page/action-creators';
+import ConfirmationDialog from '../../shared/components/confirmation-dialog/ConfirmationDialog';
 
 function CoursesPage() {
 

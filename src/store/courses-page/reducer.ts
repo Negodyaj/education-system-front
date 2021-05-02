@@ -8,21 +8,23 @@ import {
     COURSE_LIST_WRETCH_LOADING,
     COURSE_LIST_TOGGLE_MODAL_DELETE_COURSE
 } from "../actionTypes";
-import { DataNewCourse } from "../../components/courses-page/NewCourse";
+import { CourseInput } from "../../interfaces/CourseInput";
+
+export const INIT_COURSE_TO_REGISTER: CourseInput = {
+    name: '',
+    description: '',
+    duration: 1
+}
 
 const baseInitialStateIdCourseForDelete = 0;
-
 const initialState: ICoursePageState = {
     courseList: [],
     isOpenModalCreateCourse: false,
     isModalDelete: false,
     isCourseDeleting: false,
     isDataLoading: false,
-    isNameNewCourseFilled: false,
-    isDescriptionNewCourseFilled: false,
-    isDurationNewCourseFilled: false,
     idCourseForDelete: baseInitialStateIdCourseForDelete,
-    createCourseInputModel: {} as DataNewCourse
+    createCourseInputModel: INIT_COURSE_TO_REGISTER
 };
 export function coursePageReducer(state: ICoursePageState = initialState, action: CoursePageActions): ICoursePageState {
     switch (action.type) {
@@ -36,9 +38,6 @@ export function coursePageReducer(state: ICoursePageState = initialState, action
             return {
                 ...state,
                 isOpenModalCreateCourse: !state.isOpenModalCreateCourse,
-                isNameNewCourseFilled: false,
-                isDescriptionNewCourseFilled: false,
-                isDurationNewCourseFilled: false
             };
         case COURSE_LIST_TOGGLE_MODAL_DELETE_COURSE:
             return { ...state, isModalDelete: !state.isModalDelete, idCourseForDelete: action.payload};

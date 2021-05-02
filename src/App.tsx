@@ -21,9 +21,6 @@ import GroupPage from './components/group-page/GroupPage';
 import { Helmet } from "react-helmet";
 import { toggleRoleSelector, unsetCurrentUser } from './store/role-selector/action-creator';
 import { getToken, unsetToken } from './services/auth.service';
-import { FormProvider, useForm } from 'react-hook-form';
-import { UserInput } from './interfaces/UserInput';
-import LessonList from './components/group-page/lesson-list-component/LessonList';
 import Attendance from './components/group-page/attendance/Attendance';
 import React, { useState } from 'react';
 import { userEditUrl, userListUrl, userRegisterFormUrl } from './shared/consts';
@@ -117,7 +114,7 @@ function App() {
                                             </Helmet>
                                         </Route>
                                     }
-                                    <Route path="/course/:id/edition" children={<CourseEdition />} />
+                                    {/* <Route path="/course/:id/edition" children={<CourseEdition />} /> */}
                                     <Route path="/course/:id" children={<CoursePage />} />
                                     {
                                         appState.roleSelector.currentUserRoleId === Role.Teacher &&
