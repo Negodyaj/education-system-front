@@ -58,11 +58,14 @@ export interface IRoleSelector {
 }
 
 export type HomeworksByCourse = { [courseName: string]: Homework[] }
+export type HomeworksByGroup = { [groupId: number]: Homework[] }
 export interface IHomeworkPageState {
-    pageOptions: HomeworkPageOptions;
+    pageOptionsByRole: { [role: string]: HomeworkPageOptions };
     homeworkListDefault: Homework[];
     homeworkListMethodist: HomeworksByCourse;
+    homeworkListTeacher: HomeworksByGroup;
     openedCourseName: string[];
+    openedGroupId: number[];
 }
 export interface INotificationContainerState {
     notifications: {

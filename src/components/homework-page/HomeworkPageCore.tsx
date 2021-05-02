@@ -1,6 +1,8 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { Role } from "../../enums/role";
 import { PageTitle } from "../../shared/styled-components/consts";
+import { IRootState } from "../../store";
 import AddButton from "./buttons/AddButton";
 import { HomeworkButtonsCellOptions } from "./homework-selector/homeworkButtonsCell/HomeworkButtonsCell";
 import { HomeworkSelector } from "./homework-selector/HomeworkSelector";
@@ -15,7 +17,6 @@ export interface HomeworkPageOptions {
 }
 
 function HomeworkPageCore(props: { settings: HomeworkPageOptions }) {
-
     return (
         <HomeworkPageContainer>
             <HomeworkPageHeader>

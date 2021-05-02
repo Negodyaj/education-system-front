@@ -8,19 +8,21 @@ export const HomeworkPageHeader = styled.div`
     justify-content: space-between;
 `;
 export const HomeworkSelectorContainer = styled.div``;
-export const CourseItem = styled.div`
-    min-height: 0px;
-    overflow: hidden;
-    width: max-content;
-    border-bottom: 1px solid rgba(39, 45, 59, 0.15);
-    border-radius: 20px;
-    padding: 24px;
-    transition: 0.52s;
-    & + & {
-        margin-top: 10px;
-    }
-    ${props => props.className === ACTIVE ? "max-height: 500px" : "max-height: 20px"}
+const HomeworkItemsGroup = styled.div`
+min-height: 0px;
+overflow: hidden;
+width: max-content;
+border-bottom: 1px solid rgba(39, 45, 59, 0.15);
+border-radius: 20px;
+padding: 24px;
+transition: 0.52s;
+& + & {
+    margin-top: 10px;
+}
+${props => props.className === ACTIVE ? "max-height: 500px" : "max-height: 20px"}
 `;
+export const CourseItem = styled(HomeworkItemsGroup)``;
+export const GroupItem = styled(HomeworkItemsGroup)``;
 export const CourseItemHeader = styled.div`
     display: flex;
     justify-content: space-between;
