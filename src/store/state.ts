@@ -8,6 +8,7 @@ import { User } from "../interfaces/User";
 import { UserInput } from "../interfaces/UserInput";
 import { PaymentResponse } from "../components/interfaces/PaymentResponse";
 import { Homework } from "../interfaces/Homework";
+import { HomeworkPageOptions } from "../components/homework-page/HomeworkPageCore";
 
 export interface IAppState {
     isLoggedIn: boolean;
@@ -58,6 +59,7 @@ export interface IRoleSelector {
 
 export type HomeworksByCourse = { [courseName: string]: Homework[] }
 export interface IHomeworkPageState {
+    pageOptions: HomeworkPageOptions;
     homeworkListDefault: Homework[];
     homeworkListMethodist: HomeworksByCourse;
     openedCourseName: string[];

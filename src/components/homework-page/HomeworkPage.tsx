@@ -1,29 +1,18 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { CommonButton } from "../../shared/styled-components/buttonStyledComponent";
-import { PageTitle } from "../../shared/styled-components/consts";
+import { useDispatch, useSelector } from "react-redux";
 import { homeworkList } from "../../shared/tmp-mock-data/hw/homeworkList";
+import { IRootState } from "../../store";
 import { loadHomeworkSuccess } from "../../store/homework-page/action-creators";
-import { HomeworkSelector } from "./homework-selector/HomeworkSelector";
-import { HomeworkPageContainer, HomeworkPageHeader } from "./styled-components/consts";
+import HomeworkPageCore from "./HomeworkPageCore";
 
 function HomeworkPage() {
+  const appState = useSelector((state: IRootState) => state);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(loadHomeworkSuccess(homeworkList));
   }, [])
   return (
-    <HomeworkPageContainer>
-      <HomeworkPageHeader>
-        <PageTitle>Домашние задания</PageTitle>
-        <CommonButton>
-          <FontAwesomeIcon icon="plus" />
-          <span> Добавить</span>
-        </CommonButton>
-      </HomeworkPageHeader>
-      <HomeworkSelector />
-    </HomeworkPageContainer>
+    <HomeworkPageCore settings={appState.homeworkPage.pageOptions} />
   )
 }
 export default HomeworkPage;
