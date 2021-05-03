@@ -1,12 +1,10 @@
 import { faClone } from "@fortawesome/free-solid-svg-icons";
 import { HomeworkPageOptions } from "../../components/homework-page/HomeworkPageCore";
 import { Role } from "../../enums/role";
-import { Homework } from "../../interfaces/Homework";
 import { convertHomeworkListForMethodistMode } from "../../shared/converters/homeworkListForMethodistMode";
 import { convertHomeworkListForTeacherMode } from "../../shared/converters/homeworkListForTeacherMode";
-import { homeworkList } from "../../shared/tmp-mock-data/hw/homeworkList";
 import { HOMEWORK_DELETE_PENDING, HOMEWORK_LOAD_SUCCESS, ITEMS_SET_OPEN } from "../actionTypes";
-import { HomeworksByCourse, IHomeworkPageState } from "../state";
+import { IHomeworkPageState } from "../state";
 import { HomeworkPageActions } from "./action-creators";
 
 const METHODIST_VIEW: HomeworkPageOptions = {
@@ -14,11 +12,12 @@ const METHODIST_VIEW: HomeworkPageOptions = {
     homeworkSelector: Role.Methodist,
     homeworkList: {},
     homeworkButtonsCell: {
-        attemptButton: false,
+        appointButton: false,
         cloneButton: true,
         deleteButton: true,
         cancelAttemptButton: false,
-        editButton: true
+        editButton: true,
+        checkButton: false
     }
 }
 
@@ -27,11 +26,12 @@ const TEACHER_VIEW: HomeworkPageOptions = {
     homeworkSelector: Role.Teacher,
     homeworkList: {},
     homeworkButtonsCell: {
-        attemptButton: true,
+        appointButton: true,
         cloneButton: false,
         deleteButton: false,
         cancelAttemptButton: true,
-        editButton: false
+        editButton: false,
+        checkButton: true
     }
 }
 

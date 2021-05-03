@@ -1,15 +1,18 @@
 import React from "react";
 import { ButtonsCell } from "../../../shared/styled-components/consts";
+import HomeworkAppointButton from "./buttons/HomeworkAppointButton";
+import HomeworkCheckButton from "./buttons/HomeworkCheckButton";
 import HomeworkCloneButton from "./buttons/HomeworkCloneButton";
 import HomeworkDeleteButton from "./buttons/HomeworkDeleteButton";
 import HomeworkEditButton from "./buttons/HomeworkEditButton";
 
 export interface HomeworkButtonsCellOptions {
-    readonly attemptButton: boolean;
+    readonly appointButton: boolean;
     readonly cancelAttemptButton: boolean;
     readonly cloneButton: boolean;
     readonly deleteButton: boolean;
     readonly editButton: boolean;
+    readonly checkButton: boolean;
 }
 
 function HomeworkButtonsCell(props: { settings: HomeworkButtonsCellOptions }) {
@@ -18,6 +21,8 @@ function HomeworkButtonsCell(props: { settings: HomeworkButtonsCellOptions }) {
             {props.settings.deleteButton && <HomeworkDeleteButton />}
             {props.settings.cloneButton && <HomeworkCloneButton />}
             {props.settings.editButton && <HomeworkEditButton />}
+            {props.settings.appointButton && <HomeworkAppointButton />}
+            {props.settings.checkButton && <HomeworkCheckButton />}
         </ButtonsCell>
     )
 }

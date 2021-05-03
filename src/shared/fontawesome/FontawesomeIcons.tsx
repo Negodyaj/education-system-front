@@ -22,7 +22,9 @@ import { faTimes,
     faBookReader,
     faUniversity,
     faNewspaper,
-    faClone } from '@fortawesome/free-solid-svg-icons';
+    faClone, 
+    faCalendarCheck,
+    faSpellCheck} from '@fortawesome/free-solid-svg-icons';
 
 
 library.add(
@@ -49,5 +51,7 @@ library.add(
     faBookReader,
     faUniversity,
     faNewspaper,
-    faClone
+    faClone,
+    faCalendarCheck,
+    faSpellCheck
 )

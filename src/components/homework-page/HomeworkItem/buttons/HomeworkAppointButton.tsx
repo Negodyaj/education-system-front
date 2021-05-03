@@ -2,12 +2,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { RoundButton } from "../../../../shared/styled-components/buttonStyledComponent";
 
-
-function HomeworkConeButton() {
+function HomeworkAppointButton() {
     return (
-        <RoundButton title="клонировать">
-            <FontAwesomeIcon icon="clone" />
+        <RoundButton title="назначить">
+            <FontAwesomeIcon icon="calendar-check" />
         </RoundButton>
     )
 }
-export default HomeworkConeButton;
+export default HomeworkAppointButton;
