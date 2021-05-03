@@ -40,11 +40,11 @@ export const UserListAttendanceByGroup = styled.div`
 
 export const UserAttendance = styled.div`
     display: grid;
-    grid-template-columns: 75% 25%; 
+    grid-template-columns: 85% 15%; 
     font-family: 'Montserrat';
     font-weight: 400;
     border-bottom: 1px solid rgba(39, 45, 59, .15);
-    height: 35px;
+    height: 40px;
 
     &:hover{
       background-color: rgba(0, 211, 248, 0.15);
@@ -55,6 +55,16 @@ export const UserAttendance = styled.div`
 export const UserDataForAttendance = styled.div`
     display: flex;
     align-items: center;
+`
+
+export const UserPicForAttendance = styled.img`
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-right: 15px;
+`
+
+export const UserNameForAttendance = styled.div`
 `
 
 export const UserAttendanceSelect = styled.div`
@@ -100,7 +110,6 @@ export const CommonButton = styled(Button)`
 
 export const CheckBoxWrapper = styled.div`
   position: relative;
-
 `
 
 export const CheckBoxLabel = styled.label`
