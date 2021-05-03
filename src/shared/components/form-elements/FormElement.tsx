@@ -1,4 +1,5 @@
 import { ErrorMessage } from "@hookform/error-message";
+import React from "react";
 import { useFormContext } from "react-hook-form";
 import { InputNames } from "../../../enums/inputNames";
 import { ExternalInputSettings, FormElementSettings } from "../../helpers/useFormRegisterSettingByKey";
@@ -8,6 +9,7 @@ import MultiSelectInput from "./MultiSelectInput";
 import NumberInput from "./NumberInput";
 import PictureInput from "./PictureInput";
 import SingleSelectInput from "./SingleSelectInput";
+import TextAreaInput from "./TextareaInput";
 import TextInput from "./TextInput";
 
 
@@ -25,6 +27,7 @@ function FormElement(props: {
         <div className="form-row">
             <label className="form-label">{props.formElementSettings.label}</label>
             {inputType === 'text' && <TextInput inputSettings={inputSettings}></TextInput>}
+            {inputType === 'textarea' && <TextAreaInput inputSettings={inputSettings}></TextAreaInput>}
             {inputType === 'number' && <NumberInput inputSettings={inputSettings}></NumberInput>}
             {inputType === 'date' && <DateInput inputSettings={inputSettings as ExternalInputSettings}></DateInput>}
             {inputType === 'multiSelect' && <MultiSelectInput inputSettings={inputSettings as ExternalInputSettings}></MultiSelectInput>}

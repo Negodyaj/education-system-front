@@ -6,7 +6,7 @@ export interface BaseInputSettings {
     registerOptions?: RegisterOptions;
 }
 export  interface InternalInputSettings extends BaseInputSettings {
-    inputType: 'text' | 'date' | 'picture' | 'number';
+    inputType: 'text' | 'date' | 'picture' | 'number' | 'textarea';
 }
 export interface ExternalInputSettings extends BaseInputSettings {
     inputType: 'singleSelect' | 'multiSelect';
@@ -139,7 +139,7 @@ export const getFormElementSettings = (key: InputNames): FormElementSettings => 
                 label: "Описание курса",
                 inputSettings: {
                     name: key,
-                    inputType: "text",
+                    inputType: "textarea",
                     registerOptions: {
                         required: "Введите описание курса",
                         min: {
