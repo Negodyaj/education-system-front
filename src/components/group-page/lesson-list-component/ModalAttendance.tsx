@@ -1,13 +1,24 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { IRootState } from "../../../store";
+import { setIsOpenModalAttendance } from "../../../store/group-page/lesson/action-creators";
 import { CheckBox, CheckBoxLabel, CheckBoxWrapper, CommonButton, ModalAttendanceBack, ModalAttendanceContainer, ModalAttendanceHeader, RoundButton, SaveUsersAttendance, UserAttendance, UserAttendanceSelect, UserDataForAttendance, UserListAttendanceByGroup } from "./ModalAttendanceStyled";
 
 const ModalAttendance = () => {
+
+    const dispatch = useDispatch();
+    const pageState = useSelector((state: IRootState) => state.lessonByGroup);
+
+    const closeModalAttendance = () => {
+        dispatch(setIsOpenModalAttendance());
+    }
+
     return(
         <ModalAttendanceBack>
             <ModalAttendanceContainer>
                 <ModalAttendanceHeader>Посещаемость</ModalAttendanceHeader>
-                <RoundButton>
+                <RoundButton onClick={closeModalAttendance}>
                     <FontAwesomeIcon icon='times' />
                 </RoundButton>
                 <UserListAttendanceByGroup>

@@ -45,6 +45,11 @@ export const UserAttendance = styled.div`
     font-weight: 400;
     border-bottom: 1px solid rgba(39, 45, 59, .15);
     height: 35px;
+
+    &:hover{
+      background-color: rgba(0, 211, 248, 0.15);
+      border-radius: 5px;
+    }
 `
 
 export const UserDataForAttendance = styled.div`
