@@ -8,7 +8,7 @@ export const HomeworkPageHeader = styled.div`
     justify-content: space-between;
 `;
 export const HomeworkSelectorContainer = styled.div``;
-const HomeworkItemsGroup = styled.div`
+export const HomeworkItemsSet = styled.div`
 min-height: 0px;
 overflow: hidden;
 width: max-content;
@@ -21,16 +21,16 @@ transition: 0.52s;
 }
 ${props => props.className === ACTIVE ? "max-height: 500px" : "max-height: 20px"}
 `;
-export const CourseItem = styled(HomeworkItemsGroup)``;
-export const GroupItem = styled(HomeworkItemsGroup)``;
-export const CourseItemHeader = styled.div`
+//export const HomeworkItemsSet = styled(HomeworkItemsGroup)``;
+//export const GroupItem = styled(HomeworkItemsGroup)``;
+export const HomeworkItemsSetHeader = styled.div`
     display: flex;
     justify-content: space-between;
     flex-direction: row;
     height: 68px;
     align-content: center;
 `
-export const CourseName = styled.div`
+export const ItemsSetName = styled.div`
     font-weight: 700;
 `;
 export const HomeworkItem = styled.div`

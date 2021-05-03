@@ -57,15 +57,12 @@ export interface IRoleSelector {
     isDataLoading: boolean;
 }
 
-export type HomeworksByCourse = { [courseName: string]: Homework[] }
-export type HomeworksByGroup = { [groupId: number]: Homework[] }
+export type HomeworksByCourse = { [itemsSetName: string]: Homework[] }
+export type HomeworksByGroup = { [itemsSetName: string]: Homework[] }
 export interface IHomeworkPageState {
     pageOptionsByRole: { [role: string]: HomeworkPageOptions };
     homeworkListDefault: Homework[];
-    homeworkListMethodist: HomeworksByCourse;
-    homeworkListTeacher: HomeworksByGroup;
-    openedCourseName: string[];
-    openedGroupId: number[];
+    openedItemSetsNames: string[];
 }
 export interface INotificationContainerState {
     notifications: {

@@ -1,5 +1,5 @@
 import React from "react";
-import { ButtonsCell } from "../../../../shared/styled-components/consts";
+import { ButtonsCell } from "../../../shared/styled-components/consts";
 import HomeworkCloneButton from "./buttons/HomeworkCloneButton";
 import HomeworkDeleteButton from "./buttons/HomeworkDeleteButton";
 import HomeworkEditButton from "./buttons/HomeworkEditButton";

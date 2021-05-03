@@ -5,13 +5,14 @@ import { Homework } from "../../interfaces/Homework";
 import { convertHomeworkListForMethodistMode } from "../../shared/converters/homeworkListForMethodistMode";
 import { convertHomeworkListForTeacherMode } from "../../shared/converters/homeworkListForTeacherMode";
 import { homeworkList } from "../../shared/tmp-mock-data/hw/homeworkList";
-import { HOMEWORK_DELETE_PENDING, HOMEWORK_LOAD_SUCCESS, METHODIST_LIST_ITEM_OPEN, TEACHER_LIST_ITEM_OPEN } from "../actionTypes";
+import { HOMEWORK_DELETE_PENDING, HOMEWORK_LOAD_SUCCESS, ITEMS_SET_OPEN } from "../actionTypes";
 import { HomeworksByCourse, IHomeworkPageState } from "../state";
 import { HomeworkPageActions } from "./action-creators";
 
 const METHODIST_VIEW: HomeworkPageOptions = {
     addButton: true,
     homeworkSelector: Role.Methodist,
+    homeworkList: {},
     homeworkButtonsCell: {
         attemptButton: false,
         cloneButton: true,
@@ -24,6 +25,7 @@ const METHODIST_VIEW: HomeworkPageOptions = {
 const TEACHER_VIEW: HomeworkPageOptions = {
     addButton: false,
     homeworkSelector: Role.Teacher,
+    homeworkList: {},
     homeworkButtonsCell: {
         attemptButton: true,
         cloneButton: false,
@@ -35,10 +37,7 @@ const TEACHER_VIEW: HomeworkPageOptions = {
 
 const initialState: IHomeworkPageState = {
     homeworkListDefault: [],
-    homeworkListMethodist: {},
-    homeworkListTeacher: {},
-    openedCourseName: [],
-    openedGroupId: [],
+    openedItemSetsNames: [],
     pageOptionsByRole: {
         [Role[Role.Methodist]]: METHODIST_VIEW,
         [Role[Role.Teacher]]: TEACHER_VIEW
@@ -49,35 +48,23 @@ export function homeworkPageReducer(state: IHomeworkPageState = initialState, ac
     switch (action.type) {
         case HOMEWORK_LOAD_SUCCESS:
             if (action.payload.currentUserRoleId === Role.Methodist) {
-                return {
-                    ...state,
-                    homeworkListMethodist: { ...convertHomeworkListForMethodistMode(action.payload.payload) }
-                }
+                METHODIST_VIEW.homeworkList = { ...convertHomeworkListForMethodistMode(action.payload.payload) }
+                return { ...state }
             } else {
-                console.log(convertHomeworkListForTeacherMode(action.payload.payload));
-                return {
-                    ...state,
-                    homeworkListTeacher: { ...convertHomeworkListForTeacherMode(action.payload.payload) }
-                }
+                TEACHER_VIEW.homeworkList = { ...convertHomeworkListForTeacherMode(action.payload.payload) }
+                return { ...state }
             }
         case HOMEWORK_DELETE_PENDING:
             return {
                 ...state,
                 homeworkListDefault: [...state.homeworkListDefault.filter(hw => hw.id !== action.payload)]
             }
-        case METHODIST_LIST_ITEM_OPEN:
-            state.openedCourseName.includes(action.payload)
+        case ITEMS_SET_OPEN:
+            state.openedItemSetsNames.includes(action.payload)
                 ?
-                state.openedCourseName.splice(state.openedCourseName.indexOf(action.payload), 1)
+                state.openedItemSetsNames.splice(state.openedItemSetsNames.indexOf(action.payload), 1)
                 :
-                state.openedCourseName.push(action.payload)
-            return { ...state }
-        case TEACHER_LIST_ITEM_OPEN:
-            state.openedGroupId.includes(action.payload)
-                ?
-                state.openedGroupId.splice(state.openedGroupId.indexOf(action.payload), 1)
-                :
-                state.openedGroupId.push(action.payload)
+                state.openedItemSetsNames.push(action.payload)
             return { ...state }
         default:
             return state;

@@ -1,11 +1,10 @@
 import { Homework } from "../../interfaces/Homework";
-import { HOMEWORK_DELETE_PENDING, HOMEWORK_LOAD_SUCCESS, METHODIST_LIST_ITEM_OPEN, TEACHER_LIST_ITEM_OPEN } from "../actionTypes";
+import { HOMEWORK_DELETE_PENDING, HOMEWORK_LOAD_SUCCESS, ITEMS_SET_OPEN } from "../actionTypes";
 
 export type HomeworkPageActions =
     ReturnType<typeof deleteHomeworkRequest>
     | ReturnType<typeof loadHomeworkSuccess>
-    | ReturnType<typeof openHomeworkListMethodistItem>
-    | ReturnType<typeof openHomeworkListTeacherItem>;
+    | ReturnType<typeof openItemsSet>
 
 
 export const loadHomeworkSuccess = (homeworkList: Homework[], currentUserRoleId: number) => {
@@ -23,15 +22,9 @@ export const deleteHomeworkRequest = (homeworkId: number) => {
         payload: homeworkId
     } as const
 }
-export const openHomeworkListMethodistItem = (courseName: string) => {
+export const openItemsSet = (itemsSetName: string) => {
     return {
-        type: METHODIST_LIST_ITEM_OPEN,
-        payload: courseName
-    } as const
-}
-export const openHomeworkListTeacherItem = (groupId: number) => {
-    return {
-        type: TEACHER_LIST_ITEM_OPEN,
-        payload: groupId
+        type: ITEMS_SET_OPEN,
+        payload: itemsSetName
     } as const
 }

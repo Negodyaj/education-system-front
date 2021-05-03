@@ -3,8 +3,9 @@ import { useSelector } from "react-redux";
 import { Role } from "../../enums/role";
 import { PageTitle } from "../../shared/styled-components/consts";
 import { IRootState } from "../../store";
+import { HomeworksByCourse, HomeworksByGroup } from "../../store/state";
 import AddButton from "./buttons/AddButton";
-import { HomeworkButtonsCellOptions } from "./homework-selector/homeworkButtonsCell/HomeworkButtonsCell";
+import { HomeworkButtonsCellOptions } from "./HomeworkItem/HomeworkButtonsCell";
 import { HomeworkSelector } from "./homework-selector/HomeworkSelector";
 import { HomeworkPageContainer, HomeworkPageHeader } from "./styled-components/consts";
 
@@ -14,6 +15,7 @@ export interface HomeworkPageOptions {
     readonly addButton: boolean;
     readonly homeworkSelector: homeworkSelectorMode;
     readonly homeworkButtonsCell: HomeworkButtonsCellOptions;
+    homeworkList: HomeworksByCourse | HomeworksByGroup;
 }
 
 function HomeworkPageCore(props: { settings: HomeworkPageOptions }) {

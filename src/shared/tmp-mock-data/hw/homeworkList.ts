@@ -40,8 +40,8 @@ export const homeworkList: Homework[] = [
         deadlineDate: "29.05.2021",
         isOptional: false,
         group: {
-            id: 14,
-            startDate: "09.04.2021",
+            id: 1,
+            startDate: "09.07.2021",
             course: {
                 id: 4,
                 name: "Frontend",
@@ -71,8 +71,8 @@ export const homeworkList: Homework[] = [
         deadlineDate: "29.05.2021",
         isOptional: false,
         group: {
-            id: 14,
-            startDate: "09.04.2021",
+            id: 13,
+            startDate: "09.01.2021",
             course: {
                 id: 114,
                 name: "C# base",
