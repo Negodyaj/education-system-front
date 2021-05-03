@@ -1,4 +1,3 @@
-import '../HomeworkPage.css'
 import { HomeworkPageOptions } from "../HomeworkPageCore"
 import { Role } from "../../../enums/role"
 import React from "react"

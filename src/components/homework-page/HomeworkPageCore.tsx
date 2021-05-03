@@ -1,8 +1,6 @@
 import React from "react";
-import { useSelector } from "react-redux";
 import { Role } from "../../enums/role";
 import { PageTitle } from "../../shared/styled-components/consts";
-import { IRootState } from "../../store";
 import { HomeworksByCourse, HomeworksByGroup } from "../../store/state";
 import AddButton from "./buttons/AddButton";
 import { HomeworkButtonsCellOptions } from "./HomeworkItem/HomeworkButtonsCell";

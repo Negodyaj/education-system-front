@@ -8,7 +8,7 @@ export const convertHomeworkListForTeacherMode = (actionPayload: Homework[]): Ho
     let previousGroupId: number | undefined = undefined;
     let result: HomeworksByGroup = {};
     actionPayload.map(hw => {
-        const index = `${hw.group.course.name} ${hw.group.startDate}`
+        const index = `${hw.group.course.name} ${hw.group.startDate}`;
         if (hw.group.id === previousGroupId) {
             result[index].push(hw)
         } else {

@@ -24,7 +24,8 @@ import { faTimes,
     faNewspaper,
     faClone, 
     faCalendarCheck,
-    faSpellCheck} from '@fortawesome/free-solid-svg-icons';
+    faSpellCheck,
+    faGraduationCap} from '@fortawesome/free-solid-svg-icons';
 
 
 library.add(
@@ -53,5 +54,6 @@ library.add(
     faNewspaper,
     faClone,
     faCalendarCheck,
-    faSpellCheck
+    faSpellCheck,
+    faGraduationCap
 )

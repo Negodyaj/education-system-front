@@ -12,35 +12,36 @@ const METHODIST_VIEW: HomeworkPageOptions = {
     homeworkSelector: Role.Methodist,
     homeworkList: {},
     homeworkButtonsCell: {
-        appointButton: false,
         cloneButton: true,
         deleteButton: true,
-        cancelAttemptButton: false,
         editButton: true,
-        checkButton: false
     }
 }
-
 const TEACHER_VIEW: HomeworkPageOptions = {
     addButton: false,
     homeworkSelector: Role.Teacher,
     homeworkList: {},
     homeworkButtonsCell: {
         appointButton: true,
-        cloneButton: false,
-        deleteButton: false,
         cancelAttemptButton: true,
-        editButton: false,
-        checkButton: true
+        checkButton: true,
     }
 }
-
+const STUDENT_VIEW: HomeworkPageOptions = {
+    addButton: false,
+    homeworkSelector: Role.Student,
+    homeworkList: {},
+    homeworkButtonsCell: {
+        attemptButton: true
+    }
+}
 const initialState: IHomeworkPageState = {
     homeworkListDefault: [],
     openedItemSetsNames: [],
     pageOptionsByRole: {
         [Role[Role.Methodist]]: METHODIST_VIEW,
-        [Role[Role.Teacher]]: TEACHER_VIEW
+        [Role[Role.Teacher]]: TEACHER_VIEW,
+        [Role[Role.Student]]: STUDENT_VIEW
     }
 }
 
@@ -50,8 +51,11 @@ export function homeworkPageReducer(state: IHomeworkPageState = initialState, ac
             if (action.payload.currentUserRoleId === Role.Methodist) {
                 METHODIST_VIEW.homeworkList = { ...convertHomeworkListForMethodistMode(action.payload.payload) }
                 return { ...state }
-            } else {
+            } else if (action.payload.currentUserRoleId === Role.Teacher) {
                 TEACHER_VIEW.homeworkList = { ...convertHomeworkListForTeacherMode(action.payload.payload) }
+                return { ...state }
+            } else {
+                STUDENT_VIEW.homeworkList = { ['Frontend 09.07.2021']: convertHomeworkListForTeacherMode(action.payload.payload)['Frontend 09.07.2021'] }
                 return { ...state }
             }
         case HOMEWORK_DELETE_PENDING:
