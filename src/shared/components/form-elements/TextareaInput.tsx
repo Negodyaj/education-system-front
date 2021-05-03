@@ -12,13 +12,13 @@ function TextAreaInput(props: {
             <textarea
                 {...formContext.register(props.inputSettings.name, props.inputSettings.registerOptions)}
                 typeof='text'
-                className="form-input" />
+                className="form-input-textarea" />
             :
             <textarea
                 {...formContext.register(props.inputSettings.name, props.inputSettings.registerOptions)}
                 onChange={props.onChange}
                 typeof='text'
-                className="form-input" />
+                className="form-input-textarea" />
     )
 }
 export default TextAreaInput;

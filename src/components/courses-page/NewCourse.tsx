@@ -1,4 +1,3 @@
-import './NewCourse.css';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import { showToggleModalCreateCourseAction } from '../../store/courses-page/action-creators';
 import { useDispatch, useSelector } from 'react-redux';
@@ -8,8 +7,18 @@ import { InputNames } from '../../enums/inputNames';
 import { IRootState } from '../../store';
 import { CourseInput } from '../../interfaces/CourseInput';
 import { getFormElementSettings } from '../../shared/helpers/useFormRegisterSettingByKey';
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import {
+    ButtonClose,
+    FormWrapper,
+    HeadModal,
+    InputStyle,
+    ModalAddCourse,
+    ModalBackground,
+    ModalHeaderAddCourse,
+    SelectDelete
+} from './NewCourseStyled';
 
 function NewCourse() {
     const dispatch = useDispatch();
@@ -30,35 +39,38 @@ function NewCourse() {
     }
 
     return(
-        <div className="modal-back">
-            <div className="modal-add-course">
-                <div className="modal-header-add-course">
-                    <div className="head-modal"><h4>Создать новый курс</h4></div>
-                    <button className="button-close" onClick={closeModalWindow}>
+        <ModalBackground>
+            <ModalAddCourse>
+                <ModalHeaderAddCourse>
+                    <HeadModal><h4>Создать новый курс</h4></HeadModal>
+                    <ButtonClose onClick={closeModalWindow}>
                         <FontAwesomeIcon icon='times'/>
-                    </button>
-                </div>
+                    </ButtonClose>
+                </ModalHeaderAddCourse>
                 <FormProvider
                     register={register}
                     formState={formState}
                     handleSubmit={handleSubmit}
-                    getValues={getValues} setValue={setValue} {...methods}>
-                    <div>
-                        <form onSubmit={handleSubmit(onSubmit)}>
+                    getValues={getValues}
+                    setValue={setValue}
+                    {...methods}>
+                    
+                    <FormWrapper>
+                        <InputStyle onSubmit={handleSubmit(onSubmit)}>
                         {
                             Object.keys(appState.coursePage.createCourseInputModel).map(key => {
                                    return <FormElement key={key} formElementSettings={getFormElementSettings(key as InputNames)}></FormElement>
                             })
                         }
-                        </form>
-                    </div>
+                        </InputStyle>
+                    </FormWrapper>
                 </FormProvider>
-                <div className="select-delete">
-                    <button className="button-select" onClick={closeModalWindow}>Отменить</button>
-                    <button className="button-select" onClick={handleSubmit(onSubmit)}>Добавить</button>
-                </div>
-            </div>
-        </div>
+                <SelectDelete>
+                    <button className="common-button" onClick={closeModalWindow}>Отменить</button>
+                    <button className="common-button" onClick={handleSubmit(onSubmit)}>Добавить</button>
+                </SelectDelete>
+            </ModalAddCourse>
+        </ModalBackground>
     )
 }
 

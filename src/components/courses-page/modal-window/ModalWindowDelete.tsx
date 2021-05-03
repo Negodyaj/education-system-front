@@ -1,10 +1,13 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { IRootState } from '../../../store';
 import { showToggleModalDeleteCourseAction } from '../../../store/courses-page/action-creators';
 import { deleteCourse, getCourses } from '../../../store/courses-page/thunk'
+import { ModalHeaderAddCourse } from '../NewCourseStyled';
 import './ModalWindowDelete.css';
+import { Modal, ModalBack, ModalButtomCourseDelete, ModalContentCourseDelete } from './ModalWindowDeleteStyled';
 
 function ModalWindowDelete() {
   const dispatch = useDispatch();
@@ -20,20 +23,20 @@ function ModalWindowDelete() {
   }
 
   return (
-    <div className="modal-back">
-      <div className="modal">
-          <div className="modal-header-course-delete">
-              <button className="button-close-course-delete" onClick={closeModalWindow}>
-                  <FontAwesomeIcon icon='times' />
-              </button>
-          </div>
-          <div className="modal-content-course-delete">Вы уверены, что хотите удалить данный курс?</div>
-          <div className="modal-bottom-course-delete">
-            <button className="button-no" onClick={closeModalWindow}>Отмена</button>
-            <button className="button-yes" onClick={deleteCourseById}>Да</button>
-          </div>
-      </div>
-    </div>
+    <ModalBack>
+      <Modal>
+        <ModalHeaderAddCourse>
+          <button className="round-button" onClick={closeModalWindow}>
+              <FontAwesomeIcon icon='times' />
+          </button>
+        </ModalHeaderAddCourse>
+         <ModalContentCourseDelete>Вы уверены, что хотите удалить данный курс?</ModalContentCourseDelete>
+          <ModalButtomCourseDelete>
+            <button className="common-button" onClick={closeModalWindow}>Отмена</button>
+            <button className="common-button" onClick={deleteCourseById}>Да</button>
+        </ModalButtomCourseDelete>
+      </Modal>
+    </ModalBack>
   )
 }
 

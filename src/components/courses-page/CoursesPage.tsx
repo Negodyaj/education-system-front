@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import './CoursesPage.css';
+import { Link } from 'react-router-dom';
 import ModalWindowDelete from './modal-window/ModalWindowDelete';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import NewCourse from './NewCourse';
@@ -8,7 +8,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { IRootState } from '../../store';
 import { getCourses } from '../../store/courses-page/thunk';
 import { showToggleModalCreateCourseAction, showToggleModalDeleteCourseAction } from '../../store/courses-page/action-creators';
-import ConfirmationDialog from '../../shared/components/confirmation-dialog/ConfirmationDialog';
+import {
+    CourseContainer,
+    CourseCreate,
+    CoursesList,
+    CourseStyled,
+    CourseUpdateDelete,
+    EmptyDiv,
+    Loading
+} from './CoursePageStyled';
 
 function CoursesPage() {
 
@@ -28,39 +36,39 @@ function CoursesPage() {
     }
 
     return (
-        <div className="course-container">
-            <div className="course-create">
-                <div> </div>
-                <button onClick={openModalAdd} className='button-create'>Добавить курс</button> 
-            </div>
-            <div className="courses-list">
+        <CourseContainer>
+            <CourseCreate>
+                <EmptyDiv/>
+                <button onClick={openModalAdd} className='common-button' >Добавить курс</button>
+            </CourseCreate>
+            <CoursesList>
                 {
                     pageState.isDataLoading
                         ?
-                            <div>Loading...</div>
+                            <Loading>Loading...</Loading>
                         :
                             pageState.courseList?.map(item => (
-                                <div key={item.id} className="course">
+                                <CourseStyled>
                                     <Link className="current-course-name" to={`/course/${item.id}`}>
-                                        <div >{item.name}</div>
+                                        <EmptyDiv>{item.name}</EmptyDiv>
                                     </Link>
-                                    <div className="course-update-delete">
-                                    <Link to={`/course/${item.id}/edition`}>
-                                            <button className='button-update'>
+                                    <CourseUpdateDelete>
+                                    <Link to={`/course/edition/${item.id}`}>
+                                            <button className='round-button'>
                                                 <FontAwesomeIcon icon="edit" />
                                             </button>
                                         </Link>
-                                        <button onClick={() => { openModalDelete(item.id) }} className='button-delete'>
+                                        <button onClick={() => { openModalDelete(item.id) }} className='round-button'>
                                             <FontAwesomeIcon icon="trash" /> 
                                         </button>
-                                    </div>
-                                </div>
+                                    </CourseUpdateDelete>
+                                </CourseStyled>
                             ))
                 }
-            </div>
+            </CoursesList>
             { pageState.isOpenModalCreateCourse && <NewCourse /> }
             { pageState.isModalDelete && <ModalWindowDelete />}
-        </div>
+        </CourseContainer>
     )
 }
 
