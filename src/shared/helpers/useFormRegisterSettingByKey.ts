@@ -1,6 +1,7 @@
 import { RegisterOptions } from "react-hook-form";
 import { InputNames } from "../../enums/inputNames";
 import { Role } from "../../enums/role";
+import { coursesListForModalHW } from "../tmp-mock-data/hw/CourseListForHWModal";
 export interface BaseInputSettings {
     name: string;
     registerOptions?: RegisterOptions;
@@ -17,6 +18,8 @@ export interface FormElementSettings {
     label: string;
     inputSettings: InputSettings;
 }
+
+
 export const getFormElementSettings = (key: InputNames): FormElementSettings => {
     //call getValidationPattern here
     switch (key) {
@@ -119,6 +122,33 @@ export const getFormElementSettings = (key: InputNames): FormElementSettings => 
                     inputType: 'text'
                 }
             }
+        case InputNames.HomeworkDescription:
+            return{
+                label: "описание",
+                inputSettings:{
+                    name: key,
+                    inputType: 'text',
+                    registerOptions: {
+                        required: "Введите описание",
+                        min: {
+                            value: 10,
+                            message: "Не менее 10 символов"
+                        }
+
+                    }
+                }
+            }
+        case InputNames.HomeworkCourseId:
+            return{
+                label: "Курс",
+                inputSettings:{
+                    name: key,
+                    inputType: "singleSelect",
+                    selectOptions: coursesListForModalHW ,
+            }
+        }
+
+
         default: return {
             label: key,
             inputSettings: {
@@ -128,3 +158,4 @@ export const getFormElementSettings = (key: InputNames): FormElementSettings => 
         }
     }
 }
+

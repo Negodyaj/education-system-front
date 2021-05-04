@@ -8,6 +8,7 @@ export const currentUserUrl: string = 'User/current';
 export const userRegisterUrl: string = 'User/register';
 export const userRegisterFormUrl:string = "user-page/register";
 export const userEditUrl: string = "user-page";
+export const homeworkUrl: string = 'homework'
 
 //initials
 export const UNSELECTED_ROLE:number = 0;

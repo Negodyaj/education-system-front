@@ -1,7 +1,7 @@
 import { Homework } from "../../interfaces/Homework";
 import { convertHomeworkListForMethodistMode } from "../../shared/converters/homeworkListForMethodistMode";
 import { homeworkList } from "../../shared/tmp-mock-data/hw/homeworkList";
-import { HOMEWORK_DELETE_PENDING, HOMEWORK_LOAD_SUCCESS } from "../actionTypes";
+import { HOMEWORK_ADDED_SUCCESS, HOMEWORK_DELETE_PENDING, HOMEWORK_LOAD_SUCCESS } from "../actionTypes";
 import { HomeworksByCourse, IHomeworkPageState } from "../state";
 import { HomeworkPageActions } from "./action-creators";
 

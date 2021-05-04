@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { PageTitle } from "../../shared/styled-components/consts";
 import { homeworkList } from "../../shared/tmp-mock-data/hw/homeworkList";
 import { loadHomeworkSuccess } from "../../store/homework-page/action-creators";
+import AddHomeworkModal from "./add-homework-modal/AddHomeworkModal";
 import { HomeworkSelector } from "./homework-selector/HomeworkSelector";
 import { HomeworkPageContainer, HomeworkPageHeader } from "./styled-components/consts";
 
@@ -18,7 +19,9 @@ function HomeworkPage() {
         <button>Создать</button>
       </HomeworkPageHeader>
       <HomeworkSelector />
+      <AddHomeworkModal/>
     </HomeworkPageContainer>
+
   )
 }
 export default HomeworkPage;

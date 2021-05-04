@@ -9,5 +9,13 @@ export enum InputNames {
     Email = "email",
     Password = "password",
     ContractNumber = "contractNumber",
-    Roles = "roles"
+    Roles = "roles",
+    HomeworkDescription = "description", 
+    HomeworkStartDate= "startDate",
+    HomeworkDeadlineDate="deadlineDate",
+    HomeworkIsOptional="isOptional",
+    HomeworkCourseId="courseId",
+    HomeworkGroupId="groupId",
+    HomeworkTags ="tags", 
+    HomeworkThemes="themes" 
 }

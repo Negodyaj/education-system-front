@@ -22,8 +22,10 @@ import {
     IRoleSelector,
     ITagsPageState,
     IUserListPage,
-    IUserPage
+    IUserPage,
+    IAddHomeworkModal
 } from './state';
+import { addHomeworkModalReducer } from './homework-page/add-homework-modal/reducer';
 
 
 export interface IRootState {
@@ -37,7 +39,9 @@ export interface IRootState {
     notificationContainer: INotificationContainerState;
     payment: IPaymentFormState;
     groupInfoComponent: IGroupInfoComponent;
-    homeworkPage: IHomeworkPageState
+    homeworkPage: IHomeworkPageState;
+    addHomeWorkModal: IAddHomeworkModal
+
 }
 
 const middlewares = [thunk];
@@ -54,7 +58,8 @@ const store = createStore<IRootState, any, any, any>(
         tagsPage: tagsPageReducer,
         payment: paymentReducer,
         groupInfoComponent: groupInfoComponentReducer,
-        homeworkPage: homeworkPageReducer
+        homeworkPage: homeworkPageReducer,
+        addHomeWorkModal:  addHomeworkModalReducer
     }),
     undefined,
     applyMiddleware(...middlewares));

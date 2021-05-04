@@ -1,0 +1,1 @@
+export const coursesListForModalHW = {[34]:"Java"}

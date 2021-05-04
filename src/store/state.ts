@@ -8,6 +8,7 @@ import { User } from "../interfaces/User";
 import { UserInput } from "../interfaces/UserInput";
 import { PaymentResponse } from "../components/interfaces/PaymentResponse";
 import { Homework } from "../interfaces/Homework";
+import { HomeworkInput } from "../interfaces/HomeworkInput";
 
 export interface IAppState {
     isLoggedIn: boolean;
@@ -61,6 +62,12 @@ export interface IHomeworkPageState {
     homeworkListDefault: Homework[];
     homeworkListMethodist: HomeworksByCourse;
 }
+export interface IAddHomeworkModal {
+    isDataLoading: boolean,
+    defaultFormValue: HomeworkInput,
+    isModalHidden: boolean,
+}
+
 export interface INotificationContainerState {
     notifications: {
         dismissible: NotificationData[],
