@@ -1,13 +1,17 @@
 import styled from "styled-components";
 
 export const Button = styled.button`
-   background-color: #00ccf2;
+    background-color: #00ccf2;
     color: #ffff;
     border: none;
     text-align: center;
     outline: none;
     cursor: pointer;
     & + & {margin-left: 10px};
+    &:hover {
+        transition: 0.32s;
+        background-color: #2D62ED;
+    }
 `;
 
 export const RoundButton = styled(Button)`

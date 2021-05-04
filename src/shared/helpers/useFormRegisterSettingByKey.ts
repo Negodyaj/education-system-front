@@ -1,6 +1,9 @@
 import { RegisterOptions } from "react-hook-form";
+import { coursesListForModalHW } from "../../enums/courses";
 import { InputNames } from "../../enums/inputNames";
 import { Role } from "../../enums/role";
+import { DictionaryEntity } from "../../interfaces/DictionaryEntity";
+import { convertEnumToDictionary, getRussianDictionary } from "../converters/enumToDictionaryEntity";
 export interface BaseInputSettings {
     name: string;
     registerOptions?: RegisterOptions;
@@ -10,7 +13,7 @@ export  interface InternalInputSettings extends BaseInputSettings {
 }
 export interface ExternalInputSettings extends BaseInputSettings {
     inputType: 'singleSelect' | 'multiSelect';
-    selectOptions: { [index: number]: string }
+    selectOptions: DictionaryEntity[]
 }
 export type InputSettings = InternalInputSettings | ExternalInputSettings;
 export interface FormElementSettings {
@@ -107,7 +110,7 @@ export const getFormElementSettings = (key: InputNames): FormElementSettings => 
                 label: "Роли",
                 inputSettings: {
                     inputType: 'multiSelect',
-                    selectOptions: Role,
+                    selectOptions: getRussianDictionary(convertEnumToDictionary(Role)),
                     name: key
                 }
             }

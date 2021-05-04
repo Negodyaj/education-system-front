@@ -19,7 +19,18 @@ function HomeworkItemBody(props: { hw: Homework; buttons: HomeworkButtonsCellOpt
                         ))
                     }
                 </HomeworkThemeName>
-                <HomeworkProp>{props.hw.isOptional ? "без проверки" : "с проверкой"}</HomeworkProp>
+                <HomeworkProp>
+                    {
+                        props.hw.isOptional
+                            ?
+                            (() => {
+                                props.buttons.attemptButton = false;
+                                return "без проверки"
+                            })()
+                            :
+                            "с проверкой"
+                    }
+                </HomeworkProp>
                 <HomeworkButtonsCell settings={props.buttons} />
             </HomeworkItemHeader>
             <HomeworkDescription>

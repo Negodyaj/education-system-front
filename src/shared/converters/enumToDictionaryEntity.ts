@@ -1,6 +1,10 @@
 import { DictionaryEntity } from "../../interfaces/DictionaryEntity";
 import { Role } from "../../enums/role";
 
+const coursesListForModalHW: { id: number; name: string } = {
+    id: 34, name: "Java"
+}
+
 export const convertEnumToDictionary = (enumArg: any): DictionaryEntity[] => {
     return Object.keys(enumArg)
         .filter(key => typeof enumArg[key] === "number")
@@ -15,7 +19,7 @@ export const getRussianDictionary = (entities: DictionaryEntity[]): DictionaryEn
         }
     })
 
-export const getEnToRuTranslation = (eng:string) => {
+export const getEnToRuTranslation = (eng: string) => {
     return dictionary[eng];
 }
 

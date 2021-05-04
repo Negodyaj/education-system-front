@@ -1,7 +1,7 @@
 export interface UserInput {
     id?:number;
-    firstName?: string;
     lastName?: string;
+    firstName?: string;
     birthDate?: string;
     login?: string;
     phone?: string;

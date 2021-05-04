@@ -107,7 +107,7 @@ export const homeworkList: Homework[] = [
         description: "Это спросят на собеседовании!!! https://developer.mozilla.org/ru/docs/Web/JavaScript/EventLoop",
         startDate: "27.04.2021",
         deadlineDate: "29.05.2021",
-        isOptional: false,
+        isOptional: true,
         group: {
             id: 1,
             startDate: "09.07.2021",

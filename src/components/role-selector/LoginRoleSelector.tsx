@@ -1,5 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
+import { Role } from "../../enums/role";
 import CustomMultiSelect from "../../shared/components/multi-select/CustomMultiSelect";
+import { convertEntitiesToSelectItems } from "../../shared/converters/entityToSelectItemConverter";
+import { convertEnumToDictionary, getRussianDictionary } from "../../shared/converters/enumToDictionaryEntity";
 import { convertRoleIdsToSelectItems } from "../../shared/converters/roleIdsToSelectItems";
 import { convertRoleIdToSelectItem } from "../../shared/converters/roleIdToSelectItem";
 import { IRootState } from "../../store";
@@ -14,6 +17,9 @@ export function LoginRoleSelector() {
     const onSingleSelect = (roleId: number | null) => {
         dispatch(setCurrentUserRoleId(roleId || 0));
     }
+    console.log(convertEntitiesToSelectItems(
+        getRussianDictionary(
+            convertEnumToDictionary(Role))))
 
     return (
         appState.roleSelector.isDataLoading
@@ -28,8 +34,10 @@ export function LoginRoleSelector() {
                     <CustomMultiSelect
                         selectType="single"
                         onSingleSelect={onSingleSelect}
-                        selectedOption={convertRoleIdToSelectItem(appState.roleSelector.currentUserRoleId)}
-                        options={convertRoleIdsToSelectItems(appState.roleSelector.currentUser?.roles) || undefined}
+                        selectedOption={convertRoleIdToSelectItem(appState.roleSelector.currentUserRoleId, convertEntitiesToSelectItems(
+                            getRussianDictionary(
+                                convertEnumToDictionary(Role))))}
+                        options={convertEntitiesToSelectItems(getRussianDictionary(convertEnumToDictionary(Role))) || undefined}
                     ></CustomMultiSelect>
                 </div>
             </div>

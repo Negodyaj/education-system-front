@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Controller, FieldValues, UseFormReturn } from 'react-hook-form';
 import Select, { ActionMeta, OptionsType } from 'react-select'
+import { coursesListForModalHW } from '../../../enums/courses';
 import { SelectItem } from '../../../interfaces/SelectItem';
 import { convertEntitiesToSelectItems } from '../../converters/entityToSelectItem';
 import { convertEnumToDictionary, getRussianDictionary } from '../../converters/enumToDictionaryEntity';
@@ -69,21 +70,18 @@ function CustomMultiSelect(props: SelectProps) {
       <Controller
         control={props.formContext?.control}
         name={props.inputSettings.name}
-        render={({ field: { value, } }) => {
+        render={({ field: { value } }) => {
           return props.selectType === 'multi'
             ?
             MultiSelect(
-              convertEntitiesToSelectItems(
-                getRussianDictionary(convertEnumToDictionary(props.inputSettings?.selectOptions))
-              ),
-              (value !== undefined ? value[0]?.label ? value : convertRoleIdsToSelectItems(value) : undefined),
+              convertEntitiesToSelectItems(props.inputSettings?.selectOptions),
+              (value !== undefined ? value[0]?.label ? value : convertRoleIdsToSelectItems(value, convertEntitiesToSelectItems(props.inputSettings?.selectOptions)) : undefined),
               onMultiSelect)
             :
             SingleSelect(
-              convertEntitiesToSelectItems(
-                getRussianDictionary(convertEnumToDictionary(props.inputSettings?.selectOptions))
+              convertEntitiesToSelectItems(props.inputSettings?.selectOptions
               ),
-              (value !== undefined ? value?.label ? value : convertRoleIdsToSelectItems(value) : undefined),
+              (value !== undefined ? value?.label ? value : convertRoleIdsToSelectItems(value, convertEntitiesToSelectItems(props.inputSettings?.selectOptions)) : undefined),
               onSingleSelect)
         }} />
       :
