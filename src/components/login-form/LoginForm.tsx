@@ -21,8 +21,15 @@ function LoginForm() {
         setPassword(event.target.value);
     }
 
+    const handleKeyPress: React.KeyboardEventHandler<HTMLDivElement> | undefined = (event) => {
+        let key = event.key;
+        if (key === 'Enter'){ // Клавиша Enter
+            loginButtonOnClick()
+        }
+    }
+    
     return (
-        <div className="login-form">
+        <div className="login-form" onKeyPress={(event) => { handleKeyPress(event) }}>
             <h2>Залогиньтеся</h2>
             <div className="form-control">
                 <label className="form-label">Логин</label>

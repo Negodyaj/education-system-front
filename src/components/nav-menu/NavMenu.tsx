@@ -30,19 +30,23 @@ function NavMenu(props: NavMenuProps) {
             <nav className={isHidden ? "notshow" : "vision"}>
                 {
                     (props.roleId === Role.Admin || props.roleId === Role.Manager) &&
-                    <NavMenuSimpleLink route="user-list" faIcon="user" label="Пользователи"/>
+                    <NavMenuSimpleLink route="user-list" faIcon="user" label="Пользователи" />
                 }
                 {
                     (props.roleId === Role.Teacher || props.roleId === Role.Methodist) &&
-                    <NavMenuSimpleLink route="homework" faIcon="book-reader" label="Домашки"/>
+                    <NavMenuSimpleLink route="homework" faIcon="book-reader" label="Домашки" />
+                }
+                {
+                    (props.roleId === Role.Teacher || props.roleId === Role.Student || props.roleId===Role.Tutor) &&
+                    <NavMenuSimpleLink route="group-page" faIcon="book-reader" label="Группы" />
                 }
                 {
                     (props.roleId === Role.Teacher || props.roleId === Role.Methodist) &&
-                    <NavMenuSimpleLink route="courses-page" faIcon="university" label="Курсы"/>
+                    <NavMenuSimpleLink route="courses-page" faIcon="university" label="Курсы" />
                 }
                 {
                     props.roleId !== Role.Student &&
-                    <NavMenuSimpleLink route="tags-page" faIcon="tag" label="Тэги"/>
+                    <NavMenuSimpleLink route="tags-page" faIcon="tag" label="Тэги" />
                 }
                 {
                     props.roleId == Role.Admin &&

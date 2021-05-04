@@ -1,4 +1,3 @@
-import { User } from "../../interfaces/User";
 import { CURRENT_USER_ROLE_ID_SELECTED, CURRENT_USER_WAS_LOADED, CURRENT_USER_IS_LOADING, TOGGLE_ROLE_SELECTOR, CURRENT_USER_UNSET } from "../actionTypes"
 
 export type RoleSelectorActions =
@@ -14,10 +13,9 @@ export const setCurrentUserIsLoading = () => {
         payload: true
     } as const);
 }
-export const setCurrentUserWasLoaded = (currentUser: User) => {
+export const setCurrentUserWasLoaded = () => {
     return ({
-        type: CURRENT_USER_WAS_LOADED,
-        payload: currentUser
+        type: CURRENT_USER_WAS_LOADED
     } as const);
 }
 export const setCurrentUserRoleId = (roleId: number) => {

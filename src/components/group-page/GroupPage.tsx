@@ -1,20 +1,26 @@
-import { useParams } from "react-router";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { IRootState } from "../../store";
+import GroupInfoComponent from "./group-info-component/GroupInfoComponent";
 import "./GroupPage.css"
 
 
-function GroupPage () {
-    const { id } = useParams<{ id: string }>();
+function GroupPage() {
+  const dispatch = useDispatch();
+  const appState = useSelector((state: IRootState) => state)
 
-    return(
-        <div>
-            <h3>{`Group ${+id}`}</h3>
-            <div className = "group-header"> Nav menu component</div>
-            <div className="group-body">
-            <div> base info component </div>
-            <div> List component </div>
-            </div>
-        </div>
-    )
+  useEffect(() => {
+    //dispatch(getGroupToViewById(15))
+  }, []);
+
+
+  return (
+    <div>
+{
+  <GroupInfoComponent />
+}
+    </div>
+  )
 }
 
 export default GroupPage;
