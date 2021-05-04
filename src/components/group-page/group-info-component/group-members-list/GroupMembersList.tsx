@@ -10,12 +10,10 @@ import { getGroupToViewById } from '../../../../store/group-info-component/thunk
 
 
 export function GroupMembersList() {
-    const dispatch = useDispatch();
+    
     const groupState = useSelector((state: IRootState) => state.groupInfoComponent)
   
-    useEffect(() => {
-      dispatch(getGroupToViewById(14))
-    }, []);
+
     return (
         <div className='group-members-list'>
             <div className='list-header'> Учителя:</div>

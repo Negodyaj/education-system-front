@@ -123,9 +123,7 @@ function App() {
                                         </Helmet>
                                     </Route>
                                     {
-                                         (appState.roleSelector.currentUserRoleId === Role.Teacher || 
-                                            appState.roleSelector.currentUserRoleId === Role.Tutor ||
-                                            appState.roleSelector.currentUserRoleId === Role.Student)&&
+                                         (appState.roleSelector.currentUserRoleId != Role.Methodist)&&
                                         <Route path="/group-page">
                                             <GroupPage />
                                             <Helmet>

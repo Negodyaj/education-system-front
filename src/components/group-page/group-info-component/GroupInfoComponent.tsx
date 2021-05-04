@@ -9,7 +9,6 @@ import { useEffect } from "react";
 
 function GroupInfoComponent() {
     const dispatch = useDispatch();
-    const state = useSelector((state: IRootState) => state.groupInfoComponent)
   
     useEffect(() => {
       dispatch(getGroupToViewById(14))
@@ -21,9 +20,7 @@ function GroupInfoComponent() {
         <div className="group-header"> Nav menu component</div>
         <div className="group-body">
           <div>
-            <BaseGroupInfoComponent courseName={state.groupToView.course?.name}
-              startDate={state.groupToView.startDate}
-              duration={state.groupToView.course?.duration} />
+            <BaseGroupInfoComponent />
           </div>
           <div> 
             <GroupMembersList />
