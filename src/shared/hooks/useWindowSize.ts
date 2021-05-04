@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
-export const useWindowSize = () => {
-    type modeValues = "mobile" | "desktop";
+type modeValues = "mobile" | "desktop";
+export const useWindowSize = (): modeValues => {
     const [mode, setMode] = useState<modeValues>(window.innerWidth > 900 ? "desktop" : "mobile");
     useEffect(() => {
         window.addEventListener("resize", (e) => resizeHandler(e));

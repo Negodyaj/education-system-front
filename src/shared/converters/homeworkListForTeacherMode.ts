@@ -1,12 +1,12 @@
 import { Homework } from "../../interfaces/Homework";
-import { HomeworksByGroup } from "../../store/state";
+import { IndexedObj } from "../../interfaces/IndexedObj";
 import { homeworkList } from "../tmp-mock-data/hw/homeworkList";
 
 const INIT_HOMEWORK: Homework = { ...homeworkList[0] }
 
-export const convertHomeworkListForTeacherMode = (actionPayload: Homework[]): HomeworksByGroup => {
+export const convertHomeworkListForTeacherMode = (actionPayload: Homework[]): IndexedObj<Homework> => {
     let previousGroupId: number | undefined = undefined;
-    let result: HomeworksByGroup = {};
+    let result: IndexedObj<Homework> = {};
     actionPayload.map(hw => {
         const index = `${hw.group.course.name} ${hw.group.startDate}`;
         if (hw.group.id === previousGroupId) {

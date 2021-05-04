@@ -13,7 +13,7 @@ function AddButton(props: { isTurnedOn: boolean }) {
                         <span> Добавить</span>
                     </CommonButton>
                     :
-                    <></>
+                    <React.Fragment></React.Fragment>
             }
         </>
     )

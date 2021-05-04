@@ -14,7 +14,7 @@ export function HomeworkSelector(props: {
     const appState = useSelector((state: IRootState) => state);
     return (
         <HomeworkSelectorContainer>
-            <>
+            <React.Fragment>
                 {
                     Object.keys(appState.homeworkPage.pageOptionsByRole[Role[appState.roleSelector.currentUserRoleId]].homeworkList).map(itemsSetName =>
                         <HomeworkItemsSet className={appState.homeworkPage.openedItemSetsNames.includes(itemsSetName) ? ACTIVE : NOT_ACTIVE}>
@@ -30,7 +30,7 @@ export function HomeworkSelector(props: {
                         </HomeworkItemsSet>
                     )
                 }
-            </>
+            </React.Fragment>
         </HomeworkSelectorContainer>
     )
 }

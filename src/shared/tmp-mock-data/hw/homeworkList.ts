@@ -4,7 +4,7 @@ import { Homework } from "../../../interfaces/Homework";
 export const homeworkList: Homework[] = [
     {
         id: 3,
-        description: "Переделать созданные компоненты на redux/thunk",
+        name: "Переделать созданные компоненты на redux/thunk",
         startDate: "29.04.2021",
         deadlineDate: "01.05.2021",
         isOptional: false,
@@ -29,13 +29,13 @@ export const homeworkList: Homework[] = [
                 isDeleted: false,
                 id: 9,
                 name: "redux",
-                tags:[]
+                tags: []
             }
         ]
     },
     {
         id: 4,
-        description: "Рендеринг списков в React",
+        name: "Рендеринг списков в React",
         startDate: "27.04.2021",
         deadlineDate: "29.05.2021",
         isOptional: false,
@@ -60,13 +60,13 @@ export const homeworkList: Homework[] = [
                 isDeleted: false,
                 id: 1,
                 name: "циклы",
-                tags:[]
+                tags: []
             }
         ]
     },
     {
-    id: 5,
-        description: "Релизовать паттерн состояние",
+        id: 5,
+        name: "Релизовать паттерн состояние",
         startDate: "27.04.2021",
         deadlineDate: "29.05.2021",
         isOptional: false,
@@ -91,13 +91,51 @@ export const homeworkList: Homework[] = [
                 isDeleted: false,
                 id: 10,
                 name: "Паттерны. Состояние.",
-                tags:[]
+                tags: []
             },
             {
                 isDeleted: false,
                 id: 11,
                 name: "ООП",
-                tags:[]
+                tags: []
+            }
+        ]
+    },
+    {
+        id: 55,
+        name: "Event loop. Асинхронность в браузере.",
+        description: "Это спросят на собеседовании!!! https://developer.mozilla.org/ru/docs/Web/JavaScript/EventLoop",
+        startDate: "27.04.2021",
+        deadlineDate: "29.05.2021",
+        isOptional: false,
+        group: {
+            id: 1,
+            startDate: "09.07.2021",
+            course: {
+                id: 4,
+                name: "Frontend",
+                description: "",
+                duration: 0,
+                themes: [],
+                materials: []
+            },
+            groupStatus: GroupStatuses[GroupStatuses.Colloquium],
+            groupStatusId: GroupStatuses.Colloquium
+        },
+        tags: [],
+        homeworkAttempts: [],
+        themes: [
+            {
+                isDeleted: false,
+                id: 10,
+                name: "Паттерны. Состояние.",
+                tags: []
+            },
+            {
+                isDeleted: false,
+                id: 11,
+                name: "ООП",
+                tags: []
             }
         ]
     }

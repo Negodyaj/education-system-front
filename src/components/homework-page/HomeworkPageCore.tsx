@@ -1,19 +1,17 @@
 import React from "react";
 import { Role } from "../../enums/role";
 import { PageTitle } from "../../shared/styled-components/consts";
-import { HomeworksByCourse, HomeworksByGroup } from "../../store/state";
 import AddButton from "./buttons/AddButton";
 import { HomeworkButtonsCellOptions } from "./HomeworkItem/HomeworkButtonsCell";
 import { HomeworkSelector } from "./homework-selector/HomeworkSelector";
 import { HomeworkPageContainer, HomeworkPageHeader } from "./styled-components/consts";
-
-export type homeworkSelectorMode = Role.Methodist | Role.Student | Role.Teacher | Role.Tutor;
+import { Homework } from "../../interfaces/Homework";
+import { IndexedObj } from "../../interfaces/IndexedObj";
 
 export interface HomeworkPageOptions {
     readonly addButton: boolean;
-    readonly homeworkSelector: homeworkSelectorMode;
     readonly homeworkButtonsCell: HomeworkButtonsCellOptions;
-    homeworkList: HomeworksByCourse | HomeworksByGroup;
+    homeworkList: IndexedObj<Homework>;
 }
 
 function HomeworkPageCore(props: { settings: HomeworkPageOptions }) {

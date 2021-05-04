@@ -57,8 +57,6 @@ export interface IRoleSelector {
     isDataLoading: boolean;
 }
 
-export type HomeworksByCourse = { [itemsSetName: string]: Homework[] }
-export type HomeworksByGroup = { [itemsSetName: string]: Homework[] }
 export interface IHomeworkPageState {
     pageOptionsByRole: { [role: string]: HomeworkPageOptions };
     homeworkListDefault: Homework[];

@@ -4,7 +4,8 @@ import { Themes } from "./Themes";
 
 export interface Homework {
     id: number,
-    description: string,
+    name: string,
+    description?: string,
     startDate: string,
     deadlineDate: string,
     isOptional: boolean,
