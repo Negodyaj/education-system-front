@@ -8,13 +8,14 @@ import { homeworkUrl} from "../../../shared/consts";
 import { makeNotification } from "../../../shared/helpers/notificationHelpers";
 import { pushNotification } from "../../notifications/action-creators";
 import { thunkResponseHandler } from "../../thunkResponseHadlers";
-import { loadHomeworkSuccess } from "../action-creators";
+import { loadHomeworkForModalSuccess } from "./action-creators";
+
 
 
 export const getHomework = () => {
     return (dispatch: Dispatch) => {
         sendGetRequest<Homework[]>(homeworkUrl, isHomeworkArr)
-            .then(homeworks => dispatch(loadHomeworkSuccess(homeworks)))
+            .then(homeworks => dispatch(loadHomeworkForModalSuccess(homeworks)))
     }
 }
 

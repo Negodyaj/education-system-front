@@ -124,7 +124,7 @@ export const getFormElementSettings = (key: InputNames): FormElementSettings => 
             }
         case InputNames.HomeworkDescription:
             return{
-                label: "описание",
+                label: "Описание домашней работы",
                 inputSettings:{
                     name: key,
                     inputType: 'text',

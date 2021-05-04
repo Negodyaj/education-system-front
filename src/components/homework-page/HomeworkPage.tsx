@@ -14,8 +14,10 @@ function HomeworkPage() {
     dispatch(loadHomeworkSuccess(homeworkList, appState.roleSelector.currentUserRoleId));
   }, [appState.roleSelector.currentUserRoleId])
   return (
-    <HomeworkPageCore settings={appState.homeworkPage.pageOptionsByRole[Role[appState.roleSelector.currentUserRoleId]]} />
-      <AddHomeworkModal/>
+    <React.Fragment>
+      <HomeworkPageCore settings={appState.homeworkPage.pageOptionsByRole[Role[appState.roleSelector.currentUserRoleId]]} />
+      <AddHomeworkModal />
+    </React.Fragment>
   )
 }
 export default HomeworkPage;

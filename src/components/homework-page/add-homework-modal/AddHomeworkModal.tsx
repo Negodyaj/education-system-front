@@ -1,3 +1,4 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react"
 import { FormProvider, useForm } from "react-hook-form"
 import { useDispatch, useSelector } from "react-redux";
@@ -7,15 +8,20 @@ import FormElement from "../../../shared/components/form-elements/FormElement"
 import { getFormElementSettings } from "../../../shared/helpers/useFormRegisterSettingByKey";
 import { IRootState } from "../../../store";
 import { addHomework } from "../../../store/homework-page/add-homework-modal/thunk";
-import { HomeworkModalContainer } from "../styled-components/st-components-for-modalw"
+import { AddHomeworkModalContainer, HomeworkModalContainer,  } from "../styled-components/st-components-for-modalw"
 
 function AddHomeworkModal() {
     const { register, formState, handleSubmit, getValues, setValue, ...methods } = useForm<HomeworkInput>();
     const dispatch = useDispatch();
     const onSubmit = (data: HomeworkInput) => dispatch(addHomework(data))
     const addHomeWorkModal = useSelector((state: IRootState) => { return state.addHomeWorkModal })
+
     return (
         <HomeworkModalContainer>
+            <AddHomeworkModalContainer>
+            <button className="button-close" >
+                        <FontAwesomeIcon icon='times'/>
+                    </button>
             <FormProvider
                 register={register}
                 formState={formState}
@@ -33,6 +39,12 @@ function AddHomeworkModal() {
                     </form>
                 </div >
             </FormProvider>
+            <div className="select-delete">
+                    <button className="button-select" >Отменить</button>
+                    <button className="button-select" >Добавить</button>
+                </div>
+            </AddHomeworkModalContainer>
+            
         </HomeworkModalContainer>
     )
 }
