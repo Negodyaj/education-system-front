@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { ACTIVE } from "../../../shared/styled-components/consts";
 export const HomeworkPageContainer = styled.div`
     font-size: 14px;
 `;
@@ -7,31 +8,45 @@ export const HomeworkPageHeader = styled.div`
     justify-content: space-between;
 `;
 export const HomeworkSelectorContainer = styled.div``;
-export const CourseItem = styled.div`
-    height: 158px;
+export const HomeworkItemsSet = styled.div`
+min-height: 0px;
+overflow: hidden;
+width: max-content;
+border-bottom: 1px solid rgba(39, 45, 59, 0.15);
+border-radius: 20px;
+padding: 24px;
+transition: 0.52s;
+& + & {
+    margin-top: 10px;
+}
+${props => props.className === ACTIVE ? "max-height: 500px" : "max-height: 20px"}
 `;
-export const CourseName = styled.div`
+//export const HomeworkItemsSet = styled(HomeworkItemsGroup)``;
+//export const GroupItem = styled(HomeworkItemsGroup)``;
+export const HomeworkItemsSetHeader = styled.div`
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    height: 68px;
+    align-content: center;
+`
+export const ItemsSetName = styled.div`
     font-weight: 700;
 `;
 export const HomeworkItem = styled.div`
-    height: 29px;
-    
-    & + & {
-        margin-top: 10px;
-    }
-    
-    & :nth-child(2) {
-        display: flex;
-        flex-direction: column;
-    }
-
+    min-height: 50px;
     display:grid;
-    grid-template-columns: 500px 200px 100px 100px 100px;
+    grid-template-columns: 410px 150px 100px max-content;
+    border-bottom: 1px solid rgba(39, 45, 59, 0.15);
+    padding-right: 3px;
 `;
+export const HomeworkProp = styled.div`
+    display: flex;
+    align-items: center;
+`
 export const HomeworkThemeName = styled.p`
-    margin: 0;
-
-    & + & {
-        margin-top: 5px;
-    }
+    margin: 0;    
+    display: flex;
+    flex-direction: column;
+    align-self: center;
 `;

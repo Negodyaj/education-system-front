@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { IRootState } from '../../store';
 import TagList from './tag-list/TagList';
 import { doFilteringTags, toggleModalHidden } from '../../store/tags-page/action-creators';
-import { CommonButton } from './buttonStyledComponent';
+import { CommonButton } from '../../shared/styled-components/buttonStyledComponent';
 
 
 function TagsPage() {

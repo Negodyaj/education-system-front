@@ -4,7 +4,7 @@ import { Tag } from "../../../interfaces/Tag";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteTagThunk, getTags } from "../../../store/tags-page/thunk";
 import { IRootState } from "../../../store";
-import { RoundButton, CommonButton } from "../buttonStyledComponent";
+import { RoundButton, CommonButton } from "../../../shared/styled-components/buttonStyledComponent";
 
 
 

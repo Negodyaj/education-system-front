@@ -3,7 +3,7 @@ import React, { ChangeEventHandler, useState } from "react"
 import { useDispatch } from "react-redux";
 import { toggleModalHidden } from "../../../store/tags-page/action-creators";
 import { addTag } from "../../../store/tags-page/thunk";
-import { CommonButton, DisabledButton, RoundButton } from "../buttonStyledComponent";
+import { CommonButton, DisabledButton, RoundButton } from "../../../shared/styled-components/buttonStyledComponent";
 
 
 

@@ -9,6 +9,7 @@ import { UserInput } from "../interfaces/UserInput";
 import { PaymentResponse } from "../components/interfaces/PaymentResponse";
 import { Homework } from "../interfaces/Homework";
 import { HomeworkInput } from "../interfaces/HomeworkInput";
+import { HomeworkPageOptions } from "../components/homework-page/HomeworkPageCore";
 
 export interface IAppState {
     isLoggedIn: boolean;
@@ -57,10 +58,12 @@ export interface IRoleSelector {
     isDataLoading: boolean;
 }
 
-export type HomeworksByCourse = { [courseName: string]: Homework[] }
+export type HomeworksByCourse = { [itemsSetName: string]: Homework[] }
+export type HomeworksByGroup = { [itemsSetName: string]: Homework[] }
 export interface IHomeworkPageState {
+    pageOptionsByRole: { [role: string]: HomeworkPageOptions };
     homeworkListDefault: Homework[];
-    homeworkListMethodist: HomeworksByCourse;
+    openedItemSetsNames: string[];
 }
 export interface IAddHomeworkModal {
     isDataLoading: boolean,
