@@ -37,10 +37,6 @@ function NavMenu(props: NavMenuProps) {
                     <NavMenuSimpleLink route="homework" faIcon="book-reader" label="Домашки" />
                 }
                 {
-                    (props.roleId === Role.Teacher || props.roleId === Role.Student || props.roleId===Role.Tutor) &&
-                    <NavMenuSimpleLink route="group-page" faIcon="book-reader" label="Группы" />
-                }
-                {
                     (props.roleId === Role.Teacher || props.roleId === Role.Methodist) &&
                     <NavMenuSimpleLink route="courses-page" faIcon="university" label="Курсы" />
                 }
@@ -49,7 +45,7 @@ function NavMenu(props: NavMenuProps) {
                     <NavMenuSimpleLink route="tags-page" faIcon="tag" label="Тэги" />
                 }
                 {
-                    props.roleId == Role.Admin &&
+                    props.roleId !== Role.Methodist &&
                     <NavMenuDropdownLink route="group" faIcon="user" label="Группы"
                     dropdownLinks={[
                         {label:"one", routeParam: "1"},
