@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { Role } from '../../enums/role';
+import NavMenuDropdownLink, { DropdownLinkParams } from './components/NavMenuDropdownLink';
 import NavMenuSimpleLink from './components/NavMenuSimpleLink';
 import "./NavMenu.css"
 
@@ -17,6 +18,12 @@ function NavMenu(props: NavMenuProps) {
         isHidden ? setHidden(false) : setHidden(true);
         props.onHide(isHidden);
     }
+    
+    const defaultShowFilter = (link: DropdownLinkParams) => {
+        if (link.routeParam == "1" || link.routeParam == "2")
+            return true;
+        return false;
+    }
 
     return (
         <div className="menu-container">
@@ -30,16 +37,24 @@ function NavMenu(props: NavMenuProps) {
                     <NavMenuSimpleLink route="homework" faIcon="book-reader" label="Домашки" />
                 }
                 {
-                    (props.roleId === Role.Teacher || props.roleId === Role.Student || props.roleId===Role.Tutor) &&
-                    <NavMenuSimpleLink route="group-page" faIcon="book-reader" label="Группы" />
-                }
-                {
                     (props.roleId === Role.Teacher || props.roleId === Role.Methodist) &&
                     <NavMenuSimpleLink route="courses-page" faIcon="university" label="Курсы" />
                 }
                 {
                     props.roleId !== Role.Student &&
                     <NavMenuSimpleLink route="tags-page" faIcon="tag" label="Тэги" />
+                }
+                {
+                    props.roleId !== Role.Methodist &&
+                    <NavMenuDropdownLink route="group" faIcon="user" label="Группы"
+                    dropdownLinks={[
+                        {label:"one", routeParam: "1"},
+                        {label:"two", routeParam: "2"},
+                        {label:"three", routeParam: "3"},
+                        {label:"four", routeParam: "4"},
+                    ]}
+                    alwaysShowAll={false}
+                    defaultShowFilter={defaultShowFilter}/>
                 }
             </nav>
             <button className={isHidden ? "left button-update" : "right button-update"} onClick={changeHidden} title={isHidden ? "развернуть меню" : "свернуть меню"}>

@@ -12,24 +12,47 @@
     padding-top: 80px;
     margin-bottom: 5px;
     gap: 54px;
-}
-
-.menu-container nav a {
-    height: 32px;
     color: #FFFFFF80;
+}
+.menu-container nav a {
+    color: #FFFFFF80;
+    text-decoration: none;
+}
+.menu-container nav .main-link {
+    height: 32px;
     display: flex;
     justify-content: flex-start;
     gap: 32px;
     align-items: center;
-    text-decoration: none;
     padding: 0 20px;
+}
+
+.menu-container nav .dropdown-link-container {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-top: 10px;
+    padding-left: 83px;
+    list-style: none;
+}
+
+.menu-container nav .dropdown-link::before {
+    content: "\2022"; 
+    color: #FFFFFF80; 
+    font-weight: bold; 
+    display: inline-block;
+    width: 1em; 
+    margin-left: -1em; 
+}
+.menu-container nav .dropdown-link.selected::before{
+    color: white; 
 }
 
 .menu-container nav a.selected {
     color: white;
 }
 
-.menu-container nav a.selected::before {
+.menu-container nav .main-link.selected::before {
     content: "";
     position: absolute;
     left: 0;
@@ -39,15 +62,18 @@
     background-color: white;
 }
 
-
 .menu-container .icon-container {
     width: 32px;
     font-size: 32px;
 }
 
-.menu-container .label-container {
+.menu-container .text-container {
     font-size: 16px;
     font-weight: 600;
+}
+
+.menu-container nav .more-links-toggle {
+    cursor: pointer;
 }
 
 button.left, button.right{
