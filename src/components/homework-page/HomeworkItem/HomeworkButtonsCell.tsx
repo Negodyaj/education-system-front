@@ -1,4 +1,5 @@
 import React from "react";
+import { Homework } from "../../../interfaces/Homework";
 import { ButtonsCell } from "../../../shared/styled-components/consts";
 import HomeworkAppointButton from "./buttons/homework-appoint-button/HomeworkAppointButton";
 import HomeworkDeleteButton from "./buttons/homework-delete-button/HomeworkDeleteButton";
@@ -18,15 +19,15 @@ export interface HomeworkButtonsCellOptions {
     attemptButton?: boolean;
 }
 
-function HomeworkButtonsCell(props: { settings: HomeworkButtonsCellOptions }) {
+function HomeworkButtonsCell(props: { hw:Homework; buttons: HomeworkButtonsCellOptions }) {
     return (
         <ButtonsCell>
-            {props.settings.cloneButton && <HomeworkBaseButton child={HomeworkCloneButton()} />}
-            {props.settings.editButton && <HomeworkBaseButton child={HomeworkEditButton()} />}
-            {props.settings.deleteButton && <HomeworkBaseButton child={HomeworkDeleteButton()} />}
-            {props.settings.appointButton && <HomeworkBaseButton child={HomeworkAppointButton()} />}
-            {props.settings.checkButton && <HomeworkBaseButton child={HomeworkCheckButton()} />}
-            {props.settings.attemptButton && <HomeworkBaseButton child={HomeworkAttemptButton()} />}
+            {props.buttons.cloneButton && <HomeworkBaseButton child={HomeworkCloneButton()} />}
+            {props.buttons.editButton && <HomeworkBaseButton child={HomeworkEditButton()} />}
+            {props.buttons.deleteButton && <HomeworkBaseButton child={HomeworkDeleteButton()} />}
+            {props.buttons.appointButton && <HomeworkBaseButton child={HomeworkAppointButton()} />}
+            {props.buttons.checkButton && <HomeworkBaseButton child={HomeworkCheckButton()} />}
+            {(props.buttons.attemptButton && !props.hw.isOptional) && <HomeworkBaseButton child={HomeworkAttemptButton()} />}
         </ButtonsCell>
     )
 }
