@@ -9,5 +9,8 @@ export enum InputNames {
     Email = "email",
     Password = "password",
     ContractNumber = "contractNumber",
-    Roles = "roles"
+    Roles = "roles",
+    AppointGroup = "group",
+    AppointStartDate = "startDate",
+    AppointDeadline = "deadline"
 }

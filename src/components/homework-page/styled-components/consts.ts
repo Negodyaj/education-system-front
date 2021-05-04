@@ -41,7 +41,7 @@ export const HomeworkItem = styled.div`
     padding-right: 3px;
     overflow: hidden;
 `;
-type DescriptionVisibility = { descriptionVisibility: boolean };
+type ElementVisibility = { elementVisibility: boolean };
 export const HomeworkItemHeader = styled.div`
     min-height: 50px;
     display:grid;
@@ -52,7 +52,7 @@ export const HomeworkItemHeader = styled.div`
     }
     & ~ * {
         transition: 0.32s;
-        ${(props: DescriptionVisibility) => props.descriptionVisibility ? "max-height: max-content; padding: 12px;" : "max-height: 0px; padding-left: 12px;"}
+        ${(props: ElementVisibility) => props.elementVisibility ? "max-height: max-content; padding: 12px;" : "max-height: 0px; padding-left: 12px;"}
     }
     
 `;
@@ -72,4 +72,60 @@ export const HomeworkThemeName = styled.p`
     display: flex;
     flex-direction: column;
     align-self: center;
+`;
+export const ModalBg = styled.div`
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.6);
+    transition: all 0.2s ease;
+    opacity: 0;
+    pointer-events: none;
+    ${(props: ElementVisibility) => props.elementVisibility
+        ?
+        "pointer-events: all; opacity: 1;"
+        :
+        "pointer-events: none; opacity: 0;"
+    }
+`;
+export const AppointModalWindow = styled.div`
+    width: 400px;
+    background-color: rgb(255, 255, 255);
+    display: flex;
+    flex-direction: column;
+    padding:0 10px 10px 10px;
+    margin:200px auto;
+    position: relative;
+    top:-100vh;
+    padding:32px;
+    transition: all 0.2s cubic-bezier(0.38, 0.03, 0.7, 1.22);
+    ${(props: ElementVisibility) => props.elementVisibility
+        ?
+        "top:0px;"
+        :
+        "top:-100vh;"
+    }
+`;
+export const AppointModalWindowHeader = styled.div`
+    display: flex;
+    flex-direction: row-reverse;
+`;
+export const AppointModalWindowCloseBtn = styled.div`
+    transform: rotate(45deg);
+    cursor: pointer;
+`;
+export const AppointModalWindowMain = styled.div`
+    margin-bottom: 10px;
+`;
+export const AppointModalWindowFooter = styled.div`
+    display: flex;
+    justify-content: space-between;
+`;
+export const AppointModalWindowFooterButton = styled.div`
+    height: 22px;
+    padding: 0px;
+    font-size: 12px;
+    margin: 4px;
 `;

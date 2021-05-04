@@ -9,7 +9,7 @@ export const convertEntityToSelectItem = (entity: DictionaryEntity): SelectItem 
 }
 
 export const convertEntitiesToSelectItems = (entities: any): SelectItem[] => {
-    if (Array.isArray(entities) && entities[0].id && entities[0].name) {
+    if (Array.isArray(entities) && entities[0]?.id && entities[0]?.name) {
         return (entities as DictionaryEntity[]).map(entity => convertEntityToSelectItem(entity));
     } else {
         return [];

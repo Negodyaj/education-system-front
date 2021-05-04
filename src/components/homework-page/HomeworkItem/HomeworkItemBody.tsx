@@ -10,7 +10,7 @@ function HomeworkItemBody(props: { hw: Homework; buttons: HomeworkButtonsCellOpt
     }
     return (
         <HomeworkItem>
-            <HomeworkItemHeader descriptionVisibility={descriptionVisibility} onClick={toggleDescriptionVisibility}>
+            <HomeworkItemHeader elementVisibility={descriptionVisibility} onClick={toggleDescriptionVisibility}>
                 <HomeworkName>{props.hw.name}</HomeworkName>
                 <HomeworkThemeName>
                     {

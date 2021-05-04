@@ -4,8 +4,8 @@ import { RoundButton } from "../../../../shared/styled-components/buttonStyledCo
 
 function HomeworkEditButton() {
     return (
-        <RoundButton title="удалить">
-            <FontAwesomeIcon icon="trash" />
+        <RoundButton title="редактировать">
+            <FontAwesomeIcon icon="edit" />
         </RoundButton>
     )
 }

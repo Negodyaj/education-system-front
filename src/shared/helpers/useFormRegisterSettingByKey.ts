@@ -1,14 +1,14 @@
 import { RegisterOptions } from "react-hook-form";
-import { coursesListForModalHW } from "../../enums/courses";
 import { InputNames } from "../../enums/inputNames";
 import { Role } from "../../enums/role";
 import { DictionaryEntity } from "../../interfaces/DictionaryEntity";
 import { convertEnumToDictionary, getRussianDictionary } from "../converters/enumToDictionaryEntity";
+import { groupList } from "../tmp-mock-data/hw/groupList";
 export interface BaseInputSettings {
     name: string;
     registerOptions?: RegisterOptions;
 }
-export  interface InternalInputSettings extends BaseInputSettings {
+export interface InternalInputSettings extends BaseInputSettings {
     inputType: 'text' | 'date' | 'picture';
 }
 export interface ExternalInputSettings extends BaseInputSettings {
@@ -120,6 +120,31 @@ export const getFormElementSettings = (key: InputNames): FormElementSettings => 
                 inputSettings: {
                     name: key,
                     inputType: 'text'
+                }
+            }
+        case InputNames.AppointGroup:
+            return {
+                label: "группа",
+                inputSettings: {
+                    name: key,
+                    inputType: 'multiSelect',
+                    selectOptions: groupList
+                }
+            }
+        case InputNames.AppointStartDate:
+            return {
+                label: "дата назначения",
+                inputSettings: {
+                    name: key,
+                    inputType: "date"
+                }
+            }
+        case InputNames.AppointDeadline:
+            return {
+                label: "дедлайн",
+                inputSettings: {
+                    name: key,
+                    inputType: 'date'
                 }
             }
         default: return {
