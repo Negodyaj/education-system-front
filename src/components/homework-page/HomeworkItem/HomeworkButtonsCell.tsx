@@ -21,13 +21,13 @@ export interface HomeworkButtonsCellOptions {
 
 function HomeworkButtonsCell(props: { hw:Homework; buttons: HomeworkButtonsCellOptions }) {
     return (
-        <ButtonsCell>
-            {props.buttons.cloneButton && <HomeworkBaseButton child={HomeworkCloneButton()} />}
-            {props.buttons.editButton && <HomeworkBaseButton child={HomeworkEditButton()} />}
-            {props.buttons.deleteButton && <HomeworkBaseButton child={HomeworkDeleteButton()} />}
-            {props.buttons.appointButton && <HomeworkBaseButton child={HomeworkAppointButton()} />}
-            {props.buttons.checkButton && <HomeworkBaseButton child={HomeworkCheckButton()} />}
-            {(props.buttons.attemptButton && !props.hw.isOptional) && <HomeworkBaseButton child={HomeworkAttemptButton()} />}
+        <ButtonsCell onClick={(e)=>e.stopPropagation()}>
+            {props.buttons.cloneButton && <HomeworkCloneButton/>}
+            {props.buttons.editButton && <HomeworkEditButton/>}
+            {props.buttons.deleteButton && <HomeworkDeleteButton/>}
+            {props.buttons.checkButton && <HomeworkCheckButton/>}
+            {props.buttons.appointButton && <HomeworkAppointButton/>}
+            {(props.buttons.attemptButton && !props.hw.isOptional) && <HomeworkAttemptButton/>}
         </ButtonsCell>
     )
 }
