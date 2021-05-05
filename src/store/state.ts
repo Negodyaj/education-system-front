@@ -1,6 +1,7 @@
-import { DataNewCourse } from "../components/courses-page/NewCourse";
+import { Attendance } from "../interfaces/Attendance";
 import { Course } from "../interfaces/Courses";
 import { Group } from "../interfaces/Group";
+import { Lesson } from "../interfaces/Lesson";
 import NotificationData from "../interfaces/NotificationData";
 import { Tag } from "../interfaces/Tag";
 import { Themes } from "../interfaces/Themes";
@@ -8,6 +9,7 @@ import { User } from "../interfaces/User";
 import { UserInput } from "../interfaces/UserInput";
 import { UserUpdate } from "../interfaces/UserUpdate";
 import { PaymentResponse } from "../components/interfaces/PaymentResponse";
+import { CourseInput } from "../interfaces/CourseInput";
 
 export interface ICoursePageState {
     courseList: Course[]
@@ -15,11 +17,8 @@ export interface ICoursePageState {
     isModalDelete: boolean
     isCourseDeleting: boolean
     isDataLoading: boolean
-    courseForDeleteId: number
-    isNameNewCourseFilled: boolean
-    isDescriptionNewCourseFilled: boolean
-    isDurationNewCourseFilled: boolean
-    dataNewCourse: DataNewCourse
+    createCourseInputModel: CourseInput
+    idCourseForDelete: number
 }
 
 export interface ICourseEditionState {
@@ -82,7 +81,19 @@ export interface IPaymentFormState {
     isDataLoading: boolean
 }
 
-export interface IGroupInfoComponent{
-    groupToView: Group | undefined;
+export interface ILesson {
+    lessonList: Lesson[];
     isDataLoading: boolean;
+}
+
+export interface IGroupInfoComponent{
+    groupToView: Group;
+    isDataLoading: boolean;
+    studentsGroup: User[];
+}
+
+export interface IAttendance {
+    attendanceList: Attendance[]
+    studentsByGroup: User[]
+    isDataLoading: boolean
 }
