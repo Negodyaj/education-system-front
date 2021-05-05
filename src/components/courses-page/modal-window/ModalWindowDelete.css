@@ -28,7 +28,6 @@
 
 .modal {
     display: grid;
-    grid-template-rows: 70px 1fr 50px;
     width: 500px;
     height: 250px;
     border-radius: 20px;
@@ -77,22 +76,4 @@
 .modal-bottom-course-delete {
     display: flex;
     justify-content: space-around;
-}
-
-.button-yes, .button-no {
-    background-color: #00CCF2;
-    width: 140px;
-    height: 40px;
-    border-radius: 20px;
-    outline: none;
-    border: none;
-    color: #F5FBFF;
-    font-family: 'Montserrat';
-    font-weight: 600;
-    font-size: 16px;
-}
-
-.button-yes:focus, .button-no:focus {
-    outline: none;
-    border: none;
 }

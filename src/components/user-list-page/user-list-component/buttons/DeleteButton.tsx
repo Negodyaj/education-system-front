@@ -2,11 +2,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 import React, { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { User } from "../../../interfaces/User";
-import ConfirmationDialog from "../../../shared/components/confirmation-dialog/ConfirmationDialog";
-import { IRootState } from "../../../store";
-import { setUserToDelete } from "../../../store/user-list-page/action-creators";
-import { deleteUserRequest } from "../../../store/user-list-page/thunk";
+import { User } from "../../../../interfaces/User";
+import ConfirmationDialog from "../../../../shared/components/confirmation-dialog/ConfirmationDialog";
+import { IRootState } from "../../../../store";
+import { setUserToDelete } from "../../../../store/user-list-page/action-creators";
+import { deleteUserRequest } from "../../../../store/user-list-page/thunk";
 
 function DeleteButton(props: { user: User }) {
     const dispatch = useDispatch();
