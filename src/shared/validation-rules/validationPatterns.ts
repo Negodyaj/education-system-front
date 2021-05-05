@@ -5,7 +5,7 @@ export const getValidationPattern = (key: InputNames) => {
         case InputNames.FirstName 
         ||  InputNames.LastName 
         ||  InputNames.CourseDescription 
-        ||  InputNames.CourseName:
+        ||  InputNames.CourseName
         ||  InputNames.LessonDescription
         ||  InputNames.LessonDate
         ||  InputNames.LessonThemesId

@@ -12,7 +12,7 @@ export enum InputNames {
     Roles = "roles",
     CourseName = "name",
     CourseDescription = "description",
-    CourseDuration = "duration"
+    CourseDuration = "duration",
     LessonDescription = "lessonDescription",
     LessonDate = "lessonDate",
     LessonThemesId = "lessonIdThemes",

@@ -85,6 +85,9 @@ export interface IPaymentFormState {
 export interface ILesson {
     lessonList: Lesson[];
     isDataLoading: boolean;
+    isOpenModalAttendance: boolean;
+    isOpenModalAddLesson: boolean;
+    createLessonInputModel: LessonInput;
 }
 
 export interface IGroupInfoComponent{
