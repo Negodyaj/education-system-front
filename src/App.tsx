@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import { Switch, Route, useHistory, Link } from 'react-router-dom';
 import Router from 'react-router'
@@ -17,7 +16,6 @@ import { IRootState } from './store';
 import { useDispatch, useSelector } from 'react-redux';
 import { setIsLoggedOut } from './store/app/action-creators';
 import LoginRoleSelector from './components/role-selector/LoginRoleSelector';
-import GroupPage from './components/group-page/GroupPage';
 import { Helmet } from "react-helmet";
 import { toggleRoleSelector, unsetCurrentUser } from './store/role-selector/action-creator';
 import { getToken, unsetToken } from './services/auth.service';
@@ -27,6 +25,9 @@ import React, { useState } from 'react';
 import { userEditUrl, userListUrl, userRegisterFormUrl } from './shared/consts';
 import UserPage from './components/user-page/UserPage';
 import { ReactComponent as Logo } from './img/devedu.svg';
+import GroupNavMenu from './components/group-page/group-nav-menu/GroupNavMenu';
+import GroupInfoComponent from './components/group-page/group-info-component/GroupInfoComponent';
+
 
 function App() {
     const dispatch = useDispatch();
@@ -64,7 +65,7 @@ function App() {
                     {
                         !!getToken()
                         &&
-                        <NavMenu roleId={appState.roleSelector.currentUserRoleId} onHide={onHide}/>
+                        <NavMenu roleId={appState.roleSelector.currentUserRoleId} onHide={onHide} />
                     }
                 </div>
             </aside>
@@ -129,12 +130,28 @@ function App() {
                                             <title>Домашки</title>
                                         </Helmet>
                                     </Route>
-                                    <Route path="/group-page">
-                                        <GroupPage />
-                                        <Helmet>
-                                            <title>Группы</title>
-                                        </Helmet>
-                                    </Route>
+                                    {appState.roleSelector.currentUserRoleId !== Role.Methodist &&
+                                       <>
+                                       <Route path="/group-page"  >
+                                            <GroupNavMenu/>
+                                            <Helmet>
+                                                <title>Группы</title>
+                                            </Helmet>
+                                        </Route>
+                                        <Route path="/group-page/info"  >
+                                            <GroupInfoComponent/>
+                                        </Route>
+                                        <Route path="/group-page/lesson"  >
+                                            <div>lesson</div>
+                                        </Route>
+                                        <Route path="/group-page/journal"  >
+                                            <div>journal</div>
+                                        </Route>
+                                        <Route path="/group-page/statistics"  >
+                                            <div>statistics</div>
+                                        </Route>
+                                       </> 
+                                        }
                                 </Switch>
                                 <NotificationContainer />
                             </>

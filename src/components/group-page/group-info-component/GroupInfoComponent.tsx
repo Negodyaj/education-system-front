@@ -17,12 +17,11 @@ function GroupInfoComponent() {
   
     return (
       <div>
-        <div className="group-header"> Nav menu component</div>
         <div className="group-body">
           <div>
-            <BaseGroupInfoComponent courseName={appState.groupInfoComponent.groupToView?.course.name}
+            <BaseGroupInfoComponent courseName={'name'}
               startDate={appState.groupInfoComponent.groupToView?.startDate}
-              duration={appState.groupInfoComponent.groupToView?.course.duration} />
+              duration={0} />
           </div>
           <div> List component </div>
         </div>
