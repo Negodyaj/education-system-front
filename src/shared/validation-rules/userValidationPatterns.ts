@@ -1,6 +1,6 @@
 import { InputNames } from "../../enums/inputNames";
 
-export const getValidationPattern = (key: InputNames) => {
+export const getUserValidationPattern = (key: InputNames) => {
     switch (key) {
         case InputNames.FirstName || InputNames.LastName:
             return {

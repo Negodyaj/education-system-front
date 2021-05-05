@@ -1,8 +1,9 @@
-import { RegisterOptions } from "react-hook-form";
+import { RegisterOptions, ValidationRule } from "react-hook-form";
 import { InputNames } from "../../enums/inputNames";
 import { Role } from "../../enums/role";
 import { DictionaryEntity } from "../../interfaces/DictionaryEntity";
 import { convertEnumToDictionary, getRussianDictionary } from "../converters/enumToDictionaryEntity";
+import { getUserValidationPattern } from "../validation-rules/userValidationPatterns";
 export interface BaseInputSettings {
     name: string;
     registerOptions?: RegisterOptions;
@@ -20,7 +21,7 @@ export interface FormElementSettings {
     inputSettings: InputSettings;
 }
 export const getUserFormElementSettings = (key: InputNames): FormElementSettings => {
-    //call getValidationPattern here
+
     switch (key) {
         case InputNames.Id:
             return {
@@ -37,7 +38,8 @@ export const getUserFormElementSettings = (key: InputNames): FormElementSettings
                     name: key,
                     inputType: 'text',
                     registerOptions: {
-                        required: "Введите имя"
+                        required: "Введите имя",
+                        pattern: getUserValidationPattern(key)
                     }
                 }
             };
@@ -48,7 +50,8 @@ export const getUserFormElementSettings = (key: InputNames): FormElementSettings
                     name: key,
                     inputType: 'text',
                     registerOptions: {
-                        required: "Введите фамилию"
+                        required: "Введите фамилию",
+                        pattern: getUserValidationPattern(key)
                     }
                 }
             };
@@ -59,7 +62,8 @@ export const getUserFormElementSettings = (key: InputNames): FormElementSettings
                     name: key,
                     inputType: 'text',
                     registerOptions: {
-                        required: "Введите логин"
+                        required: "Введите логин",
+                        pattern: getUserValidationPattern(key)
                     }
                 }
             };
@@ -70,7 +74,8 @@ export const getUserFormElementSettings = (key: InputNames): FormElementSettings
                     name: key,
                     inputType: 'text',
                     registerOptions: {
-                        required: "Введите пароль"
+                        required: "Введите пароль",
+                        pattern: getUserValidationPattern(key)
                     }
                 }
             }
@@ -81,7 +86,8 @@ export const getUserFormElementSettings = (key: InputNames): FormElementSettings
                     name: key,
                     inputType: 'picture',
                     registerOptions: {
-                        required: "Вставьте ссылку на изображение"
+                        required: "Вставьте ссылку на изображение",
+                        pattern: getUserValidationPattern(key)
                     }
                 }
             }
@@ -92,7 +98,8 @@ export const getUserFormElementSettings = (key: InputNames): FormElementSettings
                     name: key,
                     inputType: 'text',
                     registerOptions: {
-                        required: "Введите номер телефона"
+                        required: "Введите номер телефона",
+                        pattern: getUserValidationPattern(key)
                     }
                 }
             }
