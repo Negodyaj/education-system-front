@@ -3,127 +3,92 @@ import { useEffect, useState } from 'react';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import { Themes } from '../../../interfaces/Themes';
 import SearchComponent from '../../../shared/components/search-component/SearchComponent';
-import { Course } from '../../../interfaces/Courses';
-import { sendDeleteRequest, sendDeleteRequestNoResponse, sendGetRequest, sendPostRequestNoResponse } from '../../../services/http.service';
-import { CourseCourseIdEnd, CourseIdThemeIdDeleteEnd, CourseIdThemeIdAddEnd, CourseThemesEnd } from '../../../shared/endpointConsts';
-import { responseHandlers } from '../../../services/response-handler/responseHandler';
-import { isThemesArr } from '../../../services/type-guards/themesArr';
-import { isCourse } from '../../../services/type-guards/course';
+import { useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { IRootState } from '../../../store';
+import { addThemeInCourse, deleteMaterialCourse, deleteThemeCourse, getCourseById, getThemes } from '../../../store/course-edition/thunk';
+import { setAllThemesInCourse, setChangeDisplayingButtonOpenProgramCourse, setChangeDisplayingButtonOpenMaterialsCourse } from '../../../store/course-edition/action-creators';
+import { Material } from '../../../interfaces/Materials';
 
-interface NewThemeCourse {
+export interface CourseTheme {
     idCourse: number;
     idTheme: number;
 }
 
-interface CourseEditionProps{
-    idCourse: string;
+export interface CourseMaterial {
+    idCourse: number;
+    idMaterial: number;
 }
 
-function CourseEdition(props: CourseEditionProps) {
+interface ParamTypes {
+    id: string;
+}
 
-    let currentCourse = {} as Course | undefined;
-    let themesCurrentCourse: Themes[] = [];
-    let themesList: Themes[] = [];
-    let nameThemesCourse: string[] = [];
-    let indexCourse = Number(props.idCourse.replace(/[a-z-A-Z\/]/g, ""));
+function CourseEdition() {
+
+    const dispatch = useDispatch();
+    const pageState = useSelector(((state: IRootState) => state.courseEditionPage));
+    let { id } = useParams<ParamTypes>();
     
-    const [themesCourse, setThemesCourse] = useState<Themes[] | undefined>(themesCurrentCourse);
-    const [allThemes, setAllThemes] = useState<Themes[] | undefined>(themesList);
-    const [searchTurn, setSearchTurn] = useState('');
-    const [nameThemes, setNameThemes] = useState(nameThemesCourse);
-    const [courseName, setCourseName] = useState(currentCourse);
-    const [changeDisplayingButtonOpenProgramCourse, setChangeDisplayingButtonOpenProgramCourse] = useState(false);
-    const [changeDisplayingButtonOpenMaterialsCourse, setChangeDisplayingButtonOpenMaterialsCourse] = useState(false);
-    const [isClassOnProgramCourse, setIsClassOnProgramCourse] = useState(' unvisible');
-    const [isClassOnMaterialTheme, setIsClassOnMaterialTheme] = useState(' unvisible'); 
+    let themesInCourse: number[] = [];
+    const idCourse = +id;
 
-    const getAllThemes = async() => {
-        setAllThemes(await sendGetRequest<Themes[]>(CourseThemesEnd, isThemesArr));
-        console.log(allThemes);
-    }
-
-    const getCourseById = async (id: number) => {
-        const dataCourse = await sendGetRequest<Course>(CourseCourseIdEnd + id, isCourse);
-        return dataCourse;
-    };
-
-    const updateCourseThemes = async () => {
-        currentCourse = await getCourseById(indexCourse);
-        setCourseName(currentCourse);
-        checkThemes(currentCourse as Course);
-        setThemesCourse(currentCourse?.themes);
-    } 
-
-    
-    const addThemeCourse = (newThemeCourse: NewThemeCourse) => {
-        let url = 'Course/' + newThemeCourse.idCourse + '/theme/' + newThemeCourse.idTheme;
-        sendPostRequestNoResponse(url);
-        setTimeout (() => updateCourseThemes(), 200);
-    }
-
-    const deleteThemeCourse = (newThemeCourse: NewThemeCourse) => {
-        let url = 'Course/' + newThemeCourse.idCourse + '/theme/' + newThemeCourse.idTheme;
-        sendDeleteRequestNoResponse(url);
-        setTimeout (() => updateCourseThemes(), 200);
-    }
-
-    const checkThemes = (course: Course) => {
-        course.themes.map((theme) => (
-            nameThemesCourse.push(theme.name)
-        ))
-        setNameThemes(nameThemesCourse);
-    }
-    
     useEffect(() => {
-        getAllThemes();
-        updateCourseThemes();
+        dispatch(getThemes());
+        dispatch(getCourseById(idCourse));
     }, []);
 
-        
+    useEffect(() => {
+        checkThemes();
+    }, [pageState.course.themes]);
+
+    const [searchWord, setSearchWord] = useState('');
+
     const addNewThemeInProgramCourse = (theme: Themes) => {
-        if (checkTheThemeInTheCourse(theme) === 0) { 
-            let newTheme: NewThemeCourse = {idCourse: indexCourse, idTheme: theme.id};
-            addThemeCourse(newTheme);
-            setTimeout (() => setChangeDisplayingButtonOpenProgramCourse(true), 200);
-            setTimeout(() => setIsClassOnProgramCourse(' visible'), 200);
+        if (checkTheThemeInTheCourse(theme.id)) { 
+            const courseTheme: CourseTheme = {idCourse: idCourse, idTheme: theme.id};
+            dispatch(addThemeInCourse(courseTheme));
+            !pageState.isDisplayingButtonOpenProgramCourse && openProgramCourse();
         }
     }
 
-    const checkTheThemeInTheCourse = (theme: Themes): number => {
-        let count = 0;
-        for (let item of themesCourse as Themes[]) {
-            if (item.name === theme.name) {
-                count++;
-                break;
-            }
-        }
-        return count;
+    const checkTheThemeInTheCourse = (themeId: number): boolean => {
+        const theme = pageState.course.themes.find(t => t.id === themeId);
+        return theme === undefined;
+    } 
+
+    const checkThemes = () => {
+        pageState.course.themes?.map((theme) => (
+            themesInCourse.push(theme.id)
+        ))
+        dispatch(setAllThemesInCourse(themesInCourse));
     }
 
     const deleteThemeFromCourse = (theme: Themes) => {
-        let newTheme: NewThemeCourse = {idCourse: indexCourse, idTheme: theme.id};
-        deleteThemeCourse(newTheme);
+        const courseTheme: CourseTheme = {idCourse: idCourse, idTheme: theme.id};
+        dispatch(deleteThemeCourse(courseTheme));
     } 
 
-    const searchFromTheme = (str: string) => {
-        setSearchTurn(str);
+    const deleteMaterialFromCourse = (material: Material) => {
+        const courseMaterial: CourseMaterial = {idCourse: idCourse, idMaterial: material.id};
+        dispatch(deleteMaterialCourse(courseMaterial));
+    } 
+
+    const searchInThemes = (str: string) => {
+        setSearchWord(str);
     }
 
     const openProgramCourse = () => {
-        setChangeDisplayingButtonOpenProgramCourse(!changeDisplayingButtonOpenProgramCourse);
-        isClassOnProgramCourse === ' unvisible' ? setIsClassOnProgramCourse(' visible') : setIsClassOnProgramCourse(' unvisible');
+        dispatch(setChangeDisplayingButtonOpenProgramCourse());
     }
 
     const openMaterialsCourse = () => {
-        setChangeDisplayingButtonOpenMaterialsCourse(!changeDisplayingButtonOpenMaterialsCourse);
-        isClassOnMaterialTheme === ' unvisible' ? setIsClassOnMaterialTheme(' visible') : setIsClassOnMaterialTheme(' unvisible');
-
+        dispatch(setChangeDisplayingButtonOpenMaterialsCourse());
     }
-    
 
     return (
     <div className="course-edition-container">
-        <h3 className="current-course-header-name">{ 'Курс ' + courseName?.name }</h3>
+        <h3 className="current-course-header-name">{ 'Курс ' + pageState.course.name }</h3>
         <div className='course-update'>
             <div className='new-themes-course'>
                 <div className="new-themes-course-header">
@@ -133,20 +98,16 @@ function CourseEdition(props: CourseEditionProps) {
                     </button>
                 </div>
                 <div className="new-themes-container">
-                    <SearchComponent funcSearch={searchFromTheme}/>
+                    <SearchComponent funcSearch={searchInThemes}/>
                     {
-                        allThemes?.filter((item) => {
-                            if (item.name.toLowerCase().includes(searchTurn.toLowerCase())) {
-                                return item;
-                            } 
-                        })
+                        pageState.themes?.filter(item => item.name.toLowerCase().includes(searchWord.toLowerCase()))
                         .map((item) => (
-                            <div key={item.id} className={"new-theme "}>
+                            <div key={item.id} className="new-theme ">
                                 <div className="new-theme-name">{item.name}</div>
                                 <div className="new-theme-add">
                                     <button onClick={() => addNewThemeInProgramCourse(item)} className="button-add-theme">
                                     {
-                                        nameThemes.includes(item.name) ? <FontAwesomeIcon icon="check" /> : <FontAwesomeIcon icon="plus" />
+                                        pageState.idThemesCourse.includes(item.id) ? <FontAwesomeIcon icon="check" /> : <FontAwesomeIcon icon="plus" />
                                     }
                                     </button>
                                 </div>
@@ -157,17 +118,17 @@ function CourseEdition(props: CourseEditionProps) {
             </div>
             <div className="current-course-container">
                 <div className="program-current-course-container">
-                    <div onClick={openProgramCourse}  className="program-course-header">
-                        <button onClick={openProgramCourse} className="program-course-header-button-open">
-                            {
-                                changeDisplayingButtonOpenProgramCourse ? <FontAwesomeIcon icon="angle-down" /> : <FontAwesomeIcon icon="angle-up" />
-                            }
-                        </button>
-                        <div className="program-course-header-text">Программа курса</div>
-                    </div>
-                    <div className={"program-course" + isClassOnProgramCourse}>
-                        {
-                            themesCourse?.map((theme) => (
+                        <div className="program-course-header">
+                            <button onClick={openProgramCourse} className="program-course-header-button-open">
+                                { 
+                                    pageState.isDisplayingButtonOpenProgramCourse ? <FontAwesomeIcon icon="angle-down" /> : <FontAwesomeIcon icon="angle-up" /> 
+                                }
+                            </button>
+                            <div className="program-course-header-text">Программа курса</div>
+                        </div>
+                    <div className="program-course">
+                        { pageState.isDisplayingButtonOpenProgramCourse &&
+                            pageState.course.themes?.map((theme) => (
                                 <div key={theme.id} className="theme">
                                     <div className="theme-name">{theme.name}</div>
                                     <div className="theme-delete">
@@ -181,13 +142,29 @@ function CourseEdition(props: CourseEditionProps) {
                     </div>
                 </div>
                 <div className="materials-current-course-container">
-                    <div onClick={openMaterialsCourse} className={"materials-course-header" + isClassOnMaterialTheme}>
+                    <div className={"materials-course-header"}>
                         <button onClick={openMaterialsCourse} className="materials-course-header-button-open">
-                            {
-                                changeDisplayingButtonOpenMaterialsCourse ? <FontAwesomeIcon icon="angle-down" /> : <FontAwesomeIcon icon="angle-up" />
+                            { 
+                                pageState.isDisplayingButtonOpenMaterialsCourse ? <FontAwesomeIcon icon="angle-down" /> : <FontAwesomeIcon icon="angle-up" /> 
                             }
                         </button>
                         <div className="materials-course-header-text">Материалы курса</div>
+                    </div>
+                    <div className="materials-course">
+                        { pageState.isDisplayingButtonOpenMaterialsCourse &&
+                            pageState.course.materials?.map((material) => (
+                                <div key={material.id} className="material">
+                                    <div className="material-content">
+                                        <a href={material.link} title={material.link} target="_blank" className="link-material">{material.description}</ a>
+                                    </div>
+                                    <div className="material-delete">
+                                        <button onClick={() => deleteMaterialFromCourse(material)} className='button-material-delete'>
+                                            <FontAwesomeIcon icon="minus" />
+                                        </button>
+                                    </div>
+                                </div>
+                            ))
+                        }
                     </div>
                 </div>
             </div>
