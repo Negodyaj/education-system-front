@@ -1,7 +1,6 @@
 export interface LessonInput {
-    idGroup: number;
-    description: string;
+    lessonDescription: string;
     lessonDate: string;
-    idThemes?: number[];
-    recordLink?: string;
+    lessonIdThemes?: number[];
+    lessonRecordLink?: string;
 }

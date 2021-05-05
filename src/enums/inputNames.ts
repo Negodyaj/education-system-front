@@ -10,8 +10,8 @@ export enum InputNames {
     Password = "password",
     ContractNumber = "contractNumber",
     Roles = "roles",
-    LessonDescription = "description",
+    LessonDescription = "lessonDescription",
     LessonDate = "lessonDate",
-    LessonThemesId = "idThemes",
-    LessonRecordLink = "recordLink"
+    LessonThemesId = "lessonIdThemes",
+    LessonRecordLink = "lessonRecordLink"
 }

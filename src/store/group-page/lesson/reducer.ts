@@ -4,11 +4,10 @@ import { ILesson } from "../../state";
 import { LessonListActions } from "./action-creators";
 
 export const INIT_LESSON_TO_REGISTER: LessonInput = {
-    idGroup: 14,
-    description: '',
+    lessonDescription: '',
     lessonDate: '',
-    idThemes: [],
-    recordLink: ''
+    lessonIdThemes: [],
+    lessonRecordLink: ''
 }
 
 const initialState: ILesson = {
