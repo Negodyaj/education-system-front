@@ -13,7 +13,7 @@ export const ModalAttendanceBack = styled.div`
 export const ModalAttendanceContainer = styled.div`
     position: relative;
     display: grid;
-    grid-template-rows: 70px 1fr 100px;
+    grid-template-rows: 80px 1fr 70px;
     width: 500px;
     border-radius: 20px;
     padding: 5px 5px;
@@ -25,7 +25,7 @@ export const ModalAttendanceContainer = styled.div`
 export const ModalAttendanceHeader = styled.div`
     display: flex;
     align-items: center;
-    padding-left: 50px;
+    padding-left: 40px;
     font-family: 'Montserrat';
     font-weight: 600;
     font-size: 20px;
@@ -34,7 +34,7 @@ export const ModalAttendanceHeader = styled.div`
 export const UserListAttendanceByGroup = styled.div`
     display: flex;
     flex-direction: column; 
-    width: 90%;
+    width: 85%;
     margin: 0 auto;
 `
 

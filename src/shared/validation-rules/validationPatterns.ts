@@ -2,7 +2,12 @@ import { InputNames } from "../../enums/inputNames";
 
 export const getValidationPattern = (key: InputNames) => {
     switch (key) {
-        case InputNames.FirstName || InputNames.LastName:
+        case InputNames.FirstName 
+        ||  InputNames.LastName 
+        ||  InputNames.LessonDescription
+        ||  InputNames.LessonDate
+        ||  InputNames.LessonThemesId
+        ||  InputNames.LessonRecordLink:
             return {
                 value: /[A-Za-zА-Яа-я]/,
                 message: "Допустимы только буквенные символы"

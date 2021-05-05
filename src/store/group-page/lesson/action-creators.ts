@@ -1,11 +1,12 @@
 import { Lesson } from "../../../interfaces/Lesson";
-import { LESSON_LIST_WRETCH_FAIL, LESSON_LIST_WRETCH_LOADED, LESSON_LIST_WRETCH_LOADING, LESSON_TOGGLE_MODAL_ATTENDANCE } from "../../actionTypes";
+import { LESSON_LIST_WRETCH_FAIL, LESSON_LIST_WRETCH_LOADED, LESSON_LIST_WRETCH_LOADING, LESSON_TOGGLE_MODAL_ADD_LESSON, LESSON_TOGGLE_MODAL_ATTENDANCE } from "../../actionTypes";
 
 export type LessonListActions =
     | ReturnType<typeof setLessonListIsLoading>
     | ReturnType<typeof setLessonListWasLoaded>
     | ReturnType<typeof setLessonListFail>
     | ReturnType<typeof setIsOpenModalAttendance>
+    | ReturnType<typeof setIsOpenModalAddLesson>
 
 export const setLessonListIsLoading = () => {
     return ({
@@ -30,6 +31,13 @@ export const setLessonListFail = (error: string) => {
 export const setIsOpenModalAttendance = () => {
     return ({
         type: LESSON_TOGGLE_MODAL_ATTENDANCE,
+        payload: undefined
+    } as const)
+}
+
+export const setIsOpenModalAddLesson = () => {
+    return ({
+        type: LESSON_TOGGLE_MODAL_ADD_LESSON,
         payload: undefined
     } as const)
 }

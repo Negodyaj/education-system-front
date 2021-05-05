@@ -9,5 +9,9 @@ export enum InputNames {
     Email = "email",
     Password = "password",
     ContractNumber = "contractNumber",
-    Roles = "roles"
+    Roles = "roles",
+    LessonDescription = "description",
+    LessonDate = "lessonDate",
+    LessonThemesId = "idThemes",
+    LessonRecordLink = "recordLink"
 }

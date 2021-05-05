@@ -8,6 +8,7 @@ import { User } from "../interfaces/User";
 import { UserInput } from "../interfaces/UserInput";
 import { UserUpdate } from "../interfaces/UserUpdate";
 import { PaymentResponse } from "../components/interfaces/PaymentResponse";
+import { LessonInput } from "../interfaces/LessonInput";
 
 export interface ICoursePageState {
     courseList: Course[]
@@ -82,4 +83,6 @@ export interface ILesson {
     lessonList: Lesson[];
     isDataLoading: boolean;
     isOpenModalAttendance: boolean;
+    isOpenModalAddLesson: boolean;
+    createLessonInputModel: LessonInput;
 }

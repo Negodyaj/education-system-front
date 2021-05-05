@@ -1,6 +1,8 @@
 import { RegisterOptions } from "react-hook-form";
 import { InputNames } from "../../enums/inputNames";
 import { Role } from "../../enums/role";
+import NewLesson from "../../components/group-page/lesson-list-component/NewLesson";
+
 export interface BaseInputSettings {
     name: string;
     registerOptions?: RegisterOptions;
@@ -117,6 +119,59 @@ export const getFormElementSettings = (key: InputNames): FormElementSettings => 
                 inputSettings: {
                     name: key,
                     inputType: 'text'
+                }
+            }
+        case InputNames.LessonDescription:
+            return {
+                label: "Описание занятия",
+                inputSettings: {
+                    name: key,
+                    inputType: "text",
+                    registerOptions: {
+                        required: "Введите описание занятия",
+                        min: {
+                            value: 2,
+                            message: 'Минимальное колличество символов 2'
+                        }
+                    }
+                }
+            }
+        case InputNames.LessonDate:
+            return {
+                label: "Дата занятия",
+                inputSettings: {
+                    name: key,
+                    inputType: "text",
+                    registerOptions: {
+                        required: "Введите дату занятия",
+                        min: {
+                            value: 10,
+                            message: 'Требуется ввести дату в формате 01-01-2000'
+                        }
+                    }
+                }
+            }
+        case InputNames.LessonThemesId:
+            return {
+                label: "Темы занятия",
+                inputSettings: {
+                    name: key,
+                    inputType: 'multiSelect',
+                    selectOptions: Role,
+                    registerOptions: {
+                        required: "Выберите темы занятия"
+                    }
+                }
+            }
+        case InputNames.LessonRecordLink:
+            return {
+                label: "Ссылка на запись занятия",
+                inputSettings: {
+                    name: key,
+                    inputType: "text",
+                    registerOptions: {
+                        required: "Укажите ссылку на запись занятия"
+                    }
                 }
             }
         default: return {
