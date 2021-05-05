@@ -6,7 +6,7 @@ import { SelectItem } from '../../../interfaces/SelectItem';
 import { convertEntitiesToSelectItems } from '../../converters/entityToSelectItem';
 import { convertEnumToDictionary, getRussianDictionary } from '../../converters/enumToDictionaryEntity';
 import { convertRoleIdsToSelectItems } from '../../converters/roleIdsToSelectItems';
-import { ExternalInputSettings } from '../../helpers/useFormRegisterSettingByKey';
+import { ExternalInputSettings } from '../../helpers/userFormRegisterSettingByKey';
 import { customStyles } from './multiSelectCosnts';
 
 type selectType = "single" | "multi"

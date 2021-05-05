@@ -1,5 +1,4 @@
 import React from "react";
-import { Role } from "../../enums/role";
 import { PageTitle } from "../../shared/styled-components/consts";
 import AddButton from "./buttons/AddButton";
 import { HomeworkButtonsCellOptions } from "./HomeworkItem/HomeworkButtonsCell";

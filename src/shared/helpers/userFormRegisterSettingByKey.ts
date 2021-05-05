@@ -3,7 +3,6 @@ import { InputNames } from "../../enums/inputNames";
 import { Role } from "../../enums/role";
 import { DictionaryEntity } from "../../interfaces/DictionaryEntity";
 import { convertEnumToDictionary, getRussianDictionary } from "../converters/enumToDictionaryEntity";
-import { groupList } from "../tmp-mock-data/hw/groupList";
 export interface BaseInputSettings {
     name: string;
     registerOptions?: RegisterOptions;
@@ -20,7 +19,7 @@ export interface FormElementSettings {
     label: string;
     inputSettings: InputSettings;
 }
-export const getFormElementSettings = (key: InputNames): FormElementSettings => {
+export const getUserFormElementSettings = (key: InputNames): FormElementSettings => {
     //call getValidationPattern here
     switch (key) {
         case InputNames.Id:
@@ -120,31 +119,6 @@ export const getFormElementSettings = (key: InputNames): FormElementSettings => 
                 inputSettings: {
                     name: key,
                     inputType: 'text'
-                }
-            }
-        case InputNames.AppointGroup:
-            return {
-                label: "группа",
-                inputSettings: {
-                    name: key,
-                    inputType: 'multiSelect',
-                    selectOptions: groupList
-                }
-            }
-        case InputNames.AppointStartDate:
-            return {
-                label: "дата назначения",
-                inputSettings: {
-                    name: key,
-                    inputType: "date"
-                }
-            }
-        case InputNames.AppointDeadline:
-            return {
-                label: "дедлайн",
-                inputSettings: {
-                    name: key,
-                    inputType: 'date'
                 }
             }
         default: return {

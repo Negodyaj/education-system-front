@@ -28,6 +28,7 @@ import { userEditUrl, userListUrl, userRegisterFormUrl } from './shared/consts';
 import UserPage from './components/user-page/UserPage';
 import { ReactComponent as Logo } from './img/devedu.svg';
 import Loader from './shared/components/loader/Loader';
+import ConfirmationDialog from './shared/components/confirmation-dialog/ConfirmationDialog';
 
 function App() {
     const dispatch = useDispatch();

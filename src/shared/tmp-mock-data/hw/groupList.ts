@@ -8,5 +8,9 @@ export const groupList:DictionaryEntity[] = [
     {
         id: 2,
         name: "Java 09.04.2021"
+    },
+    {
+        id:46835,
+        name:"sfjkldgh"
     }
 ]

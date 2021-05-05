@@ -4,18 +4,14 @@ import { CommonButton } from "../../../shared/styled-components/buttonStyledComp
 
 function AddButton(props: { isTurnedOn: boolean }) {
     return (
-        <>
-            {
-                props.isTurnedOn
-                    ?
-                    <CommonButton>
-                        <FontAwesomeIcon icon="plus" />
-                        <span> Добавить</span>
-                    </CommonButton>
-                    :
-                    <React.Fragment></React.Fragment>
-            }
-        </>
+        props.isTurnedOn
+            ?
+            <CommonButton>
+                <FontAwesomeIcon icon="plus" />
+                <span> Добавить</span>
+            </CommonButton>
+            :
+            null
     )
 }
 

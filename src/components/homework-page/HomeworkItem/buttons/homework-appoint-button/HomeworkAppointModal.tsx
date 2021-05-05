@@ -2,13 +2,11 @@ import { FormProvider, useForm } from "react-hook-form";
 import { InputNames } from "../../../../../enums/inputNames";
 import { AppointInput } from "../../../../../interfaces/AppointInput";
 import FormElement from "../../../../../shared/components/form-elements/FormElement";
-import { getFormElementSettings } from "../../../../../shared/helpers/useFormRegisterSettingByKey";
+import { getAppointFormElementSettings } from "../../../../../shared/helpers/appointFormRegisterSettingsByKey";
 import { CommonButton, RoundButton } from "../../../../../shared/styled-components/buttonStyledComponent";
 import {
     AppointModalWindow,
-    AppointModalWindowCloseBtn,
     AppointModalWindowFooter,
-    AppointModalWindowFooterButton,
     AppointModalWindowHeader,
     AppointModalWindowMain,
     ModalBg
@@ -42,7 +40,7 @@ function HomeworkAppointModal(props: {
                                     deadline: ""
                                 }).map(key => {
                                     return <FormElement
-                                        formElementSettings={getFormElementSettings(key as InputNames)}
+                                        formElementSettings={getAppointFormElementSettings(key as InputNames)}
                                         key={key}></FormElement>
                                 })
                             }
