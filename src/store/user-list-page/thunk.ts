@@ -6,15 +6,18 @@ import { isUserArr } from "../../services/type-guards/userArray";
 import { isUserDelete } from "../../services/type-guards/userDelete";
 import { userListUrl, usersUrl } from "../../shared/consts";
 import { makeNotification } from "../../shared/helpers/notificationHelpers";
+import { setIsLoaded, setIsLoading } from "../app/action-creators";
 import { pushNotification } from "../notifications/action-creators";
 import { thunkResponseHandler } from "../thunkResponseHadlers";
 import { setUserDeleting, setUserDeletingFail, setUserDeletingSuccess, setUserListFail, setUserListIsLoading, setUserListWasLoaded } from "./action-creators";
 
 export const getUsers = () => {
     return (dispatch: Dispatch) => {
+        dispatch(setIsLoading());
         dispatch(setUserListIsLoading());
         sendGetRequest<User[]>(usersUrl, isUserArr)
             .then(users => {
+                dispatch(setIsLoaded());
                 dispatch(setUserListWasLoaded(thunkResponseHandler(dispatch, users)));
             })
             .catch(error => dispatch(setUserListFail(error)));

@@ -33,6 +33,7 @@ export interface ICourseEditionState {
 export interface IUserListPage {
     userList: User[];
     userToDelete: User;
+    openedItemId: number;
     isDataLoading: boolean;
 }
 
@@ -52,6 +53,7 @@ export interface IRoleSelector {
 
 export interface IAppState {
     isLoggedIn: boolean;
+    loadersCount: number;
 }
 
 export interface INotificationContainerState {

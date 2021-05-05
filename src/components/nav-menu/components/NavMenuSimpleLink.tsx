@@ -3,17 +3,17 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { NavLink } from "react-router-dom";
 
-interface NavMenuSimpleLinkProps {
-    route: string,
+export interface NavMenuSimpleLinkProps {
     faIcon: IconProp,
     label: string,
+    route: string,
 }
 
 function NavMenuSimpleLink (props: NavMenuSimpleLinkProps) {
     return (
-        <NavLink to={`/${props.route}`} activeClassName="selected">
+        <NavLink to={`/${props.route}`} className="main-link" activeClassName="selected">
             <span className="icon-container"><FontAwesomeIcon icon={props.faIcon} /></span>
-            <span className="label-container">{props.label}</span>
+            <span className="text-container">{props.label}</span>
         </NavLink>
     )
 }

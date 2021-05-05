@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-import { Switch, Route, useHistory, Link } from 'react-router-dom';
+import { Switch, Route, useHistory, Link, Redirect } from 'react-router-dom';
 import Router from 'react-router'
 import LoginForm from './components/login-form/LoginForm';
 import NavMenu from './components/nav-menu/NavMenu';
@@ -26,6 +26,7 @@ import React, { useState } from 'react';
 import { userEditUrl, userListUrl, userRegisterFormUrl } from './shared/consts';
 import UserPage from './components/user-page/UserPage';
 import { ReactComponent as Logo } from './img/devedu.svg';
+import Loader from './shared/components/loader/Loader';
 import LessonsByGroup from './components/group-page/lesson-list-component/LessonsByGroup';
 import CoursePage from './components/courses-page/course-page/CoursePage';
 
@@ -65,7 +66,7 @@ function App() {
                     {
                         !!getToken()
                         &&
-                        <NavMenu roleId={appState.roleSelector.currentUserRoleId} onHide={onHide}/>
+                        <NavMenu roleId={appState.roleSelector.currentUserRoleId} onHide={onHide} />
                     }
                 </div>
             </aside>
@@ -140,7 +141,10 @@ function App() {
                                             <title>Домашки</title>
                                         </Helmet>
                                     </Route>
-                                    <Route path="/group-page">
+                                    <Route exact path="/group">
+                                        <Redirect to="/group/1" />
+                                    </Route>
+                                    <Route path="/group/:id">
                                         <GroupPage />
                                         <Helmet>
                                             <title>Группы</title>
@@ -153,7 +157,6 @@ function App() {
                                         </Helmet>
                                     </Route>
                                 </Switch>
-                                <NotificationContainer />
                             </>
                             :
                             <Switch>
@@ -167,8 +170,10 @@ function App() {
                                 </Route>
                             </Switch>
                     }
+                    <NotificationContainer />
                 </main>
             </div>
+            <Loader />
         </div>
     );
 }
