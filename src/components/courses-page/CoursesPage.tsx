@@ -53,7 +53,7 @@ function CoursesPage() {
                                         <EmptyDiv>{item.name}</EmptyDiv>
                                     </Link>
                                     <CourseUpdateDelete>
-                                    <Link to={`/course/edition/${item.id}`}>
+                                    <Link to={`/course/${item.id}/edition`}>
                                             <button className='round-button'>
                                                 <FontAwesomeIcon icon="edit" />
                                             </button>

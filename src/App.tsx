@@ -28,7 +28,7 @@ import UserPage from './components/user-page/UserPage';
 import { ReactComponent as Logo } from './img/devedu.svg';
 import Loader from './shared/components/loader/Loader';
 import LessonsByGroup from './components/group-page/lesson-list-component/LessonsByGroup';
-import CoursePage from './components/courses-page/course-page/CoursePage';
+import CoursePage from './components/courses-page/CoursesPage';
 
 function App() {
     const dispatch = useDispatch();
@@ -115,7 +115,7 @@ function App() {
                                             </Helmet>
                                         </Route>
                                     }
-                                    {/* <Route path="/course/:id/edition" children={<CourseEdition />} /> */}
+                                    <Route path="/course/:id/edition" children={<CourseEdition />} />
                                     <Route path="/course/:id" children={<CoursePage />} />
                                     {
                                         appState.roleSelector.currentUserRoleId === Role.Teacher &&
