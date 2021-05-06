@@ -29,6 +29,7 @@ import { ReactComponent as Logo } from './img/devedu.svg';
 import Loader from './shared/components/loader/Loader';
 import LessonsByGroup from './components/group-page/lesson-list-component/LessonsByGroup';
 import CoursePage from './components/courses-page/CoursesPage';
+import PersonalPage from './components/personal-page/PersonalPage';
 
 function App() {
     const dispatch = useDispatch();
@@ -154,6 +155,12 @@ function App() {
                                         <Attendance />
                                         <Helmet>
                                             <title>Журнал в разработке</title>
+                                        </Helmet>
+                                    </Route>
+                                    <Route path="/personal-page">
+                                        <PersonalPage />
+                                        <Helmet>
+                                            <title>ЛК</title>
                                         </Helmet>
                                     </Route>
                                 </Switch>

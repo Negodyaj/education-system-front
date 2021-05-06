@@ -1,0 +1,54 @@
+/*input {
+  display: block;
+  box-sizing: border-box;
+  width: 80%;
+  border-radius: 4px;
+  border: 1px solid black;
+  padding: 10px 15px;
+  margin-bottom: 10px;
+  font-size: 14px;
+}*/
+
+.notDisabledForm input{
+  border: 1px solid white;
+}
+
+label,
+.label,
+section > label {
+  line-height: 2;
+  text-align: left;
+  display: block;
+  margin-bottom: 13px;
+  margin-top: 20px;
+  font-size: 14px;
+  font-weight: 200;
+}
+
+.disabledForm{
+  pointer-events: all;
+  opacity:1;
+}
+.notDisabledForm button{
+ display:none;
+}
+.notDisabledForm{
+  pointer-events: none;
+  opacity:0.9;
+}
+
+
+/*
+button[type="button"] {
+  padding: 5px;
+  background: #516391;
+  letter-spacing: 0px;
+  text-transform: none;
+  padding: 10px;
+  letter-spacing: 2px;
+}
+
+button[type="button"]:hover {
+  background: #bf1650;
+}
+*/

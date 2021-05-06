@@ -29,6 +29,10 @@ function NavMenu(props: NavMenuProps) {
         <div className="menu-container">
             <nav className={isHidden ? "notshow" : "vision"}>
                 {
+                     (props.roleId === Role.Admin || props.roleId === Role.Manager || props.roleId === Role.Methodist ||props.roleId === Role.Teacher ) &&
+                    <NavMenuSimpleLink route="personal-page" faIcon="user" label="ЛК" />
+                }
+                {
                     (props.roleId === Role.Admin || props.roleId === Role.Manager) &&
                     <NavMenuSimpleLink route="user-list" faIcon="user" label="Пользователи" />
                 }
