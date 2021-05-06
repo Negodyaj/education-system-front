@@ -16,6 +16,7 @@ import {
     ICourseEditionState,
     ICoursePageState,
     IGroupInfoComponent,
+    IHomeworkAppointModalState,
     IHomeworkPageState,
     INotificationContainerState,
     IPaymentFormState,
@@ -24,6 +25,7 @@ import {
     IUserListPage,
     IUserPage
 } from './state';
+import { homeworkAppointModalReducer } from './homework-page/homework-appoint-modal/reducer';
 
 
 export interface IRootState {
@@ -37,7 +39,8 @@ export interface IRootState {
     notificationContainer: INotificationContainerState;
     payment: IPaymentFormState;
     groupInfoComponent: IGroupInfoComponent;
-    homeworkPage: IHomeworkPageState
+    homeworkPage: IHomeworkPageState;
+    homeworkAppointModal: IHomeworkAppointModalState;
 }
 
 const middlewares = [thunk];
@@ -54,7 +57,8 @@ const store = createStore<IRootState, any, any, any>(
         tagsPage: tagsPageReducer,
         payment: paymentReducer,
         groupInfoComponent: groupInfoComponentReducer,
-        homeworkPage: homeworkPageReducer
+        homeworkPage: homeworkPageReducer,
+        homeworkAppointModal: homeworkAppointModalReducer
     }),
     undefined,
     applyMiddleware(...middlewares));

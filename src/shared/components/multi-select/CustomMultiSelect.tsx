@@ -70,18 +70,33 @@ function CustomMultiSelect(props: SelectProps) {
         control={props.formContext?.control}
         name={props.inputSettings.name}
         render={({ field: { value } }) => {
-          console.log(value);
+          let entities = typeof props.inputSettings?.selectOptions === "function" && props.inputSettings?.selectOptions();
           return props.selectType === 'multi'
             ?
             MultiSelect(
-              convertEntitiesToSelectItems(props.inputSettings?.selectOptions),
-              (value !== undefined ? value[0]?.label ? value : convertIdsToSelectItems(value, convertEntitiesToSelectItems(props.inputSettings?.selectOptions)) : undefined),
+              convertEntitiesToSelectItems(entities || props.inputSettings?.selectOptions),
+              (value !== undefined ? value[0]?.label
+                ?
+                value
+                :
+                convertIdsToSelectItems(
+                  value, convertEntitiesToSelectItems(
+                    entities || props.inputSettings?.selectOptions
+                  )
+                ) : undefined),
               onMultiSelect)
             :
             SingleSelect(
-              convertEntitiesToSelectItems(props.inputSettings?.selectOptions
-              ),
-              (value !== undefined ? value?.label ? value : convertIdToSelectItem(value, convertEntitiesToSelectItems(props.inputSettings?.selectOptions)) : undefined),
+              convertEntitiesToSelectItems(entities || props.inputSettings?.selectOptions),
+              (value !== undefined ? value?.label
+                ?
+                value
+                :
+                convertIdToSelectItem(
+                  value, convertEntitiesToSelectItems(
+                    entities || props.inputSettings?.selectOptions
+                  )
+                ) : undefined),
               onSingleSelect)
         }} />
       :

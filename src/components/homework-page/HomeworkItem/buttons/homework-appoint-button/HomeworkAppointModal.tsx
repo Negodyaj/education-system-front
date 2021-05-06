@@ -1,9 +1,13 @@
+import { useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
 import { InputNames } from "../../../../../enums/inputNames";
 import { AppointInput } from "../../../../../interfaces/AppointInput";
 import FormElement from "../../../../../shared/components/form-elements/FormElement";
 import { getAppointFormElementSettings } from "../../../../../shared/helpers/appointFormRegisterSettingsByKey";
 import { CommonButton, RoundButton } from "../../../../../shared/styled-components/buttonStyledComponent";
+import { IRootState } from "../../../../../store";
+import { getGroupsByTeacherId } from "../../../../../store/homework-page/homework-appoint-modal/thunk";
 import {
     AppointModalWindow,
     AppointModalWindowFooter,
@@ -16,6 +20,11 @@ function HomeworkAppointModal(props: {
     visibility: boolean;
     setVisibility: (value: boolean) => void
 }) {
+    const appState = useSelector((state: IRootState) => state);
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(getGroupsByTeacherId(appState.roleSelector.currentUserRoleId))
+    }, [])
     const onSubmit = (data: AppointInput) => {
         //dispatch(postAppointment(data))
     }

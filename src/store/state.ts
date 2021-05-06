@@ -9,6 +9,7 @@ import { UserInput } from "../interfaces/UserInput";
 import { PaymentResponse } from "../components/interfaces/PaymentResponse";
 import { Homework } from "../interfaces/Homework";
 import { HomeworkPageOptions } from "../components/homework-page/HomeworkPageCore";
+import { DictionaryEntity } from "../interfaces/DictionaryEntity";
 
 export interface IAppState {
     isLoggedIn: boolean;
@@ -26,7 +27,6 @@ export interface ICoursePageState {
     isDurationNewCourseFilled: boolean
     dataNewCourse: DataNewCourse
 }
-
 export interface ICourseEditionState {
     course: Course;
     themes: Themes[];
@@ -35,32 +35,32 @@ export interface ICourseEditionState {
     isDisplayingButtonOpenProgramCourse: boolean;
     isDisplayingButtonOpenMaterialsCourse: boolean;
 }
-
 export interface IUserListPage {
     userList: User[];
     userToDelete: User;
     openedItemId: number;
     isDataLoading: boolean;
 }
-
 export interface IUserPage {
     userForUserPage: UserInput,
     userForUserPageId: number;
     isReadonly: boolean;
     isDataLoading: boolean;
 }
-
 export interface IRoleSelector {
     isTurnedOn: boolean;
     currentUser: User | undefined;
     currentUserRoleId: number;
     isDataLoading: boolean;
 }
-
 export interface IHomeworkPageState {
     pageOptionsByRole: { [role: string]: HomeworkPageOptions };
     homeworkListDefault: Homework[];
     openedItemSetsNames: string[];
+}
+export interface IHomeworkAppointModalState {
+    groupListByTeacherId: Group[];
+    groupEntities: DictionaryEntity[];
 }
 export interface INotificationContainerState {
     notifications: {

@@ -1,6 +1,5 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { useFormContext } from "react-hook-form";
-import { InputNames } from "../../../enums/inputNames";
 import { ExternalInputSettings, FormElementSettings } from "../../helpers/userFormRegisterSettingByKey";
 import DateInput from "./DateInput";
 import MultiSelectInput from "./MultiSelectInput";
@@ -14,7 +13,6 @@ function FormElement(props: {
     const formContext = useFormContext();
     const inputType = props.formElementSettings.inputSettings.inputType;
     const inputSettings = { ...props.formElementSettings.inputSettings };
-    console.log(props.formElementSettings.inputSettings.registerOptions)
     return (
         <div className="form-row">
             <label className="form-label">{props.formElementSettings.label}</label>

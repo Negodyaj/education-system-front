@@ -1,9 +1,10 @@
-import { RegisterOptions, ValidationRule } from "react-hook-form";
+import { RegisterOptions } from "react-hook-form";
 import { InputNames } from "../../enums/inputNames";
 import { Role } from "../../enums/role";
 import { DictionaryEntity } from "../../interfaces/DictionaryEntity";
 import { convertEnumToDictionary, getRussianDictionary } from "../converters/enumToDictionaryEntity";
 import { getUserValidationPattern } from "../validation-rules/userValidationPatterns";
+import { EntitiesGetter } from "./entitiesGetters";
 export interface BaseInputSettings {
     name: string;
     registerOptions?: RegisterOptions;
@@ -13,7 +14,7 @@ export interface InternalInputSettings extends BaseInputSettings {
 }
 export interface ExternalInputSettings extends BaseInputSettings {
     inputType: 'singleSelect' | 'multiSelect';
-    selectOptions: DictionaryEntity[]
+    selectOptions: DictionaryEntity[] | EntitiesGetter
 }
 export type InputSettings = InternalInputSettings | ExternalInputSettings;
 export interface FormElementSettings {
@@ -21,7 +22,6 @@ export interface FormElementSettings {
     inputSettings: InputSettings;
 }
 export const getUserFormElementSettings = (key: InputNames): FormElementSettings => {
-
     switch (key) {
         case InputNames.Id:
             return {

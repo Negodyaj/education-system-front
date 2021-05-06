@@ -1,5 +1,5 @@
 import { InputNames } from "../../enums/inputNames"
-import { groupList } from "../tmp-mock-data/hw/groupList"
+import { useGetGroupEntities } from "./entitiesGetters"
 import { FormElementSettings } from "./userFormRegisterSettingByKey"
 
 export const getAppointFormElementSettings = (key: InputNames): FormElementSettings => {
@@ -11,7 +11,7 @@ export const getAppointFormElementSettings = (key: InputNames): FormElementSetti
                 inputSettings: {
                     name: key,
                     inputType: 'multiSelect',
-                    selectOptions: groupList
+                    selectOptions: useGetGroupEntities
                 }
             }
         case InputNames.AppointStartDate:
