@@ -1,11 +1,10 @@
 import { useState } from 'react'
 import { Controller, FieldValues, UseFormReturn } from 'react-hook-form';
 import Select, { ActionMeta, OptionsType } from 'react-select'
-import { coursesListForModalHW } from '../../../enums/courses';
 import { SelectItem } from '../../../interfaces/SelectItem';
 import { convertEntitiesToSelectItems } from '../../converters/entityToSelectItem';
-import { convertEnumToDictionary, getRussianDictionary } from '../../converters/enumToDictionaryEntity';
-import { convertRoleIdsToSelectItems } from '../../converters/roleIdsToSelectItems';
+import { convertIdsToSelectItems } from '../../converters/roleIdsToSelectItems';
+import { convertIdToSelectItem } from '../../converters/roleIdToSelectItem';
 import { ExternalInputSettings } from '../../helpers/userFormRegisterSettingByKey';
 import { customStyles } from './multiSelectCosnts';
 
@@ -71,17 +70,18 @@ function CustomMultiSelect(props: SelectProps) {
         control={props.formContext?.control}
         name={props.inputSettings.name}
         render={({ field: { value } }) => {
+          console.log(value);
           return props.selectType === 'multi'
             ?
             MultiSelect(
               convertEntitiesToSelectItems(props.inputSettings?.selectOptions),
-              (value !== undefined ? value[0]?.label ? value : convertRoleIdsToSelectItems(value, convertEntitiesToSelectItems(props.inputSettings?.selectOptions)) : undefined),
+              (value !== undefined ? value[0]?.label ? value : convertIdsToSelectItems(value, convertEntitiesToSelectItems(props.inputSettings?.selectOptions)) : undefined),
               onMultiSelect)
             :
             SingleSelect(
               convertEntitiesToSelectItems(props.inputSettings?.selectOptions
               ),
-              (value !== undefined ? value?.label ? value : convertRoleIdsToSelectItems(value, convertEntitiesToSelectItems(props.inputSettings?.selectOptions)) : undefined),
+              (value !== undefined ? value?.label ? value : convertIdToSelectItem(value, convertEntitiesToSelectItems(props.inputSettings?.selectOptions)) : undefined),
               onSingleSelect)
         }} />
       :

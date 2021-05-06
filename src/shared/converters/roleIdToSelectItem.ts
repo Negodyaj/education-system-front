@@ -1,10 +1,8 @@
-import { Role } from "../../enums/role"
 import { SelectItem } from "../../interfaces/SelectItem"
-import { getEnToRuTranslation } from "./enumToDictionaryEntity"
 
-export const convertRoleIdToSelectItem = (arg: number, selectedOptions: SelectItem[]) => {
+export const convertIdToSelectItem = (id: number, selectedOptions: SelectItem[]) => {
     return {
-        value: arg,
-        label: selectedOptions[arg - 1]?.label
+        value: id,
+        label: selectedOptions[selectedOptions.indexOf(selectedOptions.filter(option => option.value === id)[0])]?.label
     }
 }

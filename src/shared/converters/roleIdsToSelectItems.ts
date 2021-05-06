@@ -1,10 +1,11 @@
+
 import { SelectItem } from "../../interfaces/SelectItem"
 
-export const convertRoleIdsToSelectItems = (roleIds: number[] | undefined, selectedOptions: SelectItem[]) => {
-    return roleIds?.map(roleId => {
+export const convertIdsToSelectItems = (ids: number[] | undefined, selectedOptions: SelectItem[]) => {
+    return ids?.map(id => {
         return {
-            value: roleId,
-            label: selectedOptions[roleId - 1]?.label
+            value: id,
+            label: selectedOptions[selectedOptions.indexOf(selectedOptions.filter(option => option.value === id)[0])]?.label
         }
     })
 }

@@ -3,7 +3,7 @@ import { Role } from "../../enums/role";
 import CustomMultiSelect from "../../shared/components/multi-select/CustomMultiSelect";
 import { convertEntitiesToSelectItems } from "../../shared/converters/entityToSelectItemConverter";
 import { convertEnumToDictionary, getRussianDictionary } from "../../shared/converters/enumToDictionaryEntity";
-import { convertRoleIdToSelectItem } from "../../shared/converters/roleIdToSelectItem";
+import { convertIdToSelectItem } from "../../shared/converters/roleIdToSelectItem";
 import { IRootState } from "../../store";
 import { setCurrentUserRoleId } from "../../store/role-selector/action-creator";
 import './LoginRoleSelector.css';
@@ -28,7 +28,7 @@ export function LoginRoleSelector() {
                     <CustomMultiSelect
                         selectType="single"
                         onSingleSelect={onSingleSelect}
-                        selectedOption={convertRoleIdToSelectItem(appState.roleSelector.currentUserRoleId, convertEntitiesToSelectItems(
+                        selectedOption={convertIdToSelectItem(appState.roleSelector.currentUserRoleId, convertEntitiesToSelectItems(
                             getRussianDictionary(
                                 convertEnumToDictionary(Role))))}
                         options={convertEntitiesToSelectItems(getRussianDictionary(convertEnumToDictionary(Role)

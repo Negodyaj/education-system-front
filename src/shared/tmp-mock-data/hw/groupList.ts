@@ -6,11 +6,11 @@ export const groupList:DictionaryEntity[] = [
         name: "C# Base 09.07.2021"
     },
     {
-        id: 2,
+        id: 500,
         name: "Java 09.04.2021"
     },
     {
-        id:46835,
+        id:3,
         name:"sfjkldgh"
     }
 ]
