@@ -16,7 +16,7 @@ export const ModalAddLesson = styled.div`
   display: grid;
   grid-template-rows: 70px 1fr 50px;
   opacity: 1;
-  width: 350px;
+  width: 500px;
   height: 610px;
   border: 3px solid rgb(255, 255, 255);
   border-radius: 20px;
@@ -34,8 +34,7 @@ export const ModalHeaderAddLesson = styled.div`
 
 export const HeadModalLesson = styled.div`
   display: flex;
-  margin-left: 115px;
-  padding-top: 15px;
+  padding-left: 15px;
   font-size: 20px;
 `
 
@@ -50,6 +49,7 @@ export const ButtonCloseModalAddLesson = styled.button`
   outline: none;
   border: none;
   color: white;
+  cursor: pointer;
 
   &:focus{
     border: none;
@@ -59,6 +59,7 @@ export const ButtonCloseModalAddLesson = styled.button`
 
 export const InputStyle = styled.form`
   display: flex;
+  margin-top: 30px;
   justify-content: center;
   flex-direction: column;
   align-items: center;

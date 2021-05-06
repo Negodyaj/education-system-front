@@ -4,7 +4,7 @@ import { Lesson } from "../../../interfaces/Lesson";
 import { sendGetRequest } from "../../../services/http.service";
 import { isAttendanceArr } from "../../../services/type-guards/attendanceArr";
 import { isLessonArr } from "../../../services/type-guards/lessonArr";
-import { lessonAttendance, lessonsUrl } from "../../../shared/consts";
+import { lessonsUrl } from "../../../shared/consts";
 import { thunkResponseHandler } from "../../thunkResponseHadlers";
 import { setAttendanceListFail, setAttendanceListIsLoading, setAttendanceListWasLoaded } from "./action-creators";
 
@@ -22,7 +22,7 @@ import { setAttendanceListFail, setAttendanceListIsLoading, setAttendanceListWas
 export const getAttendanceByLessonId = (lessonId: number) => {
   return (dispatch: Dispatch) => {
     dispatch(setAttendanceListIsLoading());
-    sendGetRequest<Attendance[]>(`${lessonAttendance}/${lessonId}/attendance`, isAttendanceArr)
+    sendGetRequest<Attendance[]>(`${lessonsUrl}/${lessonId}/attendance`, isAttendanceArr)
       .then(attendance => {
         dispatch(setAttendanceListWasLoaded(thunkResponseHandler(dispatch, attendance)));
       })

@@ -13,8 +13,8 @@ export enum InputNames {
     CourseName = "name",
     CourseDescription = "description",
     CourseDuration = "duration",
-    LessonDescription = "lessonDescription",
+    LessonDescription = "description",
     LessonDate = "lessonDate",
-    LessonThemesId = "lessonIdThemes",
-    LessonRecordLink = "lessonRecordLink"
+    LessonThemesId = "themesId",
+    LessonRecordLink = "recordLink"
 }

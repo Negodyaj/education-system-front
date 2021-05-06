@@ -5,11 +5,18 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { IRootState } from "../../../store";
 import { ButtonCloseModalAddLesson, FormWrapper, HeadModalLesson, InputStyle, ModalAddLesson, ModalBackLesson, ModalHeaderAddLesson, SelectAddLessonOrCancel } from "./NewLessonStyled";
 import FormElement from "../../../shared/components/form-elements/FormElement";
-import { getFormElementSettings } from "../../../shared/helpers/useFormRegisterSettingByKey";
 import { InputNames } from "../../../enums/inputNames";
 import { setIsOpenModalAddLesson } from "../../../store/group-page/lesson/action-creators";
 import { LessonInput } from "../../../interfaces/LessonInput";
 import { createLesson } from "../../../store/group-page/lesson/thunk";
+import { getLessonFormElementSettings } from "../../../shared/helpers/lessonFormRegisterSettingByKey";
+
+export interface DataNewLesson {
+    groupId: 14;
+    description: string;
+    lessonDate: string;
+    themesId?: number[];
+}
 
 
 const NewLesson = () => {
@@ -22,18 +29,15 @@ const NewLesson = () => {
         dispatch(setIsOpenModalAddLesson());
     }
 
-    const createDataNewLesson = (dataNewLesson: LessonInput) => {
-        dispatch(createLesson(dataNewLesson)) 
-    }
-
     const onSubmit = (dataLesson: LessonInput) => {
-        createDataNewLesson(dataLesson);
-        console.log(dataLesson);
-    }
-
-    const getThemesForAddLesson = () : string[] => {
-        let nameThemes = appState.courseEditionPage.themes.map(theme => (theme.name));
-        return nameThemes;
+        let dataNewLesson: DataNewLesson = {
+            groupId: 14,
+            description: dataLesson.description,
+            lessonDate: dataLesson.lessonDate,
+            themesId: dataLesson.themesId
+        }
+        dispatch(createLesson(dataNewLesson)) 
+        console.log(dataNewLesson);
     }
 
     return(
@@ -57,7 +61,7 @@ const NewLesson = () => {
                         <InputStyle onSubmit={handleSubmit(onSubmit)}>
                         {
                             Object.keys(appState.lessonByGroup.createLessonInputModel).map(key => {
-                                   return <FormElement key={key} formElementSettings={getFormElementSettings(key as InputNames)}></FormElement>
+                                   return <FormElement key={key} formElementSettings={getLessonFormElementSettings(key as InputNames)}></FormElement>
                             })
                         }
                         </InputStyle>

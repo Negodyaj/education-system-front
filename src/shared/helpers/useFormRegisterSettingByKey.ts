@@ -1,7 +1,8 @@
 import { RegisterOptions } from "react-hook-form";
 import { InputNames } from "../../enums/inputNames";
 import { Role } from "../../enums/role";
-import NewLesson from "../../components/group-page/lesson-list-component/NewLesson";
+import { DictionaryEntity } from "../../interfaces/DictionaryEntity";
+import { themeList } from "../tmp-mock-data/themeList";
 
 export interface BaseInputSettings {
     name: string;
@@ -12,7 +13,7 @@ export  interface InternalInputSettings extends BaseInputSettings {
 }
 export interface ExternalInputSettings extends BaseInputSettings {
     inputType: 'singleSelect' | 'multiSelect';
-    selectOptions: { [index: number]: string }
+    selectOptions: DictionaryEntity[]
 }
 export type InputSettings = InternalInputSettings | ExternalInputSettings;
 export interface FormElementSettings {
@@ -109,7 +110,7 @@ export const getFormElementSettings = (key: InputNames): FormElementSettings => 
                 label: "Роли",
                 inputSettings: {
                     inputType: 'multiSelect',
-                    selectOptions: Role,
+                    selectOptions: themeList,
                     name: key
                 }
             }
@@ -162,59 +163,6 @@ export const getFormElementSettings = (key: InputNames): FormElementSettings => 
                     }
                 }
             }
-        case InputNames.LessonDescription:
-            return {
-                label: "Описание занятия",
-                inputSettings: {
-                    name: key,
-                    inputType: "text",
-                    registerOptions: {
-                        required: "Введите описание занятия",
-                        min: {
-                            value: 2,
-                            message: 'Минимальное колличество символов 2'
-                        }
-                    }
-                }
-            }
-        case InputNames.LessonDate:
-            return {
-                label: "Дата занятия",
-                inputSettings: {
-                    name: key,
-                    inputType: "text",
-                    registerOptions: {
-                        required: "Введите дату занятия",
-                        min: {
-                            value: 10,
-                            message: 'Требуется ввести дату в формате 01-01-2000'
-                        }
-                    }
-                }
-            }
-        case InputNames.LessonThemesId:
-            return {
-                label: "Темы занятия",
-                inputSettings: {
-                    name: key,
-                    inputType: 'multiSelect',
-                    selectOptions: Role,
-                    registerOptions: {
-                        required: "Выберите темы занятия"
-                    }
-                }
-            }
-        case InputNames.LessonRecordLink:
-            return {
-                label: "Ссылка на запись занятия",
-                inputSettings: {
-                    name: key,
-                    inputType: "text",
-                    registerOptions: {
-                        required: "Укажите ссылку на запись занятия"
-                    }
-                }
-            }
         default: return {
             label: key,
             inputSettings: {
@@ -224,3 +172,4 @@ export const getFormElementSettings = (key: InputNames): FormElementSettings => 
         }
     }
 }
+

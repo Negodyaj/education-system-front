@@ -1,6 +1,6 @@
 export interface LessonInput {
-    lessonDescription: string;
+    description: string;
     lessonDate: string;
-    lessonIdThemes?: number[];
-    lessonRecordLink?: string;
+    themesId?: number[];
+    //recordLink?: string;
 }

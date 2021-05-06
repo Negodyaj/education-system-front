@@ -150,7 +150,7 @@ aside.hide {
 
 
 .form-input-textarea {
-    min-height: 200px;
+    min-height: 100px;
     max-height: 258px;
     min-width: 450px;
     max-width: 450px;
