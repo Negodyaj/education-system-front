@@ -16,7 +16,7 @@ export const ModalAddCourse = styled.div`
   display: grid;
   grid-template-rows: 70px 1fr 50px;
   opacity: 1;
-  width: 700px;
+  width: 600px;
   height: 610px;
   border: 3px solid rgb(255, 255, 255);
   border-radius: 20px;
