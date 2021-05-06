@@ -9,12 +9,12 @@ import { ButtonActions, ColumnLessonsTable, ContentColumnLessonsTable, HeaderCol
 
 function LessonsTableByGroup() {
 
+    let currentDate = new Date();
     const dispatch = useDispatch();
     const pageState = useSelector((state: IRootState) => state.lessonByGroup);
 
     useEffect(() => {
         dispatch(getLessonsByGroup());
-        console.log(pageState.lessonList);
     }, []);
 
     const openModalDeleteLesson = (lessonId: number) => {
@@ -39,9 +39,13 @@ function LessonsTableByGroup() {
                     <ColumnLessonsTable>{lesson.recordLink}</ColumnLessonsTable>
                     <ColumnLessonsTable>
                         <ButtonActions>
-                            <RoundButton onClick={() => { openModalDeleteLesson(lesson.id) }}>
-                                <FontAwesomeIcon icon="trash" />
-                            </RoundButton>
+                            { new Date(`${lesson.lessonDate.substr(6,4)}-${lesson.lessonDate.substr(3, 2)}-${lesson.lessonDate.substr(0, 2)}`) > currentDate ?
+                                <RoundButton onClick={() => { openModalDeleteLesson(lesson.id) }}>
+                                    <FontAwesomeIcon icon="trash" />
+                                </RoundButton>
+                                : 
+                                <div></div>
+                            }
                             <RoundButton>
                                 <FontAwesomeIcon icon="edit" />
                             </RoundButton>

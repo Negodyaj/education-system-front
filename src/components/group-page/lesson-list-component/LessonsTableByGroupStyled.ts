@@ -36,8 +36,8 @@ export const ColumnLessonsTable = styled.div`
 `
 
 export const ButtonActions = styled.div`
-    display: flex;
-    justify-content: space-around;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     align-items: flex-end;
     gap: 10px;
 `

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import React, { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { IRootState } from "../../../store";
-import { ButtonCloseModalAddLesson, FormWrapper, HeadModalLesson, InputStyle, ModalAddLesson, ModalBackLesson, ModalHeaderAddLesson, SelectAddLessonOrCancel } from "./NewLessonStyled";
+import { ButtonCloseModalAddLesson, CommonButton, FormWrapper, HeadModalLesson, InputStyle, ModalAddLesson, ModalBackLesson, ModalHeaderAddLesson, SelectAddLessonOrCancel } from "./NewLessonStyled";
 import FormElement from "../../../shared/components/form-elements/FormElement";
 import { InputNames } from "../../../enums/inputNames";
 import { setIsOpenModalAddLesson } from "../../../store/group-page/lesson/action-creators";
@@ -55,7 +55,6 @@ const NewLesson = () => {
                     getValues={getValues}
                     setValue={setValue}
                     {...methods}>
-                    
                     <FormWrapper>
                         <InputStyle onSubmit={handleSubmit(onSubmit)}>
                         {
@@ -67,8 +66,8 @@ const NewLesson = () => {
                     </FormWrapper>
                 </FormProvider>
                 <SelectAddLessonOrCancel>
-                    <button className="common-button" onClick={closeModalAddLesson}>Отменить</button>
-                    <button className="common-button" onClick={handleSubmit(onSubmit)}>Добавить</button>
+                    <CommonButton onClick={closeModalAddLesson}>Отменить</CommonButton>
+                    <CommonButton onClick={handleSubmit(onSubmit)}>Добавить</CommonButton>
                 </SelectAddLessonOrCancel>
             </ModalAddLesson>
         </ModalBackLesson>
