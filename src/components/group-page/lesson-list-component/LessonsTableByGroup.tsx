@@ -2,7 +2,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { IRootState } from "../../../store";
+import { setIdLessonForDelete, setIsOpenModalDeleteLesson } from "../../../store/group-page/lesson/action-creators";
 import { getLessonsByGroup } from "../../../store/group-page/lesson/thunk";
+import ModalLessonDelete from "./ModalLessonDelete";
 import { ButtonActions, ColumnLessonsTable, ContentColumnLessonsTable, HeaderColumnLessonsTable, HeaderLessonsTable, LessonsTable, RoundButton } from "./LessonsTableByGroupStyled";
 
 function LessonsTableByGroup() {
@@ -14,6 +16,11 @@ function LessonsTableByGroup() {
         dispatch(getLessonsByGroup());
         console.log(pageState.lessonList);
     }, []);
+
+    const openModalDeleteLesson = (lessonId: number) => {
+        dispatch(setIsOpenModalDeleteLesson());
+        dispatch(setIdLessonForDelete(lessonId));
+    }
     
     return(
         <LessonsTable>
@@ -32,7 +39,7 @@ function LessonsTableByGroup() {
                     <ColumnLessonsTable>{lesson.recordLink}</ColumnLessonsTable>
                     <ColumnLessonsTable>
                         <ButtonActions>
-                            <RoundButton>
+                            <RoundButton onClick={() => { openModalDeleteLesson(lesson.id) }}>
                                 <FontAwesomeIcon icon="trash" />
                             </RoundButton>
                             <RoundButton>
@@ -43,6 +50,7 @@ function LessonsTableByGroup() {
                 </ContentColumnLessonsTable>  
             ))
             }
+            {pageState.isOpenModalDeleteLesson && <ModalLessonDelete />}
         </LessonsTable>
     )
 }
