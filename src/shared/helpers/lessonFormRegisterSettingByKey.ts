@@ -1,8 +1,7 @@
 import { InputNames } from "../../enums/inputNames"
-import { Role } from "../../enums/role"
 import { themeList } from "../tmp-mock-data/themeList"
 import { getLessonValidationPattern } from "../validation-rules/lessonValidationPatterns"
-import { FormElementSettings } from "./useFormRegisterSettingByKey"
+import { FormElementSettings } from "./userFormRegisterSettingByKey"
 
 export const getLessonFormElementSettings = (key: InputNames): FormElementSettings => {
     switch (key) {
@@ -22,7 +21,7 @@ export const getLessonFormElementSettings = (key: InputNames): FormElementSettin
                 label: "Дата занятия",
                 inputSettings: {
                     name: key,
-                    inputType: "text",
+                    inputType: "date",
                     registerOptions: {
                         required: "Введите дату занятия",
                         pattern: getLessonValidationPattern(key)

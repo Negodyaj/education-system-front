@@ -5,7 +5,7 @@ export const getLessonValidationPattern = (key: InputNames) => {
         case InputNames.LessonDate:
             return {
                 value: /[0-9]/,
-                message: "Допустим ввод даты только в формате 01-01-2001"
+                message: "Допустим ввод даты только в формате 01.01.2001"
             }
 /*         case InputNames.LessonRecordLink:
             return {

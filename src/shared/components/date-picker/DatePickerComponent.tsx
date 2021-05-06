@@ -3,7 +3,7 @@ import DatePicker, { registerLocale } from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import './DatePickerComponent.css';
 import ru from "date-fns/locale/ru";
-import { ExternalInputSettings } from '../../helpers/useFormRegisterSettingByKey';
+import { ExternalInputSettings } from '../../helpers/userFormRegisterSettingByKey';
 import { Controller, FieldValues, UseFormReturn } from 'react-hook-form';
 import { convertStringToDate } from '../../converters/stringToDateConverter';
 registerLocale("ru", ru);

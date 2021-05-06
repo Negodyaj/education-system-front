@@ -2,7 +2,7 @@ import { ErrorMessage } from "@hookform/error-message";
 import React from "react";
 import { useFormContext } from "react-hook-form";
 import { InputNames } from "../../../enums/inputNames";
-import { ExternalInputSettings, FormElementSettings } from "../../helpers/useFormRegisterSettingByKey";
+import { ExternalInputSettings, FormElementSettings } from "../../helpers/userFormRegisterSettingByKey";
 import { getValidationPattern } from "../../validation-rules/validationPatterns";
 import DateInput from "./DateInput";
 import MultiSelectInput from "./MultiSelectInput";
@@ -19,10 +19,6 @@ function FormElement(props: {
     const formContext = useFormContext();
     const inputType = props.formElementSettings.inputSettings.inputType;
     const inputSettings = { ...props.formElementSettings.inputSettings };
-    inputSettings.registerOptions = {
-        ...inputSettings.registerOptions,
-        pattern: getValidationPattern(inputSettings.name as InputNames)
-    };
     return (
         <div className="form-row">
             <label className="form-label">{props.formElementSettings.label}</label>

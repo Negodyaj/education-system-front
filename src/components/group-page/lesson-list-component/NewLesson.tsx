@@ -11,13 +11,12 @@ import { LessonInput } from "../../../interfaces/LessonInput";
 import { createLesson } from "../../../store/group-page/lesson/thunk";
 import { getLessonFormElementSettings } from "../../../shared/helpers/lessonFormRegisterSettingByKey";
 
-export interface DataNewLesson {
+interface DataNewLesson {
     groupId: 14;
     description: string;
     lessonDate: string;
     themesId?: number[];
 }
-
 
 const NewLesson = () => {
 

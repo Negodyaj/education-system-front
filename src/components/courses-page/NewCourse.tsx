@@ -6,7 +6,7 @@ import FormElement from '../../shared/components/form-elements/FormElement';
 import { InputNames } from '../../enums/inputNames';
 import { IRootState } from '../../store';
 import { CourseInput } from '../../interfaces/CourseInput';
-import { getFormElementSettings } from '../../shared/helpers/useFormRegisterSettingByKey';
+import { getUserFormElementSettings } from '../../shared/helpers/userFormRegisterSettingByKey';
 import React, { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import {
@@ -59,7 +59,7 @@ function NewCourse() {
                         <InputStyle onSubmit={handleSubmit(onSubmit)}>
                         {
                             Object.keys(appState.coursePage.createCourseInputModel).map(key => {
-                                   return <FormElement key={key} formElementSettings={getFormElementSettings(key as InputNames)}></FormElement>
+                                   return <FormElement key={key} formElementSettings={getUserFormElementSettings(key as InputNames)}></FormElement>
                             })
                         }
                         </InputStyle>

@@ -9,7 +9,7 @@ import { getUserToEditById, sendUser } from '../../store/user-page/thunk';
 import { UserInput } from '../../interfaces/UserInput';
 import { User } from '../../interfaces/User';
 import FormElement from '../../shared/components/form-elements/FormElement';
-import { getFormElementSettings } from '../../shared/helpers/useFormRegisterSettingByKey';
+import { getUserFormElementSettings } from '../../shared/helpers/userFormRegisterSettingByKey';
 import { InputNames } from '../../enums/inputNames';
 
 function UserPage() {
@@ -47,7 +47,7 @@ function UserPage() {
                         {
                             Object.keys(appState.userPage.userForUserPage).map(key => {
                                 return <FormElement
-                                    formElementSettings={getFormElementSettings(key as InputNames)}
+                                    formElementSettings={getUserFormElementSettings(key as InputNames)}
                                     key={key}></FormElement>
                             })
                         }

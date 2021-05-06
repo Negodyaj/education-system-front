@@ -1,5 +1,5 @@
 import { useFormContext } from "react-hook-form";
-import { ExternalInputSettings } from "../../helpers/useFormRegisterSettingByKey";
+import { ExternalInputSettings } from "../../helpers/userFormRegisterSettingByKey";
 import CustomMultiSelect from "../multi-select/CustomMultiSelect";
 
 
