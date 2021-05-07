@@ -80,81 +80,81 @@ function App() {
               Log out
             </button>
           )}
-          <main className="main-content">
-            {getToken() ? (
-              <Switch>
-                {(currentUserRoleId === Role.Manager ||
-                  currentUserRoleId === Role.Admin) && <UserRoute />}
-                {currentUserRoleId === Role.Teacher && (
-                  <Route path="/courses-page">
-                    <CoursesPage />
-                    <Helmet>
-                      <title>Курсы</title>
-                    </Helmet>
-                  </Route>
-                )}
-                <Route path="/course/:id/edition">
-                  <CourseEdition />
-                </Route>
-                <Route path="/course/:id">
-                  <CoursePage />
-                </Route>
-                {currentUserRoleId === Role.Teacher && (
-                  <Route path="/lessons">
-                    <LessonsByGroup />
-                    <Helmet>
-                      <title>Занятия</title>
-                    </Helmet>
-                  </Route>
-                )}
-                {currentUserRoleId !== Role.Student && (
-                  <Route path="/tags-page">
-                    <TagsPage />
-                    <Helmet>
-                      <title>Тэги</title>
-                    </Helmet>
-                  </Route>
-                )}
-                <Route path="/homework">
-                  <Helmet>
-                    <title>Домашки</title>
-                  </Helmet>
-                </Route>
-                <Route exact path="/group">
-                  <Redirect to="/group/1" />
-                </Route>
-                <Route path="/group/:id">
-                  <GroupPage />
-                  <Helmet>
-                    <title>Группы</title>
-                  </Helmet>
-                </Route>
-                <Route path="/attendance">
-                  <Attendance />
-                  <Helmet>
-                    <title>Журнал в разработке</title>
-                  </Helmet>
-                </Route>
-              </Switch>
-            ) : (
-              <Switch>
-                <Route exact path="/">
-                  <LoginForm />
-                  <div className="test-page-link">
-                    <Link to="/dev-test-page">secret test page</Link>
-                  </div>
-                </Route>
-                <Route path="/dev-test-page">
-                  <DevTestPage />
-                  <NotificationContainer />
-                </Route>
-              </Switch>
-            )}
-            <NotificationContainer />
-          </main>
         </div>
-        <Loader />
+        <main className="main-content">
+          {getToken() ? (
+            <Switch>
+              {(currentUserRoleId === Role.Manager ||
+                currentUserRoleId === Role.Admin) && <UserRoute />}
+              {currentUserRoleId === Role.Teacher && (
+                <Route path="/courses-page">
+                  <CoursesPage />
+                  <Helmet>
+                    <title>Курсы</title>
+                  </Helmet>
+                </Route>
+              )}
+              <Route path="/course/:id/edition">
+                <CourseEdition />
+              </Route>
+              <Route path="/course/:id">
+                <CoursePage />
+              </Route>
+              {currentUserRoleId === Role.Teacher && (
+                <Route path="/lessons">
+                  <LessonsByGroup />
+                  <Helmet>
+                    <title>Занятия</title>
+                  </Helmet>
+                </Route>
+              )}
+              {currentUserRoleId !== Role.Student && (
+                <Route path="/tags-page">
+                  <TagsPage />
+                  <Helmet>
+                    <title>Тэги</title>
+                  </Helmet>
+                </Route>
+              )}
+              <Route path="/homework">
+                <Helmet>
+                  <title>Домашки</title>
+                </Helmet>
+              </Route>
+              <Route exact path="/group">
+                <Redirect to="/group/1" />
+              </Route>
+              <Route path="/group/:id">
+                <GroupPage />
+                <Helmet>
+                  <title>Группы</title>
+                </Helmet>
+              </Route>
+              <Route path="/attendance">
+                <Attendance />
+                <Helmet>
+                  <title>Журнал в разработке</title>
+                </Helmet>
+              </Route>
+            </Switch>
+          ) : (
+            <Switch>
+              <Route exact path="/">
+                <LoginForm />
+                <div className="test-page-link">
+                  <Link to="/dev-test-page">secret test page</Link>
+                </div>
+              </Route>
+              <Route path="/dev-test-page">
+                <DevTestPage />
+                <NotificationContainer />
+              </Route>
+            </Switch>
+          )}
+          <NotificationContainer />
+        </main>
       </div>
+      <Loader />
     </div>
   );
 }

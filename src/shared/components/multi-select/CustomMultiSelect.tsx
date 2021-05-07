@@ -9,6 +9,7 @@ import {
   getRussianDictionary,
 } from '../../converters/enumToDictionaryEntity';
 import { convertRoleIdsToSelectItems } from '../../converters/roleIdsToSelectItems';
+import { convertRoleIdToSelectItem } from '../../converters/roleIdToSelectItem';
 import { ExternalInputSettings } from '../../helpers/useFormRegisterSettingByKey';
 
 import { customStyles } from './multiSelectCosnts';
@@ -88,9 +89,12 @@ function CustomMultiSelect(props: SelectProps) {
   };
   const onSingleSelectLocal = (selectedOptionArg: SelectItem | null) => {
     setSelectedOptionState(selectedOptionArg as SelectItem);
-    onSingleSelect && onSingleSelect(selectedOption?.value || null);
+    onSingleSelect && onSingleSelect(selectedOptionArg?.value || null);
     inputSettings &&
-      formContext?.setValue(inputSettings.name, selectedOption?.value || null);
+      formContext?.setValue(
+        inputSettings.name,
+        selectedOptionArg?.value || null
+      );
   };
 
   return inputSettings ? (
@@ -98,11 +102,11 @@ function CustomMultiSelect(props: SelectProps) {
       control={formContext?.control}
       name={inputSettings.name}
       render={({ field: { value } }) =>
-        props.selectType === 'multi'
+        selectType === 'multi'
           ? MultiSelect(
               convertEntitiesToSelectItems(
                 getRussianDictionary(
-                  convertEnumToDictionary(props.inputSettings?.selectOptions)
+                  convertEnumToDictionary(inputSettings.selectOptions)
                 )
               ),
               value !== undefined
@@ -128,7 +132,7 @@ function CustomMultiSelect(props: SelectProps) {
                       return value;
                     }
 
-                    return convertRoleIdsToSelectItems(value);
+                    return convertRoleIdToSelectItem(value);
                   })()
                 : undefined,
               onSingleSelectLocal
