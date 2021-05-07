@@ -10,6 +10,8 @@ import { PaymentResponse } from "../components/interfaces/PaymentResponse";
 import { Homework } from "../interfaces/Homework";
 import { HomeworkPageOptions } from "../components/homework-page/HomeworkPageCore";
 import { DictionaryEntity } from "../interfaces/DictionaryEntity";
+import { AppointInput } from "../interfaces/AppointInput";
+import { Attempt } from "../interfaces/Attempt";
 
 export interface IAppState {
     isLoggedIn: boolean;
@@ -61,6 +63,10 @@ export interface IHomeworkPageState {
 export interface IHomeworkAppointModalState {
     groupListByTeacherId: Group[];
     groupEntities: DictionaryEntity[];
+    appointFormDefaults: AppointInput;
+}
+export interface IHomeworkAttemptState {
+    attemptList: Attempt[];
 }
 export interface INotificationContainerState {
     notifications: {

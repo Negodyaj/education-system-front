@@ -7,7 +7,7 @@ export const getAppointFormElementSettings = (key: InputNames): FormElementSetti
     switch (key) {
         case InputNames.AppointGroup:
             return {
-                label: "группа",
+                label: "назначить группам:",
                 inputSettings: {
                     name: key,
                     inputType: 'multiSelect',

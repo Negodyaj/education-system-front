@@ -71,5 +71,6 @@ const baseWretch = () => {
     .catcher(401, error => error)
     .catcher(403, error => error)
     .catcher(404, error => error)
+    .catcher(405, error => error)
     .catcher(409, error => error)
 }

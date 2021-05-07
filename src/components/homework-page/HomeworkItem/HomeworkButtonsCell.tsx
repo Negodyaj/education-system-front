@@ -24,7 +24,7 @@ function HomeworkButtonsCell(props: { hw: Homework; buttons: HomeworkButtonsCell
             {props.buttons.cloneButton && <HomeworkCloneButton />}
             {props.buttons.editButton && <HomeworkEditButton />}
             {props.buttons.deleteButton && <HomeworkDeleteButton homeworkId={props.hw.id} />}
-            {props.buttons.checkButton && <HomeworkCheckButton />}
+            {props.buttons.checkButton && <HomeworkCheckButton hwId={props.hw.id} />}
             {props.buttons.appointButton && <HomeworkAppointButton />}
             {(props.buttons.attemptButton && !props.hw.isOptional) && <HomeworkAttemptButton />}
         </ButtonsCell>

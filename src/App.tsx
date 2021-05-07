@@ -29,6 +29,7 @@ import UserPage from './components/user-page/UserPage';
 import { ReactComponent as Logo } from './img/devedu.svg';
 import Loader from './shared/components/loader/Loader';
 import ConfirmationDialog from './shared/components/confirmation-dialog/ConfirmationDialog';
+import HomeworkAttempt from './components/homework-attempt/HomeworkAttempt';
 
 function App() {
     const dispatch = useDispatch();
@@ -125,8 +126,14 @@ function App() {
                                             </Helmet>
                                         </Route>
                                     }
-                                    <Route path="/homework">
+                                    <Route exact path="/Homework">
                                         <HomeworkPage />
+                                        <Helmet>
+                                            <title>Домашки</title>
+                                        </Helmet>
+                                    </Route>
+                                    <Route path="/Homework/:hwId/attempts">
+                                        <HomeworkAttempt />
                                         <Helmet>
                                             <title>Домашки</title>
                                         </Helmet>

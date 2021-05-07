@@ -1,4 +1,5 @@
-import { useEffect } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React, { useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { InputNames } from "../../../../../enums/inputNames";
@@ -28,26 +29,20 @@ function HomeworkAppointModal(props: {
     const onSubmit = (data: AppointInput) => {
         //dispatch(postAppointment(data))
     }
-    const { register, formState, handleSubmit, getValues, setValue, ...methods } = useForm<AppointInput>();
+    const { ...methods } = useForm<AppointInput>();
     return (
-        <FormProvider
-            register={register}
-            formState={formState}
-            handleSubmit={handleSubmit}
-            getValues={getValues} setValue={setValue} {...methods}>
+        <FormProvider {...methods}>
             <ModalBg elementVisibility={props.visibility}>
                 <AppointModalWindow elementVisibility={props.visibility}>
-                    <form onSubmit={handleSubmit(onSubmit)}>
+                    <form onSubmit={methods.handleSubmit(onSubmit)}>
                         <AppointModalWindowHeader>
-                            <RoundButton onClick={() => props.setVisibility(!props.visibility)}>+</RoundButton>
+                            <RoundButton onClick={() => props.setVisibility(!props.visibility)}>
+                                <FontAwesomeIcon icon='times' />
+                            </RoundButton>
                         </AppointModalWindowHeader>
                         <AppointModalWindowMain>
                             {
-                                Object.keys({
-                                    group: "",
-                                    startDate: "",
-                                    deadline: ""
-                                }).map(key => {
+                                Object.keys(appState.homeworkAppointModal.appointFormDefaults).map(key => {
                                     return <FormElement
                                         formElementSettings={getAppointFormElementSettings(key as InputNames)}
                                         key={key}></FormElement>

@@ -20,7 +20,7 @@ function HomeworkPageCore(props: { settings: HomeworkPageOptions }) {
                 <PageTitle>Домашние задания</PageTitle>
                 <AddButton isTurnedOn={props.settings.addButton} />
             </HomeworkPageHeader>
-            <HomeworkSelector settings={props.settings} />
+            <HomeworkSelector/>
         </HomeworkPageContainer>
     )
 }
