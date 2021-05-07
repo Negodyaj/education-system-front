@@ -14,17 +14,16 @@ function UserListPage() {
   useEffect(() => {
     dispatch(getUsers());
   }, []);
+
   return (
     <div className="user-page">
-      {
-        appState.userListPage.isDataLoading
-          ?
-          <div>
-            <FontAwesomeIcon icon="spinner" />
-          </div>
-          : (
-            <UserListComponent></UserListComponent>
-          )}
+      {appState.userListPage.isDataLoading ? (
+        <div>
+          <FontAwesomeIcon icon="spinner" />
+        </div>
+      ) : (
+        <UserListComponent />
+      )}
     </div>
   );
 }

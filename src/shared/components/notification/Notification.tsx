@@ -1,8 +1,8 @@
 import './Notification.css';
-import React, { useEffect, useRef } from 'react'
-
+import React, { useEffect, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useDispatch } from 'react-redux';
+
 import NotificationData from '../../../interfaces/NotificationData';
 import { removeNotification } from '../../../store/notifications/thunk';
 
@@ -12,8 +12,8 @@ interface NotificationProps {
 
 function Notification(props: NotificationProps) {
   const dispatch = useDispatch();
-  //const deleteRef = useRef(dispatch(removeNotification));
-  //deleteRef.current = dispatch(removeNotification);
+  // const deleteRef = useRef(dispatch(removeNotification));
+  // deleteRef.current = dispatch(removeNotification);
 
   const notificationDomRef = useRef(null);
   const toggleHidden = () => {
@@ -36,19 +36,24 @@ function Notification(props: NotificationProps) {
       case 'error':
         return 0;
     }
+
     return 0;
   };
 
   let timeout = props.notificationData.autoDismissTimeout;
+
   if (timeout === undefined) {
     timeout = typeToTimeout();
   }
 
   useEffect(() => {
     if (timeout !== 0) {
-      let timer = setTimeout(dismiss, timeout);
+      const timer = setTimeout(dismiss, timeout);
+
       return () => clearTimeout(timer);
     }
+
+    return () => {};
   }, []);
 
   const dismiss = () => {
@@ -72,6 +77,7 @@ function Notification(props: NotificationProps) {
       case 'error':
         return 'error-notification';
     }
+
     return '';
   };
 
@@ -86,29 +92,36 @@ function Notification(props: NotificationProps) {
       case 'error':
         return 'times-circle';
     }
+
     return 'info-circle';
   };
 
   return (
-    <div className={`notification hidden
+    <div
+      className={`notification hidden
             ${typeToClassName()} `}
       ref={notificationDomRef}>
       <div className="type-icon">
         <FontAwesomeIcon icon={typeToIconName()} />
       </div>
       <span>{props.notificationData.text}</span>
-      {
-        props.notificationData.isDismissible &&
+      {props.notificationData.isDismissible && (
         <div className="close-btn-container">
           <button onClick={dismiss} className="close-btn">
             <FontAwesomeIcon icon="times" />
           </button>
-          {timeout > 0 && <svg className="circle-timer">
-            <circle r="18" cx="20" cy="20" style={{ animationDuration: `${timeout}ms` }} />
-          </svg>
-          }
+          {timeout > 0 && (
+            <svg className="circle-timer">
+              <circle
+                r="18"
+                cx="20"
+                cy="20"
+                style={{ animationDuration: `${timeout}ms` }}
+              />
+            </svg>
+          )}
         </div>
-      }
+      )}
     </div>
   );
 }

@@ -35,24 +35,30 @@ function UserPage() {
   const closeUserPage = () => {
     history.push('/user-list');
   };
-  const {
-    ...methods
-  } = useForm<UserInput>();
+  const { ...methods } = useForm<UserInput>();
+
   return appState.userPage.isDataLoading ? (
     <div>Loading</div>
   ) : (
-    <FormProvider
-      {...methods}>
+    <FormProvider {...methods}>
       <div className="user-edit-form needs-validation was-validated">
         <form onSubmit={methods.handleSubmit(onSubmit)}>
-          {
-            Object.keys(appState.userPage.userForUserPage).map(key => <FormElement
+          {Object.keys(appState.userPage.userForUserPage).map((key) => (
+            <FormElement
               formElementSettings={getFormElementSettings(key as InputNames)}
-              key={key}></FormElement>)
-          }
+              key={key}
+            />
+          ))}
           <div className="form-row form-row-button">
-            <button className="common-button" type="button" onClick={closeUserPage}>отмена</button>
-            <button className="common-button" type="submit">сохранить</button>
+            <button
+              className="common-button"
+              type="button"
+              onClick={closeUserPage}>
+              отмена
+            </button>
+            <button className="common-button" type="submit">
+              сохранить
+            </button>
           </div>
         </form>
       </div>

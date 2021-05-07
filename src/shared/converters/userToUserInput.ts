@@ -12,9 +12,9 @@ const initUserInput: UserInput = {
   roles: [],
 };
 export const convertUserToUserInput = (UpdatedUser: User) => {
-  Object.keys(initUserInput).map((k) => {
-    initUserInput[k as keyof UserInput] = (UpdatedUser as any)[k];
-  });
+  Object.keys(initUserInput).map((k) => 
+    initUserInput[k as keyof UserInput] = (UpdatedUser as any)[k]
+  );
 
   return initUserInput;
 };

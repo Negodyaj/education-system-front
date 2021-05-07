@@ -25,7 +25,8 @@ function LoginForm() {
   const handleKeyPress:
     | React.KeyboardEventHandler<HTMLDivElement>
     | undefined = (event) => {
-    let key = event.key;
+    const { key } = event;
+
     if (key === 'Enter') {
       // Клавиша Enter
       loginButtonOnClick();
@@ -33,19 +34,33 @@ function LoginForm() {
   };
 
   return (
-      <div className="login-form" onKeyPress={(event) => { handleKeyPress(event) }}>
-          <h2>Залогиньтеся</h2>
-          <div className="form-control">
-              <label className="form-label">Логин</label>
-              <input className='form-input' type="text" value={login} onChange={handleloginChange} />
+    <div
+      className="login-form"
+      onKeyPress={(event) => {
+        handleKeyPress(event);
+      }}>
+      <h2>Залогиньтеся</h2>
+      <div className="form-control">
+        <label className="form-label">Логин</label>
+        <input
+          className="form-input"
+          type="text"
+          value={login}
+          onChange={handleloginChange}
         />
       </div>
-          <div className="form-control">
-              <label className="form-label">Пароль</label>
-              <input className='form-input' type="password" value={password} onChange={handlePasswordChange} />
+      <div className="form-control">
+        <label className="form-label">Пароль</label>
+        <input
+          className="form-input"
+          type="password"
+          value={password}
+          onChange={handlePasswordChange}
         />
       </div>
-          <button className="common-button" onClick={loginButtonOnClick}>Войти</button>
+      <button className="common-button" onClick={loginButtonOnClick}>
+        Войти
+      </button>
     </div>
   );
 }

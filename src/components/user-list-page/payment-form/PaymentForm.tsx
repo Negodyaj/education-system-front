@@ -4,13 +4,16 @@ import '../../../App.css';
 import { ErrorMessage } from '@hookform/error-message';
 import { format } from 'date-fns';
 import { useDispatch, useSelector } from 'react-redux';
-
 import { useEffect } from 'react';
+
 import { User } from '../../../interfaces/User';
 import { IRootState } from '../../../store';
 import { PaymentInput } from '../../interfaces/PaymentInput';
 import { getPayment, sendPayment } from '../../../store/payment/thunk';
-import { setPaymentFormCLose, setPaymentFormOpen } from '../../../store/payment/action-creators';
+import {
+  setPaymentFormCLose,
+  setPaymentFormOpen,
+} from '../../../store/payment/action-creators';
 
 interface PaymentProps {
   paymentFormState: string;
@@ -28,8 +31,8 @@ function PaymentForm(props: PaymentProps) {
     dispatch(getPayment(paymentFormState.userForPayment?.id));
   }, [paymentFormState.userForPayment]);
 
-  var todate = new Date();
-  var formattedDate = format(todate, 'dd.mm.yyyy');
+  const todate = new Date();
+  const formattedDate = format(todate, 'dd.mm.yyyy');
 
   const {
     register,
@@ -69,15 +72,22 @@ function PaymentForm(props: PaymentProps) {
     <div className={`payment ${paymentFormState.formVisibility}`}>
       <div className={`inner-payment ${paymentFormState.formVisibility}`}>
         <div className="header-payment">
-          <div>Назначить платеж пользователю
-                      <div>{paymentFormState.userForPayment?.firstName} {paymentFormState.userForPayment?.lastName}</div>
+          <div>
+            Назначить платеж пользователю
+            <div>
+              {paymentFormState.userForPayment?.firstName}{' '}
+              {paymentFormState.userForPayment?.lastName}
+            </div>
           </div>
-          <button className="button-round" onClick={onCancel}>х</button>
+          <button className="button-round" onClick={onCancel}>
+            х
+          </button>
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="input-row">
               <label>Сумма платежа</label>
-              <input key='amount' {...register("amount",
-                {
+              <input
+                key="amount"
+                {...register('amount', {
                   required: {
                     value: true,
                     message: 'Ведите сумму платежа',
@@ -86,21 +96,24 @@ function PaymentForm(props: PaymentProps) {
                     value: /[0-9]/,
                     message: 'Допустимы только цифры',
                   },
-                })}></input>
+                })}
+              />
               <ErrorMessage
                 errors={errors}
-                name={'amount'}
+                name="amount"
                 className="bad-feedback"
-                as="div"></ErrorMessage>
+                as="div"
+              />
             </div>
             <div className="input-row">
               <label>Дата платежа</label>
-              <input key='date' {...register("date",)} />
+              <input key="date" {...register('date')} />
             </div>
             <div className="input-row">
               <label>Период оплаты</label>
-              <input key='period' {...register("period",
-                {
+              <input
+                key="period"
+                {...register('period', {
                   required: {
                     value: true,
                     message: 'Ведите период оплаты',
@@ -109,16 +122,19 @@ function PaymentForm(props: PaymentProps) {
                     value: /\s\d/,
                     message: "Период формата 'янв 2010'",
                   },
-                })}></input>
+                })}
+              />
               <ErrorMessage
                 errors={errors}
-                name={'period'}
+                name="period"
                 className="bad-feedback"
-                as="div"></ErrorMessage>
+                as="div"
+              />
             </div>
             <div className="input-row">
               <label>Номер договора</label>
-              <input key='contractNumber' // value={paymentFormState.userForPayment?.contractNumber}
+              <input
+                key="contractNumber" // value={paymentFormState.userForPayment?.contractNumber}
                 {...register('contractNumber', {
                   required: {
                     value: true,
@@ -128,42 +144,49 @@ function PaymentForm(props: PaymentProps) {
                     value: /[0-9]/,
                     message: 'Допустимы только цифры',
                   },
-                })}></input>
+                })}
+              />
               <ErrorMessage
                 errors={errors}
-                name={'contractNumber'}
+                name="contractNumber"
                 className="bad-feedback"
-                as="div"></ErrorMessage>
+                as="div"
+              />
             </div>
-            <div className='payment-history'>
+            <div className="payment-history">
               <h4>История оплат:</h4>
               <div className="list payment-list-head">
-                <span className='column'>сумма</span>
-                <span className='column'>дата</span>
-                <span className='column'>период</span>
-                <span className='column'>номер</span>
+                <span className="column">сумма</span>
+                <span className="column">дата</span>
+                <span className="column">период</span>
+                <span className="column">номер</span>
               </div>
               <div className="payment-list-body">
-                {
-                  paymentFormState.isDataLoading
-                    ?
-                    <>LOADING</>
-                    : (
-                      paymentFormState.paymentList?.map((item) => (
-                        <div className="list" key={item.id}>
-                          <div className='column'>{item.amount}</div>
-                          <div className='column'>{item.date}</div>
-                          <div className='column'>{item.period}</div>
-                          <div className='column'>{item.contractNumber}</div>
-                        </div>
-                      ))
-                    )}
+                {paymentFormState.isDataLoading ? (
+                  <>LOADING</>
+                ) : (
+                  paymentFormState.paymentList.map((item) => (
+                    <div className="list" key={item.id}>
+                      <div className="column">{item.amount}</div>
+                      <div className="column">{item.date}</div>
+                      <div className="column">{item.period}</div>
+                      <div className="column">{item.contractNumber}</div>
+                    </div>
+                  ))
+                )}
               </div>
             </div>
             <p />
             <div className="footer-payment">
-              <button className="button-select" type="button" onClick={onCancel}>Отмена</button>
-              <button className="button-select" type="submit">Подтвердить</button>
+              <button
+                className="button-select"
+                type="button"
+                onClick={onCancel}>
+                Отмена
+              </button>
+              <button className="button-select" type="submit">
+                Подтвердить
+              </button>
             </div>
           </form>
         </div>

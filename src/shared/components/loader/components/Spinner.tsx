@@ -1,11 +1,12 @@
 import styled, { keyframes } from 'styled-components';
 
 const Spinner = (props: { color: string; size: number }) => {
+  const { color, size } = props;
   const SpinnerContainer = styled.div`
     display: inline-block;
     position: relative;
-    width: ${props.size}px;
-    height: ${props.size}px;
+    width: ${size}px;
+    height: ${size}px;
   `;
 
   const rotate = keyframes`
@@ -21,13 +22,13 @@ const Spinner = (props: { color: string; size: number }) => {
     box-sizing: border-box;
     display: block;
     position: absolute;
-    width: ${props.size * 0.8}px;
-    height: ${props.size * 0.8}px;
-    margin: ${props.size * 0.1}px;
-    border: ${props.size * 0.1}px solid ${props.color};
+    width: ${size * 0.8}px;
+    height: ${size * 0.8}px;
+    margin: ${size * 0.1}px;
+    border: ${size * 0.1}px solid ${color};
     border-radius: 50%;
     animation: ${rotate} 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-    border-color: ${props.color} transparent transparent transparent;
+    border-color: ${color} transparent transparent transparent;
   `;
 
   const SpinnerElement1 = styled(SpinnerElement)`

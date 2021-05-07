@@ -29,11 +29,19 @@ module.exports = {
       },
     ],
     'no-console': [
-      'error',
+      'warn',
       {
         allow: ['error', 'warn', 'info'],
       },
     ],
+    "@typescript-eslint/naming-convention": [
+      "error",
+      {
+        "selector": "interface",
+        "format": ["PascalCase"]
+      }
+    ],
+    'no-unused-expressions': ["error", { "allowShortCircuit": true, "allowTernary": true }],
     'redux-saga/no-unhandled-errors': 'warn',
     'import/no-extraneous-dependencies': 'warn',
     'react-hooks/rules-of-hooks': 'error',
@@ -75,6 +83,7 @@ module.exports = {
     'react/jsx-indent': ['error', 2, { indentLogicalExpressions: true }],
     'no-underscore-dangle': 0,
     'no-unexpected-multiline': 'error',
+    '@typescript-eslint/no-floating-promises': 0,
     '@typescript-eslint/no-use-before-define': ['warn'],
     '@typescript-eslint/unbound-method': ['warn'],
     '@typescript-eslint/prefer-regexp-exec': 'warn',

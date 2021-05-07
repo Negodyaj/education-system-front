@@ -25,5 +25,7 @@ export const getValidationPattern = (key: InputNames) => {
         value: /\S/,
         message: 'Недопустимый формат ссылки',
       };
+    default:
+      return undefined;
   }
 };

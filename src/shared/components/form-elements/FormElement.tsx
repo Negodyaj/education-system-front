@@ -28,34 +28,35 @@ function FormElement(props: { formElementSettings: FormElementSettings }) {
 
   return (
     <div className="form-row">
-      <label className="form-label">{props.formElementSettings.label}</label>
-      {inputType === 'text' && <TextInput inputSettings={inputSettings} />}
-      {inputType === 'textarea' && (
-        <TextAreaInput inputSettings={inputSettings} />
-      )}
-      {inputType === 'number' && <NumberInput inputSettings={inputSettings} />}
-      {inputType === 'date' && (
-        <DateInput inputSettings={inputSettings as ExternalInputSettings} />
-      )}
-      {inputType === 'multiSelect' && (
-        <MultiSelectInput
-          inputSettings={inputSettings as ExternalInputSettings}
+      <label className="form-label">{props.formElementSettings.label}
+        {inputType === 'text' && <TextInput inputSettings={inputSettings} />}
+        {inputType === 'textarea' && (
+          <TextAreaInput inputSettings={inputSettings} />
+        )}
+        {inputType === 'number' && <NumberInput inputSettings={inputSettings} />}
+        {inputType === 'date' && (
+          <DateInput inputSettings={inputSettings as ExternalInputSettings} />
+        )}
+        {inputType === 'multiSelect' && (
+          <MultiSelectInput
+            inputSettings={inputSettings as ExternalInputSettings}
+          />
+        )}
+        {inputType === 'singleSelect' && (
+          <SingleSelectInput
+            inputSettings={inputSettings as ExternalInputSettings}
+          />
+        )}
+        {inputType === 'picture' && (
+          <PictureInput inputSettings={inputSettings as ExternalInputSettings} />
+        )}
+        <ErrorMessage
+          errors={formContext.formState.errors}
+          name={inputSettings.name}
+          className="bad-feedback"
+          as="div"
         />
-      )}
-      {inputType === 'singleSelect' && (
-        <SingleSelectInput
-          inputSettings={inputSettings as ExternalInputSettings}
-        />
-      )}
-      {inputType === 'picture' && (
-        <PictureInput inputSettings={inputSettings as ExternalInputSettings} />
-      )}
-      <ErrorMessage
-        errors={formContext.formState.errors}
-        name={inputSettings.name}
-        className="bad-feedback"
-        as="div"
-      />
+      </label>
     </div>
   );
 }

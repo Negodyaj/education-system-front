@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useDispatch } from "react-redux";
-import ConfirmationDialog from "../../shared/components/confirmation-dialog/ConfirmationDialog";
-import { generateTestNotification } from "../../shared/components/notification/generateTestNotification";
-import NotificationData from "../../interfaces/NotificationData";
+import { useDispatch } from 'react-redux';
+
+import ConfirmationDialog from '../../shared/components/confirmation-dialog/ConfirmationDialog';
+import { generateTestNotification } from '../../shared/components/notification/generateTestNotification';
 import { sendNotification } from '../../store/notifications/thunk';
 import { SelectItem } from '../../interfaces/SelectItem';
 import CustomMultiSelect from '../../shared/components/multi-select/CustomMultiSelect';
 
-interface DevTestPageProps { }
+interface DevTestPageProps {}
 
 function DevTestPage(props: DevTestPageProps) {
   const dispatch = useDispatch();
@@ -19,6 +19,7 @@ function DevTestPage(props: DevTestPageProps) {
     if (decision) {
       setCounter(counter + 1);
     }
+
     setDialogShown(false);
   };
 
@@ -41,36 +42,52 @@ function DevTestPage(props: DevTestPageProps) {
     <div>
       <h1>secret test page</h1>
 
-      <button onClick={() => dispatch(sendNotification(generateTestNotification(true)))} >
-        Test dismissible notification</button>
-      <button onClick={() => dispatch(sendNotification(generateTestNotification(false)))} >
-        Test non-dismissible notification</button>
+      <button
+        onClick={() =>
+          dispatch(sendNotification(generateTestNotification(true)))
+        }>
+        Test dismissible notification
+      </button>
+      <button
+        onClick={() =>
+          dispatch(sendNotification(generateTestNotification(false)))
+        }>
+        Test non-dismissible notification
+      </button>
 
       <div>
         <span>{counter}</span>
-        <button onClick={() => { setDialogShown(true) }}>+1</button>
+        <button
+          onClick={() => {
+            setDialogShown(true);
+          }}>
+          +1
+        </button>
       </div>
 
       <ConfirmationDialog
         isShown={dialogShown}
-        title={'Увеличить счетчик на 1?'}
+        title="Увеличить счетчик на 1?"
         message={`Новое значение: ${counter + 1}`}
-        callback={counterCallback} />
+        callback={counterCallback}
+      />
       <CustomMultiSelect
         selectType="multi"
         selectedOptions={[]}
         options={selectItems}
-        onSingleSelect={() => { }}
+        onSingleSelect={() => {}}
       />
       <br />
       <CustomMultiSelect
         selectType="multi"
         selectedOptions={[]}
         options={selectItems}
-        onMultiSelect={() => { }}
+        onMultiSelect={() => {}}
       />
 
-      <div className="test-page-link"><Link to="/">back to login</Link></div>
+      <div className="test-page-link">
+        <Link to="/">back to login</Link>
+      </div>
     </div>
   );
 }

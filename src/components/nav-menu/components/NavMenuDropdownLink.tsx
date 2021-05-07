@@ -2,6 +2,7 @@ import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useState } from 'react';
 import { NavLink, Route, Switch } from 'react-router-dom';
+
 import { NavMenuSimpleLinkProps } from './NavMenuSimpleLink';
 
 export interface DropdownLinkParams {
@@ -27,31 +28,36 @@ function NavMenuDropdownLink(props: NavMenuDropdownLinkProps) {
 
   return (
     <div>
-      <NavLink to={`/${props.route}`} className="main-link" activeClassName="selected">
-        <span className="icon-container"><FontAwesomeIcon icon={props.faIcon} /></span>
+      <NavLink
+        to={`/${props.route}`}
+        className="main-link"
+        activeClassName="selected">
+        <span className="icon-container">
+          <FontAwesomeIcon icon={props.faIcon} />
+        </span>
         <span className="text-container">{props.label}</span>
       </NavLink>
       <Switch>
         <Route path={`/${props.route}`}>
           <ul className="dropdown-link-container">
-            {
-              (isFullyOpen || (props.defaultShowFilter === undefined) ?
-                props.dropdownLinks
-                : props.dropdownLinks.filter(props.defaultShowFilter)
-              ).map((link) => {
-                return (
-                  <li><NavLink to={`/${props.route}/${link.routeParam}`} className="dropdown-link" activeClassName="selected">
-                    <span className="text-container">{link.label}</span>
-                  </NavLink>
-                  </li>
-                );
-              })}
-            {
-              (!props.alwaysShowAll) &&
+            {(isFullyOpen || props.defaultShowFilter === undefined
+              ? props.dropdownLinks
+              : props.dropdownLinks.filter(props.defaultShowFilter)
+            ).map((link) => (
+              <li>
+                <NavLink
+                  to={`/${props.route}/${link.routeParam}`}
+                  className="dropdown-link"
+                  activeClassName="selected">
+                  <span className="text-container">{link.label}</span>
+                </NavLink>
+              </li>
+            ))}
+            {!props.alwaysShowAll && (
               <span className="more-links-toggle" onClick={toggleFullyOpen}>
                 {isFullyOpen ? 'скрыть' : 'показать все'}
               </span>
-            }
+            )}
           </ul>
         </Route>
       </Switch>

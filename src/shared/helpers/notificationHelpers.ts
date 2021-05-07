@@ -4,7 +4,7 @@ import NotificationData from '../../interfaces/NotificationData';
 
 export const makeErrorText = (error: any) =>
   (error as WretcherError).status.toString() ||
-  `${'' + ' '}${(error as WretcherError).message}`;
+  ` ${(error as WretcherError).message}`;
 
 export const makeNotification = (
   type: string,

@@ -11,17 +11,20 @@ export const convertStringToDate = (value: any) => {
       ];
   date.push(
     Number.parseInt(
-      value ? dateConstructorArg[2] : new Date().getFullYear().toString()
+      value ? dateConstructorArg[2] : new Date().getFullYear().toString(),
+      10
     )
   );
   date.push(
     Number.parseInt(
-      value ? dateConstructorArg[1] : new Date().getMonth().toString()
+      value ? dateConstructorArg[1] : new Date().getMonth().toString(),
+      10
     )
   );
   date.push(
     Number.parseInt(
-      value ? dateConstructorArg[0] : new Date().getDate().toString()
+      value ? dateConstructorArg[0] : new Date().getDate().toString(),
+      10
     )
   );
 
