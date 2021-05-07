@@ -29,16 +29,14 @@ function FormElement(props: { formElementSettings: FormElementSettings }) {
 
   return (
     <div className="form-row">
-      <label className="form-label">
+      <label htmlFor="#" className="form-label">
         {formElementSettings.label}
       </label>
       {inputType === 'text' && <TextInput inputSettings={inputSettings} />}
       {inputType === 'textarea' && (
         <TextAreaInput inputSettings={inputSettings} />
       )}
-      {inputType === 'number' && (
-        <NumberInput inputSettings={inputSettings} />
-      )}
+      {inputType === 'number' && <NumberInput inputSettings={inputSettings} />}
       {inputType === 'date' && (
         <DateInput inputSettings={inputSettings as ExternalInputSettings} />
       )}
@@ -53,9 +51,7 @@ function FormElement(props: { formElementSettings: FormElementSettings }) {
         />
       )}
       {inputType === 'picture' && (
-        <PictureInput
-          inputSettings={inputSettings as ExternalInputSettings}
-        />
+        <PictureInput inputSettings={inputSettings as ExternalInputSettings} />
       )}
       <ErrorMessage
         errors={formContext.formState.errors}

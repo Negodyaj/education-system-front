@@ -27,6 +27,8 @@ function UserPage() {
         key as keyof UserInput,
         appState.userPage.userForUserPage[key as keyof UserInput]
       );
+
+      return key;
     });
   }, [appState.userPage.userForUserPage]);
   const onSubmit = (data: User) => {

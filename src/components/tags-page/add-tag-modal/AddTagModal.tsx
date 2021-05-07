@@ -10,6 +10,7 @@ interface AddTagModalProps {
 }
 
 function AddTagModal(props: AddTagModalProps) {
+  const { hidden } = props;
   const [nameNewTag, setNameNewTag] = useState('');
   const dispatch = useDispatch();
   const closeModalWindow = () => {
@@ -34,7 +35,7 @@ function AddTagModal(props: AddTagModalProps) {
   const [block, setBlock] = useState('block');
 
   return (
-    <div className={`modal-back ${props.hidden && 'hidden'}`}>
+    <div className={`modal-back ${hidden && 'hidden'}`}>
       <div className="modal">
         <div className="head-modal">
           <h4>Введите новый тег</h4>

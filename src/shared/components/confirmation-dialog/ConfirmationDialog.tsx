@@ -14,7 +14,7 @@ export interface ConfirmationDialogProps {
 
 function ConfirmationDialog(props: ConfirmationDialogProps) {
   const { isShown } = props;
-  
+
   return (
     <div className={`confirmation-dialog ${!isShown ? 'hidden' : ''}`}>
       <div className="confirmation-dialog-overlay"> </div>

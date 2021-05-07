@@ -84,74 +84,85 @@ function PaymentForm(props: PaymentProps) {
           </button>
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="input-row">
-              <label>Сумма платежа</label>
-              <input
-                key="amount"
-                {...register('amount', {
-                  required: {
-                    value: true,
-                    message: 'Ведите сумму платежа',
-                  },
-                  pattern: {
-                    value: /[0-9]/,
-                    message: 'Допустимы только цифры',
-                  },
-                })}
-              />
-              <ErrorMessage
-                errors={errors}
-                name="amount"
-                className="bad-feedback"
-                as="div"
-              />
+              <label htmlFor="amount-id">
+                Сумма платежа
+                <input
+                  id="amount-id"
+                  key="amount"
+                  {...register('amount', {
+                    required: {
+                      value: true,
+                      message: 'Ведите сумму платежа',
+                    },
+                    pattern: {
+                      value: /[0-9]/,
+                      message: 'Допустимы только цифры',
+                    },
+                  })}
+                />
+                <ErrorMessage
+                  errors={errors}
+                  name="amount"
+                  className="bad-feedback"
+                  as="div"
+                />
+              </label>
             </div>
             <div className="input-row">
-              <label>Дата платежа</label>
-              <input key="date" {...register('date')} />
+              <label htmlFor="date-id">
+                Дата платежа
+                <input id="date-id" key="date" {...register('date')} />
+              </label>
             </div>
             <div className="input-row">
-              <label>Период оплаты</label>
-              <input
-                key="period"
-                {...register('period', {
-                  required: {
-                    value: true,
-                    message: 'Ведите период оплаты',
-                  },
-                  pattern: {
-                    value: /\s\d/,
-                    message: "Период формата 'янв 2010'",
-                  },
-                })}
-              />
-              <ErrorMessage
-                errors={errors}
-                name="period"
-                className="bad-feedback"
-                as="div"
-              />
+              <label htmlFor="period-id">
+                Период оплаты
+                <input
+                  id="period-id"
+                  key="period"
+                  {...register('period', {
+                    required: {
+                      value: true,
+                      message: 'Ведите период оплаты',
+                    },
+                    pattern: {
+                      value: /\s\d/,
+                      message: "Период формата 'янв 2010'",
+                    },
+                  })}
+                />
+                <ErrorMessage
+                  errors={errors}
+                  name="period"
+                  className="bad-feedback"
+                  as="div"
+                />
+              </label>
             </div>
             <div className="input-row">
-              <label>Номер договора</label>
-              <input
-                key="contractNumber" // value={paymentFormState.userForPayment?.contractNumber}
-                {...register('contractNumber', {
-                  required: {
-                    value: true,
-                    message: 'Ведите номер договора',
-                  },
-                  pattern: {
-                    value: /[0-9]/,
-                    message: 'Допустимы только цифры',
-                  },
-                })}
-              />
-              <ErrorMessage
-                errors={errors}
-                name="contractNumber"
-                className="bad-feedback"
-                as="div"
-              />
+              <label htmlFor="contractNumber-id">
+                Номер договора
+                <input
+                  id="contractNumber-id"
+                  key="contractNumber" // value={paymentFormState.userForPayment?.contractNumber}
+                  {...register('contractNumber', {
+                    required: {
+                      value: true,
+                      message: 'Ведите номер договора',
+                    },
+                    pattern: {
+                      value: /[0-9]/,
+                      message: 'Допустимы только цифры',
+                    },
+                  })}
+                />
+                <ErrorMessage
+                  errors={errors}
+                  name="contractNumber"
+                  className="bad-feedback"
+                  as="div"
+                />
+              </label>
             </div>
             <div className="payment-history">
               <h4>История оплат:</h4>

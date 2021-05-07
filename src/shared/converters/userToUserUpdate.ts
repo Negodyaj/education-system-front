@@ -14,6 +14,8 @@ const initUserUpdate: UserUpdate = {
 export const convertUserToUserUpdate = (UpdatedUser: User) => {
   Object.keys(initUserUpdate).map((k) => {
     (initUserUpdate as any)[k] = UpdatedUser[k as keyof UserUpdate];
+
+    return k;
   });
 
   return initUserUpdate;

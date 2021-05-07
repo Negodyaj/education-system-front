@@ -16,15 +16,16 @@ interface NavMenuProps {
 }
 
 function NavMenu(props: NavMenuProps) {
+  const { roleId, onHide } = props;
   const [isHidden, setHidden] = useState(false);
 
   const changeHidden = () => {
     isHidden ? setHidden(false) : setHidden(true);
-    props.onHide(isHidden);
+    onHide(isHidden);
   };
 
   const defaultShowFilter = (link: DropdownLinkParams) => {
-    if (link.routeParam == '1' || link.routeParam == '2') return true;
+    if (link.routeParam === '1' || link.routeParam === '2') return true;
 
     return false;
   };
@@ -32,45 +33,45 @@ function NavMenu(props: NavMenuProps) {
   return (
     <div className="menu-container">
       <nav className={isHidden ? 'notshow' : 'vision'}>
-        {(props.roleId === Role.Admin || props.roleId === Role.Manager) && (
+        {(roleId === Role.Admin || roleId === Role.Manager) && (
           <NavMenuSimpleLink
             route="user-list"
             faIcon="user"
             label="Пользователи"
           />
         )}
-        {(props.roleId === Role.Teacher || props.roleId === Role.Methodist) && (
+        {(roleId === Role.Teacher || roleId === Role.Methodist) && (
           <NavMenuSimpleLink
             route="homework"
             faIcon="book-reader"
             label="Домашки"
           />
         )}
-        {(props.roleId === Role.Teacher || props.roleId === Role.Methodist) && (
+        {(roleId === Role.Teacher || roleId === Role.Methodist) && (
           <NavMenuSimpleLink
             route="courses-page"
             faIcon="university"
             label="Курсы"
           />
         )}
-        {(props.roleId === Role.Teacher || props.roleId === Role.Methodist) && (
+        {(roleId === Role.Teacher || roleId === Role.Methodist) && (
           <NavMenuSimpleLink
             route="attendance"
             faIcon="university"
             label="Журнал в разработке"
           />
         )}
-        {(props.roleId === Role.Teacher || props.roleId === Role.Methodist) && (
+        {(roleId === Role.Teacher || roleId === Role.Methodist) && (
           <NavMenuSimpleLink
             route="lessons"
             faIcon="university"
             label="Занятия"
           />
         )}
-        {props.roleId !== Role.Student && (
+        {roleId !== Role.Student && (
           <NavMenuSimpleLink route="tags-page" faIcon="tag" label="Тэги" />
         )}
-        {props.roleId !== Role.Methodist && (
+        {roleId !== Role.Methodist && (
           <NavMenuDropdownLink
             route="group"
             faIcon="user"

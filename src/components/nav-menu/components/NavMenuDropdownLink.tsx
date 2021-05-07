@@ -17,46 +17,54 @@ interface NavMenuDropdownLinkProps extends NavMenuSimpleLinkProps {
 }
 
 function NavMenuDropdownLink(props: NavMenuDropdownLinkProps) {
+  const {
+    dropdownLinks,
+    alwaysShowAll,
+    defaultShowFilter,
+    faIcon,
+    label,
+    route,
+  } = props;
   const [isFullyOpen, setIsFullyOpen] = useState(false);
   const toggleFullyOpen = () => {
     setIsFullyOpen(!isFullyOpen);
   };
 
   useEffect(() => {
-    if (props.alwaysShowAll) toggleFullyOpen();
+    if (alwaysShowAll) toggleFullyOpen();
   }, []);
 
   return (
     <div>
       <NavLink
-        to={`/${props.route}`}
+        to={`/${route}`}
         className="main-link"
         activeClassName="selected">
         <span className="icon-container">
-          <FontAwesomeIcon icon={props.faIcon} />
+          <FontAwesomeIcon icon={faIcon} />
         </span>
-        <span className="text-container">{props.label}</span>
+        <span className="text-container">{label}</span>
       </NavLink>
       <Switch>
-        <Route path={`/${props.route}`}>
+        <Route path={`/${route}`}>
           <ul className="dropdown-link-container">
-            {(isFullyOpen || props.defaultShowFilter === undefined
-              ? props.dropdownLinks
-              : props.dropdownLinks.filter(props.defaultShowFilter)
+            {(isFullyOpen || defaultShowFilter === undefined
+              ? dropdownLinks
+              : dropdownLinks.filter(defaultShowFilter)
             ).map((link) => (
               <li>
                 <NavLink
-                  to={`/${props.route}/${link.routeParam}`}
+                  to={`/${route}/${link.routeParam}`}
                   className="dropdown-link"
                   activeClassName="selected">
                   <span className="text-container">{link.label}</span>
                 </NavLink>
               </li>
             ))}
-            {!props.alwaysShowAll && (
-              <span className="more-links-toggle" onClick={toggleFullyOpen}>
+            {!alwaysShowAll && (
+              <button className="more-links-toggle" onClick={toggleFullyOpen}>
                 {isFullyOpen ? 'скрыть' : 'показать все'}
-              </span>
+              </button>
             )}
           </ul>
         </Route>

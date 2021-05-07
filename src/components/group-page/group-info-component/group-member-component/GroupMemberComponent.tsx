@@ -9,13 +9,15 @@ interface GroupMemberComponentProps {
 }
 
 function GroupMemberComponent(props: GroupMemberComponentProps) {
+  const { userPic, firstName, lastName, login } = props;
+
   return (
     <div className="list">
       <div className="column">
-        <img className="user-photo" src={props.userPic} alt="userpic" />
+        <img className="user-photo" src={userPic} alt="userpic" />
       </div>
       <div className="column">
-        {props.firstName} {props.lastName}( {props.login})
+        {firstName} {lastName}( {login})
       </div>
     </div>
   );

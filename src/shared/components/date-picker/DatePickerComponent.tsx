@@ -23,10 +23,7 @@ function DatePickerComponent(props: DatePickerComponentProps) {
       setStartDate(dateArg);
       onDateChange && onDateChange(dateArg.toLocaleDateString());
       inputSettings &&
-        formContext?.setValue(
-          inputSettings.name,
-          dateArg.toLocaleDateString()
-        );
+        formContext?.setValue(inputSettings.name, dateArg.toLocaleDateString());
     }
   };
 

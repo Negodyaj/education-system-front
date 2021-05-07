@@ -10,15 +10,14 @@ export interface NavMenuSimpleLinkProps {
 }
 
 function NavMenuSimpleLink(props: NavMenuSimpleLinkProps) {
+  const { faIcon, label, route } = props;
+
   return (
-    <NavLink
-      to={`/${props.route}`}
-      className="main-link"
-      activeClassName="selected">
+    <NavLink to={`/${route}`} className="main-link" activeClassName="selected">
       <span className="icon-container">
-        <FontAwesomeIcon icon={props.faIcon} />
+        <FontAwesomeIcon icon={faIcon} />
       </span>
-      <span className="text-container">{props.label}</span>
+      <span className="text-container">{label}</span>
     </NavLink>
   );
 }

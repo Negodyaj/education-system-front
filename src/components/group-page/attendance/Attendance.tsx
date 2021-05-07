@@ -26,6 +26,8 @@ const GroupJournal = () => {
     // dispatch(getAttendanceByLessons(attendance.lessonList))
     lessonDataForColumnName.map((item) => {
       dispatch(getAttendanceByLessonId(item.id));
+
+      return item;
     });
   }, []);
 

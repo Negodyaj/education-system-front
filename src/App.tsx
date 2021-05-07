@@ -1,13 +1,10 @@
 import { Switch, Route, useHistory, Link, Redirect } from 'react-router-dom';
-
 import './App.css';
-
 import { useDispatch, useSelector } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import React, { useState } from 'react';
 
 import NavMenu from './components/nav-menu/NavMenu';
-import HomeworkPage from './components/homework-page/HomeworkPage';
 import NotificationContainer from './shared/components/notification/NotificationContainer';
 import CoursesPage from './components/courses-page/CoursesPage';
 import CoursePage from './components/courses-page/course-page/CoursePage';
@@ -16,7 +13,6 @@ import './shared/fontawesome/FontawesomeIcons';
 import { Role } from './enums/role';
 import DevTestPage from './components/dev-test-page/DevTestPage';
 import TagsPage from './components/tags-page/TagsPage';
-import UserListPage from './components/user-list-page/UserListPage';
 import { IRootState } from './store';
 import { setIsLoggedOut } from './store/app/action-creators';
 import GroupPage from './components/group-page/GroupPage';
@@ -26,17 +22,18 @@ import {
 } from './store/role-selector/action-creator';
 import { getToken, unsetToken } from './services/auth.service';
 import Attendance from './components/group-page/attendance/Attendance';
-import { userEditUrl, userListUrl, userRegisterFormUrl } from './shared/consts';
-import UserPage from './components/user-page/UserPage';
 import { ReactComponent as Logo } from './img/devedu.svg';
 import Loader from './shared/components/loader/Loader';
 import LessonsByGroup from './components/group-page/lesson-list-component/LessonsByGroup';
 import { LoginRoleSelector } from './components/role-selector/LoginRoleSelector';
 import LoginForm from './components/login-form/LoginForm';
+import UserRoute from './components/user-page/UserRoute';
 
 function App() {
   const dispatch = useDispatch();
-  const appState = useSelector((state: IRootState) => state);
+  const { currentUserRoleId } = useSelector(
+    (state: IRootState) => state.roleSelector
+  );
   const history = useHistory();
   const [isHidden, setHidden] = useState(true);
   const logOut = () => {
@@ -71,10 +68,7 @@ function App() {
         </div>
         <div className="nav-menu">
           {!!getToken() && (
-            <NavMenu
-              roleId={appState.roleSelector.currentUserRoleId}
-              onHide={onHide}
-            />
+            <NavMenu roleId={currentUserRoleId} onHide={onHide} />
           )}
         </div>
       </aside>
@@ -88,77 +82,60 @@ function App() {
           )}
           <main className="main-content">
             {getToken() ? (
-              <>
-                <Switch>
-                  {(appState.roleSelector.currentUserRoleId === Role.Manager ||
-                    appState.roleSelector.currentUserRoleId === Role.Admin) && (
-                    <>
-                        <Route exact path={`/${userListUrl}`}>
-                        <UserListPage />
-                        <Helmet>
-                            <title>Юзеры</title>
-                          </Helmet>
-                      </Route>
-                        <Route path={`/${userRegisterFormUrl}`}>
-                        <UserPage />
-                      </Route>
-                        <Route path={`/${userEditUrl}/:idToEdit/edit`}>
-                        <UserPage />
-                      </Route>
-                      </>
-                  )}
-                  {appState.roleSelector.currentUserRoleId === Role.Teacher && (
-                    <Route path="/courses-page">
-                      <CoursesPage />
-                      <Helmet>
-                        <title>Курсы</title>
-                      </Helmet>
-                    </Route>
-                  )}
-                  <Route
-                    path="/course/:id/edition"
-                    children={<CourseEdition />}
-                  />
-                  <Route path="/course/:id" children={<CoursePage />} />
-                  {appState.roleSelector.currentUserRoleId === Role.Teacher && (
-                    <Route path="/lessons">
-                      <LessonsByGroup />
-                      <Helmet>
-                        <title>Занятия</title>
-                      </Helmet>
-                    </Route>
-                  )}
-                  {appState.roleSelector.currentUserRoleId !== Role.Student && (
-                    <Route path="/tags-page">
-                      <TagsPage />
-                      <Helmet>
-                        <title>Тэги</title>
-                      </Helmet>
-                    </Route>
-                  )}
-                  <Route path="/homework">
-                    <HomeworkPage />
+              <Switch>
+                {(currentUserRoleId === Role.Manager ||
+                  currentUserRoleId === Role.Admin) && <UserRoute />}
+                {currentUserRoleId === Role.Teacher && (
+                  <Route path="/courses-page">
+                    <CoursesPage />
                     <Helmet>
-                      <title>Домашки</title>
+                      <title>Курсы</title>
                     </Helmet>
                   </Route>
-                  <Route exact path="/group">
-                    <Redirect to="/group/1" />
-                  </Route>
-                  <Route path="/group/:id">
-                    <GroupPage />
+                )}
+                <Route path="/course/:id/edition">
+                  <CourseEdition />
+                </Route>
+                <Route path="/course/:id">
+                  <CoursePage />
+                </Route>
+                {currentUserRoleId === Role.Teacher && (
+                  <Route path="/lessons">
+                    <LessonsByGroup />
                     <Helmet>
-                      <title>Группы</title>
+                      <title>Занятия</title>
                     </Helmet>
                   </Route>
-                  <Route path="/attendance">
-                    <Attendance />
+                )}
+                {currentUserRoleId !== Role.Student && (
+                  <Route path="/tags-page">
+                    <TagsPage />
                     <Helmet>
-                      <title>Журнал в разработке</title>
+                      <title>Тэги</title>
                     </Helmet>
                   </Route>
-                </Switch>
-              </>
+                )}
+                <Route path="/homework">
+                  <Helmet>
+                    <title>Домашки</title>
+                  </Helmet>
+                </Route>
+                <Route exact path="/group">
+                  <Redirect to="/group/1" />
+                </Route>
+                <Route path="/group/:id">
+                  <GroupPage />
+                  <Helmet>
+                    <title>Группы</title>
+                  </Helmet>
+                </Route>
+                <Route path="/attendance">
+                  <Attendance />
+                  <Helmet>
+                    <title>Журнал в разработке</title>
+                  </Helmet>
+                </Route>
+              </Switch>
             ) : (
               <Switch>
                 <Route exact path="/">
