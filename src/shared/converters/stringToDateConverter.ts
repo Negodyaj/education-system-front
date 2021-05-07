@@ -1,9 +1,13 @@
 export const convertStringToDate = (value: any) => {
   const date: number[] = [];
   const dateConstructorArg = value
-    ? value instanceof Date
-      ? value.toLocaleDateString().split('.')
-      : value.concat().split('.')
+    ? (() => {
+        if (value instanceof Date) {
+          return value.toLocaleDateString().split('.');
+        }
+
+        return value.concat().split('.');
+      })()
     : [
         ['0', '0'],
         ['0', '0'],

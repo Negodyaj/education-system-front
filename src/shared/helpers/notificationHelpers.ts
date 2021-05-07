@@ -12,8 +12,8 @@ export const makeNotification = (
   isDismissible?: boolean,
   autoDismissTimeout?: number
 ): NotificationData => {
-  const typeToTimeout = (type: string) => {
-    switch (type) {
+  const typeToTimeout = (typeArg: string) => {
+    switch (typeArg) {
       case 'information':
         return 6000;
       case 'success':

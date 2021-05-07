@@ -7,56 +7,77 @@ import { getToken } from './auth.service';
 export const sendGetRequest = async <T>(
   path: string,
   isT: ((data: any) => data is T) | undefined
-) =>
-  await baseWretch()
+) => {
+  const response = await baseWretch()
     .url(path)
     .get()
     .json((data) => localResponseHandler<T>(data, isT))
     .catch((error) => error);
+
+  return response;
+};
 export const sendPutRequest = async <T>(
   path: string,
   isT: ((data: any) => data is T) | undefined,
   body: any
-) =>
-  await baseWretch()
+) => {
+  const response = await baseWretch()
     .url(path)
     .put(body)
     .json((data) => localResponseHandler<T>(data, isT))
     .catch((error) => error);
-export const sendPutRequestNoResponse = async (path: string, body: any) =>
-  await baseWretch()
+
+  return response;
+};
+export const sendPutRequestNoResponse = async (path: string, body: any) => {
+  const response = await baseWretch()
     .url(path)
     .put(body)
-    .res((response) => response);
+    .res((noResponse) => noResponse);
+
+  return response;
+};
 export const sendPostRequest = async <T>(
   path: string,
   isT: ((data: any) => data is T) | undefined,
   body?: any
-) =>
-  await baseWretch()
+) => {
+  const response = await baseWretch()
     .url(path)
     .post(body || undefined)
     .json((data) => localResponseHandler<T>(data, isT))
     .catch((error) => error);
-export const sendPostRequestNoResponse = async (path: string, body?: any) =>
-  await baseWretch()
+
+  return response;
+};
+export const sendPostRequestNoResponse = async (path: string, body?: any) => {
+  const response = await baseWretch()
     .url(path)
     .post(body)
-    .res((response) => response);
+    .res((noResponse) => noResponse);
+
+  return response;
+};
 export const sendDeleteRequest = async <T>(
   path: string,
   isT: ((data: any) => data is T) | undefined
-) =>
-  await baseWretch()
+) => {
+  const response = await baseWretch()
     .url(path)
     .delete()
     .json((data) => localResponseHandler<T>(data, isT))
     .catch((error) => error);
-export const sendDeleteRequestNoResponse = async (path: string) =>
-  await baseWretch()
+
+  return response;
+};
+export const sendDeleteRequestNoResponse = async (path: string) => {
+  const response = await baseWretch()
     .url(path)
     .delete()
-    .res((response) => response);
+    .res((noResponse) => noResponse);
+
+  return response;
+};
 export const WRONG_DATA_STATUS = -1;
 const localResponseHandler = <T>(
   data: any,

@@ -1,17 +1,19 @@
-import Notification from './Notification';
-
-import './NotificationContainer.css';
 import { useSelector } from 'react-redux';
 
 import { IRootState } from '../../../store';
 
+import './NotificationContainer.css';
+import Notification from './Notification';
+
 function NotificationContainer() {
-  const state = useSelector((state: IRootState) => state.notificationContainer);
+  const appState = useSelector(
+    (state: IRootState) => state.notificationContainer
+  );
 
   return (
     <div className="notification-container">
       <div className="non-dismissible-notifications">
-        {state.notifications.nonDismissible.map((notification) => (
+        {appState.notifications.nonDismissible.map((notification) => (
           <Notification
             key={notification.timestamp}
             notificationData={notification}
@@ -19,7 +21,7 @@ function NotificationContainer() {
         ))}
       </div>
       <div className="dismissible-notifications">
-        {state.notifications.dismissible.map((notification) => (
+        {appState.notifications.dismissible.map((notification) => (
           <Notification
             key={notification.timestamp}
             notificationData={notification}

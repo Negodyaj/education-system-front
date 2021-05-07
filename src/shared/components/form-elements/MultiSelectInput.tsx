@@ -5,11 +5,12 @@ import CustomMultiSelect from '../multi-select/CustomMultiSelect';
 
 function MultiSelectInput(props: { inputSettings: ExternalInputSettings }) {
   const formContext = useFormContext();
+  const { inputSettings } = props;
 
   return (
     <CustomMultiSelect
       selectType="multi"
-      inputSettings={props.inputSettings}
+      inputSettings={inputSettings}
       formContext={formContext}
     />
   );

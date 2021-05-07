@@ -45,9 +45,13 @@ export const customStyles = {
     color: state.isSelected ? 'white' : 'black',
     backgroundColor: state.isSelected
       ? customStyleColors.main
-      : state.isFocused
-      ? customStyleColors.light
-      : 'white',
+      : (() => {
+          if (state.isFocused) {
+            return customStyleColors.light;
+          }
+
+          return 'white';
+        })(),
   }),
   menu: (baseStyles: any) => ({
     ...baseStyles,

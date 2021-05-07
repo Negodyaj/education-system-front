@@ -5,10 +5,11 @@ import { ExternalInputSettings } from '../../helpers/useFormRegisterSettingByKey
 import DatePickerComponent from '../date-picker/DatePickerComponent';
 function DateInput(props: { inputSettings: ExternalInputSettings }) {
   const formContext = useFormContext();
+  const { inputSettings } = props;
 
   return (
     <DatePickerComponent
-      inputSettings={props.inputSettings}
+      inputSettings={inputSettings}
       formContext={formContext}
     />
   );

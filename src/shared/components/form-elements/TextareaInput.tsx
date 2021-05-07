@@ -6,13 +6,14 @@ function TextAreaInput(props: {
   inputSettings: InputSettings;
   onChange?: (...event: any[]) => void;
 }) {
+  const { inputSettings, onChange } = props;
   const formContext = useFormContext();
 
-  return !props.onChange ? (
+  return !onChange ? (
     <textarea
       {...formContext.register(
-        props.inputSettings.name,
-        props.inputSettings.registerOptions
+        inputSettings.name,
+        inputSettings.registerOptions
       )}
       typeof="text"
       className="form-input-textarea"
@@ -20,10 +21,10 @@ function TextAreaInput(props: {
   ) : (
     <textarea
       {...formContext.register(
-        props.inputSettings.name,
-        props.inputSettings.registerOptions
+        inputSettings.name,
+        inputSettings.registerOptions
       )}
-      onChange={props.onChange}
+      onChange={onChange}
       typeof="text"
       className="form-input-textarea"
     />

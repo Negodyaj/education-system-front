@@ -19,8 +19,9 @@ import TextInput from './TextInput';
 
 function FormElement(props: { formElementSettings: FormElementSettings }) {
   const formContext = useFormContext();
-  const { inputType } = props.formElementSettings.inputSettings;
-  const inputSettings = { ...props.formElementSettings.inputSettings };
+  const { formElementSettings } = props;
+  const { inputType } = formElementSettings.inputSettings;
+  const inputSettings = { ...formElementSettings.inputSettings };
   inputSettings.registerOptions = {
     ...inputSettings.registerOptions,
     pattern: getValidationPattern(inputSettings.name as InputNames),
@@ -28,35 +29,40 @@ function FormElement(props: { formElementSettings: FormElementSettings }) {
 
   return (
     <div className="form-row">
-      <label className="form-label">{props.formElementSettings.label}
-        {inputType === 'text' && <TextInput inputSettings={inputSettings} />}
-        {inputType === 'textarea' && (
-          <TextAreaInput inputSettings={inputSettings} />
-        )}
-        {inputType === 'number' && <NumberInput inputSettings={inputSettings} />}
-        {inputType === 'date' && (
-          <DateInput inputSettings={inputSettings as ExternalInputSettings} />
-        )}
-        {inputType === 'multiSelect' && (
-          <MultiSelectInput
-            inputSettings={inputSettings as ExternalInputSettings}
-          />
-        )}
-        {inputType === 'singleSelect' && (
-          <SingleSelectInput
-            inputSettings={inputSettings as ExternalInputSettings}
-          />
-        )}
-        {inputType === 'picture' && (
-          <PictureInput inputSettings={inputSettings as ExternalInputSettings} />
-        )}
-        <ErrorMessage
-          errors={formContext.formState.errors}
-          name={inputSettings.name}
-          className="bad-feedback"
-          as="div"
-        />
+      <label className="form-label">
+        {formElementSettings.label}
       </label>
+      {inputType === 'text' && <TextInput inputSettings={inputSettings} />}
+      {inputType === 'textarea' && (
+        <TextAreaInput inputSettings={inputSettings} />
+      )}
+      {inputType === 'number' && (
+        <NumberInput inputSettings={inputSettings} />
+      )}
+      {inputType === 'date' && (
+        <DateInput inputSettings={inputSettings as ExternalInputSettings} />
+      )}
+      {inputType === 'multiSelect' && (
+        <MultiSelectInput
+          inputSettings={inputSettings as ExternalInputSettings}
+        />
+      )}
+      {inputType === 'singleSelect' && (
+        <SingleSelectInput
+          inputSettings={inputSettings as ExternalInputSettings}
+        />
+      )}
+      {inputType === 'picture' && (
+        <PictureInput
+          inputSettings={inputSettings as ExternalInputSettings}
+        />
+      )}
+      <ErrorMessage
+        errors={formContext.formState.errors}
+        name={inputSettings.name}
+        className="bad-feedback"
+        as="div"
+      />
     </div>
   );
 }

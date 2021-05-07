@@ -6,13 +6,14 @@ function TextInput(props: {
   inputSettings: InputSettings;
   onChange?: (...event: any[]) => void;
 }) {
+  const { inputSettings, onChange } = props;
   const formContext = useFormContext();
 
-  return !props.onChange ? (
+  return !onChange ? (
     <input
       {...formContext.register(
-        props.inputSettings.name,
-        props.inputSettings.registerOptions
+        inputSettings.name,
+        inputSettings.registerOptions
       )}
       type="text"
       className="form-input"
@@ -20,10 +21,10 @@ function TextInput(props: {
   ) : (
     <input
       {...formContext.register(
-        props.inputSettings.name,
-        props.inputSettings.registerOptions
+        inputSettings.name,
+        inputSettings.registerOptions
       )}
-      onChange={props.onChange}
+      onChange={onChange}
       type="text"
       className="form-input"
     />

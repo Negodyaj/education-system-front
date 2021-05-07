@@ -6,14 +6,15 @@ import TextInput from './TextInput';
 
 function PictureInput(props: { inputSettings: ExternalInputSettings }) {
   const formContext = useFormContext();
+  const { inputSettings } = props;
 
   return (
     <Controller
       control={formContext.control}
-      name={props.inputSettings.name}
+      name={inputSettings.name}
       render={({ field: { onChange, value } }) => (
         <>
-          <TextInput inputSettings={props.inputSettings} onChange={onChange} />
+          <TextInput inputSettings={inputSettings} onChange={onChange} />
           <img src={value} alt="аватар" />
         </>
       )}

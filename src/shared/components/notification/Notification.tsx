@@ -40,15 +40,16 @@ function Notification(props: NotificationProps) {
     return 0;
   };
 
-  let timeout = props.notificationData.autoDismissTimeout;
+  const { notificationData } = props;
+  let { autoDismissTimeout, isDismissible, type, text } = notificationData;
 
-  if (timeout === undefined) {
-    timeout = typeToTimeout();
+  if (autoDismissTimeout === undefined) {
+    autoDismissTimeout = typeToTimeout();
   }
 
   useEffect(() => {
-    if (timeout !== 0) {
-      const timer = setTimeout(dismiss, timeout);
+    if (autoDismissTimeout !== 0) {
+      const timer = setTimeout(dismiss, autoDismissTimeout);
 
       return () => clearTimeout(timer);
     }
@@ -57,17 +58,17 @@ function Notification(props: NotificationProps) {
   }, []);
 
   const dismiss = () => {
-    if (props.notificationData.isDismissible) {
+    if (isDismissible) {
       toggleHidden();
       setTimeout(() => {
         if (dispatch(removeNotification))
-          dispatch(removeNotification(props.notificationData));
+          dispatch(removeNotification(notificationData));
       }, 300);
     }
   };
 
   const typeToClassName = () => {
-    switch (props.notificationData.type) {
+    switch (type) {
       case 'information':
         return 'info-notification';
       case 'success':
@@ -82,7 +83,7 @@ function Notification(props: NotificationProps) {
   };
 
   const typeToIconName = () => {
-    switch (props.notificationData.type) {
+    switch (type) {
       case 'information':
         return 'info-circle';
       case 'success':
@@ -104,19 +105,19 @@ function Notification(props: NotificationProps) {
       <div className="type-icon">
         <FontAwesomeIcon icon={typeToIconName()} />
       </div>
-      <span>{props.notificationData.text}</span>
-      {props.notificationData.isDismissible && (
+      <span>{text}</span>
+      {isDismissible && (
         <div className="close-btn-container">
           <button onClick={dismiss} className="close-btn">
             <FontAwesomeIcon icon="times" />
           </button>
-          {timeout > 0 && (
+          {autoDismissTimeout > 0 && (
             <svg className="circle-timer">
               <circle
                 r="18"
                 cx="20"
                 cy="20"
-                style={{ animationDuration: `${timeout}ms` }}
+                style={{ animationDuration: `${autoDismissTimeout}ms` }}
               />
             </svg>
           )}

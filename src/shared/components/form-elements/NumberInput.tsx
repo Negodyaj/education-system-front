@@ -7,12 +7,13 @@ function NumberInput(props: {
   onChange?: (...event: any[]) => void;
 }) {
   const formContext = useFormContext();
+  const { inputSettings, onChange } = props;
 
-  return !props.onChange ? (
+  return !onChange ? (
     <input
       {...formContext.register(
-        props.inputSettings.name,
-        props.inputSettings.registerOptions
+        inputSettings.name,
+        inputSettings.registerOptions
       )}
       type="number"
       className="form-input"
@@ -20,10 +21,10 @@ function NumberInput(props: {
   ) : (
     <input
       {...formContext.register(
-        props.inputSettings.name,
-        props.inputSettings.registerOptions
+        inputSettings.name,
+        inputSettings.registerOptions
       )}
-      onChange={props.onChange}
+      onChange={onChange}
       type="number"
       className="form-input"
     />

@@ -16,23 +16,24 @@ interface DatePickerComponentProps {
   formContext?: UseFormReturn<FieldValues>;
 }
 function DatePickerComponent(props: DatePickerComponentProps) {
-  const [startDate, setStartDate] = useState(props.date);
-  const handleDateChange = (date: Date | [Date, Date] | null) => {
-    if (date instanceof Date) {
-      setStartDate(date);
-      props.onDateChange && props.onDateChange(date.toLocaleDateString());
-      props.inputSettings &&
-        props.formContext?.setValue(
-          props.inputSettings.name,
-          date.toLocaleDateString()
+  const { date, onDateChange, inputSettings, formContext } = props;
+  const [startDate, setStartDate] = useState(date);
+  const handleDateChange = (dateArg: Date | [Date, Date] | null) => {
+    if (dateArg instanceof Date) {
+      setStartDate(dateArg);
+      onDateChange && onDateChange(dateArg.toLocaleDateString());
+      inputSettings &&
+        formContext?.setValue(
+          inputSettings.name,
+          dateArg.toLocaleDateString()
         );
     }
   };
 
-  return props.inputSettings ? (
+  return inputSettings ? (
     <Controller
-      control={props.formContext?.control}
-      name={props.inputSettings.name}
+      control={formContext?.control}
+      name={inputSettings.name}
       render={({ field: { value } }) => (
         <DatePicker
           selected={convertStringToDate(value)}
