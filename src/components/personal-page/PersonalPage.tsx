@@ -1,7 +1,14 @@
-import { useEffect, useState } from "react";
+import {useEffect, useState } from "react";
+import { Dispatch } from "redux";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import "./PersonalPage.css"
+import { IRootState } from "../../store";
+import { getUserToEditById } from "../../store/user-page/thunk";
+import { useParams } from "react-router-dom";
+import { sendGetRequest } from "../../services/http.service";
+import { UserInput } from "../../interfaces/UserInput";
+import { currentUserUrl } from "../../shared/consts";
 
 type FormValues = {
   firstName: string;
@@ -13,62 +20,71 @@ type FormValues = {
   developer?: string;
 };
 
+
+const getUser = () => {
+  return 
+}
+
 const PersonalPage = () => {
-    const [changeForm, setChangeForm] = useState(false);
+  const [changeForm, setChangeForm] = useState(true);
+  const [registr, setRegistr] = useState(true);
+  const pageState = useSelector((state: IRootState) => state.userPage);
+  const dispatch = useDispatch();
+  const { idToEdit } = useParams<{ idToEdit?: string; }>();
 
-    const {
-        register,
-        handleSubmit,
-        formState: { errors }
-      } = useForm<FormValues>();
-      const onSubmit = (data: FormValues) => {
-        console.log(data);
-      };
-    const changeEvent=()=>{
-        changeForm? setChangeForm(false) : setChangeForm(true);
-    }
-      return (
-          <div>
-              <button className="common-button" onClick={changeEvent}>change</button>
-        <form className={changeForm? 'notDisabledForm' : 'disabledForm'} onSubmit={handleSubmit(onSubmit)}>
-          <label htmlFor="firstName">First Name:</label>
-          <input  
-            {...register("firstName", { required: "This is required." })}
-            id="firstName"
-          />
-          {errors.firstName && <p>{errors.firstName.message}</p>}
-    
-          <label htmlFor="lastName">Last Name:</label>
-          <input {...register("lastName", { required: true, minLength: 5 })} />
-    
-          <label htmlFor="age">Age</label>
-          <input
-            type="number"
-            {...register("age", { valueAsNumber: true })}
-            id="age"
-          />
-    
-          <label htmlFor="gender"></label>
-          <select {...register("gender")} id="gender">
-            <option value="">Select...</option>
-            <option value="male">male</option>
-            <option value="female">female</option>
-          </select>
+useEffect(() => {
+  dispatch(getUserToEditById('1'))
+}, [])
 
-          <label htmlFor="phone">Your phone:</label>
-          <input {...register("phone", { required: true, minLength: 5 })} />
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm<FormValues>();
+  const onSubmit = (data: FormValues) => {
+    console.log(data);
+  };
 
-          <label htmlFor="email">Your email:</label>
-          <input {...register("email", { required: true, minLength: 5 })} />
-          
-          {//<label htmlFor="developer">Are you a developer?</label><input {...register("developer")} value="yes" type="checkbox" />
-          }
-          <button className="common-button" onClick={changeEvent}>сохранить</button>
-         {//<input type="submit" />
-         }
-        </form>
-        </div>
-      );
+  const changeEvent = () => {
+    (changeForm) ? setChangeForm(false) : setChangeForm(true);
   }
-  
-  export default PersonalPage;
+  return (
+    <div>
+      <button className={changeForm ? "show common-button" : "notshow common-button"} onClick={changeEvent}>change</button>
+      <form className={changeForm ? 'notDisabledForm' : 'disabledForm'} onSubmit={handleSubmit(onSubmit)}>
+        <label htmlFor="firstName">First Name:</label>
+        <input defaultValue={pageState.userForUserPage.firstName}/>
+          
+        <label htmlFor="lastName">Last Name:</label>
+        <input defaultValue={pageState.userForUserPage.lastName}/>
+        {//errors.lastName? setChangeForm(false):setChangeForm(true) 
+          //errors.firstName? setChangeForm(false):setChangeForm(true)
+        }
+
+        <label htmlFor="age">Age</label>
+        <input
+          type="number"
+          {...register("age", { valueAsNumber: true })}
+          id="age"
+        />
+
+        <label htmlFor="gender"></label>
+        <select {...register("gender")} id="gender">
+          <option value="">Select...</option>
+          <option value="male">male</option>
+          <option value="female">female</option>
+        </select>
+
+        <label htmlFor="phone">Your phone:</label>
+        <input />
+
+        <label htmlFor="email">Your email:</label>
+        <input defaultValue={pageState.userForUserPage.email} disabled />
+
+        <button className={changeForm ? "notshow common-button" : "show common-button"} onClick={changeEvent}>сохранить</button>
+      </form>
+    </div>
+  );
+}
+
+export default PersonalPage;

@@ -29,9 +29,14 @@ section > label {
   pointer-events: all;
   opacity:1;
 }
-.notDisabledForm button{
- display:none;
+.show{
+ display:all;
 }
+
+.notshow{
+  display:none;
+ }
+
 .notDisabledForm{
   pointer-events: none;
   opacity:0.9;
