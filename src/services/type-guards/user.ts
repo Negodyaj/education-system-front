@@ -1,6 +1,9 @@
-import { User } from "../../interfaces/User";
+import { User } from '../../interfaces/User';
 
 export const isUser = (data: any): data is User => {
-    const dataToCheck = data as User;
-    return !Array.isArray(dataToCheck) && !!dataToCheck.email && !!dataToCheck.phone;
-}
+  const dataToCheck = data as User;
+
+  return (
+    !Array.isArray(dataToCheck) && !!dataToCheck.email && !!dataToCheck.phone
+  );
+};

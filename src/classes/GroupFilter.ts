@@ -1,5 +1,5 @@
-import { FilterParameter } from "./FilterParameter";
+import { FilterParameter } from './FilterParameter';
 
-export class GroupFilter extends FilterParameter{
-    FilterType: string = "Группа";
+export class GroupFilter extends FilterParameter {
+  FilterType: string = 'Группа';
 }
