@@ -1,10 +1,12 @@
-import React, { useState } from "react";
-import { CourseFilter } from "../../classes/CourseFilter";
-import { FilterParameter } from "../../classes/FilterParameter";
-import { GroupFilter } from "../../classes/GroupFilter";
-import { ThemeFilter } from "../../classes/ThemeFilter";
-import Filters from "./Filters/Filters";
-import HomeworkRow from "./HomeworkRow/HomeworkRow";
+import React, { useState } from 'react';
+
+import { CourseFilter } from '../../classes/CourseFilter';
+import { FilterParameter } from '../../classes/FilterParameter';
+import { GroupFilter } from '../../classes/GroupFilter';
+import { ThemeFilter } from '../../classes/ThemeFilter';
+
+import Filters from './Filters/Filters';
+import HomeworkRow from './HomeworkRow/HomeworkRow';
 import DeleteHomeworkModal from './delete-homework-modal/DeleteHomeworkModal';
 
 // const model: HomeworkPageModel = {
@@ -82,7 +84,7 @@ import DeleteHomeworkModal from './delete-homework-modal/DeleteHomeworkModal';
 //   roleId: number;
 // }
 
-function HomeworkPage(/*props: HomeworkPageProps*/) {
+function HomeworkPage(/* props: HomeworkPageProps */) {
   // const coursesInFilterParameters: string[] = [];
   // const groupsInFilterParameters: string[] = [];
   // const themesInFilterParameters: string[] = [];
@@ -138,7 +140,7 @@ function HomeworkPage(/*props: HomeworkPageProps*/) {
   //     <DeleteHomeworkModal Visibility={visibility} CloseModalHandler={CloseModalHandler}></DeleteHomeworkModal>
   //   </div>
   // );
-  return (<></>)
+  return <></>;
 }
 
 export default HomeworkPage;
