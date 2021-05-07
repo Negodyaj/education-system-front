@@ -16,7 +16,6 @@ import {
   setUserDeletingFail,
   setUserDeletingSuccess,
   setUserListFail,
-  setUserListIsLoading,
   setUserListWasLoaded,
 } from './action-creators';
 
@@ -29,15 +28,15 @@ export const getUsers = () => (dispatch: Dispatch) => {
     })
     .catch((error) => dispatch(setUserListFail(error)));
 };
-export const deleteUserRequest = (userToDeleteId: number) => {
-  console.log(userToDeleteId);
-
-  return (dispatch: Dispatch<any>) => {
-    dispatch(setUserDeleting());
-    sendDeleteRequest<UserDelete>(
-      `${usersUrl}/${userToDeleteId}`,
-      isUserDelete
-    ).then((response) => {
+export const deleteUserRequest = (userToDeleteId: number) => (
+  dispatch: Dispatch<any>
+) => {
+  dispatch(setUserDeleting());
+  sendDeleteRequest<UserDelete>(
+    `${usersUrl}/${userToDeleteId}`,
+    isUserDelete
+  ).then(
+    (response) => {
       let deletedUser = thunkResponseHandler(dispatch, response);
 
       if (deletedUser) {
@@ -55,6 +54,7 @@ export const deleteUserRequest = (userToDeleteId: number) => {
       } else {
         dispatch(setUserDeletingFail());
       }
-    });
-  };
+    },
+    () => {}
+  );
 };

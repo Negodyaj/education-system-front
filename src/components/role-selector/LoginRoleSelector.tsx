@@ -33,7 +33,7 @@ export function LoginRoleSelector() {
             convertRoleIdsToSelectItems(
               appState.roleSelector.currentUser?.roles
             ) || undefined
-          }
+          } />
       </div>
     </div>
   );

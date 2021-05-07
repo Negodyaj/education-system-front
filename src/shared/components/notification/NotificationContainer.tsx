@@ -1,5 +1,3 @@
-import NotificationData from '../../../interfaces/NotificationData';
-
 import Notification from './Notification';
 
 import './NotificationContainer.css';
@@ -11,23 +9,21 @@ function NotificationContainer() {
   const state = useSelector((state: IRootState) => state.notificationContainer);
 
   return (
-      <div className="notification-container">
-          <div className="non-dismissible-notifications"> { 
-        {' '}
+    <div className="notification-container">
+      <div className="non-dismissible-notifications">
         {state.notifications.nonDismissible.map((notification) => {
           return (
-                      <Notification
+            <Notification
               key={notification.timestamp}
               notificationData={notification}
             />
           );
         })}
       </div>
-          <div className="dismissible-notifications"> {
-        {' '}
+      <div className="dismissible-notifications">
         {state.notifications.dismissible.map((notification) => {
           return (
-                      <Notification
+            <Notification
               key={notification.timestamp}
               notificationData={notification}
             />
@@ -37,5 +33,4 @@ function NotificationContainer() {
     </div>
   );
 }
-
 export default NotificationContainer;

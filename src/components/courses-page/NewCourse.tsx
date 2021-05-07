@@ -48,15 +48,15 @@ function NewCourse() {
   };
 
   return (
-      <ModalBackground>
-          <ModalAddCourse>
-              <ModalHeaderAddCourse>
-                  <HeadModal><h4>Создать новый курс</h4></HeadModal>
-                  <ButtonClose onClick={closeModalWindow}>
-                      <FontAwesomeIcon icon='times'/>
+    <ModalBackground>
+      <ModalAddCourse>
+        <ModalHeaderAddCourse>
+          <HeadModal><h4>Создать новый курс</h4></HeadModal>
+          <ButtonClose onClick={closeModalWindow}>
+            <FontAwesomeIcon icon='times' />
           </ButtonClose>
         </ModalHeaderAddCourse>
-              <FormProvider
+        <FormProvider
           register={register}
           formState={formState}
           handleSubmit={handleSubmit}
@@ -64,16 +64,16 @@ function NewCourse() {
           setValue={setValue}
           {...methods}>
           <FormWrapper>
-                      <InputStyle onSubmit={handleSubmit(onSubmit)}>
-                          {
-                            Object.keys(appState.coursePage.createCourseInputModel).map(key => <FormElement key={key} formElementSettings={getFormElementSettings(key as InputNames)}></FormElement>)
-              )}
+            <InputStyle onSubmit={handleSubmit(onSubmit)}>
+              {
+                Object.keys(appState.coursePage.createCourseInputModel).map(key => <FormElement key={key} formElementSettings={getFormElementSettings(key as InputNames)}></FormElement>)
+              }
             </InputStyle>
           </FormWrapper>
         </FormProvider>
-              <SelectDelete>
-                  <button className="common-button" onClick={closeModalWindow}>Отменить</button>
-                  <button className="common-button" onClick={handleSubmit(onSubmit)}>Добавить</button>
+        <SelectDelete>
+          <button className="common-button" onClick={closeModalWindow}>Отменить</button>
+          <button className="common-button" onClick={handleSubmit(onSubmit)}>Добавить</button>
         </SelectDelete>
       </ModalAddCourse>
     </ModalBackground>

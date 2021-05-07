@@ -66,109 +66,107 @@ function PaymentForm(props: PaymentProps) {
   };
 
   return (
-      <div className={`payment ${  paymentFormState.formVisibility}`}>
-          <div className={`inner-payment ${  paymentFormState.formVisibility}`}>
-              <div className="header-payment">
-                  <div>Назначить платеж пользователю
+    <div className={`payment ${paymentFormState.formVisibility}`}>
+      <div className={`inner-payment ${paymentFormState.formVisibility}`}>
+        <div className="header-payment">
+          <div>Назначить платеж пользователю
                       <div>{paymentFormState.userForPayment?.firstName} {paymentFormState.userForPayment?.lastName}</div>
+          </div>
+          <button className="button-round" onClick={onCancel}>х</button>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <div className="input-row">
+              <label>Сумма платежа</label>
+              <input key='amount' {...register("amount",
+                {
+                  required: {
+                    value: true,
+                    message: 'Ведите сумму платежа',
+                  },
+                  pattern: {
+                    value: /[0-9]/,
+                    message: 'Допустимы только цифры',
+                  },
+                })}></input>
+              <ErrorMessage
+                errors={errors}
+                name={'amount'}
+                className="bad-feedback"
+                as="div"></ErrorMessage>
             </div>
-                  <button className="button-round" onClick={onCancel}>х</button>
-            х
-          </button>
-              <form onSubmit={handleSubmit(onSubmit)}>
-                  <div className="input-row">
-                      <label>Сумма платежа</label>
-                      <input key='amount' {...register("amount",
-                            {
-                required: {
-                  value: true,
-                  message: 'Ведите сумму платежа',
-                },
-                pattern: {
-                  value: /[0-9]/,
-                  message: 'Допустимы только цифры',
-                },
-              })}></input>
-                      <ErrorMessage
-              errors={errors}
-              name={'amount'}
-              className="bad-feedback"
-              as="div"></ErrorMessage>
-          </div>
-                  <div className="input-row">
-                      <label>Дата платежа</label>
-                      <input key='date' {...register("date",)} />
-          </div>
-                  <div className="input-row">
-                      <label>Период оплаты</label>
-                      <input key='period' {...register("period",
-                            {
-                required: {
-                  value: true,
-                  message: 'Ведите период оплаты',
-                },
-                pattern: {
-                  value: /\s\d/,
-                  message: "Период формата 'янв 2010'",
-                },
-              })}></input>
-                      <ErrorMessage
-              errors={errors}
-              name={'period'}
-              className="bad-feedback"
-              as="div"></ErrorMessage>
-          </div>
-                  <div className="input-row">
-                      <label>Номер договора</label>
-                      <input key='contractNumber' // value={paymentFormState.userForPayment?.contractNumber}
-              {...register('contractNumber', {
-                required: {
-                  value: true,
-                  message: 'Ведите номер договора',
-                },
-                pattern: {
-                  value: /[0-9]/,
-                  message: 'Допустимы только цифры',
-                },
-              })}></input>
-                      <ErrorMessage
-              errors={errors}
-              name={'contractNumber'}
-              className="bad-feedback"
-              as="div"></ErrorMessage>
-          </div>
-                  <div className='payment-history'>
-                      <h4>История оплат:</h4>
-                      <div className="list payment-list-head">
-                          <span className='column'>сумма</span>
-                          <span className='column'>дата</span>
-                          <span className='column'>период</span>
-                          <span className='column'>номер</span>
+            <div className="input-row">
+              <label>Дата платежа</label>
+              <input key='date' {...register("date",)} />
             </div>
-                      <div className="payment-list-body">
-                          {
-                                paymentFormState.isDataLoading
-                                    ?
-                                      <>LOADING</>
-              ) : (
-                paymentFormState.paymentList?.map((item) => (
-                                      <div className="list" key={item.id}>
-                                          <div className='column'>{item.amount}</div>
-                                          <div className='column'>{item.date}</div>
-                                          <div className='column'>{item.period}</div>
-                                          <div className='column'>{item.contractNumber}</div>
-                  </div>
-                ))
-              )}
+            <div className="input-row">
+              <label>Период оплаты</label>
+              <input key='period' {...register("period",
+                {
+                  required: {
+                    value: true,
+                    message: 'Ведите период оплаты',
+                  },
+                  pattern: {
+                    value: /\s\d/,
+                    message: "Период формата 'янв 2010'",
+                  },
+                })}></input>
+              <ErrorMessage
+                errors={errors}
+                name={'period'}
+                className="bad-feedback"
+                as="div"></ErrorMessage>
             </div>
-          </div>
-                  <p />
-                  <div className="footer-payment">
-                      <button className="button-select" type="button" onClick={onCancel}>Отмена</button>
-                      <button className="button-select" type="submit">Подтвердить</button>
-            </button>
-          </div>
-        </form>
+            <div className="input-row">
+              <label>Номер договора</label>
+              <input key='contractNumber' // value={paymentFormState.userForPayment?.contractNumber}
+                {...register('contractNumber', {
+                  required: {
+                    value: true,
+                    message: 'Ведите номер договора',
+                  },
+                  pattern: {
+                    value: /[0-9]/,
+                    message: 'Допустимы только цифры',
+                  },
+                })}></input>
+              <ErrorMessage
+                errors={errors}
+                name={'contractNumber'}
+                className="bad-feedback"
+                as="div"></ErrorMessage>
+            </div>
+            <div className='payment-history'>
+              <h4>История оплат:</h4>
+              <div className="list payment-list-head">
+                <span className='column'>сумма</span>
+                <span className='column'>дата</span>
+                <span className='column'>период</span>
+                <span className='column'>номер</span>
+              </div>
+              <div className="payment-list-body">
+                {
+                  paymentFormState.isDataLoading
+                    ?
+                    <>LOADING</>
+                    : (
+                      paymentFormState.paymentList?.map((item) => (
+                        <div className="list" key={item.id}>
+                          <div className='column'>{item.amount}</div>
+                          <div className='column'>{item.date}</div>
+                          <div className='column'>{item.period}</div>
+                          <div className='column'>{item.contractNumber}</div>
+                        </div>
+                      ))
+                    )}
+              </div>
+            </div>
+            <p />
+            <div className="footer-payment">
+              <button className="button-select" type="button" onClick={onCancel}>Отмена</button>
+              <button className="button-select" type="submit">Подтвердить</button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   );

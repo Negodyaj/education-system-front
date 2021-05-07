@@ -8,7 +8,7 @@ import { sendNotification } from '../../store/notifications/thunk';
 import { SelectItem } from '../../interfaces/SelectItem';
 import CustomMultiSelect from '../../shared/components/multi-select/CustomMultiSelect';
 
-interface DevTestPageProps {}
+interface DevTestPageProps { }
 
 function DevTestPage(props: DevTestPageProps) {
   const dispatch = useDispatch();
@@ -38,39 +38,39 @@ function DevTestPage(props: DevTestPageProps) {
   ];
 
   return (
+    <div>
+      <h1>secret test page</h1>
+
+      <button onClick={() => dispatch(sendNotification(generateTestNotification(true)))} >
+        Test dismissible notification</button>
+      <button onClick={() => dispatch(sendNotification(generateTestNotification(false)))} >
+        Test non-dismissible notification</button>
+
       <div>
-          <h1>secret test page</h1>
-
-          <button onClick={() => dispatch(sendNotification(generateTestNotification(true)))} >
-              Test dismissible notification</button>
-          <button onClick={() => dispatch(sendNotification(generateTestNotification(false)))} >
-              Test non-dismissible notification</button>
-
-          <div>
-              <span>{counter}</span>
-              <button onClick={() => { setDialogShown(true) }}>+1</button>
+        <span>{counter}</span>
+        <button onClick={() => { setDialogShown(true) }}>+1</button>
       </div>
 
-          <ConfirmationDialog
+      <ConfirmationDialog
         isShown={dialogShown}
         title={'Увеличить счетчик на 1?'}
         message={`Новое значение: ${counter + 1}`}
-        callback={counterCallback}
-          <CustomMultiSelect
+        callback={counterCallback} />
+      <CustomMultiSelect
         selectType="multi"
         selectedOptions={[]}
         options={selectItems}
-        onSingleSelect={() => {}}
+        onSingleSelect={() => { }}
       />
-          <br />
-          <CustomMultiSelect
+      <br />
+      <CustomMultiSelect
         selectType="multi"
         selectedOptions={[]}
         options={selectItems}
-        onMultiSelect={() => {}}
+        onMultiSelect={() => { }}
       />
 
-          <div className="test-page-link"><Link to="/">back to login</Link></div>
+      <div className="test-page-link"><Link to="/">back to login</Link></div>
     </div>
   );
 }

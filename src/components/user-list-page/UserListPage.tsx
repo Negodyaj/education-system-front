@@ -15,16 +15,16 @@ function UserListPage() {
     dispatch(getUsers());
   }, []);
   return (
-      <div className="user-page">
-          {
-                appState.userListPage.isDataLoading
-                    ?
-                      <div>
-                      <FontAwesomeIcon icon="spinner" />
-        </div>
-      ) : (
-        <UserListComponent></UserListComponent>
-      )}
+    <div className="user-page">
+      {
+        appState.userListPage.isDataLoading
+          ?
+          <div>
+            <FontAwesomeIcon icon="spinner" />
+          </div>
+          : (
+            <UserListComponent></UserListComponent>
+          )}
     </div>
   );
 }

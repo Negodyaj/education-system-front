@@ -90,25 +90,25 @@ function Notification(props: NotificationProps) {
   };
 
   return (
-      <div className={`notification hidden
+    <div className={`notification hidden
             ${typeToClassName()} `}
       ref={notificationDomRef}>
-          <div className="type-icon">
-              <FontAwesomeIcon icon={typeToIconName()} />
+      <div className="type-icon">
+        <FontAwesomeIcon icon={typeToIconName()} />
       </div>
-          <span>{props.notificationData.text}</span>
-          {
-                props.notificationData.isDismissible &&
-                  <div className="close-btn-container">
-                  <button onClick={dismiss} className="close-btn">
-                      <FontAwesomeIcon icon="times" />
+      <span>{props.notificationData.text}</span>
+      {
+        props.notificationData.isDismissible &&
+        <div className="close-btn-container">
+          <button onClick={dismiss} className="close-btn">
+            <FontAwesomeIcon icon="times" />
           </button>
-                  {timeout > 0 && <svg className="circle-timer">
-                      <circle r="18" cx="20" cy="20" style={{ animationDuration: `${timeout  }ms` }} />
-            </svg>
-          )}
+          {timeout > 0 && <svg className="circle-timer">
+            <circle r="18" cx="20" cy="20" style={{ animationDuration: `${timeout}ms` }} />
+          </svg>
+          }
         </div>
-      )}
+      }
     </div>
   );
 }

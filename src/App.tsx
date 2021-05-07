@@ -20,7 +20,6 @@ import { IRootState } from './store';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { setIsLoggedOut } from './store/app/action-creators';
-import LoginRoleSelector from './components/role-selector/LoginRoleSelector';
 import GroupPage from './components/group-page/GroupPage';
 
 import { Helmet } from 'react-helmet';
@@ -39,6 +38,7 @@ import { ReactComponent as Logo } from './img/devedu.svg';
 import Loader from './shared/components/loader/Loader';
 import LessonsByGroup from './components/group-page/lesson-list-component/LessonsByGroup';
 import CoursePage from './components/courses-page/CoursesPage';
+import { LoginRoleSelector } from './components/role-selector/LoginRoleSelector';
 
 function App() {
   const dispatch = useDispatch();
@@ -67,128 +67,127 @@ function App() {
   }
   return (
     <div className="App">
-          <Helmet>
-              <title>Самый лучший сайт на свете</title>
-              <meta name="description" content="Helmet application" />
+      <Helmet>
+        <title>Самый лучший сайт на свете</title>
+        <meta name="description" content="Helmet application" />
       </Helmet>
-          <aside className={`left-section ${styleMenu(isHidden)}`}>
-              <div className="logo-container">
-                  <Logo />
+      <aside className={`left-section ${styleMenu(isHidden)}`}>
+        <div className="logo-container">
+          <Logo />
         </div>
-              <div className="nav-menu">
-                  {
-                        !!getToken()
-                        &&
-                          <NavMenu roleId={appState.roleSelector.currentUserRoleId} onHide={onHide} />
-            />
-          )}
+        <div className="nav-menu">
+          {
+            !!getToken()
+            &&
+            <NavMenu roleId={appState.roleSelector.currentUserRoleId} onHide={onHide} />
+
+          }
         </div>
       </aside>
-          <div className="right-section">
-              <div className="header-user-actions">
-                  {
-                        !!getToken() && <LoginRoleSelector />
+      <div className="right-section">
+        <div className="header-user-actions">
+          {
+            !!getToken() && <LoginRoleSelector />
+          }
+          {
+            !!getToken()
+            &&
+            <button className='common-button' onClick={logOut}>Log out</button>
+
+          }
+          <main className="main-content">
+            {
+              getToken() ?
+                <>
+                  <Switch>
+                    {
+                      (appState.roleSelector.currentUserRoleId === Role.Manager
+                        ||
+                        appState.roleSelector.currentUserRoleId === Role.Admin) && (
+                        <>
+                          <Route exact path={`/${userListUrl}`}>
+                            <UserListPage />
+                            <Helmet>
+                              <title>Юзеры</title>
+                            </Helmet>
+                          </Route>
+                          <Route path={`/${userRegisterFormUrl}`}>
+                            <UserPage />
+                          </Route>
+                          <Route path={`/${userEditUrl}/:idToEdit/edit`}>
+                            <UserPage />
+                          </Route>
+                        </>
+                      )}
+                    {
+                      appState.roleSelector.currentUserRoleId === Role.Teacher &&
+                      <Route path="/courses-page">
+                        <CoursesPage />
+                        <Helmet>
+                          <title>Курсы</title>
+                        </Helmet>
+                      </Route>
                     }
-                  {
-                        !!getToken()
-                        &&
-                          <button className='common-button' onClick={logOut}>Log out</button>
-              Log out
-            </button>
-          )}
-              <main className="main-content">
-                  {
-                        getToken() ?
-                          <>
-                              <Switch>
-                                  {
-                                        (appState.roleSelector.currentUserRoleId === Role.Manager
-                                            ||
-                  appState.roleSelector.currentUserRoleId === Role.Admin) && (
-                  <>
-                                          <Route exact path={`/${userListUrl}`}>
-                                              <UserListPage />
-                                              <Helmet>
-                                                  <title>Юзеры</title>
+                    <Route path="/course/:id/edition" children={<CourseEdition />} />
+                    <Route path="/course/:id" children={<CoursePage />} />
+                    {
+                      appState.roleSelector.currentUserRoleId === Role.Teacher &&
+                      <Route path="/lessons">
+                        <LessonsByGroup />
+                        <Helmet>
+                          <title>Занятия</title>
+                        </Helmet>
+                      </Route>
+                    }
+                    {
+                      appState.roleSelector.currentUserRoleId !== Role.Student &&
+                      <Route path="/tags-page">
+                        <TagsPage />
+                        <Helmet>
+                          <title>Тэги</title>
+                        </Helmet>
+                      </Route>
+                    }
+                    <Route path="/homework">
+                      <HomeworkPage />
+                      <Helmet>
+                        <title>Домашки</title>
                       </Helmet>
                     </Route>
-                                          <Route path={`/${userRegisterFormUrl}`}>
-                                              <UserPage />
+                    <Route exact path="/group">
+                      <Redirect to="/group/1" />
                     </Route>
-                                          <Route path={`/${userEditUrl}/:idToEdit/edit`}>
-                                              <UserPage />
+                    <Route path="/group/:id">
+                      <GroupPage />
+                      <Helmet>
+                        <title>Группы</title>
+                      </Helmet>
                     </Route>
-                  </>
-                )}
-                                  {
-                                        appState.roleSelector.currentUserRoleId === Role.Teacher &&
-                                          <Route path="/courses-page">
-                                          <CoursesPage />
-                                          <Helmet>
-                                              <title>Курсы</title>
-                    </Helmet>
+                    <Route path="/attendance">
+                      <Attendance />
+                      <Helmet>
+                        <title>Журнал в разработке</title>
+                      </Helmet>
+                    </Route>
+                  </Switch>
+                </>
+                :
+                <Switch>
+                  <Route exact path="/">
+                    <LoginForm />
+                    <div className="test-page-link"><Link to="/dev-test-page">secret test page</Link></div>
                   </Route>
-                )}
-                                  <Route path="/course/:id/edition" children={<CourseEdition />} />
-                                  <Route path="/course/:id" children={<CoursePage />} />
-                                  {
-                                        appState.roleSelector.currentUserRoleId === Role.Teacher &&
-                                          <Route path="/lessons">
-                                          <LessonsByGroup />
-                                          <Helmet>
-                                              <title>Занятия</title>
-                    </Helmet>
+                  <Route path="/dev-test-page">
+                    <DevTestPage />
+                    <NotificationContainer />
                   </Route>
-                )}
-                                  {
-                                        appState.roleSelector.currentUserRoleId !== Role.Student &&
-                                          <Route path="/tags-page">
-                                          <TagsPage  />
-                                          <Helmet>
-                                              <title>Тэги</title>
-                    </Helmet>
-                  </Route>
-                )}
-                                  <Route path="/homework">
-                                      <HomeworkPage />
-                                      <Helmet>
-                                          <title>Домашки</title>
-                  </Helmet>
-                </Route>
-                                  <Route exact path="/group">
-                                      <Redirect to="/group/1" />
-                </Route>
-                                  <Route path="/group/:id">
-                                      <GroupPage />
-                                      <Helmet>
-                                          <title>Группы</title>
-                  </Helmet>
-                </Route>
-                                  <Route path="/attendance">
-                                      <Attendance />
-                                      <Helmet>
-                                          <title>Журнал в разработке</title>
-                  </Helmet>
-                </Route>
-              </Switch>
-            </>
-          ) : (
-            <Switch>
-                              <Route exact path="/">
-                                  <LoginForm />
-                                  <div className="test-page-link"><Link to="/dev-test-page">secret test page</Link></div>
-                </div>
-              </Route>
-                              <Route path="/dev-test-page">
-                                  <DevTestPage />
-                                  <NotificationContainer />
-              </Route>
-            </Switch>
-          )}
-                  <NotificationContainer />
-        </main>
-      </div>
-          <Loader />
+                </Switch>
+            }
+            <NotificationContainer />
+          </main>
+        </div>
+        <Loader />
+      </div >
     </div>
   );
 }

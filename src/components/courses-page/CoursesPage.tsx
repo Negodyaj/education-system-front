@@ -36,38 +36,38 @@ function CoursesPage() {
   };
 
   return (
-      <CourseContainer>
-          <CourseCreate>
-              <EmptyDiv/>
-              <button onClick={openModalAdd} className='common-button' >Добавить курс</button>
+    <CourseContainer>
+      <CourseCreate>
+        <EmptyDiv />
+        <button onClick={openModalAdd} className='common-button' >Добавить курс</button>
       </CourseCreate>
-          <CoursesList>
-              {
-                    pageState.isDataLoading
-                        ?
-                          <Loading>Loading...</Loading>
-        ) : (
-          pageState.courseList?.map((item) => (
-                              <CourseStyled>
-                                  <Link className="current-course-name" to={`/course/${item.id}`}>
-                                      <EmptyDiv>{item.name}</EmptyDiv>
-              </Link>
-                                  <CourseUpdateDelete>
-                                      <Link to={`/course/${item.id}/edition`}>
-                                      <button className='round-button'>
-                                              <FontAwesomeIcon icon="edit" />
-                  </button>
-                                    </Link>
-                                      <button onClick={() => { openModalDelete(item.id) }} className='round-button'>
-                                          <FontAwesomeIcon icon="trash" /> 
-                </button>
-              </CourseUpdateDelete>
-            </CourseStyled>
-          ))
-        )}
+      <CoursesList>
+        {
+          pageState.isDataLoading
+            ?
+            <Loading>Loading...</Loading>
+            : (
+              pageState.courseList?.map((item) => (
+                <CourseStyled>
+                  <Link className="current-course-name" to={`/course/${item.id}`}>
+                    <EmptyDiv>{item.name}</EmptyDiv>
+                  </Link>
+                  <CourseUpdateDelete>
+                    <Link to={`/course/${item.id}/edition`}>
+                      <button className='round-button'>
+                        <FontAwesomeIcon icon="edit" />
+                      </button>
+                    </Link>
+                    <button onClick={() => { openModalDelete(item.id) }} className='round-button'>
+                      <FontAwesomeIcon icon="trash" />
+                    </button>
+                  </CourseUpdateDelete>
+                </CourseStyled>
+              ))
+            )}
       </CoursesList>
-          { pageState.isOpenModalCreateCourse && <NewCourse /> }
-          { pageState.isModalDelete && <ModalWindowDelete />}
+      { pageState.isOpenModalCreateCourse && <NewCourse />}
+      { pageState.isModalDelete && <ModalWindowDelete />}
     </CourseContainer>
   );
 }

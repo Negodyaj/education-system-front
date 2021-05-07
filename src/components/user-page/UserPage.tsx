@@ -23,7 +23,7 @@ function UserPage() {
   }, []);
   useEffect(() => {
     Object.keys(appState.userPage.userForUserPage).map((key) => {
-      setValue(
+      methods.setValue(
         key as keyof UserInput,
         appState.userPage.userForUserPage[key as keyof UserInput]
       );
@@ -36,34 +36,23 @@ function UserPage() {
     history.push('/user-list');
   };
   const {
-    register,
-    formState,
-    handleSubmit,
-    getValues,
-    setValue,
     ...methods
   } = useForm<UserInput>();
   return appState.userPage.isDataLoading ? (
-              <div>Loading</div>
+    <div>Loading</div>
   ) : (
     <FormProvider
-      register={register}
-      formState={formState}
-      handleSubmit={handleSubmit}
-      getValues={getValues}
-      setValue={setValue}
       {...methods}>
-              <div className="user-edit-form needs-validation was-validated">
-                  <form onSubmit={handleSubmit(onSubmit)}>
-                      {
-                            Object.keys(appState.userPage.userForUserPage).map(key => <FormElement
-                                    formElementSettings={getFormElementSettings(key as InputNames)}
-                                    key={key}></FormElement>)
-                        }
-                      <div className="form-row form-row-button">
-                          <button className="common-button" type="button" onClick={closeUserPage}>отмена</button>
-                          <button className="common-button" type="submit">сохранить</button>
-            </button>
+      <div className="user-edit-form needs-validation was-validated">
+        <form onSubmit={methods.handleSubmit(onSubmit)}>
+          {
+            Object.keys(appState.userPage.userForUserPage).map(key => <FormElement
+              formElementSettings={getFormElementSettings(key as InputNames)}
+              key={key}></FormElement>)
+          }
+          <div className="form-row form-row-button">
+            <button className="common-button" type="button" onClick={closeUserPage}>отмена</button>
+            <button className="common-button" type="submit">сохранить</button>
           </div>
         </form>
       </div>
