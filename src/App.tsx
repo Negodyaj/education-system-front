@@ -28,6 +28,9 @@ import LessonsByGroup from './components/group-page/lesson-list-component/Lesson
 import { LoginRoleSelector } from './components/role-selector/LoginRoleSelector';
 import LoginForm from './components/login-form/LoginForm';
 import UserRoute from './components/user-page/UserRoute';
+import GroupNavMenu from './components/group-page/group-nav-menu/GroupNavMenu';
+import GroupInfoComponent from './components/group-page/group-info-component/GroupInfoComponent';
+
 
 function App() {
   const dispatch = useDispatch();
@@ -144,6 +147,28 @@ function App() {
                 <div className="test-page-link">
                   <Link to="/dev-test-page">secret test page</Link>
                 </div>
+                                    {appState.roleSelector.currentUserRoleId !== Role.Methodist &&
+                                       <>
+                                       <Route path="/group-page"  >
+                                            <GroupNavMenu/>
+                                            <Helmet>
+                                                <title>Группы</title>
+                                            </Helmet>
+                                        </Route>
+                                        <Route path="/group-page/info"  >
+                                            <GroupInfoComponent/>
+                                        </Route>
+                                        <Route path="/group-page/lesson"  >
+                                            <div>lesson</div>
+                                        </Route>
+                                        <Route path="/group-page/journal"  >
+                                            <div>journal</div>
+                                        </Route>
+                                        <Route path="/group-page/statistics"  >
+                                            <div>statistics</div>
+                                        </Route>
+                                       </> 
+                                        }
               </Route>
               <Route path="/dev-test-page">
                 <DevTestPage />
