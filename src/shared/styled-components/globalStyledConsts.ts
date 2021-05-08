@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
 
 type WidthText = { width?: number };
@@ -58,4 +59,9 @@ export const NumberInputStyled = styled(InputStyledBase)`
 
 export const InputText = styled(InputStyledBase)`
   width: ${(props: WidthText) => (props.width ? props.width + "px" : "272px")};
+`;
+
+export const LinkStyledRegularFont = styled(Link)`
+  text-decoration: none; 
+  color: black; 
 `;
