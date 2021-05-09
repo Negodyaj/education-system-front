@@ -1,6 +1,6 @@
 export const UserEnd: string = 'User';
 export const UserUserUpdateIdEnd: string = 'User/UpdateId';
-export const UserUserDeleteIdEnd:string = 'User/DeleteId';
+export const UserUserDeleteIdEnd: string = 'User/DeleteId';
 export const UserRegisterEnd: string = 'User/register';
 export const CourseEnd: string = 'Course';
 export const CourseAddEnd: string = 'CourseAdd';
@@ -12,6 +12,6 @@ export const CourseIdThemeIdDeleteEnd: string = 'Course/id/theme/idDelete';
 export const RoleDeleteEnd: string = 'User/id/role/roleId';
 export const PaymentAddEnd: string = 'PaymentAddEnd';
 export const PaymentEnd: string = 'PaymentEnd';
-export const TagEnd: string ='Tag';
-export const TagAddEnd: string ='Tag/Add';
-export const TagDeleteEnd: string ='Tag/Delete';
+export const TagEnd: string = 'Tag';
+export const TagAddEnd: string = 'Tag/Add';
+export const TagDeleteEnd: string = 'Tag/Delete';

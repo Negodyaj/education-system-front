@@ -47,8 +47,11 @@ aside.hide {
 
 .right-section, main {
     flex-grow: 1;
-    padding-left: 32px;
     overflow-y: scroll;
+}
+
+.right-section {
+    padding-left: 32px;
 }
 
 .header-user-actions {
@@ -91,6 +94,12 @@ aside.hide {
     border-radius: 50%;
 }
 
+.narrow .round-button {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+}
+
 .common-button {
     height: 40px;
     border-radius: 25px;
@@ -123,6 +132,28 @@ aside.hide {
 .form-input {
     height: 40px;
     width: 272px;
+    border: 1px solid #e0e7ff;
+    border-radius: 5px;
+    margin-bottom: 11px;
+    outline: none;
+    font-size: 14px;
+    padding: 0 13px;
+    font-weight: 600;
+}
+
+.form-row {
+    display: flex;
+    flex-direction: column;
+    min-height: 90px;
+    min-width: 450px;
+}
+
+
+.form-input-textarea {
+    min-height: 200px;
+    max-height: 258px;
+    min-width: 450px;
+    max-width: 450px;
     border: 1px solid #e0e7ff;
     border-radius: 5px;
     margin-bottom: 11px;

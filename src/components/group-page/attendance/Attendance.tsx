@@ -19,18 +19,22 @@ import {
 
 const Attandance = () => {
   const dispatch = useDispatch();
-  const studentGroup = useSelector((state: IRootState) => state.groupInfoComponent.studentsGroup);
-  const lessonDataForColumnName = useSelector((state: IRootState) => state.lessonByGroup.lessonList);
-  const attendance = useSelector((state: IRootState) => state.attendanceList.attendanceList);
+  const studentGroup = useSelector(
+    (state: IRootState) => state.groupInfoComponent.studentsGroup
+  );
+  const lessonDataForColumnName = useSelector(
+    (state: IRootState) => state.lessonByGroup.lessonList
+  );
+  const attendance = useSelector(
+    (state: IRootState) => state.attendanceList.attendanceList
+  );
 
   useEffect(() => {
-    dispatch(getGroupToViewById(14))
+    dispatch(getGroupToViewById(14));
     dispatch(getLessonsByGroup());
     // dispatch(getAttendanceByLessons(attendance.lessonList))
     lessonDataForColumnName.map((item) => {
-        dispatch(getAttendanceByLessonId(item.id))
-    })
-  }, [])
+      dispatch(getAttendanceByLessonId(item.id));
 
     return(
         <AttendanceList>

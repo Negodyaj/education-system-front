@@ -1,3 +1,3 @@
 export interface TagInput {
-    name: string;
+  name: string;
 }
