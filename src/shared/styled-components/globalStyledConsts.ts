@@ -65,3 +65,4 @@ export const LinkStyledRegularFont = styled(Link)`
   text-decoration: none; 
   color: black; 
 `;
+
