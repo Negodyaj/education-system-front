@@ -1,39 +1,43 @@
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import ModalWindowDelete from './modal-window/ModalWindowDelete';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import NewCourse from './NewCourse';
-import { useDispatch, useSelector } from "react-redux";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useDispatch, useSelector } from 'react-redux';
+
 import { IRootState } from '../../store';
 import { getCourses } from '../../store/courses-page/thunk';
-import { showToggleModalCreateCourseAction, showToggleModalDeleteCourseAction } from '../../store/courses-page/action-creators';
 import {
-    CourseContainer,
-    CourseCreate,
-    CoursesList,
-    CourseStyled,
-    CourseUpdateDelete,
-    EmptyDiv,
-    Loading
+  showToggleModalCreateCourseAction,
+  showToggleModalDeleteCourseAction,
+} from '../../store/courses-page/action-creators';
+
+import NewCourse from './NewCourse';
+import ModalWindowDelete from './modal-window/ModalWindowDelete';
+import {
+  CourseContainer,
+  CourseCreate,
+  CoursesList,
+  CourseStyled,
+  CourseUpdateDelete,
+  EmptyDiv,
+  Loading,
 } from './CoursePageStyled';
 import { LinkStyledRegularFont } from '../../shared/styled-components/globalStyledConsts';
 
 function CoursesPage() {
+  const dispatch = useDispatch();
+  const pageState = useSelector((state: IRootState) => state.coursePage);
 
-    const dispatch = useDispatch();
-    const pageState = useSelector((state: IRootState) => state.coursePage);
-    
-    useEffect(() => {
-        dispatch(getCourses());
-    }, []);
+  useEffect(() => {
+    dispatch(getCourses());
+  }, []);
 
-    const openModalDelete = (idCourse: number) => {
-        dispatch(showToggleModalDeleteCourseAction(idCourse));
-    }
+  const openModalDelete = (idCourse: number) => {
+    dispatch(showToggleModalDeleteCourseAction(idCourse));
+  };
 
-    const openModalAdd = () => {
-        dispatch(showToggleModalCreateCourseAction());
-    }
+  const openModalAdd = () => {
+    dispatch(showToggleModalCreateCourseAction());
+  };
 
     return (
         <CourseContainer>

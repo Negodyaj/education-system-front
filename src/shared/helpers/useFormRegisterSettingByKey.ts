@@ -1,16 +1,17 @@
-import { RegisterOptions } from "react-hook-form";
-import { InputNames } from "../../enums/inputNames";
-import { Role } from "../../enums/role";
+import { RegisterOptions } from 'react-hook-form';
+
+import { InputNames } from '../../enums/inputNames';
+import { Role } from '../../enums/role';
 export interface BaseInputSettings {
-    name: string;
-    registerOptions?: RegisterOptions;
+  name: string;
+  registerOptions?: RegisterOptions;
 }
-export  interface InternalInputSettings extends BaseInputSettings {
-    inputType: 'text' | 'date' | 'picture' | 'number' | 'textarea';
+export interface InternalInputSettings extends BaseInputSettings {
+  inputType: 'text' | 'date' | 'picture' | 'number' | 'textarea';
 }
 export interface ExternalInputSettings extends BaseInputSettings {
-    inputType: 'singleSelect' | 'multiSelect';
-    selectOptions: { [index: number]: string }
+  inputType: 'singleSelect' | 'multiSelect';
+  selectOptions: { [index: number]: string };
 }
 export type InputSettings = InternalInputSettings | ExternalInputSettings;
 export interface FormElementSettings {

@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const ModalBack = styled.div`
   position: fixed;
@@ -9,7 +9,7 @@ export const ModalBack = styled.div`
   background-color: rgba(0, 0, 0, 0.7);
   opacity: 1;
   pointer-events: all;
-`
+`;
 
 export const Modal = styled.div`
   display: grid;
@@ -23,13 +23,11 @@ export const Modal = styled.div`
   background-color: rgb(255, 255, 255);
   position: relative;
   opacity: 1;
-`
-
+`;
 
 export const ModalHeaderCourseDelete = styled.div`
   position: relative;
-`
-
+`;
 
 export const ModalContentCourseDelete = styled.div`
   margin-left: 40px;
@@ -37,9 +35,9 @@ export const ModalContentCourseDelete = styled.div`
   font-size: 20px;
   font-family: 'Montserrat';
   font-weight: 600;
-`
+`;
 
 export const ModalButtomCourseDelete = styled.div`
   display: flex;
-  justify-content: space-around;  
-`
+  justify-content: space-around;
+`;

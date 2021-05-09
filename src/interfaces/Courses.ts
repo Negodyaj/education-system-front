@@ -1,5 +1,5 @@
-import { Themes } from "./Themes";
-import { Material } from "./Materials";
+import { Themes } from './Themes';
+import { Material } from './Materials';
 
 export interface Course {
   isDeleted: boolean;
