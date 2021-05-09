@@ -1,12 +1,12 @@
-import { Link } from "react-router-dom";
-import styled, { css } from "styled-components";
+import { Link } from 'react-router-dom';
+import styled, { css } from 'styled-components';
 
 type WidthText = { width?: number };
 type WidthTextarea = { width?: number };
 type WidthNumberInput = { width?: number };
 
-export const ACTIVE = "is-active";
-export const NOT_ACTIVE = "";
+export const ACTIVE = 'is-active';
+export const NOT_ACTIVE = '';
 
 export const PageTitle = styled.div`
   margin: 0px;
@@ -35,9 +35,9 @@ export const TextareaStyled = styled(TextareaInput)`
   min-height: 200px;
   max-height: 200px;
   min-width: ${(props: WidthTextarea) =>
-    props.width ? props.width + "px" : "272px"};
+    props.width ? `${props.width}px` : '272px'};
   max-width: ${(props: WidthTextarea) =>
-    props.width ? props.width + "px" : "272px"};
+    props.width ? `${props.width}px` : '272px'};
 `;
 
 const InputStyledBase = styled.input`
@@ -54,15 +54,14 @@ const InputStyledBase = styled.input`
 
 export const NumberInputStyled = styled(InputStyledBase)`
   width: ${(props: WidthNumberInput) =>
-    props.width ? props.width + "px" : "272px"};
+    props.width ? `${props.width}px` : '100px'};
 `;
 
 export const InputText = styled(InputStyledBase)`
-  width: ${(props: WidthText) => (props.width ? props.width + "px" : "272px")};
+  width: ${(props: WidthText) => (props.width ? `${props.width}px` : '272px')};
 `;
 
 export const LinkStyledRegularFont = styled(Link)`
-  text-decoration: none; 
-  color: black; 
+  text-decoration: none;
+  color: black;
 `;
-

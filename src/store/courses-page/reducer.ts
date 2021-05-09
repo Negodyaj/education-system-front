@@ -6,14 +6,14 @@ import {
   COURSE_LIST_WRETCH_LOADED,
   COURSE_LIST_WRETCH_LOADING,
   COURSE_LIST_TOGGLE_MODAL_DELETE_COURSE,
-} from "../actionTypes";
-import { CourseInput } from "../../interfaces/CourseInput";
+} from '../actionTypes';
+import { CourseInput } from '../../interfaces/CourseInput';
 
 import { CoursePageActions } from './action-creators';
 
 export const INIT_COURSE_TO_REGISTER: CourseInput = {
-  name: "",
-  description: "",
+  name: '',
+  description: '',
   duration: 1,
 };
 

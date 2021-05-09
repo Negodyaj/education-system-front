@@ -32,9 +32,17 @@ function FormElement(props: { formElementSettings: FormElementSettings }) {
       <label htmlFor="#" className="form-label">
         {formElementSettings.label}
       </label>
-      {inputType === 'text' && <TextInput inputSettings={inputSettings} />}
+      {inputType === 'text' && (
+        <TextInput
+          width={formElementSettings.width}
+          inputSettings={inputSettings}
+        />
+      )}
       {inputType === 'textarea' && (
-        <TextAreaInput inputSettings={inputSettings} />
+        <TextAreaInput
+          width={formElementSettings.width}
+          inputSettings={inputSettings}
+        />
       )}
       {inputType === 'number' && <NumberInput inputSettings={inputSettings} />}
       {inputType === 'date' && (

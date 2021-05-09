@@ -5,26 +5,31 @@ import { InputSettings } from '../../helpers/useFormRegisterSettingByKey';
 import { TextareaStyled } from '../../styled-components/globalStyledConsts';
 
 function TextAreaInput(props: {
-    inputSettings: InputSettings;
-    onChange?: (...event: any[]) => void;
-    width: number
+  inputSettings: InputSettings;
+  onChange?: (...event: any[]) => void;
+  width?: number;
 }) {
-    const formContext = useFormContext()
-    return (
-        !props.onChange
-            ?
-            <TextareaStyled
-                {...formContext.register(props.inputSettings.name, props.inputSettings.registerOptions)}
-                typeof='text'
-                width={props.width}
-            />
-            :
-            <TextareaStyled
-                {...formContext.register(props.inputSettings.name, props.inputSettings.registerOptions)}
-                onChange={props.onChange}
-                typeof='text'
-                width={props.width}
-            />
-    )
+  const formContext = useFormContext();
+
+  return !props.onChange ? (
+    <TextareaStyled
+      {...formContext.register(
+        props.inputSettings.name,
+        props.inputSettings.registerOptions
+      )}
+      typeof="text"
+      width={props.width}
+    />
+  ) : (
+    <TextareaStyled
+      {...formContext.register(
+        props.inputSettings.name,
+        props.inputSettings.registerOptions
+      )}
+      onChange={props.onChange}
+      typeof="text"
+      width={props.width}
+    />
+  );
 }
 export default TextAreaInput;

@@ -9,6 +9,7 @@ import {
   showToggleModalCreateCourseAction,
   showToggleModalDeleteCourseAction,
 } from '../../store/courses-page/action-creators';
+import { LinkStyledRegularFont } from '../../shared/styled-components/globalStyledConsts';
 
 import NewCourse from './NewCourse';
 import ModalWindowDelete from './modal-window/ModalWindowDelete';
@@ -21,7 +22,6 @@ import {
   EmptyDiv,
   Loading,
 } from './CoursePageStyled';
-import { LinkStyledRegularFont } from '../../shared/styled-components/globalStyledConsts';
 
 function CoursesPage() {
   const dispatch = useDispatch();
@@ -39,41 +39,47 @@ function CoursesPage() {
     dispatch(showToggleModalCreateCourseAction());
   };
 
-    return (
-        <CourseContainer>
-            <CourseCreate>
-                <EmptyDiv/>
-                <button onClick={openModalAdd} className='common-button' >Добавить курс</button>
-            </CourseCreate>
-            <CoursesList>
-                {
-                    pageState.isDataLoading
-                        ?
-                            <Loading>Loading...</Loading>
-                        :
-                            pageState.courseList?.map(item => (
-                                <CourseStyled>
-                                    <LinkStyledRegularFont className="current-course-name" to={`/course/${item.id}`}>
-                                        <EmptyDiv>{item.name}</EmptyDiv>
-                                    </LinkStyledRegularFont>
-                                    <CourseUpdateDelete>
-                                    <Link to={`/course/${item.id}/edition`}>
-                                        <button className='round-button'>
-                                            <FontAwesomeIcon icon="edit" />
-                                        </button>
-                                    </Link>
-                                        <button onClick={() => { openModalDelete(item.id) }} className='round-button'>
-                                            <FontAwesomeIcon icon="trash" /> 
-                                        </button>
-                                    </CourseUpdateDelete>
-                                </CourseStyled>
-                            ))
-                }
-            </CoursesList>
-            { pageState.isOpenModalCreateCourse && <NewCourse /> }
-            { pageState.isModalDelete && <ModalWindowDelete />}
-        </CourseContainer>
-    )
+  return (
+    <CourseContainer>
+      <CourseCreate>
+        <EmptyDiv />
+        <button onClick={openModalAdd} className="common-button">
+          Добавить курс
+        </button>
+      </CourseCreate>
+      <CoursesList>
+        {pageState.isDataLoading ? (
+          <Loading>Loading...</Loading>
+        ) : (
+          pageState.courseList.map((item) => (
+            <CourseStyled>
+              <LinkStyledRegularFont
+                className="current-course-name"
+                to={`/course/${item.id}`}>
+                <EmptyDiv>{item.name}</EmptyDiv>
+              </LinkStyledRegularFont>
+              <CourseUpdateDelete>
+                <Link to={`/course/${item.id}/edition`}>
+                  <button className="round-button">
+                    <FontAwesomeIcon icon="edit" />
+                  </button>
+                </Link>
+                <button
+                  onClick={() => {
+                    openModalDelete(item.id);
+                  }}
+                  className="round-button">
+                  <FontAwesomeIcon icon="trash" />
+                </button>
+              </CourseUpdateDelete>
+            </CourseStyled>
+          ))
+        )}
+      </CoursesList>
+      {pageState.isOpenModalCreateCourse && <NewCourse />}
+      {pageState.isModalDelete && <ModalWindowDelete />}
+    </CourseContainer>
+  );
 }
 
 export default CoursesPage;
