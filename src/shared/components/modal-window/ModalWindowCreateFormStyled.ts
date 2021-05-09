@@ -15,16 +15,14 @@ export const ModalBackground = styled.div`
 export const ModalFormCreate = styled.div`
   display: grid;
   grid-template-rows: 70px 1fr 50px;
-  height: 610;
-  width: 600;
   opacity: 1;
   border: 3px solid rgb(255, 255, 255);
   border-radius: 20px;
-  padding: 5px 5px;
+  padding: 35px 35px;
   background-color: rgb(255, 255, 255);
   position: absolute;
-  margin-left: 50%;
-  margin-right: 50%;
+  margin-left: 35%;
+  margin-right: 65%;
   margin-top: 6%;
 `
 
