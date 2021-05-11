@@ -1,17 +1,16 @@
 export const store = (key: string, data: any) => {
-    if (!localStorage) return;
+  if (!localStorage) return;
 
-    if (typeof data === 'string')
-        localStorage.setItem(key, data)
-    else
-        localStorage.setItem(key, JSON.stringify(data));
-}
+  if (typeof data === 'string') localStorage.setItem(key, data);
+  else localStorage.setItem(key, JSON.stringify(data));
+};
 
 export const getFromStorage = (key: string): string => {
-    const data = localStorage.getItem(key);
-    return data ?? '';
-}
+  const data = localStorage.getItem(key);
+
+  return data ?? '';
+};
 
 export const removeFromStorage = (key: string) => {
-    localStorage.removeItem(key);
-}
+  localStorage.removeItem(key);
+};

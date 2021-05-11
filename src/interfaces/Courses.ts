@@ -1,4 +1,5 @@
-import { Themes } from "./Themes";
+import { Themes } from './Themes';
+import { Material } from './Materials';
 
 export interface Course {
   isDeleted: boolean;
@@ -7,5 +8,5 @@ export interface Course {
   description: string;
   duration: number;
   themes: Themes[];
-  materials: [];
+  materials: Material[];
 }

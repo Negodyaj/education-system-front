@@ -1,84 +1,96 @@
-import './NewCourse.css';
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import React, { useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useDispatch, useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
 
-export interface DataNewCourse { 
-    name: string; 
-    description: string;
-    duration: number
-}
+import { showToggleModalCreateCourseAction } from '../../store/courses-page/action-creators';
+import { createCourse } from '../../store/courses-page/thunk';
+import FormElement from '../../shared/components/form-elements/FormElement';
+import { InputNames } from '../../enums/inputNames';
+import { IRootState } from '../../store';
+import { CourseInput } from '../../interfaces/CourseInput';
+import { getFormElementSettings } from '../../shared/helpers/useFormRegisterSettingByKey';
 
-interface NewCourseProps{
-    dataNewCourse: (data?: DataNewCourse) => void
-}
+import {
+  ButtonClose,
+  FormWrapper,
+  HeadModal,
+  InputStyle,
+  ModalAddCourse,
+  ModalBackground,
+  ModalHeaderAddCourse,
+  SelectDelete,
+} from './NewCourseStyled';
 
-function NewCourse(props: NewCourseProps) {
+function NewCourse() {
+  const dispatch = useDispatch();
+  const appState = useSelector((state: IRootState) => state);
+  const {
+    register,
+    formState,
+    handleSubmit,
+    getValues,
+    setValue,
+    ...methods
+  } = useForm<CourseInput>();
 
-    let nameNewCourse = React.createRef<HTMLInputElement>();
-    let descriptionNewCourse = React.createRef<HTMLTextAreaElement>();
-    let durationNewCourse = React.createRef<HTMLInputElement>();
+  const closeModalWindow = () => {
+    dispatch(showToggleModalCreateCourseAction());
+  };
 
-    const [isNameNewCourseFilled, setIsNameNewCourseFilled] = useState(false);
-    const [isDescriptionNewCourseFilled, setIsDescriptionNewCourseFilled] = useState(false);
-    const [isDurationNewCourseFilled, setIsDurationNewCourseFilled] = useState(false);
+  const createDataNewCourse = (dataNewCourse: CourseInput) => {
+    dispatch(createCourse(dataNewCourse));
+  };
 
-    const closeModalWindow = () => {
-        props.dataNewCourse();
-    }
+  const onSubmit = (dataCourse: CourseInput) => {
+    createDataNewCourse(dataCourse);
+    console.log(dataCourse);
+  };
 
-    const showDataNewCourse = () => {
-        props.dataNewCourse(
-            {
-                name: `${nameNewCourse.current?.value}`,
-                description: `${descriptionNewCourse.current?.value}`,
-                duration: Number(durationNewCourse.current?.value)
-            }
-        );
-        setIsNameNewCourseFilled(nameNewCourse.current?.value === '' ? true : false);
-        setIsDescriptionNewCourseFilled(descriptionNewCourse.current?.value === '' ? true : false);
-        setIsDurationNewCourseFilled(durationNewCourse.current?.value === '' ? true : false);
-    }
-
-    return(
-        <div className="modal-back">
-            <div className="modal-add-course">
-                <div className="modal-header-add-course">
-                    <div className="head-modal"><h4>Создать новый курс</h4></div>
-                    <button className="button-close" onClick={closeModalWindow}>
-                        <FontAwesomeIcon icon='times'/>
-                    </button>
-                </div>
-                <div className="create-course">
-                    <div className='new-course-header'>Название курса</div>
-                    <div className="course-data">
-                        <input type="text" className="course-name" placeholder="Введите название курса" ref={nameNewCourse} />
-                    </div>
-                    { 
-                        isNameNewCourseFilled ? <div className="error-no-name">Заполните данное поле</div> : <div></div> 
-                    }
-                    <div className='new-course-header'>Описание курса</div>
-                    <div className="course-data">
-                        <textarea className="course-description" placeholder="Введите описание курса" ref={descriptionNewCourse} />
-                    </div>
-                    { 
-                        isDescriptionNewCourseFilled ? <div className="error-no-description">Заполните данное поле</div> : <div></div> 
-                    }
-                    <div className='new-course-header'>Продолжительность курса</div>
-                    <div className="course-data">
-                        <input type="number" min={1} className="course-duration" ref={durationNewCourse} />
-                        <div className="duration-course-text">месяца(ов)</div>
-                    </div>
-                    { 
-                        isDurationNewCourseFilled ? <div className="error-no-duration">Заполните данное поле</div> : <div></div> 
-                    }
-                </div>
-                <div className="select-delete">
-                    <button className="button-select" onClick={closeModalWindow}>Отменить</button>
-                    <button className="button-select" onClick={showDataNewCourse}>Добавить</button>
-                </div>
-            </div>
-        </div>
-    )
+  return (
+    <ModalBackground>
+      <ModalAddCourse>
+        <ModalHeaderAddCourse>
+          <HeadModal>
+            <h4>Создать новый курс</h4>
+          </HeadModal>
+          <ButtonClose onClick={closeModalWindow}>
+            <FontAwesomeIcon icon="times" />
+          </ButtonClose>
+        </ModalHeaderAddCourse>
+        <FormProvider
+          register={register}
+          formState={formState}
+          handleSubmit={handleSubmit}
+          getValues={getValues}
+          setValue={setValue}
+          {...methods}>
+          <FormWrapper>
+            <InputStyle onSubmit={handleSubmit(onSubmit)}>
+              {Object.keys(appState.coursePage.createCourseInputModel).map(
+                (key) => (
+                  <FormElement
+                    key={key}
+                    formElementSettings={getFormElementSettings(
+                      key as InputNames
+                    )}
+                  />
+                )
+              )}
+            </InputStyle>
+          </FormWrapper>
+        </FormProvider>
+        <SelectDelete>
+          <button className="common-button" onClick={closeModalWindow}>
+            Отменить
+          </button>
+          <button className="common-button" onClick={handleSubmit(onSubmit)}>
+            Добавить
+          </button>
+        </SelectDelete>
+      </ModalAddCourse>
+    </ModalBackground>
+  );
 }
 
 export default NewCourse;

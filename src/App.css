@@ -48,6 +48,11 @@ aside.hide {
 
 .right-section, main {
     flex-grow: 1;
+    overflow-y: scroll;
+}
+
+.right-section {
+    padding-left: 32px;
 }
 
 .header-user-actions {
@@ -59,6 +64,11 @@ aside.hide {
     padding: 0 20px;
 }
 
+.page-title {
+    margin: 0px;
+    font-size: 26px;
+}
+
 .main-content {
     display: flex;
     flex-direction: column;
@@ -67,8 +77,7 @@ aside.hide {
     overflow: auto;
 }
 
-.common-button,
-.round-button {
+.common-button, .round-button {
     background-color: #00ccf2;
     color: #ffff;
     border: none;
@@ -77,14 +86,19 @@ aside.hide {
     cursor: pointer;
 }
 
-.common-button + .common-button,
-.round-button + .round-button {
+.common-button+.common-button, .round-button+.round-button {
     margin-left: 10px;
 }
 
 .round-button {
     width: 40px;
     height: 40px;
+    border-radius: 50%;
+}
+
+.narrow .round-button {
+    width: 32px;
+    height: 32px;
     border-radius: 50%;
 }
 
@@ -105,7 +119,7 @@ aside.hide {
     font-size: 14px;
 }
 
-.form-control + .form-control {
+.form-control+.form-control {
     margin-top: 11px;
 }
 
@@ -120,6 +134,28 @@ aside.hide {
 .form-input {
     height: 40px;
     width: 272px;
+    border: 1px solid #e0e7ff;
+    border-radius: 5px;
+    margin-bottom: 11px;
+    outline: none;
+    font-size: 14px;
+    padding: 0 13px;
+    font-weight: 600;
+}
+
+.form-row {
+    display: flex;
+    flex-direction: column;
+    min-height: 90px;
+    min-width: 450px;
+}
+
+
+.form-input-textarea {
+    min-height: 200px;
+    max-height: 258px;
+    min-width: 450px;
+    max-width: 450px;
     border: 1px solid #e0e7ff;
     border-radius: 5px;
     margin-bottom: 11px;
@@ -151,10 +187,10 @@ aside.hide {
     align-items: center;
 }
 
-.logo-container svg {
-    stroke: white;
+.nothide .logo-container svg {
+    transform: scale(1.5);
 }
 
-.nothide .logo-container svg {
-    transform: scale(2);
+aside.hide .logo-container svg {
+    transform: scale(0.75);
 }

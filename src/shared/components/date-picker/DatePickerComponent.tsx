@@ -1,33 +1,47 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import DatePicker, { registerLocale } from 'react-datepicker';
-import "react-datepicker/dist/react-datepicker.css";
+import 'react-datepicker/dist/react-datepicker.css';
 import './DatePickerComponent.css';
-import ru from "date-fns/locale/ru";
-import { runInContext } from 'node:vm';
-registerLocale("ru", ru);
+import ru from 'date-fns/locale/ru';
+import { Controller, FieldValues, UseFormReturn } from 'react-hook-form';
+
+import { ExternalInputSettings } from '../../helpers/useFormRegisterSettingByKey';
+import { convertStringToDate } from '../../converters/stringToDateConverter';
+registerLocale('ru', ru);
 
 interface DatePickerComponentProps {
-  date: string | undefined,
-  onDateChange: (date: string) => void
+  date?: Date;
+  onDateChange?: (date: string) => void;
+  inputSettings?: ExternalInputSettings;
+  formContext?: UseFormReturn<FieldValues>;
 }
-
 function DatePickerComponent(props: DatePickerComponentProps) {
-  let date: number[] = [];
-  let dateConstructorArg = props.date?.concat().split('.');
-  date.push(Number.parseInt(dateConstructorArg ? dateConstructorArg[2] : new Date().getFullYear().toString()));
-  date.push(Number.parseInt(dateConstructorArg ? dateConstructorArg[1] : new Date().getMonth().toString()));
-  date.push(Number.parseInt(dateConstructorArg ? dateConstructorArg[0] : new Date().getDate().toString()));
-
-  const [startDate, setStartDate] = useState(props.date ? new Date(date[0], date[1], date[2]) : new Date());
-  const handleDateChange = (date: Date | [Date, Date] | null) => {
-    if (date instanceof Date) {
-      setStartDate(date);
-      props.onDateChange(date.toLocaleDateString());
+  const { date, onDateChange, inputSettings, formContext } = props;
+  const [startDate, setStartDate] = useState(date);
+  const handleDateChange = (dateArg: Date | [Date, Date] | null) => {
+    if (dateArg instanceof Date) {
+      setStartDate(dateArg);
+      onDateChange && onDateChange(dateArg.toLocaleDateString());
+      inputSettings &&
+        formContext?.setValue(inputSettings.name, dateArg.toLocaleDateString());
     }
-  }
-  return (
+  };
+
+  return inputSettings ? (
+    <Controller
+      control={formContext?.control}
+      name={inputSettings.name}
+      render={({ field: { value } }) => (
+        <DatePicker
+          selected={convertStringToDate(value)}
+          onChange={handleDateChange}
+          locale="ru"
+        />
+      )}
+    />
+  ) : (
     <DatePicker selected={startDate} onChange={handleDateChange} locale="ru" />
   );
-};
+}
 
 export default DatePickerComponent;
