@@ -1,12 +1,18 @@
-import { Dispatch } from "redux";
-import { Attendance } from "../../../interfaces/Attendance";
-import { Lesson } from "../../../interfaces/Lesson";
-import { sendGetRequest } from "../../../services/http.service";
-import { isAttendanceArr } from "../../../services/type-guards/attendanceArr";
-import { isLessonArr } from "../../../services/type-guards/lessonArr";
-import { lessonsUrl } from "../../../shared/consts";
-import { thunkResponseHandler } from "../../thunkResponseHadlers";
-import { setAttendanceListFail, setAttendanceListIsLoading, setAttendanceListWasLoaded } from "./action-creators";
+import { Dispatch } from 'redux';
+
+import { Attendance } from '../../../interfaces/Attendance';
+import { Lesson } from '../../../interfaces/Lesson';
+import { sendGetRequest } from '../../../services/http.service';
+import { isAttendanceArr } from '../../../services/type-guards/attendanceArr';
+import { isLessonArr } from '../../../services/type-guards/lessonArr';
+import { lessonAttendance, lessonsUrl } from '../../../shared/consts';
+import { thunkResponseHandler } from '../../thunkResponseHadlers';
+
+import {
+  setAttendanceListFail,
+  setAttendanceListIsLoading,
+  setAttendanceListWasLoaded,
+} from './action-creators';
 
 // export const getLessonsByGroupId = (groupId: number) => {
 //   return (dispatch: Dispatch) => {

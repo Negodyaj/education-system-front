@@ -1,4 +1,4 @@
-import { InputNames } from "../../enums/inputNames";
+import { InputNames } from '../../enums/inputNames';
 
 export const getValidationPattern = (key: InputNames) => {
     switch (key) {

@@ -10,18 +10,16 @@ export type LessonListActions =
     | ReturnType<typeof setIsOpenModalDeleteLesson>
     | ReturnType<typeof setIdLessonForDelete>
 
-export const setLessonListIsLoading = () => {
-    return ({
-        type: LESSON_LIST_WRETCH_LOADING,
-        payload: undefined
-    } as const);
-}
-export const setLessonListWasLoaded = (lessons: Lesson[]) => {
-    return ({
-        type: LESSON_LIST_WRETCH_LOADED,
-        payload: lessons
-    } as const);
-}
+export const setLessonListIsLoading = () =>
+  ({
+    type: LESSON_LIST_WRETCH_LOADING,
+    payload: undefined,
+  } as const);
+export const setLessonListWasLoaded = (lessons: Lesson[]) =>
+  ({
+    type: LESSON_LIST_WRETCH_LOADED,
+    payload: lessons,
+  } as const);
 
 export const setLessonListFail = (error: string) => {
     return ({

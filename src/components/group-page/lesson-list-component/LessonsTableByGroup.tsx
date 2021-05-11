@@ -7,7 +7,22 @@ import { getLessonsByGroup } from "../../../store/group-page/lesson/thunk";
 import ModalLessonDelete from "./ModalLessonDelete";
 import { ButtonActions, ColumnLessonsTable, ContentColumnLessonsTable, HeaderColumnLessonsTable, HeaderLessonsTable, LessonsTable, RoundButton } from "./LessonsTableByGroupStyled";
 
+import { IRootState } from '../../../store';
+import { getLessonsByGroup } from '../../../store/group-page/lesson/thunk';
+
+import {
+  ButtonActions,
+  ColumnLessonsTable,
+  ContentColumnLessonsTable,
+  HeaderColumnLessonsTable,
+  HeaderLessonsTable,
+  LessonsTable,
+  RoundButton,
+} from './LessonsTableByGroupStyled';
+
 function LessonsTableByGroup() {
+  const dispatch = useDispatch();
+  const pageState = useSelector((state: IRootState) => state.lessonByGroup);
 
     let currentDate = new Date();
     const dispatch = useDispatch();
