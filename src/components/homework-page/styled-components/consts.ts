@@ -7,6 +7,7 @@ export const HomeworkPageContainer = styled.div`
 export const HomeworkPageHeader = styled.div`
   display: flex;
   justify-content: space-between;
+  margin-bottom: 30px;
 `;
 export const HomeworkSelectorContainer = styled.div``;
 export const HomeworkItemsSet = styled.div`

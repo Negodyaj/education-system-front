@@ -7,58 +7,71 @@ import { homeworkUrl } from '../../shared/consts';
 import { PageTitle } from '../../shared/styled-components/consts';
 import { IRootState } from '../../store';
 import { setCurrentAttempt } from '../../store/homework-attempt/action-creators';
-import { getAttemptListToCheck } from '../../store/homework-attempt/thunk';
+import {
+  getAttemptListToCheck,
+  loadCurrentHomework,
+} from '../../store/homework-attempt/thunk';
 
 import {
   AttemptCheckingContainer,
   Author,
   Content,
+  Description,
+  GroupName,
+  Header,
   NavPanel,
 } from './styledComponents';
 
 function HomeworkAttempt() {
-  const appState = useSelector((state: IRootState) => state);
+  const {
+    attemptList,
+    currentAttempt,
+    currentGroup,
+    currentHomework,
+  } = useSelector((state: IRootState) => state.homeworkAttempt);
   const history = useHistory();
-  const { url } = useRouteMatch();
   const dispatch = useDispatch();
   const { hwId } = useParams<{ hwId?: string }>();
   const { attemptId } = useParams<{ attemptId?: string }>();
   useEffect(() => {
-    dispatch(getAttemptListToCheck(hwId || ''));
-    attemptId &&
-      dispatch(
-        setCurrentAttempt(
-          appState.homeworkAttempt.attemptList.filter(
-            (attempt) => attempt.id.toString() === attemptId
-          )[0]
+    attemptList?.length
+      ? dispatch(
+          setCurrentAttempt(
+            attemptList.filter(
+              (attempt) => attempt.id.toString() === attemptId
+            )[0]
+          )
         )
-      );
-    console.log(appState.homeworkAttempt.currentAttempt);
-  }, [appState.homeworkAttempt.attemptList]);
+      : dispatch(getAttemptListToCheck(hwId || ''));
+    dispatch(loadCurrentHomework(hwId || ''));
+  }, [attemptList]);
 
-  const authorOnClick = (currentAttempt: Attempt) => {
-    dispatch(setCurrentAttempt(currentAttempt));
-    history.replace(`/${homeworkUrl}/${hwId}/attempts/${currentAttempt.id}`);
+  const authorOnClick = (currentAttemptArg: Attempt) => {
+    dispatch(setCurrentAttempt(currentAttemptArg));
+    history.replace(`/${homeworkUrl}/${hwId}/attempts/${currentAttemptArg.id}`);
   };
 
   return (
     <>
-      <PageTitle>Проверка ответов</PageTitle>
-      <p>
-        {appState.homeworkAttempt.currentGroup?.course.name}{' '}
-        {appState.homeworkAttempt.currentGroup?.startDate}
-      </p>
+      <Header>
+        <PageTitle>Проверка ответов</PageTitle>
+        <GroupName>
+          {currentGroup?.course.name} {currentGroup?.startDate}
+        </GroupName>
+        <Description>{currentHomework?.description}</Description>
+      </Header>
       <AttemptCheckingContainer>
         <NavPanel>
-          {appState.homeworkAttempt.attemptList.map((attempt) => (
-            <Author
-              onClick={() => authorOnClick(attempt)}
-              key={attempt.author.id}>
-              {attempt.author.firstName} {attempt.author.lastName}
-            </Author>
-          ))}
+          {attemptList?.length &&
+            attemptList.map((attempt) => (
+              <Author
+                onClick={() => authorOnClick(attempt)}
+                key={attempt.author.id}>
+                {attempt.author.firstName} {attempt.author.lastName}
+              </Author>
+            ))}
         </NavPanel>
-        <Content>{appState.homeworkAttempt.currentAttempt?.comment}</Content>
+        <Content>{currentAttempt?.comment}</Content>
       </AttemptCheckingContainer>
     </>
   );

@@ -71,7 +71,8 @@ export interface IHomeworkAppointModalState {
   appointFormDefaults: AppointInput;
 }
 export interface IHomeworkAttemptState {
-  attemptList: Attempt[];
+  attemptList?: Attempt[];
+  currentHomework?: Homework;
   currentGroup?: typeof INIT_HOMEWORK.group;
   currentAttempt?: Attempt;
 }
