@@ -1,6 +1,4 @@
-import { Lesson } from "../../interfaces/Lesson";
+import { Lesson } from '../../interfaces/Lesson';
 
-export const isLesson = (data: any): data is Lesson => {
-    return !!data.description && !!data.lessonDate;
-
-}
+export const isLesson = (data: any): data is Lesson =>
+  !!data.description && !!data.lessonDate;

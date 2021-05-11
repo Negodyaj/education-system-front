@@ -6,7 +6,7 @@ import { InputNames } from '../../../enums/inputNames';
 import {
   ExternalInputSettings,
   FormElementSettings,
-} from '../../helpers/useFormRegisterSettingByKey';
+} from '../../helpers/userFormRegisterSettingByKey';
 import { getValidationPattern } from '../../validation-rules/validationPatterns';
 
 import DateInput from './DateInput';
@@ -22,10 +22,6 @@ function FormElement(props: { formElementSettings: FormElementSettings }) {
   const { formElementSettings } = props;
   const { inputType } = formElementSettings.inputSettings;
   const inputSettings = { ...formElementSettings.inputSettings };
-  inputSettings.registerOptions = {
-    ...inputSettings.registerOptions,
-    pattern: getValidationPattern(inputSettings.name as InputNames),
-  };
 
   return (
     <div className="form-row">

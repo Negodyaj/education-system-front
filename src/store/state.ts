@@ -1,16 +1,16 @@
-import { Attendance } from "../interfaces/Attendance";
-import { Course } from "../interfaces/Courses";
-import { Group } from "../interfaces/Group";
-import { Lesson } from "../interfaces/Lesson";
-import NotificationData from "../interfaces/NotificationData";
-import { Tag } from "../interfaces/Tag";
-import { Themes } from "../interfaces/Themes";
-import { User } from "../interfaces/User";
-import { UserInput } from "../interfaces/UserInput";
-import { UserUpdate } from "../interfaces/UserUpdate";
-import { PaymentResponse } from "../components/interfaces/PaymentResponse";
-import { CourseInput } from "../interfaces/CourseInput";
-import { LessonInput } from "../interfaces/LessonInput";
+import { Attendance } from '../interfaces/Attendance';
+import { Course } from '../interfaces/Courses';
+import { Group } from '../interfaces/Group';
+import { Lesson } from '../interfaces/Lesson';
+import NotificationData from '../interfaces/NotificationData';
+import { Tag } from '../interfaces/Tag';
+import { Themes } from '../interfaces/Themes';
+import { User } from '../interfaces/User';
+import { UserInput } from '../interfaces/UserInput';
+import { UserUpdate } from '../interfaces/UserUpdate';
+import { PaymentResponse } from '../components/interfaces/PaymentResponse';
+import { CourseInput } from '../interfaces/CourseInput';
+import { LessonInput } from '../interfaces/LessonInput';
 
 export interface ICoursePageState {
   courseList: Course[];
@@ -83,13 +83,13 @@ export interface IPaymentFormState {
 }
 
 export interface ILesson {
-    lessonList: Lesson[];
-    isDataLoading: boolean;
-    isOpenModalAttendance: boolean;
-    isOpenModalAddLesson: boolean;
-    isOpenModalDeleteLesson: boolean;
-    idLessonForDelete: number; 
-    createLessonInputModel: LessonInput;
+  lessonList: Lesson[];
+  isDataLoading: boolean;
+  isOpenModalAttendance: boolean;
+  isOpenModalAddLesson: boolean;
+  isOpenModalDeleteLesson: boolean;
+  idLessonForDelete: number;
+  createLessonInputModel: LessonInput;
 }
 
 export interface IGroupInfoComponent {

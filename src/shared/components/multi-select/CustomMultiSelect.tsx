@@ -10,7 +10,7 @@ import {
 } from '../../converters/enumToDictionaryEntity';
 import { convertRoleIdsToSelectItems } from '../../converters/roleIdsToSelectItems';
 import { convertRoleIdToSelectItem } from '../../converters/roleIdToSelectItem';
-import { ExternalInputSettings } from '../../helpers/useFormRegisterSettingByKey';
+import { ExternalInputSettings } from '../../helpers/userFormRegisterSettingByKey';
 
 import { customStyles } from './multiSelectCosnts';
 

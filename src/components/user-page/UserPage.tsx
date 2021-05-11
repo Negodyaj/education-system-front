@@ -10,8 +10,8 @@ import { getUserToEditById, sendUser } from '../../store/user-page/thunk';
 import { UserInput } from '../../interfaces/UserInput';
 import { User } from '../../interfaces/User';
 import FormElement from '../../shared/components/form-elements/FormElement';
-import { getUserFormElementSettings } from '../../shared/helpers/userFormRegisterSettingByKey';
 import { InputNames } from '../../enums/inputNames';
+import { getUserFormElementSettings } from '../../shared/helpers/userFormRegisterSettingByKey';
 
 function UserPage() {
   const dispatch = useDispatch();
@@ -47,7 +47,9 @@ function UserPage() {
         <form onSubmit={methods.handleSubmit(onSubmit)}>
           {Object.keys(appState.userPage.userForUserPage).map((key) => (
             <FormElement
-              formElementSettings={getFormElementSettings(key as InputNames)}
+              formElementSettings={getUserFormElementSettings(
+                key as InputNames
+              )}
               key={key}
             />
           ))}

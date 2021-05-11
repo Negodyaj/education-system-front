@@ -36,11 +36,11 @@ export const ColumnLessonsTable = styled.div`
 `;
 
 export const ButtonActions = styled.div`
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    align-items: flex-end;
-    gap: 10px;
-`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: flex-end;
+  gap: 10px;
+`;
 
 export const Button = styled.button`
   background-color: #00ccf2;
