@@ -4,7 +4,7 @@ import { Homework } from '../../../interfaces/Homework';
 export const homeworkList: Homework[] = [
   {
     id: 3,
-    name: 'Переделать созданные компоненты на redux/thunk',
+    name: 'Двухсвязные списки',
     startDate: '29.04.2021',
     deadlineDate: '01.05.2021',
     isOptional: false,
@@ -27,8 +27,8 @@ export const homeworkList: Homework[] = [
     themes: [
       {
         isDeleted: false,
-        id: 9,
-        name: 'redux',
+        id: 11,
+        name: 'ООП',
         tags: [],
       },
     ],

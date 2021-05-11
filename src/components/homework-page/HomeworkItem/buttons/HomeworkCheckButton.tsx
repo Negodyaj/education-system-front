@@ -3,15 +3,18 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
+import { Homework } from '../../../../interfaces/Homework';
 import { homeworkUrl } from '../../../../shared/consts';
 import { RoundButton } from '../../../../shared/styled-components/buttonStyledComponent';
-import { getAttemptListToCheck } from '../../../../store/homework-attempt/thunk';
+import { setCurrentGroup } from '../../../../store/homework-attempt/action-creators';
 
-function HomeworkCheckButton(props: { hwId: number }) {
+function HomeworkCheckButton(props: { hw: Homework }) {
+  const { hw } = props;
   const dispatch = useDispatch();
   const history = useHistory();
   const checkOnClick = () => {
-    history.push(`${homeworkUrl}/${props.hwId}/attempts`);
+    history.push(`${homeworkUrl}/${hw.id}/attempts`);
+    dispatch(setCurrentGroup(hw.group));
   };
 
   return (

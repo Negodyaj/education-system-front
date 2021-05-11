@@ -15,7 +15,7 @@ export const convertHomeworkListForMethodistMode = (
       result[hw.group.course.name][0] = hw;
     } else result[hw.group.course.name].push(hw);
 
-    return previousCourseName?.push(hw.group.course.name);
+    return previousCourseName.push(hw.group.course.name);
   });
 
   return result;

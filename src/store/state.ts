@@ -14,6 +14,7 @@ import { Attempt } from '../interfaces/Attempt';
 import { Attendance } from '../interfaces/Attendance';
 import { Lesson } from '../interfaces/Lesson';
 import { CourseInput } from '../interfaces/CourseInput';
+import { INIT_HOMEWORK } from '../shared/tmp-mock-data/hw/initHomewwork';
 
 export interface IAppState {
   isLoggedIn: boolean;
@@ -71,6 +72,8 @@ export interface IHomeworkAppointModalState {
 }
 export interface IHomeworkAttemptState {
   attemptList: Attempt[];
+  currentGroup?: typeof INIT_HOMEWORK.group;
+  currentAttempt?: Attempt;
 }
 export interface INotificationContainerState {
   notifications: {

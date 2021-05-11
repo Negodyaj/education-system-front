@@ -17,7 +17,7 @@ export const convertHomeworkListForTeacherMode = (
       result[index][0] = hw;
     } else result[index].push(hw);
 
-    return previousGroupId?.push(hw.group.id);
+    return previousGroupId.push(hw.group.id);
   });
 
   return result;
