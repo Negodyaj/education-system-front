@@ -5,10 +5,12 @@ import { toggleModalHidden } from "../../../store/tags-page/action-creators";
 import { addTag } from "../../../store/tags-page/thunk";
 import { CommonButton, DisabledButton, RoundButton } from "../../../shared/styled-components/buttonStyledComponent";
 
+import { toggleModalHidden } from '../../../store/tags-page/action-creators';
+import { addTag } from '../../../store/tags-page/thunk';
 
 
 interface AddTagModalProps {
-       hidden: boolean;
+  hidden: boolean;
 }
 
 function AddTagModal(props: AddTagModalProps) {
@@ -47,6 +49,33 @@ function AddTagModal(props: AddTagModalProps) {
                 </div>
             </div>
         </div>
-    )
+        <button className="button-close" onClick={closeModalWindow}>
+          <FontAwesomeIcon icon="times" />
+        </button>
+
+        <div className="create-tag">
+          <div className="tag-data">
+            <input
+              type="text"
+              className="tag-name"
+              value={nameNewTag}
+              onChange={tagOnChange}
+            />
+          </div>
+        </div>
+        <div className="select-delete">
+          <button className="button-select" onClick={closeModalWindow}>
+            Отмена
+          </button>
+          <button
+            className={`button-select ${block}`}
+            onClick={AddNewTag}
+            disabled={isDisabled}>
+            Ок
+          </button>
+        </div>
+      </div>
+    </div>
+  );
 }
-export default AddTagModal
+export default AddTagModal;

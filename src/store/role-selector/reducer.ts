@@ -4,6 +4,8 @@ import { CURRENT_USER_ROLE_ID_SELECTED, CURRENT_USER_WAS_LOADED, CURRENT_USER_IS
 import { IRoleSelector } from "../state";
 import { RoleSelectorActions } from "./action-creator";
 
+import { RoleSelectorActions } from './action-creator';
+
 const initialState: IRoleSelector = {
     isTurnedOn: false,
     currentUser: getCurrentUserFromStorage(),

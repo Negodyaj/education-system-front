@@ -1,5 +1,5 @@
-import { FilterParameter } from "./FilterParameter";
+import { FilterParameter } from './FilterParameter';
 
-export class CourseFilter extends FilterParameter{
-    FilterType: string = "Курс";
+export class CourseFilter extends FilterParameter {
+  FilterType: string = 'Курс';
 }

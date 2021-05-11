@@ -1,72 +1,101 @@
-import { baseUrl } from "../shared/consts";
 import wretch, { WretcherError } from 'wretch';
-import { getToken } from "./auth.service";
 
+import { baseUrl } from '../shared/consts';
 
-export const sendGetRequest = async <T>(path: string, isT: ((data: any) => data is T) | undefined) => {
-  return await baseWretch()
+import { getToken } from './auth.service';
+
+export const sendGetRequest = async <T>(
+  path: string,
+  isT: ((data: any) => data is T) | undefined
+) => {
+  const response = await baseWretch()
     .url(path)
     .get()
-    .json(data => localResponseHandler<T>(data, isT))
-    .catch(error => error);
+    .json((data) => localResponseHandler<T>(data, isT))
+    .catch((error) => error);
+
+  return response;
 };
-export const sendPutRequest = async <T>(path: string, isT: ((data: any) => data is T) | undefined,
+export const sendPutRequest = async <T>(
+  path: string,
+  isT: ((data: any) => data is T) | undefined,
   body: any
 ) => {
-  return await baseWretch()
+  const response = await baseWretch()
     .url(path)
     .put(body)
-    .json(data => localResponseHandler<T>(data, isT))
-    .catch(error => error);
+    .json((data) => localResponseHandler<T>(data, isT))
+    .catch((error) => error);
+
+  return response;
 };
 export const sendPutRequestNoResponse = async (path: string, body: any) => {
-  return await baseWretch()
+  const response = await baseWretch()
     .url(path)
     .put(body)
-    .res(response => response)
+    .res((noResponse) => noResponse);
+
+  return response;
 };
-export const sendPostRequest = async <T>(path: string, isT: ((data: any) => data is T) | undefined, body?: any) => {
-  return await baseWretch()
+export const sendPostRequest = async <T>(
+  path: string,
+  isT: ((data: any) => data is T) | undefined,
+  body?: any
+) => {
+  const response = await baseWretch()
     .url(path)
     .post(body || undefined)
-    .json(data => localResponseHandler<T>(data, isT))
-    .catch(error => error);
+    .json((data) => localResponseHandler<T>(data, isT))
+    .catch((error) => error);
+
+  return response;
 };
 export const sendPostRequestNoResponse = async (path: string, body?: any) => {
-  return await baseWretch()
+  const response = await baseWretch()
     .url(path)
     .post(body)
-    .res(response => response)
+    .res((noResponse) => noResponse);
+
+  return response;
 };
-export const sendDeleteRequest = async <T>(path: string, isT: ((data: any) => data is T) | undefined) => {
-  return await baseWretch()
+export const sendDeleteRequest = async <T>(
+  path: string,
+  isT: ((data: any) => data is T) | undefined
+) => {
+  const response = await baseWretch()
     .url(path)
     .delete()
-    .json(data => localResponseHandler<T>(data, isT))
-    .catch(error => error)
+    .json((data) => localResponseHandler<T>(data, isT))
+    .catch((error) => error);
 
+  return response;
 };
 export const sendDeleteRequestNoResponse = async (path: string) => {
-  return await baseWretch()
+  const response = await baseWretch()
     .url(path)
     .delete()
-    .res(response => { return response })
+    .res((noResponse) => noResponse);
+
+  return response;
 };
 export const WRONG_DATA_STATUS = -1;
-const localResponseHandler = <T>(data: any, isT: ((data: any) => data is T) | undefined) => {
+const localResponseHandler = <T>(
+  data: any,
+  isT: ((data: any) => data is T) | undefined
+) => {
   if (isT ? isT(data) : true) {
     return data as T;
-  } else {
-    return {
-      status: WRONG_DATA_STATUS,
-      response: {},
-      text: 'Неверные данные'
-    } as WretcherError
   }
-}
-const baseWretch = () => {
-  return wretch()
-    .url(baseUrl + '/')
+
+  return {
+    status: WRONG_DATA_STATUS,
+    response: {},
+    text: 'Неверные данные',
+  } as WretcherError;
+};
+const baseWretch = () =>
+  wretch()
+    .url(`${baseUrl}/`)
     .auth(`Bearer ${getToken()}`)
     .catcher(401, error => error)
     .catcher(403, error => error)

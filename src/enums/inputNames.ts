@@ -13,4 +13,7 @@ export enum InputNames {
     AppointGroup = "group",
     AppointStartDate = "startDate",
     AppointDeadline = "deadline"
+  CourseName = 'name',
+  CourseDescription = 'description',
+  CourseDuration = 'duration',
 }

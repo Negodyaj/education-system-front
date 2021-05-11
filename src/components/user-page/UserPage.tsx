@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import './UserPage.css'
+import './UserPage.css';
 import '../../App.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
+
 import { IRootState } from '../../store';
 import { getUserToEditById, sendUser } from '../../store/user-page/thunk';
 import { UserInput } from '../../interfaces/UserInput';
@@ -61,5 +62,3 @@ function UserPage() {
     )
 }
 export default UserPage;
-
-

@@ -9,6 +9,8 @@ import { setCurrentUserRoleId } from "../../store/role-selector/action-creator";
 import './LoginRoleSelector.css';
 
 export function LoginRoleSelector() {
+  const dispatch = useDispatch();
+  const appState = useSelector((state: IRootState) => state);
 
     const dispatch = useDispatch()
     const appState = useSelector((state: IRootState) => state)

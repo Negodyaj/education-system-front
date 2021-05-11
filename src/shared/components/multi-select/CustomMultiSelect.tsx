@@ -1,6 +1,7 @@
-import { useState } from 'react'
+import { useState } from 'react';
 import { Controller, FieldValues, UseFormReturn } from 'react-hook-form';
-import Select, { ActionMeta, OptionsType } from 'react-select'
+import Select, { ActionMeta, OptionsType } from 'react-select';
+
 import { SelectItem } from '../../../interfaces/SelectItem';
 import { convertEntitiesToSelectItems } from '../../converters/entityToSelectItem';
 import { convertIdsToSelectItems } from '../../converters/roleIdsToSelectItems';
@@ -8,37 +9,46 @@ import { convertIdToSelectItem } from '../../converters/roleIdToSelectItem';
 import { ExternalInputSettings } from '../../helpers/userFormRegisterSettingByKey';
 import { customStyles } from './multiSelectCosnts';
 
-type selectType = "single" | "multi"
+type selectType = 'single' | 'multi';
 
 export const MultiSelect = (
   options: SelectItem[] | undefined,
   value: SelectItem[] | undefined,
-  onChange: (((value: OptionsType<any>, actionMeta: ActionMeta<any>) => void) & ((value: OptionsType<any>, action: ActionMeta<any>) => void)) | undefined) => (
+  onChange:
+    | (((value: OptionsType<any>, actionMeta: ActionMeta<any>) => void) &
+        ((value: OptionsType<any>, action: ActionMeta<any>) => void))
+    | undefined
+) => (
   <Select
-    isMulti={true}
+    isMulti
     name="Role"
     options={options}
     value={value}
     className="basic-multi-select"
     classNamePrefix="select"
     styles={customStyles}
-    placeholder='Выберите опцию'
+    placeholder="Выберите опцию"
     noOptionsMessage={() => 'Опций больше нет'}
     onChange={onChange}
   />
-)
+);
 export const SingleSelect = (
   options: SelectItem[] | undefined,
   value: any,
-  onChange: (((value: any, actionMeta: ActionMeta<any>) => void) & ((value: any, action: ActionMeta<any>) => void)) | undefined) => (
+  onChange:
+    | (((value: any, actionMeta: ActionMeta<any>) => void) &
+        ((value: any, action: ActionMeta<any>) => void))
+    | undefined
+) => (
   <Select
     options={options}
     isMulti={false}
     value={value}
     styles={customStyles}
-    placeholder='Выберите опцию'
-    onChange={onChange} />
-)
+    placeholder="Выберите опцию"
+    onChange={onChange}
+  />
+);
 interface SelectProps {
   selectType: selectType;
   selectedOptions?: SelectItem[] | undefined;
@@ -47,7 +57,7 @@ interface SelectProps {
   onMultiSelect?: (optionIds: number[]) => void;
   onSingleSelect?: (optionId: number | null) => void;
   inputSettings?: ExternalInputSettings;
-  formContext?: UseFormReturn<FieldValues>
+  formContext?: UseFormReturn<FieldValues>;
 }
 function CustomMultiSelect(props: SelectProps) {
   const [selectedOptions, setSelectedOptions] = useState<SelectItem[] | undefined>(props.selectedOptions?.length ? [...props.selectedOptions] : undefined);
