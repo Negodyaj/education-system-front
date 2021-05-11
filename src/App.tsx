@@ -26,6 +26,10 @@ import { ReactComponent as Logo } from './img/devedu.svg';
 import Loader from './shared/components/loader/Loader';
 import HomeworkAttempt from './components/homework-attempt/HomeworkAttempt';
 import UserRoute from './components/user-page/UserRoute';
+import HomeworkPage from './components/homework-page/HomeworkPage';
+import LessonsByGroup from './components/group-page/lesson-list-component/LessonsByGroup';
+import LoginForm from './components/login-form/LoginForm';
+import LoginRoleSelector from './components/role-selector/LoginRoleSelector';
 
 function App() {
   const dispatch = useDispatch();
@@ -92,6 +96,18 @@ function App() {
                   </Helmet>
                 </Route>
               )}
+              <Route exact path="/Homework">
+                <HomeworkPage />
+                <Helmet>
+                  <title>Домашки</title>
+                </Helmet>
+              </Route>
+              <Route path="/Homework/:hwId/attempts">
+                <HomeworkAttempt />
+                <Helmet>
+                  <title>Домашки</title>
+                </Helmet>
+              </Route>
               <Route path="/course/:id/edition">
                 <CourseEdition />
               </Route>
@@ -155,18 +171,6 @@ function App() {
       <Loader />
     </div>
   );
-                                    <Route exact path="/Homework">
-                                        <HomeworkPage />
-                                        <Helmet>
-                                            <title>Домашки</title>
-                                        </Helmet>
-                                    </Route>
-                                    <Route path="/Homework/:hwId/attempts">
-                                        <HomeworkAttempt />
-                                        <Helmet>
-                                            <title>Домашки</title>
-                                        </Helmet>
-                                    </Route>
 }
 
 export default App;

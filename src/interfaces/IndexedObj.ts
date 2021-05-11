@@ -1,3 +1,3 @@
 export interface IndexedObj<T> {
-    [itemsSetName: string]: T[]
+  [itemsSetName: string]: T[];
 }

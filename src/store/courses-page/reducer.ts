@@ -1,4 +1,4 @@
-import { ICoursePageState } from '../state';
+import { CourseInput } from '../../interfaces/CourseInput';
 import {
   COURSE_LIST_TOGGLE_MODAL_CREATE_COURSE,
   COURSE_LIST_WRETCH_CREATE_COURSE,
@@ -7,7 +7,7 @@ import {
   COURSE_LIST_WRETCH_LOADING,
   COURSE_LIST_TOGGLE_MODAL_DELETE_COURSE,
 } from '../actionTypes';
-import { CourseInput } from '../../interfaces/CourseInput';
+import { ICoursePageState } from '../state';
 
 import { CoursePageActions } from './action-creators';
 

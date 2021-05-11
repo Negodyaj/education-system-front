@@ -16,14 +16,12 @@ export const unsetToken = () => {
 };
 // current user
 export const setCurrentUserInStorage = (user: User) => {
-    store('user', JSON.stringify(user));
-}
-export const getCurrentUserFromStorage = (): User => {
-    return getFromStorage('user') ? JSON.parse(getFromStorage('user')) : undefined;
-}
-export const setCurrentUserRoleIdStorage = (roleId:number) => {
-    store('roleId', roleId);
-}
-export const getCurrentUserRoleIdFromStorage = () => {
-    return Number.parseInt(getFromStorage('roleId'));
-}
+  store('user', JSON.stringify(user));
+};
+export const getCurrentUserFromStorage = (): User =>
+  getFromStorage('user') ? JSON.parse(getFromStorage('user')) : undefined;
+export const setCurrentUserRoleIdStorage = (roleId: number) => {
+  store('roleId', roleId);
+};
+export const getCurrentUserRoleIdFromStorage = () =>
+  Number.parseInt(getFromStorage('roleId'), 10);

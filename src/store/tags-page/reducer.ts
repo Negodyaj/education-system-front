@@ -7,11 +7,11 @@ import {
   TAGS_LIST_WRETCH_LOADED,
   TAGS_LIST_WRETCH_LOADING,
 } from '../actionTypes';
-import { ITagsPageState } from '../state';
+import * as State from '../state';
 
 import { TagsPageActions } from './action-creators';
 
-const initialState: ITagsPageState = {
+const initialState: State.ITagsPageState = {
   tagList: [],
   isDataLoading: false,
   filterTagsList: [],
@@ -19,9 +19,9 @@ const initialState: ITagsPageState = {
 };
 
 export function tagsPageReducer(
-  state: ITagsPageState = initialState,
+  state: State.ITagsPageState = initialState,
   action: TagsPageActions
-): ITagsPageState {
+): State.ITagsPageState {
   switch (action.type) {
     case TAGS_LIST_WRETCH_LOADED:
       return {

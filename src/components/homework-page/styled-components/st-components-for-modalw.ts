@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const HomeworkModalContainer = styled.div`
     position: absolute;
@@ -16,16 +16,16 @@ export const HomeworkModalContainer = styled.div`
 `;
 
 export const AddHomeworkModalContainer = styled.div`
-    display: grid;
-    grid-template-rows: 70px 1fr 50px;
-    opacity: 0;
-    width: 700px;
-    height: 610px;
-    border: 3px solid rgb(255, 255, 255);
-    border-radius: 20px;
-    padding: 5px 5px;
-    margin-top: -100%;
-    background-color: rgb(255, 255, 255);
-    animation-fill-mode: forwards;
-    position: relative;
+  display: grid;
+  grid-template-rows: 70px 1fr 50px;
+  opacity: 0;
+  width: 700px;
+  height: 610px;
+  border: 3px solid rgb(255, 255, 255);
+  border-radius: 20px;
+  padding: 5px 5px;
+  margin-top: -100%;
+  background-color: rgb(255, 255, 255);
+  animation-fill-mode: forwards;
+  position: relative;
 `;

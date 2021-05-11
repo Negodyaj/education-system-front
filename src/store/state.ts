@@ -1,23 +1,23 @@
-import { DataNewCourse } from "../components/courses-page/NewCourse";
-import { Course } from "../interfaces/Courses";
-import { Group } from "../interfaces/Group";
-import NotificationData from "../interfaces/NotificationData";
-import { Tag } from "../interfaces/Tag";
-import { Themes } from "../interfaces/Themes";
-import { User } from "../interfaces/User";
-import { UserInput } from "../interfaces/UserInput";
-import { PaymentResponse } from "../components/interfaces/PaymentResponse";
-import { Homework } from "../interfaces/Homework";
-import { HomeworkPageOptions } from "../components/homework-page/HomeworkPageCore";
-import { DictionaryEntity } from "../interfaces/DictionaryEntity";
-import { AppointInput } from "../interfaces/AppointInput";
-import { Attempt } from "../interfaces/Attempt";
+import { Course } from '../interfaces/Courses';
+import { Group } from '../interfaces/Group';
+import NotificationData from '../interfaces/NotificationData';
+import { Tag } from '../interfaces/Tag';
+import { Themes } from '../interfaces/Themes';
+import { User } from '../interfaces/User';
+import { UserInput } from '../interfaces/UserInput';
+import { PaymentResponse } from '../components/interfaces/PaymentResponse';
+import { Homework } from '../interfaces/Homework';
+import { HomeworkPageOptions } from '../components/homework-page/HomeworkPageCore';
+import { DictionaryEntity } from '../interfaces/DictionaryEntity';
+import { AppointInput } from '../interfaces/AppointInput';
+import { Attempt } from '../interfaces/Attempt';
 import { Attendance } from '../interfaces/Attendance';
 import { Lesson } from '../interfaces/Lesson';
+import { CourseInput } from '../interfaces/CourseInput';
 
 export interface IAppState {
-    isLoggedIn: boolean;
-    loadersCount: number;
+  isLoggedIn: boolean;
+  loadersCount: number;
 }
 export interface ICoursePageState {
   courseList: Course[];
@@ -58,18 +58,19 @@ export interface IRoleSelector {
 export interface IAppState {
   isLoggedIn: boolean;
   loadersCount: number;
+}
 export interface IHomeworkPageState {
-    pageOptionsByRole: { [role: string]: HomeworkPageOptions };
-    homeworkListDefault: Homework[];
-    openedItemSetsNames: string[];
+  pageOptionsByRole: { [role: string]: HomeworkPageOptions };
+  homeworkListDefault: Homework[];
+  openedItemSetsNames: string[];
 }
 export interface IHomeworkAppointModalState {
-    groupListByTeacherId: Group[];
-    groupEntities: DictionaryEntity[];
-    appointFormDefaults: AppointInput;
+  groupListByTeacherId: Group[];
+  groupEntities: DictionaryEntity[];
+  appointFormDefaults: AppointInput;
 }
 export interface IHomeworkAttemptState {
-    attemptList: Attempt[];
+  attemptList: Attempt[];
 }
 export interface INotificationContainerState {
   notifications: {

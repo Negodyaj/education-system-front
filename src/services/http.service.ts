@@ -97,9 +97,7 @@ const baseWretch = () =>
   wretch()
     .url(`${baseUrl}/`)
     .auth(`Bearer ${getToken()}`)
-    .catcher(401, error => error)
-    .catcher(403, error => error)
-    .catcher(404, error => error)
-    .catcher(405, error => error)
-    .catcher(409, error => error)
-}
+    .catcher(401, (error) => error)
+    .catcher(403, (error) => error)
+    .catcher(404, (error) => error)
+    .catcher(409, (error) => error);
