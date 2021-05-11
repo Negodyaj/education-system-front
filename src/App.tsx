@@ -24,10 +24,12 @@ import { getToken, unsetToken } from './services/auth.service';
 import Attendance from './components/group-page/attendance/Attendance';
 import { ReactComponent as Logo } from './img/devedu.svg';
 import Loader from './shared/components/loader/Loader';
-import LessonsByGroup from './components/group-page/lesson-list-component/LessonsByGroup';
-import { LoginRoleSelector } from './components/role-selector/LoginRoleSelector';
-import LoginForm from './components/login-form/LoginForm';
+import HomeworkAttempt from './components/homework-attempt/HomeworkAttempt';
 import UserRoute from './components/user-page/UserRoute';
+import HomeworkPage from './components/homework-page/HomeworkPage';
+import LessonsByGroup from './components/group-page/lesson-list-component/LessonsByGroup';
+import LoginForm from './components/login-form/LoginForm';
+import LoginRoleSelector from './components/role-selector/LoginRoleSelector';
 
 function App() {
   const dispatch = useDispatch();
@@ -94,6 +96,18 @@ function App() {
                   </Helmet>
                 </Route>
               )}
+              <Route exact path="/Homework">
+                <HomeworkPage />
+                <Helmet>
+                  <title>Домашки</title>
+                </Helmet>
+              </Route>
+              <Route path="/Homework/:hwId/attempts">
+                <HomeworkAttempt />
+                <Helmet>
+                  <title>Домашки</title>
+                </Helmet>
+              </Route>
               <Route path="/course/:id/edition">
                 <CourseEdition />
               </Route>
