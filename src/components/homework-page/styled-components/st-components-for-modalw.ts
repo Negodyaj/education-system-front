@@ -12,8 +12,9 @@ animation-name: open-back;
 animation-duration: .6s;
 animation-fill-mode: forwards;
 pointer-events: all;
-}
 `;
+
+type ModalVisibility = {marginTop: boolean };
 
 export const AddHomeworkModalContainer = styled.div`
 display: grid;
@@ -29,5 +30,6 @@ background-color: rgb(255, 255, 255);
 animation-name: open-modal;
 animation-duration: .6s;
 animation-fill-mode: forwards;
-position: relative;
+position: absolute;
+${(props: ModalVisibility) => props.marginTop ? "margin-top: 150 px":"margin-top: -100 vh"}
 `;
