@@ -31,7 +31,6 @@ import UserRoute from './components/user-page/UserRoute';
 import GroupNavMenu from './components/group-page/group-nav-menu/GroupNavMenu';
 import GroupInfoComponent from './components/group-page/group-info-component/GroupInfoComponent';
 
-
 function App() {
   const dispatch = useDispatch();
   const { currentUserRoleId } = useSelector(
@@ -124,11 +123,32 @@ function App() {
                   <title>Домашки</title>
                 </Helmet>
               </Route>
+              {currentUserRoleId !== Role.Methodist && (
+                <>
+                  <Route path="/group">
+                    <GroupNavMenu />
+                    <Helmet>
+                      <title>Группы</title>
+                    </Helmet>
+                  </Route>
+                  <Route path="/group/info">
+                    <GroupInfoComponent />
+                  </Route>
+                  <Route path="/group/lesson">
+                    <LessonsByGroup />
+                  </Route>
+                  <Route path="/group/journal">
+                    <Attendance />
+                  </Route>
+                  <Route path="/group/statistics">
+                    <div>statistics</div>
+                  </Route>
+                </>
+              )}
               <Route exact path="/group">
-                <Redirect to="/group/1" />
+                <Redirect to="/group/1/info" />
               </Route>
-              <Route path="/group/:id">
-                <GroupPage />
+              <Route path="/group/:id/info">
                 <Helmet>
                   <title>Группы</title>
                 </Helmet>
@@ -147,28 +167,6 @@ function App() {
                 <div className="test-page-link">
                   <Link to="/dev-test-page">secret test page</Link>
                 </div>
-                                    {appState.roleSelector.currentUserRoleId !== Role.Methodist &&
-                                       <>
-                                       <Route path="/group-page"  >
-                                            <GroupNavMenu/>
-                                            <Helmet>
-                                                <title>Группы</title>
-                                            </Helmet>
-                                        </Route>
-                                        <Route path="/group-page/info"  >
-                                            <GroupInfoComponent/>
-                                        </Route>
-                                        <Route path="/group-page/lesson"  >
-                                            <div>lesson</div>
-                                        </Route>
-                                        <Route path="/group-page/journal"  >
-                                            <div>journal</div>
-                                        </Route>
-                                        <Route path="/group-page/statistics"  >
-                                            <div>statistics</div>
-                                        </Route>
-                                       </> 
-                                        }
               </Route>
               <Route path="/dev-test-page">
                 <DevTestPage />
