@@ -1,105 +1,85 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import './CoursesPage.css';
-import ModalWindowDelete from './modal-window/ModalWindowDelete';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import NewCourse from './NewCourse';
-import { DataNewCourse } from './NewCourse';
-import { Course } from '../../interfaces/Courses';
-import { sendDeleteRequest, sendGetRequest, sendPostRequest } from '../../services/http.service';
-import { CourseAddEnd, CourseDeleteEnd, CourseEnd } from '../../shared/endpointConsts';
-import { responseHandlers } from '../../services/response-handler/responseHandler';
-import { useDispatch, useSelector } from "react-redux";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useDispatch, useSelector } from 'react-redux';
+
 import { IRootState } from '../../store';
-import { isCourse } from '../../services/type-guards/course';
-import { isCourseArr } from '../../services/type-guards/courseArr';
 import { getCourses } from '../../store/courses-page/thunk';
-import NotificationData from '../../interfaces/NotificationData';
+import {
+  showToggleModalCreateCourseAction,
+  showToggleModalDeleteCourseAction,
+} from '../../store/courses-page/action-creators';
+import { LinkStyledRegularFont } from '../../shared/styled-components/globalStyledConsts';
+
+import NewCourse from './NewCourse';
+import ModalWindowDelete from './modal-window/ModalWindowDelete';
+import {
+  CourseContainer,
+  CourseCreate,
+  CoursesList,
+  CourseStyled,
+  CourseUpdateDelete,
+  EmptyDiv,
+  Loading,
+} from './CoursePageStyled';
 
 function CoursesPage() {
+  const dispatch = useDispatch();
+  const pageState = useSelector((state: IRootState) => state.coursePage);
 
-    const dispatch = useDispatch();
-    const pageState = useSelector((state: IRootState) => state.coursePage);
+  useEffect(() => {
+    dispatch(getCourses());
+  }, []);
 
-    const [isModalAdd, setIsModalAdd] = useState(false);
-    const [isModalDelete, setIsModalDelete] = useState(false);
-    const [coursesList, setCoursesList] = useState<Course[]>();
-    const [idCourseDelete, setIdCourseDelete] = useState(0);
+  const openModalDelete = (idCourse: number) => {
+    dispatch(showToggleModalDeleteCourseAction(idCourse));
+  };
 
+  const openModalAdd = () => {
+    dispatch(showToggleModalCreateCourseAction());
+  };
 
-
-    useEffect(() => {
-        dispatch(getCourses());
-    }, []);
-
-    const addCourse = async (newCourse: DataNewCourse) => {
-        await sendPostRequest<Course>(CourseEnd, isCourse, newCourse);
-        getCourses();
-    }
-
-    const deleteCourse = async (id: number) => {
-        await sendDeleteRequest<Course>(CourseEnd + '/' + id, isCourse);
-        getCourses();
-    }
-
-    const openModalDelete = (id: number) => {
-        setIsModalDelete(true);
-        setIdCourseDelete(id);
-    }
-
-    const onDeleteHandler = (num: number) => {
-        if (num === 1) {
-            deleteCourse(idCourseDelete);
-        }
-        setIsModalDelete(false);
-    }
-
-    const openModalAdd = () => {
-        setIsModalAdd(true);
-    }
-
-    const addNewCourse = (data?: DataNewCourse) => {
-        if(data?.name === '' || data?.description === '' || data?.duration === 0) {
-            return;
-        } else if (data !== undefined) {
-            addCourse(data);
-        }
-        setIsModalAdd(false);
-    }
-
-    return (
-        <div className="course-container">
-            <div className="course-create">
-                <div> </div>
-                {/* <button onClick={openModalAdd} className='button-create'>Добавить курс</button>  */}
-            </div>
-            <div className="courses-list">
-                {
-                    pageState.isDataLoading
-                        ?
-                        <>LOADING</>
-                        :
-                        pageState.courseList?.map(item => (
-                            <div key={item.id} className="course">
-                                <div className="current-course-name">{item.name}</div>
-                                <div className="course-update-delete">
-                                    <Link to={"/course-edition/" + item.id}>
-                                        <button className='button-update'>
-                                            <FontAwesomeIcon icon="edit" />
-                                        </button>
-                                    </Link>
-                                    <button onClick={() => openModalDelete(item.id)} className='button-delete'>
-                                        <FontAwesomeIcon icon="trash" /> 
-                                    </button>
-                                </div>
-                            </div>
-                        ))
-                }
-            </div>
-            { isModalAdd && <NewCourse dataNewCourse={addNewCourse} /> }
-            { isModalDelete && <ModalWindowDelete onClickDelete={onDeleteHandler}/>}
-        </div>
-    )
+  return (
+    <CourseContainer>
+      <CourseCreate>
+        <EmptyDiv />
+        <button onClick={openModalAdd} className="common-button">
+          Добавить курс
+        </button>
+      </CourseCreate>
+      <CoursesList>
+        {pageState.isDataLoading ? (
+          <Loading>Loading...</Loading>
+        ) : (
+          pageState.courseList.map((item) => (
+            <CourseStyled>
+              <LinkStyledRegularFont
+                className="current-course-name"
+                to={`/course/${item.id}`}>
+                <EmptyDiv>{item.name}</EmptyDiv>
+              </LinkStyledRegularFont>
+              <CourseUpdateDelete>
+                <Link to={`/course/${item.id}/edition`}>
+                  <button className="round-button">
+                    <FontAwesomeIcon icon="edit" />
+                  </button>
+                </Link>
+                <button
+                  onClick={() => {
+                    openModalDelete(item.id);
+                  }}
+                  className="round-button">
+                  <FontAwesomeIcon icon="trash" />
+                </button>
+              </CourseUpdateDelete>
+            </CourseStyled>
+          ))
+        )}
+      </CoursesList>
+      {pageState.isOpenModalCreateCourse && <NewCourse />}
+      {pageState.isModalDelete && <ModalWindowDelete />}
+    </CourseContainer>
+  );
 }
 
 export default CoursesPage;

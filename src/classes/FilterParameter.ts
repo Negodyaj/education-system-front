@@ -1,8 +1,9 @@
-export abstract class FilterParameter{
-    abstract FilterType:string;
-    Content: string[]
+export abstract class FilterParameter {
+  abstract FilterType: string;
 
-    constructor(content:string[]){
-        this.Content=content;
-    }
+  Content: string[];
+
+  constructor(content: string[]) {
+    this.Content = content;
+  }
 }
