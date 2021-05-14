@@ -2,20 +2,7 @@ import { Homework } from '../../../interfaces/Homework';
 
 export const INIT_HOMEWORK: Homework = {
   deadlineDate: '',
-  group: {
-    course: {
-      id: 0,
-      name: '',
-      description: '',
-      duration: 0,
-      materials: [],
-      themes: [],
-    },
-    groupStatus: '',
-    groupStatusId: 0,
-    id: -1,
-    startDate: '',
-  },
+  groupsIds: [-1],
   homeworkAttempts: [],
   id: -10,
   isOptional: false,
@@ -24,4 +11,13 @@ export const INIT_HOMEWORK: Homework = {
   tags: [],
   themes: [],
   description: '',
+  course: {
+    description: '',
+    duration: 0,
+    id: -1,
+    isDeleted: true,
+    materials: [],
+    name: '',
+    themes: [],
+  },
 };

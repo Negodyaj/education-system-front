@@ -7,3 +7,6 @@ export type EntitiesGetter = () => DictionaryEntity[];
 
 export const useGetGroupEntities = () =>
   useSelector((state: IRootState) => state.homeworkAppointModal.groupEntities);
+
+export const useGroupsWithAttemptsForCurrentTeacher = () =>
+  useSelector((state: IRootState) => state.homeworkAttempt.currentHomework);

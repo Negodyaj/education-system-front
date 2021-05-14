@@ -5,20 +5,10 @@ import { INIT_HOMEWORK } from '../tmp-mock-data/hw/initHomewwork';
 export const convertHomeworkListForTeacherMode = (
   actionPayload: Homework[]
 ): IndexedObj<Homework> => {
-  const previousGroupId: number[] | undefined = [];
+  const previousGroupIds: number[] | undefined = [];
   const result: IndexedObj<Homework> = {};
-  actionPayload.map((hw) => {
-    const index = `${hw.group.course.name} ${hw.group.startDate}`;
-
-    if (previousGroupId.includes(hw.group.id)) {
-      result[index].push(hw);
-    } else if (result[index] === undefined) {
-      result[index] = [INIT_HOMEWORK];
-      result[index][0] = hw;
-    } else result[index].push(hw);
-
-    return previousGroupId.push(hw.group.id);
-  });
+  const groupIndex = 0;
+  const currentGroupId = 0;
 
   return result;
 };

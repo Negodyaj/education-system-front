@@ -14,15 +14,6 @@ import {
   setCurrentHomework,
 } from './action-creators';
 
-export const getAttemptListToCheck = (hwId: string) => (dispatch: Dispatch) => {
-  sendGetRequest<Attempt[]>(
-    `${homeworkUrl}/${hwId}/attempts`,
-    isAttemptArr
-  ).then((response) => {
-    const attempts = thunkResponseHandler(dispatch, response);
-    attempts && dispatch(attemptListLoadingSuccess(attempts));
-  });
-};
 export const loadCurrentHomework = (hwId: string) => (dispatch: Dispatch) => {
   sendGetRequest<Homework>(`${homeworkUrl}/${hwId}`, isHomework).then(
     (response) => {
@@ -34,4 +25,20 @@ export const loadCurrentHomework = (hwId: string) => (dispatch: Dispatch) => {
       }
     }
   );
+};
+
+export const getAttemptListToCheck = (hwId: string) => (
+  dispatch: Dispatch<any>
+) => {
+  sendGetRequest<Attempt[]>(
+    `${homeworkUrl}/${hwId}/attempts`,
+    isAttemptArr
+  ).then((response) => {
+    const attempts = thunkResponseHandler(dispatch, response);
+    attempts &&
+      (() => {
+        dispatch(attemptListLoadingSuccess(attempts));
+        dispatch(loadCurrentHomework(hwId || ''));
+      })();
+  });
 };

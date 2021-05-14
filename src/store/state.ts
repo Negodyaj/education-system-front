@@ -73,7 +73,7 @@ export interface IHomeworkAppointModalState {
 export interface IHomeworkAttemptState {
   attemptList?: Attempt[];
   currentHomework?: Homework;
-  currentGroup?: typeof INIT_HOMEWORK.group;
+  currentGroup?: typeof INIT_HOMEWORK.groupsIds;
   currentAttempt?: Attempt;
 }
 export interface INotificationContainerState {

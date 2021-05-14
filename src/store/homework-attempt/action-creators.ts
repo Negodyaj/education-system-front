@@ -20,7 +20,7 @@ export const attemptListLoadingSuccess = (attempts: Attempt[]) =>
     payload: attempts,
   } as const);
 
-export const setCurrentGroup = (group: typeof INIT_HOMEWORK.group) =>
+export const setCurrentGroup = (group: typeof INIT_HOMEWORK.groupsIds) =>
   ({
     type: SET_CURRENT_GROUP,
     payload: group,

@@ -31,9 +31,10 @@ function HomeworkItemBody(props: {
         onClick={toggleDescriptionVisibility}>
         <HomeworkName>{hw.name}</HomeworkName>
         <HomeworkThemeName>
-          {hw.themes.map((theme) => (
-            <HomeworkProp key={theme.id}>{theme.name}</HomeworkProp>
-          ))}
+          {hw.themes &&
+            hw.themes.map((theme) => (
+              <HomeworkProp key={theme.id}>{theme.name}</HomeworkProp>
+            ))}
         </HomeworkThemeName>
         <HomeworkProp>
           {hw.isOptional ? 'без проверки' : 'с проверкой'}
