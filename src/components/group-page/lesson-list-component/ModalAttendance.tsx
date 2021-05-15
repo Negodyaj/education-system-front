@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { IRootState } from '../../../store';
 import { setIsOpenModalAttendance } from '../../../store/group-page/lesson/action-creators';
+import { createAttendance } from '../../../store/group-page/lesson/thunk';
 import { getUsers } from '../../../store/user-list-page/thunk';
 
 import {
@@ -24,9 +25,15 @@ import {
   UserPicForAttendance,
 } from './ModalAttendanceStyled';
 
+export interface IUserAttendance {
+  userId: number;
+  isPresence: boolean;
+}
+
 const ModalAttendance = () => {
   const dispatch = useDispatch();
   const pageState = useSelector((state: IRootState) => state.userListPage);
+  const presenceOfUserOnLesson: IUserAttendance[] = [];
 
   const closeModalAttendance = () => {
     dispatch(setIsOpenModalAttendance());
@@ -34,8 +41,19 @@ const ModalAttendance = () => {
 
   useEffect(() => {
     dispatch(getUsers());
-    console.log(pageState.userList);
+    indicateAttendance();
   }, []);
+
+  const indicateAttendance = () => {
+    pageState.userList.map((user) =>
+      presenceOfUserOnLesson.push({
+        userId: user.id,
+        isPresence: false,
+      })
+    );
+    dispatch(createAttendance(28, presenceOfUserOnLesson));
+    console.log(presenceOfUserOnLesson);
+  };
 
   return (
     <ModalAttendanceBack>

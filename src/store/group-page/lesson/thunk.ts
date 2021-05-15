@@ -7,6 +7,9 @@ import {
   sendGetRequest,
   sendPostRequest,
 } from '../../../services/http.service';
+import { isAttendance } from '../../../services/type-guards/attendance';
+import { IUserAttendance } from '../../../components/group-page/lesson-list-component/ModalAttendance';
+import { Attendance } from '../../../interfaces/Attendance';
 import { isLesson } from '../../../services/type-guards/lesson';
 import { isLessonArr } from '../../../services/type-guards/lessonArr';
 import { lessonsUrl } from '../../../shared/consts';
@@ -67,4 +70,34 @@ export const deleteLesson = (id: number) => (dispatch: Dispatch<any>) => {
       dispatch(getLessonsByGroup());
     })
     .catch((error) => dispatch(setLessonListFail(error)));
+};
+
+export const createAttendance = (
+  lessonId: number,
+  newAttendanceArr: IUserAttendance[]
+) => (dispatch: Dispatch<any>) => {
+  newAttendanceArr.map(async (newAttendance) =>
+    sendPostRequest<Attendance>(
+      `${lessonsUrl}/${lessonId}/attendance`,
+      isAttendance,
+      {
+        ...newAttendance,
+      }
+    )
+      .then((attendance) => {
+        const response = thunkResponseHandler(dispatch, attendance);
+        response &&
+          dispatch(
+            pushNotification(
+              makeNotification(
+                'success',
+                `Посещаемость ${(response as Attendance).user.lastName} ${
+                  (response as Attendance).user.firstName
+                } сохранена`
+              )
+            )
+          );
+      })
+      .catch((error) => dispatch(setLessonListFail(error)))
+  );
 };
