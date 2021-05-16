@@ -9,9 +9,9 @@ export const ChevronArrow = styled.button`
   width: 20px;
   padding: 0px;
   border: none;
-
+  cursor: pointer;
   transition: 0.32s;
-  background-color: #fff;
+  background-color: #fff0;
   background-image: url(${img});
   ${(props) =>
     props.className === ACTIVE

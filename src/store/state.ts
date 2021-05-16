@@ -1,18 +1,35 @@
+<<<<<<<<< Temporary merge branch 1
+import { DataNewCourse } from "../components/courses-page/NewCourse";
+import { Course } from "../interfaces/Courses";
+import { Group } from "../interfaces/Group";
+import NotificationData from "../interfaces/NotificationData";
+import { Tag } from "../interfaces/Tag";
+import { Themes } from "../interfaces/Themes";
+import { User } from "../interfaces/User";
+import { UserInput } from "../interfaces/UserInput";
+import { PaymentResponse } from "../components/interfaces/PaymentResponse";
+import { Homework } from "../interfaces/Homework";
+import { HomeworkPageOptions } from "../components/homework-page/HomeworkPageCore";
+=========
 import { Attendance } from '../interfaces/Attendance';
 import { Course } from '../interfaces/Courses';
 import { Group } from '../interfaces/Group';
-import { Lesson } from '../interfaces/Lesson';
 import NotificationData from '../interfaces/NotificationData';
 import { Tag } from '../interfaces/Tag';
 import { Themes } from '../interfaces/Themes';
 import { User } from '../interfaces/User';
 import { UserInput } from '../interfaces/UserInput';
-import { UserUpdate } from '../interfaces/UserUpdate';
 import { PaymentResponse } from '../components/interfaces/PaymentResponse';
-import { CourseInput } from '../interfaces/CourseInput';
-import { HomeworkPageOptions } from '../components/homework-page/HomeworkPageCore';
-import { HomeworkInput } from '../interfaces/HomeworkInput';
 import { Homework } from '../interfaces/Homework';
+import { HomeworkPageOptions } from '../components/homework-page/HomeworkPageCore';
+import { DictionaryEntity } from '../interfaces/DictionaryEntity';
+import { AppointInput } from '../interfaces/AppointInput';
+import { Attempt } from '../interfaces/Attempt';
+import { Attendance } from '../interfaces/Attendance';
+import { Lesson } from '../interfaces/Lesson';
+import { CourseInput } from '../interfaces/CourseInput';
+import { INIT_HOMEWORK } from '../shared/tmp-mock-data/hw/initHomewwork';
+import { HomeworkInput } from '../interfaces/HomeworkInput';
 
 export interface IAppState {
   isLoggedIn: boolean;
@@ -27,7 +44,6 @@ export interface ICoursePageState {
   createCourseInputModel: CourseInput;
   idCourseForDelete: number;
 }
-
 export interface ICourseEditionState {
   course: Course;
   themes: Themes[];
@@ -36,21 +52,18 @@ export interface ICourseEditionState {
   isDisplayingButtonOpenProgramCourse: boolean;
   isDisplayingButtonOpenMaterialsCourse: boolean;
 }
-
 export interface IUserListPage {
   userList: User[];
   userToDelete: User;
   openedItemId: number;
   isDataLoading: boolean;
 }
-
 export interface IUserPage {
   userForUserPage: UserInput;
   userForUserPageId: number;
   isReadonly: boolean;
   isDataLoading: boolean;
 }
-
 export interface IRoleSelector {
   isTurnedOn: boolean;
   currentUser: User | undefined;
@@ -58,8 +71,14 @@ export interface IRoleSelector {
   isDataLoading: boolean;
 }
 
-export type HomeworksByCourse = { [itemsSetName: string]: Homework[] };
-export type HomeworksByGroup = { [itemsSetName: string]: Homework[] };
+<<<<<<<<< Temporary merge branch 1
+export type HomeworksByCourse = { [itemsSetName: string]: Homework[] }
+export type HomeworksByGroup = { [itemsSetName: string]: Homework[] }
+export interface IHomeworkPageState {
+    pageOptionsByRole: { [role: string]: HomeworkPageOptions };
+    homeworkListDefault: Homework[];
+    openedItemSetsNames: string[];
+=========
 export interface IAppState {
   isLoggedIn: boolean;
   loadersCount: number;
@@ -69,12 +88,22 @@ export interface IHomeworkPageState {
   homeworkListDefault: Homework[];
   openedItemSetsNames: string[];
 }
+export interface IHomeworkAppointModalState {
+  groupListByTeacherId: Group[];
+  groupEntities: DictionaryEntity[];
+  appointFormDefaults: AppointInput;
+}
+export interface IHomeworkAttemptState {
+  attemptList?: Attempt[];
+  currentHomework?: Homework;
+  currentGroup?: typeof INIT_HOMEWORK.groupsIds;
+  currentAttempt?: Attempt;
+}
 export interface IAddHomeworkModal {
   isDataLoading: boolean;
   defaultFormValue: HomeworkInput;
   isModalHidden: boolean;
 }
-
 export interface INotificationContainerState {
   notifications: {
     dismissible: NotificationData[];

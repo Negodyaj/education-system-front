@@ -1,5 +1,3 @@
-import { faClone } from '@fortawesome/free-solid-svg-icons';
-
 import { HomeworkPageOptions } from '../../components/homework-page/HomeworkPageCore';
 import { Role } from '../../enums/role';
 import { convertHomeworkListForMethodistMode } from '../../shared/converters/homeworkListForMethodistMode';
@@ -15,7 +13,6 @@ import { HomeworkPageActions } from './action-creators';
 
 const METHODIST_VIEW: HomeworkPageOptions = {
   addButton: true,
-  homeworkSelector: Role.Methodist,
   homeworkList: {},
   homeworkButtonsCell: {
     cloneButton: true,
@@ -25,7 +22,6 @@ const METHODIST_VIEW: HomeworkPageOptions = {
 };
 const TEACHER_VIEW: HomeworkPageOptions = {
   addButton: false,
-  homeworkSelector: Role.Teacher,
   homeworkList: {},
   homeworkButtonsCell: {
     appointButton: true,
@@ -33,9 +29,15 @@ const TEACHER_VIEW: HomeworkPageOptions = {
     checkButton: true,
   },
 };
+const TUTOR_VIEW: HomeworkPageOptions = {
+  ...TEACHER_VIEW,
+  homeworkButtonsCell: {
+    ...TEACHER_VIEW.homeworkButtonsCell,
+    appointButton: false,
+  },
+};
 const STUDENT_VIEW: HomeworkPageOptions = {
   addButton: false,
-  homeworkSelector: Role.Student,
   homeworkList: {},
   homeworkButtonsCell: {
     attemptButton: true,
@@ -48,6 +50,7 @@ const initialState: IHomeworkPageState = {
     [Role[Role.Methodist]]: METHODIST_VIEW,
     [Role[Role.Teacher]]: TEACHER_VIEW,
     [Role[Role.Student]]: STUDENT_VIEW,
+    [Role[Role.Tutor]]: TUTOR_VIEW,
   },
 };
 
@@ -57,6 +60,8 @@ export function homeworkPageReducer(
 ): IHomeworkPageState {
   switch (action.type) {
     case HOMEWORK_LOAD_SUCCESS:
+      state.openedItemSetsNames = [];
+
       if (action.payload.currentUserRoleId === Role.Methodist) {
         METHODIST_VIEW.homeworkList = {
           ...convertHomeworkListForMethodistMode(action.payload.payload),
@@ -67,6 +72,14 @@ export function homeworkPageReducer(
 
       if (action.payload.currentUserRoleId === Role.Teacher) {
         TEACHER_VIEW.homeworkList = {
+          ...convertHomeworkListForTeacherMode(action.payload.payload),
+        };
+
+        return { ...state };
+      }
+
+      if (action.payload.currentUserRoleId === Role.Tutor) {
+        TUTOR_VIEW.homeworkList = {
           ...convertHomeworkListForTeacherMode(action.payload.payload),
         };
 
@@ -84,9 +97,9 @@ export function homeworkPageReducer(
     case HOMEWORK_DELETE_PENDING:
       return {
         ...state,
-        homeworkListDefault: [
-          ...state.homeworkListDefault.filter((hw) => hw.id !== action.payload),
-        ],
+        homeworkListDefault: [...state.homeworkListDefault].filter(
+          (hw) => hw.id !== action.payload
+        ),
       };
     case ITEMS_SET_OPEN:
       state.openedItemSetsNames.includes(action.payload)

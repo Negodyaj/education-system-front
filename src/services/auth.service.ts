@@ -20,3 +20,8 @@ export const setCurrentUserInStorage = (user: User) => {
 };
 export const getCurrentUserFromStorage = (): User =>
   getFromStorage('user') ? JSON.parse(getFromStorage('user')) : undefined;
+export const setCurrentUserRoleIdStorage = (roleId: number) => {
+  store('roleId', roleId);
+};
+export const getCurrentUserRoleIdFromStorage = () =>
+  Number.parseInt(getFromStorage('roleId'), 10);

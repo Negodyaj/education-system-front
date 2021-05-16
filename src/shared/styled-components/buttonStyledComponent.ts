@@ -10,6 +10,10 @@ export const Button = styled.button`
   & + & {
     margin-left: 10px;
   }
+  &:hover {
+    transition: 0.32s;
+    background-color: #2d62ed;
+  }
 `;
 
 export const RoundButton = styled(Button)`

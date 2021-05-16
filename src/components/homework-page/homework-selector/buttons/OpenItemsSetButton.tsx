@@ -10,19 +10,20 @@ import { IRootState } from '../../../../store';
 import { openItemsSet } from '../../../../store/homework-page/action-creators';
 
 function OpenItemsSetButton(props: { itemsSetName: string }) {
+  const { itemsSetName } = props;
   const dispatch = useDispatch();
-  const appState = useSelector((state: IRootState) => state);
-  const arrowOnClick = (itemsSetName: string) => {
-    dispatch(openItemsSet(itemsSetName));
+  const { openedItemSetsNames } = useSelector(
+    (state: IRootState) => state.homeworkPage
+  );
+  const arrowOnClick = (itemsSetNameArg: string) => {
+    dispatch(openItemsSet(itemsSetNameArg));
   };
 
   return (
     <ChevronArrow
-      onClick={() => arrowOnClick(props.itemsSetName)}
+      onClick={() => arrowOnClick(itemsSetName)}
       className={
-        appState.homeworkPage.openedItemSetsNames.includes(props.itemsSetName)
-          ? ACTIVE
-          : NOT_ACTIVE
+        openedItemSetsNames.includes(itemsSetName) ? ACTIVE : NOT_ACTIVE
       }
     />
   );

@@ -9,7 +9,7 @@ import FormElement from '../../shared/components/form-elements/FormElement';
 import { InputNames } from '../../enums/inputNames';
 import { IRootState } from '../../store';
 import { CourseInput } from '../../interfaces/CourseInput';
-import { getFormElementSettings } from '../../shared/helpers/useFormRegisterSettingByKey';
+// import { getFormElementSettings } from '../../shared/helpers/useFormRegisterSettingByKey';
 
 import {
   ButtonClose,
@@ -67,7 +67,7 @@ function NewCourse() {
           {...methods}>
           <FormWrapper>
             <InputStyle onSubmit={handleSubmit(onSubmit)}>
-              {Object.keys(appState.coursePage.createCourseInputModel).map(
+              {/* {Object.keys(appState.coursePage.createCourseInputModel).map(
                 (key) => (
                   <FormElement
                     key={key}
@@ -76,7 +76,7 @@ function NewCourse() {
                     )}
                   />
                 )
-              )}
+              )} */}
             </InputStyle>
           </FormWrapper>
         </FormProvider>

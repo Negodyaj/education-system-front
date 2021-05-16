@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { Homework } from '../../../interfaces/Homework';
 import {
+  HomeworkDescription,
   HomeworkItem,
+  HomeworkItemHeader,
+  HomeworkName,
   HomeworkProp,
   HomeworkThemeName,
 } from '../styled-components/consts';
@@ -15,18 +18,32 @@ function HomeworkItemBody(props: {
   hw: Homework;
   buttons: HomeworkButtonsCellOptions;
 }) {
+  const { hw, buttons } = props;
+  const [descriptionVisibility, setDescriptionVisibility] = useState(false);
+  const toggleDescriptionVisibility = () => {
+    setDescriptionVisibility(!descriptionVisibility);
+  };
+
   return (
     <HomeworkItem>
-      <HomeworkProp>{props.hw.description}</HomeworkProp>
-      <HomeworkThemeName>
-        {props.hw.themes.map((theme) => (
-          <HomeworkProp key={theme.id}>{theme.name}</HomeworkProp>
-        ))}
-      </HomeworkThemeName>
-      <HomeworkProp>
-        {props.hw.isOptional ? 'без проверки' : 'с проверкой'}
-      </HomeworkProp>
-      <HomeworkButtonsCell settings={props.buttons} />
+      <HomeworkItemHeader
+        elementVisibility={descriptionVisibility}
+        onClick={toggleDescriptionVisibility}>
+        <HomeworkName>{hw.name}</HomeworkName>
+        <HomeworkThemeName>
+          {hw.themes &&
+            hw.themes.map((theme) => (
+              <HomeworkProp key={theme.id}>{theme.name}</HomeworkProp>
+            ))}
+        </HomeworkThemeName>
+        <HomeworkProp>
+          {hw.isOptional ? 'без проверки' : 'с проверкой'}
+        </HomeworkProp>
+        <HomeworkButtonsCell hw={hw} buttons={buttons} />
+      </HomeworkItemHeader>
+      <HomeworkDescription>
+        {hw.description ? hw.description : 'нет описания'}
+      </HomeworkDescription>
     </HomeworkItem>
   );
 }

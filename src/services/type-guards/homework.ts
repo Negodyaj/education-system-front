@@ -1,10 +1,4 @@
 import { Homework } from '../../interfaces/Homework';
 
-export const isHomework = (data: any): data is Homework => {
-  if (data)
-    return (
-      !Array.isArray(data) && !!data.name && !!data.description && !!data.id
-    );
-
-  return false;
-};
+export const isHomework = (data: any): data is Homework =>
+  !!data.id && !!data.description && !!data.deadlineDate && !!data.group;

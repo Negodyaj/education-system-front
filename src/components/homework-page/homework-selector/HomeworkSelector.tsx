@@ -1,7 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-import { HomeworkPageOptions } from '../HomeworkPageCore';
 import { Role } from '../../../enums/role';
 import { ACTIVE, NOT_ACTIVE } from '../../../shared/styled-components/consts';
 import { IRootState } from '../../../store';
@@ -15,38 +14,33 @@ import HomeworkItemBody from '../HomeworkItem/HomeworkItemBody';
 
 import OpenItemsSetButton from './buttons/OpenItemsSetButton';
 
-export function HomeworkSelector(props: { settings: HomeworkPageOptions }) {
+export function HomeworkSelector() {
   const appState = useSelector((state: IRootState) => state);
+  const { homeworkList } = appState.homeworkPage.pageOptionsByRole[
+    Role[appState.roleSelector.currentUserRoleId]
+  ];
+  const { homeworkButtonsCell } = appState.homeworkPage.pageOptionsByRole[
+    Role[appState.roleSelector.currentUserRoleId]
+  ];
 
   return (
     <HomeworkSelectorContainer>
-      <>
-        {Object.keys(
-          appState.homeworkPage.pageOptionsByRole[
-            Role[appState.roleSelector.currentUserRoleId]
-          ].homeworkList
-        ).map((itemsSetName) => (
-          <HomeworkItemsSet
-            className={
-              appState.homeworkPage.openedItemSetsNames.includes(itemsSetName)
-                ? ACTIVE
-                : NOT_ACTIVE
-            }>
-            <HomeworkItemsSetHeader>
-              <ItemsSetName>{itemsSetName}</ItemsSetName>
-              <OpenItemsSetButton itemsSetName={itemsSetName} />
-            </HomeworkItemsSetHeader>
-            {appState.homeworkPage.pageOptionsByRole[
-              Role[appState.roleSelector.currentUserRoleId]
-            ].homeworkList[itemsSetName].map((hw) => (
-              <HomeworkItemBody
-                hw={hw}
-                buttons={props.settings.homeworkButtonsCell}
-              />
-            ))}
-          </HomeworkItemsSet>
-        ))}
-      </>
+      {Object.keys(homeworkList).map((itemsSetName) => (
+        <HomeworkItemsSet
+          className={
+            appState.homeworkPage.openedItemSetsNames.includes(itemsSetName)
+              ? ACTIVE
+              : NOT_ACTIVE
+          }>
+          <HomeworkItemsSetHeader>
+            <ItemsSetName>{itemsSetName}</ItemsSetName>
+            <OpenItemsSetButton itemsSetName={itemsSetName} />
+          </HomeworkItemsSetHeader>
+          {homeworkList[itemsSetName].map((hw) => (
+            <HomeworkItemBody hw={hw} buttons={homeworkButtonsCell} />
+          ))}
+        </HomeworkItemsSet>
+      ))}
     </HomeworkSelectorContainer>
   );
 }

@@ -1,12 +1,13 @@
 import React from 'react';
 
+import { Homework } from '../../../interfaces/Homework';
 import { ButtonsCell } from '../../../shared/styled-components/consts';
 
-import HomeworkAppointButton from './buttons/HomeworkAppointButton';
+import HomeworkAppointButton from './buttons/homework-appoint-button/HomeworkAppointButton';
+import HomeworkDeleteButton from './buttons/homework-delete-button/HomeworkDeleteButton';
 import HomeworkAttemptButton from './buttons/HomeworkAttemptButton';
 import HomeworkCheckButton from './buttons/HomeworkCheckButton';
 import HomeworkCloneButton from './buttons/HomeworkCloneButton';
-import HomeworkDeleteButton from './buttons/HomeworkDeleteButton';
 import HomeworkEditButton from './buttons/HomeworkEditButton';
 
 export interface HomeworkButtonsCellOptions {
@@ -16,18 +17,23 @@ export interface HomeworkButtonsCellOptions {
   readonly deleteButton?: boolean;
   readonly editButton?: boolean;
   readonly checkButton?: boolean;
-  readonly attemptButton?: boolean;
+  attemptButton?: boolean;
 }
 
-function HomeworkButtonsCell(props: { settings: HomeworkButtonsCellOptions }) {
+function HomeworkButtonsCell(props: {
+  hw: Homework;
+  buttons: HomeworkButtonsCellOptions;
+}) {
+  const { hw, buttons } = props;
+
   return (
-    <ButtonsCell>
-      {props.settings.deleteButton && <HomeworkDeleteButton />}
-      {props.settings.cloneButton && <HomeworkCloneButton />}
-      {props.settings.editButton && <HomeworkEditButton />}
-      {props.settings.appointButton && <HomeworkAppointButton />}
-      {props.settings.checkButton && <HomeworkCheckButton />}
-      {props.settings.attemptButton && <HomeworkAttemptButton />}
+    <ButtonsCell onClick={(e) => e.stopPropagation()}>
+      {buttons.cloneButton && <HomeworkCloneButton />}
+      {buttons.editButton && <HomeworkEditButton />}
+      {buttons.deleteButton && <HomeworkDeleteButton homeworkId={hw.id} />}
+      {buttons.checkButton && <HomeworkCheckButton hw={hw} />}
+      {buttons.appointButton && <HomeworkAppointButton />}
+      {buttons.attemptButton && !hw.isOptional && <HomeworkAttemptButton />}
     </ButtonsCell>
   );
 }

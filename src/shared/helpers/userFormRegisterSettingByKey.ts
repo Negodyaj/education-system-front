@@ -2,26 +2,33 @@ import { RegisterOptions } from 'react-hook-form';
 
 import { InputNames } from '../../enums/inputNames';
 import { Role } from '../../enums/role';
+import { DictionaryEntity } from '../../interfaces/DictionaryEntity';
+import {
+  convertEnumToDictionary,
+  getRussianDictionary,
+} from '../converters/enumToDictionaryEntity';
+import { getUserValidationPattern } from '../validation-rules/userValidationPatterns';
+
+import { EntitiesGetter } from './entitiesGetters';
 export interface BaseInputSettings {
   name: string;
   registerOptions?: RegisterOptions;
 }
 export interface InternalInputSettings extends BaseInputSettings {
-  inputType: 'text' | 'date' | 'picture' | 'number' | 'textarea';
+  inputType: 'text' | 'date' | 'picture' | 'textarea' | 'number';
 }
 export interface ExternalInputSettings extends BaseInputSettings {
   inputType: 'singleSelect' | 'multiSelect';
-  selectOptions: { [index: number]: string };
+  selectOptions: DictionaryEntity[] | EntitiesGetter;
 }
 export type InputSettings = InternalInputSettings | ExternalInputSettings;
 export interface FormElementSettings {
   label: string;
   inputSettings: InputSettings;
 }
-export const getFormElementSettings = (
+export const getUserFormElementSettings = (
   key: InputNames
 ): FormElementSettings => {
-  // call getValidationPattern here
   switch (key) {
     case InputNames.Id:
       return {
@@ -39,6 +46,7 @@ export const getFormElementSettings = (
           inputType: 'text',
           registerOptions: {
             required: 'Введите имя',
+            pattern: getUserValidationPattern(key),
           },
         },
       };
@@ -50,6 +58,7 @@ export const getFormElementSettings = (
           inputType: 'text',
           registerOptions: {
             required: 'Введите фамилию',
+            pattern: getUserValidationPattern(key),
           },
         },
       };
@@ -61,6 +70,7 @@ export const getFormElementSettings = (
           inputType: 'text',
           registerOptions: {
             required: 'Введите логин',
+            pattern: getUserValidationPattern(key),
           },
         },
       };
@@ -72,6 +82,7 @@ export const getFormElementSettings = (
           inputType: 'text',
           registerOptions: {
             required: 'Введите пароль',
+            pattern: getUserValidationPattern(key),
           },
         },
       };
@@ -83,6 +94,7 @@ export const getFormElementSettings = (
           inputType: 'picture',
           registerOptions: {
             required: 'Вставьте ссылку на изображение',
+            pattern: getUserValidationPattern(key),
           },
         },
       };
@@ -94,6 +106,7 @@ export const getFormElementSettings = (
           inputType: 'text',
           registerOptions: {
             required: 'Введите номер телефона',
+            pattern: getUserValidationPattern(key),
           },
         },
       };
@@ -110,7 +123,7 @@ export const getFormElementSettings = (
         label: 'Роли',
         inputSettings: {
           inputType: 'multiSelect',
-          selectOptions: Role,
+          selectOptions: getRussianDictionary(convertEnumToDictionary(Role)),
           name: key,
         },
       };
@@ -120,47 +133,6 @@ export const getFormElementSettings = (
         inputSettings: {
           name: key,
           inputType: 'text',
-        },
-      };
-    case InputNames.CourseName:
-      return {
-        label: 'Название курса',
-        inputSettings: {
-          name: key,
-          inputType: 'text',
-          registerOptions: {
-            required: 'Введите название курса',
-            min: {
-              value: 2,
-              message: 'Минимальное колличество символов 2',
-            },
-          },
-        },
-      };
-    case InputNames.CourseDescription:
-      return {
-        label: 'Описание курса',
-        inputSettings: {
-          name: key,
-          inputType: 'textarea',
-          registerOptions: {
-            required: 'Введите описание курса',
-            min: {
-              value: 2,
-              message: 'Минимальное колличество символов 2',
-            },
-          },
-        },
-      };
-    case InputNames.CourseDuration:
-      return {
-        label: 'Продолжительность курса',
-        inputSettings: {
-          name: key,
-          inputType: 'number',
-          registerOptions: {
-            required: 'Введите продолжительность курса',
-          },
         },
       };
     default:
