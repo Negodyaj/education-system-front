@@ -6,8 +6,6 @@ import { Tag } from '../../../interfaces/Tag';
 import { deleteTagThunk, getTags } from '../../../store/tags-page/thunk';
 import { IRootState } from '../../../store';
 
-
-
 interface TagListProps {
   str: string;
 }

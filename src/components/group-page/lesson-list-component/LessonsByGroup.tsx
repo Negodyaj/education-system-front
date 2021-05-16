@@ -2,7 +2,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { IRootState } from '../../../store';
 import { getLessonsByGroup } from '../../../store/group-page/lesson/thunk';
 
 import {

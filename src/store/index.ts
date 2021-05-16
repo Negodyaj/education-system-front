@@ -5,11 +5,13 @@ import { coursePageReducer } from './courses-page/reducer';
 import { userListPageReducer } from './user-list-page/reducer';
 import { notificationContainerReducer } from './notifications/reducer';
 import {
+  IAddHomeworkModal,
   IAppState,
   IAttendance,
   ICourseEditionState,
   ICoursePageState,
   IGroupInfoComponent,
+  IHomeworkPageState,
   ILesson,
   INotificationContainerState,
   IPaymentFormState,
@@ -23,12 +25,12 @@ import { courseEditionPageReducer } from './course-edition/reducer';
 import { roleSelectorReducer } from './role-selector/reducer';
 import { appReducer } from './app/reducer';
 import { tagsPageReducer } from './tags-page/reducer';
-import { paymentReducer } from './payment/reducer';
-import { lessonByGroupReducer } from './group-page/lesson/reducer';
 import { groupInfoComponentReducer } from './group-info-component/reducer';
-    IAddHomeworkModal
 import { attendanceReducer } from './group-page/attendance/reducer';
-    IHomeworkPageState,
+import { addHomeworkModalReducer } from './homework-page/add-homework-modal/reducer';
+import { homeworkPageReducer } from './homework-page/reducer';
+import { lessonByGroupReducer } from './group-page/lesson/reducer';
+import { paymentReducer } from './payment/reducer';
 
 export interface IRootState {
   tagsPage: ITagsPageState;
@@ -43,8 +45,8 @@ export interface IRootState {
   lessonByGroup: ILesson;
   groupInfoComponent: IGroupInfoComponent;
   attendanceList: IAttendance;
-    addHomeWorkModal: IAddHomeworkModal
-    homeworkPage: IHomeworkPageState;
+  addHomeWorkModal: IAddHomeworkModal;
+  homeworkPage: IHomeworkPageState;
 }
 
 const middlewares = [thunk];
@@ -63,11 +65,11 @@ const store = createStore<IRootState, any, any, any>(
     groupInfoComponent: groupInfoComponentReducer,
     lessonByGroup: lessonByGroupReducer,
     attendanceList: attendanceReducer,
+    addHomeWorkModal: addHomeworkModalReducer,
+    homeworkPage: homeworkPageReducer,
   }),
   undefined,
   applyMiddleware(...middlewares)
 );
-        addHomeWorkModal:  addHomeworkModalReducer
-        homeworkPage: homeworkPageReducer,
 
 export default store;

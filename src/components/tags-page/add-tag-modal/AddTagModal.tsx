@@ -5,7 +5,6 @@ import { useDispatch } from 'react-redux';
 import { toggleModalHidden } from '../../../store/tags-page/action-creators';
 import { addTag } from '../../../store/tags-page/thunk';
 
-
 interface AddTagModalProps {
   hidden: boolean;
 }

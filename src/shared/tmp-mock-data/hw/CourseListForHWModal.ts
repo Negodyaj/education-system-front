@@ -1,1 +1,1 @@
-export const coursesListForModalHW = {[34]:"Java"}
+export const coursesListForModalHW = { 34: 'Java' };

@@ -10,7 +10,7 @@ export const userRegisterFormUrl: string = 'user-page/register';
 export const userEditUrl: string = 'user-page';
 export const lessonsUrl: string = 'Lesson/by-group';
 export const lessonAttendance: string = 'Lesson/';
-export const homeworkUrl: string = 'homework'
+export const homeworkUrl: string = 'homework';
 
 // initials
 export const UNSELECTED_ROLE: number = 0;

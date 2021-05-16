@@ -10,13 +10,13 @@ import { UserInput } from '../interfaces/UserInput';
 import { UserUpdate } from '../interfaces/UserUpdate';
 import { PaymentResponse } from '../components/interfaces/PaymentResponse';
 import { CourseInput } from '../interfaces/CourseInput';
-import { HomeworkPageOptions } from "../components/homework-page/HomeworkPageCore";
-import { HomeworkInput } from "../interfaces/HomeworkInput";
-import { Homework } from "../interfaces/Homework";
+import { HomeworkPageOptions } from '../components/homework-page/HomeworkPageCore';
+import { HomeworkInput } from '../interfaces/HomeworkInput';
+import { Homework } from '../interfaces/Homework';
 
 export interface IAppState {
-    isLoggedIn: boolean;
-    loadersCount: number;
+  isLoggedIn: boolean;
+  loadersCount: number;
 }
 export interface ICoursePageState {
   courseList: Course[];
@@ -58,20 +58,21 @@ export interface IRoleSelector {
   isDataLoading: boolean;
 }
 
+export type HomeworksByCourse = { [itemsSetName: string]: Homework[] };
+export type HomeworksByGroup = { [itemsSetName: string]: Homework[] };
 export interface IAppState {
   isLoggedIn: boolean;
   loadersCount: number;
-export type HomeworksByCourse = { [itemsSetName: string]: Homework[] }
-export type HomeworksByGroup = { [itemsSetName: string]: Homework[] }
+}
 export interface IHomeworkPageState {
-    pageOptionsByRole: { [role: string]: HomeworkPageOptions };
-    homeworkListDefault: Homework[];
-    openedItemSetsNames: string[];
+  pageOptionsByRole: { [role: string]: HomeworkPageOptions };
+  homeworkListDefault: Homework[];
+  openedItemSetsNames: string[];
 }
 export interface IAddHomeworkModal {
-    isDataLoading: boolean,
-    defaultFormValue: HomeworkInput,
-    isModalHidden: boolean,
+  isDataLoading: boolean;
+  defaultFormValue: HomeworkInput;
+  isModalHidden: boolean;
 }
 
 export interface INotificationContainerState {
