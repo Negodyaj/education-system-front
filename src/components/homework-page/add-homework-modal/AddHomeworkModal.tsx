@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { InputNames } from '../../../enums/inputNames';
 import { HomeworkInput } from '../../../interfaces/HomeworkInput';
 import FormElement from '../../../shared/components/form-elements/FormElement';
-import { getFormElementSettings } from '../../../shared/helpers/useFormRegisterSettingByKey';
+import { getUserFormElementSettings } from '../../../shared/helpers/userFormRegisterSettingByKey';
 import { IRootState } from '../../../store';
 import { addHomework } from '../../../store/homework-page/add-homework-modal/thunk';
 import {
@@ -49,7 +49,7 @@ function AddHomeworkModal() {
             <form onSubmit={handleSubmit(onSubmit)}>
               {Object.keys(addHomeWorkModal.defaultFormValue).map((key) => (
                 <FormElement
-                  formElementSettings={getFormElementSettings(
+                  formElementSettings={getUserFormElementSettings(
                     key as InputNames
                   )}
                   key={key}

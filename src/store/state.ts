@@ -1,16 +1,3 @@
-<<<<<<<<< Temporary merge branch 1
-import { DataNewCourse } from "../components/courses-page/NewCourse";
-import { Course } from "../interfaces/Courses";
-import { Group } from "../interfaces/Group";
-import NotificationData from "../interfaces/NotificationData";
-import { Tag } from "../interfaces/Tag";
-import { Themes } from "../interfaces/Themes";
-import { User } from "../interfaces/User";
-import { UserInput } from "../interfaces/UserInput";
-import { PaymentResponse } from "../components/interfaces/PaymentResponse";
-import { Homework } from "../interfaces/Homework";
-import { HomeworkPageOptions } from "../components/homework-page/HomeworkPageCore";
-=========
 import { Attendance } from '../interfaces/Attendance';
 import { Course } from '../interfaces/Courses';
 import { Group } from '../interfaces/Group';
@@ -25,7 +12,6 @@ import { HomeworkPageOptions } from '../components/homework-page/HomeworkPageCor
 import { DictionaryEntity } from '../interfaces/DictionaryEntity';
 import { AppointInput } from '../interfaces/AppointInput';
 import { Attempt } from '../interfaces/Attempt';
-import { Attendance } from '../interfaces/Attendance';
 import { Lesson } from '../interfaces/Lesson';
 import { CourseInput } from '../interfaces/CourseInput';
 import { INIT_HOMEWORK } from '../shared/tmp-mock-data/hw/initHomewwork';
@@ -70,15 +56,6 @@ export interface IRoleSelector {
   currentUserRoleId: number;
   isDataLoading: boolean;
 }
-
-<<<<<<<<< Temporary merge branch 1
-export type HomeworksByCourse = { [itemsSetName: string]: Homework[] }
-export type HomeworksByGroup = { [itemsSetName: string]: Homework[] }
-export interface IHomeworkPageState {
-    pageOptionsByRole: { [role: string]: HomeworkPageOptions };
-    homeworkListDefault: Homework[];
-    openedItemSetsNames: string[];
-=========
 export interface IAppState {
   isLoggedIn: boolean;
   loadersCount: number;
@@ -103,6 +80,7 @@ export interface IAddHomeworkModal {
   isDataLoading: boolean;
   defaultFormValue: HomeworkInput;
   isModalHidden: boolean;
+  coursesForCloneEntities: DictionaryEntity[];
 }
 export interface INotificationContainerState {
   notifications: {

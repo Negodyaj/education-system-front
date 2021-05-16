@@ -34,6 +34,7 @@ import {
 import { homeworkAppointModalReducer } from './homework-page/homework-appoint-modal/reducer';
 import { homeworkAttemptReducer } from './homework-attempt/reducer';
 import { attendanceReducer } from './group-page/attendance/reducer';
+import { addHomeworkModalReducer } from './homework-page/add-homework-modal/reducer';
 
 export interface IRootState {
   tagsPage: ITagsPageState;

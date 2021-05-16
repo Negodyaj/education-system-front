@@ -16,6 +16,7 @@ const initialState: IAddHomeworkModal = {
   isDataLoading: false,
   defaultFormValue: defaultValues,
   isModalHidden: false,
+  coursesForCloneEntities: [],
 };
 
 export function addHomeworkModalReducer(
