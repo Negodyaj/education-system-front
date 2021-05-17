@@ -7,7 +7,6 @@ import {
   ExternalInputSettings,
   FormElementSettings,
 } from '../../helpers/userFormRegisterSettingByKey';
-import { getValidationPattern } from '../../validation-rules/validationPatterns';
 
 import DateInput from './DateInput';
 import MultiSelectInput from './MultiSelectInput';

@@ -1,16 +1,20 @@
 import { useDispatch, useSelector } from 'react-redux';
 
+import { Role } from '../../enums/role';
 import CustomMultiSelect from '../../shared/components/multi-select/CustomMultiSelect';
-import { convertRoleIdsToSelectItems } from '../../shared/converters/roleIdsToSelectItems';
-import { convertRoleIdToSelectItem } from '../../shared/converters/roleIdToSelectItem';
+import { convertEntitiesToSelectItems } from '../../shared/converters/entityToSelectItemConverter';
+import {
+  convertEnumToDictionary,
+  getRussianDictionary,
+} from '../../shared/converters/enumToDictionaryEntity';
+import { convertIdToSelectItem } from '../../shared/converters/roleIdToSelectItem';
 import { IRootState } from '../../store';
 import { setCurrentUserRoleId } from '../../store/role-selector/action-creator';
 import './LoginRoleSelector.css';
 
-export function LoginRoleSelector() {
+function LoginRoleSelector() {
   const dispatch = useDispatch();
   const appState = useSelector((state: IRootState) => state);
-
   const onSingleSelect = (roleId: number | null) => {
     dispatch(setCurrentUserRoleId(roleId || 0));
   };
@@ -26,12 +30,22 @@ export function LoginRoleSelector() {
         <CustomMultiSelect
           selectType="single"
           onSingleSelect={onSingleSelect}
-          selectedOption={convertRoleIdToSelectItem(
-            appState.roleSelector.currentUserRoleId
+          selectedOption={convertIdToSelectItem(
+            appState.roleSelector.currentUserRoleId,
+            convertEntitiesToSelectItems(
+              getRussianDictionary(convertEnumToDictionary(Role))
+            )
           )}
           options={
-            convertRoleIdsToSelectItems(
-              appState.roleSelector.currentUser?.roles
+            convertEntitiesToSelectItems(
+              getRussianDictionary(
+                convertEnumToDictionary(Role).filter(
+                  (item) =>
+                    appState.roleSelector.currentUser?.roles.includes(
+                      item.id
+                    ) && item
+                )
+              )
             ) || undefined
           }
         />

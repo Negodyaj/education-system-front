@@ -23,12 +23,12 @@ function UserPage() {
   }, []);
   useEffect(() => {
     Object.keys(appState.userPage.userForUserPage).map((key) => {
-      methods.setValue(
+      setValue(
         key as keyof UserInput,
         appState.userPage.userForUserPage[key as keyof UserInput]
       );
 
-      return key;
+      return undefined;
     });
   }, [appState.userPage.userForUserPage]);
   const onSubmit = (data: User) => {
@@ -37,14 +37,27 @@ function UserPage() {
   const closeUserPage = () => {
     history.push('/user-list');
   };
-  const { ...methods } = useForm<UserInput>();
+  const {
+    register,
+    formState,
+    handleSubmit,
+    getValues,
+    setValue,
+    ...methods
+  } = useForm<UserInput>();
 
   return appState.userPage.isDataLoading ? (
     <div>Loading</div>
   ) : (
-    <FormProvider {...methods}>
+    <FormProvider
+      register={register}
+      formState={formState}
+      handleSubmit={handleSubmit}
+      getValues={getValues}
+      setValue={setValue}
+      {...methods}>
       <div className="user-edit-form needs-validation was-validated">
-        <form onSubmit={methods.handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(onSubmit)}>
           {Object.keys(appState.userPage.userForUserPage).map((key) => (
             <FormElement
               formElementSettings={getUserFormElementSettings(

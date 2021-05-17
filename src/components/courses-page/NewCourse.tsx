@@ -67,7 +67,7 @@ function NewCourse() {
           {...methods}>
           <FormWrapper>
             <InputStyle onSubmit={handleSubmit(onSubmit)}>
-              {Object.keys(appState.coursePage.createCourseInputModel).map(
+              {/* {Object.keys(appState.coursePage.createCourseInputModel).map(
                 (key) => (
                   <FormElement
                     key={key}
@@ -76,7 +76,7 @@ function NewCourse() {
                     )}
                   />
                 )
-              )}
+              )} */}
             </InputStyle>
           </FormWrapper>
         </FormProvider>

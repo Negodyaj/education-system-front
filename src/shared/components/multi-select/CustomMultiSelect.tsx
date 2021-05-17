@@ -4,12 +4,8 @@ import Select, { ActionMeta, OptionsType } from 'react-select';
 
 import { SelectItem } from '../../../interfaces/SelectItem';
 import { convertEntitiesToSelectItems } from '../../converters/entityToSelectItem';
-import {
-  convertEnumToDictionary,
-  getRussianDictionary,
-} from '../../converters/enumToDictionaryEntity';
-import { convertRoleIdsToSelectItems } from '../../converters/roleIdsToSelectItems';
-import { convertRoleIdToSelectItem } from '../../converters/roleIdToSelectItem';
+import { convertIdsToSelectItems } from '../../converters/roleIdsToSelectItems';
+import { convertIdToSelectItem } from '../../converters/roleIdToSelectItem';
 import { ExternalInputSettings } from '../../helpers/userFormRegisterSettingByKey';
 
 import { customStyles } from './multiSelectCosnts';
@@ -85,7 +81,7 @@ function CustomMultiSelect(props: SelectProps) {
     setSelectedOptionsState(selectedOptionsArg as SelectItem[]);
     const roleIds = (selectedOptionsArg as SelectItem[]).map((i) => i.value);
     onMultiSelect && onMultiSelect(roleIds);
-    inputSettings && formContext?.setValue(inputSettings.name || '', roleIds);
+    inputSettings && formContext?.setValue(inputSettings.name, roleIds);
   };
   const onSingleSelectLocal = (selectedOptionArg: SelectItem | null) => {
     setSelectedOptionState(selectedOptionArg as SelectItem);
@@ -101,43 +97,49 @@ function CustomMultiSelect(props: SelectProps) {
     <Controller
       control={formContext?.control}
       name={inputSettings.name}
-      render={({ field: { value } }) =>
-        selectType === 'multi'
+      render={({ field: { value } }) => {
+        const entities =
+          typeof inputSettings.selectOptions === 'function' &&
+          inputSettings.selectOptions();
+
+        return selectType === 'multi'
           ? MultiSelect(
               convertEntitiesToSelectItems(
-                getRussianDictionary(
-                  convertEnumToDictionary(inputSettings.selectOptions)
-                )
+                entities || inputSettings.selectOptions
               ),
               value !== undefined
                 ? (() => {
-                    if (value[0]?.label) {
-                      return value;
-                    }
+                    if (value[0]?.label) return value;
 
-                    return convertRoleIdsToSelectItems(value);
+                    return convertIdsToSelectItems(
+                      value,
+                      convertEntitiesToSelectItems(
+                        entities || inputSettings.selectOptions
+                      )
+                    );
                   })()
                 : undefined,
               onMultiSelectLocal
             )
           : SingleSelect(
               convertEntitiesToSelectItems(
-                getRussianDictionary(
-                  convertEnumToDictionary(inputSettings.selectOptions)
-                )
+                entities || inputSettings.selectOptions
               ),
               value !== undefined
                 ? (() => {
-                    if (value?.label) {
-                      return value;
-                    }
+                    if (value?.label) return value;
 
-                    return convertRoleIdToSelectItem(value);
+                    return convertIdToSelectItem(
+                      value,
+                      convertEntitiesToSelectItems(
+                        entities || inputSettings.selectOptions
+                      )
+                    );
                   })()
                 : undefined,
               onSingleSelectLocal
-            )
-      }
+            );
+      }}
     />
   ) : (
     <div>

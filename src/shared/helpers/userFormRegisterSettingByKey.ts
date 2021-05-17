@@ -7,17 +7,19 @@ import {
   convertEnumToDictionary,
   getRussianDictionary,
 } from '../converters/enumToDictionaryEntity';
+import { getUserValidationPattern } from '../validation-rules/userValidationPatterns';
 
+import { EntitiesGetter } from './entitiesGetters';
 export interface BaseInputSettings {
   name: string;
   registerOptions?: RegisterOptions;
 }
 export interface InternalInputSettings extends BaseInputSettings {
-  inputType: 'text' | 'date' | 'picture' | 'number' | 'textarea';
+  inputType: 'text' | 'date' | 'picture' | 'textarea' | 'number';
 }
 export interface ExternalInputSettings extends BaseInputSettings {
   inputType: 'singleSelect' | 'multiSelect';
-  selectOptions: DictionaryEntity[];
+  selectOptions: DictionaryEntity[] | EntitiesGetter;
 }
 export type InputSettings = InternalInputSettings | ExternalInputSettings;
 export interface FormElementSettings {
@@ -27,7 +29,6 @@ export interface FormElementSettings {
 export const getUserFormElementSettings = (
   key: InputNames
 ): FormElementSettings => {
-  // call getValidationPattern here
   switch (key) {
     case InputNames.Id:
       return {
@@ -45,6 +46,7 @@ export const getUserFormElementSettings = (
           inputType: 'text',
           registerOptions: {
             required: 'Введите имя',
+            pattern: getUserValidationPattern(key),
           },
         },
       };
@@ -56,6 +58,7 @@ export const getUserFormElementSettings = (
           inputType: 'text',
           registerOptions: {
             required: 'Введите фамилию',
+            pattern: getUserValidationPattern(key),
           },
         },
       };
@@ -67,6 +70,7 @@ export const getUserFormElementSettings = (
           inputType: 'text',
           registerOptions: {
             required: 'Введите логин',
+            pattern: getUserValidationPattern(key),
           },
         },
       };
@@ -78,6 +82,7 @@ export const getUserFormElementSettings = (
           inputType: 'text',
           registerOptions: {
             required: 'Введите пароль',
+            pattern: getUserValidationPattern(key),
           },
         },
       };
@@ -89,6 +94,7 @@ export const getUserFormElementSettings = (
           inputType: 'picture',
           registerOptions: {
             required: 'Вставьте ссылку на изображение',
+            pattern: getUserValidationPattern(key),
           },
         },
       };
@@ -100,6 +106,7 @@ export const getUserFormElementSettings = (
           inputType: 'text',
           registerOptions: {
             required: 'Введите номер телефона',
+            pattern: getUserValidationPattern(key),
           },
         },
       };

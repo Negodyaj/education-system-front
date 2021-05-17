@@ -2,7 +2,7 @@ import { Dispatch } from 'redux';
 
 import { User } from '../../interfaces/User';
 import { UserDelete } from '../../interfaces/UserDelete';
-import { sendDeleteRequest, sendGetRequest } from '../../services/http.service';
+import * as service from '../../services/http.service';
 import { isUserArr } from '../../services/type-guards/userArray';
 import { isUserDelete } from '../../services/type-guards/userDelete';
 import { userListUrl, usersUrl } from '../../shared/consts';
@@ -21,7 +21,8 @@ import {
 
 export const getUsers = () => (dispatch: Dispatch) => {
   dispatch(setIsLoading());
-  sendGetRequest<User[]>(usersUrl, isUserArr)
+  service
+    .sendGetRequest<User[]>(usersUrl, isUserArr)
     .then((users) => {
       dispatch(setIsLoaded());
       dispatch(setUserListWasLoaded(thunkResponseHandler(dispatch, users)));
@@ -32,29 +33,31 @@ export const deleteUserRequest = (userToDeleteId: number) => (
   dispatch: Dispatch<any>
 ) => {
   dispatch(setUserDeleting());
-  sendDeleteRequest<UserDelete>(
-    `${usersUrl}/${userToDeleteId}`,
-    isUserDelete
-  ).then(
-    (response) => {
-      let deletedUser = thunkResponseHandler(dispatch, response);
+  service
+    .sendDeleteRequest<UserDelete>(
+      `${usersUrl}/${userToDeleteId}`,
+      isUserDelete
+    )
+    .then(
+      (response) => {
+        let deletedUser = thunkResponseHandler(dispatch, response);
 
-      if (deletedUser) {
-        deletedUser = { ...deletedUser } as UserDelete;
-        dispatch(setUserDeletingSuccess(deletedUser));
-        dispatch(
-          pushNotification(
-            makeNotification(
-              'success',
-              `Пользователь ${response.firstName} ${response.lastName} успешно удалён`
+        if (deletedUser) {
+          deletedUser = { ...deletedUser } as UserDelete;
+          dispatch(setUserDeletingSuccess(deletedUser));
+          dispatch(
+            pushNotification(
+              makeNotification(
+                'success',
+                `Пользователь ${response.firstName} ${response.lastName} успешно удалён`
+              )
             )
-          )
-        );
-        dispatch(getUsers());
-      } else {
-        dispatch(setUserDeletingFail());
-      }
-    },
-    () => {}
-  );
+          );
+          dispatch(getUsers());
+        } else {
+          dispatch(setUserDeletingFail());
+        }
+      },
+      () => {}
+    );
 };
