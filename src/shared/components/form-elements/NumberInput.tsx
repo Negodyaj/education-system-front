@@ -1,6 +1,6 @@
 import { useFormContext } from 'react-hook-form';
 
-import { InputSettings } from '../../helpers/useFormRegisterSettingByKey';
+import { InputSettings } from '../../helpers/userFormRegisterSettingByKey';
 
 function NumberInput(props: {
   inputSettings: InputSettings;
