@@ -1,5 +1,6 @@
 import { applyMiddleware, combineReducers, createStore } from 'redux';
 import thunk from 'redux-thunk';
+import createSagaMiddleware from 'redux-saga';
 
 import { coursePageReducer } from './courses-page/reducer';
 import { userListPageReducer } from './user-list-page/reducer';
@@ -33,6 +34,8 @@ import {
 import { homeworkAppointModalReducer } from './homework-page/homework-appoint-modal/reducer';
 import { homeworkAttemptReducer } from './homework-attempt/reducer';
 import { attendanceReducer } from './group-page/attendance/reducer';
+import { homeworkPageSaga } from './homework-page/saga';
+import { rootSaga } from './root-saga';
 
 export interface IRootState {
   tagsPage: ITagsPageState;
@@ -52,7 +55,8 @@ export interface IRootState {
   lessonByGroup: ILesson;
 }
 
-const middlewares = [thunk];
+const sagaMiddleware = createSagaMiddleware();
+const middlewares = [thunk, sagaMiddleware];
 
 const store = createStore<IRootState, any, any, any>(
   combineReducers({
@@ -75,5 +79,7 @@ const store = createStore<IRootState, any, any, any>(
   undefined,
   applyMiddleware(...middlewares)
 );
+
+sagaMiddleware.run(rootSaga);
 
 export default store;

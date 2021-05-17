@@ -1,5 +1,6 @@
 import { Homework } from '../../interfaces/Homework';
 import {
+  GET_HOMEWORKS,
   HOMEWORK_DELETE_PENDING,
   HOMEWORK_LOAD_SUCCESS,
   ITEMS_SET_OPEN,
@@ -8,7 +9,8 @@ import {
 export type HomeworkPageActions =
   | ReturnType<typeof deleteHomeworkRequest>
   | ReturnType<typeof loadHomeworkSuccess>
-  | ReturnType<typeof openItemsSet>;
+  | ReturnType<typeof openItemsSet>
+  | ReturnType<typeof getHomeworks>;
 
 export const loadHomeworkSuccess = (
   homeworkList: Homework[],
@@ -20,6 +22,11 @@ export const loadHomeworkSuccess = (
       payload: homeworkList,
       currentUserRoleId,
     },
+  } as const);
+export const getHomeworks = (currentUserRoleId: number) =>
+  ({
+    type: GET_HOMEWORKS,
+    payload: currentUserRoleId,
   } as const);
 export const deleteHomeworkRequest = (homeworkId: number) =>
   ({
