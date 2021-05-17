@@ -7,13 +7,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 
 import { User } from '../../../interfaces/User';
-import { IRootState } from '../../../store';
 import { PaymentInput } from '../../interfaces/PaymentInput';
 import { getPayment, sendPayment } from '../../../store/payment/thunk';
 import {
   setPaymentFormCLose,
   setPaymentFormOpen,
 } from '../../../store/payment/action-creators';
+import { IRootState } from '../../../store';
 
 interface PaymentProps {
   paymentFormState: string;

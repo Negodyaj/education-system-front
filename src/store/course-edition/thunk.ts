@@ -2,12 +2,6 @@ import { Dispatch } from 'redux';
 
 import { Course } from '../../interfaces/Courses';
 import { Themes } from '../../interfaces/Themes';
-import {
-  sendDeleteRequestNoResponse,
-  sendGetRequest,
-  sendPostRequest,
-  sendPostRequestNoResponse,
-} from '../../services/http.service';
 import { isCourse } from '../../services/type-guards/course';
 import { isThemesArr } from '../../services/type-guards/themesArr';
 import { coursesUrl, themesUrl } from '../../shared/consts';
@@ -18,6 +12,11 @@ import {
 import { thunkResponseHandler } from '../thunkResponseHadlers';
 import { pushNotification } from '../notifications/action-creators';
 import { makeNotification } from '../../shared/helpers/notificationHelpers';
+import {
+  sendDeleteRequestNoResponse,
+  sendGetRequest,
+  sendPostRequestNoResponse,
+} from '../../services/http.service';
 
 import {
   getCourseByIdLoaded,

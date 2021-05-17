@@ -1,7 +1,7 @@
 import { Dispatch } from 'redux';
 import { WretcherError } from 'wretch';
 
-import { WRONG_DATA_STATUS } from '../services/http.service';
+import * as service from '../services/http.service';
 import { makeNotification } from '../shared/helpers/notificationHelpers';
 
 import { pushNotification } from './notifications/action-creators';
@@ -15,7 +15,7 @@ export const thunkResponseHandler = (dispatch: Dispatch, response: any) => {
       pushNotification(
         makeNotification(
           'error',
-          error.status === WRONG_DATA_STATUS
+          error.status === service.WRONG_DATA_STATUS
             ? 'неверные данные'
             : `${error.status} ${
                 JSON.parse(error.text || ERROR_MESSAGE).Message

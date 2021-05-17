@@ -1,6 +1,6 @@
 import { Controller, useFormContext } from 'react-hook-form';
 
-import { ExternalInputSettings } from '../../helpers/useFormRegisterSettingByKey';
+import { ExternalInputSettings } from '../../helpers/userFormRegisterSettingByKey';
 
 import TextInput from './TextInput';
 
