@@ -1,6 +1,6 @@
 import { Lesson } from '../../../interfaces/Lesson';
 import {
-  LESSON_ID_FOR_DELETE_LESSON,
+  SELECTED_LESSON_ID,
   LESSON_LIST_WRETCH_FAIL,
   LESSON_LIST_WRETCH_LOADED,
   LESSON_LIST_WRETCH_LOADING,
@@ -16,7 +16,7 @@ export type LessonListActions =
   | ReturnType<typeof setIsOpenModalAttendance>
   | ReturnType<typeof setIsOpenModalAddLesson>
   | ReturnType<typeof setIsOpenModalDeleteLesson>
-  | ReturnType<typeof setIdLessonForDelete>;
+  | ReturnType<typeof setSelectedLessonId>;
 
 export const setLessonListIsLoading = () =>
   ({
@@ -53,8 +53,8 @@ export const setIsOpenModalDeleteLesson = () =>
     payload: undefined,
   } as const);
 
-export const setIdLessonForDelete = (lessonId: number) =>
+export const setSelectedLessonId = (lessonId: number) =>
   ({
-    type: LESSON_ID_FOR_DELETE_LESSON,
+    type: SELECTED_LESSON_ID,
     payload: lessonId,
   } as const);

@@ -88,7 +88,7 @@ export interface ILesson {
   isOpenModalAttendance: boolean;
   isOpenModalAddLesson: boolean;
   isOpenModalDeleteLesson: boolean;
-  idLessonForDelete: number;
+  idSelectedLesson: number;
   createLessonInputModel: LessonInput;
 }
 

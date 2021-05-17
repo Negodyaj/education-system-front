@@ -19,8 +19,8 @@ import {
 
 const ModalLessonDelete = () => {
   const dispatch = useDispatch();
-  const deleteLessonId = useSelector(
-    (state: IRootState) => state.lessonByGroup.idLessonForDelete
+  const lessonIdForDelete = useSelector(
+    (state: IRootState) => state.lessonByGroup.idSelectedLesson
   );
 
   const closeModalDeleteLesson = () => {
@@ -28,7 +28,7 @@ const ModalLessonDelete = () => {
   };
 
   const deleteLessonById = () => {
-    dispatch(deleteLesson(deleteLessonId));
+    dispatch(deleteLesson(lessonIdForDelete));
   };
 
   return (

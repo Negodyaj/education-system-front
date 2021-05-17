@@ -1,6 +1,6 @@
 import { LessonInput } from '../../../interfaces/LessonInput';
 import {
-  LESSON_ID_FOR_DELETE_LESSON,
+  SELECTED_LESSON_ID,
   LESSON_LIST_WRETCH_FAIL,
   LESSON_LIST_WRETCH_LOADED,
   LESSON_LIST_WRETCH_LOADING,
@@ -31,7 +31,7 @@ const initialState: ILesson = {
   isOpenModalAttendance: false,
   isOpenModalAddLesson: false,
   isOpenModalDeleteLesson: false,
-  idLessonForDelete: 0,
+  idSelectedLesson: 0,
   createLessonInputModel: INIT_LESSON_TO_CREATE,
 };
 
@@ -55,8 +55,8 @@ export function lessonByGroupReducer(
         ...state,
         isOpenModalDeleteLesson: !state.isOpenModalDeleteLesson,
       };
-    case LESSON_ID_FOR_DELETE_LESSON:
-      return { ...state, idLessonForDelete: action.payload };
+    case SELECTED_LESSON_ID:
+      return { ...state, idSelectedLesson: action.payload };
     default:
       return state;
   }

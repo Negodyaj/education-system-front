@@ -32,7 +32,7 @@ export interface IUserAttendance {
 
 const ModalAttendance = () => {
   const dispatch = useDispatch();
-  const pageState = useSelector((state: IRootState) => state.userListPage);
+  const pageState = useSelector((state: IRootState) => state);
   const presenceOfUserOnLesson: IUserAttendance[] = [];
 
   const closeModalAttendance = () => {
@@ -45,13 +45,18 @@ const ModalAttendance = () => {
   }, []);
 
   const indicateAttendance = () => {
-    pageState.userList.map((user) =>
+    pageState.userListPage.userList.map((user) =>
       presenceOfUserOnLesson.push({
         userId: user.id,
         isPresence: false,
       })
     );
-    dispatch(createAttendance(28, presenceOfUserOnLesson));
+    dispatch(
+      createAttendance(
+        pageState.lessonByGroup.idSelectedLesson,
+        presenceOfUserOnLesson
+      )
+    );
     console.log(presenceOfUserOnLesson);
   };
 
@@ -63,7 +68,7 @@ const ModalAttendance = () => {
           <FontAwesomeIcon icon="times" />
         </RoundButton>
         <UserListAttendanceByGroup>
-          {pageState.userList.map((user) => (
+          {pageState.userListPage.userList.map((user) => (
             <UserAttendance key={user.id}>
               <UserDataForAttendance>
                 <UserPicForAttendance src={user.userPic} />

@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { IRootState } from '../../../store';
 import {
-  setIdLessonForDelete,
+  setSelectedLessonId,
   setIsOpenModalDeleteLesson,
 } from '../../../store/group-page/lesson/action-creators';
 import { getLessonsByGroup } from '../../../store/group-page/lesson/thunk';
@@ -31,7 +31,11 @@ function LessonsTableByGroup() {
 
   const openModalDeleteLesson = (lessonId: number) => {
     dispatch(setIsOpenModalDeleteLesson());
-    dispatch(setIdLessonForDelete(lessonId));
+    dispatch(setSelectedLessonId(lessonId));
+  };
+
+  const rememberLessonId = (lessonId: number) => {
+    dispatch(setSelectedLessonId(lessonId));
   };
 
   return (
@@ -44,7 +48,10 @@ function LessonsTableByGroup() {
         <HeaderColumnLessonsTable>Действия</HeaderColumnLessonsTable>
       </HeaderLessonsTable>
       {pageState.lessonList.map((lesson) => (
-        <ContentColumnLessonsTable>
+        <ContentColumnLessonsTable
+          onClick={() => {
+            rememberLessonId(lesson.id);
+          }}>
           <ColumnLessonsTable>{lesson.lessonDate}</ColumnLessonsTable>
           <ColumnLessonsTable>{lesson.description}</ColumnLessonsTable>
           <ColumnLessonsTable>{lesson.themes}</ColumnLessonsTable>
