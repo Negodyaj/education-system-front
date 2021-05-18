@@ -41,23 +41,25 @@ const ModalAttendance = () => {
 
   useEffect(() => {
     dispatch(getUsers());
-    indicateAttendance();
+    collectDataToCreateAttendances();
   }, []);
 
-  const indicateAttendance = () => {
+  const collectDataToCreateAttendances = () => {
     pageState.userListPage.userList.map((user) =>
       presenceOfUserOnLesson.push({
         userId: user.id,
         isPresence: false,
       })
     );
+  };
+
+  const saveAttendances = () => {
     dispatch(
       createAttendance(
         pageState.lessonByGroup.idSelectedLesson,
         presenceOfUserOnLesson
       )
     );
-    console.log(presenceOfUserOnLesson);
   };
 
   return (
@@ -86,7 +88,7 @@ const ModalAttendance = () => {
           ))}
         </UserListAttendanceByGroup>
         <SaveUsersAttendance>
-          <CommonButton>Сохранить</CommonButton>
+          <CommonButton onClick={saveAttendances}>Сохранить</CommonButton>
         </SaveUsersAttendance>
       </ModalAttendanceContainer>
     </ModalAttendanceBack>
