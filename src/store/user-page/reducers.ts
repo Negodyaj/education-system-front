@@ -6,7 +6,6 @@ import { convertUserToUserUpdate } from '../../shared/converters/userToUserUpdat
 import {
   USER_IS_SENDING,
   USER_TO_EDIT_ID_FOR_USER_PAGE,
-  USER_SENDING_SUCCESS,
   USER_TO_EDIT_LOADING,
   USER_TO_EDIT_LOADED,
   USER_TO_EDIT_FAIL,
@@ -67,8 +66,6 @@ export function userPageReducer(
       return { ...state, isDataLoading: false };
     case USER_IS_SENDING:
       return { ...state, isDataLoading: true };
-    case USER_SENDING_SUCCESS:
-      return { ...state, isDataLoading: false };
     case USER_SENDING_FAIL:
       return { ...state, isDataLoading: false };
     default:

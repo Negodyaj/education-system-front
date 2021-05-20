@@ -6,13 +6,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
 
 import { IRootState } from '../../store';
-import { sendUser } from '../../store/user-page/thunk';
 import { UserInput } from '../../interfaces/UserInput';
-import { User } from '../../interfaces/User';
 import FormElement from '../../shared/components/form-elements/FormElement';
 import { InputNames } from '../../enums/inputNames';
 import { getUserFormElementSettings } from '../../shared/helpers/userFormRegisterSettingByKey';
-import { getUserToEdit } from '../../store/user-page/action-creators';
+import { getUserToEdit, sendUser } from '../../store/user-page/action-creators';
 
 export interface UserPageOptions {
   isReadonly: boolean;
@@ -37,7 +35,7 @@ function UserPage() {
       return undefined;
     });
   }, [appState.userPage.userForUserPage]);
-  const onSubmit = (data: User) => {
+  const onSubmit = (data: UserInput) => {
     dispatch(sendUser(data, appState.userPage.userForUserPageId, history));
   };
   const closeUserPage = () => {
@@ -47,7 +45,7 @@ function UserPage() {
   return (
     <FormProvider {...methods}>
       <div className="user-edit-form needs-validation was-validated">
-        <form onSubmit={methods.handleSubmit(onSubmit)}>
+        <form>
           {Object.keys(appState.userPage.userForUserPage).map((key) => (
             <FormElement
               formElementSettings={getUserFormElementSettings(
@@ -63,7 +61,10 @@ function UserPage() {
               onClick={closeUserPage}>
               отмена
             </button>
-            <button className="common-button" type="submit">
+            <button
+              className="common-button"
+              type="button"
+              onClick={() => onSubmit(methods.getValues())}>
               сохранить
             </button>
           </div>

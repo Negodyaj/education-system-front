@@ -13,22 +13,19 @@ import { setIsLoaded, setIsLoading } from '../app/action-creators';
 import { constructNotificationError } from '../core/error-notification-constructor';
 import { pushNotification } from '../notifications/action-creators';
 
-import {
-  deleteUserRequest,
-  getUsers,
-  setUserListWasLoaded,
-} from './action-creators';
+import { deleteUserRequest, setUserListWasLoaded } from './action-creators';
 
 function* userListPageRootSaga() {
   yield all([getUsersSagaWatcher(), deleteUserSagaWatcher()]);
 }
-
 function* getUsersSagaWatcher() {
+  yield takeLatest(GET_USERS, getUsersSagaWorkerWrapper);
+}
+function* getUsersSagaWorkerWrapper() {
   yield put(setIsLoading());
-  yield takeLatest(GET_USERS, getUsersSagaWorker);
+  yield getUsersSagaWorker();
   yield put(setIsLoaded());
 }
-
 function* getUsersSagaWorker() {
   const users: User[] = yield call(async () =>
     sendGetRequest<User[]>(usersUrl, isUserArr).then((response) => response)
