@@ -2,7 +2,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { ChangeEventHandler, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { toggleModalHidden } from '../../../store/tags-page/action-creators';
+import {
+  addTagWatcherAction,
+  toggleModalHidden,
+} from '../../../store/tags-page/action-creators';
 import { addTag } from '../../../store/tags-page/thunk';
 import {
   CommonButton,
@@ -32,7 +35,7 @@ function AddTagModal(props: AddTagModalProps) {
   };
 
   const AddNewTag = () => {
-    dispatch(addTag({ name: nameNewTag }));
+    dispatch(addTagWatcherAction({ name: nameNewTag }));
   };
   const [isDisabled, setIsDisabled] = useState(true);
 

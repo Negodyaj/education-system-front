@@ -3,12 +3,16 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Tag } from '../../../interfaces/Tag';
-import { deleteTagThunk, getTags } from '../../../store/tags-page/thunk';
+import { deleteTagThunk } from '../../../store/tags-page/thunk';
 import { IRootState } from '../../../store';
 import {
   RoundButton,
   CommonButton,
 } from '../../../shared/styled-components/buttonStyledComponent';
+import {
+  deleteTagWatcherAction,
+  loadTagsListWatcherAction,
+} from '../../../store/tags-page/action-creators';
 
 interface TagListProps {
   str: string;
@@ -19,11 +23,11 @@ function TagList(props: TagListProps) {
   const pageState = useSelector((state: IRootState) => state.tagsPage);
 
   useEffect(() => {
-    dispatch(getTags());
+    dispatch(loadTagsListWatcherAction());
   }, []);
 
   const deleteTag = (tag: Tag) => {
-    dispatch(deleteTagThunk(tag.id, tag.name));
+    dispatch(deleteTagWatcherAction(tag.id, tag.name));
   };
 
   return (

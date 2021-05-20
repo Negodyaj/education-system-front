@@ -13,4 +13,6 @@ export const useGroupsWithAttemptsForCurrentTeacher = () =>
   useSelector((state: IRootState) => state.homeworkAttempt.currentHomework);
 
 export const useCoursesForHomeworkAddModal = () =>
-useSelector((state: IRootState) => state.addHomeWorkModal.coursesForCloneEntities)
+  useSelector(
+    (state: IRootState) => state.addHomeWorkModal.coursesForCloneEntities
+  );
