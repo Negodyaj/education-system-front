@@ -3,7 +3,10 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { IRootState } from '../../../store';
-import { setIsOpenModalAttendance } from '../../../store/group-page/lesson/action-creators';
+import {
+  setDataToCreateAttendances,
+  setIsOpenModalAttendance,
+} from '../../../store/group-page/lesson/action-creators';
 import { createAttendance } from '../../../store/group-page/lesson/thunk';
 import { getUsers } from '../../../store/user-list-page/thunk';
 
@@ -27,37 +30,53 @@ import {
 
 export interface IUserAttendance {
   userId: number;
-  isPresence: boolean;
+  isAbsent: boolean;
 }
 
 const ModalAttendance = () => {
   const dispatch = useDispatch();
   const pageState = useSelector((state: IRootState) => state);
-  const presenceOfUserOnLesson: IUserAttendance[] = [];
+  let presenceOfUserOnLesson: IUserAttendance[] = [];
+
+  useEffect(() => {
+    dispatch(getUsers());
+  }, []);
+
+  useEffect(() => {
+    collectDataToCreateAttendances();
+  }, [pageState.userListPage.userList]);
 
   const closeModalAttendance = () => {
     dispatch(setIsOpenModalAttendance());
   };
 
-  useEffect(() => {
-    dispatch(getUsers());
-    collectDataToCreateAttendances();
-  }, []);
-
   const collectDataToCreateAttendances = () => {
     pageState.userListPage.userList.map((user) =>
       presenceOfUserOnLesson.push({
         userId: user.id,
-        isPresence: false,
+        isAbsent: false,
       })
     );
+    dispatch(setDataToCreateAttendances(presenceOfUserOnLesson));
+  };
+
+  const changeDataToCreateAttendances = (idUser: number) => {
+    presenceOfUserOnLesson = pageState.lessonByGroup.arrDataToCreateAttendances;
+    presenceOfUserOnLesson.map((dataAttendance) => {
+      if (dataAttendance.userId === idUser) {
+        dataAttendance.isAbsent = !dataAttendance.isAbsent;
+      }
+
+      return presenceOfUserOnLesson;
+    });
+    dispatch(setDataToCreateAttendances(presenceOfUserOnLesson));
   };
 
   const saveAttendances = () => {
     dispatch(
       createAttendance(
         pageState.lessonByGroup.idSelectedLesson,
-        presenceOfUserOnLesson
+        pageState.lessonByGroup.arrDataToCreateAttendances
       )
     );
   };
@@ -80,7 +99,11 @@ const ModalAttendance = () => {
               </UserDataForAttendance>
               <UserAttendanceSelect>
                 <CheckBoxWrapper>
-                  <CheckBox id={String(user.id)} type="checkbox" />
+                  <CheckBox
+                    id={String(user.id)}
+                    type="checkbox"
+                    onClick={() => changeDataToCreateAttendances(user.id)}
+                  />
                   <CheckBoxLabel htmlFor={String(user.id)} />
                 </CheckBoxWrapper>
               </UserAttendanceSelect>

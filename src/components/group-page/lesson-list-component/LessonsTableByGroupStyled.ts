@@ -29,6 +29,10 @@ export const ContentColumnLessonsTable = styled.div`
     background-color: rgba(0, 211, 248, 0.15);
     border-radius: 5px;
   }
+  &:focus {
+    background-color: rgba(0, 211, 248, 0.15);
+    border-radius: 5px;
+  }
 `;
 
 export const ColumnLessonsTable = styled.div`

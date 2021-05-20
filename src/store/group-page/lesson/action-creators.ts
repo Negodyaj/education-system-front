@@ -1,3 +1,4 @@
+import { IUserAttendance } from '../../../components/group-page/lesson-list-component/ModalAttendance';
 import { Lesson } from '../../../interfaces/Lesson';
 import {
   SELECTED_LESSON_ID,
@@ -7,6 +8,7 @@ import {
   LESSON_TOGGLE_MODAL_ADD_LESSON,
   LESSON_TOGGLE_MODAL_ATTENDANCE,
   LESSON_TOGGLE_MODAL_DELETE_LESSON,
+  DATA_TO_CREATE_ATTENDANCES,
 } from '../../actionTypes';
 
 export type LessonListActions =
@@ -16,7 +18,8 @@ export type LessonListActions =
   | ReturnType<typeof setIsOpenModalAttendance>
   | ReturnType<typeof setIsOpenModalAddLesson>
   | ReturnType<typeof setIsOpenModalDeleteLesson>
-  | ReturnType<typeof setSelectedLessonId>;
+  | ReturnType<typeof setSelectedLessonId>
+  | ReturnType<typeof setDataToCreateAttendances>;
 
 export const setLessonListIsLoading = () =>
   ({
@@ -57,4 +60,10 @@ export const setSelectedLessonId = (lessonId: number) =>
   ({
     type: SELECTED_LESSON_ID,
     payload: lessonId,
+  } as const);
+
+export const setDataToCreateAttendances = (arrData: IUserAttendance[]) =>
+  ({
+    type: DATA_TO_CREATE_ATTENDANCES,
+    payload: arrData,
   } as const);

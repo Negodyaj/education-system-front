@@ -19,6 +19,7 @@ import { thunkResponseHandler } from '../../thunkResponseHadlers';
 
 import {
   setIsOpenModalAddLesson,
+  setIsOpenModalAttendance,
   setIsOpenModalDeleteLesson,
   setLessonListFail,
   setLessonListWasLoaded,
@@ -97,6 +98,7 @@ export const createAttendance = (
               )
             )
           );
+        dispatch(setIsOpenModalAttendance());
       })
       .catch((error) => dispatch(setLessonListFail(error)))
   );

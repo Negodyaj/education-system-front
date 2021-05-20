@@ -16,6 +16,7 @@ import { Lesson } from '../interfaces/Lesson';
 import { CourseInput } from '../interfaces/CourseInput';
 import { INIT_HOMEWORK } from '../shared/tmp-mock-data/hw/initHomewwork';
 import { LessonInput } from '../interfaces/LessonInput';
+import { IUserAttendance } from '../components/group-page/lesson-list-component/ModalAttendance';
 
 export interface IAppState {
   isLoggedIn: boolean;
@@ -109,6 +110,7 @@ export interface ILesson {
   isOpenModalAddLesson: boolean;
   isOpenModalDeleteLesson: boolean;
   idSelectedLesson: number;
+  arrDataToCreateAttendances: IUserAttendance[];
   createLessonInputModel: LessonInput;
 }
 

@@ -7,6 +7,7 @@ import {
   LESSON_TOGGLE_MODAL_ADD_LESSON,
   LESSON_TOGGLE_MODAL_ATTENDANCE,
   LESSON_TOGGLE_MODAL_DELETE_LESSON,
+  DATA_TO_CREATE_ATTENDANCES,
 } from '../../actionTypes';
 import { ILesson } from '../../state';
 
@@ -32,6 +33,7 @@ const initialState: ILesson = {
   isOpenModalAddLesson: false,
   isOpenModalDeleteLesson: false,
   idSelectedLesson: 0,
+  arrDataToCreateAttendances: [],
   createLessonInputModel: INIT_LESSON_TO_CREATE,
 };
 
@@ -57,6 +59,8 @@ export function lessonByGroupReducer(
       };
     case SELECTED_LESSON_ID:
       return { ...state, idSelectedLesson: action.payload };
+    case DATA_TO_CREATE_ATTENDANCES:
+      return { ...state, arrDataToCreateAttendances: action.payload };
     default:
       return state;
   }

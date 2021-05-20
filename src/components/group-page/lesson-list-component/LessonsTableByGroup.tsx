@@ -51,7 +51,8 @@ function LessonsTableByGroup() {
         <ContentColumnLessonsTable
           onClick={() => {
             rememberLessonId(lesson.id);
-          }}>
+          }}
+          tabIndex={0}>
           <ColumnLessonsTable>{lesson.lessonDate}</ColumnLessonsTable>
           <ColumnLessonsTable>{lesson.description}</ColumnLessonsTable>
           <ColumnLessonsTable>{lesson.themes}</ColumnLessonsTable>
