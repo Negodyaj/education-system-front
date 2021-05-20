@@ -4,9 +4,9 @@ import { INIT_HOMEWORK } from '../tmp-mock-data/hw/initHomewwork';
 
 export const convertHomeworkListForTeacherMode = (
   actionPayload: Homework[]
-): IndexedObj<Homework> => {
+): IndexedObj<Homework[]> => {
   const previousGroupIds: number[] | undefined = [];
-  const result: IndexedObj<Homework> = {};
+  const result: IndexedObj<Homework[]> = {};
   const groupIndex = 0;
   const currentGroupId = 0;
 

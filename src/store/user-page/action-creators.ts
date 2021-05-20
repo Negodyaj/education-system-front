@@ -7,10 +7,12 @@ import {
   USER_TO_EDIT_ID_FOR_USER_PAGE,
   USER_TO_EDIT_LOADED,
   USER_TO_EDIT_LOADING,
+  USER_TO_EDIT_LOADING_WATCHER,
 } from '../actionTypes';
 
 export type UserPageActions =
   | ReturnType<typeof setUserForUserPageId>
+  | ReturnType<typeof getUserToEdit>
   | ReturnType<typeof setUserToEditIsLoading>
   | ReturnType<typeof setUserToEditWasLoaded>
   | ReturnType<typeof setUserToEditFail>
@@ -22,6 +24,11 @@ export const setUserForUserPageId = (userId: number) =>
   ({
     type: USER_TO_EDIT_ID_FOR_USER_PAGE,
     payload: userId,
+  } as const);
+export const getUserToEdit = (userToEditId?: string) =>
+  ({
+    type: USER_TO_EDIT_LOADING_WATCHER,
+    payload: userToEditId,
   } as const);
 export const setUserToEditIsLoading = () =>
   ({

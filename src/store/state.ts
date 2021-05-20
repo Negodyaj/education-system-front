@@ -15,6 +15,8 @@ import { Attendance } from '../interfaces/Attendance';
 import { Lesson } from '../interfaces/Lesson';
 import { CourseInput } from '../interfaces/CourseInput';
 import { INIT_HOMEWORK } from '../shared/tmp-mock-data/hw/initHomewwork';
+import { IndexedObj } from '../interfaces/IndexedObj';
+import { UserPageOptions } from '../components/user-page/UserPage';
 
 export interface IAppState {
   isLoggedIn: boolean;
@@ -48,6 +50,7 @@ export interface IUserPage {
   userForUserPageId: number;
   isReadonly: boolean;
   isDataLoading: boolean;
+  pageOptionsByRole: IndexedObj<UserPageOptions>;
 }
 export interface IRoleSelector {
   isTurnedOn: boolean;
@@ -61,7 +64,7 @@ export interface IAppState {
   loadersCount: number;
 }
 export interface IHomeworkPageState {
-  pageOptionsByRole: { [role: string]: HomeworkPageOptions };
+  pageOptionsByRole: IndexedObj<HomeworkPageOptions>;
   homeworkListDefault: Homework[];
   openedItemSetsNames: string[];
 }

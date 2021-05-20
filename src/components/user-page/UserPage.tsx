@@ -6,12 +6,17 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
 
 import { IRootState } from '../../store';
-import { getUserToEditById, sendUser } from '../../store/user-page/thunk';
+import { sendUser } from '../../store/user-page/thunk';
 import { UserInput } from '../../interfaces/UserInput';
 import { User } from '../../interfaces/User';
 import FormElement from '../../shared/components/form-elements/FormElement';
 import { InputNames } from '../../enums/inputNames';
 import { getUserFormElementSettings } from '../../shared/helpers/userFormRegisterSettingByKey';
+import { getUserToEdit } from '../../store/user-page/action-creators';
+
+export interface UserPageOptions {
+  isReadonly: boolean;
+}
 
 function UserPage() {
   const dispatch = useDispatch();
@@ -19,11 +24,12 @@ function UserPage() {
   const { idToEdit } = useParams<{ idToEdit?: string }>();
   const history = useHistory();
   useEffect(() => {
-    dispatch(getUserToEditById(idToEdit));
+    dispatch(getUserToEdit(idToEdit));
   }, []);
+  const { ...methods } = useForm<UserInput>();
   useEffect(() => {
     Object.keys(appState.userPage.userForUserPage).map((key) => {
-      setValue(
+      methods.setValue(
         key as keyof UserInput,
         appState.userPage.userForUserPage[key as keyof UserInput]
       );
@@ -37,27 +43,11 @@ function UserPage() {
   const closeUserPage = () => {
     history.push('/user-list');
   };
-  const {
-    register,
-    formState,
-    handleSubmit,
-    getValues,
-    setValue,
-    ...methods
-  } = useForm<UserInput>();
 
-  return appState.userPage.isDataLoading ? (
-    <div>Loading</div>
-  ) : (
-    <FormProvider
-      register={register}
-      formState={formState}
-      handleSubmit={handleSubmit}
-      getValues={getValues}
-      setValue={setValue}
-      {...methods}>
+  return (
+    <FormProvider {...methods}>
       <div className="user-edit-form needs-validation was-validated">
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={methods.handleSubmit(onSubmit)}>
           {Object.keys(appState.userPage.userForUserPage).map((key) => (
             <FormElement
               formElementSettings={getUserFormElementSettings(

@@ -1,3 +1,4 @@
+import { Role } from '../../enums/role';
 import { User } from '../../interfaces/User';
 import { UNSET_USER_ID_FOR_USER_PAGE } from '../../shared/consts';
 import { convertUserToUserInput } from '../../shared/converters/userToUserInput';
@@ -34,6 +35,11 @@ const initialState: IUserPage = {
   userForUserPageId: UNSET_USER_ID_FOR_USER_PAGE,
   isReadonly: false,
   isDataLoading: true,
+  pageOptionsByRole: {
+    [Role[Role.Student]]: {
+      isReadonly: true,
+    },
+  },
 };
 export function userPageReducer(
   state: IUserPage = initialState,

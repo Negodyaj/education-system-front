@@ -21,7 +21,7 @@ import {
   loadHomeworkSuccess,
 } from './action-creators';
 
-export function* homeworkPageRootSaga() {
+export function* homeworkPageWatchers() {
   yield all([fork(homeworkPageSaga), fork(anotherHomeworkPageSaga)]);
 }
 
@@ -29,7 +29,9 @@ export function* homeworkPageSaga() {
   yield takeLatest(GET_HOMEWORKS, loadHomeworkListSaga);
 }
 
-export function* loadHomeworkListSaga({ payload }: any) {
+export function* loadHomeworkListSaga({
+  payload,
+}: ReturnType<typeof getHomeworks>) {
   try {
     const homeworks: Homework[] = yield call(async () =>
       sendGetRequest<Homework[]>(`${homeworkUrl}`, isHomeworkArr).then(

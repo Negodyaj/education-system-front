@@ -52,28 +52,25 @@ export const sendUser = (user: User, userId: number, history: any) => (
       userRegisterUrl,
       isUserRegisterResponse,
       convertUserToUserInput(user)
-    ).then(
-      (userUpdateResponse) => {
-        const response = thunkResponseHandler(dispatch, userUpdateResponse);
+    ).then((userUpdateResponse) => {
+      const response = thunkResponseHandler(dispatch, userUpdateResponse);
 
-        if (response) {
-          const userResponse = { ...response } as User;
-          dispatch(
-            pushNotification(
-              makeNotification(
-                'success',
-                `Пользователь ${userResponse.firstName} ${userResponse.lastName} успешно зарегистрирован`
-              )
+      if (response) {
+        const userResponse = { ...response } as User;
+        dispatch(
+          pushNotification(
+            makeNotification(
+              'success',
+              `Пользователь ${userResponse.firstName} ${userResponse.lastName} успешно зарегистрирован`
             )
-          );
-          dispatch(setUserUpdateResponse());
-          history.push(`/${userListUrl}`);
-        } else {
-          dispatch(setUserSendingFail());
-        }
-      },
-      () => {}
-    );
+          )
+        );
+        dispatch(setUserUpdateResponse());
+        history.push(`/${userListUrl}`);
+      } else {
+        dispatch(setUserSendingFail());
+      }
+    });
   }
 };
 const updateUser = (user: User, userId: number, history: any) => (
@@ -100,7 +97,6 @@ const updateUser = (user: User, userId: number, history: any) => (
       } else {
         dispatch(setUserSendingFail());
       }
-    },
-    () => {}
+    }
   );
 };
