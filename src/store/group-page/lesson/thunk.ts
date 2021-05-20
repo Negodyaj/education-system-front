@@ -16,6 +16,7 @@ import { lessonsUrl } from '../../../shared/consts';
 import { makeNotification } from '../../../shared/helpers/notificationHelpers';
 import { pushNotification } from '../../notifications/action-creators';
 import { thunkResponseHandler } from '../../thunkResponseHadlers';
+import { CurrentLesson } from '../../../components/group-page/lesson-list-component/LessonsTableByGroup';
 
 import {
   setIsOpenModalAddLesson,
@@ -23,6 +24,7 @@ import {
   setIsOpenModalDeleteLesson,
   setLessonListFail,
   setLessonListWasLoaded,
+  setSelectedLesson,
 } from './action-creators';
 
 export const getLessonsByGroup = () => (dispatch: Dispatch) => {
@@ -68,6 +70,7 @@ export const deleteLesson = (id: number) => (dispatch: Dispatch<any>) => {
           )
         );
       dispatch(setIsOpenModalDeleteLesson());
+      dispatch(setSelectedLesson({} as CurrentLesson));
       dispatch(getLessonsByGroup());
     })
     .catch((error) => dispatch(setLessonListFail(error)));
@@ -98,7 +101,7 @@ export const createAttendance = (
               )
             )
           );
-        dispatch(setIsOpenModalAttendance());
+        dispatch(setSelectedLesson({} as CurrentLesson));
       })
       .catch((error) => dispatch(setLessonListFail(error)))
   );

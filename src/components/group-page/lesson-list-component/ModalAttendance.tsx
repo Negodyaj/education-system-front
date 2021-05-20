@@ -6,15 +6,18 @@ import { IRootState } from '../../../store';
 import {
   setDataToCreateAttendances,
   setIsOpenModalAttendance,
+  setSelectedLesson,
 } from '../../../store/group-page/lesson/action-creators';
 import { createAttendance } from '../../../store/group-page/lesson/thunk';
 import { getUsers } from '../../../store/user-list-page/thunk';
 
+import { CurrentLesson } from './LessonsTableByGroup';
 import {
   CheckBox,
   CheckBoxLabel,
   CheckBoxWrapper,
   CommonButton,
+  ErrorLessonSelection,
   ModalAttendanceBack,
   ModalAttendanceContainer,
   ModalAttendanceHeader,
@@ -48,6 +51,7 @@ const ModalAttendance = () => {
 
   const closeModalAttendance = () => {
     dispatch(setIsOpenModalAttendance());
+    dispatch(setSelectedLesson({} as CurrentLesson));
   };
 
   const collectDataToCreateAttendances = () => {
@@ -73,9 +77,10 @@ const ModalAttendance = () => {
   };
 
   const saveAttendances = () => {
+    dispatch(setIsOpenModalAttendance());
     dispatch(
       createAttendance(
-        pageState.lessonByGroup.idSelectedLesson,
+        pageState.lessonByGroup.currentLesson.lessonId,
         pageState.lessonByGroup.arrDataToCreateAttendances
       )
     );
@@ -84,35 +89,43 @@ const ModalAttendance = () => {
   return (
     <ModalAttendanceBack>
       <ModalAttendanceContainer>
-        <ModalAttendanceHeader>Посещаемость</ModalAttendanceHeader>
+        <ModalAttendanceHeader>
+          Посещаемость {pageState.lessonByGroup.currentLesson.lessonDate}
+        </ModalAttendanceHeader>
         <RoundButton onClick={closeModalAttendance}>
           <FontAwesomeIcon icon="times" />
         </RoundButton>
-        <UserListAttendanceByGroup>
-          {pageState.userListPage.userList.map((user) => (
-            <UserAttendance key={user.id}>
-              <UserDataForAttendance>
-                <UserPicForAttendance src={user.userPic} />
-                <UserNameForAttendance>
-                  {user.lastName} {user.firstName}
-                </UserNameForAttendance>
-              </UserDataForAttendance>
-              <UserAttendanceSelect>
-                <CheckBoxWrapper>
-                  <CheckBox
-                    id={String(user.id)}
-                    type="checkbox"
-                    onClick={() => changeDataToCreateAttendances(user.id)}
-                  />
-                  <CheckBoxLabel htmlFor={String(user.id)} />
-                </CheckBoxWrapper>
-              </UserAttendanceSelect>
-            </UserAttendance>
-          ))}
-        </UserListAttendanceByGroup>
-        <SaveUsersAttendance>
-          <CommonButton onClick={saveAttendances}>Сохранить</CommonButton>
-        </SaveUsersAttendance>
+        {pageState.lessonByGroup.currentLesson.lessonId ? (
+          <>
+            <UserListAttendanceByGroup>
+              {pageState.userListPage.userList.map((user) => (
+                <UserAttendance key={user.id}>
+                  <UserDataForAttendance>
+                    <UserPicForAttendance src={user.userPic} />
+                    <UserNameForAttendance>
+                      {user.lastName} {user.firstName}
+                    </UserNameForAttendance>
+                  </UserDataForAttendance>
+                  <UserAttendanceSelect>
+                    <CheckBoxWrapper>
+                      <CheckBox
+                        id={String(user.id)}
+                        type="checkbox"
+                        onClick={() => changeDataToCreateAttendances(user.id)}
+                      />
+                      <CheckBoxLabel htmlFor={String(user.id)} />
+                    </CheckBoxWrapper>
+                  </UserAttendanceSelect>
+                </UserAttendance>
+              ))}
+            </UserListAttendanceByGroup>
+            <SaveUsersAttendance>
+              <CommonButton onClick={saveAttendances}>Сохранить</CommonButton>
+            </SaveUsersAttendance>
+          </>
+        ) : (
+          <ErrorLessonSelection>Занятие не выбрано</ErrorLessonSelection>
+        )}
       </ModalAttendanceContainer>
     </ModalAttendanceBack>
   );

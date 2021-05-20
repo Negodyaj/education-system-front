@@ -1,6 +1,6 @@
+import { CurrentLesson } from '../../../components/group-page/lesson-list-component/LessonsTableByGroup';
 import { LessonInput } from '../../../interfaces/LessonInput';
 import {
-  SELECTED_LESSON_ID,
   LESSON_LIST_WRETCH_FAIL,
   LESSON_LIST_WRETCH_LOADED,
   LESSON_LIST_WRETCH_LOADING,
@@ -8,6 +8,7 @@ import {
   LESSON_TOGGLE_MODAL_ATTENDANCE,
   LESSON_TOGGLE_MODAL_DELETE_LESSON,
   DATA_TO_CREATE_ATTENDANCES,
+  SELECTED_LESSON,
 } from '../../actionTypes';
 import { ILesson } from '../../state';
 
@@ -32,7 +33,7 @@ const initialState: ILesson = {
   isOpenModalAttendance: false,
   isOpenModalAddLesson: false,
   isOpenModalDeleteLesson: false,
-  idSelectedLesson: 0,
+  currentLesson: {} as CurrentLesson,
   arrDataToCreateAttendances: [],
   createLessonInputModel: INIT_LESSON_TO_CREATE,
 };
@@ -57,8 +58,8 @@ export function lessonByGroupReducer(
         ...state,
         isOpenModalDeleteLesson: !state.isOpenModalDeleteLesson,
       };
-    case SELECTED_LESSON_ID:
-      return { ...state, idSelectedLesson: action.payload };
+    case SELECTED_LESSON:
+      return { ...state, currentLesson: action.payload };
     case DATA_TO_CREATE_ATTENDANCES:
       return { ...state, arrDataToCreateAttendances: action.payload };
     default:

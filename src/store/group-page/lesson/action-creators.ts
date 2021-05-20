@@ -1,7 +1,8 @@
+import { CurrentLesson } from '../../../components/group-page/lesson-list-component/LessonsTableByGroup';
 import { IUserAttendance } from '../../../components/group-page/lesson-list-component/ModalAttendance';
 import { Lesson } from '../../../interfaces/Lesson';
 import {
-  SELECTED_LESSON_ID,
+  SELECTED_LESSON,
   LESSON_LIST_WRETCH_FAIL,
   LESSON_LIST_WRETCH_LOADED,
   LESSON_LIST_WRETCH_LOADING,
@@ -18,7 +19,7 @@ export type LessonListActions =
   | ReturnType<typeof setIsOpenModalAttendance>
   | ReturnType<typeof setIsOpenModalAddLesson>
   | ReturnType<typeof setIsOpenModalDeleteLesson>
-  | ReturnType<typeof setSelectedLessonId>
+  | ReturnType<typeof setSelectedLesson>
   | ReturnType<typeof setDataToCreateAttendances>;
 
 export const setLessonListIsLoading = () =>
@@ -56,10 +57,10 @@ export const setIsOpenModalDeleteLesson = () =>
     payload: undefined,
   } as const);
 
-export const setSelectedLessonId = (lessonId: number) =>
+export const setSelectedLesson = (lesson: CurrentLesson) =>
   ({
-    type: SELECTED_LESSON_ID,
-    payload: lessonId,
+    type: SELECTED_LESSON,
+    payload: lesson,
   } as const);
 
 export const setDataToCreateAttendances = (arrData: IUserAttendance[]) =>

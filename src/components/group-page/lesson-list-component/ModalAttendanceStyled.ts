@@ -79,6 +79,16 @@ export const SaveUsersAttendance = styled.div`
   width: 95%;
 `;
 
+export const ErrorLessonSelection = styled.div`
+  display: flex;
+  height: 50px;
+  justify-content: center;
+  align-items: flex-end;
+  font-family: 'Montserrat';
+  font-weight: 400;
+  font-size: 18px;
+`;
+
 export const Button = styled.button`
   background-color: #00ccf2;
   color: #ffff;

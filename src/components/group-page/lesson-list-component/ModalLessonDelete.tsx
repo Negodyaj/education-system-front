@@ -3,9 +3,13 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { IRootState } from '../../../store';
-import { setIsOpenModalDeleteLesson } from '../../../store/group-page/lesson/action-creators';
+import {
+  setIsOpenModalDeleteLesson,
+  setSelectedLesson,
+} from '../../../store/group-page/lesson/action-creators';
 import { deleteLesson } from '../../../store/group-page/lesson/thunk';
 
+import { CurrentLesson } from './LessonsTableByGroup';
 import {
   ButtonCloseModalDeleteLesson,
   CommonButton,
@@ -19,16 +23,17 @@ import {
 
 const ModalLessonDelete = () => {
   const dispatch = useDispatch();
-  const lessonIdForDelete = useSelector(
-    (state: IRootState) => state.lessonByGroup.idSelectedLesson
+  const dataLessonForDelete = useSelector(
+    (state: IRootState) => state.lessonByGroup.currentLesson
   );
 
   const closeModalDeleteLesson = () => {
     dispatch(setIsOpenModalDeleteLesson());
+    dispatch(setSelectedLesson({} as CurrentLesson));
   };
 
   const deleteLessonById = () => {
-    dispatch(deleteLesson(lessonIdForDelete));
+    dispatch(deleteLesson(dataLessonForDelete.lessonId));
   };
 
   return (
@@ -40,7 +45,8 @@ const ModalLessonDelete = () => {
           </ButtonCloseModalDeleteLesson>
         </ModalHeaderDeleteLesson>
         <ModalContentDeleteLesson>
-          Вы уверены, что хотите удалить данное занятие?
+          Вы уверены, что хотите удалить занятие от{' '}
+          {dataLessonForDelete.lessonDate}?
         </ModalContentDeleteLesson>
         <ModalBottomDeleteLesson>
           <CommonButton onClick={closeModalDeleteLesson}>Отмена</CommonButton>

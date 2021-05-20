@@ -4,10 +4,11 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { IRootState } from '../../../store';
 import {
-  setSelectedLessonId,
+  setSelectedLesson,
   setIsOpenModalDeleteLesson,
 } from '../../../store/group-page/lesson/action-creators';
 import { getLessonsByGroup } from '../../../store/group-page/lesson/thunk';
+import { Lesson } from '../../../interfaces/Lesson';
 
 import ModalLessonDelete from './ModalLessonDelete';
 import {
@@ -20,6 +21,11 @@ import {
   RoundButton,
 } from './LessonsTableByGroupStyled';
 
+export interface CurrentLesson {
+  lessonId: number;
+  lessonDate: string;
+}
+
 function LessonsTableByGroup() {
   const currentDate = new Date();
   const dispatch = useDispatch();
@@ -27,15 +33,19 @@ function LessonsTableByGroup() {
 
   useEffect(() => {
     dispatch(getLessonsByGroup());
+    dispatch(setSelectedLesson({} as CurrentLesson));
   }, []);
 
-  const openModalDeleteLesson = (lessonId: number) => {
+  const openModalDeleteLesson = (lesson: Lesson) => {
     dispatch(setIsOpenModalDeleteLesson());
-    dispatch(setSelectedLessonId(lessonId));
   };
 
-  const rememberLessonId = (lessonId: number) => {
-    dispatch(setSelectedLessonId(lessonId));
+  const rememberLesson = (lesson: Lesson) => {
+    const dataCurrentLesson: CurrentLesson = {
+      lessonId: lesson.id,
+      lessonDate: lesson.lessonDate,
+    };
+    dispatch(setSelectedLesson(dataCurrentLesson));
   };
 
   return (
@@ -50,7 +60,7 @@ function LessonsTableByGroup() {
       {pageState.lessonList.map((lesson) => (
         <ContentColumnLessonsTable
           onClick={() => {
-            rememberLessonId(lesson.id);
+            rememberLesson(lesson);
           }}
           tabIndex={0}>
           <ColumnLessonsTable>{lesson.lessonDate}</ColumnLessonsTable>
@@ -67,7 +77,7 @@ function LessonsTableByGroup() {
               ) > currentDate ? (
                 <RoundButton
                   onClick={() => {
-                    openModalDeleteLesson(lesson.id);
+                    openModalDeleteLesson(lesson);
                   }}>
                   <FontAwesomeIcon icon="trash" />
                 </RoundButton>
