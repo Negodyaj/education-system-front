@@ -10,25 +10,26 @@ function TextAreaInput(props: {
   width?: number;
 }) {
   const formContext = useFormContext();
+  const { inputSettings, onChange, width } = props;
 
-  return !props.onChange ? (
+  return !onChange ? (
     <TextareaStyled
       {...formContext.register(
-        props.inputSettings.name,
-        props.inputSettings.registerOptions
+        inputSettings.name,
+        inputSettings.registerOptions
       )}
       typeof="text"
-      width={props.width}
+      width={width}
     />
   ) : (
     <TextareaStyled
       {...formContext.register(
-        props.inputSettings.name,
-        props.inputSettings.registerOptions
+        inputSettings.name,
+        inputSettings.registerOptions
       )}
-      onChange={props.onChange}
+      onChange={onChange}
       typeof="text"
-      width={props.width}
+      width={width}
     />
   );
 }

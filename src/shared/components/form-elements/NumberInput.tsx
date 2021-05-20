@@ -1,33 +1,32 @@
 import { useFormContext } from 'react-hook-form';
 
 import { InputSettings } from '../../helpers/useFormRegisterSettingByKey';
-import { NumberInputStyled } from '../../styled-components/globalStyledConsts';
 
 function NumberInput(props: {
   inputSettings: InputSettings;
   onChange?: (...event: any[]) => void;
-  width?: number;
 }) {
   const formContext = useFormContext();
+  const { onChange, inputSettings } = props;
 
-  return !props.onChange ? (
-    <NumberInputStyled
+  return !onChange ? (
+    <input
       {...formContext.register(
-        props.inputSettings.name,
-        props.inputSettings.registerOptions
+        inputSettings.name,
+        inputSettings.registerOptions
       )}
       type="number"
-      width={props.width}
+      className="form-input"
     />
   ) : (
-    <NumberInputStyled
+    <input
       {...formContext.register(
-        props.inputSettings.name,
-        props.inputSettings.registerOptions
+        inputSettings.name,
+        inputSettings.registerOptions
       )}
-      onChange={props.onChange}
+      onChange={onChange}
       type="number"
-      width={props.width}
+      className="form-input"
     />
   );
 }

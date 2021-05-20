@@ -1,4 +1,5 @@
 import { RegisterOptions } from 'react-hook-form';
+import Input from 'react-select/src/components/Input';
 
 import { InputNames } from '../../enums/inputNames';
 import { Role } from '../../enums/role';
@@ -201,6 +202,74 @@ export const getCourseFormElementSettings = (
           },
         },
         width: 100,
+      };
+    default:
+      return {
+        ...baseSettings,
+        label: key,
+        inputSettings: {
+          name: key,
+          inputType: 'text',
+        },
+      };
+  }
+};
+
+export const getPaymentFormElementSettings = (
+  key: InputNames
+): FormElementSettings => {
+  switch (key) {
+    case InputNames.PaymentAmount:
+      return {
+        ...baseSettings,
+        label: 'Сумма оплаты',
+        inputSettings: {
+          name: key,
+          inputType: 'number',
+          registerOptions: {
+            required: 'Введите сумму платежа',
+          },
+        },
+        width: 150,
+      };
+    case InputNames.PaymentContract:
+      return {
+        ...baseSettings,
+        label: 'Номер договора',
+        inputSettings: {
+          name: key,
+          inputType: 'text',
+          registerOptions: {
+            required: 'Введите номер договора',
+          },
+        },
+        width: 400,
+      };
+    case InputNames.PaymentDate:
+      return {
+        ...baseSettings,
+        label: 'Дата',
+        inputSettings: {
+          name: key,
+          inputType: 'date',
+          registerOptions: {
+            required: 'Введите дату платежа',
+          },
+        },
+        width: 400,
+      };
+    case InputNames.PaymentPeriod:
+      return {
+        ...baseSettings,
+        label: 'Период оплаты',
+        inputSettings: {
+          name: key,
+          inputType: 'text',
+          registerOptions: {
+            required: 'Введите за какой период оплата',
+          },
+        },
+        width: 400,
       };
     default:
       return {

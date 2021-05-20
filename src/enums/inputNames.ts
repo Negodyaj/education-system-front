@@ -13,4 +13,8 @@ export enum InputNames {
   CourseName = 'name',
   CourseDescription = 'description',
   CourseDuration = 'duration',
+  PaymentAmount = 'amount',
+  PaymentDate = 'date',
+  PaymentPeriod = 'period',
+  PaymentContract = 'contractNumber',
 }

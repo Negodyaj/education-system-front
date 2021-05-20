@@ -9,27 +9,28 @@ function TextInput(props: {
   width?: number;
 }) {
   const formContext = useFormContext();
+  const { inputSettings, onChange, width } = props;
 
-  return !props.onChange ? (
+  return !onChange ? (
     <InputText
       {...formContext.register(
-        props.inputSettings.name,
-        props.inputSettings.registerOptions
+        inputSettings.name,
+        inputSettings.registerOptions
       )}
       type="text"
       className="form-input"
-      width={props.width}
+      width={width}
     />
   ) : (
     <InputText
       {...formContext.register(
-        props.inputSettings.name,
-        props.inputSettings.registerOptions
+        inputSettings.name,
+        inputSettings.registerOptions
       )}
-      onChange={props.onChange}
+      onChange={onChange}
       type="text"
       className="form-input"
-      width={props.width}
+      width={width}
     />
   );
 }
