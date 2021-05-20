@@ -62,9 +62,14 @@ function NavMenuDropdownLink(props: NavMenuDropdownLinkProps) {
               </li>
             ))}
             {!alwaysShowAll && (
-              <button className="more-links-toggle" onClick={toggleFullyOpen}>
+              <span
+                role="button"
+                tabIndex={0}
+                onClick={toggleFullyOpen}
+                onKeyPress={toggleFullyOpen}
+                className="more-links-toggle">
                 {isFullyOpen ? 'скрыть' : 'показать все'}
-              </button>
+              </span>
             )}
           </ul>
         </Route>
