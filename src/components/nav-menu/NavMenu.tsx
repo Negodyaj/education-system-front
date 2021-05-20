@@ -88,7 +88,9 @@ function NavMenu(props: NavMenuProps) {
         )}
       </nav>
       <button
-        className={isHidden ? 'left button-update' : 'right button-update'}
+        className={`${
+          isHidden ? 'left button-update' : 'right button-update'
+        } round-button`}
         onClick={changeHidden}
         title={isHidden ? 'развернуть меню' : 'свернуть меню'}>
         <FontAwesomeIcon icon="angle-double-right" />
