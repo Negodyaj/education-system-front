@@ -1,33 +1,53 @@
-import { MODAL_HIDDEN_IS_CHECK, TAGS_LIST_FILTERED, TAGS_LIST_WRETCH_ADD_TAG, TAGS_LIST_WRETCH_DELETE_TAG, TAGS_LIST_WRETCH_FAIL, TAGS_LIST_WRETCH_LOADED, TAGS_LIST_WRETCH_LOADING } from "../actionTypes";
-import { ITagsPageState } from "../state";
-import { TagsPageActions } from "./action-creators";
+import {
+  MODAL_HIDDEN_IS_CHECK,
+  TAGS_LIST_FILTERED,
+  TAGS_LIST_WRETCH_ADD_TAG,
+  TAGS_LIST_WRETCH_DELETE_TAG,
+  TAGS_LIST_WRETCH_FAIL,
+  TAGS_LIST_WRETCH_LOADED,
+  TAGS_LIST_WRETCH_LOADING,
+} from '../actionTypes';
+import * as State from '../state';
 
-const initialState: ITagsPageState = {
-    tagList: [],
-    isDataLoading: false,
-    filterTagsList: [],
-    isTagsModalHidden: true
+import { TagsPageActions } from './action-creators';
+
+const initialState: State.ITagsPageState = {
+  tagList: [],
+  isDataLoading: false,
+  filterTagsList: [],
+  isTagsModalHidden: true,
 };
 
-export function tagsPageReducer(state: ITagsPageState = initialState, action: TagsPageActions): ITagsPageState {
-    switch (action.type) {
-
-        case TAGS_LIST_WRETCH_LOADED:
-            return { ...state, tagList: action.payload, filterTagsList: action.payload, isDataLoading: false };
-        case TAGS_LIST_FILTERED:
-            return {...state, filterTagsList: state.tagList.filter(tag => tag.name.toLowerCase().includes(action.payload.toLowerCase()))
-            };
-        case MODAL_HIDDEN_IS_CHECK:
-            return { ...state, isTagsModalHidden: !state.isTagsModalHidden };
-        case TAGS_LIST_WRETCH_ADD_TAG:
-            return { ...state, isDataLoading: false}
-        case TAGS_LIST_WRETCH_DELETE_TAG:
-            return { ...state, isDataLoading: false } 
-        case TAGS_LIST_WRETCH_LOADING:
-            return { ...state, isDataLoading:true }
-        case TAGS_LIST_WRETCH_FAIL:
-            return { ...state, tagList: [], isDataLoading: false };
-        default:
-            return state;
-    }
+export function tagsPageReducer(
+  state: State.ITagsPageState = initialState,
+  action: TagsPageActions
+): State.ITagsPageState {
+  switch (action.type) {
+    case TAGS_LIST_WRETCH_LOADED:
+      return {
+        ...state,
+        tagList: action.payload,
+        filterTagsList: action.payload,
+        isDataLoading: false,
+      };
+    case TAGS_LIST_FILTERED:
+      return {
+        ...state,
+        filterTagsList: state.tagList.filter((tag) =>
+          tag.name.toLowerCase().includes(action.payload.toLowerCase())
+        ),
+      };
+    case MODAL_HIDDEN_IS_CHECK:
+      return { ...state, isTagsModalHidden: !state.isTagsModalHidden };
+    case TAGS_LIST_WRETCH_ADD_TAG:
+      return { ...state, isDataLoading: false };
+    case TAGS_LIST_WRETCH_DELETE_TAG:
+      return { ...state, isDataLoading: false };
+    case TAGS_LIST_WRETCH_LOADING:
+      return { ...state, isDataLoading: true };
+    case TAGS_LIST_WRETCH_FAIL:
+      return { ...state, tagList: [], isDataLoading: false };
+    default:
+      return state;
+  }
 }

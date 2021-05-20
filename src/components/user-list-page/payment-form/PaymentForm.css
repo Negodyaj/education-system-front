@@ -73,7 +73,7 @@
 .checkbox{
     width: max-content;
 }
-.row{
+.payment .row{
     display: flex;
     flex-direction: row;
 }
