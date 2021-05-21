@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { Dispatch } from 'redux';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
-
 import './PersonalPage.css';
 import { useParams } from 'react-router-dom';
 
@@ -73,47 +72,11 @@ const PersonalPage = () => {
         onClick={changeEvent}>
         change
       </button>
-      <form
-        className={changeForm ? 'notDisabledForm' : 'disabledForm'}
-        onSubmit={handleSubmit(onSubmit)}>
-        <label htmlFor="firstName">First Name:</label>
-        <input defaultValue={pageState.userForUserPage.firstName} />
-
-        <label htmlFor="lastName">Last Name:</label>
-        <input defaultValue={pageState.userForUserPage.lastName} />
-        {
-          // errors.lastName? setChangeForm(false):setChangeForm(true)
-          // errors.firstName? setChangeForm(false):setChangeForm(true)
-        }
-
-        <label htmlFor="age">Age</label>
-        <input
-          type="number"
-          {...register('age', { valueAsNumber: true })}
-          id="age"
-        />
-
-        <label htmlFor="gender" />
-        <select {...register('gender')} id="gender">
-          <option value="">Select...</option>
-          <option value="male">male</option>
-          <option value="female">female</option>
-        </select>
-
-        <label htmlFor="phone">Your phone:</label>
-        <input />
-
-        <label htmlFor="email">Your email:</label>
-        <input defaultValue={pageState.userForUserPage.email} disabled />
-
-        <button
-          className={
-            changeForm ? 'notshow common-button' : 'show common-button'
-          }
-          onClick={changeEvent}>
-          сохранить
-        </button>
-      </form>
+      <button
+        className={changeForm ? 'notshow common-button' : 'show common-button'}
+        onClick={changeEvent}>
+        сохранить
+      </button>
     </div>
   );
 };
