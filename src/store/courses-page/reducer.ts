@@ -6,6 +6,8 @@ import {
   COURSE_LIST_WRETCH_LOADED,
   COURSE_LIST_WRETCH_LOADING,
   COURSE_LIST_TOGGLE_MODAL_DELETE_COURSE,
+  DELETE_COURSE_WATCHER,
+  COURSE_ID_DELETE,
 } from '../actionTypes';
 import { ICoursePageState } from '../state';
 
@@ -47,6 +49,10 @@ export function coursePageReducer(
       return {
         ...state,
         isModalDelete: !state.isModalDelete,
+      };
+    case COURSE_ID_DELETE:
+      return {
+        ...state,
         idCourseForDelete: action.payload,
       };
     case COURSE_LIST_WRETCH_CREATE_COURSE:

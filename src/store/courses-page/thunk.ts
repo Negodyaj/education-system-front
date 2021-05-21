@@ -31,24 +31,24 @@ export const getCourses = () => (dispatch: Dispatch) => {
     .catch((error) => dispatch(setCoursesListFail(error)));
 };
 
-export const deleteCourse = (id: number) => (dispatch: Dispatch<any>) => {
-  sendDeleteRequest<Course>(`${coursesUrl}/${id}`, isCourse)
-    .then((course) => {
-      const response = thunkResponseHandler(dispatch, course);
-      response &&
-        dispatch(
-          pushNotification(
-            makeNotification(
-              'success',
-              `Курс ${(response as Course).name} успешно удален`
-            )
-          )
-        );
-      dispatch(showToggleModalDeleteCourseAction(response.id));
-      dispatch(getCourses());
-    })
-    .catch((error) => dispatch(setCoursesListFail(error)));
-};
+// export const deleteCourse = (id: number) => (dispatch: Dispatch<any>) => {
+//   sendDeleteRequest<Course>(`${coursesUrl}/${id}`, isCourse)
+//     .then((course) => {
+//       const response = thunkResponseHandler(dispatch, course);
+//       response &&
+//         dispatch(
+//           pushNotification(
+//             makeNotification(
+//               'success',
+//               `Курс ${(response as Course).name} успешно удален`
+//             )
+//           )
+//         );
+//       dispatch(showToggleModalDeleteCourseAction(response.id));
+//       dispatch(getCourses());
+//     })
+//     .catch((error) => dispatch(setCoursesListFail(error)));
+// };
 
 export const createCourse = (newCourse: CourseInput) => (
   dispatch: Dispatch<any>

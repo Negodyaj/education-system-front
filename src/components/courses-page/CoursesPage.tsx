@@ -9,6 +9,7 @@ import {
   getCourses,
   showToggleModalDeleteCourseAction,
   showToggleModalCreateCourseAction,
+  courseIdForDelete,
 } from '../../store/courses-page/action-creators';
 
 import NewCourse from './NewCourse';
@@ -31,8 +32,9 @@ function CoursesPage() {
     dispatch(getCourses());
   }, []);
 
-  const openModalDelete = (idCourse: number) => {
-    dispatch(showToggleModalDeleteCourseAction(idCourse));
+  const openModalDelete = (id: number) => {
+    dispatch(showToggleModalDeleteCourseAction());
+    dispatch(courseIdForDelete(id));
   };
 
   const openModalAdd = () => {
@@ -63,9 +65,7 @@ function CoursesPage() {
                   </button>
                 </Link>
                 <button
-                  onClick={() => {
-                    openModalDelete(item.id);
-                  }}
+                  onClick={() => openModalDelete(item.id)}
                   className="round-button">
                   <FontAwesomeIcon icon="trash" />
                 </button>

@@ -24,12 +24,12 @@ function ModalWindowDelete() {
   );
 
   const closeModalWindow = () => {
-    dispatch(showToggleModalDeleteCourseAction(deleteId));
+    dispatch(showToggleModalDeleteCourseAction());
   };
 
   const deleteCourseById = () => {
     dispatch(deleteCourse());
-    dispatch(getCourses());
+    console.log(deleteId);
   };
 
   return (
