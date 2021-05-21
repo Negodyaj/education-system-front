@@ -48,7 +48,6 @@ export const setUsersListWasLoaded = (user: User[]) => {
 
 const PersonalPage = () => {
   const [changeForm, setChangeForm] = useState(true);
-  const [registr, setRegistr] = useState(true);
   const pageState = useSelector((state: IRootState) => state.userPage);
   const dispatch = useDispatch();
   const { idToEdit } = useParams<{ idToEdit?: string; }>();

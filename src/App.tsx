@@ -22,7 +22,7 @@ import { Helmet } from "react-helmet";
 import { toggleRoleSelector, unsetCurrentUser } from './store/role-selector/action-creator';
 import { getToken, unsetToken } from './services/auth.service';
 import Attendance from './components/group-page/attendance/Attendance';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { userEditUrl, userListUrl, userRegisterFormUrl } from './shared/consts';
 import UserPage from './components/user-page/UserPage';
 import { ReactComponent as Logo } from './img/devedu.svg';
@@ -44,6 +44,10 @@ function App() {
         unsetToken();
         history.push("/");
     }
+
+    /*useEffect(() => {
+        dispatch(menuMode);
+    }, []);*/
 
 
     const onHide = (condition: boolean) => {
