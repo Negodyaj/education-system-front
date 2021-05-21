@@ -29,7 +29,6 @@ import UserRoute from './components/user-page/UserRoute';
 import HomeworkPage from './components/homework-page/HomeworkPage';
 import LessonsByGroup from './components/group-page/lesson-list-component/LessonsByGroup';
 import LoginForm from './components/login-form/LoginForm';
-import UserRoute from './components/user-page/UserRoute';
 import GroupNavMenu from './components/group-page/group-nav-menu/GroupNavMenu';
 import GroupInfoComponent from './components/group-page/group-info-component/GroupInfoComponent';
 import LoginRoleSelector from './components/role-selector/LoginRoleSelector';
