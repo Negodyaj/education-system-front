@@ -11,18 +11,30 @@ import NavMenuSimpleLink from './components/NavMenuSimpleLink';
 import './NavMenu.css';
 
 interface NavMenuProps {
-  roleId: number;
-  onHide: (condition: boolean) => void;
+    roleId: number,
+    onHide: (condition: boolean) => void
+    onShangeMode: (condition: boolean) => void
 }
 
 function NavMenu(props: NavMenuProps) {
   const { roleId, onHide } = props;
-  const [isHidden, setHidden] = useState(false);
+    const [isHidden, setHidden] = useState(false);
+    const [isDark, setMode] = useState(false);
 
-  const changeHidden = () => {
-    isHidden ? setHidden(false) : setHidden(true);
-    onHide(isHidden);
-  };
+    let changeMode = () => {
+        isDark ? setMode(false) : setMode(true);
+        props.onShangeMode(isDark);
+    }
+
+    let changeHidden = () => {
+        isHidden ? setHidden(false) : setHidden(true);
+        props.onHide(isHidden);
+    }
+            return true;
+        return false;
+    }
+    const defaultShowFilter = (link: DropdownLinkParams) => {
+        if (link.routeParam == "1" || link.routeParam == "2")
 
   const defaultShowFilter = (link: DropdownLinkParams) => {
     if (link.routeParam === '1' || link.routeParam === '2') return true;

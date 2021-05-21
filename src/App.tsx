@@ -30,6 +30,7 @@ import HomeworkPage from './components/homework-page/HomeworkPage';
 import LessonsByGroup from './components/group-page/lesson-list-component/LessonsByGroup';
 import LoginForm from './components/login-form/LoginForm';
 import LoginRoleSelector from './components/role-selector/LoginRoleSelector';
+import PersonalPage from './components/personal-page/PersonalPage';
 
 function App() {
   const dispatch = useDispatch();
@@ -45,6 +46,7 @@ function App() {
     unsetToken();
     history.push('/');
   };
+    const [isDark, setMode] = useState(false);
 
   const onHide = (condition: boolean) => {
     setHidden(condition);
@@ -57,6 +59,18 @@ function App() {
 
     return 'hide';
   }
+    const onShangeMode = (condition: boolean) => {
+        setMode(condition);
+    }
+
+    function styleMenu(condition: boolean) {
+        if (condition) { return ("nothide") } else { return ("hide") }
+    }
+
+    function menuMode(condition: boolean) {
+        if (condition) { return ("darkMode") } else { return ("lightMode") }
+    }
+
 
   return (
     <div className="App">
