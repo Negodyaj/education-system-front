@@ -1,5 +1,13 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { FormProvider, UseFormReturn } from "react-hook-form";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { FormProvider, UseFormReturn } from 'react-hook-form';
+import React from 'react';
+
+import { InputNames } from '../../../enums/inputNames';
+import { CourseInput } from '../../../interfaces/CourseInput';
+import { UserInput } from '../../../interfaces/UserInput';
+import { FormElementSettings } from '../../helpers/userFormRegisterSettingByKey';
+import FormElement from '../form-elements/FormElement';
+
 import {
   ButtonClose,
   FormWrapper,
@@ -8,22 +16,16 @@ import {
   ModalBackground,
   SelectDelete,
   ModalHeader,
-  InputStyle
-} from "./ModalWindowCreateFormStyled";
-import { InputNames } from "../../../enums/inputNames";
-import { CourseInput } from "../../../interfaces/CourseInput";
-import { UserInput } from "../../../interfaces/UserInput";
-import { FormElementSettings } from "../../helpers/useFormRegisterSettingByKey";
-import FormElement from "../form-elements/FormElement";
-import React from "react";
+  InputStyle,
+} from './ModalWindowCreateFormStyled';
 
 interface CreateModalProps {
-  headerName: string
-  objectKeysOnForm: CourseInput | UserInput | any
-  form: UseFormReturn<any>
-  closeHandler: () => void
-  createFormElementOnType: (key: InputNames) => FormElementSettings
-  onSubmit: (data: any) => void
+  headerName: string;
+  objectKeysOnForm: CourseInput | UserInput | any;
+  form: UseFormReturn<any>;
+  closeHandler: () => void;
+  createFormElementOnType: (key: InputNames) => FormElementSettings;
+  onSubmit: (data: any) => void;
 }
 
 const ModalWindowCreateForm = (props: CreateModalProps) => {
@@ -33,36 +35,47 @@ const ModalWindowCreateForm = (props: CreateModalProps) => {
     closeHandler,
     createFormElementOnType,
     onSubmit,
-    form
+    form,
   } = props;
 
   return (
     <ModalBackground>
       <ModalFormCreate>
-          <ModalHeader>
-              <HeadModal><h4>{headerName}</h4></HeadModal>
-              <ButtonClose onClick={closeHandler}>
-                  <FontAwesomeIcon icon='times'/>
-              </ButtonClose>
-          </ModalHeader>
-        <FormProvider { ...form } >
+        <ModalHeader>
+          <HeadModal>
+            <h4>{headerName}</h4>
+          </HeadModal>
+          <ButtonClose onClick={closeHandler}>
+            <FontAwesomeIcon icon="times" />
+          </ButtonClose>
+        </ModalHeader>
+        <FormProvider {...form}>
           <FormWrapper onSubmit={form.handleSubmit(onSubmit)}>
             <InputStyle>
-              {
-                Object.keys(objectKeysOnForm).map(key => {
-                return <FormElement key={key} formElementSettings={createFormElementOnType(key as InputNames)}></FormElement>
-                })
-              }
+              {Object.keys(objectKeysOnForm).map((key) => (
+                <FormElement
+                  key={key}
+                  formElementSettings={createFormElementOnType(
+                    key as InputNames
+                  )}
+                />
+              ))}
             </InputStyle>
           </FormWrapper>
         </FormProvider>
         <SelectDelete>
-            <button className="common-button" onClick={closeHandler}>Отменить</button>
-            <button className="common-button" onClick={form.handleSubmit(onSubmit)}>Добавить</button>
+          <button className="common-button" onClick={closeHandler}>
+            Отменить
+          </button>
+          <button
+            className="common-button"
+            onClick={form.handleSubmit(onSubmit)}>
+            Добавить
+          </button>
         </SelectDelete>
       </ModalFormCreate>
     </ModalBackground>
-  )
-}
+  );
+};
 
 export default ModalWindowCreateForm;

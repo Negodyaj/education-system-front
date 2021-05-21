@@ -27,11 +27,24 @@ function FormElement(props: { formElementSettings: FormElementSettings }) {
       <label htmlFor="#" className="form-label">
         {formElementSettings.label}
       </label>
-      {inputType === 'text' && <TextInput inputSettings={inputSettings} />}
-      {inputType === 'textarea' && (
-        <TextAreaInput inputSettings={inputSettings} />
+      {inputType === 'text' && (
+        <TextInput
+          width={formElementSettings.width}
+          inputSettings={inputSettings}
+        />
       )}
-      {inputType === 'number' && <NumberInput inputSettings={inputSettings} />}
+      {inputType === 'textarea' && (
+        <TextAreaInput
+          width={formElementSettings.width}
+          inputSettings={inputSettings}
+        />
+      )}
+      {inputType === 'number' && (
+        <NumberInput
+          width={formElementSettings.width}
+          inputSettings={inputSettings}
+        />
+      )}
       {inputType === 'date' && (
         <DateInput inputSettings={inputSettings as ExternalInputSettings} />
       )}
