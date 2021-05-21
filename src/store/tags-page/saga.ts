@@ -32,16 +32,16 @@ export function* tagsPageRootSaga() {
 }
 
 export function* tagsPageSagaWatcher() {
+  yield put(setIsLoading());
   yield takeLatest(GET_TAGS, loadTagsListSaga);
+  yield put(setIsLoaded());
 }
 
 export function* loadTagsListSaga() {
   try {
-    yield put(setIsLoading());
     const tags: Tag[] = yield call(async () =>
       sendGetRequest<Tag[]>(`${tagsUrl}`, isTagArr).then((response) => response)
     );
-    yield put(setIsLoaded());
     const error = tryGetErrorFromResponse(tags);
 
     if (error) yield put(constructNotificationError(error));
@@ -52,20 +52,19 @@ export function* loadTagsListSaga() {
 }
 
 export function* deleteTagPageSagaWatcher() {
+  yield put(setIsLoading());
   yield takeLatest(DELETE_TAG, deleteTagSaga);
+  yield put(setIsLoaded());
 }
 
 export function* deleteTagSaga({
   payload,
 }: ReturnType<typeof deleteTagWatcherAction>) {
   try {
-    yield put(setIsLoading());
     const error: WretcherError = yield call(
       sendDeleteRequestNoResponse,
       `${tagsUrl}/${payload.id}`
     );
-    yield put(setIsLoaded());
-
     if (error.status >= 400) yield put(constructNotificationError(error));
     else {
       yield put(
@@ -91,7 +90,7 @@ export function* addTagSaga({
   try {
     yield put(setIsLoading());
     const newTag: Tag = yield call(async () =>
-      sendPostRequest<Tag>(`${tagsUrl}`, isTag, newTag).then((tag) => tag)
+      sendPostRequest<Tag>(`${tagsUrl}`, isTag, payload).then((tag) => tag)
     );
     const error = tryGetErrorFromResponse(newTag);
 
