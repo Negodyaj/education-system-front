@@ -4,9 +4,9 @@ import { INIT_HOMEWORK } from '../tmp-mock-data/hw/initHomewwork';
 
 export const convertHomeworkListForMethodistMode = (
   actionPayload: Homework[]
-): IndexedObj<Homework> => {
+): IndexedObj<Homework[]> => {
   const previousCourseName: string[] | undefined = [];
-  const result: IndexedObj<Homework> = {};
+  const result: IndexedObj<Homework[]> = {};
   actionPayload.map((hw) => {
     if (previousCourseName.includes(hw.course.name)) {
       result[hw.course.name].push(hw);

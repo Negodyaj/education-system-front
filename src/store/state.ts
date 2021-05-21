@@ -18,6 +18,8 @@ import { INIT_HOMEWORK } from '../shared/tmp-mock-data/hw/initHomewwork';
 import { LessonInput } from '../interfaces/LessonInput';
 import { IUserAttendance } from '../components/group-page/lesson-list-component/ModalAttendance';
 import { CurrentLesson } from '../components/group-page/lesson-list-component/LessonsTableByGroup';
+import { IndexedObj } from '../interfaces/IndexedObj';
+import { UserPageOptions } from '../components/user-page/UserPage';
 
 export interface IAppState {
   isLoggedIn: boolean;
@@ -51,6 +53,7 @@ export interface IUserPage {
   userForUserPageId: number;
   isReadonly: boolean;
   isDataLoading: boolean;
+  pageOptionsByRole: IndexedObj<UserPageOptions>;
 }
 export interface IRoleSelector {
   isTurnedOn: boolean;
@@ -64,7 +67,7 @@ export interface IAppState {
   loadersCount: number;
 }
 export interface IHomeworkPageState {
-  pageOptionsByRole: { [role: string]: HomeworkPageOptions };
+  pageOptionsByRole: IndexedObj<HomeworkPageOptions>;
   homeworkListDefault: Homework[];
   openedItemSetsNames: string[];
 }

@@ -15,7 +15,7 @@ import {
 export interface HomeworkPageOptions {
   readonly addButton: boolean;
   readonly homeworkButtonsCell: HomeworkButtonsCellOptions;
-  homeworkList: IndexedObj<Homework>;
+  homeworkList: IndexedObj<Homework[]>;
 }
 
 function HomeworkPageCore(props: { settings: HomeworkPageOptions }) {
