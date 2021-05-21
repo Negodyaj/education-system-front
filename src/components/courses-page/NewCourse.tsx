@@ -19,12 +19,8 @@ function NewCourse() {
     dispatch(showToggleModalCreateCourseAction());
   };
 
-  const createDataNewCourse = (dataNewCourse: CourseInput) => {
-    dispatch(createCourse(dataNewCourse));
-  };
-
   const onSubmit = (dataCourse: CourseInput) => {
-    createDataNewCourse(dataCourse);
+    dispatch(createCourse(dataCourse));
   };
 
   return (
