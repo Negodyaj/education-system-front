@@ -26,6 +26,7 @@ module.exports = {
         parser: 'typescript',
         bracketSpacing: true,
         jsxBracketSameLine: true,
+        //"endOfLine": "auto"
       },
     ],
     'no-console': [
