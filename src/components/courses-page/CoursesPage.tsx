@@ -1,78 +1,83 @@
-import { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect } from 'react';
 import './CoursesPage.css';
-import ModalWindowDelete from './modal-window/ModalWindowDelete';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import NewCourse from './NewCourse';
-import { DataNewCourse } from './NewCourse';
-import { useDispatch, useSelector } from "react-redux";
+import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useDispatch, useSelector } from 'react-redux';
+
 import { IRootState } from '../../store';
-import { createCourse, getCourses } from '../../store/courses-page/thunk';
-import { closeModalCreateCourseAction, showOpenModalCreateCourseAction, showOpenModalDeleteCourseAction } from '../../store/courses-page/action-creators';
+import { getCourses } from '../../store/courses-page/thunk';
+import {
+  showToggleModalCreateCourseAction,
+  showToggleModalDeleteCourseAction,
+} from '../../store/courses-page/action-creators';
+
+import NewCourse from './NewCourse';
+import ModalWindowDelete from './modal-window/ModalWindowDelete';
+import {
+  CourseContainer,
+  CourseCreate,
+  CoursesList,
+  CourseStyled,
+  CourseUpdateDelete,
+  EmptyDiv,
+  Loading,
+} from './CoursePageStyled';
 
 function CoursesPage() {
+  const dispatch = useDispatch();
+  const pageState = useSelector((state: IRootState) => state.coursePage);
 
-    const dispatch = useDispatch();
-    const pageState = useSelector((state: IRootState) => state.coursePage);
-    
-    useEffect(() => {
-        dispatch(getCourses());
-    }, []);
+  useEffect(() => {
+    dispatch(getCourses());
+  }, []);
 
-    //openModalDelete done
-    const openModalDelete = (id: number) => {
-        dispatch(showOpenModalDeleteCourseAction(id));
-    }
+  const openModalDelete = (idCourse: number) => {
+    dispatch(showToggleModalDeleteCourseAction(idCourse));
+  };
 
-    //OpenModalAdd done
-    const openModalAdd = () => {
-        dispatch(showOpenModalCreateCourseAction());
-    }
-    //Избавиться от setTimeout
-    // const addNewCourse = (data?: DataNewCourse) => {
-    //     if(pageState.isNameNewCourseFilled && ) {
-    //         return;
-    //     } else if (data !== undefined) {
-    //         dispatch(createCourse(data));
-    //         dispatch(closeModalCreateCourseAction());
-    //     }
-    // }
+  const openModalAdd = () => {
+    dispatch(showToggleModalCreateCourseAction());
+  };
 
-    return (
-        <div className="course-container">
-            <div className="course-create">
-                <div> </div>
-                <button onClick={openModalAdd} className='button-create'>Добавить курс</button> 
-            </div>
-            <div className="courses-list">
-                {
-                    pageState.isDataLoading
-                        ?
-                            <div>Loading...</div>
-                        :
-                            pageState.courseList?.map(item => (
-                                <div key={item.id} className="course">
-                                    <Link className="current-course-name" to={`/course/${item.id}`}> 
-                                        <div >{item.name}</div> 
-                                    </Link> 
-                                    <div className="course-update-delete">
-                                        <Link to={`/course/${item.id}/edition`}>
-                                            <button className='button-update'>
-                                                <FontAwesomeIcon icon="edit" />
-                                            </button>
-                                        </Link>
-                                        <button onClick={() => {openModalDelete(item.id)}} className='button-delete'>
-                                            <FontAwesomeIcon icon="trash" /> 
-                                        </button>
-                                    </div>
-                                </div>
-                            ))
-                }
-            </div>
-            { pageState.isOpenModalCreateCourse && <NewCourse /> }
-            { pageState.isModalDelete && <ModalWindowDelete />}
-        </div>
-    )
+  return (
+    <CourseContainer>
+      <CourseCreate>
+        <EmptyDiv />
+        <button onClick={openModalAdd} className="common-button">
+          Добавить курс
+        </button>
+      </CourseCreate>
+      <CoursesList>
+        {pageState.isDataLoading ? (
+          <Loading>Loading...</Loading>
+        ) : (
+          pageState.courseList.map((item) => (
+            <CourseStyled>
+              <Link className="current-course-name" to={`/course/${item.id}`}>
+                <EmptyDiv>{item.name}</EmptyDiv>
+              </Link>
+              <CourseUpdateDelete>
+                <Link to={`/course/${item.id}/edition`}>
+                  <button className="round-button">
+                    <FontAwesomeIcon icon="edit" />
+                  </button>
+                </Link>
+                <button
+                  onClick={() => {
+                    openModalDelete(item.id);
+                  }}
+                  className="round-button">
+                  <FontAwesomeIcon icon="trash" />
+                </button>
+              </CourseUpdateDelete>
+            </CourseStyled>
+          ))
+        )}
+      </CoursesList>
+      {pageState.isOpenModalCreateCourse && <NewCourse />}
+      {pageState.isModalDelete && <ModalWindowDelete />}
+    </CourseContainer>
+  );
 }
 
 export default CoursesPage;

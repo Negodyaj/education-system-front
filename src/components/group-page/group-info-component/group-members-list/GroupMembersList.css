@@ -1,0 +1,14 @@
+.list-group{
+    display: grid;
+    grid-template-columns: 300px 300px;
+    padding: 10px;
+}
+
+.group-members-list{ 
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    border-radius: 20px;
+    box-shadow: 0 3px 6px #272d3b36;
+    padding: 10px;
+}

@@ -1,5 +1,5 @@
-import { FilterParameter } from "./FilterParameter";
+import { FilterParameter } from './FilterParameter';
 
-export class ThemeFilter extends FilterParameter{
-    FilterType: string = "Тема";
+export class ThemeFilter extends FilterParameter {
+  FilterType: string = 'Тема';
 }
