@@ -7,7 +7,6 @@ import {
   setIsOpenModalAddLesson,
   setIsOpenModalAttendance,
 } from '../../../store/group-page/lesson/action-creators';
-import { getLessonsByGroup } from '../../../store/group-page/lesson/thunk';
 
 import {
   AttendanceLesson,

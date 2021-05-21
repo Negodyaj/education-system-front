@@ -9,7 +9,7 @@ import {
   setSelectedLesson,
 } from '../../../store/group-page/lesson/action-creators';
 import { createAttendance } from '../../../store/group-page/lesson/thunk';
-import { getUsers } from '../../../store/user-list-page/thunk';
+import { getUsers } from '../../../store/user-list-page/action-creators';
 
 import { CurrentLesson } from './LessonsTableByGroup';
 import {

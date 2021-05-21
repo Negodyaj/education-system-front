@@ -4,10 +4,10 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { IRootState } from '../../../store';
 import {
+  getLessonsByGroup,
   setSelectedLesson,
   setIsOpenModalDeleteLesson,
 } from '../../../store/group-page/lesson/action-creators';
-import { getLessonsByGroup } from '../../../store/group-page/lesson/thunk';
 import { Lesson } from '../../../interfaces/Lesson';
 
 import ModalLessonDelete from './ModalLessonDelete';

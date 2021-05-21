@@ -10,6 +10,7 @@ import {
   LESSON_TOGGLE_MODAL_ATTENDANCE,
   LESSON_TOGGLE_MODAL_DELETE_LESSON,
   DATA_TO_CREATE_ATTENDANCES,
+  LESSON_BY_GROUP_ID,
 } from '../../actionTypes';
 
 export type LessonListActions =
@@ -20,7 +21,8 @@ export type LessonListActions =
   | ReturnType<typeof setIsOpenModalAddLesson>
   | ReturnType<typeof setIsOpenModalDeleteLesson>
   | ReturnType<typeof setSelectedLesson>
-  | ReturnType<typeof setDataToCreateAttendances>;
+  | ReturnType<typeof setDataToCreateAttendances>
+  | ReturnType<typeof getLessonsByGroup>;
 
 export const setLessonListIsLoading = () =>
   ({
@@ -67,4 +69,10 @@ export const setDataToCreateAttendances = (arrData: IUserAttendance[]) =>
   ({
     type: DATA_TO_CREATE_ATTENDANCES,
     payload: arrData,
+  } as const);
+
+export const getLessonsByGroup = () =>
+  ({
+    type: LESSON_BY_GROUP_ID,
+    payload: undefined,
   } as const);
