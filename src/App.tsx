@@ -36,6 +36,7 @@ function App() {
     const appState = useSelector((state: IRootState) => state)
     const history = useHistory();
     const [isHidden, setHidden] = useState(true);
+    const [isDark, setMode] = useState(false);
     const logOut = () => {
         dispatch(setIsLoggedOut());
         dispatch(toggleRoleSelector());
@@ -49,12 +50,21 @@ function App() {
         setHidden(condition);
     }
 
+    const onShangeMode = (condition: boolean) => {
+        setMode(condition);
+    }
+
     function styleMenu(condition: boolean) {
         if (condition) { return ("nothide") } else { return ("hide") }
     }
+
+    function menuMode(condition: boolean) {
+        if (condition) { return ("darkMode") } else { return ("lightMode") }
+    }
+
     return (
 
-        <div className="App">
+        <div className={`App ${menuMode(isDark)}`}>
             <Helmet>
                 <title>Самый лучший сайт на свете</title>
                 <meta name="description" content="Helmet application" />
@@ -67,7 +77,7 @@ function App() {
                     {
                         !!getToken()
                         &&
-                        <NavMenu roleId={appState.roleSelector.currentUserRoleId} onHide={onHide} />
+                        <NavMenu roleId={appState.roleSelector.currentUserRoleId} onHide={onHide} onShangeMode={onShangeMode}/>
                     }
                 </div>
             </aside>

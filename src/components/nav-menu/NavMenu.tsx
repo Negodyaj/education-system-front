@@ -9,16 +9,22 @@ import "./NavMenu.css"
 interface NavMenuProps {
     roleId: number,
     onHide: (condition: boolean) => void
+    onShangeMode: (condition: boolean) => void
 }
 
 function NavMenu(props: NavMenuProps) {
     const [isHidden, setHidden] = useState(false);
+    const [isDark, setMode] = useState(false);
+
+    let changeMode = () => {
+        isDark ? setMode(false) : setMode(true);
+        props.onShangeMode(isDark);
+    }
 
     let changeHidden = () => {
         isHidden ? setHidden(false) : setHidden(true);
         props.onHide(isHidden);
     }
-    
     const defaultShowFilter = (link: DropdownLinkParams) => {
         if (link.routeParam == "1" || link.routeParam == "2")
             return true;
@@ -72,7 +78,9 @@ function NavMenu(props: NavMenuProps) {
             <button className={isHidden ? "left button-update" : "right button-update"} onClick={changeHidden} title={isHidden ? "развернуть меню" : "свернуть меню"}>
                 <FontAwesomeIcon icon="angle-double-right" />
             </button>
-
+            <button className="mode round-button" onClick={changeMode} title={isDark ? "ночной режим" : " дневной режим"}>
+                <FontAwesomeIcon icon={isDark? "moon":"sun"}/>
+            </button>
         </div>
     )
 }

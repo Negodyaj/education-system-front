@@ -8,7 +8,9 @@ import { getUserToEditById } from "../../store/user-page/thunk";
 import { useParams } from "react-router-dom";
 import { sendGetRequest } from "../../services/http.service";
 import { UserInput } from "../../interfaces/UserInput";
-import { currentUserUrl } from "../../shared/consts";
+import { currentUserUrl, usersUrl } from "../../shared/consts";
+import { User } from "../../interfaces/User";
+import { isUser } from "../../services/type-guards/user";
 
 type FormValues = {
   firstName: string;
@@ -20,10 +22,29 @@ type FormValues = {
   developer?: string;
 };
 
+//const for action type
+export const USERS_LIST_WRETCH_LOADED = 'USERS_LIST_WRETCH_LOADED';
 
-const getUser = () => {
-  return 
+export type TagsPageActions =
+    | ReturnType<typeof setUsersListWasLoaded>
+
+//action creator
+export const getUser = (userId?: string) => {
+  return (dispatch: Dispatch) => {
+      sendGetRequest<User>(`${usersUrl}/${userId}`, isUser)
+          .then(user => dispatch(setUsersListWasLoaded(user)))
+  }
 }
+
+//action
+export const setUsersListWasLoaded = (user: User[]) => {
+  return ({
+      type: USERS_LIST_WRETCH_LOADED,
+      payload: user
+  } as const);
+}
+
+
 
 const PersonalPage = () => {
   const [changeForm, setChangeForm] = useState(true);
@@ -33,7 +54,8 @@ const PersonalPage = () => {
   const { idToEdit } = useParams<{ idToEdit?: string; }>();
 
 useEffect(() => {
-  dispatch(getUserToEditById('1'))
+  //dispatch(getUserToEditById('1'))
+  dispatch(getUser('1'));
 }, [])
 
   const {
