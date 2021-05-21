@@ -7,11 +7,10 @@ import { isUserArr } from '../../services/type-guards/userArray';
 import { isUserDelete } from '../../services/type-guards/userDelete';
 import { usersUrl } from '../../shared/consts';
 import { tryGetErrorFromResponse } from '../../shared/helpers/http-response.helper';
-import { makeNotification } from '../../shared/helpers/notificationHelpers';
 import { DELETE_USER, GET_USERS } from '../actionTypes';
 import { setIsLoaded, setIsLoading } from '../app/action-creators';
 import { constructNotificationError } from '../core/error-notification-constructor';
-import { pushNotification } from '../notifications/action-creators';
+import { constructSuccessNotification } from '../core/sucess-notification-constructor';
 
 import { deleteUserRequest, setUserListWasLoaded } from './action-creators';
 
@@ -19,14 +18,11 @@ function* userListPageRootSaga() {
   yield all([getUsersSagaWatcher(), deleteUserSagaWatcher()]);
 }
 function* getUsersSagaWatcher() {
-  yield takeLatest(GET_USERS, getUsersSagaWorkerWrapper);
-}
-function* getUsersSagaWorkerWrapper() {
-  yield put(setIsLoading());
-  yield getUsersSagaWorker();
-  yield put(setIsLoaded());
+  yield takeLatest(GET_USERS, getUsersSagaWorker);
 }
 function* getUsersSagaWorker() {
+  yield put(setIsLoading());
+
   const users: User[] = yield call(async () =>
     sendGetRequest<User[]>(usersUrl, isUserArr).then((response) => response)
   );
@@ -35,6 +31,8 @@ function* getUsersSagaWorker() {
 
   if (error) yield put(constructNotificationError(error));
   else yield put(setUserListWasLoaded(users));
+
+  yield put(setIsLoaded());
 }
 
 function* deleteUserSagaWatcher() {
@@ -46,7 +44,6 @@ function* deleteUserSagaWorkerWrapper({
   const userToDeleteId: number = payload;
   yield put(setIsLoading());
   yield deleteUserSagaWorker(userToDeleteId);
-  yield getUsersSagaWorker();
   yield put(setIsLoaded());
 }
 function* deleteUserSagaWorker(userToDeleteId: number) {
@@ -60,15 +57,15 @@ function* deleteUserSagaWorker(userToDeleteId: number) {
   const error = tryGetErrorFromResponse(deleteUserResponse);
 
   if (error) yield put(constructNotificationError(error));
-  else
+  else {
     yield put(
-      pushNotification(
-        makeNotification(
-          'success',
-          `Пользователь ${deleteUserResponse.firstName} ${deleteUserResponse.lastName} успешно удалён`
-        )
+      constructSuccessNotification(
+        `Пользователь ${deleteUserResponse.firstName} ${deleteUserResponse.lastName} успешно удалён`
       )
     );
+
+    yield getUsersSagaWorker();
+  }
 }
 
 export default userListPageRootSaga;

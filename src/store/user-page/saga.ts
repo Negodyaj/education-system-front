@@ -1,4 +1,4 @@
-import { call, put, takeEvery } from 'redux-saga/effects';
+import { call, put, select, takeEvery } from 'redux-saga/effects';
 
 import { User } from '../../interfaces/User';
 import { UserInput } from '../../interfaces/UserInput';
@@ -17,11 +17,10 @@ import {
   usersUrl,
 } from '../../shared/consts';
 import { tryGetErrorFromResponse } from '../../shared/helpers/http-response.helper';
-import { makeNotification } from '../../shared/helpers/notificationHelpers';
 import { SEND_USER, USER_TO_EDIT_LOADING_WATCHER } from '../actionTypes';
 import { setIsLoaded, setIsLoading } from '../app/action-creators';
 import { constructNotificationError } from '../core/error-notification-constructor';
-import { pushNotification } from '../notifications/action-creators';
+import { constructSuccessNotification } from '../core/sucess-notification-constructor';
 
 import {
   getUserToEdit,
@@ -79,11 +78,8 @@ export function* sendUserSagaWorker({ payload }: ReturnType<typeof sendUser>) {
     if (error) yield put(constructNotificationError(error));
     else {
       yield put(
-        pushNotification(
-          makeNotification(
-            'success',
-            `Пользователь ${userRegisterResponse.firstName} ${userRegisterResponse.lastName} успешно зарегистрирован`
-          )
+        constructSuccessNotification(
+          `Пользователь ${userRegisterResponse.firstName} ${userRegisterResponse.lastName} успешно зарегистрирован`
         )
       );
       history.push(`/${userListUrl}`);
@@ -110,11 +106,8 @@ export function* updateUserSagaWorker(
   if (error) yield put(constructNotificationError(error));
   else {
     yield put(
-      pushNotification(
-        makeNotification(
-          'success',
-          `Пользователь ${userUpdateResponse.firstName} ${userUpdateResponse.lastName} успешно изменён`
-        )
+      constructSuccessNotification(
+        `Пользователь ${userUpdateResponse.firstName} ${userUpdateResponse.lastName} успешно изменён`
       )
     );
     history.push(`/${userListUrl}`);
