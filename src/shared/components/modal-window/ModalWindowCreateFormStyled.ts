@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-
+type ModalWindowVisibility = { isVisible?: boolean };
 export const ModalBackground = styled.div`
   position: fixed;
   top: 0;
@@ -10,6 +10,8 @@ export const ModalBackground = styled.div`
   opacity: 1;
   transition: all 0.6s easy;
   pointer-events: all;
+  display: ${(props: ModalWindowVisibility) =>
+    props.isVisible ? `block` : `none`};
 `;
 
 export const ModalFormCreate = styled.div`

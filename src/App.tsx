@@ -30,6 +30,7 @@ import HomeworkPage from './components/homework-page/HomeworkPage';
 import LessonsByGroup from './components/group-page/lesson-list-component/LessonsByGroup';
 import LoginForm from './components/login-form/LoginForm';
 import LoginRoleSelector from './components/role-selector/LoginRoleSelector';
+import ModalWindow from './shared/components/modal-window/ModalWindow';
 
 function App() {
   const dispatch = useDispatch();
@@ -168,6 +169,7 @@ function App() {
             </Switch>
           )}
           <NotificationContainer />
+          <ModalWindow />
         </main>
       </div>
       <Loader />
