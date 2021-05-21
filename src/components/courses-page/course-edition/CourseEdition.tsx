@@ -48,9 +48,9 @@ function CourseEdition() {
     dispatch(getCourseById(idCourse));
   }, []);
 
-  useEffect(() => {
+  /* useEffect(() => {
     checkThemes();
-  }, [pageState.course.themes]);
+  }, [pageState.course.themes]); */
 
   const [searchWord, setSearchWord] = useState('');
 
@@ -71,10 +71,10 @@ function CourseEdition() {
     return theme === undefined;
   };
 
-  const checkThemes = () => {
+  /* const checkThemes = () => {
     pageState.course.themes.map((theme) => themesInCourse.push(theme.id));
     dispatch(setAllThemesInCourse(themesInCourse));
-  };
+  }; */
 
   const deleteThemeFromCourse = (theme: Themes) => {
     const courseTheme: CourseTheme = { idCourse, idTheme: theme.id };
