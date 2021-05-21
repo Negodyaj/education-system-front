@@ -46,7 +46,7 @@ function App() {
     unsetToken();
     history.push('/');
   };
-    const [isDark, setMode] = useState(false);
+  const [isDark, setMode] = useState(false);
 
   const onHide = (condition: boolean) => {
     setHidden(condition);
@@ -59,21 +59,20 @@ function App() {
 
     return 'hide';
   }
-    const onShangeMode = (condition: boolean) => {
-        setMode(condition);
+  const onShangeMode = (condition: boolean) => {
+    setMode(condition);
+  };
+
+  function menuMode(condition: boolean) {
+    if (condition) {
+      return 'darkMode';
     }
 
-    function styleMenu(condition: boolean) {
-        if (condition) { return ("nothide") } else { return ("hide") }
-    }
-
-    function menuMode(condition: boolean) {
-        if (condition) { return ("darkMode") } else { return ("lightMode") }
-    }
-
+    return 'lightMode';
+  }
 
   return (
-    <div className="App">
+    <div className={`App ${menuMode(isDark)}`}>
       <Helmet>
         <title>Самый лучший сайт на свете</title>
         <meta name="description" content="Helmet application" />
@@ -84,7 +83,11 @@ function App() {
         </div>
         <div className="nav-menu">
           {!!getToken() && (
-            <NavMenu roleId={currentUserRoleId} onHide={onHide} />
+            <NavMenu
+              roleId={currentUserRoleId}
+              onHide={onHide}
+              onShangeMode={onShangeMode}
+            />
           )}
         </div>
       </aside>

@@ -27,9 +27,11 @@ import {
   faCalendarCheck,
   faSpellCheck,
   faGraduationCap,
+  faMoon,
+  faSun,
 } from '@fortawesome/free-solid-svg-icons';
 
-library.add(
+/* library.add(
   faTimes,
   faEdit,
   faTrash,
@@ -53,7 +55,7 @@ library.add(
   faBookReader,
   faUniversity,
   faNewspaper
-);
+); */
 
 library.add(
   faTimes,
@@ -82,5 +84,7 @@ library.add(
   faClone,
   faCalendarCheck,
   faSpellCheck,
-  faGraduationCap
+  faGraduationCap,
+  faSun,
+  faMoon
 );
