@@ -45,7 +45,7 @@ const ModalLessonDelete = () => {
           </ButtonCloseModalDeleteLesson>
         </ModalHeaderDeleteLesson>
         <ModalContentDeleteLesson>
-          Вы уверены, что хотите удалить занятие от{' '}
+          Вы уверены, что хотите удалить занятие, запланированное на{' '}
           {dataLessonForDelete.lessonDate}?
         </ModalContentDeleteLesson>
         <ModalBottomDeleteLesson>

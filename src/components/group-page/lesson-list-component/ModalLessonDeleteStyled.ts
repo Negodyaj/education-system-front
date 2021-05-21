@@ -30,11 +30,11 @@ export const ModalHeaderDeleteLesson = styled.div`
 `;
 
 export const ModalContentDeleteLesson = styled.div`
-  margin-left: 40px;
   padding: 0 30px;
   font-size: 20px;
   font-family: 'Montserrat';
   font-weight: 600;
+  text-align: center;
 `;
 
 export const ModalBottomDeleteLesson = styled.div`
