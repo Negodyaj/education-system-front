@@ -3,6 +3,8 @@ import { useFormContext } from 'react-hook-form';
 import { InputSettings } from '../../helpers/userFormRegisterSettingByKey';
 import { TextareaStyled } from '../../styled-components/globalStyledConsts';
 
+import { InputSettings } from '../../helpers/userFormRegisterSettingByKey';
+
 function TextAreaInput(props: {
     inputSettings: InputSettings;
     onChange?: (...event: any[]) => void;

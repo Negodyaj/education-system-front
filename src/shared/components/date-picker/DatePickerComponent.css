@@ -37,73 +37,39 @@
     justify-content: space-between;
 }
 
-.react-datepicker__day-names,
-.react-datepicker__week {
+.react-datepicker__day-names, .react-datepicker__week {
     white-space: nowrap;
     display: flex;
     justify-content: space-around;
 }
 
-.react-datepicker__day--selected,
-.react-datepicker__day--in-selecting-range,
-.react-datepicker__day--in-range,
-.react-datepicker__month-text--selected,
-.react-datepicker__month-text--in-selecting-range,
-.react-datepicker__month-text--in-range,
-.react-datepicker__quarter-text--selected,
-.react-datepicker__quarter-text--in-selecting-range,
-.react-datepicker__quarter-text--in-range,
-.react-datepicker__year-text--selected,
-.react-datepicker__year-text--in-selecting-range,
-.react-datepicker__year-text--in-range {
+.react-datepicker__day--selected, .react-datepicker__day--in-selecting-range, .react-datepicker__day--in-range, .react-datepicker__month-text--selected, .react-datepicker__month-text--in-selecting-range, .react-datepicker__month-text--in-range, .react-datepicker__quarter-text--selected, .react-datepicker__quarter-text--in-selecting-range, .react-datepicker__quarter-text--in-range, .react-datepicker__year-text--selected, .react-datepicker__year-text--in-selecting-range, .react-datepicker__year-text--in-range {
     border-radius: 50%;
     background-color: #00ccf2;
 }
 
-.react-datepicker__day--selected:hover,
-.react-datepicker__day--in-selecting-range:hover,
-.react-datepicker__day--in-range:hover,
-.react-datepicker__month-text--selected:hover,
-.react-datepicker__month-text--in-selecting-range:hover,
-.react-datepicker__month-text--in-range:hover,
-.react-datepicker__quarter-text--selected:hover,
-.react-datepicker__quarter-text--in-selecting-range:hover,
-.react-datepicker__quarter-text--in-range:hover,
-.react-datepicker__year-text--selected:hover,
-.react-datepicker__year-text--in-selecting-range:hover,
-.react-datepicker__year-text--in-range:hover {
+.react-datepicker__day--selected:hover, .react-datepicker__day--in-selecting-range:hover, .react-datepicker__day--in-range:hover, .react-datepicker__month-text--selected:hover, .react-datepicker__month-text--in-selecting-range:hover, .react-datepicker__month-text--in-range:hover, .react-datepicker__quarter-text--selected:hover, .react-datepicker__quarter-text--in-selecting-range:hover, .react-datepicker__quarter-text--in-range:hover, .react-datepicker__year-text--selected:hover, .react-datepicker__year-text--in-selecting-range:hover, .react-datepicker__year-text--in-range:hover {
     background-color: #00ccf2;
 }
 
-.react-datepicker__day--keyboard-selected,
-.react-datepicker__month-text--keyboard-selected,
-.react-datepicker__quarter-text--keyboard-selected,
-.react-datepicker__year-text--keyboard-selected {
+.react-datepicker__day--keyboard-selected, .react-datepicker__month-text--keyboard-selected, .react-datepicker__quarter-text--keyboard-selected, .react-datepicker__year-text--keyboard-selected {
     border-radius: 0;
     background-color: #fff;
     color: inherit;
 }
 
-.react-datepicker__day,
-.react-datepicker__month-text,
-.react-datepicker__quarter-text,
-.react-datepicker__year-text {
+.react-datepicker__day, .react-datepicker__month-text, .react-datepicker__quarter-text, .react-datepicker__year-text {
     cursor: pointer;
     width: 40px;
     height: 40px;
     line-height: 40px;
 }
 
-.react-datepicker__day-name,
-.react-datepicker__day,
-.react-datepicker__time-name {
+.react-datepicker__day-name, .react-datepicker__day, .react-datepicker__time-name {
     margin: 0;
 }
 
-.react-datepicker__day:hover,
-.react-datepicker__month-text:hover,
-.react-datepicker__quarter-text:hover,
-.react-datepicker__year-text:hover {
+.react-datepicker__day:hover, .react-datepicker__month-text:hover, .react-datepicker__quarter-text:hover, .react-datepicker__year-text:hover {
     border-radius: 50%;
 }
 
@@ -163,11 +129,11 @@
     background-repeat: no-repeat;
 }
 
-.button, input, optgroup, select, textarea{
+.button, .react-datepicker-wrapper input, optgroup, select, textarea {
     height: 40px;
-  width: 272px;
-  border: 1px solid #E0E7FF;
-  border-radius: 5px;
-  margin-bottom: 11px;
-  font-family: 'Montserrat';
+    width: 272px;
+    border: 1px solid #E0E7FF;
+    border-radius: 5px;
+    margin-bottom: 11px;
+    font-family: 'Montserrat';
 }

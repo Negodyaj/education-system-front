@@ -1,5 +1,4 @@
-import { ICoursePageState } from "../state";
-import { CoursePageActions } from "./action-creators";
+import { CourseInput } from '../../interfaces/CourseInput';
 import {
   COURSE_LIST_TOGGLE_MODAL_CREATE_COURSE,
   COURSE_LIST_WRETCH_CREATE_COURSE,
@@ -7,12 +6,14 @@ import {
   COURSE_LIST_WRETCH_LOADED,
   COURSE_LIST_WRETCH_LOADING,
   COURSE_LIST_TOGGLE_MODAL_DELETE_COURSE,
-} from "../actionTypes";
-import { CourseInput } from "../../interfaces/CourseInput";
+} from '../actionTypes';
+import { ICoursePageState } from '../state';
+
+import { CoursePageActions } from './action-creators';
 
 export const INIT_COURSE_TO_REGISTER: CourseInput = {
-  name: "",
-  description: "",
+  name: '',
+  description: '',
   duration: 1,
 };
 

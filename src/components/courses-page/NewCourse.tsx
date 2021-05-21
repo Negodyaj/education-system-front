@@ -1,5 +1,4 @@
 import { showToggleModalCreateCourseAction } from '../../store/courses-page/action-creators';
-import { useDispatch, useSelector } from 'react-redux';
 import { createCourse } from '../../store/courses-page/thunk';
 import { IRootState } from '../../store';
 import { CourseInput } from '../../interfaces/CourseInput';
@@ -13,13 +12,13 @@ function NewCourse() {
     const appState = useSelector((state: IRootState) => state.coursePage.createCourseInputModel)
     const formCourse = useForm<CourseInput>();
 
-    const closeModalWindow = () => {
-        dispatch(showToggleModalCreateCourseAction());
-    }
+  const closeModalWindow = () => {
+    dispatch(showToggleModalCreateCourseAction());
+  };
 
-    const createDataNewCourse = (dataNewCourse: CourseInput) => {
-        dispatch(createCourse(dataNewCourse)) 
-    }
+  const createDataNewCourse = (dataNewCourse: CourseInput) => {
+    dispatch(createCourse(dataNewCourse));
+  };
 
     const onSubmit = (dataCourse: CourseInput) => {
         createDataNewCourse(dataCourse);

@@ -32,7 +32,7 @@
     flex-direction: column;
     gap: 5px;
     margin-top: 10px;
-    padding-left: 83px;
+    padding-left: 100px;
     list-style: none;
 }
 
@@ -74,6 +74,7 @@
 
 .menu-container nav .more-links-toggle {
     cursor: pointer;
+    font-weight: 600;
 }
 
 button.left, button.right{

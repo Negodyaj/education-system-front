@@ -1,6 +1,7 @@
 .App {
     display: flex;
     flex-direction: row;
+    height: 100%;
 }
 
 .app-logo {
@@ -73,6 +74,7 @@ aside.hide {
     flex-direction: column;
     height: calc(100vh - 100px);
     flex-grow: 1;
+    overflow: auto;
 }
 
 .common-button, .round-button {

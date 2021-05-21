@@ -2,6 +2,8 @@ import { useFormContext } from 'react-hook-form';
 import { InputSettings } from '../../helpers/useFormRegisterSettingByKey';
 import { InputText } from '../../styled-components/globalStyledConsts';
 
+import { InputSettings } from '../../helpers/userFormRegisterSettingByKey';
+
 function TextInput(props: {
     inputSettings: InputSettings;
     onChange?: (...event: any[]) => void
