@@ -4,6 +4,11 @@ import { useDispatch } from 'react-redux';
 
 import { toggleModalHidden } from '../../../store/tags-page/action-creators';
 import { addTag } from '../../../store/tags-page/thunk';
+import {
+  CommonButton,
+  DisabledButton,
+  RoundButton,
+} from '../../../shared/styled-components/buttonStyledComponent';
 
 interface AddTagModalProps {
   hidden: boolean;
@@ -21,10 +26,8 @@ function AddTagModal(props: AddTagModalProps) {
 
     if (e.target.value.length > 2) {
       setIsDisabled(false);
-      setBlock('');
     } else {
       setIsDisabled(true);
-      setBlock('block');
     }
   };
 
@@ -32,18 +35,16 @@ function AddTagModal(props: AddTagModalProps) {
     dispatch(addTag({ name: nameNewTag }));
   };
   const [isDisabled, setIsDisabled] = useState(true);
-  const [block, setBlock] = useState('block');
 
   return (
     <div className={`modal-back ${hidden && 'hidden'}`}>
       <div className="modal">
         <div className="head-modal">
           <h4>Введите новый тег</h4>
+          <RoundButton as="button" onClick={closeModalWindow}>
+            <FontAwesomeIcon icon="times" />
+          </RoundButton>
         </div>
-        <button className="button-close" onClick={closeModalWindow}>
-          <FontAwesomeIcon icon="times" />
-        </button>
-
         <div className="create-tag">
           <div className="tag-data">
             <input
@@ -55,15 +56,12 @@ function AddTagModal(props: AddTagModalProps) {
           </div>
         </div>
         <div className="select-delete">
-          <button className="button-select" onClick={closeModalWindow}>
+          <CommonButton as="button" onClick={closeModalWindow}>
             Отмена
-          </button>
-          <button
-            className={`button-select ${block}`}
-            onClick={AddNewTag}
-            disabled={isDisabled}>
+          </CommonButton>
+          <DisabledButton as="button" onClick={AddNewTag} disabled={isDisabled}>
             Ок
-          </button>
+          </DisabledButton>
         </div>
       </div>
     </div>

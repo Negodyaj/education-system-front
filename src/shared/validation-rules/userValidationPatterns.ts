@@ -1,11 +1,8 @@
 import { InputNames } from '../../enums/inputNames';
 
-export const getValidationPattern = (key: InputNames) => {
+export const getUserValidationPattern = (key: InputNames) => {
   switch (key) {
-    case InputNames.FirstName ||
-      InputNames.LastName ||
-      InputNames.CourseDescription ||
-      InputNames.CourseName:
+    case InputNames.FirstName || InputNames.LastName:
       return {
         value: /[A-Za-zА-Яа-я]/,
         message: 'Допустимы только буквенные символы',
@@ -15,7 +12,7 @@ export const getValidationPattern = (key: InputNames) => {
         value: /[a-z0-9]/,
         message: 'Допустимы только строчные буквы и цифры',
       };
-    case InputNames.Phone || InputNames.CourseDuration:
+    case InputNames.Phone:
       return {
         value: /[0-9]/,
         message: 'Допустимы только цифры',
