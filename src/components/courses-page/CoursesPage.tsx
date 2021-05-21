@@ -5,10 +5,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { IRootState } from '../../store';
-import { getCourses } from '../../store/courses-page/thunk';
 import {
-  showToggleModalCreateCourseAction,
+  getCourses,
   showToggleModalDeleteCourseAction,
+  showToggleModalCreateCourseAction,
 } from '../../store/courses-page/action-creators';
 
 import NewCourse from './NewCourse';

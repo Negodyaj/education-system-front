@@ -3,11 +3,13 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { IRootState } from '../../../store';
-import { showToggleModalDeleteCourseAction } from '../../../store/courses-page/action-creators';
-import { deleteCourse, getCourses } from '../../../store/courses-page/thunk';
+import {
+  deleteCourse,
+  getCourses,
+  showToggleModalDeleteCourseAction,
+} from '../../../store/courses-page/action-creators';
 import { ModalHeaderAddCourse } from '../NewCourseStyled';
 
-import './ModalWindowDelete.css';
 import {
   Modal,
   ModalBack,
@@ -26,7 +28,7 @@ function ModalWindowDelete() {
   };
 
   const deleteCourseById = () => {
-    dispatch(deleteCourse(deleteId));
+    dispatch(deleteCourse());
     dispatch(getCourses());
   };
 
