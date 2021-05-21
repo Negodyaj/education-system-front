@@ -1,6 +1,8 @@
 import { User } from '../../interfaces/User';
 import { UserDelete } from '../../interfaces/UserDelete';
 import {
+  DELETE_USER,
+  GET_USERS,
   USER_DELETING,
   USER_DELETING_FAIL,
   USER_DELETING_SUCCESS,
@@ -19,7 +21,9 @@ export type UserListPageActions =
   | ReturnType<typeof setUserDeleting>
   | ReturnType<typeof setUserDeletingSuccess>
   | ReturnType<typeof setUserDeletingFail>
-  | ReturnType<typeof openListItem>;
+  | ReturnType<typeof openListItem>
+  | ReturnType<typeof getUsers>
+  | ReturnType<typeof deleteUserRequest>;
 
 export const setUserListIsLoading = () =>
   ({
@@ -60,4 +64,14 @@ export const openListItem = (id: number) =>
   ({
     type: USER_OPEN_LIST_ITEM,
     payload: id,
+  } as const);
+export const getUsers = () =>
+  ({
+    type: GET_USERS,
+    payload: undefined,
+  } as const);
+export const deleteUserRequest = (userToDeleteId: number) =>
+  ({
+    type: DELETE_USER,
+    payload: userToDeleteId,
   } as const);
