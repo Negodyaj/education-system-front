@@ -1,6 +1,6 @@
 import React from 'react';
 import { useFormContext } from 'react-hook-form';
-import { InputSettings } from '../../helpers/useFormRegisterSettingByKey';
+import { InputSettings } from '../../helpers/userFormRegisterSettingByKey';
 import { TextareaStyled } from '../../styled-components/globalStyledConsts';
 
 function TextAreaInput(props: {
