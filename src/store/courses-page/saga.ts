@@ -1,41 +1,51 @@
-/* eslint-disable no-unused-expressions */
-import {
-  put,
-  takeEvery,
-  all,
-  call,
-  takeLatest,
-  fork,
-  select,
-} from 'redux-saga/effects';
+import { put, all, call, takeLatest, select } from 'redux-saga/effects';
 
+import { CourseInput } from '../../interfaces/CourseInput';
 import { Course } from '../../interfaces/Courses';
-import { sendDeleteRequest, sendGetRequest } from '../../services/http.service';
+import {
+  sendDeleteRequest,
+  sendGetRequest,
+  sendPostRequest,
+} from '../../services/http.service';
 import { isCourse } from '../../services/type-guards/course';
 import { isCourseArr } from '../../services/type-guards/courseArr';
 import { coursesUrl } from '../../shared/consts';
 import { tryGetErrorFromResponse } from '../../shared/helpers/http-response.helper';
-import { DELETE_COURSE_WATCHER, GET_COURSES_WATCHER } from '../actionTypes';
+import {
+  CREATE_COURSE_WATCHER,
+  DELETE_COURSE_WATCHER,
+  GET_COURSES_WATCHER,
+} from '../actionTypes';
 import { constructNotificationError } from '../core/error-notification-constructor';
 import { constructSuccessNotification } from '../core/sucess-notification-constructor';
 
 import {
+  setCoursesListFail,
   setCoursesListIsLoadingAction,
   setCoursesListWasLoadedAction,
+  showToggleModalCreateCourseAction,
   showToggleModalDeleteCourseAction,
 } from './action-creators';
-import { courseToDeleteSelector } from './selector';
+import { courseToCreateSelector, courseToDeleteSelector } from './selector';
 
 export function* coursePageRootSaga() {
-  yield all([getCoursesSagaWatcher(), deleteCourseWarcher()]);
+  yield all([
+    getCoursesSagaWatcher(),
+    deleteCourseWatcher(),
+    createCourseWatcher(),
+  ]);
 }
 
 function* getCoursesSagaWatcher() {
   yield takeLatest(GET_COURSES_WATCHER, getCoursesSagaWorker);
 }
 
-function* deleteCourseWarcher() {
+function* deleteCourseWatcher() {
   yield takeLatest(DELETE_COURSE_WATCHER, deleteCourseWorker);
+}
+
+function* createCourseWatcher() {
+  yield takeLatest(CREATE_COURSE_WATCHER, createCourseWorker);
 }
 
 function* getCoursesSagaWorker() {
@@ -47,8 +57,8 @@ function* getCoursesSagaWorker() {
       )
     );
     yield put(setCoursesListWasLoadedAction(courses));
-  } catch {
-    console.log('ошибка');
+  } catch (error) {
+    yield put(setCoursesListFail(error));
   }
 }
 
@@ -73,7 +83,34 @@ function* deleteCourseWorker() {
         )
       );
     }
-  } catch {
-    console.log('ошибка');
+  } catch (error) {
+    yield put(setCoursesListFail(error));
+  }
+}
+
+function* createCourseWorker() {
+  try {
+    yield put(setCoursesListIsLoadingAction());
+    const newCourse: CourseInput = yield select(courseToCreateSelector);
+    const createRequestResponse: Course = yield call(async () =>
+      sendPostRequest<Course>(`${coursesUrl}`, isCourse, newCourse).then(
+        (response) => response
+      )
+    );
+    const errorResponse = tryGetErrorFromResponse(createRequestResponse);
+
+    if (errorResponse) {
+      yield constructNotificationError(errorResponse);
+    } else {
+      yield put(showToggleModalCreateCourseAction());
+      yield getCoursesSagaWorker();
+      yield put(
+        constructSuccessNotification(
+          `Курс ${createRequestResponse.name} успешно созданы`
+        )
+      );
+    }
+  } catch (error) {
+    yield put(setCoursesListFail(error));
   }
 }

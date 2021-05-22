@@ -3,8 +3,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import React, { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
-import { showToggleModalCreateCourseAction } from '../../store/courses-page/action-creators';
-import { createCourse } from '../../store/courses-page/thunk';
+import {
+  createCourse,
+  showToggleModalCreateCourseAction,
+} from '../../store/courses-page/action-creators';
 import FormElement from '../../shared/components/form-elements/FormElement';
 import { InputNames } from '../../enums/inputNames';
 import { IRootState } from '../../store';
@@ -44,7 +46,6 @@ function NewCourse() {
 
   const onSubmit = (dataCourse: CourseInput) => {
     createDataNewCourse(dataCourse);
-    console.log(dataCourse);
   };
 
   return (
