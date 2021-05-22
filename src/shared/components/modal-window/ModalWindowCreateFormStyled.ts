@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-
+type ModalWindowVisibility = { isVisible?: boolean };
 export const ModalBackground = styled.div`
   position: fixed;
   top: 0;
@@ -10,31 +10,33 @@ export const ModalBackground = styled.div`
   opacity: 1;
   transition: all 0.6s easy;
   pointer-events: all;
+  display: ${(props: ModalWindowVisibility) =>
+    props.isVisible ? `block` : `none`};
 `;
 
-export const ModalAddCourse = styled.div`
+export const ModalFormCreate = styled.div`
   display: grid;
   grid-template-rows: 70px 1fr 50px;
   opacity: 1;
-  width: 600px;
-  height: 610px;
   border: 3px solid rgb(255, 255, 255);
   border-radius: 20px;
-  padding: 5px 5px;
+  padding: 35px 35px;
   background-color: rgb(255, 255, 255);
-  transition: all 0.6s easy;
-  position: relative;
-  margin: 0 auto;
+  position: absolute;
+  margin-left: 35%;
+  margin-right: 65%;
   margin-top: 6%;
 `;
 
-export const ModalHeaderAddCourse = styled.div`
+export const ModalHeader = styled.div`
+  display: flex;
   position: relative;
+  justify-content: left;
 `;
 
 export const HeadModal = styled.div`
   display: flex;
-  margin-left: 115px;
+  margin-left: 0;
   padding-top: 15px;
   font-size: 20px;
 `;
@@ -61,7 +63,6 @@ export const InputStyle = styled.form`
   display: flex;
   justify-content: center;
   flex-direction: column;
-  align-items: center;
   outline: none;
 `;
 

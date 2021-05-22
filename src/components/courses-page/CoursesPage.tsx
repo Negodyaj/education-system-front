@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react';
-import './CoursesPage.css';
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,6 +10,9 @@ import {
   showToggleModalCreateCourseAction,
   courseIdForDelete,
 } from '../../store/courses-page/action-creators';
+import { LinkStyledRegularFont } from '../../shared/styled-components/globalStyledConsts';
+import { toggleModalWindow } from '../../store/modal-window/action-creators';
+import { ChildIndex } from '../../enums/ChildIndex';
 
 import NewCourse from './NewCourse';
 import ModalWindowDelete from './modal-window/ModalWindowDelete';
@@ -38,7 +40,7 @@ function CoursesPage() {
   };
 
   const openModalAdd = () => {
-    dispatch(showToggleModalCreateCourseAction());
+    dispatch(toggleModalWindow(ChildIndex.NewCourse));
   };
 
   return (
@@ -55,9 +57,11 @@ function CoursesPage() {
         ) : (
           pageState.courseList.map((item) => (
             <CourseStyled>
-              <Link className="current-course-name" to={`/course/${item.id}`}>
+              <LinkStyledRegularFont
+                className="current-course-name"
+                to={`/course/${item.id}`}>
                 <EmptyDiv>{item.name}</EmptyDiv>
-              </Link>
+              </LinkStyledRegularFont>
               <CourseUpdateDelete>
                 <Link to={`/course/${item.id}/edition`}>
                   <button className="round-button">
