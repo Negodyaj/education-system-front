@@ -32,7 +32,7 @@ function HomeworkButtonsCell(props: {
       {buttons.editButton && <HomeworkEditButton />}
       {buttons.deleteButton && <HomeworkDeleteButton homeworkId={hw.id} />}
       {buttons.checkButton && <HomeworkCheckButton hw={hw} />}
-      {buttons.appointButton && <HomeworkAppointButton />}
+      {buttons.appointButton && <HomeworkAppointButton hw={hw} />}
       {buttons.attemptButton && !hw.isOptional && <HomeworkAttemptButton />}
     </ButtonsCell>
   );

@@ -1,7 +1,9 @@
+import { AllGroupsInCollege } from '../../interfaces/AllGroupsInCollege';
 import { Attempt } from '../../interfaces/Attempt';
 import { Homework } from '../../interfaces/Homework';
 import { INIT_HOMEWORK } from '../../shared/tmp-mock-data/hw/initHomewwork';
 import {
+  ALL_ACTIVE_GROUPS,
   ATTEMPTS_LOADING_SUCCESS,
   SET_CURRENT_ATTEMPT,
   SET_CURRENT_GROUP,
@@ -12,7 +14,8 @@ export type HomeworkAttemptActions =
   | ReturnType<typeof attemptListLoadingSuccess>
   | ReturnType<typeof setCurrentGroup>
   | ReturnType<typeof setCurrentAttempt>
-  | ReturnType<typeof setCurrentHomework>;
+  | ReturnType<typeof setCurrentHomework>
+  | ReturnType<typeof setAllGroupsInCollege>;
 
 export const attemptListLoadingSuccess = (attempts: Attempt[]) =>
   ({
@@ -34,4 +37,9 @@ export const setCurrentAttempt = (currentAttempt: Attempt) =>
   ({
     type: SET_CURRENT_ATTEMPT,
     payload: currentAttempt,
+  } as const);
+export const setAllGroupsInCollege = (groups: AllGroupsInCollege[]) =>
+  ({
+    type: ALL_ACTIVE_GROUPS,
+    payload: groups,
   } as const);

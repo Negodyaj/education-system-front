@@ -1,0 +1,153 @@
+[
+    {
+        "id": 3,
+        "description": "Паттерн декоратор",
+        "startDate": "29.04.2021",
+        "deadlineDate": "01.05.2021",
+        "isOptional": false,
+        "course": {
+            "id": 4,
+            "name": "Frontend",
+            "description": "Специальный курс Frontend для студентов успешно прошедших базовый курс",
+            "duration": 0,
+            "isDeleted": false,
+            "materials": [
+                {
+                    "id": 1,
+                    "link": "https://htmlreference.io/",
+                    "description": "html"
+                },
+                {
+                    "id": 3,
+                    "link": "http://getbootstrap.com ",
+                    "description": "bootstrap"
+                },
+                {
+                    "id": 4,
+                    "link": "www.typescriptlang.org (https://www.typescriptlang.org/download/)",
+                    "description": "TypeScript"
+                }
+            ]
+        },
+        "groupsIds": [],
+        "tags": [],
+        "homeworkAttempts": [
+            {
+                "id": 1,
+                "comment": "https://github.com/DmitriyFilimonov/DoubleLinkedList_TypeScript",
+                "author": {
+                    "id": 127,
+                    "firstName": "Кеша",
+                    "lastName": "Попугай",
+                    "userPic": "https://i.pinimg.com/originals/ee/fa/54/eefa54fbe930758a9e6139416e5001b3.png"
+                },
+                "homeworkAttemptStatus": "Ждет проверки",
+                "comments": [],
+                "attachments": []
+            },
+            {
+                "id": 2,
+                "comment": "https://github.com/DmitriyFilimonov/DataStructure_2",
+                "author": {
+                    "id": 128,
+                    "firstName": "Dimon",
+                    "lastName": "Filimonov",
+                    "userPic": "https://pbs.twimg.com/profile_images/910180358737424384/THenAPB7_400x400.jpg"
+                },
+                "homeworkAttemptStatus": "Ждет проверки",
+                "comments": [],
+                "attachments": []
+            }
+        ],
+        "themes": []
+    },
+    {
+        "id": 4,
+        "description": "Event loop. Асинхронность в браузере. https://developer.mozilla.org/ru/docs/Web/JavaScript/EventLoop",
+        "startDate": "04.05.2021",
+        "deadlineDate": "11.05.2021",
+        "isOptional": true,
+        "course": {
+            "id": 4,
+            "name": "Frontend",
+            "description": "Специальный курс Frontend для студентов успешно прошедших базовый курс",
+            "duration": 0,
+            "isDeleted": false,
+            "materials": [
+                {
+                    "id": 1,
+                    "link": "https://htmlreference.io/",
+                    "description": "html"
+                },
+                {
+                    "id": 3,
+                    "link": "http://getbootstrap.com ",
+                    "description": "bootstrap"
+                },
+                {
+                    "id": 4,
+                    "link": "www.typescriptlang.org (https://www.typescriptlang.org/download/)",
+                    "description": "TypeScript"
+                }
+            ]
+        },
+        "groupsIds": [],
+        "tags": [],
+        "homeworkAttempts": [],
+        "themes": []
+    },
+    {
+        "id": 5,
+        "description": "Воссоздать компоненты Bootstrap: аккордеон, модальное окно, форма с валидацией",
+        "startDate": "10.05.2021",
+        "deadlineDate": "14.05.2021",
+        "isOptional": false,
+        "course": {
+            "id": 4,
+            "name": "Frontend",
+            "description": "Специальный курс Frontend для студентов успешно прошедших базовый курс",
+            "duration": 0,
+            "isDeleted": false,
+            "materials": [
+                {
+                    "id": 1,
+                    "link": "https://htmlreference.io/",
+                    "description": "html"
+                },
+                {
+                    "id": 3,
+                    "link": "http://getbootstrap.com ",
+                    "description": "bootstrap"
+                },
+                {
+                    "id": 4,
+                    "link": "www.typescriptlang.org (https://www.typescriptlang.org/download/)",
+                    "description": "TypeScript"
+                }
+            ]
+        },
+        "groupsIds": [],
+        "tags": [],
+        "homeworkAttempts": [],
+        "themes": []
+    },
+    {
+        "id": 6,
+        "description": "Сделать то, о чём просили фронтендеры",
+        "startDate": "10.05.2021",
+        "deadlineDate": "14.05.2021",
+        "isOptional": false,
+        "course": {
+            "id": 5,
+            "name": "Backend",
+            "description": "Специальный курс Backend для студентов успешно прошедших базовый курс",
+            "duration": 0,
+            "isDeleted": false,
+            "materials": []
+        },
+        "groupsIds": [],
+        "tags": [],
+        "homeworkAttempts": [],
+        "themes": []
+    }
+]

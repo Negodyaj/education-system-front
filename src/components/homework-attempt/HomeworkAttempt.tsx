@@ -5,6 +5,7 @@ import { useHistory, useParams } from 'react-router-dom';
 import { Attempt } from '../../interfaces/Attempt';
 import CustomMultiSelect from '../../shared/components/multi-select/CustomMultiSelect';
 import { homeworkUrl } from '../../shared/consts';
+import { convertAllGroupsInCollegeToSelectItems } from '../../shared/converters/allGroupsInCollegeToSelecItems';
 import { convertIdsToSelectItems } from '../../shared/converters/roleIdsToSelectItems';
 import { PageTitle } from '../../shared/styled-components/consts';
 import { IRootState } from '../../store';
@@ -29,21 +30,15 @@ function HomeworkAttempt() {
     currentAttempt,
     currentGroup,
     currentHomework,
+    allGroupsInCollege,
   } = useSelector((state: IRootState) => state.homeworkAttempt);
   const history = useHistory();
   const dispatch = useDispatch();
   const { hwId } = useParams<{ hwId?: string }>();
   const { attemptId } = useParams<{ attemptId?: string }>();
   useEffect(() => {
-    attemptList?.length
-      ? dispatch(
-          setCurrentAttempt(
-            [...attemptList].filter(
-              (attempt) => attempt.id.toString() === attemptId
-            )[0]
-          )
-        )
-      : dispatch(getAttemptListToCheck(hwId || ''));
+    !attemptList?.length &&
+      dispatch(getAttemptListToCheck(hwId || '', attemptId));
   }, [attemptList]);
 
   const authorOnClick = (currentAttemptArg: Attempt) => {
@@ -57,6 +52,10 @@ function HomeworkAttempt() {
         <PageTitle>Проверка ответов</PageTitle>
         <GroupName>
           <Title>Группа:</Title>
+          <CustomMultiSelect
+            selectType="single"
+            options={convertAllGroupsInCollegeToSelectItems(allGroupsInCollege)}
+          />
         </GroupName>
       </Header>
       <Description>

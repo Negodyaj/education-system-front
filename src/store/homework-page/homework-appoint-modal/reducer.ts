@@ -13,7 +13,6 @@ const initialState: IHomeworkAppointModalState = {
   groupEntities: [],
   appointFormDefaults: APPOINT_FORM_DEFAULTS,
 };
-
 const localGroupEntities: DictionaryEntity[] = [];
 export function homeworkAppointModalReducer(
   state: IHomeworkAppointModalState = initialState,

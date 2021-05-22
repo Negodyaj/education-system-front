@@ -18,6 +18,7 @@ export const authenticate = (login: string, password: string) => (
       dispatch(getCurrentUser());
     })
     .catch((error) => {
+      console.log(error);
       dispatch(
         pushNotification(makeNotification('error', 'Неверный логин или пароль'))
       );

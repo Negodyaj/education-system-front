@@ -22,7 +22,7 @@ export const HomeworkItemsSet = styled.div`
     margin-top: 10px;
   }
   ${(props) =>
-    props.className === ACTIVE ? 'max-height: 500px' : 'max-height: 20px'}
+    props.className === ACTIVE ? 'max-height: max-content' : 'max-height: 20px'}
 `;
 // export const HomeworkItemsSet = styled(HomeworkItemsGroup)``;
 // export const GroupItem = styled(HomeworkItemsGroup)``;

@@ -17,6 +17,7 @@ import { CourseInput } from '../interfaces/CourseInput';
 import { INIT_HOMEWORK } from '../shared/tmp-mock-data/hw/initHomewwork';
 import { IndexedObj } from '../interfaces/IndexedObj';
 import { UserPageOptions } from '../components/user-page/UserPage';
+import { AllGroupsInCollege } from '../interfaces/AllGroupsInCollege';
 
 export interface IAppState {
   isLoggedIn: boolean;
@@ -69,7 +70,7 @@ export interface IHomeworkPageState {
   openedItemSetsNames: string[];
 }
 export interface IHomeworkAppointModalState {
-  groupListByTeacherId: Group[];
+  groupListByTeacherId: AllGroupsInCollege[];
   groupEntities: DictionaryEntity[];
   appointFormDefaults: AppointInput;
 }
@@ -78,6 +79,7 @@ export interface IHomeworkAttemptState {
   currentHomework?: Homework;
   currentGroup?: typeof INIT_HOMEWORK.groupsIds;
   currentAttempt?: Attempt;
+  allGroupsInCollege: AllGroupsInCollege[];
 }
 export interface INotificationContainerState {
   notifications: {

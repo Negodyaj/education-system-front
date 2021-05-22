@@ -1,8 +1,10 @@
 import { Dispatch } from 'redux';
 
+import { AllGroupsInCollege } from '../../interfaces/AllGroupsInCollege';
 import { Attempt } from '../../interfaces/Attempt';
 import { Homework } from '../../interfaces/Homework';
 import { sendGetRequest } from '../../services/http.service';
+import { isAllGroupsInCollegeArr } from '../../services/type-guards/allGroupsIncollegeArr';
 import { isAttemptArr } from '../../services/type-guards/attemptsArr';
 import { isHomework } from '../../services/type-guards/homework';
 import { homeworkUrl } from '../../shared/consts';
@@ -10,6 +12,8 @@ import { thunkResponseHandler } from '../thunkResponseHadlers';
 
 import {
   attemptListLoadingSuccess,
+  setAllGroupsInCollege,
+  setCurrentAttempt,
   setCurrentGroup,
   setCurrentHomework,
 } from './action-creators';
@@ -27,9 +31,20 @@ export const loadCurrentHomework = (hwId: string) => (dispatch: Dispatch) => {
   );
 };
 
-export const getAttemptListToCheck = (hwId: string) => (
-  dispatch: Dispatch<any>
-) => {
+export const getAllActiveGroupsInCollege = () => (dispatch: Dispatch) => {
+  sendGetRequest<AllGroupsInCollege[]>(`Group`, isAllGroupsInCollegeArr).then(
+    (response) => {
+      const groups = thunkResponseHandler(dispatch, response);
+
+      if (groups) dispatch(setAllGroupsInCollege(groups));
+    }
+  );
+};
+
+export const getAttemptListToCheck = (
+  hwId: string,
+  attemptId: string = '0'
+) => (dispatch: Dispatch<any>) => {
   sendGetRequest<Attempt[]>(
     `${homeworkUrl}/${hwId}/attempts`,
     isAttemptArr
@@ -39,6 +54,14 @@ export const getAttemptListToCheck = (hwId: string) => (
       (() => {
         dispatch(attemptListLoadingSuccess(attempts));
         dispatch(loadCurrentHomework(hwId || ''));
+        dispatch(
+          setCurrentAttempt(
+            [...attempts].filter(
+              (attempt) => attempt.id.toString() === attemptId
+            )[0]
+          )
+        );
+        dispatch(getAllActiveGroupsInCollege());
       })();
   });
 };

@@ -60,11 +60,13 @@ export function homeworkPageReducer(
 ): IHomeworkPageState {
   switch (action.type) {
     case HOMEWORK_LOAD_SUCCESS:
+      console.log(action.payload.homeworks);
+      state.homeworkListDefault = action.payload.homeworks;
       state.openedItemSetsNames = [];
 
       if (action.payload.currentUserRoleId === Role.Methodist) {
         METHODIST_VIEW.homeworkList = {
-          ...convertHomeworkListForMethodistMode(action.payload.payload),
+          ...convertHomeworkListForMethodistMode(state.homeworkListDefault),
         };
 
         return { ...state };
@@ -72,7 +74,7 @@ export function homeworkPageReducer(
 
       if (action.payload.currentUserRoleId === Role.Teacher) {
         TEACHER_VIEW.homeworkList = {
-          ...convertHomeworkListForTeacherMode(action.payload.payload),
+          ...convertHomeworkListForTeacherMode(state.homeworkListDefault),
         };
 
         return { ...state };
@@ -80,7 +82,7 @@ export function homeworkPageReducer(
 
       if (action.payload.currentUserRoleId === Role.Tutor) {
         TUTOR_VIEW.homeworkList = {
-          ...convertHomeworkListForTeacherMode(action.payload.payload),
+          ...convertHomeworkListForTeacherMode(action.payload.homeworks),
         };
 
         return { ...state };
@@ -88,7 +90,7 @@ export function homeworkPageReducer(
 
       STUDENT_VIEW.homeworkList = {
         'Frontend 09.07.2021': convertHomeworkListForTeacherMode(
-          action.payload.payload
+          action.payload.homeworks
         )['Frontend 09.07.2021'],
       };
 

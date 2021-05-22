@@ -34,7 +34,6 @@ import {
 import { homeworkAppointModalReducer } from './homework-page/homework-appoint-modal/reducer';
 import { homeworkAttemptReducer } from './homework-attempt/reducer';
 import { attendanceReducer } from './group-page/attendance/reducer';
-import { homeworkPageSaga } from './homework-page/saga';
 import { rootSaga } from './root-saga';
 
 export interface IRootState {
