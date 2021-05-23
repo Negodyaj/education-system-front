@@ -90,25 +90,26 @@ function* deleteCourseWorker() {
 
 function* createCourseWorker() {
   try {
-    yield put(setCoursesListIsLoadingAction());
     const newCourse: CourseInput = yield select(courseToCreateSelector);
+    console.log(newCourse);
     const createRequestResponse: Course = yield call(async () =>
       sendPostRequest<Course>(`${coursesUrl}`, isCourse, newCourse).then(
         (response) => response
       )
     );
+    console.log(createRequestResponse);
     const errorResponse = tryGetErrorFromResponse(createRequestResponse);
+    console.log(errorResponse);
 
     if (errorResponse) {
       yield constructNotificationError(errorResponse);
     } else {
-      yield put(showToggleModalCreateCourseAction());
-      yield getCoursesSagaWorker();
       yield put(
         constructSuccessNotification(
-          `Курс ${createRequestResponse.name} успешно созданы`
+          `Курс ${createRequestResponse.name} успешно создан`
         )
       );
+      yield getCoursesSagaWorker();
     }
   } catch (error) {
     yield put(setCoursesListFail(error));

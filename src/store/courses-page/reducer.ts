@@ -59,7 +59,6 @@ export function coursePageReducer(
     case CREATE_COURSE_WATCHER:
       return {
         ...state,
-        isDataLoading: false,
         createCourseInputModel: action.payload,
       };
     default:

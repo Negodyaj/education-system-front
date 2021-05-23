@@ -1,14 +1,11 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { IRootState } from '../../../store';
 import {
   deleteCourse,
-  getCourses,
   showToggleModalDeleteCourseAction,
 } from '../../../store/courses-page/action-creators';
-import { ModalHeaderAddCourse } from '../NewCourseStyled';
 
 import {
   Modal,
@@ -35,11 +32,11 @@ function ModalWindowDelete() {
   return (
     <ModalBack>
       <Modal>
-        <ModalHeaderAddCourse>
+        <div>
           <button className="round-button" onClick={closeModalWindow}>
             <FontAwesomeIcon icon="times" />
           </button>
-        </ModalHeaderAddCourse>
+        </div>
         <ModalContentCourseDelete>
           Вы уверены, что хотите удалить данный курс?
         </ModalContentCourseDelete>
