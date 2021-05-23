@@ -33,9 +33,6 @@ import LoginRoleSelector from './components/role-selector/LoginRoleSelector';
 import { removeFromStorage } from './services/local-storage.service';
 
 function App() {
-  // unsetToken();
-  // removeFromStorage('user');
-  // console.log(import('./server/mock-data/current-user.json'));
   const dispatch = useDispatch();
   const { currentUserRoleId } = useSelector(
     (state: IRootState) => state.roleSelector
@@ -108,6 +105,14 @@ function App() {
               </Route>
               {[Role.Teacher, Role.Tutor].includes(currentUserRoleId) && (
                 <Route path="/Homework/:hwId/attempts/:attemptId?">
+                  <HomeworkAttempt />
+                  <Helmet>
+                    <title>Домашки</title>
+                  </Helmet>
+                </Route>
+              )}
+              {currentUserRoleId === Role.Student && (
+                <Route path="/Homework/:hwId/attempt-creator">
                   <HomeworkAttempt />
                   <Helmet>
                     <title>Домашки</title>

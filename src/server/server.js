@@ -1,10 +1,5 @@
-import { createServer, Request } from 'miragejs';
+import { createServer } from 'miragejs';
 
-import {
-  store,
-  getFromStorage,
-  removeFromStorage,
-} from '../services/local-storage.service';
 import * as homeworks from '../store/homework-page/mock/homeworks.json';
 
 import * as themes from './mock-data/themes.json';
@@ -12,13 +7,11 @@ import * as attempts from './mock-data/attempts.json';
 import convertHomeworkPostToHomework from './converters/homeworkPostToHomework';
 
 function* idGenerator() {
-  let n = 10020;
+  let n = 10000;
   while (true) yield (n += 1);
 }
 
 export const newId = idGenerator();
-
-// removeFromStorage('homeworksTable');
 
 const runMock = () => {
   createServer({
@@ -71,8 +64,6 @@ const runMock = () => {
             id: newRecord.id,
             attempts: [],
           });
-
-        console.log(newRecord);
 
         return schema.db.homeworksTable[schema.db.homeworksTable.length - 1];
       });

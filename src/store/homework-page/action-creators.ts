@@ -51,7 +51,7 @@ export const appointHomework = (
     startDate: homework.startDate,
     deadlineDate: appointData.deadline,
     courseId: homework.course.id,
-    groupId: Number.parseInt(appointData.group[0], 10),
+    groupId: Number.parseInt(appointData.group, 10),
     tagIds: homework.tags.map((tag) => tag.id),
     themeIds: homework.themes?.map((theme) => theme.id) || [],
     isOptional: homework.isOptional,

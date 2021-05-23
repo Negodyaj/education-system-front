@@ -4,9 +4,7 @@ import { useParams } from 'react-router-dom';
 
 import { getAttemptListToCheck } from '../../store/homework-attempt/thunk';
 import { IRootState } from '../../store';
-import { PageTitle } from '../../shared/styled-components/consts';
-import CustomMultiSelect from '../../shared/components/multi-select/CustomMultiSelect';
-import { convertAllGroupsInCollegeToSelectItems } from '../../shared/converters/allGroupsInCollegeToSelecItems';
+import { Role } from '../../enums/role';
 
 import NavPanelComponent from './nav-panel/NavPanelComponent';
 import {
@@ -14,19 +12,23 @@ import {
   Content,
   Data,
   Description,
-  GroupName,
-  Header,
   Title,
 } from './styledComponents';
+import { HeaderComponent } from './header-component/HeaderComponent';
+import AttemptCreator from './attempt-creator/AttemptCreator';
 
 function HomeworkAttempt() {
+  const { homeworkAttempt, roleSelector } = useSelector(
+    (state: IRootState) => state
+  );
   const {
     attemptList,
     currentAttempt,
     currentGroup,
     currentHomework,
     allGroupsInCollege,
-  } = useSelector((state: IRootState) => state.homeworkAttempt);
+  } = homeworkAttempt;
+  const { currentUserRoleId } = roleSelector;
   const dispatch = useDispatch();
   const { hwId } = useParams<{ hwId?: string }>();
   const { attemptId } = useParams<{ attemptId?: string }>();
@@ -37,26 +39,21 @@ function HomeworkAttempt() {
 
   return (
     <>
-      <Header>
-        <PageTitle>Проверка ответов</PageTitle>
-        <GroupName>
-          <Title>Группа:</Title>
-          <CustomMultiSelect
-            selectType="single"
-            options={convertAllGroupsInCollegeToSelectItems(allGroupsInCollege)}
-          />
-        </GroupName>
-      </Header>
+      <HeaderComponent />
       <Description>
         <Title>Домашняя работа:</Title>
         <Data>{currentHomework?.description}</Data>
       </Description>
-      <AttemptCheckingContainer>
-        <NavPanelComponent attemptList={attemptList} />
-        <Content>
-          {currentAttempt ? currentAttempt.comment : 'нет ответов'}
-        </Content>
-      </AttemptCheckingContainer>
+      {currentUserRoleId === Role.Student ? (
+        <AttemptCreator />
+      ) : (
+        <AttemptCheckingContainer>
+          <NavPanelComponent attemptList={attemptList} />
+          <Content>
+            {currentAttempt ? currentAttempt.comment : 'нет ответов'}
+          </Content>
+        </AttemptCheckingContainer>
+      )}
     </>
   );
 }

@@ -18,6 +18,9 @@ import { INIT_HOMEWORK } from '../shared/tmp-mock-data/hw/initHomewwork';
 import { IndexedObj } from '../interfaces/IndexedObj';
 import { UserPageOptions } from '../components/user-page/UserPage';
 import { AllGroupsInCollege } from '../interfaces/AllGroupsInCollege';
+import { AttemptInput } from '../interfaces/AttemptInput';
+
+import { DEFAULT_ATTEMPT } from './homework-attempt/reducer';
 
 export interface IAppState {
   isLoggedIn: boolean;
@@ -80,6 +83,7 @@ export interface IHomeworkAttemptState {
   currentGroup?: typeof INIT_HOMEWORK.groupsIds;
   currentAttempt?: Attempt;
   allGroupsInCollege: AllGroupsInCollege[];
+  defaultAttempt: AttemptInput;
 }
 export interface INotificationContainerState {
   notifications: {

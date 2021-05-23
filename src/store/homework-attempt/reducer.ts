@@ -1,3 +1,5 @@
+import { Attempt } from '../../interfaces/Attempt';
+import { AttemptInput } from '../../interfaces/AttemptInput';
 import {
   ALL_ACTIVE_GROUPS,
   ATTEMPTS_LOADING_SUCCESS,
@@ -9,12 +11,17 @@ import { IHomeworkAttemptState } from '../state';
 
 import { HomeworkAttemptActions } from './action-creators';
 
+export const DEFAULT_ATTEMPT: AttemptInput = {
+  comment: '',
+};
+
 const initialState: IHomeworkAttemptState = {
   attemptList: undefined,
   currentGroup: undefined,
   currentAttempt: undefined,
   currentHomework: undefined,
   allGroupsInCollege: [],
+  defaultAttempt: DEFAULT_ATTEMPT,
 };
 export function homeworkAttemptReducer(
   state: IHomeworkAttemptState = initialState,

@@ -5,7 +5,7 @@ import { IHomeworkAppointModalState } from '../../state';
 import { HomeworkAppointModalActions } from './action-creators';
 
 const APPOINT_FORM_DEFAULTS = {
-  group: [],
+  group: '',
   deadline: '',
 };
 const initialState: IHomeworkAppointModalState = {
@@ -26,7 +26,6 @@ export function homeworkAppointModalReducer(
           name: `${group.course.name} ${group.startDate}`,
         })
       );
-      console.log(localGroupEntities);
 
       return {
         ...state,

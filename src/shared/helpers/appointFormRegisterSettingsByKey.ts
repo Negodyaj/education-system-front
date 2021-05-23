@@ -13,7 +13,7 @@ export const getAppointFormElementSettings = (
         label: 'назначить группам:',
         inputSettings: {
           name: key,
-          inputType: 'multiSelect',
+          inputType: 'singleSelect',
           selectOptions: useGetGroupEntities,
         },
       };
