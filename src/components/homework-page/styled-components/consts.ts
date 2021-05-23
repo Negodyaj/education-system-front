@@ -17,6 +17,7 @@ export const HomeworkItemsSet = styled.div`
   border-bottom: 1px solid rgba(39, 45, 59, 0.15);
   border-radius: 20px;
   padding: 24px;
+  box-shadow: 0 3px 6px #272d3b36;
   transition: 0.52s;
   & + & {
     margin-top: 10px;
@@ -63,7 +64,9 @@ export const HomeworkItemHeader = styled.div`
 `;
 export const HomeworkDescription = styled.div.attrs({
   className: 'homework-description',
-})``;
+})`
+  width: 680px;
+`;
 export const HomeworkProp = styled.div`
   display: flex;
   align-items: center;

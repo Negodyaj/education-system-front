@@ -28,6 +28,10 @@ const runMock = () => {
     routes() {
       this.passthrough('https://80.78.240.16:7070/api/authentication');
       this.passthrough('https://80.78.240.16:7070/api/Group');
+      this.passthrough('https://80.78.240.16:7070/api/User');
+      this.passthrough('https://80.78.240.16:7070/api/User/:id');
+      // this.passthrough('https://80.78.240.16:7070/api/User/current');
+      this.passthrough('https://80.78.240.16:7070/api/User/:id/payment');
       this.get(
         'https://80.78.240.16:7070/api/User/current',
         import('./mock-data/current-user.json')
