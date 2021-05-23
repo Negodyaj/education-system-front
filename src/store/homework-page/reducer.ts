@@ -11,6 +11,11 @@ import { IHomeworkPageState } from '../state';
 
 import { HomeworkPageActions } from './action-creators';
 
+export enum HWListTypes {
+  Proposed = 'proposed',
+  Appointed = 'appointed',
+}
+
 const METHODIST_VIEW: HomeworkPageOptions = {
   addButton: true,
   homeworkList: {},
@@ -60,12 +65,10 @@ export function homeworkPageReducer(
 ): IHomeworkPageState {
   switch (action.type) {
     case HOMEWORK_LOAD_SUCCESS:
-      console.log(action.payload.homeworks);
       state.homeworkListDefault = action.payload.homeworks;
-      state.openedItemSetsNames = [];
 
       if (action.payload.currentUserRoleId === Role.Methodist) {
-        METHODIST_VIEW.homeworkList = {
+        METHODIST_VIEW.homeworkList[HWListTypes.Proposed] = {
           ...convertHomeworkListForMethodistMode(state.homeworkListDefault),
         };
 
@@ -73,7 +76,10 @@ export function homeworkPageReducer(
       }
 
       if (action.payload.currentUserRoleId === Role.Teacher) {
-        TEACHER_VIEW.homeworkList = {
+        TEACHER_VIEW.homeworkList[HWListTypes.Proposed] = {
+          ...convertHomeworkListForMethodistMode(state.homeworkListDefault),
+        };
+        TEACHER_VIEW.homeworkList[HWListTypes.Appointed] = {
           ...convertHomeworkListForTeacherMode(state.homeworkListDefault),
         };
 
@@ -81,14 +87,14 @@ export function homeworkPageReducer(
       }
 
       if (action.payload.currentUserRoleId === Role.Tutor) {
-        TUTOR_VIEW.homeworkList = {
-          ...convertHomeworkListForTeacherMode(action.payload.homeworks),
+        TUTOR_VIEW.homeworkList[HWListTypes.Appointed] = {
+          ...convertHomeworkListForTeacherMode(state.homeworkListDefault),
         };
 
         return { ...state };
       }
 
-      STUDENT_VIEW.homeworkList = {
+      STUDENT_VIEW.homeworkList[HWListTypes.Appointed] = {
         'Frontend 09.07.2021': convertHomeworkListForTeacherMode(
           action.payload.homeworks
         )['Frontend 09.07.2021'],

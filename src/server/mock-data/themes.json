@@ -1,0 +1,56 @@
+[
+    {
+        "id": 1,
+        "name": "Циклы",
+        "isDeleted": false,
+        "tags": []
+    },
+    {
+        "id": 2,
+        "name": "Массивы",
+        "isDeleted": false,
+        "tags": []
+    },
+    {
+        "id": 3,
+        "name": "Делегаты",
+        "isDeleted": false,
+        "tags": []
+    },
+    {
+        "id": 5,
+        "name": "Переменные",
+        "isDeleted": false,
+        "tags": []
+    },
+    {
+        "id": 6,
+        "name": "Типы данных",
+        "isDeleted": false,
+        "tags": []
+    },
+    {
+        "id": 8,
+        "name": "Styled components",
+        "isDeleted": false,
+        "tags": []
+    },
+    {
+        "id": 9,
+        "name": "Redux",
+        "isDeleted": false,
+        "tags": []
+    },
+    {
+        "id": 10,
+        "name": "Test theme 1",
+        "isDeleted": false,
+        "tags": []
+    },
+    {
+        "id": 11,
+        "name": "Test theme 2",
+        "isDeleted": false,
+        "tags": []
+    }
+]

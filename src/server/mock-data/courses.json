@@ -1,0 +1,173 @@
+[
+    {
+        "id": 4,
+        "name": "Frontend",
+        "description": "Специальный курс Frontend для студентов успешно прошедших базовый курс",
+        "duration": 0,
+        "isDeleted": false,
+        "materials": [
+            {
+                "id": 1,
+                "link": "https://htmlreference.io/",
+                "description": "html"
+            },
+            {
+                "id": 3,
+                "link": "http://getbootstrap.com ",
+                "description": "bootstrap"
+            },
+            {
+                "id": 4,
+                "link": "www.typescriptlang.org (https://www.typescriptlang.org/download/)",
+                "description": "TypeScript"
+            }
+        ]
+    },
+    {
+        "id": 5,
+        "name": "Backend",
+        "description": "Специальный курс Backend для студентов успешно прошедших базовый курс",
+        "duration": 0,
+        "isDeleted": false,
+        "materials": []
+    },
+    {
+        "id": 6,
+        "name": "Mobile React Native",
+        "description": "Специальный курс React Native для студентов успешно прошедших базовый курс",
+        "duration": 0,
+        "isDeleted": false,
+        "materials": []
+    },
+    {
+        "id": 7,
+        "name": "Mobile Xamarin",
+        "description": "Специальный курс Mobile Xamarin для студентов успешно прошедших базовый курс",
+        "duration": 0,
+        "isDeleted": false,
+        "materials": []
+    },
+    {
+        "id": 79,
+        "name": "new",
+        "description": "new",
+        "duration": 2,
+        "isDeleted": false,
+        "materials": []
+    },
+    {
+        "id": 114,
+        "name": "C# base",
+        "description": "Базовый курс",
+        "duration": 3,
+        "isDeleted": false,
+        "materials": [
+            {
+                "id": 6,
+                "link": "https://github.com",
+                "description": "GitHub"
+            },
+            {
+                "id": 7,
+                "link": "https://medium.com/webbdev/solid-4ffc018077da",
+                "description": "Принципы SOLID"
+            }
+        ]
+    },
+    {
+        "id": 123,
+        "name": "C++ base",
+        "description": "C++ base",
+        "duration": 3,
+        "isDeleted": false,
+        "materials": []
+    },
+    {
+        "id": 124,
+        "name": "Test 1 C#",
+        "description": "Course Test 1 mock",
+        "duration": 8,
+        "isDeleted": false,
+        "materials": []
+    },
+    {
+        "id": 125,
+        "name": "Test 2 C#",
+        "description": "Course Test 2 mock",
+        "duration": 16,
+        "isDeleted": false,
+        "materials": []
+    },
+    {
+        "id": 126,
+        "name": "Test 3 C#",
+        "description": "Course Test 3 mock",
+        "duration": 32,
+        "isDeleted": false,
+        "materials": []
+    },
+    {
+        "id": 127,
+        "name": "Test 4 C#",
+        "description": "Course Test 4 mock",
+        "duration": 4,
+        "isDeleted": false,
+        "materials": []
+    },
+    {
+        "id": 128,
+        "name": "Test 5 C#",
+        "description": "Course Test 5 mock",
+        "duration": 2,
+        "isDeleted": false,
+        "materials": []
+    },
+    {
+        "id": 130,
+        "name": "Test 1 C#",
+        "description": "Course Test 1 mock",
+        "duration": 8,
+        "isDeleted": false,
+        "materials": []
+    },
+    {
+        "id": 131,
+        "name": "Test 2 C#",
+        "description": "Course Test 2 mock",
+        "duration": 16,
+        "isDeleted": false,
+        "materials": []
+    },
+    {
+        "id": 132,
+        "name": "Test 3 C#",
+        "description": "Course Test 3 mock",
+        "duration": 32,
+        "isDeleted": false,
+        "materials": []
+    },
+    {
+        "id": 133,
+        "name": "Test 4 C#",
+        "description": "Course Test 4 mock",
+        "duration": 4,
+        "isDeleted": false,
+        "materials": []
+    },
+    {
+        "id": 134,
+        "name": "Test 5 C#",
+        "description": "Course Test 5 mock",
+        "duration": 2,
+        "isDeleted": false,
+        "materials": []
+    },
+    {
+        "id": 137,
+        "name": "Updated Name",
+        "description": "Updated description",
+        "duration": 9,
+        "isDeleted": false,
+        "materials": []
+    }
+]

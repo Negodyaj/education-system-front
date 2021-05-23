@@ -6,7 +6,6 @@ import { Attempt } from '../../interfaces/Attempt';
 import CustomMultiSelect from '../../shared/components/multi-select/CustomMultiSelect';
 import { homeworkUrl } from '../../shared/consts';
 import { convertAllGroupsInCollegeToSelectItems } from '../../shared/converters/allGroupsInCollegeToSelecItems';
-import { convertIdsToSelectItems } from '../../shared/converters/roleIdsToSelectItems';
 import { PageTitle } from '../../shared/styled-components/consts';
 import { IRootState } from '../../store';
 import { setCurrentAttempt } from '../../store/homework-attempt/action-creators';
@@ -39,7 +38,7 @@ function HomeworkAttempt() {
   useEffect(() => {
     !attemptList?.length &&
       dispatch(getAttemptListToCheck(hwId || '', attemptId));
-  }, [attemptList]);
+  }, []);
 
   const authorOnClick = (currentAttemptArg: Attempt) => {
     dispatch(setCurrentAttempt(currentAttemptArg));

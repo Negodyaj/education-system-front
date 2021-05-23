@@ -49,18 +49,19 @@ export const getAttemptListToCheck = (
     `${homeworkUrl}/${hwId}/attempts`,
     isAttemptArr
   ).then((response) => {
-    const attempts = thunkResponseHandler(dispatch, response);
+    const attempts: Attempt[] = thunkResponseHandler(dispatch, response);
     attempts &&
       (() => {
         dispatch(attemptListLoadingSuccess(attempts));
         dispatch(loadCurrentHomework(hwId || ''));
-        dispatch(
-          setCurrentAttempt(
-            [...attempts].filter(
-              (attempt) => attempt.id.toString() === attemptId
-            )[0]
-          )
-        );
+        attempts.length &&
+          dispatch(
+            setCurrentAttempt(
+              [...attempts].filter(
+                (attempt) => attempt.id.toString() === attemptId
+              )[0]
+            )
+          );
         dispatch(getAllActiveGroupsInCollege());
       })();
   });

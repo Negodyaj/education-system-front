@@ -47,12 +47,15 @@ export const appointHomework = (
   homework: Homework
 ) => {
   const appointedHomework: HomeworkPost = {
-    ...homework,
-    groupsId: Number.parseInt(appointData.group[0], 10),
+    description: homework.description,
+    startDate: homework.startDate,
     deadlineDate: appointData.deadline,
     courseId: homework.course.id,
+    groupId: Number.parseInt(appointData.group[0], 10),
+    tagIds: homework.tags.map((tag) => tag.id),
+    themeIds: homework.themes?.map((theme) => theme.id) || [],
+    isOptional: homework.isOptional,
   };
-  console.log(appointedHomework);
 
   return {
     type: APPOINT_HOMEWORK,

@@ -30,8 +30,6 @@ export function homeworkAttemptReducer(
     case SET_CURRENT_HOMEWORK:
       return { ...state, currentHomework: action.payload };
     case ALL_ACTIVE_GROUPS:
-      console.log(action.payload);
-
       return { ...state, allGroupsInCollege: action.payload };
     default:
       return state;

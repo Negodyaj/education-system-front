@@ -29,7 +29,9 @@ function HomeworkItemBody(props: {
       <HomeworkItemHeader
         elementVisibility={descriptionVisibility}
         onClick={toggleDescriptionVisibility}>
-        <HomeworkName>{hw.name}</HomeworkName>
+        <HomeworkName>
+          {hw.themes?.length ? hw.themes[0].name : ''}
+        </HomeworkName>
         <HomeworkThemeName>
           {hw.themes &&
             hw.themes.map((theme) => (
