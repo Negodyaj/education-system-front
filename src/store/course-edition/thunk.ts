@@ -17,7 +17,7 @@ import { CourseTheme } from '../../components/courses-page/course-edition/progra
 import { CourseMaterial } from '../../components/courses-page/course-edition/materials-course/MaterialsCourse';
 
 import {
-  getCourseByIdLoaded,
+  getCourseById,
   setCourseEditionFailAction,
   setCourseEditionIsLoadingAction,
   setCourseEditionWasLoadedAction,
@@ -30,14 +30,6 @@ export const getThemes = () => (dispatch: Dispatch) => {
       dispatch(
         setCourseEditionWasLoadedAction(thunkResponseHandler(dispatch, themes))
       );
-    })
-    .catch((error) => dispatch(setCourseEditionFailAction(error)));
-};
-
-export const getCourseById = (id: number) => (dispatch: Dispatch) => {
-  sendGetRequest<Course>(`${coursesUrl}/${id}`, isCourse)
-    .then((course) => {
-      dispatch(getCourseByIdLoaded(thunkResponseHandler(dispatch, course)));
     })
     .catch((error) => dispatch(setCourseEditionFailAction(error)));
 };

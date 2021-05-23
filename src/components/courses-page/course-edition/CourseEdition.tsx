@@ -3,8 +3,11 @@ import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { IRootState } from '../../../store';
-import { setIdCourse } from '../../../store/course-edition/action-creators';
-import { getCourseById, getThemes } from '../../../store/course-edition/thunk';
+import {
+  getCourseById,
+  setIdCourse,
+} from '../../../store/course-edition/action-creators';
+import { getThemes } from '../../../store/course-edition/thunk';
 
 import {
   CourseEditionContainer,
