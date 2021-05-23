@@ -8,9 +8,10 @@ import {
   doFilteringTags,
   toggleModalHidden,
 } from '../../store/tags-page/action-creators';
+import { CommonButton } from '../../shared/styled-components/buttonStyledComponent';
 
-import AddTagModal from './add-tag-modal/AddTagModal';
 import TagList from './tag-list/TagList';
+import AddTagModal from './add-tag-modal/AddTagModal';
 
 function TagsPage() {
   const url = 'Tag';
@@ -36,23 +37,23 @@ function TagsPage() {
           placeholder="Поиск"
         />{' '}
         <FontAwesomeIcon icon="search" />
-        <button
-          className="button-style"
+        <CommonButton
+          as="button"
           onClick={() => {
             dispatch(toggleModalHidden());
           }}>
           <FontAwesomeIcon icon="plus" />
           <span> Добавить</span>
-        </button>
+        </CommonButton>
       </div>
 
       <div className="body">
         <div className="tags-list">
           {' '}
-          <TagList str={searchTurn} />{' '}
+          <TagList str={searchTurn} />
+          <AddTagModal hidden={pageState.isTagsModalHidden} />
         </div>
       </div>
-      <AddTagModal hidden={pageState.isTagsModalHidden} />
     </div>
   );
 }

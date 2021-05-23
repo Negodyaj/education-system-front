@@ -1,9 +1,4 @@
 import { User } from '../../interfaces/User';
 
-export const isUser = (data: any): data is User => {
-  const dataToCheck = data as User;
-
-  return (
-    !Array.isArray(dataToCheck) && !!dataToCheck.email && !!dataToCheck.phone
-  );
-};
+export const isUser = (data: any): data is User =>
+  !Array.isArray(data) && !!data.email && !!data.phone;

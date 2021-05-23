@@ -1,23 +1,10 @@
 import { applyMiddleware, combineReducers, createStore } from 'redux';
 import thunk from 'redux-thunk';
+import createSagaMiddleware from 'redux-saga';
 
 import { coursePageReducer } from './courses-page/reducer';
 import { userListPageReducer } from './user-list-page/reducer';
 import { notificationContainerReducer } from './notifications/reducer';
-import {
-  IAppState,
-  IAttendance,
-  ICourseEditionState,
-  ICoursePageState,
-  IGroupInfoComponent,
-  ILesson,
-  INotificationContainerState,
-  IPaymentFormState,
-  IRoleSelector,
-  ITagsPageState,
-  IUserListPage,
-  IUserPage,
-} from './state';
 import { userPageReducer } from './user-page/reducers';
 import { courseEditionPageReducer } from './course-edition/reducer';
 import { roleSelectorReducer } from './role-selector/reducer';
@@ -26,7 +13,29 @@ import { tagsPageReducer } from './tags-page/reducer';
 import { paymentReducer } from './payment/reducer';
 import { lessonByGroupReducer } from './group-page/lesson/reducer';
 import { groupInfoComponentReducer } from './group-info-component/reducer';
+import { homeworkPageReducer } from './homework-page/reducer';
+import {
+  IAppState,
+  IAttendance,
+  ICourseEditionState,
+  ICoursePageState,
+  IGroupInfoComponent,
+  IHomeworkAppointModalState,
+  IHomeworkAttemptState,
+  IHomeworkPageState,
+  ILesson,
+  INotificationContainerState,
+  IPaymentFormState,
+  IRoleSelector,
+  ITagsPageState,
+  IUserListPage,
+  IUserPage,
+} from './state';
+import { homeworkAppointModalReducer } from './homework-page/homework-appoint-modal/reducer';
+import { homeworkAttemptReducer } from './homework-attempt/reducer';
 import { attendanceReducer } from './group-page/attendance/reducer';
+import { homeworkPageSaga } from './homework-page/saga';
+import { rootSaga } from './root-saga';
 
 export interface IRootState {
   tagsPage: ITagsPageState;
@@ -38,12 +47,16 @@ export interface IRootState {
   app: IAppState;
   notificationContainer: INotificationContainerState;
   payment: IPaymentFormState;
-  lessonByGroup: ILesson;
   groupInfoComponent: IGroupInfoComponent;
+  homeworkPage: IHomeworkPageState;
+  homeworkAppointModal: IHomeworkAppointModalState;
+  homeworkAttempt: IHomeworkAttemptState;
   attendanceList: IAttendance;
+  lessonByGroup: ILesson;
 }
 
-const middlewares = [thunk];
+const sagaMiddleware = createSagaMiddleware();
+const middlewares = [thunk, sagaMiddleware];
 
 const store = createStore<IRootState, any, any, any>(
   combineReducers({
@@ -59,9 +72,14 @@ const store = createStore<IRootState, any, any, any>(
     groupInfoComponent: groupInfoComponentReducer,
     lessonByGroup: lessonByGroupReducer,
     attendanceList: attendanceReducer,
+    homeworkPage: homeworkPageReducer,
+    homeworkAppointModal: homeworkAppointModalReducer,
+    homeworkAttempt: homeworkAttemptReducer,
   }),
   undefined,
   applyMiddleware(...middlewares)
 );
+
+sagaMiddleware.run(rootSaga);
 
 export default store;
