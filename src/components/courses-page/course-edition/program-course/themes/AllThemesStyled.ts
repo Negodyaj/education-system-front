@@ -7,7 +7,12 @@ export const ThemesContainer = styled.div`
 
 export const AllThemesHeader = styled.div`
   display: grid;
-  grid-template-columns: 1fr 50px;
+  grid-template-columns: 1fr 100px;
+`;
+
+export const ButtonGroup = styled.div`
+  display: flex;
+  justify-content: flex-start;
 `;
 
 export const TextForHeaders = styled.div`

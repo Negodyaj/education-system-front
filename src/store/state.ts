@@ -17,6 +17,7 @@ import { CourseInput } from '../interfaces/CourseInput';
 import { INIT_HOMEWORK } from '../shared/tmp-mock-data/hw/initHomewwork';
 import { IndexedObj } from '../interfaces/IndexedObj';
 import { UserPageOptions } from '../components/user-page/UserPage';
+import { Material } from '../interfaces/Materials';
 
 export interface IAppState {
   isLoggedIn: boolean;
@@ -34,6 +35,7 @@ export interface ICoursePageState {
 export interface ICourseEditionState {
   course: Course;
   themes: Themes[];
+  materials: Material[];
   idThemesCourse: number[];
   isDataLoading: boolean;
   isDisplayingButtonOpenProgramCourse: boolean;

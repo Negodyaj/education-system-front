@@ -13,6 +13,7 @@ import {
   AddingNewThemeInCourse,
   AllThemesHeader,
   ButtonAddingNewThemeInCourse,
+  ButtonGroup,
   TextForHeaders,
   ThemePosition,
   ThemePositionName,
@@ -58,10 +59,15 @@ const AllThemes = () => {
   return (
     <ThemesContainer>
       <AllThemesHeader>
-        <TextForHeaders>Темы для курса</TextForHeaders>
-        <RoundButton>
-          <FontAwesomeIcon icon="plus" />
-        </RoundButton>
+        <TextForHeaders>Темы</TextForHeaders>
+        <ButtonGroup>
+          <RoundButton>
+            <FontAwesomeIcon icon="plus" />
+          </RoundButton>
+          <RoundButton>
+            <FontAwesomeIcon icon="trash" />
+          </RoundButton>
+        </ButtonGroup>
       </AllThemesHeader>
       <ThemesContent>
         <SearchComponent funcSearch={searchInThemes} />

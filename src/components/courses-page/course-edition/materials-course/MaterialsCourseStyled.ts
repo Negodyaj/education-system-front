@@ -3,6 +3,7 @@ import styled from 'styled-components';
 export const MaterialsCourseContainer = styled.div`
   display: grid;
   grid-template-rows: 60px 1fr;
+  margin-bottom: 100px;
 `;
 
 export const MaterialsCourseHeader = styled.div`

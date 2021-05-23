@@ -11,6 +11,7 @@ import {
   AllMaterialsContainer,
   AllMaterialsHeader,
   ButtonAddingNewMaterialInCourse,
+  ButtonGroup,
   MaterialPosition,
   MaterialPositionName,
   MaterialsContent,
@@ -40,26 +41,37 @@ const AllMaterials = () => {
   return (
     <AllMaterialsContainer>
       <AllMaterialsHeader>
-        <TextForHeaders>Темы для курса</TextForHeaders>
-        <RoundButton>
-          <FontAwesomeIcon icon="plus" />
-        </RoundButton>
+        <TextForHeaders>Материалы</TextForHeaders>
+        <ButtonGroup>
+          <RoundButton>
+            <FontAwesomeIcon icon="plus" />
+          </RoundButton>
+          <RoundButton>
+            <FontAwesomeIcon icon="trash" />
+          </RoundButton>
+        </ButtonGroup>
       </AllMaterialsHeader>
       <MaterialsContent>
         <SearchComponent funcSearch={searchInThemes} />
-        {pageState.themes
-          .filter((item) =>
-            item.name.toLowerCase().includes(searchWord.toLowerCase())
+        {pageState.materials
+          .filter((material) =>
+            material.description
+              .toLowerCase()
+              .includes(searchWord.toLowerCase())
           )
 
-          .map((item) => (
-            <MaterialPosition key={item.id}>
-              <MaterialPositionName>{item.name}</MaterialPositionName>
+          .map((material) => (
+            <MaterialPosition key={material.id} title={material.description}>
+              <MaterialPositionName>
+                {material.description.length > 25
+                  ? `${material.description.substr(0, 25)}...`
+                  : material.description}
+              </MaterialPositionName>
               <AddingNewMaterialInCourse>
                 <ButtonAddingNewMaterialInCourse
                 /* onClick={() => addNewThemeInProgramCourse(item)} */
                 >
-                  {pageState.idThemesCourse.includes(item.id) ? (
+                  {pageState.idThemesCourse.includes(material.id) ? (
                     <FontAwesomeIcon icon="check" />
                   ) : (
                     <FontAwesomeIcon icon="plus" />

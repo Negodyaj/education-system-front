@@ -5,9 +5,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { IRootState } from '../../../store';
 import {
   getCourseById,
+  getMaterials,
+  getThemes,
   setIdCourse,
 } from '../../../store/course-edition/action-creators';
-import { getThemes } from '../../../store/course-edition/thunk';
 
 import {
   CourseEditionContainer,
@@ -30,6 +31,7 @@ const CourseEdition = () => {
 
   useEffect(() => {
     dispatch(getThemes());
+    dispatch(getMaterials());
     dispatch(getCourseById(idCourse));
     dispatch(setIdCourse(idCourse));
   }, []);

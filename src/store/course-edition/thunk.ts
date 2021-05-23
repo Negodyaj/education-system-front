@@ -20,16 +20,14 @@ import {
   getCourseById,
   setCourseEditionFailAction,
   setCourseEditionIsLoadingAction,
-  setCourseEditionWasLoadedAction,
+  getAllThemes,
 } from './action-creators';
 
 export const getThemes = () => (dispatch: Dispatch) => {
   dispatch(setCourseEditionIsLoadingAction());
   sendGetRequest<Themes[]>(themesUrl, isThemesArr)
     .then((themes) => {
-      dispatch(
-        setCourseEditionWasLoadedAction(thunkResponseHandler(dispatch, themes))
-      );
+      dispatch(getAllThemes(thunkResponseHandler(dispatch, themes)));
     })
     .catch((error) => dispatch(setCourseEditionFailAction(error)));
 };
