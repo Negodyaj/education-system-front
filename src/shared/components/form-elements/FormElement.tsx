@@ -16,9 +16,12 @@ import SingleSelectInput from './SingleSelectInput';
 import TextAreaInput from './TextareaInput';
 import TextInput from './TextInput';
 
-function FormElement(props: { formElementSettings: FormElementSettings }) {
-  const formContext = useFormContext();
+function FormElement(props: { formElementSettings?: FormElementSettings }) {
   const { formElementSettings } = props;
+  const formContext = useFormContext();
+
+  if (!formElementSettings) return <>error in FormElement</>;
+
   const { inputType } = formElementSettings.inputSettings;
   const inputSettings = { ...formElementSettings.inputSettings };
 
@@ -39,7 +42,12 @@ function FormElement(props: { formElementSettings: FormElementSettings }) {
           inputSettings={inputSettings}
         />
       )}
-      {inputType === 'number' && <NumberInput inputSettings={inputSettings} />}
+      {inputType === 'number' && (
+        <NumberInput
+          width={formElementSettings.width}
+          inputSettings={inputSettings}
+        />
+      )}
       {inputType === 'date' && (
         <DateInput inputSettings={inputSettings as ExternalInputSettings} />
       )}

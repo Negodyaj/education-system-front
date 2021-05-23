@@ -17,6 +17,8 @@ import { CourseInput } from '../interfaces/CourseInput';
 import { INIT_HOMEWORK } from '../shared/tmp-mock-data/hw/initHomewwork';
 import { IndexedObj } from '../interfaces/IndexedObj';
 import { UserPageOptions } from '../components/user-page/UserPage';
+import { ChildIndex } from '../enums/ChildIndex';
+import { ModalWindowSettings } from '../shared/components/modal-window/ModalWindow';
 
 export interface IAppState {
   isLoggedIn: boolean;
@@ -119,4 +121,10 @@ export interface IAttendance {
   attendanceList: Attendance[];
   studentsByGroup: User[];
   isDataLoading: boolean;
+}
+
+export interface ModalWindowState {
+  isVisible: boolean;
+  childIndex: ChildIndex;
+  modalWindowSettings: { [index: string]: ModalWindowSettings };
 }

@@ -54,7 +54,7 @@ const InputStyledBase = styled.input`
 
 export const NumberInputStyled = styled(InputStyledBase)`
   width: ${(props: WidthNumberInput) =>
-    props.width ? `${props.width}px` : '100px'};
+    props.width ? `${props.width}px` : '272px'};
 `;
 
 export const InputText = styled(InputStyledBase)`

@@ -5,7 +5,7 @@ import { showToggleModalCreateCourseAction } from '../../store/courses-page/acti
 import { createCourse } from '../../store/courses-page/thunk';
 import { IRootState } from '../../store';
 import { CourseInput } from '../../interfaces/CourseInput';
-import { getCourseFormElementSettings } from '../../shared/helpers/useFormRegisterSettingByKey';
+import { getCourseFormElementSettings } from '../../shared/helpers/courseFormRegisterSettingByKey';
 import ModalWindowCreateForm from '../../shared/components/modal-window/ModalWindowCreateForm';
 
 function NewCourse() {
@@ -19,12 +19,8 @@ function NewCourse() {
     dispatch(showToggleModalCreateCourseAction());
   };
 
-  const createDataNewCourse = (dataNewCourse: CourseInput) => {
-    dispatch(createCourse(dataNewCourse));
-  };
-
   const onSubmit = (dataCourse: CourseInput) => {
-    createDataNewCourse(dataCourse);
+    dispatch(createCourse(dataCourse));
   };
 
   return (

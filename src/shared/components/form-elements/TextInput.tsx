@@ -1,6 +1,6 @@
 import { useFormContext } from 'react-hook-form';
 
-import { InputSettings } from '../../helpers/useFormRegisterSettingByKey';
+import { InputSettings } from '../../helpers/userFormRegisterSettingByKey';
 import { InputText } from '../../styled-components/globalStyledConsts';
 
 function TextInput(props: {
@@ -9,7 +9,7 @@ function TextInput(props: {
   width?: number;
 }) {
   const formContext = useFormContext();
-  const { inputSettings, onChange, width } = props;
+  const { inputSettings, width, onChange } = props;
 
   return !onChange ? (
     <InputText

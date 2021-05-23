@@ -4,7 +4,7 @@ import { IHomeworkAppointModalState } from '../../state';
 
 import { HomeworkAppointModalActions } from './action-creators';
 
-const APPOINT_FORM_DEFAULTS = {
+export const APPOINT_FORM_DEFAULTS = {
   group: [],
   deadline: '',
 };

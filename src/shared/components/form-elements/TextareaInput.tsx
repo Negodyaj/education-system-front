@@ -1,7 +1,7 @@
 import React from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import { InputSettings } from '../../helpers/useFormRegisterSettingByKey';
+import { InputSettings } from '../../helpers/userFormRegisterSettingByKey';
 import { TextareaStyled } from '../../styled-components/globalStyledConsts';
 
 function TextAreaInput(props: {
@@ -10,7 +10,7 @@ function TextAreaInput(props: {
   width?: number;
 }) {
   const formContext = useFormContext();
-  const { inputSettings, onChange, width } = props;
+  const { inputSettings, width, onChange } = props;
 
   return !onChange ? (
     <TextareaStyled
