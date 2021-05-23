@@ -19,6 +19,8 @@ import { IndexedObj } from '../interfaces/IndexedObj';
 import { UserPageOptions } from '../components/user-page/UserPage';
 import { AllGroupsInCollege } from '../interfaces/AllGroupsInCollege';
 import { AttemptInput } from '../interfaces/AttemptInput';
+import { ChildIndex } from '../enums/ChildIndex';
+import { ModalWindowSettings } from '../shared/components/modal-window/ModalWindow';
 
 import { DEFAULT_ATTEMPT } from './homework-attempt/reducer';
 
@@ -125,4 +127,10 @@ export interface IAttendance {
   attendanceList: Attendance[];
   studentsByGroup: User[];
   isDataLoading: boolean;
+}
+
+export interface ModalWindowState {
+  isVisible: boolean;
+  childIndex: ChildIndex;
+  modalWindowSettings: { [index: string]: ModalWindowSettings };
 }
