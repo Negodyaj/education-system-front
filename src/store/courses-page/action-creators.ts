@@ -6,7 +6,10 @@ import {
   COURSE_LIST_WRETCH_FAIL,
   COURSE_LIST_TOGGLE_MODAL_CREATE_COURSE,
   COURSE_LIST_TOGGLE_MODAL_DELETE_COURSE,
-  COURSE_LIST_WRETCH_CREATE_COURSE,
+  GET_COURSES_WATCHER,
+  DELETE_COURSE_WATCHER,
+  COURSE_ID_DELETE,
+  CREATE_COURSE_WATCHER,
 } from '../actionTypes';
 
 export type CoursePageActions =
@@ -15,7 +18,10 @@ export type CoursePageActions =
   | ReturnType<typeof setCoursesListFail>
   | ReturnType<typeof showToggleModalCreateCourseAction>
   | ReturnType<typeof showToggleModalDeleteCourseAction>
-  | ReturnType<typeof createCourseAction>;
+  | ReturnType<typeof createCourse>
+  | ReturnType<typeof getCourses>
+  | ReturnType<typeof deleteCourse>
+  | ReturnType<typeof courseIdForDelete>;
 
 export const setCoursesListIsLoadingAction = () =>
   ({
@@ -41,14 +47,32 @@ export const showToggleModalCreateCourseAction = () =>
     payload: true,
   } as const);
 
-export const showToggleModalDeleteCourseAction = (id: number) =>
+export const showToggleModalDeleteCourseAction = () =>
   ({
     type: COURSE_LIST_TOGGLE_MODAL_DELETE_COURSE,
+    payload: undefined,
+  } as const);
+
+export const createCourse = (newCourse: CourseInput) =>
+  ({
+    type: CREATE_COURSE_WATCHER,
+    payload: newCourse,
+  } as const);
+
+export const getCourses = () =>
+  ({
+    type: GET_COURSES_WATCHER,
+    payload: undefined,
+  } as const);
+
+export const courseIdForDelete = (id: number) =>
+  ({
+    type: COURSE_ID_DELETE,
     payload: id,
   } as const);
 
-export const createCourseAction = (newCourse: CourseInput) =>
+export const deleteCourse = () =>
   ({
-    type: COURSE_LIST_WRETCH_CREATE_COURSE,
-    payload: newCourse,
+    type: DELETE_COURSE_WATCHER,
+    payload: undefined,
   } as const);
