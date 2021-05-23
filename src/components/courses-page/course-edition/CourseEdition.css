@@ -14,6 +14,17 @@
 }
 
 .course-update {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.program-course-container, .material-course-container {
+    display: grid;
+    grid-template-rows: 60px 1fr;
+}
+
+.program-course-content, .materials-course-content {
     display: grid;
     grid-template-columns: 350px 600px;
     gap: 100px;
@@ -53,7 +64,7 @@
     grid-template-columns: 1fr 50px;
 }
 
-.new-themes-header-text, .program-course-header, .materials-course-header {
+.new-themes-header-text, .program-course-header, .materials-course-header, .program-course-header-themes {
     display: flex;
     justify-content: flex-start;
     padding-left: 20px;
