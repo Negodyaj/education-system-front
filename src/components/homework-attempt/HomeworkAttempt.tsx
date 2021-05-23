@@ -1,25 +1,21 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
-import { Attempt } from '../../interfaces/Attempt';
-import CustomMultiSelect from '../../shared/components/multi-select/CustomMultiSelect';
-import { homeworkUrl } from '../../shared/consts';
-import { convertAllGroupsInCollegeToSelectItems } from '../../shared/converters/allGroupsInCollegeToSelecItems';
-import { PageTitle } from '../../shared/styled-components/consts';
-import { IRootState } from '../../store';
-import { setCurrentAttempt } from '../../store/homework-attempt/action-creators';
 import { getAttemptListToCheck } from '../../store/homework-attempt/thunk';
+import { IRootState } from '../../store';
+import { PageTitle } from '../../shared/styled-components/consts';
+import CustomMultiSelect from '../../shared/components/multi-select/CustomMultiSelect';
+import { convertAllGroupsInCollegeToSelectItems } from '../../shared/converters/allGroupsInCollegeToSelecItems';
 
+import NavPanelComponent from './nav-panel/NavPanelComponent';
 import {
   AttemptCheckingContainer,
-  Author,
   Content,
   Data,
   Description,
   GroupName,
   Header,
-  NavPanel,
   Title,
 } from './styledComponents';
 
@@ -31,7 +27,6 @@ function HomeworkAttempt() {
     currentHomework,
     allGroupsInCollege,
   } = useSelector((state: IRootState) => state.homeworkAttempt);
-  const history = useHistory();
   const dispatch = useDispatch();
   const { hwId } = useParams<{ hwId?: string }>();
   const { attemptId } = useParams<{ attemptId?: string }>();
@@ -39,11 +34,6 @@ function HomeworkAttempt() {
     !attemptList?.length &&
       dispatch(getAttemptListToCheck(hwId || '', attemptId));
   }, []);
-
-  const authorOnClick = (currentAttemptArg: Attempt) => {
-    dispatch(setCurrentAttempt(currentAttemptArg));
-    history.replace(`/${homeworkUrl}/${hwId}/attempts/${currentAttemptArg.id}`);
-  };
 
   return (
     <>
@@ -62,17 +52,10 @@ function HomeworkAttempt() {
         <Data>{currentHomework?.description}</Data>
       </Description>
       <AttemptCheckingContainer>
-        <NavPanel>
-          {attemptList?.length &&
-            attemptList.map((attempt) => (
-              <Author
-                onClick={() => authorOnClick(attempt)}
-                key={attempt.author.id}>
-                {attempt.author.firstName} {attempt.author.lastName}
-              </Author>
-            ))}
-        </NavPanel>
-        <Content>{currentAttempt?.comment}</Content>
+        <NavPanelComponent attemptList={attemptList} />
+        <Content>
+          {currentAttempt ? currentAttempt.comment : 'нет ответов'}
+        </Content>
       </AttemptCheckingContainer>
     </>
   );

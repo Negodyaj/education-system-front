@@ -30,8 +30,12 @@ import HomeworkPage from './components/homework-page/HomeworkPage';
 import LessonsByGroup from './components/group-page/lesson-list-component/LessonsByGroup';
 import LoginForm from './components/login-form/LoginForm';
 import LoginRoleSelector from './components/role-selector/LoginRoleSelector';
+import { removeFromStorage } from './services/local-storage.service';
 
 function App() {
+  // unsetToken();
+  // removeFromStorage('user');
+  // console.log(import('./server/mock-data/current-user.json'));
   const dispatch = useDispatch();
   const { currentUserRoleId } = useSelector(
     (state: IRootState) => state.roleSelector

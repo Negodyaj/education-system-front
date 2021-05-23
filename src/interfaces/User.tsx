@@ -9,5 +9,6 @@ export interface User {
   userPic: string;
   email: string;
   contractNumber: number;
+  groupIds: number[],
   roles: number[];
 }

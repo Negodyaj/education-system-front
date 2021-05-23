@@ -1,6 +1,7 @@
 import { HomeworkPageOptions } from '../../components/homework-page/HomeworkPageCore';
 import { Role } from '../../enums/role';
 import { convertHomeworkListForMethodistMode } from '../../shared/converters/homeworkListForMethodistMode';
+import { convertHomeworkListForStudentMode } from '../../shared/converters/homeworkListForStudentMode';
 import { convertHomeworkListForTeacherMode } from '../../shared/converters/homeworkListForTeacherMode';
 import {
   HOMEWORK_DELETE_PENDING,
@@ -20,32 +21,41 @@ const METHODIST_VIEW: HomeworkPageOptions = {
   addButton: true,
   homeworkList: {},
   homeworkButtonsCell: {
-    cloneButton: true,
-    deleteButton: true,
-    editButton: true,
+    [HWListTypes.Proposed]: {
+      cloneButton: true,
+      deleteButton: true,
+      editButton: true,
+    },
   },
 };
 const TEACHER_VIEW: HomeworkPageOptions = {
   addButton: false,
   homeworkList: {},
   homeworkButtonsCell: {
-    appointButton: true,
-    cancelAttemptButton: true,
-    checkButton: true,
+    [HWListTypes.Proposed]: {
+      appointButton: true,
+    },
+    [HWListTypes.Appointed]: {
+      checkButton: true,
+    },
   },
 };
 const TUTOR_VIEW: HomeworkPageOptions = {
   ...TEACHER_VIEW,
+  homeworkList: {},
   homeworkButtonsCell: {
-    ...TEACHER_VIEW.homeworkButtonsCell,
-    appointButton: false,
+    [HWListTypes.Appointed]: {
+      checkButton: true,
+    },
   },
 };
 const STUDENT_VIEW: HomeworkPageOptions = {
   addButton: false,
   homeworkList: {},
   homeworkButtonsCell: {
-    attemptButton: true,
+    [HWListTypes.Appointed]: {
+      attemptButton: true,
+    },
   },
 };
 const initialState: IHomeworkPageState = {
@@ -95,9 +105,7 @@ export function homeworkPageReducer(
       }
 
       STUDENT_VIEW.homeworkList[HWListTypes.Appointed] = {
-        'Frontend 09.07.2021': convertHomeworkListForTeacherMode(
-          action.payload.homeworks
-        )['Frontend 09.07.2021'],
+        ...convertHomeworkListForStudentMode(action.payload.homeworks),
       };
 
       return { ...state };

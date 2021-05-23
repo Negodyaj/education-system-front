@@ -56,6 +56,7 @@ export const appointHomework = (
     themeIds: homework.themes?.map((theme) => theme.id) || [],
     isOptional: homework.isOptional,
   };
+  console.log(appointedHomework);
 
   return {
     type: APPOINT_HOMEWORK,

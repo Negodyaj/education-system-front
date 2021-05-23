@@ -26,6 +26,7 @@ export function homeworkAppointModalReducer(
           name: `${group.course.name} ${group.startDate}`,
         })
       );
+      console.log(localGroupEntities);
 
       return {
         ...state,

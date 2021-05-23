@@ -10,9 +10,9 @@ import {
   HomeworkSelectorContainer,
   ItemsSetName,
 } from '../styled-components/consts';
-import HomeworkItemBody from '../HomeworkItem/HomeworkItemBody';
 import { getEnToRuTranslation } from '../../../shared/converters/enumToDictionaryEntity';
 import { currentUserRoleIdSelector } from '../../../store/role-selector/selectors';
+import HomeworkItemBodyList from '../HomeworkItem/HomeworkItemBodyList';
 
 import OpenItemsSetButton from './buttons/OpenItemsSetButton';
 
@@ -47,13 +47,10 @@ export function HomeworkSelector() {
                   <ItemsSetName>{itemsSetName}</ItemsSetName>
                   <OpenItemsSetButton openedItemName={openedItemName} />
                 </HomeworkItemsSetHeader>
-                {homeworkList[type][itemsSetName].map((hw) => (
-                  <HomeworkItemBody
-                    hw={hw}
-                    buttons={homeworkButtonsCell}
-                    key={hw.id}
-                  />
-                ))}
+                <HomeworkItemBodyList
+                  homeworkList={homeworkList[type][itemsSetName]}
+                  homeworkButtonsCell={homeworkButtonsCell[type]}
+                />
               </HomeworkItemsSet>
             );
           })}

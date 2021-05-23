@@ -59,7 +59,12 @@
                 "attachments": []
             }
         ],
-        "themes": []
+        "themes": [{
+            "id": 12,
+            "name": "Паттерн декоратор",
+            "isDeleted": false,
+            "tags": []
+        }]
     },
     {
         "id": 4,
@@ -94,7 +99,12 @@
         "groupsIds": [],
         "tags": [],
         "homeworkAttempts": [],
-        "themes": []
+        "themes": [{
+                "id": 13,
+                "name": "Browser API. Event Loop.",
+                "isDeleted": false,
+                "tags": []
+        }]
     },
     {
         "id": 5,
@@ -129,7 +139,12 @@
         "groupsIds": [],
         "tags": [],
         "homeworkAttempts": [],
-        "themes": []
+        "themes": [{
+            "id": 14,
+            "name": "DOM events",
+            "isDeleted": false,
+            "tags": []
+        }]
     },
     {
         "id": 6,

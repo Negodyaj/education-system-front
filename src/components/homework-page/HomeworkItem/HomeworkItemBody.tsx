@@ -30,7 +30,7 @@ function HomeworkItemBody(props: {
         elementVisibility={descriptionVisibility}
         onClick={toggleDescriptionVisibility}>
         <HomeworkName>
-          {hw.themes?.length ? hw.themes[0].name : ''}
+          {hw.themes?.length ? hw.themes[0].name : 'без названия'}
         </HomeworkName>
         <HomeworkThemeName>
           {hw.themes &&

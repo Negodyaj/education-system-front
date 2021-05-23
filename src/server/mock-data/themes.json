@@ -52,5 +52,23 @@
         "name": "Test theme 2",
         "isDeleted": false,
         "tags": []
+    },
+    {
+        "id": 12,
+        "name": "Паттерн декоратор",
+        "isDeleted": false,
+        "tags": []
+    },
+    {
+        "id": 13,
+        "name": "Browser API. Event Loop.",
+        "isDeleted": false,
+        "tags": []
+    },
+    {
+        "id": 14,
+        "name": "DOM events",
+        "isDeleted": false,
+        "tags": []
     }
 ]

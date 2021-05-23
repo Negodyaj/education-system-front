@@ -14,7 +14,7 @@ import {
 
 export interface HomeworkPageOptions {
   readonly addButton: boolean;
-  readonly homeworkButtonsCell: HomeworkButtonsCellOptions;
+  readonly homeworkButtonsCell: IndexedObj<HomeworkButtonsCellOptions>;
   homeworkList: IndexedObj<IndexedObj<Homework[]>>;
 }
 
