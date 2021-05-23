@@ -65,6 +65,7 @@ export function* deleteTagSaga({
       sendDeleteRequestNoResponse,
       `${tagsUrl}/${payload.id}`
     );
+
     if (error.status >= 400) yield put(constructNotificationError(error));
     else {
       yield put(
@@ -81,14 +82,15 @@ export function* deleteTagSaga({
 }
 
 export function* addTagWatcher() {
+  yield put(setIsLoading());
   yield takeLatest(ADD_TAG, addTagSaga);
+  yield put(setIsLoaded());
 }
 
 export function* addTagSaga({
   payload,
 }: ReturnType<typeof addTagWatcherAction>) {
   try {
-    yield put(setIsLoading());
     const newTag: Tag = yield call(async () =>
       sendPostRequest<Tag>(`${tagsUrl}`, isTag, payload).then((tag) => tag)
     );
