@@ -38,6 +38,7 @@ export interface ICourseEditionState {
   isDataLoading: boolean;
   isDisplayingButtonOpenProgramCourse: boolean;
   isDisplayingButtonOpenMaterialsCourse: boolean;
+  idCourse: number;
 }
 export interface IUserListPage {
   userList: User[];

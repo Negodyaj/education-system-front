@@ -7,6 +7,7 @@ import {
   COURSE_EDITION_WRETCH_LOADED,
   COURSE_EDITION_WRETCH_LOADING,
   COURSE_EDITION_WRETCH_FAIL,
+  CURRENT_COURSE_ID,
 } from '../actionTypes';
 import { ICourseEditionState } from '../state';
 
@@ -19,6 +20,7 @@ const initialState: ICourseEditionState = {
   isDataLoading: false,
   isDisplayingButtonOpenProgramCourse: false,
   isDisplayingButtonOpenMaterialsCourse: false,
+  idCourse: 0,
 };
 
 export function courseEditionPageReducer(
@@ -46,6 +48,8 @@ export function courseEditionPageReducer(
         ...state,
         isDisplayingButtonOpenMaterialsCourse: !state.isDisplayingButtonOpenMaterialsCourse,
       };
+    case CURRENT_COURSE_ID:
+      return { ...state, idCourse: action.payload };
     default:
       return state;
   }

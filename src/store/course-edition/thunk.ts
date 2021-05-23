@@ -5,10 +5,6 @@ import { Themes } from '../../interfaces/Themes';
 import { isCourse } from '../../services/type-guards/course';
 import { isThemesArr } from '../../services/type-guards/themesArr';
 import { coursesUrl, themesUrl } from '../../shared/consts';
-import {
-  CourseMaterial,
-  CourseTheme,
-} from '../../components/courses-page/course-edition/CourseEdition';
 import { thunkResponseHandler } from '../thunkResponseHadlers';
 import { pushNotification } from '../notifications/action-creators';
 import { makeNotification } from '../../shared/helpers/notificationHelpers';
@@ -17,6 +13,8 @@ import {
   sendGetRequest,
   sendPostRequestNoResponse,
 } from '../../services/http.service';
+import { CourseTheme } from '../../components/courses-page/course-edition/program-course/ProgramCourse';
+import { CourseMaterial } from '../../components/courses-page/course-edition/materials-course/MaterialsCourse';
 
 import {
   getCourseByIdLoaded,

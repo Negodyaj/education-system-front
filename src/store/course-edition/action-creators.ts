@@ -8,6 +8,7 @@ import {
   COURSE_EDITION_WRETCH_LOADED,
   COURSE_EDITION_WRETCH_LOADING,
   COURSE_EDITION_WRETCH_FAIL,
+  CURRENT_COURSE_ID,
 } from '../actionTypes';
 
 export type CourseEditionActions =
@@ -17,7 +18,8 @@ export type CourseEditionActions =
   | ReturnType<typeof getCourseByIdLoaded>
   | ReturnType<typeof setAllThemesInCourse>
   | ReturnType<typeof setChangeDisplayingButtonOpenProgramCourse>
-  | ReturnType<typeof setChangeDisplayingButtonOpenMaterialsCourse>;
+  | ReturnType<typeof setChangeDisplayingButtonOpenMaterialsCourse>
+  | ReturnType<typeof setIdCourse>;
 
 export const setCourseEditionIsLoadingAction = () =>
   ({
@@ -59,4 +61,10 @@ export const setChangeDisplayingButtonOpenMaterialsCourse = () =>
   ({
     type: COURSE_EDITION_CHANGE_DISPLAYING_BUTTON_OPEN_MATERIALS_COURSE,
     payload: undefined,
+  } as const);
+
+export const setIdCourse = (id: number) =>
+  ({
+    type: CURRENT_COURSE_ID,
+    payload: id,
   } as const);
