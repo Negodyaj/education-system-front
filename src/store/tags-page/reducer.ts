@@ -2,7 +2,6 @@ import {
   MODAL_HIDDEN_IS_CHECK,
   TAGS_LIST_FILTERED,
   TAGS_LIST_WRETCH_ADD_TAG,
-  TAGS_LIST_WRETCH_DELETE_TAG,
   TAGS_LIST_WRETCH_FAIL,
   TAGS_LIST_WRETCH_LOADED,
   TAGS_LIST_WRETCH_LOADING,
@@ -40,8 +39,6 @@ export function tagsPageReducer(
     case MODAL_HIDDEN_IS_CHECK:
       return { ...state, isTagsModalHidden: !state.isTagsModalHidden };
     case TAGS_LIST_WRETCH_ADD_TAG:
-      return { ...state, isDataLoading: false };
-    case TAGS_LIST_WRETCH_DELETE_TAG:
       return { ...state, isDataLoading: false };
     case TAGS_LIST_WRETCH_LOADING:
       return { ...state, isDataLoading: true };

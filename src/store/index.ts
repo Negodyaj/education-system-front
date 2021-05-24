@@ -15,6 +15,7 @@ import { lessonByGroupReducer } from './group-page/lesson/reducer';
 import { groupInfoComponentReducer } from './group-info-component/reducer';
 import { homeworkPageReducer } from './homework-page/reducer';
 import {
+  IAddHomeworkModal,
   IAppState,
   IAttendance,
   ICourseEditionState,
@@ -35,6 +36,8 @@ import {
 import { homeworkAppointModalReducer } from './homework-page/homework-appoint-modal/reducer';
 import { homeworkAttemptReducer } from './homework-attempt/reducer';
 import { attendanceReducer } from './group-page/attendance/reducer';
+import { addHomeworkModalReducer } from './homework-page/add-homework-modal/reducer';
+import { homeworkPageSaga } from './homework-page/saga';
 import { rootSaga } from './root-saga';
 import { modalWindowReducer } from './modal-window/reducer';
 
@@ -55,6 +58,7 @@ export interface IRootState {
   attendanceList: IAttendance;
   lessonByGroup: ILesson;
   modalWindow: ModalWindowState;
+  addHomeWorkModal: IAddHomeworkModal;
 }
 
 const sagaMiddleware = createSagaMiddleware();
@@ -74,6 +78,7 @@ const store = createStore<IRootState, any, any, any>(
     groupInfoComponent: groupInfoComponentReducer,
     lessonByGroup: lessonByGroupReducer,
     attendanceList: attendanceReducer,
+    addHomeWorkModal: addHomeworkModalReducer,
     homeworkPage: homeworkPageReducer,
     homeworkAppointModal: homeworkAppointModalReducer,
     homeworkAttempt: homeworkAttemptReducer,

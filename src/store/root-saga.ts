@@ -6,6 +6,7 @@ import loginFormRootSaga from './login-form/saga';
 import RoleSelectorRootSaga from './role-selector/saga';
 import userListPageRootSaga from './user-list-page/saga';
 import { userPageRootSaga } from './user-page/saga';
+import { tagsPageRootSaga } from './tags-page/saga';
 
 export function* rootSaga() {
   yield all([
@@ -15,5 +16,6 @@ export function* rootSaga() {
     attemptRootSaga(),
     RoleSelectorRootSaga(),
     loginFormRootSaga(),
+    tagsPageRootSaga(),
   ]);
 }
