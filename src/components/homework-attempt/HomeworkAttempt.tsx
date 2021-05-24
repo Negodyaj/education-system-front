@@ -1,81 +1,59 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
-import { Attempt } from '../../interfaces/Attempt';
-import CustomMultiSelect from '../../shared/components/multi-select/CustomMultiSelect';
-import { homeworkUrl } from '../../shared/consts';
-import { convertIdsToSelectItems } from '../../shared/converters/roleIdsToSelectItems';
-import { PageTitle } from '../../shared/styled-components/consts';
+import { getAttemptListToCheck } from '../../store/homework-attempt/action-creators';
 import { IRootState } from '../../store';
-import { setCurrentAttempt } from '../../store/homework-attempt/action-creators';
-import { getAttemptListToCheck } from '../../store/homework-attempt/thunk';
+import { Role } from '../../enums/role';
 
+import NavPanelComponent from './nav-panel/NavPanelComponent';
 import {
   AttemptCheckingContainer,
-  Author,
   Content,
   Data,
   Description,
-  GroupName,
-  Header,
-  NavPanel,
   Title,
 } from './styledComponents';
+import { HeaderComponent } from './header-component/HeaderComponent';
+import AttemptCreator from './attempt-creator/AttemptCreator';
 
 function HomeworkAttempt() {
+  const { homeworkAttempt, roleSelector } = useSelector(
+    (state: IRootState) => state
+  );
   const {
     attemptList,
     currentAttempt,
     currentGroup,
     currentHomework,
-  } = useSelector((state: IRootState) => state.homeworkAttempt);
-  const history = useHistory();
+    allGroupsInCollege,
+  } = homeworkAttempt;
+  const { currentUserRoleId } = roleSelector;
   const dispatch = useDispatch();
   const { hwId } = useParams<{ hwId?: string }>();
   const { attemptId } = useParams<{ attemptId?: string }>();
   useEffect(() => {
-    attemptList?.length
-      ? dispatch(
-          setCurrentAttempt(
-            [...attemptList].filter(
-              (attempt) => attempt.id.toString() === attemptId
-            )[0]
-          )
-        )
-      : dispatch(getAttemptListToCheck(hwId || ''));
-  }, [attemptList]);
-
-  const authorOnClick = (currentAttemptArg: Attempt) => {
-    dispatch(setCurrentAttempt(currentAttemptArg));
-    history.replace(`/${homeworkUrl}/${hwId}/attempts/${currentAttemptArg.id}`);
-  };
+    !attemptList?.length &&
+      dispatch(getAttemptListToCheck(hwId || '', attemptId));
+  }, []);
 
   return (
     <>
-      <Header>
-        <PageTitle>Проверка ответов</PageTitle>
-        <GroupName>
-          <Title>Группа:</Title>
-        </GroupName>
-      </Header>
+      <HeaderComponent />
       <Description>
         <Title>Домашняя работа:</Title>
         <Data>{currentHomework?.description}</Data>
       </Description>
-      <AttemptCheckingContainer>
-        <NavPanel>
-          {attemptList?.length &&
-            attemptList.map((attempt) => (
-              <Author
-                onClick={() => authorOnClick(attempt)}
-                key={attempt.author.id}>
-                {attempt.author.firstName} {attempt.author.lastName}
-              </Author>
-            ))}
-        </NavPanel>
-        <Content>{currentAttempt?.comment}</Content>
-      </AttemptCheckingContainer>
+      {currentUserRoleId === Role.Student ? (
+        <AttemptCreator />
+      ) : (
+        <AttemptCheckingContainer>
+          <NavPanelComponent attemptList={attemptList} />
+          <Content>
+            {attemptList?.length ? currentAttempt?.comment : 'нет ответов'}
+          </Content>
+        </AttemptCheckingContainer>
+      )}
     </>
   );
 }

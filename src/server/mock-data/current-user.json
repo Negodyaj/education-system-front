@@ -1,0 +1,21 @@
+{
+    "id": 1177,
+    "firstName": "Гамлет",
+    "lastName": "Принц датский",
+    "birthDate": "1753-01-01T00:00:00",
+    "login": "aazzhahamlet333",
+    "password": "$2a$10$uoLiEHCxUrFRjecSCWfVyugN8ogJeHD7OxWnlf.loT/F6CXhqqJKe",
+    "phone": "123456789",
+    "userPic": "https://www.gale.com/binaries/content/gallery/gale-us-en/international-images/intl_databases_explored/william-shakespeare-portrait.jpg",
+    "email": "aazzhahaham3t@domain.com",
+    "isDeleted": false,
+    "contractNumber": 0,
+    "groupIds": [15],
+    "roles": [
+        6,
+        5,
+        2,
+        3,
+        4
+    ]
+}

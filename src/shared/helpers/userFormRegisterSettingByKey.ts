@@ -25,7 +25,21 @@ export type InputSettings = InternalInputSettings | ExternalInputSettings;
 export interface FormElementSettings {
   label: string;
   inputSettings: InputSettings;
+  width?: number;
 }
+
+export const baseSettings: FormElementSettings = {
+  width: 272,
+  label: '',
+  inputSettings: {
+    name: '',
+    inputType: 'text',
+    registerOptions: {
+      required: false,
+    },
+  },
+};
+
 export const getUserFormElementSettings = (
   key: InputNames
 ): FormElementSettings => {
@@ -125,6 +139,9 @@ export const getUserFormElementSettings = (
           inputType: 'multiSelect',
           selectOptions: getRussianDictionary(convertEnumToDictionary(Role)),
           name: key,
+          registerOptions: {
+            required: 'Выберите роль',
+          },
         },
       };
     case InputNames.ContractNumber:

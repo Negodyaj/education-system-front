@@ -31,13 +31,14 @@ import {
   ITagsPageState,
   IUserListPage,
   IUserPage,
+  ModalWindowState,
 } from './state';
 import { homeworkAppointModalReducer } from './homework-page/homework-appoint-modal/reducer';
 import { homeworkAttemptReducer } from './homework-attempt/reducer';
 import { attendanceReducer } from './group-page/attendance/reducer';
 import { addHomeworkModalReducer } from './homework-page/add-homework-modal/reducer';
-import { homeworkPageSaga } from './homework-page/saga';
 import { rootSaga } from './root-saga';
+import { modalWindowReducer } from './modal-window/reducer';
 
 export interface IRootState {
   tagsPage: ITagsPageState;
@@ -55,6 +56,7 @@ export interface IRootState {
   homeworkAttempt: IHomeworkAttemptState;
   attendanceList: IAttendance;
   lessonByGroup: ILesson;
+  modalWindow: ModalWindowState;
   addHomeWorkModal: IAddHomeworkModal;
 }
 
@@ -79,6 +81,7 @@ const store = createStore<IRootState, any, any, any>(
     homeworkPage: homeworkPageReducer,
     homeworkAppointModal: homeworkAppointModalReducer,
     homeworkAttempt: homeworkAttemptReducer,
+    modalWindow: modalWindowReducer,
   }),
   undefined,
   applyMiddleware(...middlewares)

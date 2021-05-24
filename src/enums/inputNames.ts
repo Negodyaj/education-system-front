@@ -16,6 +16,7 @@ export enum InputNames {
   CourseName = 'name',
   CourseDescription = 'description',
   CourseDuration = 'duration',
+  AttemptComment = 'comment',
   HomeworkDescription = 'description',
   HomeworkStartDate = 'startDate',
   HomeworkDeadlineDate = 'deadlineDate',

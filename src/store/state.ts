@@ -17,7 +17,13 @@ import { CourseInput } from '../interfaces/CourseInput';
 import { INIT_HOMEWORK } from '../shared/tmp-mock-data/hw/initHomewwork';
 import { IndexedObj } from '../interfaces/IndexedObj';
 import { UserPageOptions } from '../components/user-page/UserPage';
+import { AllGroupsInCollege } from '../interfaces/AllGroupsInCollege';
+import { AttemptInput } from '../interfaces/AttemptInput';
+import { ChildIndex } from '../enums/ChildIndex';
+import { ModalWindowSettings } from '../shared/components/modal-window/ModalWindow';
 import { HomeworkInput } from '../interfaces/HomeworkInput';
+
+import { DEFAULT_ATTEMPT } from './homework-attempt/reducer';
 
 export interface IAppState {
   isLoggedIn: boolean;
@@ -69,15 +75,18 @@ export interface IHomeworkPageState {
   openedItemSetsNames: string[];
 }
 export interface IHomeworkAppointModalState {
-  groupListByTeacherId: Group[];
+  groupListByTeacherId: AllGroupsInCollege[];
   groupEntities: DictionaryEntity[];
   appointFormDefaults: AppointInput;
+  homeworkForAppointment: Homework;
 }
 export interface IHomeworkAttemptState {
   attemptList?: Attempt[];
   currentHomework?: Homework;
   currentGroup?: typeof INIT_HOMEWORK.groupsIds;
   currentAttempt?: Attempt;
+  allGroupsInCollege: AllGroupsInCollege[];
+  defaultAttempt: AttemptInput;
 }
 export interface IAddHomeworkModal {
   isDataLoading: boolean;
@@ -125,4 +134,10 @@ export interface IAttendance {
   attendanceList: Attendance[];
   studentsByGroup: User[];
   isDataLoading: boolean;
+}
+
+export interface ModalWindowState {
+  isVisible: boolean;
+  childIndex: ChildIndex;
+  modalWindowSettings: { [index: string]: ModalWindowSettings };
 }
