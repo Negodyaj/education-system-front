@@ -20,6 +20,7 @@ import { IUserAttendance } from '../components/group-page/lesson-list-component/
 import { CurrentLesson } from '../components/group-page/lesson-list-component/LessonsTableByGroup';
 import { IndexedObj } from '../interfaces/IndexedObj';
 import { UserPageOptions } from '../components/user-page/UserPage';
+import { Material } from '../interfaces/Materials';
 import { AllGroupsInCollege } from '../interfaces/AllGroupsInCollege';
 import { AttemptInput } from '../interfaces/AttemptInput';
 import { ChildIndex } from '../enums/ChildIndex';
@@ -44,10 +45,12 @@ export interface ICoursePageState {
 export interface ICourseEditionState {
   course: Course;
   themes: Themes[];
+  materials: Material[];
   idThemesCourse: number[];
   isDataLoading: boolean;
   isDisplayingButtonOpenProgramCourse: boolean;
   isDisplayingButtonOpenMaterialsCourse: boolean;
+  idCourse: number;
 }
 export interface IUserListPage {
   userList: User[];

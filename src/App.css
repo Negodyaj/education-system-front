@@ -4,6 +4,18 @@
     height: 100%;
 }
 
+.lightMode .right-section{
+    background-color: white;
+    --main-color:#272D3B;
+    color:var(--main-color);    
+}
+
+.darkMode .right-section{
+    background-color: #181D23;
+    --main-color:white;
+    color:var(--main-color);   
+}
+
 .app-logo {
     width: 50%;
     pointer-events: none;
@@ -32,8 +44,15 @@ header {
 aside {
     border-top-left-radius: 16px;
     border-bottom-left-radius: 16px;
-    background: #2D62ED;
     position: relative;
+}
+
+.lightMode aside{
+    background: #2D62ED;
+}
+
+.darkMode aside{
+    background: #29313A;
 }
 
 aside.nothide {
@@ -44,6 +63,14 @@ aside.nothide {
 
 aside.hide {
     width: 72px;
+}
+
+aside.nothide .text-container{
+    display:all;
+}
+
+aside.hide .text-container{
+    display:none;
 }
 
 .right-section, main {
