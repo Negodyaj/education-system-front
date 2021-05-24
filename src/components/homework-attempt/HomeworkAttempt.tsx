@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
-import { getAttemptListToCheck } from '../../store/homework-attempt/thunk';
+import { getAttemptListToCheck } from '../../store/homework-attempt/action-creators';
 import { IRootState } from '../../store';
 import { Role } from '../../enums/role';
 

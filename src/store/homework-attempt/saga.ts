@@ -9,9 +9,14 @@ import {
 
 import { Homework } from '../../interfaces/Homework';
 import { SendAttemptResponse } from '../../interfaces/SendAttemptResponse';
-import { sendPostRequest } from '../../services/http.service';
+import { sendGetRequest, sendPostRequest } from '../../services/http.service';
 import { homeworkUrl } from '../../shared/consts';
-import { SEND_ATTEMPT } from '../actionTypes';
+import {
+  ALL_ACTIVE_GROUPS_LOADING,
+  ATTEMPT_LIST_LOADING,
+  LOAD_CURRENT_HOMEWORK,
+  SEND_ATTEMPT,
+} from '../actionTypes';
 import { isSendAttemptResponse } from '../../services/type-guards/sendAttemptResponse';
 import { AttemptPost } from '../../interfaces/AttemptPost';
 import { currentUserRoleIdSelector } from '../role-selector/selectors';
@@ -20,12 +25,56 @@ import { tryGetErrorFromResponse } from '../../shared/helpers/http-response.help
 import { constructNotificationError } from '../core/error-notification-constructor';
 import { constructSuccessNotification } from '../core/sucess-notification-constructor';
 import { setIsLoaded, setIsLoading } from '../app/action-creators';
+import { isHomework } from '../../services/type-guards/homework';
+import { AllGroupsInCollege } from '../../interfaces/AllGroupsInCollege';
+import { isAllGroupsInCollegeArr } from '../../services/type-guards/allGroupsIncollegeArr';
+import { Attempt } from '../../interfaces/Attempt';
+import { isAttemptArr } from '../../services/type-guards/attemptsArr';
 
 import { currentHomeworkSelector } from './selector';
-import { sendAttempt } from './action-creators';
+import {
+  attemptListLoadingSuccess,
+  getAttemptListToCheck,
+  loadCurrentHomework,
+  sendAttempt,
+  setAllGroupsInCollege,
+  setCurrentAttempt,
+  setCurrentGroup,
+  setCurrentHomework,
+} from './action-creators';
 
 function* attemptRootSaga() {
-  yield all([sendAttemptWatcher()]);
+  yield all([
+    sendAttemptWatcher(),
+    loadCurrentHomeworkWatcher(),
+    getAllActiveGroupsInCollegeWatcher(),
+    getAttemptListToCheckWatcher(),
+  ]);
+}
+
+function* loadCurrentHomeworkWatcher() {
+  yield takeLeading(LOAD_CURRENT_HOMEWORK, loadCurrentHomeworkWorker);
+}
+
+function* loadCurrentHomeworkWorker({
+  payload,
+}: ReturnType<typeof loadCurrentHomework>) {
+  yield put(setIsLoading());
+  const currentHomework: Homework = yield call(async () =>
+    sendGetRequest<Homework>(`${homeworkUrl}/${payload}`, isHomework).then(
+      (response) => response
+    )
+  );
+
+  const error = tryGetErrorFromResponse(currentHomework);
+
+  if (error) yield put(constructNotificationError(error));
+  else {
+    yield put(setCurrentHomework(currentHomework));
+    yield put(setCurrentGroup(currentHomework.groupsIds));
+  }
+
+  yield put(setIsLoaded());
 }
 
 function* sendAttemptWatcher() {
@@ -63,6 +112,65 @@ function* sendAttemptWorker({ payload }: ReturnType<typeof sendAttempt>) {
     yield put(setIsLoaded());
   } catch {
     console.log('attempt sending error');
+  }
+}
+
+function* getAllActiveGroupsInCollegeWatcher() {
+  yield takeLatest(
+    ALL_ACTIVE_GROUPS_LOADING,
+    getAllActiveGroupsInCollegeWorker
+  );
+}
+
+function* getAllActiveGroupsInCollegeWorker() {
+  yield put(setIsLoading());
+  const groups: AllGroupsInCollege[] = yield call(async () =>
+    sendGetRequest<AllGroupsInCollege[]>(`Group`, isAllGroupsInCollegeArr).then(
+      (response) => response
+    )
+  );
+  const error = tryGetErrorFromResponse(groups);
+
+  if (error) yield put(constructNotificationError(error));
+  else yield put(setAllGroupsInCollege(groups));
+
+  yield put(setIsLoaded());
+}
+
+function* getAttemptListToCheckWatcher() {
+  yield takeLatest(ATTEMPT_LIST_LOADING, getAttemptListToCheckWorker);
+}
+
+function* getAttemptListToCheckWorker({
+  payload,
+}: ReturnType<typeof getAttemptListToCheck>) {
+  const attempts: Attempt[] = yield call(async () =>
+    sendGetRequest<Attempt[]>(
+      `${homeworkUrl}/${payload.hwId}/attempts`,
+      isAttemptArr
+    ).then((response) => response)
+  );
+
+  const error = tryGetErrorFromResponse(attempts);
+
+  if (error) yield put(constructNotificationError(error));
+  else {
+    yield put(attemptListLoadingSuccess(attempts));
+    yield loadCurrentHomeworkWorker({
+      type: LOAD_CURRENT_HOMEWORK,
+      payload: payload.hwId,
+    });
+
+    if (attempts.length)
+      yield put(
+        setCurrentAttempt(
+          [...attempts].filter(
+            (attempt) => attempt.id.toString() === payload.attemptId
+          )[0]
+        )
+      );
+
+    yield getAllActiveGroupsInCollegeWorker();
   }
 }
 

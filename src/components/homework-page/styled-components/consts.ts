@@ -9,7 +9,9 @@ export const HomeworkPageHeader = styled.div`
   justify-content: space-between;
   margin-bottom: 30px;
 `;
-export const HomeworkSelectorContainer = styled.div``;
+export const HomeworkSelectorContainer = styled.div`
+  padding-left: 3px;
+`;
 export const HomeworkItemsSet = styled.div`
   min-height: 0px;
   overflow: hidden;

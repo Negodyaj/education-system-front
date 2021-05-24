@@ -14,7 +14,6 @@ import {
 } from '../../../../../shared/styled-components/buttonStyledComponent';
 import { IRootState } from '../../../../../store';
 import { appointHomework } from '../../../../../store/homework-page/action-creators';
-import { getGroupsByTeacherId } from '../../../../../store/homework-page/homework-appoint-modal/thunk';
 import {
   AppointModalWindow,
   AppointModalWindowFooter,

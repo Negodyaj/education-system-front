@@ -5,7 +5,10 @@ import { Homework } from '../../interfaces/Homework';
 import { INIT_HOMEWORK } from '../../shared/tmp-mock-data/hw/initHomewwork';
 import {
   ALL_ACTIVE_GROUPS,
+  ALL_ACTIVE_GROUPS_LOADING,
   ATTEMPTS_LOADING_SUCCESS,
+  ATTEMPT_LIST_LOADING,
+  LOAD_CURRENT_HOMEWORK,
   SEND_ATTEMPT,
   SET_CURRENT_ATTEMPT,
   SET_CURRENT_GROUP,
@@ -18,7 +21,10 @@ export type HomeworkAttemptActions =
   | ReturnType<typeof setCurrentAttempt>
   | ReturnType<typeof setCurrentHomework>
   | ReturnType<typeof setAllGroupsInCollege>
-  | ReturnType<typeof sendAttempt>;
+  | ReturnType<typeof sendAttempt>
+  | ReturnType<typeof loadCurrentHomework>
+  | ReturnType<typeof getAllActiveGroupsInCollege>
+  | ReturnType<typeof getAttemptListToCheck>;
 
 export const attemptListLoadingSuccess = (attempts: Attempt[]) =>
   ({
@@ -50,4 +56,22 @@ export const sendAttempt = (attempt: AttemptInput) =>
   ({
     type: SEND_ATTEMPT,
     payload: attempt,
+  } as const);
+export const loadCurrentHomework = (hwId: string) =>
+  ({
+    type: LOAD_CURRENT_HOMEWORK,
+    payload: hwId,
+  } as const);
+export const getAllActiveGroupsInCollege = () =>
+  ({
+    type: ALL_ACTIVE_GROUPS_LOADING,
+    payload: undefined,
+  } as const);
+export const getAttemptListToCheck = (hwId: string, attemptId: string = '0') =>
+  ({
+    type: ATTEMPT_LIST_LOADING,
+    payload: {
+      hwId,
+      attemptId,
+    },
   } as const);
