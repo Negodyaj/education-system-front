@@ -97,3 +97,9 @@ button.right{
     display:none;
 }
 
+.mode{
+    position:absolute;
+    left:10px;
+    bottom:20px;
+}
+
