@@ -32,6 +32,7 @@ import LoginForm from './components/login-form/LoginForm';
 import GroupNavMenu from './components/group-page/group-nav-menu/GroupNavMenu';
 import GroupInfoComponent from './components/group-page/group-info-component/GroupInfoComponent';
 import LoginRoleSelector from './components/role-selector/LoginRoleSelector';
+import ModalWindow from './shared/components/modal-window/ModalWindow';
 
 function App() {
   const dispatch = useDispatch();
@@ -106,6 +107,14 @@ function App() {
               </Route>
               {[Role.Teacher, Role.Tutor].includes(currentUserRoleId) && (
                 <Route path="/Homework/:hwId/attempts/:attemptId?">
+                  <HomeworkAttempt />
+                  <Helmet>
+                    <title>Домашки</title>
+                  </Helmet>
+                </Route>
+              )}
+              {currentUserRoleId === Role.Student && (
+                <Route path="/Homework/:hwId/attempt-creator">
                   <HomeworkAttempt />
                   <Helmet>
                     <title>Домашки</title>
@@ -191,6 +200,7 @@ function App() {
             </Switch>
           )}
           <NotificationContainer />
+          <ModalWindow />
         </main>
       </div>
       <Loader />

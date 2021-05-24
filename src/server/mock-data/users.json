@@ -1,0 +1,124 @@
+[
+    {
+        "id": 1,
+        "firstName": "Володя",
+        "lastName": "Админ",
+        "birthDate": "01.01.1970",
+        "login": "volodya22",
+        "phone": "45-78-123",
+        "userPic": "https://rlv.zcache.com/bert_face_classic_round_sticker-r9616986a46584b3f98ec5b9877a7cab8_0ugmm_8byvr_307.jpg",
+        "email": "educationsystem42@gmail.com",
+        "contractNumber": 0,
+        "roles": [
+            1,
+            3,
+            5,
+            6
+        ]
+    },
+    {
+        "id": 19,
+        "firstName": "Гай Юлий",
+        "lastName": "Фудзимото",
+        "birthDate": "02.05.1999",
+        "login": "rtyrtyrty",
+        "phone": "00-00-00",
+        "userPic": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTK1k0vqf81wIYgTP9spbSc9kLgbHZjKtscSA&usqp=CAU",
+        "email": "qwe@domain.com",
+        "contractNumber": 43,
+        "roles": [
+            4
+        ]
+    },
+    {
+        "id": 123,
+        "firstName": "Гамлет",
+        "lastName": "Принц датский",
+        "birthDate": "01.03.1954",
+        "login": "hhhhm13t",
+        "phone": "123456780",
+        "userPic": "https://www.gale.com/binaries/content/gallery/gale-us-en/international-images/intl_databases_explored/william-shakespeare-portrait.jpg",
+        "email": "hhhhm13t@domain.comzzzzz",
+        "contractNumber": 42,
+        "roles": [
+            2
+        ]
+    },
+    {
+        "id": 127,
+        "firstName": "Кеша",
+        "lastName": "Попугай",
+        "birthDate": "08.04.1965",
+        "login": "ke5ha",
+        "phone": "1414141414",
+        "userPic": "https://i.pinimg.com/originals/ee/fa/54/eefa54fbe930758a9e6139416e5001b3.png",
+        "email": "po@pu.gai",
+        "contractNumber": 127,
+        "roles": [
+            2
+        ]
+    },
+    {
+        "id": 1176,
+        "firstName": "Гамлет",
+        "lastName": "Принц датский",
+        "birthDate": "01.01.1753",
+        "login": "azzhahamlet333",
+        "phone": "123456789",
+        "userPic": "https://www.gale.com/binaries/content/gallery/gale-us-en/international-images/intl_databases_explored/william-shakespeare-portrait.jpg",
+        "email": "azzhahaham3t@domain.com",
+        "contractNumber": 0,
+        "roles": [
+            2
+        ]
+    },
+    {
+        "id": 1177,
+        "firstName": "Гамлет",
+        "lastName": "Принц датский",
+        "birthDate": "01.01.1753",
+        "login": "aazzhahamlet333",
+        "phone": "123456789",
+        "userPic": "https://www.gale.com/binaries/content/gallery/gale-us-en/international-images/intl_databases_explored/william-shakespeare-portrait.jpg",
+        "email": "aazzhahaham3t@domain.com",
+        "contractNumber": 0,
+        "roles": [
+            2,
+            3,
+            4,
+            5,
+            6
+        ]
+    },
+    {
+        "id": 1185,
+        "firstName": "Donald",
+        "lastName": "Duck",
+        "birthDate": "20.05.2065",
+        "login": "d0nald",
+        "phone": "9113579389401",
+        "userPic": "https://www.swiminn.com/f/13640/136409795/jibbitz-donald-duck-ss17.jpg",
+        "email": "donald@duck.com",
+        "contractNumber": 0,
+        "roles": [
+            1,
+            2,
+            3,
+            4
+        ]
+    },
+    {
+        "id": 1186,
+        "firstName": "Jack",
+        "lastName": "Monterey",
+        "birthDate": "22.01.2022",
+        "login": "jackM",
+        "phone": "019856523857",
+        "userPic": "https://static.tvtropes.org/pmwiki/pub/images/monterey_jack_7.jpg",
+        "email": "m@j.com",
+        "contractNumber": 0,
+        "roles": [
+            2
+        ]
+    }
+]
