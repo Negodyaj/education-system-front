@@ -139,6 +139,9 @@ export const getUserFormElementSettings = (
           inputType: 'multiSelect',
           selectOptions: getRussianDictionary(convertEnumToDictionary(Role)),
           name: key,
+          registerOptions: {
+            required: 'Выберите роль',
+          },
         },
       };
     case InputNames.ContractNumber:
