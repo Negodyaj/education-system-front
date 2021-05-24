@@ -9,6 +9,7 @@ const getAttemptFormElementSettings = (
     case InputNames.AttemptComment:
       return {
         label: 'Текст ответа:',
+        width: 750,
         inputSettings: {
           name: key,
           inputType: 'textarea',

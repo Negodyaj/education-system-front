@@ -9,6 +9,7 @@ import {
 } from 'redux-saga/effects';
 
 import { Homework } from '../../interfaces/Homework';
+import { HomeworkPost } from '../../interfaces/HomeworkPost';
 import { sendGetRequest, sendPostRequest } from '../../services/http.service';
 import { isHomework } from '../../services/type-guards/homework';
 import { isHomeworkArr } from '../../services/type-guards/homeworkArr';
@@ -26,6 +27,7 @@ import {
   HomeworkPageActions,
   loadHomeworkSuccess,
 } from './action-creators';
+import { getHomeworkForAppointmentSelector } from './homework-appoint-modal/selector';
 
 export function* homeworkPageWatchers() {
   yield all([loadHomeworkListWatcher(), appointHomeworkPageSagaWatcher()]);
@@ -63,10 +65,25 @@ export function* appointHomeworkPageSagaWorker({
   payload,
 }: ReturnType<typeof appointHomework>) {
   try {
+    const homeworkForAppointment: Homework = yield select(
+      getHomeworkForAppointmentSelector
+    );
+    const appointedHomework: HomeworkPost = {
+      description: homeworkForAppointment.description,
+      startDate: homeworkForAppointment.startDate,
+      deadlineDate: payload.deadline,
+      courseId: homeworkForAppointment.course.id,
+      groupId: Number.parseInt(payload.group, 10),
+      tagIds: homeworkForAppointment.tags.map((tag) => tag.id),
+      themeIds: homeworkForAppointment.themes?.map((theme) => theme.id) || [],
+      isOptional: homeworkForAppointment.isOptional,
+    };
     const homeworkAppointmentResponse: Homework = yield call(async () =>
-      sendPostRequest<Homework>(`${homeworkUrl}`, isHomework, payload).then(
-        (response) => response
-      )
+      sendPostRequest<Homework>(
+        `${homeworkUrl}`,
+        isHomework,
+        appointedHomework
+      ).then((response) => response)
     );
     const error = tryGetErrorFromResponse(homeworkAppointmentResponse);
 

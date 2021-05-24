@@ -78,6 +78,7 @@ export interface IHomeworkAppointModalState {
   groupListByTeacherId: AllGroupsInCollege[];
   groupEntities: DictionaryEntity[];
   appointFormDefaults: AppointInput;
+  homeworkForAppointment: Homework;
 }
 export interface IHomeworkAttemptState {
   attemptList?: Attempt[];

@@ -34,7 +34,7 @@ const HomeworkAppointModal = (props: {
   );
   const dispatch = useDispatch();
   const onSubmit = (data: AppointInput) => {
-    dispatch(appointHomework(data, hw));
+    dispatch(appointHomework(data));
   };
   const { ...methods } = useForm<AppointInput>();
 

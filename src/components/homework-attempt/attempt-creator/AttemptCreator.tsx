@@ -1,19 +1,21 @@
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { InputNames } from '../../../enums/inputNames';
 import { AttemptInput } from '../../../interfaces/AttemptInput';
 import FormElement from '../../../shared/components/form-elements/FormElement';
 import getAttemptFormElementSettings from '../../../shared/helpers/attemptFormRegisterSettingsByKey';
 import { IRootState } from '../../../store';
+import { sendAttempt } from '../../../store/homework-attempt/action-creators';
 
 const AttemptCreator = () => {
   const methods = useForm<AttemptInput>();
   const { homeworkAttempt } = useSelector((state: IRootState) => state);
+  const dispatch = useDispatch();
   const onSubmit = (data: AttemptInput) => {
     console.log(data);
-    // dispatch action
+    dispatch(sendAttempt(data));
   };
 
   return (

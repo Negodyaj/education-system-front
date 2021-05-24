@@ -71,6 +71,16 @@ const runMock = () => {
 
         return schema.db.homeworksTable[schema.db.homeworksTable.length - 1];
       });
+      this.post(
+        'https://80.78.240.16:7070/api/Homework/:id/attempt',
+        (schema, request) => {
+          let newRecord = JSON.parse(request.requestBody);
+          let { id } = request.params;
+          schema.db.attemptsTable.find(id).attempts.push([newRecord]);
+
+          return schema.db.attemptsTable;
+        }
+      );
     },
   });
 };

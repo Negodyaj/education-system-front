@@ -50,7 +50,7 @@ function HomeworkAttempt() {
         <AttemptCheckingContainer>
           <NavPanelComponent attemptList={attemptList} />
           <Content>
-            {currentAttempt ? currentAttempt.comment : 'нет ответов'}
+            {attemptList?.length ? currentAttempt?.comment : 'нет ответов'}
           </Content>
         </AttemptCheckingContainer>
       )}
