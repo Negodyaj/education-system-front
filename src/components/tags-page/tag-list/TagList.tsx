@@ -3,8 +3,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Tag } from '../../../interfaces/Tag';
-import { deleteTagThunk } from '../../../store/tags-page/thunk';
-import { IRootState } from '../../../store';
 import {
   RoundButton,
   CommonButton,
@@ -13,6 +11,7 @@ import {
   deleteTagWatcherAction,
   loadTagsListWatcherAction,
 } from '../../../store/tags-page/action-creators';
+import { IRootState } from '../../../store';
 
 interface TagListProps {
   str: string;

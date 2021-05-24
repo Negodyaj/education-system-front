@@ -6,7 +6,6 @@ import {
   addTagWatcherAction,
   toggleModalHidden,
 } from '../../../store/tags-page/action-creators';
-import { addTag } from '../../../store/tags-page/thunk';
 import {
   CommonButton,
   DisabledButton,
