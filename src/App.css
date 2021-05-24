@@ -151,11 +151,11 @@ aside.hide {
 }
 
 
-.form-input-textarea {
-    min-height: 100px;
+/* .form-input-textarea {
+    min-height: 200px;
     max-height: 258px;
-    min-width: 450px;
-    max-width: 450px;
+    min-width: 272px;
+    max-width: 272px;
     border: 1px solid #e0e7ff;
     border-radius: 5px;
     margin-bottom: 11px;
@@ -163,7 +163,7 @@ aside.hide {
     font-size: 14px;
     padding: 0 13px;
     font-weight: 600;
-}
+} */
 
 .test-page-link {
     position: absolute;

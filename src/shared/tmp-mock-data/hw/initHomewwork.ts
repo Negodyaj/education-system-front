@@ -6,7 +6,6 @@ export const INIT_HOMEWORK: Homework = {
   homeworkAttempts: [],
   id: -10,
   isOptional: false,
-  name: '',
   startDate: '',
   tags: [],
   themes: [],

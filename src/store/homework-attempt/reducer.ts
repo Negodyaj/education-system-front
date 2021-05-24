@@ -1,4 +1,7 @@
+import { Attempt } from '../../interfaces/Attempt';
+import { AttemptInput } from '../../interfaces/AttemptInput';
 import {
+  ALL_ACTIVE_GROUPS,
   ATTEMPTS_LOADING_SUCCESS,
   SET_CURRENT_ATTEMPT,
   SET_CURRENT_GROUP,
@@ -8,11 +11,17 @@ import { IHomeworkAttemptState } from '../state';
 
 import { HomeworkAttemptActions } from './action-creators';
 
+export const DEFAULT_ATTEMPT: AttemptInput = {
+  comment: '',
+};
+
 const initialState: IHomeworkAttemptState = {
   attemptList: undefined,
   currentGroup: undefined,
   currentAttempt: undefined,
   currentHomework: undefined,
+  allGroupsInCollege: [],
+  defaultAttempt: DEFAULT_ATTEMPT,
 };
 export function homeworkAttemptReducer(
   state: IHomeworkAttemptState = initialState,
@@ -27,6 +36,8 @@ export function homeworkAttemptReducer(
       return { ...state, currentAttempt: action.payload };
     case SET_CURRENT_HOMEWORK:
       return { ...state, currentHomework: action.payload };
+    case ALL_ACTIVE_GROUPS:
+      return { ...state, allGroupsInCollege: action.payload };
     default:
       return state;
   }

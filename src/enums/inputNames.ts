@@ -20,4 +20,13 @@ export enum InputNames {
   LessonDate = 'lessonDate',
   LessonThemesId = 'themesId',
   LessonRecordLink = 'recordLink',
+  AttemptComment = 'comment',
+  HomeworkDescription = 'description',
+  HomeworkStartDate = 'startDate',
+  HomeworkDeadlineDate = 'deadlineDate',
+  HomeworkIsOptional = 'isOptional',
+  HomeworkCourseId = 'courseId',
+  HomeworkGroupId = 'groupId',
+  HomeworkTags = 'tags',
+  HomeworkThemes = 'themes',
 }

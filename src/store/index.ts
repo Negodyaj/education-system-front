@@ -12,9 +12,10 @@ import { appReducer } from './app/reducer';
 import { tagsPageReducer } from './tags-page/reducer';
 import { paymentReducer } from './payment/reducer';
 import { lessonByGroupReducer } from './group-page/lesson/reducer';
-import { groupInfoComponentReducer } from './group-info-component/reducer';
+import { groupInfoComponentReducer } from './group-page/group-info-component/reducer';
 import { homeworkPageReducer } from './homework-page/reducer';
 import {
+  IAddHomeworkModal,
   IAppState,
   IAttendance,
   ICourseEditionState,
@@ -30,12 +31,14 @@ import {
   ITagsPageState,
   IUserListPage,
   IUserPage,
+  ModalWindowState,
 } from './state';
 import { homeworkAppointModalReducer } from './homework-page/homework-appoint-modal/reducer';
 import { homeworkAttemptReducer } from './homework-attempt/reducer';
 import { attendanceReducer } from './group-page/attendance/reducer';
-import { homeworkPageSaga } from './homework-page/saga';
+import { addHomeworkModalReducer } from './homework-page/add-homework-modal/reducer';
 import { rootSaga } from './root-saga';
+import { modalWindowReducer } from './modal-window/reducer';
 
 export interface IRootState {
   tagsPage: ITagsPageState;
@@ -53,6 +56,8 @@ export interface IRootState {
   homeworkAttempt: IHomeworkAttemptState;
   attendanceList: IAttendance;
   lessonByGroup: ILesson;
+  modalWindow: ModalWindowState;
+  addHomeWorkModal: IAddHomeworkModal;
 }
 
 const sagaMiddleware = createSagaMiddleware();
@@ -72,9 +77,11 @@ const store = createStore<IRootState, any, any, any>(
     groupInfoComponent: groupInfoComponentReducer,
     lessonByGroup: lessonByGroupReducer,
     attendanceList: attendanceReducer,
+    addHomeWorkModal: addHomeworkModalReducer,
     homeworkPage: homeworkPageReducer,
     homeworkAppointModal: homeworkAppointModalReducer,
     homeworkAttempt: homeworkAttemptReducer,
+    modalWindow: modalWindowReducer,
   }),
   undefined,
   applyMiddleware(...middlewares)
