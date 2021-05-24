@@ -12,7 +12,7 @@ import { appReducer } from './app/reducer';
 import { tagsPageReducer } from './tags-page/reducer';
 import { paymentReducer } from './payment/reducer';
 import { lessonByGroupReducer } from './group-page/lesson/reducer';
-import { groupInfoComponentReducer } from './group-info-component/reducer';
+import { groupInfoComponentReducer } from './group-page/group-info-component/reducer';
 import { homeworkPageReducer } from './homework-page/reducer';
 import {
   IAppState,

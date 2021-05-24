@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { IRootState } from '../../../store';
-import { getGroupToViewById } from '../../../store/group-info-component/thunk';
+import { getGroupToViewById } from '../../../store/group-page/group-info-component/thunk';
 import '../../../App.css';
 import './GroupInfoComponent.css';
 import Loader from '../../../shared/components/loader/Loader';
