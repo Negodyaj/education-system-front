@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { isTypeNode } from 'typescript';
 
 import { IRootState } from '../../../store';
-import { getGroupToViewById } from '../../../store/group-info-component/thunk';
+import { getGroupToViewById } from '../../../store/group-page/group-info-component/thunk';
 import { getAttendanceByLessonId } from '../../../store/group-page/attendance/thunk';
 import { getLessonsByGroup } from '../../../store/group-page/lesson/thunk';
 

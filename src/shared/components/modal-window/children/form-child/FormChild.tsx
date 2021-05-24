@@ -1,9 +1,11 @@
 import React from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
+import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 
 import { ChildIndex } from '../../../../../enums/ChildIndex';
 import { InputNames } from '../../../../../enums/inputNames';
+import { AppointInput } from '../../../../../interfaces/AppointInput';
+import { CourseInput } from '../../../../../interfaces/CourseInput';
 import { toggleModalWindow } from '../../../../../store/modal-window/action-creators';
 import FormElement from '../../../form-elements/FormElement';
 import {
@@ -24,7 +26,7 @@ export function FormChild<T>(props: FormChildProps<T>) {
   const { defaultValues, childIndex } = props;
   const methods = useForm<T>(defaultValues);
   const dispatch = useDispatch();
-  const onSubmit = selectOnSubmit(childIndex, dispatch);
+  const onSubmit: SubmitHandler<any> = selectOnSubmit(childIndex, dispatch);
 
   return (
     <>

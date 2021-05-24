@@ -29,6 +29,8 @@ import UserRoute from './components/user-page/UserRoute';
 import HomeworkPage from './components/homework-page/HomeworkPage';
 import LessonsByGroup from './components/group-page/lesson-list-component/LessonsByGroup';
 import LoginForm from './components/login-form/LoginForm';
+import GroupNavMenu from './components/group-page/group-nav-menu/GroupNavMenu';
+import GroupInfoComponent from './components/group-page/group-info-component/GroupInfoComponent';
 import LoginRoleSelector from './components/role-selector/LoginRoleSelector';
 import ModalWindow from './shared/components/modal-window/ModalWindow';
 
@@ -111,6 +113,14 @@ function App() {
                   </Helmet>
                 </Route>
               )}
+              {currentUserRoleId === Role.Student && (
+                <Route path="/Homework/:hwId/attempt-creator">
+                  <HomeworkAttempt />
+                  <Helmet>
+                    <title>Домашки</title>
+                  </Helmet>
+                </Route>
+              )}
               <Route path="/course/:id/edition">
                 <CourseEdition />
               </Route>
@@ -138,11 +148,32 @@ function App() {
                   <title>Домашки</title>
                 </Helmet>
               </Route>
+              {currentUserRoleId !== Role.Methodist && (
+                <>
+                  <Route path="/group">
+                    <GroupNavMenu />
+                    <Helmet>
+                      <title>Группы</title>
+                    </Helmet>
+                  </Route>
+                  <Route path="/group/info">
+                    <GroupInfoComponent />
+                  </Route>
+                  <Route path="/group/lesson">
+                    <LessonsByGroup />
+                  </Route>
+                  <Route path="/group/journal">
+                    <Attendance />
+                  </Route>
+                  <Route path="/group/statistics">
+                    <div>statistics</div>
+                  </Route>
+                </>
+              )}
               <Route exact path="/group">
-                <Redirect to="/group/1" />
+                <Redirect to="/group/1/info" />
               </Route>
-              <Route path="/group/:id">
-                <GroupPage />
+              <Route path="/group/:id/info">
                 <Helmet>
                   <title>Группы</title>
                 </Helmet>

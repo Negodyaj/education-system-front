@@ -12,7 +12,7 @@ function GroupMemberComponent(props: GroupMemberComponentProps) {
   const { userPic, firstName, lastName, login } = props;
 
   return (
-    <div className="list">
+    <div className="list-member">
       <div className="column">
         <img className="user-photo" src={userPic} alt="userpic" />
       </div>

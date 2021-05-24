@@ -24,6 +24,7 @@ function FormElement(props: { formElementSettings?: FormElementSettings }) {
 
   const { inputType } = formElementSettings.inputSettings;
   const inputSettings = { ...formElementSettings.inputSettings };
+  console.log(inputSettings);
 
   return (
     <div className="form-row">

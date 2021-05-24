@@ -40,7 +40,11 @@ function DatePickerComponent(props: DatePickerComponentProps) {
       )}
     />
   ) : (
-    <DatePicker selected={startDate} onChange={handleDateChange} locale="ru" />
+    <DatePicker
+      selected={startDate || new Date()}
+      onChange={handleDateChange}
+      locale="ru"
+    />
   );
 }
 

@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { Themes } from '../../../interfaces/Themes';
 import SearchComponent from '../../../shared/components/search-component/SearchComponent';
-import { IRootState } from '../../../store';
 import {
   addThemeInCourse,
   deleteMaterialCourse,
@@ -20,6 +19,7 @@ import {
   setChangeDisplayingButtonOpenMaterialsCourse,
 } from '../../../store/course-edition/action-creators';
 import { Material } from '../../../interfaces/Materials';
+import { IRootState } from '../../../store';
 
 export interface CourseTheme {
   idCourse: number;
