@@ -3,10 +3,10 @@ import { Themes } from './Themes';
 
 export interface HomeworkInput {
   description: string;
-  // startDate: string,
-  // deadlineDate: string,
-  // isOptional: boolean,
+  startDate?: string;
+  deadlineDate?: string;
+  isOptional: boolean;
   courseId: number;
-  // tags: Tag[],
-  // themes: Themes[]
+  tags: Tag[];
+  themes: Themes[];
 }

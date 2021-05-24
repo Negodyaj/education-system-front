@@ -15,6 +15,7 @@ import PictureInput from './PictureInput';
 import SingleSelectInput from './SingleSelectInput';
 import TextAreaInput from './TextareaInput';
 import TextInput from './TextInput';
+import TumblerInput from './Tumbler';
 
 function FormElement(props: { formElementSettings?: FormElementSettings }) {
   const { formElementSettings } = props;
@@ -64,6 +65,9 @@ function FormElement(props: { formElementSettings?: FormElementSettings }) {
       )}
       {inputType === 'picture' && (
         <PictureInput inputSettings={inputSettings as ExternalInputSettings} />
+      )}
+      {inputType === 'tumbler' && (
+        <TumblerInput inputSettings={inputSettings} />
       )}
       <ErrorMessage
         errors={formContext.formState.errors}

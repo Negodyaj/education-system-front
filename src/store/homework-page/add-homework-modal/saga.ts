@@ -11,7 +11,6 @@ import { isHomeworkArr } from '../../../services/type-guards/homeworkArr';
 import { homeworkUrl } from '../../../shared/consts';
 import { tryGetErrorFromResponse } from '../../../shared/helpers/http-response.helper';
 import { makeNotification } from '../../../shared/helpers/notificationHelpers';
-import { homeworkList } from '../../../shared/tmp-mock-data/hw/homeworkList';
 import {
   ADD_HOMEWORK_OR_MODAL,
   GET_HOMEWORKS_FOR_MODAL,
@@ -45,7 +44,7 @@ export function* loadHMListForModalSaga() {
     const error = tryGetErrorFromResponse(homeworks);
 
     if (error) yield put(constructNotificationError(error));
-    else yield put(loadHomeworkForModalSuccess(homeworkList));
+    else yield put(loadHomeworkForModalSuccess(homeworks));
   } catch {
     console.log('error setloadHMListForModalSaga');
   }

@@ -4,14 +4,15 @@ import { coursesListForModalHW } from '../tmp-mock-data/hw/CourseListForHWModal'
 import { useCoursesForHomeworkAddModal } from './entitiesGetters';
 import { FormElementSettings } from './userFormRegisterSettingByKey';
 
-export const homeworkForm = (key: InputNames): FormElementSettings => {
+export const getHomeworkAddForm = (key: InputNames): FormElementSettings => {
   switch (key) {
     case InputNames.HomeworkDescription:
       return {
         label: 'Описание домашней работы',
+        width: 400,
         inputSettings: {
           name: key,
-          inputType: 'text',
+          inputType: 'textarea',
           registerOptions: {
             required: 'Введите описание',
             min: {
@@ -28,6 +29,14 @@ export const homeworkForm = (key: InputNames): FormElementSettings => {
           name: key,
           inputType: 'singleSelect',
           selectOptions: useCoursesForHomeworkAddModal,
+        },
+      };
+    case InputNames.HomeworkIsOptional:
+      return {
+        label: 'Требует проверки',
+        inputSettings: {
+          name: key,
+          inputType: 'tumbler',
         },
       };
 

@@ -2,6 +2,7 @@ import { ChildIndex } from '../../enums/ChildIndex';
 import { CourseInput } from '../../interfaces/CourseInput';
 import { TOGGLE_MODAL_WINDOW } from '../actionTypes';
 import { INIT_COURSE_TO_REGISTER } from '../courses-page/reducer';
+import { defaultAddHomeworkValues } from '../homework-page/add-homework-modal/reducer';
 import { APPOINT_FORM_DEFAULTS } from '../homework-page/homework-appoint-modal/reducer';
 import { ModalWindowState } from '../state';
 
@@ -18,6 +19,10 @@ const initialState: ModalWindowState = {
     [ChildIndex.AppointHomework]: {
       headerName: 'Назначить ДЗ на группу',
       defaultValues: APPOINT_FORM_DEFAULTS,
+    },
+    [ChildIndex.AddHomework]: {
+      headerName: 'Добавить домашнюю работу',
+      defaultValues: defaultAddHomeworkValues,
     },
     [ChildIndex.Closed]: {},
   },

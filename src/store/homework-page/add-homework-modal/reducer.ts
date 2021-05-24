@@ -7,14 +7,17 @@ import { IAddHomeworkModal } from '../../state';
 
 import { AddHomeworkModalActions } from './action-creators';
 
-const defaultValues: HomeworkInput = {
+export const defaultAddHomeworkValues: HomeworkInput = {
   description: '',
+  isOptional: false,
+  tags: [],
+  themes: [],
   courseId: 0,
 };
 
 const initialState: IAddHomeworkModal = {
   isDataLoading: false,
-  defaultFormValue: defaultValues,
+  defaultFormValue: defaultAddHomeworkValues,
   isModalHidden: false,
   coursesForCloneEntities: [],
 };
