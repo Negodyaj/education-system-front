@@ -1,5 +1,6 @@
 import { all } from 'redux-saga/effects';
 
+import courseByIdPageRootSaga from './course-edition/saga';
 import attemptRootSaga from './homework-attempt/saga';
 import lessonByGroupListPageRootSaga from './group-page/lesson/saga';
 import { homeworkPageWatchers } from './homework-page/saga';
@@ -15,6 +16,7 @@ export function* rootSaga() {
     homeworkPageWatchers(),
     userPageRootSaga(),
     userListPageRootSaga(),
+    courseByIdPageRootSaga(),
     attemptRootSaga(),
     RoleSelectorRootSaga(),
     loginFormRootSaga(),
