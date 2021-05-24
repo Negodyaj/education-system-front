@@ -6,13 +6,14 @@
 
 .lightMode .right-section{
     background-color: white;
-    color:#272D3B;
-    
+    --main-color:#272D3B;
+    color:var(--main-color);    
 }
 
 .darkMode .right-section{
-background-color: #181D23;
-color: white;
+    background-color: #181D23;
+    --main-color:white;
+    color:var(--main-color);   
 }
 
 .app-logo {
