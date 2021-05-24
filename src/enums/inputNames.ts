@@ -16,4 +16,12 @@ export enum InputNames {
   CourseName = 'name',
   CourseDescription = 'description',
   CourseDuration = 'duration',
+  HomeworkDescription = 'description',
+  HomeworkStartDate = 'startDate',
+  HomeworkDeadlineDate = 'deadlineDate',
+  HomeworkIsOptional = 'isOptional',
+  HomeworkCourseId = 'courseId',
+  HomeworkGroupId = 'groupId',
+  HomeworkTags = 'tags',
+  HomeworkThemes = 'themes',
 }

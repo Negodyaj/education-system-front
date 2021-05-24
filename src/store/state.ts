@@ -1,3 +1,4 @@
+import { Attendance } from '../interfaces/Attendance';
 import { Course } from '../interfaces/Courses';
 import { Group } from '../interfaces/Group';
 import NotificationData from '../interfaces/NotificationData';
@@ -11,12 +12,12 @@ import { HomeworkPageOptions } from '../components/homework-page/HomeworkPageCor
 import { DictionaryEntity } from '../interfaces/DictionaryEntity';
 import { AppointInput } from '../interfaces/AppointInput';
 import { Attempt } from '../interfaces/Attempt';
-import { Attendance } from '../interfaces/Attendance';
 import { Lesson } from '../interfaces/Lesson';
 import { CourseInput } from '../interfaces/CourseInput';
 import { INIT_HOMEWORK } from '../shared/tmp-mock-data/hw/initHomewwork';
 import { IndexedObj } from '../interfaces/IndexedObj';
 import { UserPageOptions } from '../components/user-page/UserPage';
+import { HomeworkInput } from '../interfaces/HomeworkInput';
 
 export interface IAppState {
   isLoggedIn: boolean;
@@ -58,7 +59,6 @@ export interface IRoleSelector {
   currentUserRoleId: number;
   isDataLoading: boolean;
 }
-
 export interface IAppState {
   isLoggedIn: boolean;
   loadersCount: number;
@@ -78,6 +78,12 @@ export interface IHomeworkAttemptState {
   currentHomework?: Homework;
   currentGroup?: typeof INIT_HOMEWORK.groupsIds;
   currentAttempt?: Attempt;
+}
+export interface IAddHomeworkModal {
+  isDataLoading: boolean;
+  defaultFormValue: HomeworkInput;
+  isModalHidden: boolean;
+  coursesForCloneEntities: DictionaryEntity[];
 }
 export interface INotificationContainerState {
   notifications: {
