@@ -1,8 +1,15 @@
-import { all, fork } from 'redux-saga/effects';
+import { all } from 'redux-saga/effects';
 
-import { homeworkPageRootSaga, homeworkPageSaga } from './homework-page/saga';
+import { homeworkPageWatchers } from './homework-page/saga';
+import userListPageRootSaga from './user-list-page/saga';
+import { userPageRootSaga } from './user-page/saga';
 import { tagsPageRootSaga } from './tags-page/saga';
 
 export function* rootSaga() {
-  yield all([fork(homeworkPageRootSaga), fork(tagsPageRootSaga)]);
+  yield all([
+    homeworkPageWatchers(),
+    userPageRootSaga(),
+    userListPageRootSaga(),
+    tagsPageRootSaga(),
+  ]);
 }

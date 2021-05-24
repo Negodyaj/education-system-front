@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { IRootState } from '../../store';
-import { getUsers } from '../../store/user-list-page/thunk';
+import { getUsers } from '../../store/user-list-page/action-creators';
 
 import UserListComponent from './user-list-component/UserListComponent';
 import './UserListPage.css';
@@ -17,13 +17,7 @@ function UserListPage() {
 
   return (
     <div className="user-page">
-      {appState.userListPage.isDataLoading ? (
-        <div>
-          <FontAwesomeIcon icon="spinner" />
-        </div>
-      ) : (
-        <UserListComponent />
-      )}
+      <UserListComponent />
     </div>
   );
 }
