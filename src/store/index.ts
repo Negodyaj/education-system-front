@@ -37,7 +37,6 @@ import { homeworkAppointModalReducer } from './homework-page/homework-appoint-mo
 import { homeworkAttemptReducer } from './homework-attempt/reducer';
 import { attendanceReducer } from './group-page/attendance/reducer';
 import { addHomeworkModalReducer } from './homework-page/add-homework-modal/reducer';
-import { homeworkPageSaga } from './homework-page/saga';
 import { rootSaga } from './root-saga';
 import { modalWindowReducer } from './modal-window/reducer';
 

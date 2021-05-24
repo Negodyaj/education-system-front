@@ -104,6 +104,7 @@ export function homeworkPageReducer(
         return { ...state };
       }
 
+      console.log(convertHomeworkListForStudentMode(action.payload.homeworks));
       STUDENT_VIEW.homeworkList[HWListTypes.Appointed] = {
         ...convertHomeworkListForStudentMode(action.payload.homeworks),
       };
