@@ -1,10 +1,8 @@
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
 
+import PaymentForm from '../../../../components/user-list-page/payment-form/PaymentForm';
 import { ChildIndex } from '../../../../enums/ChildIndex';
-import { CourseInput } from '../../../../interfaces/CourseInput';
-import { ModalWindowSettings } from '../ModalWindow';
 
-import { FormChild } from './form-child/FormChild';
 import NewCourse from './new-course/NewCourse';
 
 type Props = {
@@ -18,6 +16,8 @@ export function Children(props: Props) {
   switch (childIndex) {
     case 'new-course':
       return <NewCourse>{children}</NewCourse>;
+    case 'payment':
+      return <PaymentForm>{children}</PaymentForm>;
   }
 
   return null;

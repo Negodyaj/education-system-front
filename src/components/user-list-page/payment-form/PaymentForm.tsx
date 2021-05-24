@@ -1,7 +1,6 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
 import './PaymentForm.css';
 import '../../../App.css';
-import { ErrorMessage } from '@hookform/error-message';
 import { format } from 'date-fns';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
@@ -9,12 +8,10 @@ import { useEffect } from 'react';
 import { User } from '../../../interfaces/User';
 import { PaymentInput } from '../../interfaces/PaymentInput';
 import { getPayment, sendPayment } from '../../../store/payment/thunk';
-import {
-  setPaymentFormCLose,
-  setPaymentFormOpen,
-} from '../../../store/payment/action-creators';
+import { setPaymentFormCLose } from '../../../store/payment/action-creators';
 import ModalWindowCreateForm from '../../../shared/components/modal-window/ModalWindowCreateForm';
-import { getPaymentFormElementSettings } from '../../../shared/helpers/useFormRegisterSettingByKey';
+import { getPaymentFormElementSettings } from '../../../shared/helpers/paymentFormRegisterSettingByKey';
+import { IRootState } from '../../../store';
 
 interface PaymentProps {
   paymentFormState: string;
@@ -63,15 +60,6 @@ function PaymentForm(props: PaymentProps) {
     dispatch(setPaymentFormCLose());
   };
 
-  return (
-    <ModalWindowCreateForm
-      form={paymentForm}
-      closeHandler={onCancel}
-      onSubmit={onSubmit}
-      headerName="Оплата"
-      objectKeysOnForm={paymentFormState.userForPayment}
-      createFormElementOnType={getPaymentFormElementSettings}
-    />
-  );
+  return <>{}</>;
 }
 export default PaymentForm;
