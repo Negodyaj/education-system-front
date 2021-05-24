@@ -1,13 +1,12 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { IRootState } from '../../../store';
-import { showToggleModalDeleteCourseAction } from '../../../store/courses-page/action-creators';
-import { deleteCourse, getCourses } from '../../../store/courses-page/thunk';
-import { ModalHeaderAddCourse } from '../NewCourseStyled';
+import {
+  deleteCourse,
+  showToggleModalDeleteCourseAction,
+} from '../../../store/courses-page/action-creators';
 
-import './ModalWindowDelete.css';
 import {
   Modal,
   ModalBack,
@@ -22,22 +21,22 @@ function ModalWindowDelete() {
   );
 
   const closeModalWindow = () => {
-    dispatch(showToggleModalDeleteCourseAction(deleteId));
+    dispatch(showToggleModalDeleteCourseAction());
   };
 
   const deleteCourseById = () => {
-    dispatch(deleteCourse(deleteId));
-    dispatch(getCourses());
+    dispatch(deleteCourse());
+    console.log(deleteId);
   };
 
   return (
     <ModalBack>
       <Modal>
-        <ModalHeaderAddCourse>
+        <div>
           <button className="round-button" onClick={closeModalWindow}>
             <FontAwesomeIcon icon="times" />
           </button>
-        </ModalHeaderAddCourse>
+        </div>
         <ModalContentCourseDelete>
           Вы уверены, что хотите удалить данный курс?
         </ModalContentCourseDelete>

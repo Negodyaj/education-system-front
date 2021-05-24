@@ -1,32 +1,35 @@
+import React from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import { InputSettings } from '../../helpers/userFormRegisterSettingByKey';
+import { TextareaStyled } from '../../styled-components/globalStyledConsts';
 
 function TextAreaInput(props: {
   inputSettings: InputSettings;
   onChange?: (...event: any[]) => void;
+  width?: number;
 }) {
-  const { inputSettings, onChange } = props;
   const formContext = useFormContext();
+  const { inputSettings, width, onChange } = props;
 
   return !onChange ? (
-    <textarea
+    <TextareaStyled
       {...formContext.register(
         inputSettings.name,
         inputSettings.registerOptions
       )}
       typeof="text"
-      className="form-input-textarea"
+      width={width}
     />
   ) : (
-    <textarea
+    <TextareaStyled
       {...formContext.register(
         inputSettings.name,
         inputSettings.registerOptions
       )}
       onChange={onChange}
       typeof="text"
-      className="form-input-textarea"
+      width={width}
     />
   );
 }

@@ -1,4 +1,4 @@
 export interface AppointInput {
-  group: string[];
+  group: string;
   deadline: string;
 }

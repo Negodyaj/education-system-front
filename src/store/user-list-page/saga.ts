@@ -27,6 +27,7 @@ function* getUsersSagaWorker() {
     sendGetRequest<User[]>(usersUrl, isUserArr).then((response) => response)
   );
 
+  console.log(users);
   const error = tryGetErrorFromResponse(users);
 
   if (error) yield put(constructNotificationError(error));

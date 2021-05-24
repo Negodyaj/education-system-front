@@ -1,9 +1,12 @@
 import { Tag } from '../../interfaces/Tag';
+import { TagInput } from '../../interfaces/TagInput';
 import {
+  ADD_TAG,
+  DELETE_TAG,
+  GET_TAGS,
   MODAL_HIDDEN_IS_CHECK,
   TAGS_LIST_FILTERED,
   TAGS_LIST_WRETCH_ADD_TAG,
-  TAGS_LIST_WRETCH_DELETE_TAG,
   TAGS_LIST_WRETCH_FAIL,
   TAGS_LIST_WRETCH_LOADED,
   TAGS_LIST_WRETCH_LOADING,
@@ -16,7 +19,9 @@ export type TagsPageActions =
   | ReturnType<typeof addTagAction>
   | ReturnType<typeof setTagsListIsLoading>
   | ReturnType<typeof setTagsListFail>
-  | ReturnType<typeof deleteTagAction>;
+  | ReturnType<typeof loadTagsListWatcherAction>
+  | ReturnType<typeof deleteTagWatcherAction>
+  | ReturnType<typeof addTagWatcherAction>;
 
 export const setTagsListWasLoaded = (tags: Tag[]) =>
   ({
@@ -42,12 +47,6 @@ export const addTagAction = (newTag: string) =>
     payload: newTag,
   } as const);
 
-export const deleteTagAction = (tagId: number) =>
-  ({
-    type: TAGS_LIST_WRETCH_DELETE_TAG,
-    payload: tagId,
-  } as const);
-
 export const setTagsListIsLoading = () =>
   ({
     type: TAGS_LIST_WRETCH_LOADING,
@@ -58,4 +57,21 @@ export const setTagsListFail = (error: string) =>
   ({
     type: TAGS_LIST_WRETCH_FAIL,
     payload: error,
+  } as const);
+
+export const loadTagsListWatcherAction = () =>
+  ({
+    type: GET_TAGS,
+  } as const);
+
+export const deleteTagWatcherAction = (id: number, tagName: string) =>
+  ({
+    type: DELETE_TAG,
+    payload: { id, name: tagName },
+  } as const);
+
+export const addTagWatcherAction = (newTag: TagInput) =>
+  ({
+    type: ADD_TAG,
+    payload: newTag,
   } as const);
