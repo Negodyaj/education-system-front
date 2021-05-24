@@ -22,8 +22,8 @@ export function* loadHMListForModalSaga() {
     );
     const error = tryGetErrorFromResponse(homeworks);
 
-    if (error) yield put(constructNotificationError(error));
-    else yield put(setTagsListWasLoaded(homeworks));
+    // if (error) yield put(constructNotificationError(error));
+    // else yield put(setTagsListWasLoaded(homeworks));
   } catch {
     console.log('error setloadHMListForModalSaga');
   }

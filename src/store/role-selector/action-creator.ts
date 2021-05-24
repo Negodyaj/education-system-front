@@ -4,6 +4,7 @@ import {
   CURRENT_USER_IS_LOADING,
   TOGGLE_ROLE_SELECTOR,
   CURRENT_USER_UNSET,
+  GET_CURRENT_USER,
 } from '../actionTypes';
 
 export type RoleSelectorActions =
@@ -36,3 +37,7 @@ export const toggleRoleSelector = () =>
   ({
     type: TOGGLE_ROLE_SELECTOR,
   } as const);
+export const getCurrentUser = () => ({
+  type: GET_CURRENT_USER,
+  payload: undefined,
+});

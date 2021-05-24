@@ -64,7 +64,7 @@ function UserPage() {
             <button
               className="common-button"
               type="button"
-              onClick={() => onSubmit(methods.getValues())}>
+              onClick={methods.handleSubmit(onSubmit)}>
               сохранить
             </button>
           </div>
