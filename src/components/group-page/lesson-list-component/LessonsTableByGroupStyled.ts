@@ -24,20 +24,29 @@ export const ContentColumnLessonsTable = styled.div`
   display: grid;
   grid-template-columns: 10% 25% 25% 25% 15%;
   border-bottom: 1px solid rgba(39, 45, 59, 0.15);
+  cursor: pointer;
+  &:hover {
+    background-color: rgba(0, 211, 248, 0.15);
+    border-radius: 5px;
+  }
+  &:focus {
+    background-color: rgba(0, 211, 248, 0.15);
+    border-radius: 5px;
+  }
 `;
 
 export const ColumnLessonsTable = styled.div`
   display: flex;
   justify-content: center;
-  align-items: flex-end;
+  align-items: center;
   font-family: 'Montserrat';
   font-weight: 400;
   height: 60px;
 `;
 
 export const ButtonActions = styled.div`
-  display: flex;
-  justify-content: space-around;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   align-items: flex-end;
   gap: 10px;
 `;

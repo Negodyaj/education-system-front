@@ -1,8 +1,11 @@
 import wretch, { WretcherError } from 'wretch';
 
+import runMock from '../server/server';
 import { baseUrl } from '../shared/consts';
 
 import { getToken } from './auth.service';
+
+// runMock();
 
 export const sendGetRequest = async <T>(
   path: string,

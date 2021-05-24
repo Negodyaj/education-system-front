@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { InputNames } from '../../../../../enums/inputNames';
 import { AppointInput } from '../../../../../interfaces/AppointInput';
+import { Homework } from '../../../../../interfaces/Homework';
 import FormElement from '../../../../../shared/components/form-elements/FormElement';
 import { getAppointFormElementSettings } from '../../../../../shared/helpers/appointFormRegisterSettingsByKey';
 import {
@@ -12,7 +13,7 @@ import {
   RoundButton,
 } from '../../../../../shared/styled-components/buttonStyledComponent';
 import { IRootState } from '../../../../../store';
-import { getGroupsByTeacherId } from '../../../../../store/homework-page/homework-appoint-modal/thunk';
+import { appointHomework } from '../../../../../store/homework-page/action-creators';
 import {
   AppointModalWindow,
   AppointModalWindowFooter,
@@ -21,23 +22,18 @@ import {
   ModalBg,
 } from '../../../styled-components/consts';
 
-function HomeworkAppointModal(props: {
+const HomeworkAppointModal = (props: {
+  hw: Homework;
   visibility: boolean;
   setVisibility: (value: boolean) => void;
-}) {
-  const { visibility, setVisibility } = props;
-  const { currentUserRoleId } = useSelector(
-    (state: IRootState) => state.roleSelector
-  );
+}) => {
+  const { hw, visibility, setVisibility } = props;
   const { appointFormDefaults } = useSelector(
     (state: IRootState) => state.homeworkAppointModal
   );
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(getGroupsByTeacherId(currentUserRoleId));
-  }, []);
   const onSubmit = (data: AppointInput) => {
-    // dispatch(postAppointment(data))
+    dispatch(appointHomework(data));
   };
   const { ...methods } = useForm<AppointInput>();
 
@@ -77,5 +73,5 @@ function HomeworkAppointModal(props: {
       </ModalBg>
     </FormProvider>
   );
-}
-export default HomeworkAppointModal;
+};
+export default React.memo(HomeworkAppointModal);

@@ -1,7 +1,7 @@
 import { ChangeEvent, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { authenticate } from '../../store/login-form/thunk';
+import { authenticate } from '../../store/login-form/action-creators';
 import './LoginForm.css';
 import '../../App.css';
 
