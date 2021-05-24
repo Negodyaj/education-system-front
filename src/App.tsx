@@ -32,6 +32,7 @@ import LoginForm from './components/login-form/LoginForm';
 import GroupNavMenu from './components/group-page/group-nav-menu/GroupNavMenu';
 import GroupInfoComponent from './components/group-page/group-info-component/GroupInfoComponent';
 import LoginRoleSelector from './components/role-selector/LoginRoleSelector';
+import PersonalPage from './components/personal-page/PersonalPage';
 import ModalWindow from './shared/components/modal-window/ModalWindow';
 
 function App() {
@@ -48,6 +49,7 @@ function App() {
     unsetToken();
     history.push('/');
   };
+  const [isDark, setMode] = useState(false);
 
   const onHide = (condition: boolean) => {
     setHidden(condition);
@@ -60,9 +62,20 @@ function App() {
 
     return 'hide';
   }
+  const onShangeMode = (condition: boolean) => {
+    setMode(condition);
+  };
+
+  function menuMode(condition: boolean) {
+    if (condition) {
+      return 'darkMode';
+    }
+
+    return 'lightMode';
+  }
 
   return (
-    <div className="App">
+    <div className={`App ${menuMode(isDark)}`}>
       <Helmet>
         <title>Самый лучший сайт на свете</title>
         <meta name="description" content="Helmet application" />
@@ -73,7 +86,11 @@ function App() {
         </div>
         <div className="nav-menu">
           {!!getToken() && (
-            <NavMenu roleId={currentUserRoleId} onHide={onHide} />
+            <NavMenu
+              roleId={currentUserRoleId}
+              onHide={onHide}
+              onShangeMode={onShangeMode}
+            />
           )}
         </div>
       </aside>
@@ -182,6 +199,12 @@ function App() {
                 <Attendance />
                 <Helmet>
                   <title>Журнал в разработке</title>
+                </Helmet>
+              </Route>
+              <Route path="/personal-page">
+                <PersonalPage />
+                <Helmet>
+                  <title>ЛК</title>
                 </Helmet>
               </Route>
             </Switch>
