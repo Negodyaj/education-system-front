@@ -15,6 +15,9 @@ import { Attempt } from '../interfaces/Attempt';
 import { Lesson } from '../interfaces/Lesson';
 import { CourseInput } from '../interfaces/CourseInput';
 import { INIT_HOMEWORK } from '../shared/tmp-mock-data/hw/initHomewwork';
+import { LessonInput } from '../interfaces/LessonInput';
+import { IUserAttendance } from '../components/group-page/lesson-list-component/ModalAttendance';
+import { CurrentLesson } from '../components/group-page/lesson-list-component/LessonsTableByGroup';
 import { IndexedObj } from '../interfaces/IndexedObj';
 import { UserPageOptions } from '../components/user-page/UserPage';
 import { AllGroupsInCollege } from '../interfaces/AllGroupsInCollege';
@@ -122,6 +125,12 @@ export interface IPaymentFormState {
 export interface ILesson {
   lessonList: Lesson[];
   isDataLoading: boolean;
+  isOpenModalAttendance: boolean;
+  isOpenModalAddLesson: boolean;
+  isOpenModalDeleteLesson: boolean;
+  currentLesson: CurrentLesson;
+  arrDataToCreateAttendances: IUserAttendance[];
+  createLessonInputModel: LessonInput;
 }
 
 export interface IGroupInfoComponent {

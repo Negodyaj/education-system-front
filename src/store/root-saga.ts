@@ -1,6 +1,7 @@
 import { all } from 'redux-saga/effects';
 
 import attemptRootSaga from './homework-attempt/saga';
+import lessonByGroupListPageRootSaga from './group-page/lesson/saga';
 import { homeworkPageWatchers } from './homework-page/saga';
 import loginFormRootSaga from './login-form/saga';
 import RoleSelectorRootSaga from './role-selector/saga';
@@ -19,5 +20,6 @@ export function* rootSaga() {
     loginFormRootSaga(),
     tagsPageRootSaga(),
     coursePageRootSaga(),
+    lessonByGroupListPageRootSaga(),
   ]);
 }

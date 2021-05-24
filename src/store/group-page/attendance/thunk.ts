@@ -4,8 +4,7 @@ import { Attendance } from '../../../interfaces/Attendance';
 import { Lesson } from '../../../interfaces/Lesson';
 import { sendGetRequest } from '../../../services/http.service';
 import { isAttendanceArr } from '../../../services/type-guards/attendanceArr';
-import { isLessonArr } from '../../../services/type-guards/lessonArr';
-import { lessonAttendance, lessonsUrl } from '../../../shared/consts';
+import { lessonsUrl } from '../../../shared/consts';
 import { thunkResponseHandler } from '../../thunkResponseHadlers';
 
 import {
@@ -30,7 +29,7 @@ export const getAttendanceByLessonId = (lessonId: number) => (
 ) => {
   dispatch(setAttendanceListIsLoading());
   sendGetRequest<Attendance[]>(
-    `${lessonAttendance}/${lessonId}/attendance`,
+    `${lessonsUrl}/${lessonId}/attendance`,
     isAttendanceArr
   )
     .then((attendance) => {
