@@ -70,6 +70,7 @@ const PersonalPage = () => {
       <button
         className={changeForm ? 'show common-button' : 'notshow common-button'}
         onClick={changeEvent}>
+        {console.log(pageState.userForUserPage.firstName)}
         change
       </button>
       <button

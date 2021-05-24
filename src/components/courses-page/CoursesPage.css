@@ -3,3 +3,12 @@
     color: black; 
 } 
 
+.darkMode .current-course-name { 
+    text-decoration: none; 
+    color: whitesmoke; 
+} 
+
+.lightMode .current-course-name { 
+    text-decoration: none; 
+    color: black; 
+} 

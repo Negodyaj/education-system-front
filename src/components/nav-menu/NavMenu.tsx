@@ -19,7 +19,7 @@ interface NavMenuProps {
 function NavMenu(props: NavMenuProps) {
   const { roleId, onHide } = props;
   const [isHidden, setHidden] = useState(false);
-  const [isDark, setMode] = useState(false);
+  const [isDark, setMode] = useState(true);
 
   const changeMode = () => {
     isDark ? setMode(false) : setMode(true);
