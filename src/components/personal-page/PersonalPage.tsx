@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { FormProvider, useForm } from 'react-hook-form';
 import './PersonalPage.css';
 import { useHistory, useParams } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IRootState } from '../../store';
 import { sendGetRequest } from '../../services/http.service';
@@ -21,6 +22,7 @@ import { Role } from '../../enums/role';
 const PersonalPage = () => {
   const dispatch = useDispatch();
   const appState = useSelector((state: IRootState) => state);
+  const [changeForm, setChangeForm] = useState(true);
   const user = appState.userPage.userForUserPage;
   const { idToEdit } = useParams<{ idToEdit?: string }>();
   const history = useHistory();
@@ -39,15 +41,22 @@ const PersonalPage = () => {
     });
   }, [appState.userPage.userForUserPage]);
   const onSubmit = (data: UserInput) => {
-    dispatch(sendUser(data, appState.userPage.userForUserPageId, history));
+    history.push(`/personal-page`);
+    dispatch(
+      sendUser(data, appState.userPage.userForUserPageId, `/personal-page`)
+    );
+    changeEvent();
   };
   const closeUserPage = () => {
-    history.push('/user-list');
+    changeEvent();
+  };
+  const changeEvent = () => {
+    changeForm ? setChangeForm(false) : setChangeForm(true);
   };
 
   return (
     <div>
-      <div className="show-user">
+      <div className={changeForm ? 'show-user' : 'notshow-user'}>
         <img
           src={appState.userPage.userForUserPage.userPic}
           className="user-avatar"
@@ -57,6 +66,11 @@ const PersonalPage = () => {
           <div className="user-name">
             <p>{appState.userPage.userForUserPage.lastName}</p>
             <p>{appState.userPage.userForUserPage.firstName}</p>
+            <p>
+              <button className="common-button" onClick={changeEvent}>
+                <FontAwesomeIcon icon="edit" />
+              </button>
+            </p>
           </div>
           <div className="roles">
             {appState.userPage.userForUserPage.roles?.map((key) => (
@@ -74,7 +88,7 @@ const PersonalPage = () => {
           </ul>
         </div>
       </div>
-      <div className="edit-user">
+      <div className={changeForm ? 'closeedit-user' : 'edit-user'}>
         <FormProvider {...methods}>
           <div className="user-edit-form needs-validation was-validated">
             <form className="personal-page-form">

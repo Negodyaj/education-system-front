@@ -35,13 +35,12 @@ section > label {
 
 .notshow{
   display:none;
- }
+}
 
 .notDisabledForm{
   pointer-events: none;
   opacity:0.9;
 }
-
 
 /*
 button[type="button"] {
@@ -56,16 +55,12 @@ button[type="button"] {
 button[type="button"]:hover {
   background: #bf1650;
 }
-*/
+
 .personal-page-form{
-width:auto;
 display: flex;
 flex-direction: column;
 }
-
-.personal-page-form .form-row{
-  min-width:200px;
-}
+*/
 
 img{
   width: 300px;
@@ -73,9 +68,22 @@ img{
 }
 
 .show-user{
+  display:all;
   display: flex;
   justify-content: space-around;
   align-items: center;
+}
+
+.notshow-user{
+  display: none;
+}
+
+.edit-user{
+  display:all;
+}
+
+.closeedit-user{
+  display:none;
 }
 
 .user-name{
@@ -100,4 +108,9 @@ float: left;
   flex-basis: 70%;
   flex-direction: column;
   justify-content: space-around;
+}
+
+.edit-user .sc-eCImvq .gjiCxy .email{
+  pointer-events: none;
+  opacity:0.9;
 }
