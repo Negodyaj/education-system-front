@@ -4,6 +4,10 @@ import { ACTIVE, NOT_ACTIVE } from '../../../shared/styled-components/consts';
 export const HomeworkPageContainer = styled.div`
   font-size: 14px;
 `;
+export const SetType = styled.div`
+  font-size: 20px;
+  padding-top: 20px;
+`;
 export const HomeworkPageHeader = styled.div`
   display: flex;
   justify-content: space-between;
