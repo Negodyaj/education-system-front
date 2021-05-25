@@ -15,8 +15,12 @@ import { Attempt } from '../interfaces/Attempt';
 import { Lesson } from '../interfaces/Lesson';
 import { CourseInput } from '../interfaces/CourseInput';
 import { INIT_HOMEWORK } from '../shared/tmp-mock-data/hw/initHomewwork';
+import { LessonInput } from '../interfaces/LessonInput';
+import { IUserAttendance } from '../components/group-page/lesson-list-component/ModalAttendance';
+import { CurrentLesson } from '../components/group-page/lesson-list-component/LessonsTableByGroup';
 import { IndexedObj } from '../interfaces/IndexedObj';
 import { UserPageOptions } from '../components/user-page/UserPage';
+import { Material } from '../interfaces/Materials';
 import { AllGroupsInCollege } from '../interfaces/AllGroupsInCollege';
 import { AttemptInput } from '../interfaces/AttemptInput';
 import { ChildIndex } from '../enums/ChildIndex';
@@ -41,10 +45,12 @@ export interface ICoursePageState {
 export interface ICourseEditionState {
   course: Course;
   themes: Themes[];
+  materials: Material[];
   idThemesCourse: number[];
   isDataLoading: boolean;
   isDisplayingButtonOpenProgramCourse: boolean;
   isDisplayingButtonOpenMaterialsCourse: boolean;
+  idCourse: number;
 }
 export interface IUserListPage {
   userList: User[];
@@ -122,6 +128,12 @@ export interface IPaymentFormState {
 export interface ILesson {
   lessonList: Lesson[];
   isDataLoading: boolean;
+  isOpenModalAttendance: boolean;
+  isOpenModalAddLesson: boolean;
+  isOpenModalDeleteLesson: boolean;
+  currentLesson: CurrentLesson;
+  arrDataToCreateAttendances: IUserAttendance[];
+  createLessonInputModel: LessonInput;
 }
 
 export interface IGroupInfoComponent {

@@ -5,10 +5,10 @@ import { useParams } from 'react-router-dom';
 
 import { IRootState } from '../../../store';
 import {
+  getCourseById,
   setChangeDisplayingButtonOpenMaterialsCourse,
   setChangeDisplayingButtonOpenProgramCourse,
 } from '../../../store/course-edition/action-creators';
-import { getCourseById } from '../../../store/course-edition/thunk';
 import './CoursePage.css';
 
 interface ParamTypes {

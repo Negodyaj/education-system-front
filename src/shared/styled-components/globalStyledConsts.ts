@@ -63,5 +63,5 @@ export const InputText = styled(InputStyledBase)`
 
 export const LinkStyledRegularFont = styled(Link)`
   text-decoration: none;
-  color: black;
+  color: var(--main-color);
 `;

@@ -5,7 +5,7 @@ import { ChildIndex } from '../../../../../enums/ChildIndex';
 import { AppointInput } from '../../../../../interfaces/AppointInput';
 import { CourseInput } from '../../../../../interfaces/CourseInput';
 import { IRootState } from '../../../../../store';
-import { createCourse } from '../../../../../store/courses-page/thunk';
+import { createCourse } from '../../../../../store/courses-page/action-creators';
 import { appointHomework } from '../../../../../store/homework-page/action-creators';
 import { toggleModalWindow } from '../../../../../store/modal-window/action-creators';
 

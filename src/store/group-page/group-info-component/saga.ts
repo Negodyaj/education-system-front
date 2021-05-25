@@ -1,6 +1,5 @@
-import { all } from "redux-saga/effects";
+import { all } from 'redux-saga/effects';
 
 function* groupInfoRootSaga() {
-    //yield all([getGroupSagaWatcher()]);
-  }
-
+  // yield all([getGroupSagaWatcher()]);
+}
