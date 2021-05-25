@@ -29,10 +29,35 @@ import {
   faGraduationCap,
   faMoon,
   faSun,
-  faEye,
 } from '@fortawesome/free-solid-svg-icons';
 
 /* library.add(
+  faTimes,
+  faEdit,
+  faTrash,
+  faPlus,
+  faMinus,
+  faCheck,
+  faSpinner,
+  faSearch,
+  faInfoCircle,
+  faTimesCircle,
+  faCheckCircle,
+  faExclamationCircle,
+  faRubleSign,
+  faAngleDown,
+  faAngleUp,
+  faAngleDoubleRight,
+  faAngleDoubleLeft,
+  faUsers,
+  faUser,
+  faTag,
+  faBookReader,
+  faUniversity,
+  faNewspaper
+); */
+
+library.add(
   faTimes,
   faEdit,
   faTrash,
@@ -61,6 +86,5 @@ import {
   faSpellCheck,
   faGraduationCap,
   faSun,
-  faMoon,
-  faEye
+  faMoon
 );
