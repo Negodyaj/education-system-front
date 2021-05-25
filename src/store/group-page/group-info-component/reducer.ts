@@ -1,10 +1,10 @@
-import { Group } from '../../interfaces/Group';
+import { Group } from '../../../interfaces/Group';
 import {
   GROUP_TO_VIEW_WRETCH_FAIL,
   GROUP_TO_VIEW_WRETCH_LOADED,
   GROUP_TO_VIEW_WRETCH_LOADING,
-} from '../actionTypes';
-import { IGroupInfoComponent } from '../state';
+} from '../../actionTypes';
+import { IGroupInfoComponent } from '../../state';
 
 import { GroupInfoComponentActions } from './action-creaters';
 

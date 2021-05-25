@@ -1,9 +1,9 @@
 import { Dispatch } from 'redux';
 
-import { Group } from '../../interfaces/Group';
-import { sendGetRequest } from '../../services/http.service';
-import { isGroup } from '../../services/type-guards/group';
-import { thunkResponseHandler } from '../thunkResponseHadlers';
+import { Group } from '../../../interfaces/Group';
+import { sendGetRequest } from '../../../services/http.service';
+import { isGroup } from '../../../services/type-guards/group';
+import { thunkResponseHandler } from '../../thunkResponseHadlers';
 
 import {
   setGroupToViewFailed,

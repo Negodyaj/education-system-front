@@ -8,11 +8,7 @@ import { AppointInput } from '../../../../../interfaces/AppointInput';
 import { CourseInput } from '../../../../../interfaces/CourseInput';
 import { toggleModalWindow } from '../../../../../store/modal-window/action-creators';
 import FormElement from '../../../form-elements/FormElement';
-import {
-  FormWrapper,
-  InputStyle,
-  SelectDelete,
-} from '../../ModalWindowCreateFormStyled';
+import { InputStyle, SelectDelete } from '../../ModalWindowCreateFormStyled';
 
 import { selectFormSetting } from './form-setting-selector';
 import { selectOnSubmit } from './on-submit-selector';

@@ -32,7 +32,7 @@ import {
   faEye,
 } from '@fortawesome/free-solid-svg-icons';
 
-library.add(
+/* library.add(
   faTimes,
   faEdit,
   faTrash,
