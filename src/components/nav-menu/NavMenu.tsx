@@ -69,13 +69,6 @@ function NavMenu(props: NavMenuProps) {
             label="Журнал в разработке"
           />
         )}
-        {(roleId === Role.Teacher || roleId === Role.Methodist) && (
-          <NavMenuSimpleLink
-            route="lessons"
-            faIcon="university"
-            label="Занятия"
-          />
-        )}
         {roleId !== Role.Student && (
           <NavMenuSimpleLink route="tags-page" faIcon="tag" label="Тэги" />
         )}
