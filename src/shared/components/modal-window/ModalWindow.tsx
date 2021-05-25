@@ -9,7 +9,6 @@ import { IRootState } from '../../../store';
 import { INIT_COURSE_TO_REGISTER } from '../../../store/courses-page/reducer';
 import { toggleModalWindow } from '../../../store/modal-window/action-creators';
 
-import { Children } from './children/Children';
 import { FormChild } from './children/form-child/FormChild';
 import {
   ButtonClose,

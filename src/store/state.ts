@@ -19,11 +19,8 @@ import { IndexedObj } from '../interfaces/IndexedObj';
 import { UserPageOptions } from '../components/user-page/UserPage';
 import { ChildIndex } from '../enums/ChildIndex';
 import { ModalWindowSettings } from '../shared/components/modal-window/ModalWindow';
+import { PaymentInput } from '../components/interfaces/PaymentInput';
 
-export interface IAppState {
-  isLoggedIn: boolean;
-  loadersCount: number;
-}
 export interface ICoursePageState {
   courseList: Course[];
   isOpenModalCreateCourse: boolean;
@@ -100,10 +97,10 @@ export interface IModalDeleteCourse {
 }
 
 export interface IPaymentFormState {
-  formVisibility: string;
   userForPayment: User | undefined;
   paymentList: PaymentResponse[];
   isDataLoading: boolean;
+  newPaymentInput: PaymentInput;
 }
 
 export interface ILesson {

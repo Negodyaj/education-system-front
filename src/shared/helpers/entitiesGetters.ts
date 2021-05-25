@@ -10,3 +10,8 @@ export const useGetGroupEntities = () =>
 
 export const useGroupsWithAttemptsForCurrentTeacher = () =>
   useSelector((state: IRootState) => state.homeworkAttempt.currentHomework);
+
+export const useContractNumberForUser = () =>
+  useSelector(
+    (state: IRootState) => state.payment.userForPayment?.contractNumber
+  );

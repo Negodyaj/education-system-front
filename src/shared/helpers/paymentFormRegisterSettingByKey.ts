@@ -12,9 +12,9 @@ export const getPaymentFormElementSettings = (
     case InputNames.PaymentAmount:
       return {
         ...baseSettings,
-        label: key,
+        label: 'Сумма платежа',
         inputSettings: {
-          name: 'Сумма платежа',
+          name: key,
           inputType: 'number',
         },
         width: 450,
@@ -22,10 +22,10 @@ export const getPaymentFormElementSettings = (
     case InputNames.PaymentContract:
       return {
         ...baseSettings,
-        label: key,
+        label: 'Номер договора',
         inputSettings: {
-          name: 'Номер договора',
-          inputType: 'text',
+          name: key,
+          inputType: 'number',
           registerOptions: {
             required: 'Введите cумму оплаты',
           },
@@ -35,28 +35,26 @@ export const getPaymentFormElementSettings = (
     case InputNames.PaymentDate:
       return {
         ...baseSettings,
-        label: key,
+        label: 'Дата платежа',
         inputSettings: {
-          name: 'Дата платежа',
+          name: key,
           inputType: 'date',
           registerOptions: {
             required: 'Введите дату платежа',
           },
         },
-        width: 450,
       };
     case InputNames.PaymentPeriod:
       return {
         ...baseSettings,
-        label: key,
+        label: 'Период платежа',
         inputSettings: {
-          name: 'Продолжительность курса',
+          name: key,
           inputType: 'date',
           registerOptions: {
-            required: 'Введите продолжительность курса',
+            required: 'Введите за какой срок вносили платеж',
           },
         },
-        width: 450,
       };
     default:
       return {

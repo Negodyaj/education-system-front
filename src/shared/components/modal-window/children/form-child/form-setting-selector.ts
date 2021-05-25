@@ -1,4 +1,3 @@
-import { Cipher } from 'crypto';
 import { ChildIndex } from '../../../../../enums/ChildIndex';
 import { InputNames } from '../../../../../enums/inputNames';
 import { getAppointFormElementSettings } from '../../../../helpers/appointFormRegisterSettingsByKey';
