@@ -17,7 +17,7 @@
     position: relative;
     outline: none;
     text-decoration: none;
-    color: #272D3B;
+    color: var(--main-color);
   }
  
   .active-tabs  {

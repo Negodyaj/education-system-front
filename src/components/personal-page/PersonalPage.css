@@ -57,3 +57,47 @@ button[type="button"]:hover {
   background: #bf1650;
 }
 */
+.personal-page-form{
+width:auto;
+display: flex;
+flex-direction: column;
+}
+
+.personal-page-form .form-row{
+  min-width:200px;
+}
+
+img{
+  width: 300px;
+  height: 300px;
+}
+
+.show-user{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.user-name{
+  font-size: 30px;
+  font-weight: 600;
+}
+
+.show-user p{
+  padding-left: 15px;		
+  float: left;
+}
+
+.roles p{
+width:max-content;
+padding-left: 5px;		
+float: left;
+}
+
+.user-info{
+  display: flex;
+  flex-wrap: wrap;
+  flex-basis: 70%;
+  flex-direction: column;
+  justify-content: space-around;
+}
