@@ -13,11 +13,13 @@ import {
 import HomeworkButtonsCell, {
   HomeworkButtonsCellOptions,
 } from './HomeworkButtonsCell';
+import HomeworkItemName from './HomeworkItemName';
+import IsOptional from './IsOptional';
 
-function HomeworkItemBody(props: {
+const HomeworkItemBody = (props: {
   hw: Homework;
   buttons: HomeworkButtonsCellOptions;
-}) {
+}) => {
   const { hw, buttons } = props;
   const [descriptionVisibility, setDescriptionVisibility] = useState(false);
   const toggleDescriptionVisibility = () => {
@@ -29,18 +31,9 @@ function HomeworkItemBody(props: {
       <HomeworkItemHeader
         elementVisibility={descriptionVisibility}
         onClick={toggleDescriptionVisibility}>
-        <HomeworkName>
-          {hw.themes?.length ? hw.themes[0].name : 'без названия'}
-        </HomeworkName>
-        <HomeworkThemeName>
-          {hw.themes &&
-            hw.themes.map((theme) => (
-              <HomeworkProp key={theme.id}>{theme.name}</HomeworkProp>
-            ))}
-        </HomeworkThemeName>
-        <HomeworkProp>
-          {hw.isOptional ? 'без проверки' : 'с проверкой'}
-        </HomeworkProp>
+        <HomeworkItemName hw={hw} />
+        <HomeworkThemeName />
+        <IsOptional hw={hw} />
         <HomeworkButtonsCell hw={hw} buttons={buttons} />
       </HomeworkItemHeader>
       <HomeworkDescription>
@@ -48,6 +41,6 @@ function HomeworkItemBody(props: {
       </HomeworkDescription>
     </HomeworkItem>
   );
-}
+};
 
-export default HomeworkItemBody;
+export default React.memo(HomeworkItemBody);

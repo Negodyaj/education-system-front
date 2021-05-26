@@ -1,6 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
-import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
 import { Homework } from '../../../../interfaces/Homework';
@@ -9,7 +8,6 @@ import { RoundButton } from '../../../../shared/styled-components/buttonStyledCo
 
 function HomeworkCheckButton(props: { hw: Homework }) {
   const { hw } = props;
-  const dispatch = useDispatch();
   const history = useHistory();
   const checkOnClick = () => {
     history.push(`${homeworkUrl}/${hw.id}/attempts`);

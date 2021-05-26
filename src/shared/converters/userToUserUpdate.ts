@@ -11,9 +11,9 @@ const initUserUpdate: UserUpdate = {
   roles: [],
 };
 
-export const convertUserToUserUpdate = (UpdatedUser: User) => {
+export const convertUserToUserUpdate = (InitUser: User) => {
   Object.keys(initUserUpdate).map((k) => {
-    (initUserUpdate as any)[k] = UpdatedUser[k as keyof UserUpdate];
+    (initUserUpdate as any)[k] = InitUser[k as keyof UserUpdate];
 
     return k;
   });

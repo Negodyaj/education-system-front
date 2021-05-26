@@ -48,7 +48,9 @@ function NavMenu(props: NavMenuProps) {
             label="Пользователи"
           />
         )}
-        {(roleId === Role.Teacher || roleId === Role.Methodist) && (
+        {[Role.Teacher, Role.Methodist, Role.Tutor, Role.Student].includes(
+          roleId
+        ) && (
           <NavMenuSimpleLink
             route="homework"
             faIcon="book-reader"
@@ -67,13 +69,6 @@ function NavMenu(props: NavMenuProps) {
             route="attendance"
             faIcon="university"
             label="Журнал в разработке"
-          />
-        )}
-        {(roleId === Role.Teacher || roleId === Role.Methodist) && (
-          <NavMenuSimpleLink
-            route="lessons"
-            faIcon="university"
-            label="Занятия"
           />
         )}
         {roleId !== Role.Student && (

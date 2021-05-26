@@ -19,7 +19,7 @@ import {
 } from '../actionTypes';
 import { isSendAttemptResponse } from '../../services/type-guards/sendAttemptResponse';
 import { AttemptPost } from '../../interfaces/AttemptPost';
-import { currentUserRoleIdSelector } from '../role-selector/selectors';
+import { currentUserSelector } from '../role-selector/selectors';
 import { HWAttemptStatuses } from '../../enums/hwAttemptStatuses';
 import { tryGetErrorFromResponse } from '../../shared/helpers/http-response.helper';
 import { constructNotificationError } from '../core/error-notification-constructor';
@@ -30,6 +30,7 @@ import { AllGroupsInCollege } from '../../interfaces/AllGroupsInCollege';
 import { isAllGroupsInCollegeArr } from '../../services/type-guards/allGroupsIncollegeArr';
 import { Attempt } from '../../interfaces/Attempt';
 import { isAttemptArr } from '../../services/type-guards/attemptsArr';
+import { User } from '../../interfaces/User';
 
 import { currentHomeworkSelector } from './selector';
 import {
@@ -84,9 +85,9 @@ function* sendAttemptWatcher() {
 function* sendAttemptWorker({ payload }: ReturnType<typeof sendAttempt>) {
   try {
     yield put(setIsLoading());
-    const currentUserRoleId: number = yield select(currentUserRoleIdSelector);
+    const currentUser: User = yield select(currentUserSelector);
     const newAttempt: AttemptPost = {
-      authorId: currentUserRoleId,
+      authorId: currentUser.id,
       homeworkAttemptStatusId: HWAttemptStatuses.Await,
       comment: payload.comment,
     };

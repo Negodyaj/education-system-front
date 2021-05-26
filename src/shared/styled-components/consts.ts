@@ -12,4 +12,5 @@ export const ButtonsCell = styled.div`
   display: flex;
   flex-direction: row;
   align-self: center;
+  justify-content: flex-end;
 `;

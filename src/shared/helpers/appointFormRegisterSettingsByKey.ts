@@ -1,4 +1,5 @@
 import { InputNames } from '../../enums/inputNames';
+import { convertStringToDate } from '../converters/stringToDateConverter';
 
 import { useGetGroupEntities } from './entitiesGetters';
 import { FormElementSettings } from './userFormRegisterSettingByKey';
@@ -6,11 +7,10 @@ import { FormElementSettings } from './userFormRegisterSettingByKey';
 export const getAppointFormElementSettings = (
   key: InputNames
 ): FormElementSettings => {
-  // call getValidationPattern here
   switch (key) {
     case InputNames.AppointGroup:
       return {
-        label: 'назначить группам:',
+        label: '',
         inputSettings: {
           name: key,
           inputType: 'singleSelect',
@@ -31,6 +31,12 @@ export const getAppointFormElementSettings = (
         inputSettings: {
           name: key,
           inputType: 'date',
+          registerOptions: {
+            validate: (value) =>
+              convertStringToDate(value) > new Date()
+                ? true
+                : `Введите дату после ${new Date().toLocaleDateString()}`,
+          },
         },
       };
     default:

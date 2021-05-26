@@ -37,10 +37,10 @@ function UserListBodyWide() {
           <div className="column-button">
             <div className="column">
               <EditButton user={u} />
-              <DeleteButton user={u} />
               {appState.roleSelector.currentUserRoleId === Role.Manager && (
                 <PaymentButton user={u} />
               )}
+              <DeleteButton user={u} />
             </div>
           </div>
         </div>

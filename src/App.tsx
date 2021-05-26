@@ -144,14 +144,6 @@ function App() {
               <Route path="/course/:id">
                 <CoursePage />
               </Route>
-              {currentUserRoleId === Role.Teacher && (
-                <Route path="/lessons">
-                  <LessonsByGroup />
-                  <Helmet>
-                    <title>Занятия</title>
-                  </Helmet>
-                </Route>
-              )}
               {currentUserRoleId !== Role.Student && (
                 <Route path="/tags-page">
                   <TagsPage />
