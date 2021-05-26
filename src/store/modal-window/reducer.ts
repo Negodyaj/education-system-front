@@ -6,6 +6,7 @@ import {
   INIT_LESSON_TO_UPDATE,
 } from '../group-page/lesson/reducer';
 import { APPOINT_FORM_DEFAULTS } from '../homework-page/homework-appoint-modal/reducer';
+import { INIT_PAYMENT } from '../payment/reducer';
 import { ModalWindowState } from '../state';
 
 import { ModalWindowActions } from './action-creators';
@@ -29,6 +30,10 @@ const initialState: ModalWindowState = {
     [ChildIndex.UpdateLesson]: {
       headerName: 'Внести изменения в занятие',
       defaultValues: INIT_LESSON_TO_UPDATE,
+    },
+    [ChildIndex.Payment]: {
+      headerName: 'Назначить оплату',
+      defaultValues: INIT_PAYMENT,
     },
     [ChildIndex.Closed]: {},
   },

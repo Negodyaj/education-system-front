@@ -11,7 +11,6 @@ import {
 } from '../../store/courses-page/action-creators';
 import { LinkStyledRegularFont } from '../../shared/styled-components/globalStyledConsts';
 import { toggleModalWindow } from '../../store/modal-window/action-creators';
-import NewCourse from '../../shared/components/modal-window/children/new-course/NewCourse';
 import { ChildIndex } from '../../enums/ChildIndex';
 
 import ModalWindowDelete from './modal-window/ModalWindowDelete';

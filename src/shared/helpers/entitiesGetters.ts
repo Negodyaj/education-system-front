@@ -19,3 +19,8 @@ export const useCoursesForHomeworkAddModal = () =>
 
 export const useGetThemesEntities = () =>
   useSelector((state: IRootState) => state.courseEditionPage.themes);
+
+export const useContractNumberForUser = () =>
+  useSelector(
+    (state: IRootState) => state.payment.userForPayment?.contractNumber
+  );

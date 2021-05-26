@@ -23,7 +23,6 @@ import {
   setCoursesListFail,
   setCoursesListIsLoadingAction,
   setCoursesListWasLoadedAction,
-  showToggleModalCreateCourseAction,
   showToggleModalDeleteCourseAction,
 } from './action-creators';
 import { courseToCreateSelector, courseToDeleteSelector } from './selector';
@@ -91,15 +90,12 @@ function* deleteCourseWorker() {
 function* createCourseWorker() {
   try {
     const newCourse: CourseInput = yield select(courseToCreateSelector);
-    console.log(newCourse);
     const createRequestResponse: Course = yield call(async () =>
       sendPostRequest<Course>(`${coursesUrl}`, isCourse, newCourse).then(
         (response) => response
       )
     );
-    console.log(createRequestResponse);
     const errorResponse = tryGetErrorFromResponse(createRequestResponse);
-    console.log(errorResponse);
 
     if (errorResponse) {
       yield constructNotificationError(errorResponse);

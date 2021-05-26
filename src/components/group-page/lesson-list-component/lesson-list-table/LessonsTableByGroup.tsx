@@ -26,6 +26,7 @@ import {
 export interface CurrentLesson {
   lessonId: number;
   lessonDate: string;
+  description: string;
 }
 
 function LessonsTableByGroup() {
@@ -50,6 +51,7 @@ function LessonsTableByGroup() {
     const dataCurrentLesson: CurrentLesson = {
       lessonId: lesson.id,
       lessonDate: lesson.lessonDate,
+      description: lesson.description,
     };
     dispatch(setSelectedLesson(dataCurrentLesson));
   };

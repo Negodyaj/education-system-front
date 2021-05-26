@@ -5,7 +5,7 @@ import { baseUrl } from '../shared/consts';
 
 import { getToken } from './auth.service';
 
-runMock();
+// runMock();
 
 export const sendGetRequest = async <T>(
   path: string,

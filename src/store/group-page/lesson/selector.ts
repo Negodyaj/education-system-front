@@ -9,5 +9,8 @@ export const lessonToUpdateSelector = (state: IRootState) =>
 export const lessonToSelectSelector = (state: IRootState) =>
   state.lessonByGroup.currentLesson.lessonId;
 
+export const currentLessonSelector = (state: IRootState) =>
+  state.lessonByGroup.currentLesson;
+
 export const attendancesToCreateSelector = (state: IRootState) =>
   state.lessonByGroup.arrDataToCreateAttendances;

@@ -21,7 +21,7 @@ export const customStyles = {
     },
     borderRadius: 5,
     boxShadow: 'none',
-    padding: '0px 5px',
+    padding: '5px 5px 1px 5px',
     outline: 'none',
     caretColor: 'transparent',
   }),
@@ -31,11 +31,11 @@ export const customStyles = {
   valueContainer: (baseStyles: any) => ({
     ...baseStyles,
     padding: 0,
-    height: customStyleHeight,
+    height: 'auto',
   }),
   input: (baseStyles: any) => ({
     ...baseStyles,
-    height: customStyleHeight,
+    height: 20,
     padding: 0,
   }),
   option: (baseStyles: any, state: any) => ({
@@ -68,6 +68,7 @@ export const customStyles = {
     height: 28,
     borderRadius: 5,
     padding: '0px 5px',
+    margin: '0px 2px 4px 2px',
     ':hover': {
       backgroundColor: customStyleColors.main,
     },
@@ -77,6 +78,8 @@ export const customStyles = {
   }),
   multiValueLabel: (baseStyles: any) => ({
     ...baseStyles,
+    padding: '0px 3px',
+    lineHeight: '28px',
   }),
   multiValueRemove: (baseStyles: any) => ({
     ...baseStyles,
