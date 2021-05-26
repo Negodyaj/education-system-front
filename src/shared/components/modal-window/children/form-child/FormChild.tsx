@@ -1,4 +1,5 @@
-import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
+import { useEffect } from 'react';
+import { FormProvider, Path, SubmitHandler, useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 
 import { ChildIndex } from '../../../../../enums/ChildIndex';
@@ -20,6 +21,13 @@ export function FormChild<T>(props: FormChildProps<T>) {
   const methods = useForm<T>(defaultValues);
   const dispatch = useDispatch();
   const onSubmit: SubmitHandler<any> = selectOnSubmit(childIndex, dispatch);
+
+  useEffect(() => {
+    defaultValues &&
+      Object.keys(defaultValues).map((key) =>
+        methods.setValue(key as Path<T>, (defaultValues as any)[key])
+      );
+  }, []);
 
   return (
     <>

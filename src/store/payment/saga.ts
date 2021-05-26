@@ -13,6 +13,7 @@ import { constructSuccessNotification } from '../core/sucess-notification-constr
 import { PaymentResponse } from '../../components/interfaces/PaymentResponse';
 import { toggleModalWindow } from '../modal-window/action-creators';
 import { ChildIndex } from '../../enums/ChildIndex';
+import { setIsLoaded, setIsLoading } from '../app/action-creators';
 
 import { newPaymentInput, userForPayment } from './selector';
 import {
@@ -63,6 +64,7 @@ export function* createPaymentSagaWorker() {
 export function* getPaymentSagaWorker({
   payload,
 }: ReturnType<typeof getCurrentUser>) {
+  yield put(setIsLoading());
   const user: User = payload;
   yield put(setPaymentListIsLoading());
   const responseRequest: PaymentResponse[] = yield call(async () =>
@@ -75,6 +77,8 @@ export function* getPaymentSagaWorker({
 
   if (errorResponse) yield constructNotificationError(errorResponse);
   else yield put(setPaymentListWasLoaded(responseRequest));
+
+  yield put(setIsLoaded());
 
   yield put(toggleModalWindow(ChildIndex.Payment));
 }

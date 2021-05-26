@@ -35,10 +35,12 @@ export function paymentReducer(
 ): IPaymentFormState {
   switch (action.type) {
     case PAYMENT_LIST_WRETCH_LOADED:
+      console.log(action.payload[0].contractNumber);
+
       return {
         ...state,
         newPaymentInput: {
-          amount: 2500,
+          amount: 3000,
           date: todate.toLocaleDateString('ru-RU'),
           period: '',
           contractNumber: action.payload[0].contractNumber,
