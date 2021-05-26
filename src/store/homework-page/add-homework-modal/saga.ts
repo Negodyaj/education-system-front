@@ -1,4 +1,4 @@
-import { all, call, put, takeLatest } from 'redux-saga/effects';
+import { all, call, put, select, takeLatest } from 'redux-saga/effects';
 
 import { Homework } from '../../../interfaces/Homework';
 import { Course } from '../../../interfaces/Courses';
@@ -32,6 +32,8 @@ import { Tag } from '../../../interfaces/Tag';
 import { isTagArr } from '../../../services/type-guards/tagArr';
 import { Themes } from '../../../interfaces/Themes';
 import { isThemesArr } from '../../../services/type-guards/themesArr';
+import { currentUserRoleIdSelector } from '../../role-selector/selectors';
+import { getHomeworks } from '../action-creators';
 
 import {
   addHomeworkForModalWatcherAction,
@@ -96,7 +98,8 @@ export function* addHWForModalSagaWorker({
           )
         )
       );
-      yield loadHMListForModalSagaWorker();
+      const roleId: number = yield select(currentUserRoleIdSelector);
+      yield put(getHomeworks(roleId));
     } else yield put(constructNotificationError(error));
   } catch {
     console.log('error addHWForModalSaga');
