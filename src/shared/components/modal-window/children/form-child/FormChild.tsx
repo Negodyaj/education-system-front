@@ -1,17 +1,26 @@
 import React, { useEffect } from 'react';
-import { FormProvider, Path, SubmitHandler, useForm } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
+import {
+  DeepPartial,
+  FormProvider,
+  Path,
+  SubmitHandler,
+  UnpackNestedValue,
+  useForm,
+} from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { ChildIndex } from '../../../../../enums/ChildIndex';
 import { InputNames } from '../../../../../enums/inputNames';
 import { AppointInput } from '../../../../../interfaces/AppointInput';
 import { CourseInput } from '../../../../../interfaces/CourseInput';
+import { IRootState } from '../../../../../store';
 import { toggleModalWindow } from '../../../../../store/modal-window/action-creators';
 import FormElement from '../../../form-elements/FormElement';
 import { InputStyle, SelectDelete } from '../../ModalWindowCreateFormStyled';
 
 import { selectFormSetting } from './form-setting-selector';
 import { selectOnSubmit } from './on-submit-selector';
+import { getCurrentSelector } from './selectCurrentSelector';
 
 interface FormChildProps<T> {
   defaultValues: T;
@@ -20,16 +29,22 @@ interface FormChildProps<T> {
 
 export function FormChild<T>(props: FormChildProps<T>) {
   const { defaultValues, childIndex } = props;
-  const methods = useForm<T>(defaultValues);
+  const appState = useSelector((state: IRootState) => state);
+  const realDefaultValues = getCurrentSelector(childIndex)(appState);
+  const methods = useForm<T>({
+    defaultValues: (realDefaultValues as unknown) as UnpackNestedValue<
+      DeepPartial<T>
+    >,
+  });
   const dispatch = useDispatch();
   const onSubmit: SubmitHandler<any> = selectOnSubmit(childIndex, dispatch);
 
   useEffect(() => {
-    defaultValues &&
-      Object.keys(defaultValues).map((key) =>
-        methods.setValue(key as Path<T>, (defaultValues as any)[key])
+    realDefaultValues &&
+      Object.keys(realDefaultValues).map((key) =>
+        methods.setValue(key as Path<T>, (realDefaultValues as any)[key])
       );
-  }, []);
+  }, [realDefaultValues]);
 
   return (
     <>

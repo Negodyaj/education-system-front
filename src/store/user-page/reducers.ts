@@ -17,7 +17,7 @@ import { UserPageActions } from './action-creators';
 
 export const INIT_USER: User = {
   id: 0,
-  firstName: '',
+  firstName: 'asdfasdf',
   lastName: '',
   birthDate: new Date().toLocaleDateString(),
   login: '',
