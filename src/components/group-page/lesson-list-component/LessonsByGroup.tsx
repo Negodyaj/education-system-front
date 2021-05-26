@@ -1,12 +1,10 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { IRootState } from '../../../store';
-import {
-  setIsOpenModalAddLesson,
-  setIsOpenModalAttendance,
-} from '../../../store/group-page/lesson/action-creators';
+import { setIsOpenModalAttendance } from '../../../store/group-page/lesson/action-creators';
+import { toggleModalWindow } from '../../../store/modal-window/action-creators';
+import { ChildIndex } from '../../../enums/ChildIndex';
 
 import {
   AttendanceLesson,
@@ -14,16 +12,15 @@ import {
   CreateLesson,
   LessonsContainer,
 } from './LessonsByGroupStyled';
-import LessonsTableByGroup from './LessonsTableByGroup';
-import ModalAttendance from './ModalAttendance';
-import NewLesson from './NewLesson';
+import LessonsTableByGroup from './lesson-list-table/LessonsTableByGroup';
+import ModalAttendance from './modal-attendance/ModalAttendance';
 
 const LessonsByGroup = () => {
   const dispatch = useDispatch();
   const pageState = useSelector((state: IRootState) => state.lessonByGroup);
 
   const openUpModalAddLesson = () => {
-    dispatch(setIsOpenModalAddLesson());
+    dispatch(toggleModalWindow(ChildIndex.NewLesson));
   };
 
   const openUpModalAttendance = () => {
@@ -44,7 +41,6 @@ const LessonsByGroup = () => {
         </CommonButton>
         <CommonButton>Обратная связь</CommonButton>
       </AttendanceLesson>
-      {pageState.isOpenModalAddLesson && <NewLesson />}
       {pageState.isOpenModalAttendance && <ModalAttendance />}
     </LessonsContainer>
   );

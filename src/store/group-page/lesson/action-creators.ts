@@ -1,6 +1,8 @@
-import { CurrentLesson } from '../../../components/group-page/lesson-list-component/LessonsTableByGroup';
-import { IUserAttendance } from '../../../components/group-page/lesson-list-component/ModalAttendance';
+import { CurrentLesson } from '../../../components/group-page/lesson-list-component/lesson-list-table/LessonsTableByGroup';
+import { IUserAttendance } from '../../../components/group-page/lesson-list-component/modal-attendance/ModalAttendance';
 import { Lesson } from '../../../interfaces/Lesson';
+import { LessonInput } from '../../../interfaces/LessonInput';
+import { LessonUpdate } from '../../../interfaces/LessonUpdate';
 import {
   SELECTED_LESSON,
   LESSON_LIST_WRETCH_FAIL,
@@ -11,6 +13,10 @@ import {
   LESSON_TOGGLE_MODAL_DELETE_LESSON,
   DATA_TO_CREATE_ATTENDANCES,
   LESSON_BY_GROUP_ID,
+  CREATE_LESSON,
+  DELETE_LESSON,
+  CREATE_ATTENDANCES,
+  UPDATE_LESSON,
 } from '../../actionTypes';
 
 export type LessonListActions =
@@ -22,7 +28,11 @@ export type LessonListActions =
   | ReturnType<typeof setIsOpenModalDeleteLesson>
   | ReturnType<typeof setSelectedLesson>
   | ReturnType<typeof setDataToCreateAttendances>
-  | ReturnType<typeof getLessonsByGroup>;
+  | ReturnType<typeof getLessonsByGroup>
+  | ReturnType<typeof createLesson>
+  | ReturnType<typeof updateLesson>
+  | ReturnType<typeof deleteLesson>
+  | ReturnType<typeof createAttendances>;
 
 export const setLessonListIsLoading = () =>
   ({
@@ -74,5 +84,29 @@ export const setDataToCreateAttendances = (arrData: IUserAttendance[]) =>
 export const getLessonsByGroup = () =>
   ({
     type: LESSON_BY_GROUP_ID,
+    payload: undefined,
+  } as const);
+
+export const createLesson = (newLesson: LessonInput) =>
+  ({
+    type: CREATE_LESSON,
+    payload: newLesson,
+  } as const);
+
+export const updateLesson = (dataLesson: LessonUpdate) =>
+  ({
+    type: UPDATE_LESSON,
+    payload: dataLesson,
+  } as const);
+
+export const deleteLesson = () =>
+  ({
+    type: DELETE_LESSON,
+    payload: undefined,
+  } as const);
+
+export const createAttendances = () =>
+  ({
+    type: CREATE_ATTENDANCES,
     payload: undefined,
   } as const);

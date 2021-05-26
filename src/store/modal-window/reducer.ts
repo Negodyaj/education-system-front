@@ -1,7 +1,12 @@
 import { ChildIndex } from '../../enums/ChildIndex';
 import { TOGGLE_MODAL_WINDOW } from '../actionTypes';
 import { INIT_COURSE_TO_REGISTER } from '../courses-page/reducer';
+import {
+  INIT_LESSON_TO_CREATE,
+  INIT_LESSON_TO_UPDATE,
+} from '../group-page/lesson/reducer';
 import { APPOINT_FORM_DEFAULTS } from '../homework-page/homework-appoint-modal/reducer';
+import { INIT_PAYMENT } from '../payment/reducer';
 import { ModalWindowState } from '../state';
 
 import { ModalWindowActions } from './action-creators';
@@ -17,6 +22,18 @@ const initialState: ModalWindowState = {
     [ChildIndex.AppointHomework]: {
       headerName: 'Назначить ДЗ на группу:',
       defaultValues: APPOINT_FORM_DEFAULTS,
+    },
+    [ChildIndex.NewLesson]: {
+      headerName: 'Запланировать занятие',
+      defaultValues: INIT_LESSON_TO_CREATE,
+    },
+    [ChildIndex.UpdateLesson]: {
+      headerName: 'Внести изменения в занятие',
+      defaultValues: INIT_LESSON_TO_UPDATE,
+    },
+    [ChildIndex.Payment]: {
+      headerName: 'Назначить оплату',
+      defaultValues: INIT_PAYMENT,
     },
     [ChildIndex.Closed]: {},
   },

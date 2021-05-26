@@ -2,16 +2,16 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { IRootState } from '../../../store';
+import { IRootState } from '../../../../store';
 import {
+  createAttendances,
   setDataToCreateAttendances,
   setIsOpenModalAttendance,
   setSelectedLesson,
-} from '../../../store/group-page/lesson/action-creators';
-import { createAttendance } from '../../../store/group-page/lesson/thunk';
-import { getUsers } from '../../../store/user-list-page/action-creators';
+} from '../../../../store/group-page/lesson/action-creators';
+import { getUsers } from '../../../../store/user-list-page/action-creators';
+import { CurrentLesson } from '../lesson-list-table/LessonsTableByGroup';
 
-import { CurrentLesson } from './LessonsTableByGroup';
 import {
   CheckBox,
   CheckBoxLabel,
@@ -77,13 +77,7 @@ const ModalAttendance = () => {
   };
 
   const saveAttendances = () => {
-    dispatch(setIsOpenModalAttendance());
-    dispatch(
-      createAttendance(
-        pageState.lessonByGroup.currentLesson.lessonId,
-        pageState.lessonByGroup.arrDataToCreateAttendances
-      )
-    );
+    dispatch(createAttendances());
   };
 
   return (

@@ -10,6 +10,7 @@ import userListPageRootSaga from './user-list-page/saga';
 import { userPageRootSaga } from './user-page/saga';
 import { tagsPageRootSaga } from './tags-page/saga';
 import { coursePageRootSaga } from './courses-page/saga';
+import { paymentRootSaga } from './payment/saga';
 
 export function* rootSaga() {
   yield all([
@@ -23,5 +24,6 @@ export function* rootSaga() {
     tagsPageRootSaga(),
     coursePageRootSaga(),
     lessonByGroupListPageRootSaga(),
+    paymentRootSaga(),
   ]);
 }
