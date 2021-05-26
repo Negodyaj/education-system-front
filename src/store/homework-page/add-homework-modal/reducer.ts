@@ -1,3 +1,4 @@
+import { DictionaryEntity } from '../../../interfaces/DictionaryEntity';
 import { HomeworkInput } from '../../../interfaces/HomeworkInput';
 import {
   COURSES_LOAD_FOR_HW_MODAL_SUCCESS,
@@ -19,11 +20,11 @@ const initialState: IAddHomeworkModal = {
   isDataLoading: false,
   defaultFormValue: defaultAddHomeworkValues,
   isModalHidden: false,
-  coursesForCloneEntities: [],
+  coursesEntities: [],
   tagsForHomeworkEntities: [],
   themesForHomeworkEntities: [],
 };
-
+let localCoursesEntitites: DictionaryEntity[] = [];
 export function addHomeworkModalReducer(
   state: IAddHomeworkModal = initialState,
   action: AddHomeworkModalActions
@@ -32,7 +33,12 @@ export function addHomeworkModalReducer(
     case HOMEWORK_LOAD_FOR_MODAL_SUCCESS:
       return { ...state, isDataLoading: false, isModalHidden: false };
     case COURSES_LOAD_FOR_HW_MODAL_SUCCESS:
-      return { ...state, isDataLoading: false, isModalHidden: false };
+      localCoursesEntitites = action.payload.map((course) => ({
+        id: course.id,
+        name: course.name,
+      }));
+
+      return { ...state, coursesEntities: localCoursesEntitites };
 
     default:
       return state;

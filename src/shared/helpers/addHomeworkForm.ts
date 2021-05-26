@@ -16,7 +16,7 @@ export const getHomeworkAddForm = (key: InputNames): FormElementSettings => {
         width: 400,
         inputSettings: {
           name: key,
-          inputType: 'text',
+          inputType: 'textarea',
           registerOptions: {
             required: 'Введите описание',
             min: {
@@ -31,7 +31,7 @@ export const getHomeworkAddForm = (key: InputNames): FormElementSettings => {
         label: 'Курс',
         inputSettings: {
           name: key,
-          inputType: 'multiSelect',
+          inputType: 'singleSelect',
           selectOptions: useCoursesForHomeworkAddModal,
         },
       };

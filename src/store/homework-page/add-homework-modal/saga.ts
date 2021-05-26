@@ -9,7 +9,7 @@ import {
 } from '../../../services/http.service';
 import { isHomework } from '../../../services/type-guards/homework';
 import { isHomeworkArr } from '../../../services/type-guards/homeworkArr';
-import { homeworkUrl } from '../../../shared/consts';
+import { coursesUrl, homeworkUrl, tagsUrl } from '../../../shared/consts';
 import { tryGetErrorFromResponse } from '../../../shared/helpers/http-response.helper';
 import { makeNotification } from '../../../shared/helpers/notificationHelpers';
 import {
@@ -28,6 +28,7 @@ import { isTagArr } from '../../../services/type-guards/tagArr';
 
 import {
   addHomeworkForModalWatcherAction,
+  loadCourseForHWModalSuccess,
   loadCourseForHWModalWatcherAction,
   loadHomeworkForModalSuccess,
   loadTagsForHWModalWatcherAction,
@@ -37,14 +38,11 @@ export function* addHWModalRootSaga() {
   yield all([getHWForModalSagaWatcher()]);
 }
 export function* getHWForModalSagaWatcher() {
-  yield put(setIsLoading());
   yield takeLatest(GET_HOMEWORKS_FOR_MODAL, loadHMListForModalSagaWorker);
-  yield takeLatest(GET_COURSES_FOR_HW_MODAL, loadCoursesForAddModalSagaWorker);
-  yield takeLatest(GET_TAGS_FOR_HW_MODAL, loadTagsForAddModalSagaWorker);
-  yield put(setIsLoaded());
 }
 
 export function* loadHMListForModalSagaWorker() {
+  yield put(setIsLoading());
   try {
     const homeworks: Homework[] = yield call(async () =>
       sendGetRequest<Homework[]>(`${homeworkUrl}`, isHomeworkArr).then(
@@ -52,27 +50,30 @@ export function* loadHMListForModalSagaWorker() {
       )
     );
     const error = tryGetErrorFromResponse(homeworks);
+    yield loadCoursesForAddModalSagaWorker();
+    yield loadTagsForAddModalSagaWorker();
 
     if (error) yield put(constructNotificationError(error));
     else yield put(loadHomeworkForModalSuccess(homeworks));
-    // yield put (loadCourseForHWModalWatcherAction());
-    // yield put (loadTagsForHWModalWatcherAction();
+
+    console.log(homeworks);
   } catch {
     console.log('error setloadHMListForModalSaga');
   }
+  yield put(setIsLoaded());
 }
 
 export function* addHWForModalWatcher() {
-  yield put(setIsLoading());
   yield takeLatest(ADD_HOMEWORK_OR_MODAL, addHWForModalSagaWorker);
-  yield put(setIsLoaded());
+  console.log('dfsfds');
 }
 export function* addHWForModalSagaWorker({
   payload,
 }: ReturnType<typeof addHomeworkForModalWatcherAction>) {
+  yield put(setIsLoading());
   try {
     const newHomework: HomeworkInput = yield call(async () =>
-      sendPostRequest<Homework>(`${homeworkUrl}`, isHomework, newHomework).then(
+      sendPostRequest<Homework>(`${homeworkUrl}`, isHomework, payload).then(
         (homework) => homework
       )
     );
@@ -92,19 +93,21 @@ export function* addHWForModalSagaWorker({
   } catch {
     console.log('error addHWForModalSaga');
   }
+  yield put(setIsLoaded());
 }
 
 export function* loadCoursesForAddModalSagaWorker() {
   try {
     const courses: Course[] = yield call(async () =>
-      sendGetRequest<Course[]>(homeworkUrl, isCourseArr).then(
+      sendGetRequest<Course[]>(`${coursesUrl}`, isCourseArr).then(
         (response) => response
       )
     );
     const error = tryGetErrorFromResponse(courses);
+    console.log(courses);
 
     if (error) yield put(constructNotificationError(error));
-    else yield put(loadCourseForHWModalWatcherAction(courses));
+    else yield put(loadCourseForHWModalSuccess(courses));
   } catch {
     console.log('error addCoursesForAddModalSaga');
   }
@@ -113,11 +116,10 @@ export function* loadCoursesForAddModalSagaWorker() {
 export function* loadTagsForAddModalSagaWorker() {
   try {
     const tags: Tag[] = yield call(async () =>
-      sendGetRequest<Tag[]>(`${homeworkUrl}`, isTagArr).then(
-        (response) => response
-      )
+      sendGetRequest<Tag[]>(`${tagsUrl}`, isTagArr).then((response) => response)
     );
     const error = tryGetErrorFromResponse(tags);
+    console.log(tags);
 
     if (error) yield put(constructNotificationError(error));
     else yield put(loadTagsForHWModalWatcherAction(tags));

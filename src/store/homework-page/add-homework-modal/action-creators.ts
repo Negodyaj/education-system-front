@@ -34,10 +34,10 @@ export const loadCourseForHWModalSuccess = (corsesList: Course[]) => ({
   type: COURSES_LOAD_FOR_HW_MODAL_SUCCESS,
   payload: corsesList,
 });
-export const loadHomeworkForModalWatcherAction = (homeworkList: Homework[]) =>
+export const loadHomeworkForModalWatcherAction = () =>
   ({
     type: GET_HOMEWORKS_FOR_MODAL,
-    payload: homeworkList,
+    payload: undefined,
   } as const);
 export const addHomeworkForModalWatcherAction = (newHomework: HomeworkInput) =>
   ({
