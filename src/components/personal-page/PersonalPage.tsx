@@ -41,11 +41,9 @@ const PersonalPage = () => {
     });
   }, [appState.userPage.userForUserPage]);
   const onSubmit = (data: UserInput) => {
-    history.push(`/personal-page`);
-    dispatch(
-      sendUser(data, appState.userPage.userForUserPageId, `/personal-page`)
-    );
-    changeEvent();
+    // history.push(`/personal-page`);
+    closeUserPage();
+    dispatch(sendUser(data, appState.userPage.userForUserPageId));
   };
   const closeUserPage = () => {
     changeEvent();

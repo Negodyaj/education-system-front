@@ -110,7 +110,8 @@ float: left;
   justify-content: space-around;
 }
 
-.edit-user .sc-eCImvq .gjiCxy .email{
+.edit-user input[name="email"],
+.edit-user .basic-multi-select {
   pointer-events: none;
   opacity:0.9;
 }

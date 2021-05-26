@@ -105,109 +105,111 @@ function App() {
         </div>
         <main className="main-content">
           {getToken() ? (
-            <Switch>
-              {(currentUserRoleId === Role.Manager ||
-                currentUserRoleId === Role.Admin) && <UserRoute />}
-              {currentUserRoleId === Role.Teacher && (
-                <Route path="/courses-page">
-                  <CoursesPage />
-                  <Helmet>
-                    <title>Курсы</title>
-                  </Helmet>
-                </Route>
-              )}
-              <Route exact path="/Homework">
-                <HomeworkPage />
-                <Helmet>
-                  <title>Домашки</title>
-                </Helmet>
-              </Route>
-              {[Role.Teacher, Role.Tutor].includes(currentUserRoleId) && (
-                <Route path="/Homework/:hwId/attempts/:attemptId?">
-                  <HomeworkAttempt />
-                  <Helmet>
-                    <title>Домашки</title>
-                  </Helmet>
-                </Route>
-              )}
-              {currentUserRoleId === Role.Student && (
-                <Route path="/Homework/:hwId/attempt-creator">
-                  <HomeworkAttempt />
-                  <Helmet>
-                    <title>Домашки</title>
-                  </Helmet>
-                </Route>
-              )}
-              <Route path="/course/:id/edition">
-                <CourseEdition />
-              </Route>
-              <Route path="/course/:id">
-                <CoursePage />
-              </Route>
-              {currentUserRoleId === Role.Teacher && (
-                <Route path="/lessons">
-                  <LessonsByGroup />
-                  <Helmet>
-                    <title>Занятия</title>
-                  </Helmet>
-                </Route>
-              )}
-              {currentUserRoleId !== Role.Student && (
-                <Route path="/tags-page">
-                  <TagsPage />
-                  <Helmet>
-                    <title>Тэги</title>
-                  </Helmet>
-                </Route>
-              )}
-              <Route path="/homework">
-                <Helmet>
-                  <title>Домашки</title>
-                </Helmet>
-              </Route>
-              {currentUserRoleId !== Role.Methodist && (
-                <>
-                  <Route path="/group">
-                    <GroupNavMenu />
-                    <Helmet>
-                      <title>Группы</title>
-                    </Helmet>
-                  </Route>
-                  <Route path="/group/info">
-                    <GroupInfoComponent />
-                  </Route>
-                  <Route path="/group/lesson">
-                    <LessonsByGroup />
-                  </Route>
-                  <Route path="/group/journal">
-                    <Attendance />
-                  </Route>
-                  <Route path="/group/statistics">
-                    <div>statistics</div>
-                  </Route>
-                </>
-              )}
-              <Route exact path="/group">
-                <Redirect to="/group/1/info" />
-              </Route>
-              <Route path="/group/:id/info">
-                <Helmet>
-                  <title>Группы</title>
-                </Helmet>
-              </Route>
-              <Route path="/attendance">
-                <Attendance />
-                <Helmet>
-                  <title>Журнал в разработке</title>
-                </Helmet>
-              </Route>
+            <>
               <Route path="/personal-page">
                 <PersonalPage />
                 <Helmet>
                   <title>ЛК</title>
                 </Helmet>
               </Route>
-            </Switch>
+              <Switch>
+                {(currentUserRoleId === Role.Manager ||
+                  currentUserRoleId === Role.Admin) && <UserRoute />}
+                {currentUserRoleId === Role.Teacher && (
+                  <Route path="/courses-page">
+                    <CoursesPage />
+                    <Helmet>
+                      <title>Курсы</title>
+                    </Helmet>
+                  </Route>
+                )}
+                <Route exact path="/Homework">
+                  <HomeworkPage />
+                  <Helmet>
+                    <title>Домашки</title>
+                  </Helmet>
+                </Route>
+                {[Role.Teacher, Role.Tutor].includes(currentUserRoleId) && (
+                  <Route path="/Homework/:hwId/attempts/:attemptId?">
+                    <HomeworkAttempt />
+                    <Helmet>
+                      <title>Домашки</title>
+                    </Helmet>
+                  </Route>
+                )}
+                {currentUserRoleId === Role.Student && (
+                  <Route path="/Homework/:hwId/attempt-creator">
+                    <HomeworkAttempt />
+                    <Helmet>
+                      <title>Домашки</title>
+                    </Helmet>
+                  </Route>
+                )}
+                <Route path="/course/:id/edition">
+                  <CourseEdition />
+                </Route>
+                <Route path="/course/:id">
+                  <CoursePage />
+                </Route>
+                {currentUserRoleId === Role.Teacher && (
+                  <Route path="/lessons">
+                    <LessonsByGroup />
+                    <Helmet>
+                      <title>Занятия</title>
+                    </Helmet>
+                  </Route>
+                )}
+                {currentUserRoleId !== Role.Student && (
+                  <Route path="/tags-page">
+                    <TagsPage />
+                    <Helmet>
+                      <title>Тэги</title>
+                    </Helmet>
+                  </Route>
+                )}
+                <Route path="/homework">
+                  <Helmet>
+                    <title>Домашки</title>
+                  </Helmet>
+                </Route>
+                {currentUserRoleId !== Role.Methodist && (
+                  <>
+                    <Route path="/group">
+                      <GroupNavMenu />
+                      <Helmet>
+                        <title>Группы</title>
+                      </Helmet>
+                    </Route>
+                    <Route path="/group/info">
+                      <GroupInfoComponent />
+                    </Route>
+                    <Route path="/group/lesson">
+                      <LessonsByGroup />
+                    </Route>
+                    <Route path="/group/journal">
+                      <Attendance />
+                    </Route>
+                    <Route path="/group/statistics">
+                      <div>statistics</div>
+                    </Route>
+                  </>
+                )}
+                <Route exact path="/group">
+                  <Redirect to="/group/1/info" />
+                </Route>
+                <Route path="/group/:id/info">
+                  <Helmet>
+                    <title>Группы</title>
+                  </Helmet>
+                </Route>
+                <Route path="/attendance">
+                  <Attendance />
+                  <Helmet>
+                    <title>Журнал в разработке</title>
+                  </Helmet>
+                </Route>
+              </Switch>
+            </>
           ) : (
             <Switch>
               <Route exact path="/">
