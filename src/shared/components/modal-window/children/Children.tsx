@@ -6,6 +6,8 @@ import { ModalWindowSettings } from '../ModalWindow';
 
 import { FormChild } from './form-child/FormChild';
 import NewCourse from './new-course/NewCourse';
+import NewLesson from './lessons/NewLesson';
+import UpdateLesson from './lessons/UpdateLesson';
 
 type Props = {
   childIndex: ChildIndex;
@@ -18,6 +20,10 @@ export function Children(props: Props) {
   switch (childIndex) {
     case 'new-course':
       return <NewCourse>{children}</NewCourse>;
+    case 'new-lesson':
+      return <NewLesson>{children}</NewLesson>;
+    case 'update-lesson':
+      return <UpdateLesson>{children}</UpdateLesson>;
   }
 
   return null;

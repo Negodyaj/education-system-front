@@ -16,8 +16,8 @@ import { Lesson } from '../interfaces/Lesson';
 import { CourseInput } from '../interfaces/CourseInput';
 import { INIT_HOMEWORK } from '../shared/tmp-mock-data/hw/initHomewwork';
 import { LessonInput } from '../interfaces/LessonInput';
-import { IUserAttendance } from '../components/group-page/lesson-list-component/ModalAttendance';
-import { CurrentLesson } from '../components/group-page/lesson-list-component/LessonsTableByGroup';
+import { IUserAttendance } from '../components/group-page/lesson-list-component/modal-attendance/ModalAttendance';
+import { CurrentLesson } from '../components/group-page/lesson-list-component/lesson-list-table/LessonsTableByGroup';
 import { IndexedObj } from '../interfaces/IndexedObj';
 import { UserPageOptions } from '../components/user-page/UserPage';
 import { Material } from '../interfaces/Materials';
@@ -26,6 +26,7 @@ import { AttemptInput } from '../interfaces/AttemptInput';
 import { ChildIndex } from '../enums/ChildIndex';
 import { ModalWindowSettings } from '../shared/components/modal-window/ModalWindow';
 import { HomeworkInput } from '../interfaces/HomeworkInput';
+import { LessonUpdate } from '../interfaces/LessonUpdate';
 
 import { DEFAULT_ATTEMPT } from './homework-attempt/reducer';
 
@@ -135,6 +136,7 @@ export interface ILesson {
   currentLesson: CurrentLesson;
   arrDataToCreateAttendances: IUserAttendance[];
   createLessonInputModel: LessonInput;
+  updateLessonInputModel: LessonUpdate;
 }
 
 export interface IGroupInfoComponent {

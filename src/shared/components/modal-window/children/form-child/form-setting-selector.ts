@@ -2,6 +2,10 @@ import { ChildIndex } from '../../../../../enums/ChildIndex';
 import { InputNames } from '../../../../../enums/inputNames';
 import { getAppointFormElementSettings } from '../../../../helpers/appointFormRegisterSettingsByKey';
 import { getCourseFormElementSettings } from '../../../../helpers/courseFormRegisterSettingByKey';
+import {
+  getLessonFormElementSettings,
+  getLessonUpdateFormElementSettings,
+} from '../../../../helpers/lessonFormRegisterSettingByKey';
 
 export const selectFormSetting = (index: ChildIndex, key: InputNames) => {
   switch (index) {
@@ -9,6 +13,10 @@ export const selectFormSetting = (index: ChildIndex, key: InputNames) => {
       return getCourseFormElementSettings(key);
     case ChildIndex.AppointHomework:
       return getAppointFormElementSettings(key);
+    case ChildIndex.NewLesson:
+      return getLessonFormElementSettings(key);
+    case ChildIndex.UpdateLesson:
+      return getLessonUpdateFormElementSettings(key);
   }
 
   return undefined;

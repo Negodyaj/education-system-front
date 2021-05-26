@@ -16,3 +16,6 @@ export const useCoursesForHomeworkAddModal = () =>
   useSelector(
     (state: IRootState) => state.addHomeWorkModal.coursesForCloneEntities
   );
+
+export const useGetThemesEntities = () =>
+  useSelector((state: IRootState) => state.courseEditionPage.themes);

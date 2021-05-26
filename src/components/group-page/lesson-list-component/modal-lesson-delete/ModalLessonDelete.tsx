@@ -2,14 +2,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { IRootState } from '../../../store';
+import { IRootState } from '../../../../store';
 import {
+  deleteLesson,
   setIsOpenModalDeleteLesson,
   setSelectedLesson,
-} from '../../../store/group-page/lesson/action-creators';
-import { deleteLesson } from '../../../store/group-page/lesson/thunk';
+} from '../../../../store/group-page/lesson/action-creators';
+import { CurrentLesson } from '../lesson-list-table/LessonsTableByGroup';
 
-import { CurrentLesson } from './LessonsTableByGroup';
 import {
   ButtonCloseModalDeleteLesson,
   CommonButton,
@@ -33,7 +33,7 @@ const ModalLessonDelete = () => {
   };
 
   const deleteLessonById = () => {
-    dispatch(deleteLesson(dataLessonForDelete.lessonId));
+    dispatch(deleteLesson());
   };
 
   return (
