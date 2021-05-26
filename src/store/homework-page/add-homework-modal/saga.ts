@@ -1,6 +1,7 @@
 import { all, call, put, takeLatest } from 'redux-saga/effects';
 
 import { Homework } from '../../../interfaces/Homework';
+import { Course } from '../../../interfaces/Courses';
 import { HomeworkInput } from '../../../interfaces/HomeworkInput';
 import {
   sendGetRequest,
@@ -13,16 +14,23 @@ import { tryGetErrorFromResponse } from '../../../shared/helpers/http-response.h
 import { makeNotification } from '../../../shared/helpers/notificationHelpers';
 import {
   ADD_HOMEWORK_OR_MODAL,
+  GET_COURSES_FOR_HW_MODAL,
   GET_HOMEWORKS_FOR_MODAL,
+  GET_TAGS_FOR_HW_MODAL,
 } from '../../actionTypes';
 import { setIsLoaded, setIsLoading } from '../../app/action-creators';
 import { constructNotificationError } from '../../core/error-notification-constructor';
 import { pushNotification } from '../../notifications/action-creators';
 import { setTagsListWasLoaded } from '../../tags-page/action-creators';
+import { isCourseArr } from '../../../services/type-guards/courseArr';
+import { Tag } from '../../../interfaces/Tag';
+import { isTagArr } from '../../../services/type-guards/tagArr';
 
 import {
   addHomeworkForModalWatcherAction,
+  loadCourseForHWModalWatcherAction,
   loadHomeworkForModalSuccess,
+  loadTagsForHWModalWatcherAction,
 } from './action-creators';
 
 export function* addHWModalRootSaga() {
@@ -30,14 +38,16 @@ export function* addHWModalRootSaga() {
 }
 export function* getHWForModalSagaWatcher() {
   yield put(setIsLoading());
-  yield takeLatest(GET_HOMEWORKS_FOR_MODAL, loadHMListForModalSaga);
+  yield takeLatest(GET_HOMEWORKS_FOR_MODAL, loadHMListForModalSagaWorker);
+  yield takeLatest(GET_COURSES_FOR_HW_MODAL, loadCoursesForAddModalSagaWorker);
+  yield takeLatest(GET_TAGS_FOR_HW_MODAL, loadTagsForAddModalSagaWorker);
   yield put(setIsLoaded());
 }
 
-export function* loadHMListForModalSaga() {
+export function* loadHMListForModalSagaWorker() {
   try {
     const homeworks: Homework[] = yield call(async () =>
-      sendGetRequest<Homework[]>(homeworkUrl, isHomeworkArr).then(
+      sendGetRequest<Homework[]>(`${homeworkUrl}`, isHomeworkArr).then(
         (response) => response
       )
     );
@@ -45,6 +55,8 @@ export function* loadHMListForModalSaga() {
 
     if (error) yield put(constructNotificationError(error));
     else yield put(loadHomeworkForModalSuccess(homeworks));
+    // yield put (loadCourseForHWModalWatcherAction());
+    // yield put (loadTagsForHWModalWatcherAction();
   } catch {
     console.log('error setloadHMListForModalSaga');
   }
@@ -52,10 +64,10 @@ export function* loadHMListForModalSaga() {
 
 export function* addHWForModalWatcher() {
   yield put(setIsLoading());
-  yield takeLatest(ADD_HOMEWORK_OR_MODAL, addHWForModalSaga);
+  yield takeLatest(ADD_HOMEWORK_OR_MODAL, addHWForModalSagaWorker);
   yield put(setIsLoaded());
 }
-export function* addHWForModalSaga({
+export function* addHWForModalSagaWorker({
   payload,
 }: ReturnType<typeof addHomeworkForModalWatcherAction>) {
   try {
@@ -75,9 +87,41 @@ export function* addHWForModalSaga({
           )
         )
       );
-      yield loadHMListForModalSaga();
+      yield loadHMListForModalSagaWorker();
     } else yield put(constructNotificationError(error));
   } catch {
     console.log('error addHWForModalSaga');
+  }
+}
+
+export function* loadCoursesForAddModalSagaWorker() {
+  try {
+    const courses: Course[] = yield call(async () =>
+      sendGetRequest<Course[]>(homeworkUrl, isCourseArr).then(
+        (response) => response
+      )
+    );
+    const error = tryGetErrorFromResponse(courses);
+
+    if (error) yield put(constructNotificationError(error));
+    else yield put(loadCourseForHWModalWatcherAction(courses));
+  } catch {
+    console.log('error addCoursesForAddModalSaga');
+  }
+}
+
+export function* loadTagsForAddModalSagaWorker() {
+  try {
+    const tags: Tag[] = yield call(async () =>
+      sendGetRequest<Tag[]>(`${homeworkUrl}`, isTagArr).then(
+        (response) => response
+      )
+    );
+    const error = tryGetErrorFromResponse(tags);
+
+    if (error) yield put(constructNotificationError(error));
+    else yield put(loadTagsForHWModalWatcherAction(tags));
+  } catch {
+    console.log('error setTagsListWasLoaded');
   }
 }

@@ -99,6 +99,8 @@ export interface IAddHomeworkModal {
   defaultFormValue: HomeworkInput;
   isModalHidden: boolean;
   coursesForCloneEntities: DictionaryEntity[];
+  tagsForHomeworkEntities: DictionaryEntity[];
+  themesForHomeworkEntities: DictionaryEntity[];
 }
 export interface INotificationContainerState {
   notifications: {

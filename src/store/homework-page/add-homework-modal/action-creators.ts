@@ -1,11 +1,13 @@
 import { Course } from '../../../interfaces/Courses';
 import { Homework } from '../../../interfaces/Homework';
 import { HomeworkInput } from '../../../interfaces/HomeworkInput';
+import { Tag } from '../../../interfaces/Tag';
 import {
   ADD_HOMEWORK_OR_MODAL,
   COURSES_LOAD_FOR_HW_MODAL_SUCCESS,
   GET_COURSES_FOR_HW_MODAL,
   GET_HOMEWORKS_FOR_MODAL,
+  GET_TAGS_FOR_HW_MODAL,
   HOMEWORK_ADDED_SUCCESS,
   HOMEWORK_LOAD_FOR_MODAL_SUCCESS,
 } from '../../actionTypes';
@@ -46,4 +48,9 @@ export const loadCourseForHWModalWatcherAction = (corsesList: Course[]) =>
   ({
     type: GET_COURSES_FOR_HW_MODAL,
     payload: corsesList,
+  } as const);
+export const loadTagsForHWModalWatcherAction = (tagList: Tag[]) =>
+  ({
+    type: GET_TAGS_FOR_HW_MODAL,
+    payload: tagList,
   } as const);

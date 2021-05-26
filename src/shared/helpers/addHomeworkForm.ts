@@ -1,7 +1,11 @@
 import { InputNames } from '../../enums/inputNames';
 import { coursesListForModalHW } from '../tmp-mock-data/hw/CourseListForHWModal';
 
-import { useCoursesForHomeworkAddModal } from './entitiesGetters';
+import {
+  useCoursesForHomeworkAddModal,
+  useTagsForHomeworkAddModal,
+  useThemesForHomeworkAddModal,
+} from './entitiesGetters';
 import { FormElementSettings } from './userFormRegisterSettingByKey';
 
 export const getHomeworkAddForm = (key: InputNames): FormElementSettings => {
@@ -12,7 +16,7 @@ export const getHomeworkAddForm = (key: InputNames): FormElementSettings => {
         width: 400,
         inputSettings: {
           name: key,
-          inputType: 'textarea',
+          inputType: 'text',
           registerOptions: {
             required: 'Введите описание',
             min: {
@@ -27,7 +31,7 @@ export const getHomeworkAddForm = (key: InputNames): FormElementSettings => {
         label: 'Курс',
         inputSettings: {
           name: key,
-          inputType: 'singleSelect',
+          inputType: 'multiSelect',
           selectOptions: useCoursesForHomeworkAddModal,
         },
       };
@@ -39,7 +43,24 @@ export const getHomeworkAddForm = (key: InputNames): FormElementSettings => {
           inputType: 'tumbler',
         },
       };
-
+    case InputNames.HomeworkTags:
+      return {
+        label: 'Добавить тег',
+        inputSettings: {
+          name: key,
+          inputType: 'multiSelect',
+          selectOptions: useTagsForHomeworkAddModal,
+        },
+      };
+    case InputNames.HomeworkThemes:
+      return {
+        label: 'Добавить тему',
+        inputSettings: {
+          name: key,
+          inputType: 'multiSelect',
+          selectOptions: useThemesForHomeworkAddModal,
+        },
+      };
     default:
       return {
         label: key,

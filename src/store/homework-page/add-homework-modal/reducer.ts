@@ -20,6 +20,8 @@ const initialState: IAddHomeworkModal = {
   defaultFormValue: defaultAddHomeworkValues,
   isModalHidden: false,
   coursesForCloneEntities: [],
+  tagsForHomeworkEntities: [],
+  themesForHomeworkEntities: [],
 };
 
 export function addHomeworkModalReducer(

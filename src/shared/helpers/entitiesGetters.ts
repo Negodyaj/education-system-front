@@ -16,3 +16,11 @@ export const useCoursesForHomeworkAddModal = () =>
   useSelector(
     (state: IRootState) => state.addHomeWorkModal.coursesForCloneEntities
   );
+export const useTagsForHomeworkAddModal = () =>
+  useSelector(
+    (state: IRootState) => state.addHomeWorkModal.tagsForHomeworkEntities
+  );
+export const useThemesForHomeworkAddModal = () =>
+  useSelector(
+    (state: IRootState) => state.addHomeWorkModal.themesForHomeworkEntities
+  );
