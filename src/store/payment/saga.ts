@@ -7,7 +7,10 @@ import { sendGetRequest, sendPostRequest } from '../../services/http.service';
 import { isPaymentResponse } from '../../services/type-guards/paymentResponse';
 import { isPaymentResponseArr } from '../../services/type-guards/paymentResponseArr';
 import { tryGetErrorFromResponse } from '../../shared/helpers/http-response.helper';
-import { CREATE_PAYMENT_WATCHER, GET_CURRENT_USER } from '../actionTypes';
+import {
+  CREATE_PAYMENT_WATCHER,
+  GET_CURRENT_USER_PAYMENT,
+} from '../actionTypes';
 import { constructNotificationError } from '../core/error-notification-constructor';
 import { constructSuccessNotification } from '../core/sucess-notification-constructor';
 import { PaymentResponse } from '../../components/interfaces/PaymentResponse';
@@ -31,7 +34,7 @@ export function* createPaymentWatcher() {
 }
 
 export function* getPaymentWatcher() {
-  yield takeLatest(GET_CURRENT_USER, getPaymentSagaWorker);
+  yield takeLatest(GET_CURRENT_USER_PAYMENT, getPaymentSagaWorker);
 }
 
 export function* createPaymentSagaWorker() {

@@ -3,7 +3,6 @@ import { format } from 'date-fns';
 import { PaymentInput } from '../../components/interfaces/PaymentInput';
 import {
   CREATE_PAYMENT_WATCHER,
-  GET_CURRENT_USER,
   PAYMENT_LIST_WRETCH_FAIL,
   PAYMENT_LIST_WRETCH_LOADED,
   PAYMENT_LIST_WRETCH_LOADING,

@@ -2,8 +2,7 @@ import { User } from '../../interfaces/User';
 import { PaymentResponse } from '../../components/interfaces/PaymentResponse';
 import {
   CREATE_PAYMENT_WATCHER,
-  GET_CURRENT_USER,
-  GET_PAYMENT_WATCHER,
+  GET_CURRENT_USER_PAYMENT,
   PAYMENT_FORM_CLOSE,
   PAYMENT_LIST_WRETCH_FAIL,
   PAYMENT_LIST_WRETCH_LOADED,
@@ -59,6 +58,6 @@ export const createPaymentWatcher = (newPayment: PaymentInput) =>
 
 export const getCurrentUser = (user: User) =>
   ({
-    type: GET_CURRENT_USER,
+    type: GET_CURRENT_USER_PAYMENT,
     payload: user,
   } as const);

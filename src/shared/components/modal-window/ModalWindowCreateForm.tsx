@@ -2,12 +2,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { FormProvider, UseFormReturn } from 'react-hook-form';
 import React from 'react';
 
-import { InputNames } from '../../../enums/inputNames';
 import { CourseInput } from '../../../interfaces/CourseInput';
 import { UserInput } from '../../../interfaces/UserInput';
 import { FormElementSettings } from '../../helpers/userFormRegisterSettingByKey';
 import FormElement from '../form-elements/FormElement';
 import { PaymentInput } from '../../../components/interfaces/PaymentInput';
+import { InputNames } from '../../../enums/inputNames';
 
 import {
   ButtonClose,
