@@ -23,10 +23,6 @@ function TextInput(props: {
     />
   ) : (
     <InputText
-      {...formContext.register(
-        inputSettings.name,
-        inputSettings.registerOptions
-      )}
       onChange={onChange}
       type="text"
       className="form-input"

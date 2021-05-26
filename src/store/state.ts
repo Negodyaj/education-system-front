@@ -97,7 +97,9 @@ export interface IAddHomeworkModal {
   isDataLoading: boolean;
   defaultFormValue: HomeworkInput;
   isModalHidden: boolean;
-  coursesForCloneEntities: DictionaryEntity[];
+  coursesEntities: DictionaryEntity[];
+  tagsForHomeworkEntities: DictionaryEntity[];
+  themesForHomeworkEntities: DictionaryEntity[];
 }
 export interface INotificationContainerState {
   notifications: {
