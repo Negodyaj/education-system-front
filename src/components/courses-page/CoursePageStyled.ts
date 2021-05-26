@@ -7,7 +7,7 @@ export const CourseContainer = styled.div`
 
 export const CourseCreate = styled.div`
   display: grid;
-  grid-template-columns: 83.5% 17.5%;
+  grid-template-columns: 1fr auto;
   gap: 7px;
   margin-bottom: 30px;
 `;
