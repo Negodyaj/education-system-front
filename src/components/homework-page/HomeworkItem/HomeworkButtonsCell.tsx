@@ -9,6 +9,7 @@ import HomeworkAttemptButton from './buttons/HomeworkAttemptButton';
 import HomeworkCheckButton from './buttons/HomeworkCheckButton';
 import HomeworkCloneButton from './buttons/HomeworkCloneButton';
 import HomeworkEditButton from './buttons/HomeworkEditButton';
+import HomeworkViewButton from './buttons/HomeworkViewButton';
 
 export interface HomeworkButtonsCellOptions {
   readonly appointButton?: boolean;
@@ -18,6 +19,7 @@ export interface HomeworkButtonsCellOptions {
   readonly editButton?: boolean;
   readonly checkButton?: boolean;
   attemptButton?: boolean;
+  readonly viewButton?: boolean;
 }
 
 function HomeworkButtonsCell(props: {
@@ -36,6 +38,7 @@ function HomeworkButtonsCell(props: {
       {buttons.attemptButton && !hw.isOptional && (
         <HomeworkAttemptButton hw={hw} />
       )}
+      {buttons.viewButton && <HomeworkViewButton hw={hw} />}
     </ButtonsCell>
   );
 }

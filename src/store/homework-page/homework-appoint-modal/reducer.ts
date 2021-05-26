@@ -11,7 +11,7 @@ import { HomeworkAppointModalActions } from './action-creators';
 
 export const APPOINT_FORM_DEFAULTS: AppointInput = {
   group: '',
-  deadline: '',
+  deadline: new Date().toLocaleDateString(),
 };
 const initialState: IHomeworkAppointModalState = {
   groupListByTeacherId: [],

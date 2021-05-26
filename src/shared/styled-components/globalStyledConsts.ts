@@ -32,8 +32,10 @@ export const TextareaInput = styled.textarea`
 `;
 
 export const TextareaStyled = styled(TextareaInput)`
-  min-height: 200px;
-  max-height: 200px;
+  resize: none;
+  height: 100px;
+  padding: 10px 13px;
+  font-family: inherit;
   min-width: ${(props: WidthTextarea) =>
     props.width ? `${props.width}px` : '272px'};
   max-width: ${(props: WidthTextarea) =>
