@@ -1,19 +1,14 @@
 import { Homework } from '../../interfaces/Homework';
 import { IndexedObj } from '../../interfaces/IndexedObj';
-import { getCurrentUserFromStorage } from '../../services/auth.service';
 import { INIT_HOMEWORK } from '../tmp-mock-data/hw/initHomewwork';
 
-export const convertHomeworkListForStudentMode = (
+export const convertHomeworkListToAppointed = (
   actionPayload: Homework[]
 ): IndexedObj<Homework[]> => {
-  const availableGroups = getCurrentUserFromStorage().groupIds;
   const previousCourseName: string[] | undefined = [];
   const result: IndexedObj<Homework[]> = {};
   actionPayload.map((hw) => {
-    if (
-      hw.groupsIds?.length &&
-      [...hw.groupsIds].filter((gId) => availableGroups.includes(gId)).length
-    ) {
+    if (hw.groupsIds?.length) {
       const index = `${hw.course.name}`;
 
       if (previousCourseName.includes(index)) {

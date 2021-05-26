@@ -27,4 +27,5 @@ const dictionary: { [key: string]: string } = {
   [Role[Role.Test]]: 'Тестовая роль',
   [HWListTypes.Appointed]: 'Назначенные',
   [HWListTypes.Proposed]: 'Предложенные',
+  [HWListTypes.Submitted]: 'Ожидают проверки',
 };

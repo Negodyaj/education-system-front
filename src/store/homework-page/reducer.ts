@@ -1,20 +1,22 @@
 import { HomeworkPageOptions } from '../../components/homework-page/HomeworkPageCore';
 import { Role } from '../../enums/role';
-import { convertHomeworkListForMethodistMode } from '../../shared/converters/homeworkListForMethodistMode';
-import { convertHomeworkListForStudentMode } from '../../shared/converters/homeworkListForStudentMode';
-import { convertHomeworkListForTeacherMode } from '../../shared/converters/homeworkListForTeacherMode';
+import { convertHomeworkListToProposed } from '../../shared/converters/homeworkListToProposed';
+import { convertHomeworkListToAppointedForStudent } from '../../shared/converters/homeworkListToToAppointedForStudent';
+import { convertHomeworkListToAppointed } from '../../shared/converters/homeworkListToAppointed';
 import {
   HOMEWORK_DELETE_PENDING,
   HOMEWORK_LOAD_SUCCESS,
   ITEMS_SET_OPEN,
 } from '../actionTypes';
 import { IHomeworkPageState } from '../state';
+import { convertHomeworkListToSubmitted } from '../../shared/converters/homeworkListToSubmitted';
 
 import { HomeworkPageActions } from './action-creators';
 
 export enum HWListTypes {
   Proposed = 'proposed',
   Appointed = 'appointed',
+  Submitted = 'submitted',
 }
 
 const METHODIST_VIEW: HomeworkPageOptions = {
@@ -57,6 +59,9 @@ const STUDENT_VIEW: HomeworkPageOptions = {
     [HWListTypes.Appointed]: {
       attemptButton: true,
     },
+    [HWListTypes.Submitted]: {
+      editAttemptButton: true,
+    },
   },
 };
 const initialState: IHomeworkPageState = {
@@ -80,7 +85,7 @@ export function homeworkPageReducer(
 
       if (action.payload.currentUserRoleId === Role.Methodist) {
         METHODIST_VIEW.homeworkList[HWListTypes.Proposed] = {
-          ...convertHomeworkListForMethodistMode(state.homeworkListDefault),
+          ...convertHomeworkListToProposed(state.homeworkListDefault),
         };
 
         return { ...state };
@@ -88,10 +93,10 @@ export function homeworkPageReducer(
 
       if (action.payload.currentUserRoleId === Role.Teacher) {
         TEACHER_VIEW.homeworkList[HWListTypes.Proposed] = {
-          ...convertHomeworkListForMethodistMode(state.homeworkListDefault),
+          ...convertHomeworkListToProposed(state.homeworkListDefault),
         };
         TEACHER_VIEW.homeworkList[HWListTypes.Appointed] = {
-          ...convertHomeworkListForTeacherMode(state.homeworkListDefault),
+          ...convertHomeworkListToAppointed(state.homeworkListDefault),
         };
 
         return { ...state };
@@ -99,16 +104,22 @@ export function homeworkPageReducer(
 
       if (action.payload.currentUserRoleId === Role.Tutor) {
         TUTOR_VIEW.homeworkList[HWListTypes.Appointed] = {
-          ...convertHomeworkListForTeacherMode(state.homeworkListDefault),
+          ...convertHomeworkListToAppointed(state.homeworkListDefault),
         };
 
         return { ...state };
       }
 
-      console.log(convertHomeworkListForStudentMode(action.payload.homeworks));
-      STUDENT_VIEW.homeworkList[HWListTypes.Appointed] = {
-        ...convertHomeworkListForStudentMode(action.payload.homeworks),
-      };
+      if (action.payload.currentUserRoleId === Role.Student) {
+        STUDENT_VIEW.homeworkList[HWListTypes.Appointed] = {
+          ...convertHomeworkListToAppointedForStudent(action.payload.homeworks),
+        };
+        STUDENT_VIEW.homeworkList[HWListTypes.Submitted] = {
+          ...convertHomeworkListToSubmitted(action.payload.homeworks),
+        };
+
+        return { ...state };
+      }
 
       return { ...state };
 

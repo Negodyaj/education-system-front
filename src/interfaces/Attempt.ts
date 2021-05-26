@@ -22,7 +22,7 @@ export interface Attempt {
         userPic: string;
         email: string;
         contractNumber: number;
-        roles: [number];
+        roles: number[];
       };
       attachments?: [
         {
@@ -33,7 +33,7 @@ export interface Attempt {
       ];
     }
   ];
-  attachments: [
+  attachments?: [
     {
       id: number;
       path: string;

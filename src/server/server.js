@@ -33,10 +33,7 @@ const runMock = () => {
       this.passthrough('https://80.78.240.16:7070/api/User/:id');
       // this.passthrough('https://80.78.240.16:7070/api/User/current');
       this.passthrough('https://80.78.240.16:7070/api/User/:id/payment');
-      this.get(
-        'https://80.78.240.16:7070/api/Course',
-        import('./mock-data/courses.json')
-      );
+      this.passthrough('https://80.78.240.16:7070/api/Course');
       this.get(
         'https://80.78.240.16:7070/api/User/current',
         import('./mock-data/current-user.json')
@@ -85,6 +82,7 @@ const runMock = () => {
           );
           let { id } = request.params;
           schema.db.attemptsTable.find(id).attempts.push(newRecord);
+          schema.db.homeworksTable.find(id).homeworkAttempts.push(newRecord);
 
           return newRecord;
         }
