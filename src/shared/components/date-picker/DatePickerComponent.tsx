@@ -31,6 +31,7 @@ function DatePickerComponent(props: DatePickerComponentProps) {
     <Controller
       control={formContext?.control}
       name={inputSettings.name}
+      rules={inputSettings.registerOptions}
       render={({ field: { value } }) => (
         <DatePicker
           selected={convertStringToDate(value)}
@@ -40,7 +41,11 @@ function DatePickerComponent(props: DatePickerComponentProps) {
       )}
     />
   ) : (
-    <DatePicker selected={startDate} onChange={handleDateChange} locale="ru" />
+    <DatePicker
+      selected={startDate || new Date()}
+      onChange={handleDateChange}
+      locale="ru"
+    />
   );
 }
 

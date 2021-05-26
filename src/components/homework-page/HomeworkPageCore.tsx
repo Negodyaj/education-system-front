@@ -6,7 +6,7 @@ import { IndexedObj } from '../../interfaces/IndexedObj';
 
 import AddButton from './buttons/AddButton';
 import { HomeworkButtonsCellOptions } from './HomeworkItem/HomeworkButtonsCell';
-import { HomeworkSelector } from './homework-selector/HomeworkSelector';
+import HomeworkSelector from './homework-selector/HomeworkSelector';
 import {
   HomeworkPageContainer,
   HomeworkPageHeader,
@@ -14,11 +14,11 @@ import {
 
 export interface HomeworkPageOptions {
   readonly addButton: boolean;
-  readonly homeworkButtonsCell: HomeworkButtonsCellOptions;
-  homeworkList: IndexedObj<Homework[]>;
+  readonly homeworkButtonsCell: IndexedObj<HomeworkButtonsCellOptions>;
+  homeworkList: IndexedObj<IndexedObj<Homework[]>>;
 }
 
-function HomeworkPageCore(props: { settings: HomeworkPageOptions }) {
+const HomeworkPageCore = (props: { settings: HomeworkPageOptions }) => {
   const { settings } = props;
 
   return (
@@ -30,6 +30,6 @@ function HomeworkPageCore(props: { settings: HomeworkPageOptions }) {
       <HomeworkSelector />
     </HomeworkPageContainer>
   );
-}
+};
 
-export default HomeworkPageCore;
+export default React.memo(HomeworkPageCore);

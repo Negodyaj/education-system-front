@@ -1,5 +1,6 @@
 import { DictionaryEntity } from '../../interfaces/DictionaryEntity';
 import { Role } from '../../enums/role';
+import { HWListTypes } from '../../store/homework-page/reducer';
 
 export const convertEnumToDictionary = (enumArg: any): DictionaryEntity[] =>
   Object.keys(enumArg)
@@ -24,4 +25,6 @@ const dictionary: { [key: string]: string } = {
   [Role[Role.Teacher]]: 'Преподаватель',
   [Role[Role.Tutor]]: 'Тьютор',
   [Role[Role.Test]]: 'Тестовая роль',
+  [HWListTypes.Appointed]: 'Назначенные',
+  [HWListTypes.Proposed]: 'Предложенные',
 };

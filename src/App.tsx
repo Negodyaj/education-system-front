@@ -29,7 +29,10 @@ import UserRoute from './components/user-page/UserRoute';
 import HomeworkPage from './components/homework-page/HomeworkPage';
 import LessonsByGroup from './components/group-page/lesson-list-component/LessonsByGroup';
 import LoginForm from './components/login-form/LoginForm';
+import GroupNavMenu from './components/group-page/group-nav-menu/GroupNavMenu';
+import GroupInfoComponent from './components/group-page/group-info-component/GroupInfoComponent';
 import LoginRoleSelector from './components/role-selector/LoginRoleSelector';
+import PersonalPage from './components/personal-page/PersonalPage';
 import ModalWindow from './shared/components/modal-window/ModalWindow';
 
 function App() {
@@ -46,6 +49,7 @@ function App() {
     unsetToken();
     history.push('/');
   };
+  const [isDark, setMode] = useState(false);
 
   const onHide = (condition: boolean) => {
     setHidden(condition);
@@ -58,9 +62,20 @@ function App() {
 
     return 'hide';
   }
+  const onShangeMode = (condition: boolean) => {
+    setMode(condition);
+  };
+
+  function menuMode(condition: boolean) {
+    if (condition) {
+      return 'darkMode';
+    }
+
+    return 'lightMode';
+  }
 
   return (
-    <div className="App">
+    <div className={`App ${menuMode(isDark)}`}>
       <Helmet>
         <title>Самый лучший сайт на свете</title>
         <meta name="description" content="Helmet application" />
@@ -71,7 +86,11 @@ function App() {
         </div>
         <div className="nav-menu">
           {!!getToken() && (
-            <NavMenu roleId={currentUserRoleId} onHide={onHide} />
+            <NavMenu
+              roleId={currentUserRoleId}
+              onHide={onHide}
+              onShangeMode={onShangeMode}
+            />
           )}
         </div>
       </aside>
@@ -111,20 +130,20 @@ function App() {
                   </Helmet>
                 </Route>
               )}
+              {currentUserRoleId === Role.Student && (
+                <Route path="/Homework/:hwId/attempt-creator">
+                  <HomeworkAttempt />
+                  <Helmet>
+                    <title>Домашки</title>
+                  </Helmet>
+                </Route>
+              )}
               <Route path="/course/:id/edition">
                 <CourseEdition />
               </Route>
               <Route path="/course/:id">
                 <CoursePage />
               </Route>
-              {currentUserRoleId === Role.Teacher && (
-                <Route path="/lessons">
-                  <LessonsByGroup />
-                  <Helmet>
-                    <title>Занятия</title>
-                  </Helmet>
-                </Route>
-              )}
               {currentUserRoleId !== Role.Student && (
                 <Route path="/tags-page">
                   <TagsPage />
@@ -138,11 +157,32 @@ function App() {
                   <title>Домашки</title>
                 </Helmet>
               </Route>
+              {currentUserRoleId !== Role.Methodist && (
+                <>
+                  <Route path="/group">
+                    <GroupNavMenu />
+                    <Helmet>
+                      <title>Группы</title>
+                    </Helmet>
+                  </Route>
+                  <Route path="/group/info">
+                    <GroupInfoComponent />
+                  </Route>
+                  <Route path="/group/lesson">
+                    <LessonsByGroup />
+                  </Route>
+                  <Route path="/group/journal">
+                    <Attendance />
+                  </Route>
+                  <Route path="/group/statistics">
+                    <div>statistics</div>
+                  </Route>
+                </>
+              )}
               <Route exact path="/group">
-                <Redirect to="/group/1" />
+                <Redirect to="/group/1/info" />
               </Route>
-              <Route path="/group/:id">
-                <GroupPage />
+              <Route path="/group/:id/info">
                 <Helmet>
                   <title>Группы</title>
                 </Helmet>
@@ -151,6 +191,12 @@ function App() {
                 <Attendance />
                 <Helmet>
                   <title>Журнал в разработке</title>
+                </Helmet>
+              </Route>
+              <Route path="/personal-page">
+                <PersonalPage />
+                <Helmet>
+                  <title>ЛК</title>
                 </Helmet>
               </Route>
             </Switch>

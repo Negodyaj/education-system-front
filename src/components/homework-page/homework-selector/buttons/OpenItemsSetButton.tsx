@@ -9,8 +9,8 @@ import {
 import { IRootState } from '../../../../store';
 import { openItemsSet } from '../../../../store/homework-page/action-creators';
 
-function OpenItemsSetButton(props: { itemsSetName: string }) {
-  const { itemsSetName } = props;
+const OpenItemsSetButton = (props: { openedItemName: string }) => {
+  const { openedItemName } = props;
   const dispatch = useDispatch();
   const { openedItemSetsNames } = useSelector(
     (state: IRootState) => state.homeworkPage
@@ -21,12 +21,12 @@ function OpenItemsSetButton(props: { itemsSetName: string }) {
 
   return (
     <ChevronArrow
-      onClick={() => arrowOnClick(itemsSetName)}
+      onClick={() => arrowOnClick(openedItemName)}
       className={
-        openedItemSetsNames.includes(itemsSetName) ? ACTIVE : NOT_ACTIVE
+        openedItemSetsNames.includes(openedItemName) ? ACTIVE : NOT_ACTIVE
       }
     />
   );
-}
+};
 
-export default OpenItemsSetButton;
+export default React.memo(OpenItemsSetButton);

@@ -13,15 +13,22 @@ import './NavMenu.css';
 interface NavMenuProps {
   roleId: number;
   onHide: (condition: boolean) => void;
+  onShangeMode: (condition: boolean) => void;
 }
 
 function NavMenu(props: NavMenuProps) {
   const { roleId, onHide } = props;
   const [isHidden, setHidden] = useState(false);
+  const [isDark, setMode] = useState(true);
+
+  const changeMode = () => {
+    isDark ? setMode(false) : setMode(true);
+    props.onShangeMode(isDark);
+  };
 
   const changeHidden = () => {
     isHidden ? setHidden(false) : setHidden(true);
-    onHide(isHidden);
+    props.onHide(isHidden);
   };
 
   const defaultShowFilter = (link: DropdownLinkParams) => {
@@ -33,6 +40,7 @@ function NavMenu(props: NavMenuProps) {
   return (
     <div className="menu-container">
       <nav className={isHidden ? 'notshow' : 'vision'}>
+        <NavMenuSimpleLink route="personal-page" faIcon="user" label="ЛК" />
         {(roleId === Role.Admin || roleId === Role.Manager) && (
           <NavMenuSimpleLink
             route="user-list"
@@ -40,7 +48,9 @@ function NavMenu(props: NavMenuProps) {
             label="Пользователи"
           />
         )}
-        {(roleId === Role.Teacher || roleId === Role.Methodist) && (
+        {[Role.Teacher, Role.Methodist, Role.Tutor, Role.Student].includes(
+          roleId
+        ) && (
           <NavMenuSimpleLink
             route="homework"
             faIcon="book-reader"
@@ -59,13 +69,6 @@ function NavMenu(props: NavMenuProps) {
             route="attendance"
             faIcon="university"
             label="Журнал в разработке"
-          />
-        )}
-        {(roleId === Role.Teacher || roleId === Role.Methodist) && (
-          <NavMenuSimpleLink
-            route="lessons"
-            faIcon="university"
-            label="Занятия"
           />
         )}
         {roleId !== Role.Student && (
@@ -94,6 +97,12 @@ function NavMenu(props: NavMenuProps) {
         onClick={changeHidden}
         title={isHidden ? 'развернуть меню' : 'свернуть меню'}>
         <FontAwesomeIcon icon="angle-double-right" />
+      </button>
+      <button
+        className="mode round-button"
+        onClick={changeMode}
+        title={isDark ? 'ночной режим' : 'дневной режим'}>
+        <FontAwesomeIcon icon={isDark ? 'moon' : 'sun'} />
       </button>
     </div>
   );

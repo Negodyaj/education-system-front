@@ -32,5 +32,5 @@ export const convertStringToDate = (value: any) => {
     )
   );
 
-  return new Date(date[0], date[1] - 1, date[2]);
+  return new Date(date[0], value ? date[1] - 1 : date[1], date[2]);
 };

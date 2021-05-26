@@ -1,8 +1,11 @@
-.list{
-    border:none;
+.list-member{
     grid-template-columns: 60px 250px;
     margin: 2px 0;
     align-self: center;
+    display: grid;
+    min-height: 50px;
+    text-align: left;
+    font-size: 14px;
 }
 
 .column{

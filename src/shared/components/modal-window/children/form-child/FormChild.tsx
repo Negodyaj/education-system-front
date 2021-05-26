@@ -1,9 +1,11 @@
-import { useEffect } from 'react';
-import { FormProvider, Path, SubmitHandler, useForm } from 'react-hook-form';
+import React from 'react';
+import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 
 import { ChildIndex } from '../../../../../enums/ChildIndex';
 import { InputNames } from '../../../../../enums/inputNames';
+import { AppointInput } from '../../../../../interfaces/AppointInput';
+import { CourseInput } from '../../../../../interfaces/CourseInput';
 import { toggleModalWindow } from '../../../../../store/modal-window/action-creators';
 import FormElement from '../../../form-elements/FormElement';
 import { InputStyle, SelectDelete } from '../../ModalWindowCreateFormStyled';

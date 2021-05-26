@@ -2,7 +2,6 @@ import { ErrorMessage } from '@hookform/error-message';
 import React from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import { InputNames } from '../../../enums/inputNames';
 import {
   ExternalInputSettings,
   FormElementSettings,
