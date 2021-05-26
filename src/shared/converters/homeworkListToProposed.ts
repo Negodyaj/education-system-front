@@ -2,7 +2,7 @@ import { Homework } from '../../interfaces/Homework';
 import { IndexedObj } from '../../interfaces/IndexedObj';
 import { INIT_HOMEWORK } from '../tmp-mock-data/hw/initHomewwork';
 
-export const convertHomeworkListForMethodistMode = (
+export const convertHomeworkListToProposed = (
   actionPayload: Homework[]
 ): IndexedObj<Homework[]> => {
   const previousCourseNames: string[] | undefined = [];

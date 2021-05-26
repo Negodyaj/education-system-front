@@ -81,6 +81,7 @@ const runMock = () => {
           );
           let { id } = request.params;
           schema.db.attemptsTable.find(id).attempts.push(newRecord);
+          schema.db.homeworksTable.find(id).homeworkAttempts.push(newRecord);
 
           return newRecord;
         }

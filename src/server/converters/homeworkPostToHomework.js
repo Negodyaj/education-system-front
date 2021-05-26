@@ -14,6 +14,7 @@ const convertHomeworkPostToHomework = (hw) => ({
   groupsIds: [hw.groupId],
   tags: tags.default.filter((tag) => hw.tagIds.includes(tag.id)),
   themes: themes.default.filter((theme) => hw.themeIds.includes(theme.id)),
+  homeworkAttempts: [],
 });
 
 export default convertHomeworkPostToHomework;
