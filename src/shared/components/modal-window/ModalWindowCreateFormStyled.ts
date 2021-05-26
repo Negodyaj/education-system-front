@@ -17,7 +17,7 @@ export const ModalBackground = styled.div`
 export const ModalFormCreate = styled.div`
   display: grid;
   position: absolute;
-  grid-template-rows: 70px 1fr 50px;
+  grid-template-rows: 50px 1fr;
   opacity: 1;
   border: 3px solid rgb(255, 255, 255);
   border-radius: 20px;
@@ -27,11 +27,14 @@ export const ModalFormCreate = styled.div`
   margin-left: 35%;
   margin-right: 65%;
   margin-top: 6%;
+
+  & h4 {
+    margin: 0;
+  }
 `;
 
 export const ModalHeader = styled.div`
   display: flex;
-  position: relative;
   justify-content: left;
 `;
 
@@ -43,8 +46,8 @@ export const HeadModal = styled.div`
 
 export const ButtonClose = styled.button`
   position: absolute;
-  top: 5px;
-  right: 5px;
+  top: 30px;
+  right: 25px;
   border-radius: 50%;
   background-color: #00ccf2;
   width: 40px;
@@ -71,5 +74,6 @@ export const FormWrapper = styled.div``;
 export const SelectDelete = styled.div`
   display: flex;
   justify-content: space-around;
+  align-items: flex-end;
   height: 55px;
 `;

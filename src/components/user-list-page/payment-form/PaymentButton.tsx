@@ -19,7 +19,7 @@ function PaymentButton(props: { user: User }) {
   return (
     <>
       <button
-        className="button-round"
+        className="round-button"
         onClick={() => onPaymentButtonClick(props.user)}>
         <FontAwesomeIcon icon="ruble-sign" />
       </button>
