@@ -15,7 +15,7 @@ export interface BaseInputSettings {
   registerOptions?: RegisterOptions;
 }
 export interface InternalInputSettings extends BaseInputSettings {
-  inputType: 'text' | 'date' | 'picture' | 'textarea' | 'number';
+  inputType: 'text' | 'date' | 'picture' | 'textarea' | 'number' | 'tumbler';
 }
 export interface ExternalInputSettings extends BaseInputSettings {
   inputType: 'singleSelect' | 'multiSelect';
