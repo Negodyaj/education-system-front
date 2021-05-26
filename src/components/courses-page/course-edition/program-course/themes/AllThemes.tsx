@@ -2,11 +2,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { ChildIndex } from '../../../../../enums/ChildIndex';
 import { Themes } from '../../../../../interfaces/Themes';
 import SearchComponent from '../../../../../shared/components/search-component/SearchComponent';
 import { RoundButton } from '../../../../../shared/styled-components/buttonStyledComponent';
 import { IRootState } from '../../../../../store';
 import { addThemeInCourse } from '../../../../../store/course-edition/thunk';
+import { toggleModalWindow } from '../../../../../store/modal-window/action-creators';
 import { CourseTheme } from '../ProgramCourse';
 
 import {
@@ -56,12 +58,16 @@ const AllThemes = () => {
     setSearchWord(str);
   };
 
+  const openUpModalCreateTheme = () => {
+    dispatch(toggleModalWindow(ChildIndex.NewTheme));
+  };
+
   return (
     <ThemesContainer>
       <AllThemesHeader>
         <TextForHeaders>Темы</TextForHeaders>
         <ButtonGroup>
-          <RoundButton>
+          <RoundButton onClick={openUpModalCreateTheme}>
             <FontAwesomeIcon icon="plus" />
           </RoundButton>
           <RoundButton>

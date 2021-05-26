@@ -1,4 +1,6 @@
 import { Course } from '../../interfaces/Courses';
+import { MaterialInput } from '../../interfaces/MaterialInput';
+import { ThemeInput } from '../../interfaces/ThemeInput';
 import {
   COURSE_EDITION_CHANGE_DISPLAYING_BUTTON_OPEN_MATERIALS_COURSE,
   COURSE_EDITION_CHANGE_DISPLAYING_BUTTON_OPEN_PROGRAM_COURSE,
@@ -9,10 +11,22 @@ import {
   COURSE_EDITION_WRETCH_FAIL,
   COURSE_EDITION_CURRENT_COURSE_ID,
   COURSE_EDITION_WRETCH_GET_MATERIALS_LOADED,
+  CREATE_THEME,
+  CREATE_MATERIAL,
 } from '../actionTypes';
 import { ICourseEditionState } from '../state';
 
 import { CourseEditionActions } from './action-creators';
+
+export const INIT_THEME_TO_CREATE: ThemeInput = {
+  name: '',
+  tagIds: [],
+};
+
+export const INIT_MATERIAL_TO_CREATE: MaterialInput = {
+  link: '',
+  description: '',
+};
 
 const initialState: ICourseEditionState = {
   course: {} as Course,
@@ -23,6 +37,8 @@ const initialState: ICourseEditionState = {
   isDisplayingButtonOpenProgramCourse: false,
   isDisplayingButtonOpenMaterialsCourse: false,
   idCourse: 0,
+  createThemeInputModel: INIT_THEME_TO_CREATE,
+  createMaterialInputModel: INIT_MATERIAL_TO_CREATE,
 };
 
 export function courseEditionPageReducer(
@@ -42,6 +58,10 @@ export function courseEditionPageReducer(
       return { ...state, course: action.payload };
     case COURSE_EDITION_ALL_THEMES_IN_COURSE:
       return { ...state, idThemesCourse: action.payload };
+    case CREATE_THEME:
+      return { ...state, createThemeInputModel: action.payload };
+    case CREATE_MATERIAL:
+      return { ...state, createMaterialInputModel: action.payload };
     case COURSE_EDITION_CHANGE_DISPLAYING_BUTTON_OPEN_PROGRAM_COURSE:
       return {
         ...state,

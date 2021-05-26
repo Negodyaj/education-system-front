@@ -28,6 +28,8 @@ import { ModalWindowSettings } from '../shared/components/modal-window/ModalWind
 import { PaymentInput } from '../components/interfaces/PaymentInput';
 import { HomeworkInput } from '../interfaces/HomeworkInput';
 import { LessonUpdate } from '../interfaces/LessonUpdate';
+import { ThemeInput } from '../interfaces/ThemeInput';
+import { MaterialInput } from '../interfaces/MaterialInput';
 
 import { DEFAULT_ATTEMPT } from './homework-attempt/reducer';
 
@@ -49,6 +51,8 @@ export interface ICourseEditionState {
   isDisplayingButtonOpenProgramCourse: boolean;
   isDisplayingButtonOpenMaterialsCourse: boolean;
   idCourse: number;
+  createThemeInputModel: ThemeInput;
+  createMaterialInputModel: MaterialInput;
 }
 export interface IUserListPage {
   userList: User[];

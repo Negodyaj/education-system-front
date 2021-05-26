@@ -1,5 +1,7 @@
 import { Course } from '../../interfaces/Courses';
+import { MaterialInput } from '../../interfaces/MaterialInput';
 import { Material } from '../../interfaces/Materials';
+import { ThemeInput } from '../../interfaces/ThemeInput';
 import { Themes } from '../../interfaces/Themes';
 import {
   COURSE_EDITION_CHANGE_DISPLAYING_BUTTON_OPEN_MATERIALS_COURSE,
@@ -14,6 +16,8 @@ import {
   COURSE_EDITION_COURSE_BY_ID,
   COURSE_EDITION_ALL_THEMES,
   COURSE_EDITION_ALL_MATERIALS,
+  CREATE_THEME,
+  CREATE_MATERIAL,
 } from '../actionTypes';
 
 export type CourseEditionActions =
@@ -28,6 +32,8 @@ export type CourseEditionActions =
   | ReturnType<typeof setIdCourse>
   | ReturnType<typeof getCourseById>
   | ReturnType<typeof getThemes>
+  | ReturnType<typeof createTheme>
+  | ReturnType<typeof createMaterial>
   | ReturnType<typeof getMaterials>;
 
 export const setCourseEditionIsLoadingAction = () =>
@@ -94,6 +100,18 @@ export const getThemes = () =>
   ({
     type: COURSE_EDITION_ALL_THEMES,
     payload: undefined,
+  } as const);
+
+export const createTheme = (newTheme: ThemeInput) =>
+  ({
+    type: CREATE_THEME,
+    payload: newTheme,
+  } as const);
+
+export const createMaterial = (newMaterial: MaterialInput) =>
+  ({
+    type: CREATE_MATERIAL,
+    payload: newMaterial,
   } as const);
 
 export const getMaterials = () =>

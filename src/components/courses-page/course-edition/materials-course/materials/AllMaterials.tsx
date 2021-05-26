@@ -2,9 +2,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { ChildIndex } from '../../../../../enums/ChildIndex';
 import SearchComponent from '../../../../../shared/components/search-component/SearchComponent';
 import { RoundButton } from '../../../../../shared/styled-components/buttonStyledComponent';
 import { IRootState } from '../../../../../store';
+import { toggleModalWindow } from '../../../../../store/modal-window/action-creators';
 
 import {
   AddingNewMaterialInCourse,
@@ -28,6 +30,10 @@ const AllMaterials = () => {
     setSearchWord(str);
   };
 
+  const openUpModalCreateMaterial = () => {
+    dispatch(toggleModalWindow(ChildIndex.NewMaterial));
+  };
+
   /* const addNewThemeInProgramCourse = (theme: Themes) => {
           if (checkTheThemeInTheCourse(theme.id)) {
               const courseTheme: CourseTheme = {
@@ -43,7 +49,7 @@ const AllMaterials = () => {
       <AllMaterialsHeader>
         <TextForHeaders>Материалы</TextForHeaders>
         <ButtonGroup>
-          <RoundButton>
+          <RoundButton onClick={openUpModalCreateMaterial}>
             <FontAwesomeIcon icon="plus" />
           </RoundButton>
           <RoundButton>

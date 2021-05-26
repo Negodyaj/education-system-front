@@ -1,11 +1,22 @@
-import { all, call, put, takeEvery, takeLatest } from 'redux-saga/effects';
+import {
+  all,
+  call,
+  put,
+  select,
+  takeEvery,
+  takeLatest,
+} from 'redux-saga/effects';
 
 import { Course } from '../../interfaces/Courses';
+import { MaterialInput } from '../../interfaces/MaterialInput';
 import { Material } from '../../interfaces/Materials';
+import { ThemeInput } from '../../interfaces/ThemeInput';
 import { Themes } from '../../interfaces/Themes';
-import { sendGetRequest } from '../../services/http.service';
+import { sendGetRequest, sendPostRequest } from '../../services/http.service';
 import { isCourse } from '../../services/type-guards/course';
+import { isMaterial } from '../../services/type-guards/material';
 import { isMaterialArr } from '../../services/type-guards/materialArr';
+import { isTheme } from '../../services/type-guards/theme';
 import { isThemesArr } from '../../services/type-guards/themesArr';
 import { coursesUrl, materialsUrl, themesUrl } from '../../shared/consts';
 import { tryGetErrorFromResponse } from '../../shared/helpers/http-response.helper';
@@ -13,32 +24,50 @@ import {
   COURSE_EDITION_ALL_MATERIALS,
   COURSE_EDITION_ALL_THEMES,
   COURSE_EDITION_COURSE_BY_ID,
+  CREATE_MATERIAL,
+  CREATE_THEME,
 } from '../actionTypes';
 import { setIsLoaded, setIsLoading } from '../app/action-creators';
 import { constructNotificationError } from '../core/error-notification-constructor';
+import { constructSuccessNotification } from '../core/sucess-notification-constructor';
+import { loadTagsListWatcherAction } from '../tags-page/action-creators';
 
 import {
   getAllMaterials,
   getAllThemes,
   getCourseById,
   getCourseByIdLoaded,
+  setCourseEditionFailAction,
 } from './action-creators';
+import { materialToCreateSelector, themeToCreateSelector } from './selector';
 
 function* courseByIdPageRootSaga() {
   yield all([
     getCourseByIdSagaWatcher(),
     getThemesSagaWatcher(),
+    createThemeSagaWatcher(),
     getMaterialsSagaWatcher(),
+    createMaterialSagaWatcher(),
   ]);
 }
 function* getCourseByIdSagaWatcher() {
   yield takeLatest(COURSE_EDITION_COURSE_BY_ID, getCourseByIdSagaWorker);
 }
+
 function* getThemesSagaWatcher() {
   yield takeLatest(COURSE_EDITION_ALL_THEMES, getThemesSagaWorker);
 }
+
+function* createThemeSagaWatcher() {
+  yield takeLatest(CREATE_THEME, createThemeSagaWorker);
+}
+
 function* getMaterialsSagaWatcher() {
   yield takeLatest(COURSE_EDITION_ALL_MATERIALS, getMaterialsSagaWorker);
+}
+
+function* createMaterialSagaWatcher() {
+  yield takeLatest(CREATE_MATERIAL, createMaterialSagaWorker);
 }
 
 function* getCourseByIdSagaWorker({
@@ -71,10 +100,39 @@ function* getThemesSagaWorker() {
 
   const error = tryGetErrorFromResponse(themes);
 
-  if (error) yield put(constructNotificationError(error));
-  else yield put(getAllThemes(themes));
+  if (error) {
+    yield put(constructNotificationError(error));
+  } else {
+    yield put(loadTagsListWatcherAction());
+    yield put(getAllThemes(themes));
+  }
 
   yield put(setIsLoaded());
+}
+
+function* createThemeSagaWorker() {
+  try {
+    const newTheme: ThemeInput = yield select(themeToCreateSelector);
+    const createThemeRequestResponse: Themes = yield call(async () =>
+      sendPostRequest<Themes>(themesUrl, isTheme, newTheme).then(
+        (response) => response
+      )
+    );
+    const errorResponse = tryGetErrorFromResponse(createThemeRequestResponse);
+
+    if (errorResponse) {
+      yield constructNotificationError(errorResponse);
+    } else {
+      yield put(
+        constructSuccessNotification(
+          `Тема ${createThemeRequestResponse.name} успешно добавлена`
+        )
+      );
+      yield getThemesSagaWorker();
+    }
+  } catch (error) {
+    yield put(setCourseEditionFailAction(error));
+  }
 }
 
 function* getMaterialsSagaWorker() {
@@ -92,6 +150,29 @@ function* getMaterialsSagaWorker() {
   else yield put(getAllMaterials(materials));
 
   yield put(setIsLoaded());
+}
+
+function* createMaterialSagaWorker() {
+  try {
+    const newMaterial: MaterialInput = yield select(materialToCreateSelector);
+    const createMaterialRequestResponse: Material = yield call(async () =>
+      sendPostRequest<Material>(materialsUrl, isMaterial, newMaterial).then(
+        (response) => response
+      )
+    );
+    const errorResponse = tryGetErrorFromResponse(
+      createMaterialRequestResponse
+    );
+
+    if (errorResponse) {
+      yield constructNotificationError(errorResponse);
+    } else {
+      yield put(constructSuccessNotification(`Материал успешно добавлен`));
+      yield getMaterialsSagaWorker();
+    }
+  } catch (error) {
+    yield put(setCourseEditionFailAction(error));
+  }
 }
 
 export default courseByIdPageRootSaga;
