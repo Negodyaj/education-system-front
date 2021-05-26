@@ -23,7 +23,7 @@ function GroupNavMenu() {
           className={toggleState === 'lessons' ? 'tabs active-tabs' : 'tabs'}
           onClick={() => toggleTab('lessons')}>
           {' '}
-          Lesson
+          Занятия
         </Link>
         <Link
           to="/group/journal"
