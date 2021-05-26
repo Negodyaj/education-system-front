@@ -1,22 +1,21 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { Homework } from '../../../../interfaces/Homework';
 import { homeworkUrl } from '../../../../shared/consts';
 import { RoundButton } from '../../../../shared/styled-components/buttonStyledComponent';
 
-function HomeworkCheckButton(props: { hw: Homework }) {
+function HomeworkViewButton(props: { hw: Homework }) {
   const { hw } = props;
   const history = useHistory();
-  const checkOnClick = () => {
+  const viewOnClick = () => {
     history.push(`${homeworkUrl}/${hw.id}/attempts`);
   };
 
   return (
-    <RoundButton title="проверить" onClick={checkOnClick}>
-      <FontAwesomeIcon icon="spell-check" />
+    <RoundButton title="просмотреть" onClick={viewOnClick}>
+      <FontAwesomeIcon icon="eye" />
     </RoundButton>
   );
 }
-export default HomeworkCheckButton;
+export default HomeworkViewButton;

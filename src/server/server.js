@@ -5,6 +5,7 @@ import * as homeworks from '../store/homework-page/mock/homeworks.json';
 import * as themes from './mock-data/themes.json';
 import * as attempts from './mock-data/attempts.json';
 import convertHomeworkPostToHomework from './converters/homeworkPostToHomework';
+import { convertAttemptPostToResponse } from './converters/attemptPostToResponse';
 
 function* idGenerator() {
   let n = 10000;
@@ -75,11 +76,13 @@ const runMock = () => {
       this.post(
         'https://80.78.240.16:7070/api/Homework/:id/attempt',
         (schema, request) => {
-          let newRecord = JSON.parse(request.requestBody);
+          let newRecord = convertAttemptPostToResponse(
+            JSON.parse(request.requestBody)
+          );
           let { id } = request.params;
-          schema.db.attemptsTable.find(id).attempts.push([newRecord]);
+          schema.db.attemptsTable.find(id).attempts.push(newRecord);
 
-          return schema.db.attemptsTable;
+          return newRecord;
         }
       );
     },

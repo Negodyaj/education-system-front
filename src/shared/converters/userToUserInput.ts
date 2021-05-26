@@ -3,7 +3,7 @@ import { UserInput } from '../../interfaces/UserInput';
 const initUserInput: UserInput = {
   firstName: '',
   lastName: '',
-  birthDate: '',
+  birthDate: new Date().toLocaleDateString(),
   userPic: '',
   phone: '',
   email: '',
@@ -11,9 +11,9 @@ const initUserInput: UserInput = {
   password: '',
   roles: [],
 };
-export const convertUserToUserInput = (UpdatedUser: User) => {
+export const convertUserToUserInput = (InitUser: User) => {
   Object.keys(initUserInput).map((k) => {
-    (initUserInput as any)[k] = UpdatedUser[k as keyof UserInput];
+    (initUserInput as any)[k] = InitUser[k as keyof UserInput];
 
     return k;
   });

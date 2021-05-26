@@ -91,6 +91,7 @@ export interface IHomeworkAttemptState {
   currentHomework?: Homework;
   currentGroup?: typeof INIT_HOMEWORK.groupsIds;
   currentAttempt?: Attempt;
+  currentAuthorId: number;
   allGroupsInCollege: AllGroupsInCollege[];
   defaultAttempt: AttemptInput;
 }

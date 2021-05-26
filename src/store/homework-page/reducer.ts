@@ -37,6 +37,7 @@ const TEACHER_VIEW: HomeworkPageOptions = {
     },
     [HWListTypes.Appointed]: {
       checkButton: true,
+      editButton: true,
     },
   },
 };
@@ -45,7 +46,7 @@ const TUTOR_VIEW: HomeworkPageOptions = {
   homeworkList: {},
   homeworkButtonsCell: {
     [HWListTypes.Appointed]: {
-      checkButton: true,
+      viewButton: true,
     },
   },
 };
