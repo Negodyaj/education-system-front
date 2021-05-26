@@ -5,17 +5,15 @@ import {
   HomeworkDescription,
   HomeworkItem,
   HomeworkItemHeader,
-  HomeworkName,
-  HomeworkProp,
   HomeworkThemeName,
 } from '../styled-components/consts';
+import { LinkDetector } from '../../../shared/components/link-detector/LinkDetector';
 
 import HomeworkButtonsCell, {
   HomeworkButtonsCellOptions,
 } from './HomeworkButtonsCell';
 import HomeworkItemName from './HomeworkItemName';
 import IsOptional from './IsOptional';
-import { LinkDetector } from './LinkDetector';
 
 const HomeworkItemBody = (props: {
   hw: Homework;
@@ -23,6 +21,7 @@ const HomeworkItemBody = (props: {
 }) => {
   const { hw, buttons } = props;
   const [descriptionVisibility, setDescriptionVisibility] = useState(false);
+  const stringForDetecting = hw.description ? hw.description : 'нет описания';
   const toggleDescriptionVisibility = () => {
     setDescriptionVisibility(!descriptionVisibility);
   };
@@ -38,7 +37,7 @@ const HomeworkItemBody = (props: {
         <HomeworkButtonsCell hw={hw} buttons={buttons} />
       </HomeworkItemHeader>
       <HomeworkDescription>
-        <LinkDetector hw={hw} />
+        <LinkDetector stringForDetecting={stringForDetecting} />
       </HomeworkDescription>
     </HomeworkItem>
   );
