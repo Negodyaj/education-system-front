@@ -1,5 +1,4 @@
 import { ChildIndex } from '../../enums/ChildIndex';
-import { CourseInput } from '../../interfaces/CourseInput';
 import { TOGGLE_MODAL_WINDOW } from '../actionTypes';
 import { INIT_COURSE_TO_REGISTER } from '../courses-page/reducer';
 import {
@@ -20,7 +19,7 @@ const initialState: ModalWindowState = {
       defaultValues: INIT_COURSE_TO_REGISTER,
     },
     [ChildIndex.AppointHomework]: {
-      headerName: 'Назначить ДЗ на группу',
+      headerName: 'Назначить ДЗ на группу:',
       defaultValues: APPOINT_FORM_DEFAULTS,
     },
     [ChildIndex.NewLesson]: {

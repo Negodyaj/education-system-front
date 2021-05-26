@@ -48,7 +48,9 @@ function NavMenu(props: NavMenuProps) {
             label="Пользователи"
           />
         )}
-        {(roleId === Role.Teacher || roleId === Role.Methodist) && (
+        {[Role.Teacher, Role.Methodist, Role.Tutor, Role.Student].includes(
+          roleId
+        ) && (
           <NavMenuSimpleLink
             route="homework"
             faIcon="book-reader"

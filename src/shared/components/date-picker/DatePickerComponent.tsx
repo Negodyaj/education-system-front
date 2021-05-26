@@ -31,6 +31,7 @@ function DatePickerComponent(props: DatePickerComponentProps) {
     <Controller
       control={formContext?.control}
       name={inputSettings.name}
+      rules={inputSettings.registerOptions}
       render={({ field: { value } }) => (
         <DatePicker
           selected={convertStringToDate(value)}
