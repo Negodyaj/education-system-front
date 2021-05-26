@@ -164,5 +164,43 @@
         "tags": [],
         "homeworkAttempts": [],
         "themes": []
+    },
+    {
+        "id": 12,
+        "description": "Функции-генераторы. Задачи: https://docs.google.com/document/d/1Fg6hlbxoBPWaFNOYp0UCyEKsgbJMqdxm6TsShEJizXw/edit",
+        "isOptional": false,
+        "course": {
+            "id": 4,
+            "name": "Frontend",
+            "description": "Специальный курс Frontend для студентов успешно прошедших базовый курс",
+            "duration": 0,
+            "isDeleted": false,
+            "materials": [
+                {
+                    "id": 1,
+                    "link": "https://htmlreference.io/",
+                    "description": "html"
+                },
+                {
+                    "id": 3,
+                    "link": "http://getbootstrap.com ",
+                    "description": "bootstrap"
+                },
+                {
+                    "id": 4,
+                    "link": "www.typescriptlang.org (https://www.typescriptlang.org/download/)",
+                    "description": "TypeScript"
+                }
+            ]
+        },
+        "groupsIds": [],
+        "tags": [],
+        "homeworkAttempts": [],
+        "themes": [{
+            "id": 155,
+            "name": "Итераторы, генераторы",
+            "isDeleted": false,
+            "tags": []
+    }]
     }
 ]

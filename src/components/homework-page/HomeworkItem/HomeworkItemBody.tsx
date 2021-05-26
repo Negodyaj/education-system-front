@@ -15,6 +15,7 @@ import HomeworkButtonsCell, {
 } from './HomeworkButtonsCell';
 import HomeworkItemName from './HomeworkItemName';
 import IsOptional from './IsOptional';
+import { LinkDetector } from './LinkDetector';
 
 const HomeworkItemBody = (props: {
   hw: Homework;
@@ -37,7 +38,7 @@ const HomeworkItemBody = (props: {
         <HomeworkButtonsCell hw={hw} buttons={buttons} />
       </HomeworkItemHeader>
       <HomeworkDescription>
-        {hw.description ? hw.description : 'нет описания'}
+        <LinkDetector hw={hw} />
       </HomeworkDescription>
     </HomeworkItem>
   );
