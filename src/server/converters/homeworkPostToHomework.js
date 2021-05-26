@@ -4,7 +4,7 @@ import * as themes from '../mock-data/themes.json';
 import { newId } from '../server';
 
 const convertHomeworkPostToHomework = (hw) => {
-  console.log([hw.groupId]);
+  console.log(hw.themeIds);
 
   return {
     id: newId.next().value || -1,
@@ -16,7 +16,11 @@ const convertHomeworkPostToHomework = (hw) => {
       courses.default.filter((course) => course.id === hw.courseId)[0] || [],
     groupsIds: hw.groupId ? [hw.groupId] : [],
     tags: tags.default.filter((tag) => hw.tagIds?.includes(tag.id)),
-    themes: themes.default.filter((theme) => hw.themeIds?.includes(theme.id)),
+    themes: themes.default.filter((theme) =>
+      hw.themeIds
+        ? hw.themeIds?.map((id) => +id).includes(theme.id)
+        : hw.themes.includes(theme.id)
+    ),
     homeworkAttempts: [],
   };
 };

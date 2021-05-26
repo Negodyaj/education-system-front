@@ -43,6 +43,10 @@ const runMock = () => {
         (schema) => schema.db.homeworksTable
       );
       this.get(
+        'https://80.78.240.16:7070/api/Course/theme',
+        (schema) => schema.db.themesTable
+      );
+      this.get(
         'https://80.78.240.16:7070/api/Homework/:id',
         (schema, request) => {
           let { id } = request.params;
