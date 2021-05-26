@@ -16,6 +16,7 @@ export const ModalBackground = styled.div`
 
 export const ModalFormCreate = styled.div`
   display: grid;
+  position: absolute;
   grid-template-rows: 70px 1fr 50px;
   opacity: 1;
   border: 3px solid rgb(255, 255, 255);
@@ -37,7 +38,6 @@ export const ModalHeader = styled.div`
 export const HeadModal = styled.div`
   display: flex;
   margin-left: 0;
-  padding-top: 15px;
   font-size: 20px;
 `;
 

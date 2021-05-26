@@ -25,15 +25,12 @@ import { AllGroupsInCollege } from '../interfaces/AllGroupsInCollege';
 import { AttemptInput } from '../interfaces/AttemptInput';
 import { ChildIndex } from '../enums/ChildIndex';
 import { ModalWindowSettings } from '../shared/components/modal-window/ModalWindow';
+import { PaymentInput } from '../components/interfaces/PaymentInput';
 import { HomeworkInput } from '../interfaces/HomeworkInput';
 import { LessonUpdate } from '../interfaces/LessonUpdate';
 
 import { DEFAULT_ATTEMPT } from './homework-attempt/reducer';
 
-export interface IAppState {
-  isLoggedIn: boolean;
-  loadersCount: number;
-}
 export interface ICoursePageState {
   courseList: Course[];
   isOpenModalCreateCourse: boolean;
@@ -121,10 +118,10 @@ export interface IModalDeleteCourse {
 }
 
 export interface IPaymentFormState {
-  formVisibility: string;
   userForPayment: User | undefined;
   paymentList: PaymentResponse[];
   isDataLoading: boolean;
+  newPaymentInput: PaymentInput;
 }
 
 export interface ILesson {
