@@ -9,7 +9,12 @@ import {
 } from '../../../services/http.service';
 import { isHomework } from '../../../services/type-guards/homework';
 import { isHomeworkArr } from '../../../services/type-guards/homeworkArr';
-import { coursesUrl, homeworkUrl, tagsUrl } from '../../../shared/consts';
+import {
+  coursesUrl,
+  homeworkUrl,
+  tagsUrl,
+  themesUrl,
+} from '../../../shared/consts';
 import { tryGetErrorFromResponse } from '../../../shared/helpers/http-response.helper';
 import { makeNotification } from '../../../shared/helpers/notificationHelpers';
 import {
@@ -25,6 +30,8 @@ import { setTagsListWasLoaded } from '../../tags-page/action-creators';
 import { isCourseArr } from '../../../services/type-guards/courseArr';
 import { Tag } from '../../../interfaces/Tag';
 import { isTagArr } from '../../../services/type-guards/tagArr';
+import { Themes } from '../../../interfaces/Themes';
+import { isThemesArr } from '../../../services/type-guards/themesArr';
 
 import {
   addHomeworkForModalWatcherAction,
@@ -32,10 +39,11 @@ import {
   loadCourseForHWModalWatcherAction,
   loadHomeworkForModalSuccess,
   loadTagsForHWModalWatcherAction,
+  loadThemesForHWModalWatcherAction,
 } from './action-creators';
 
 export function* addHWModalRootSaga() {
-  yield all([getHWForModalSagaWatcher()]);
+  yield all([getHWForModalSagaWatcher(), addHWForModalWatcher()]);
 }
 export function* getHWForModalSagaWatcher() {
   yield takeLatest(GET_HOMEWORKS_FOR_MODAL, loadHMListForModalSagaWorker);
@@ -52,6 +60,7 @@ export function* loadHMListForModalSagaWorker() {
     const error = tryGetErrorFromResponse(homeworks);
     yield loadCoursesForAddModalSagaWorker();
     yield loadTagsForAddModalSagaWorker();
+    yield loadThemesForAddModalSagaWorker();
 
     if (error) yield put(constructNotificationError(error));
     else yield put(loadHomeworkForModalSuccess(homeworks));
@@ -65,7 +74,6 @@ export function* loadHMListForModalSagaWorker() {
 
 export function* addHWForModalWatcher() {
   yield takeLatest(ADD_HOMEWORK_OR_MODAL, addHWForModalSagaWorker);
-  console.log('dfsfds');
 }
 export function* addHWForModalSagaWorker({
   payload,
@@ -104,7 +112,6 @@ export function* loadCoursesForAddModalSagaWorker() {
       )
     );
     const error = tryGetErrorFromResponse(courses);
-    console.log(courses);
 
     if (error) yield put(constructNotificationError(error));
     else yield put(loadCourseForHWModalSuccess(courses));
@@ -119,11 +126,26 @@ export function* loadTagsForAddModalSagaWorker() {
       sendGetRequest<Tag[]>(`${tagsUrl}`, isTagArr).then((response) => response)
     );
     const error = tryGetErrorFromResponse(tags);
-    console.log(tags);
 
     if (error) yield put(constructNotificationError(error));
     else yield put(loadTagsForHWModalWatcherAction(tags));
   } catch {
-    console.log('error setTagsListWasLoaded');
+    console.log('error loadTagsForAddModalSagaWorker');
+  }
+}
+
+export function* loadThemesForAddModalSagaWorker() {
+  try {
+    const themes: Themes[] = yield call(async () =>
+      sendGetRequest<Themes[]>(`${themesUrl}`, isThemesArr).then(
+        (response) => response
+      )
+    );
+    const error = tryGetErrorFromResponse(themes);
+
+    if (error) yield put(constructNotificationError(error));
+    else yield put(loadThemesForHWModalWatcherAction(themes));
+  } catch {
+    console.log('error loadThemesForAddModalSagaWorker');
   }
 }
