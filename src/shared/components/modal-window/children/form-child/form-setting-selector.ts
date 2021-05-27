@@ -17,6 +17,8 @@ export const selectFormSetting = (index: ChildIndex, key: InputNames) => {
       return getPaymentFormElementSettings(key);
     case ChildIndex.AppointHomework:
       return getAppointFormElementSettings(key);
+    case ChildIndex.EditHomework:
+      return getHomeworkAddForm(key);
     case ChildIndex.AddHomework:
       return getHomeworkAddForm(key);
     case ChildIndex.NewLesson:

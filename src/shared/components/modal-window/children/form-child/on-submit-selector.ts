@@ -15,7 +15,10 @@ import {
   updateLesson,
 } from '../../../../../store/group-page/lesson/action-creators';
 import { appointHomework } from '../../../../../store/homework-page/action-creators';
-import { addHomeworkForModalWatcherAction } from '../../../../../store/homework-page/add-homework-modal/action-creators';
+import {
+  addHomeworkForModalWatcherAction,
+  updateHWForEditModalWatcherAction,
+} from '../../../../../store/homework-page/add-homework-modal/action-creators';
 import { toggleModalWindow } from '../../../../../store/modal-window/action-creators';
 import { createPaymentWatcher } from '../../../../../store/payment/action-creators';
 
@@ -34,6 +37,11 @@ export function selectOnSubmit(index: ChildIndex, dispatch: Dispatch<any>) {
     case ChildIndex.AddHomework:
       return (dataHomework: HomeworkInput) => {
         dispatch(addHomeworkForModalWatcherAction(dataHomework));
+        dispatch(toggleModalWindow(ChildIndex.Closed));
+      };
+    case ChildIndex.EditHomework:
+      return (dataHomework: HomeworkInput) => {
+        dispatch(updateHWForEditModalWatcherAction(dataHomework));
         dispatch(toggleModalWindow(ChildIndex.Closed));
       };
     case ChildIndex.NewLesson:

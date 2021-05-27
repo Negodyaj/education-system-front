@@ -100,6 +100,7 @@ export interface IAddHomeworkModal {
   coursesEntities: DictionaryEntity[];
   tagsForHomeworkEntities: DictionaryEntity[];
   themesForHomeworkEntities: DictionaryEntity[];
+  homeworkForUpdate: HomeworkInput;
 }
 export interface INotificationContainerState {
   notifications: {
