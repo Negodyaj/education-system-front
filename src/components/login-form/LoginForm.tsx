@@ -1,5 +1,6 @@
-import { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { authenticate } from '../../store/login-form/action-creators';
 import './LoginForm.css';
@@ -7,6 +8,7 @@ import '../../App.css';
 
 function LoginForm() {
   const [login, setLogin] = useState('');
+  const [passwordHS, setPasswordHS] = useState(true);
   const [password, setPassword] = useState('');
   const dispatch = useDispatch();
 
@@ -32,6 +34,21 @@ function LoginForm() {
       loginButtonOnClick();
     }
   };
+
+  const eyeButton = document.getElementById('eye');
+  const showHidePassword = () => {
+    const passwordSH = document.getElementById('password-id');
+
+    if (passwordSH !== null && passwordSH.getAttribute('type') === 'password') {
+      passwordSH.setAttribute('type', 'text');
+      setPasswordHS(false);
+    } else {
+      passwordSH?.setAttribute('type', 'password');
+      setPasswordHS(true);
+    }
+  };
+
+  eyeButton?.addEventListener('onClick', showHidePassword);
 
   return (
     <div className="login-form">
@@ -64,6 +81,13 @@ function LoginForm() {
               handleKeyPress(event);
             }}
           />
+          <button
+            className={passwordHS ? 'round-button close' : 'round-button open'}
+            type="button"
+            onClick={showHidePassword}
+            id="eye">
+            <FontAwesomeIcon icon="eye" />
+          </button>
         </label>
       </div>
       <button className="common-button" onClick={loginButtonOnClick}>
