@@ -14,7 +14,7 @@ export const defaultAddHomeworkValues: HomeworkInput = {
   description: '',
   isOptional: false,
   tags: [],
-  themes: [],
+  themeIds: [],
   courseId: 0,
 };
 

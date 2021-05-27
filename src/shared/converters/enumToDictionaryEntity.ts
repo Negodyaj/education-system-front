@@ -1,6 +1,7 @@
 import { DictionaryEntity } from '../../interfaces/DictionaryEntity';
 import { Role } from '../../enums/role';
 import { HWListTypes } from '../../store/homework-page/reducer';
+import { HWAttemptStatuses } from '../../enums/hwAttemptStatuses';
 
 export const convertEnumToDictionary = (enumArg: any): DictionaryEntity[] =>
   Object.keys(enumArg)
@@ -28,4 +29,7 @@ const dictionary: { [key: string]: string } = {
   [HWListTypes.Appointed]: 'Назначенные',
   [HWListTypes.Proposed]: 'Предложенные',
   [HWListTypes.Submitted]: 'Ожидают проверки',
+  [HWAttemptStatuses[HWAttemptStatuses.Await]]: 'Ожидает проверки',
+  [HWAttemptStatuses[HWAttemptStatuses.Late]]: 'Отправлено с опозданием',
+  [HWAttemptStatuses[HWAttemptStatuses.Passed]]: 'Сдано',
 };
