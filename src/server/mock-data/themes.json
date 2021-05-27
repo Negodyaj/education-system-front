@@ -70,5 +70,11 @@
         "name": "DOM events",
         "isDeleted": false,
         "tags": []
+    },
+    {
+        "id": 155,
+        "name": "Итераторы, генераторы",
+        "isDeleted": false,
+        "tags": []
     }
 ]

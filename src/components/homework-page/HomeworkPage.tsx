@@ -8,7 +8,7 @@ import { getGroupsByTeacherId } from '../../store/homework-page/homework-appoint
 
 import HomeworkPageCore from './HomeworkPageCore';
 
-function HomeworkPage() {
+const HomeworkPage = () => {
   const appState = useSelector((state: IRootState) => state);
   const { currentUserRoleId } = useSelector(
     (state: IRootState) => state.roleSelector
@@ -34,5 +34,6 @@ function HomeworkPage() {
       }
     />
   );
-}
-export default HomeworkPage;
+};
+
+export default React.memo(HomeworkPage);

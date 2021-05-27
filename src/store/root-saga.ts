@@ -11,6 +11,7 @@ import { userPageRootSaga } from './user-page/saga';
 import { tagsPageRootSaga } from './tags-page/saga';
 import { coursePageRootSaga } from './courses-page/saga';
 import groupRootSaga from './group-page/group-info-component/saga';
+import { paymentRootSaga } from './payment/saga';
 
 export function* rootSaga() {
   yield all([
@@ -24,6 +25,7 @@ export function* rootSaga() {
     tagsPageRootSaga(),
     coursePageRootSaga(),
     lessonByGroupListPageRootSaga(),
+    paymentRootSaga(),
     groupRootSaga(),
   ]);
 }

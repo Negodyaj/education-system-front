@@ -9,14 +9,16 @@ import './GroupInfoComponent.css';
 import BaseGroupInfoComponent from './base-group-info-component/BaseGroupInfoComponent';
 import GroupMembersList from './group-members-list/GroupMembersList';
 
-function GroupInfoComponent() {
+function GroupInfoComponent(props: { id: number }) {
+  const { id } = props;
+
   const dispatch = useDispatch();
   const groupState = useSelector(
     (state: IRootState) => state.groupInfoComponent
   );
 
   useEffect(() => {
-    dispatch(getGroup(14));
+    dispatch(getGroupToViewById(id));
   }, []);
 
   return (

@@ -2,7 +2,6 @@ import { ErrorMessage } from '@hookform/error-message';
 import React from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import { InputNames } from '../../../enums/inputNames';
 import {
   ExternalInputSettings,
   FormElementSettings,
@@ -24,7 +23,6 @@ function FormElement(props: { formElementSettings?: FormElementSettings }) {
 
   const { inputType } = formElementSettings.inputSettings;
   const inputSettings = { ...formElementSettings.inputSettings };
-  console.log(inputSettings);
 
   return (
     <div className="form-row">

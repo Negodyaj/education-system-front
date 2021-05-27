@@ -9,7 +9,7 @@ import {
 import { IRootState } from '../../../../store';
 import { openItemsSet } from '../../../../store/homework-page/action-creators';
 
-function OpenItemsSetButton(props: { openedItemName: string }) {
+const OpenItemsSetButton = (props: { openedItemName: string }) => {
   const { openedItemName } = props;
   const dispatch = useDispatch();
   const { openedItemSetsNames } = useSelector(
@@ -27,6 +27,6 @@ function OpenItemsSetButton(props: { openedItemName: string }) {
       }
     />
   );
-}
+};
 
-export default OpenItemsSetButton;
+export default React.memo(OpenItemsSetButton);

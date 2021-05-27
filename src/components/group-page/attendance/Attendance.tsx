@@ -5,7 +5,7 @@ import { isTypeNode } from 'typescript';
 import { IRootState } from '../../../store';
 import { getGroupToViewById } from '../../../store/group-page/group-info-component/thunk';
 import { getAttendanceByLessonId } from '../../../store/group-page/attendance/thunk';
-import { getLessonsByGroup } from '../../../store/group-page/lesson/thunk';
+import { getLessonsByGroup } from '../../../store/group-page/lesson/action-creators';
 
 import {
   AttendanceHead,
