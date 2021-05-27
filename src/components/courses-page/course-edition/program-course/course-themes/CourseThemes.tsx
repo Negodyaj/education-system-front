@@ -52,7 +52,7 @@ const CourseThemes = () => {
   };
 
   const sendDataToChangeTheListOfThemes = (arrIdThemes: number[]) => {
-    let arrThemes: ThemeInCourse[] = [];
+    const arrThemes: ThemeInCourse[] = [];
     for (let i = 0; i < arrIdThemes.length; i++) {
       arrThemes.push({
         id: arrIdThemes[i],

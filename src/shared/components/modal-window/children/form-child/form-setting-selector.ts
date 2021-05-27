@@ -10,6 +10,7 @@ import { getMaterialFormElementSettings } from '../../../../helpers/materialForm
 import { getPaymentFormElementSettings } from '../../../../helpers/paymentFormRegisterSettingByKey';
 import { getHomeworkAddForm } from '../../../../helpers/addHomeworkForm';
 import { getThemeFormElementSettings } from '../../../../helpers/themeFormRegisterSettingByKey';
+import { cloneHomeworkForm } from '../../../../helpers/cloneHomeworkForm';
 
 export const selectFormSetting = (index: ChildIndex, key: InputNames) => {
   switch (index) {
@@ -19,8 +20,12 @@ export const selectFormSetting = (index: ChildIndex, key: InputNames) => {
       return getPaymentFormElementSettings(key);
     case ChildIndex.AppointHomework:
       return getAppointFormElementSettings(key);
+    case ChildIndex.EditHomework:
+      return getHomeworkAddForm(key);
     case ChildIndex.AddHomework:
       return getHomeworkAddForm(key);
+    case ChildIndex.CloneHomework:
+      return cloneHomeworkForm(key);
     case ChildIndex.NewLesson:
       return getLessonFormElementSettings(key);
     case ChildIndex.UpdateLesson:
