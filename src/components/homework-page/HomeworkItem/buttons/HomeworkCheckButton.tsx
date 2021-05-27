@@ -10,7 +10,7 @@ function HomeworkCheckButton(props: { hw: Homework }) {
   const { hw } = props;
   const history = useHistory();
   const checkOnClick = () => {
-    history.push(`${homeworkUrl}/${hw.id}/attempts`);
+    history.push(`${homeworkUrl}/${hw.id}/attempt`);
   };
 
   return (

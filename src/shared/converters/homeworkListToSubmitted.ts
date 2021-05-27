@@ -1,14 +1,24 @@
+import { Attempt } from '../../interfaces/Attempt';
 import { Homework } from '../../interfaces/Homework';
 import { IndexedObj } from '../../interfaces/IndexedObj';
+import { getCurrentUserFromStorage } from '../../services/auth.service';
 import { INIT_HOMEWORK } from '../tmp-mock-data/hw/initHomewwork';
 
-export const convertHomeworkListForTeacherMode = (
+export const convertHomeworkListToSubmitted = (
   actionPayload: Homework[]
 ): IndexedObj<Homework[]> => {
+  const currentUser = getCurrentUserFromStorage();
+  const availableGroups = currentUser.groupIds;
   const previousCourseName: string[] | undefined = [];
   const result: IndexedObj<Homework[]> = {};
   actionPayload.map((hw) => {
-    if (hw.groupsIds?.length) {
+    if (
+      hw.groupsIds?.length &&
+      [...hw.groupsIds].filter((gId) => availableGroups.includes(gId)).length &&
+      hw.homeworkAttempts?.filter(
+        (attempt) => attempt.author.id === currentUser.id
+      ).length
+    ) {
       const index = `${hw.course.name}`;
 
       if (previousCourseName.includes(index)) {

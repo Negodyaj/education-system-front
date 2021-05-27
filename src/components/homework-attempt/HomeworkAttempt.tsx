@@ -17,18 +17,13 @@ import {
 } from './styledComponents';
 import { HeaderComponent } from './header-component/HeaderComponent';
 import AttemptCreator from './attempt-creator/AttemptCreator';
+import AttemptChecker from './attempt-checker/AttemptChecker';
 
 function HomeworkAttempt() {
   const { homeworkAttempt, roleSelector } = useSelector(
     (state: IRootState) => state
   );
-  const {
-    attemptList,
-    currentAttempt,
-    currentGroup,
-    currentHomework,
-    allGroupsInCollege,
-  } = homeworkAttempt;
+  const { attemptList, currentHomework } = homeworkAttempt;
   const { currentUserRoleId } = roleSelector;
   const dispatch = useDispatch();
   const { hwId } = useParams<{ hwId?: string }>();
@@ -52,18 +47,7 @@ function HomeworkAttempt() {
       {currentUserRoleId === Role.Student ? (
         <AttemptCreator />
       ) : (
-        <AttemptCheckingContainer>
-          <NavPanelComponent attemptList={attemptList} />
-          <Content>
-            {currentAttempt?.comment && (
-              <LinkDetector
-                stringForDetecting={
-                  attemptList?.length ? currentAttempt.comment : 'нет ответов'
-                }
-              />
-            )}
-          </Content>
-        </AttemptCheckingContainer>
+        <AttemptChecker />
       )}
     </>
   );

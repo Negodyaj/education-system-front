@@ -13,8 +13,14 @@ export const useGroupsWithAttemptsForCurrentTeacher = () =>
   useSelector((state: IRootState) => state.homeworkAttempt.currentHomework);
 
 export const useCoursesForHomeworkAddModal = () =>
+  useSelector((state: IRootState) => state.addHomeWorkModal.coursesEntities);
+export const useTagsForHomeworkAddModal = () =>
   useSelector(
-    (state: IRootState) => state.addHomeWorkModal.coursesForCloneEntities
+    (state: IRootState) => state.addHomeWorkModal.tagsForHomeworkEntities
+  );
+export const useThemesForHomeworkAddModal = () =>
+  useSelector(
+    (state: IRootState) => state.addHomeWorkModal.themesForHomeworkEntities
   );
 
 export const useGetThemesEntities = () =>

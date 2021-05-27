@@ -28,6 +28,7 @@ import { ModalWindowSettings } from '../shared/components/modal-window/ModalWind
 import { PaymentInput } from '../components/interfaces/PaymentInput';
 import { HomeworkInput } from '../interfaces/HomeworkInput';
 import { LessonUpdate } from '../interfaces/LessonUpdate';
+import { AttemptPut } from '../interfaces/AttemptPut';
 import { ThemeInput } from '../interfaces/ThemeInput';
 import { MaterialInput } from '../interfaces/MaterialInput';
 import { CourseMaterial } from '../components/courses-page/course-edition/materials-course/MaterialsCourse';
@@ -107,12 +108,15 @@ export interface IHomeworkAttemptState {
   currentAuthorId: number;
   allGroupsInCollege: AllGroupsInCollege[];
   defaultAttempt: AttemptInput;
+  attemptUpdate: AttemptPut;
 }
 export interface IAddHomeworkModal {
   isDataLoading: boolean;
   defaultFormValue: HomeworkInput;
   isModalHidden: boolean;
-  coursesForCloneEntities: DictionaryEntity[];
+  coursesEntities: DictionaryEntity[];
+  tagsForHomeworkEntities: DictionaryEntity[];
+  themesForHomeworkEntities: DictionaryEntity[];
 }
 export interface INotificationContainerState {
   notifications: {

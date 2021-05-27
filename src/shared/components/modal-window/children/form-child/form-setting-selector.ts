@@ -8,6 +8,7 @@ import {
 } from '../../../../helpers/lessonFormRegisterSettingByKey';
 import { getMaterialFormElementSettings } from '../../../../helpers/materialFormRegisterSettingByKey';
 import { getPaymentFormElementSettings } from '../../../../helpers/paymentFormRegisterSettingByKey';
+import { getHomeworkAddForm } from '../../../../helpers/addHomeworkForm';
 import { getThemeFormElementSettings } from '../../../../helpers/themeFormRegisterSettingByKey';
 
 export const selectFormSetting = (index: ChildIndex, key: InputNames) => {
@@ -18,6 +19,8 @@ export const selectFormSetting = (index: ChildIndex, key: InputNames) => {
       return getPaymentFormElementSettings(key);
     case ChildIndex.AppointHomework:
       return getAppointFormElementSettings(key);
+    case ChildIndex.AddHomework:
+      return getHomeworkAddForm(key);
     case ChildIndex.NewLesson:
       return getLessonFormElementSettings(key);
     case ChildIndex.UpdateLesson:

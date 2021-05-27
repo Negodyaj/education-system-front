@@ -36,5 +36,6 @@ export enum InputNames {
   HomeworkCourseId = 'courseId',
   HomeworkGroupId = 'groupId',
   HomeworkTags = 'tags',
-  HomeworkThemes = 'themes',
+  HomeworkThemes = 'themeIds',
+  HomeworkAttemptStatusId = 'homeworkAttemptStatusId',
 }
