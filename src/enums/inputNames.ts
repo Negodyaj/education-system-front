@@ -33,4 +33,5 @@ export enum InputNames {
   HomeworkGroupId = 'groupId',
   HomeworkTags = 'tags',
   HomeworkThemes = 'themeIds',
+  HomeworkAttemptStatusId = 'homeworkAttemptStatusId',
 }
