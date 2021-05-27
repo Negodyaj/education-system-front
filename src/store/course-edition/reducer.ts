@@ -1,6 +1,8 @@
 import { Course } from '../../interfaces/Courses';
 import { MaterialInput } from '../../interfaces/MaterialInput';
+import { Material } from '../../interfaces/Materials';
 import { ThemeInput } from '../../interfaces/ThemeInput';
+import { Themes } from '../../interfaces/Themes';
 import {
   COURSE_EDITION_CHANGE_DISPLAYING_BUTTON_OPEN_MATERIALS_COURSE,
   COURSE_EDITION_CHANGE_DISPLAYING_BUTTON_OPEN_PROGRAM_COURSE,
@@ -13,6 +15,10 @@ import {
   COURSE_EDITION_WRETCH_GET_MATERIALS_LOADED,
   CREATE_THEME,
   CREATE_MATERIAL,
+  SELECTED_MATERIAL,
+  SELECTED_THEME,
+  TOGGLE_MODAL_DELETE_THEME,
+  TOGGLE_MODAL_DELETE_MATERIAL,
 } from '../actionTypes';
 import { ICourseEditionState } from '../state';
 
@@ -36,7 +42,11 @@ const initialState: ICourseEditionState = {
   isDataLoading: false,
   isDisplayingButtonOpenProgramCourse: false,
   isDisplayingButtonOpenMaterialsCourse: false,
+  isOpenModalDeleteTheme: false,
+  isOpenModalDeleteMaterial: false,
   idCourse: 0,
+  currentTheme: {} as Themes,
+  currentMaterial: {} as Material,
   createThemeInputModel: INIT_THEME_TO_CREATE,
   createMaterialInputModel: INIT_MATERIAL_TO_CREATE,
 };
@@ -72,6 +82,20 @@ export function courseEditionPageReducer(
         ...state,
         isDisplayingButtonOpenMaterialsCourse: !state.isDisplayingButtonOpenMaterialsCourse,
       };
+    case TOGGLE_MODAL_DELETE_THEME:
+      return {
+        ...state,
+        isOpenModalDeleteTheme: !state.isOpenModalDeleteTheme,
+      };
+    case TOGGLE_MODAL_DELETE_MATERIAL:
+      return {
+        ...state,
+        isOpenModalDeleteMaterial: !state.isOpenModalDeleteMaterial,
+      };
+    case SELECTED_THEME:
+      return { ...state, currentTheme: action.payload };
+    case SELECTED_MATERIAL:
+      return { ...state, currentMaterial: action.payload };
     case COURSE_EDITION_CURRENT_COURSE_ID:
       return { ...state, idCourse: action.payload };
     default:

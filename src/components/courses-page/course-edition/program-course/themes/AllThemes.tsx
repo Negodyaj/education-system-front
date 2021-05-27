@@ -7,6 +7,10 @@ import { Themes } from '../../../../../interfaces/Themes';
 import SearchComponent from '../../../../../shared/components/search-component/SearchComponent';
 import { RoundButton } from '../../../../../shared/styled-components/buttonStyledComponent';
 import { IRootState } from '../../../../../store';
+import {
+  setIsOpenModalDeleteTheme,
+  setSelectedTheme,
+} from '../../../../../store/course-edition/action-creators';
 import { addThemeInCourse } from '../../../../../store/course-edition/thunk';
 import { toggleModalWindow } from '../../../../../store/modal-window/action-creators';
 import { CourseTheme } from '../ProgramCourse';
@@ -22,6 +26,7 @@ import {
   ThemesContainer,
   ThemesContent,
 } from './AllThemesStyled';
+import ModalDeleteTheme from './ModalDeleteTheme';
 
 const AllThemes = () => {
   const dispatch = useDispatch();
@@ -62,33 +67,50 @@ const AllThemes = () => {
     dispatch(toggleModalWindow(ChildIndex.NewTheme));
   };
 
+  const openModalDeleteTheme = () => {
+    dispatch(setIsOpenModalDeleteTheme());
+  };
+
+  const rememberTheme = (theme: Themes) => {
+    dispatch(setSelectedTheme(theme));
+  };
+
   return (
     <ThemesContainer>
       <AllThemesHeader>
         <TextForHeaders>Темы</TextForHeaders>
         <ButtonGroup>
+          {pageState.currentTheme.id > 0 ? (
+            <RoundButton onClick={openModalDeleteTheme}>
+              <FontAwesomeIcon icon="trash" />
+            </RoundButton>
+          ) : (
+            <div />
+          )}
           <RoundButton onClick={openUpModalCreateTheme}>
             <FontAwesomeIcon icon="plus" />
-          </RoundButton>
-          <RoundButton>
-            <FontAwesomeIcon icon="trash" />
           </RoundButton>
         </ButtonGroup>
       </AllThemesHeader>
       <ThemesContent>
         <SearchComponent funcSearch={searchInThemes} />
         {pageState.themes
-          .filter((item) =>
-            item.name.toLowerCase().includes(searchWord.toLowerCase())
+          .filter((theme) =>
+            theme.name.toLowerCase().includes(searchWord.toLowerCase())
           )
 
-          .map((item) => (
-            <ThemePosition key={item.id}>
-              <ThemePositionName>{item.name}</ThemePositionName>
+          .map((theme) => (
+            <ThemePosition
+              onClick={() => {
+                rememberTheme(theme);
+              }}
+              tabIndex={0}
+              key={theme.id}>
+              <ThemePositionName>{theme.name}</ThemePositionName>
               <AddingNewThemeInCourse>
                 <ButtonAddingNewThemeInCourse
-                  onClick={() => addNewThemeInProgramCourse(item)}>
-                  {pageState.idThemesCourse.includes(item.id) ? (
+                  onClick={() => addNewThemeInProgramCourse(theme)}>
+                  {pageState.idThemesCourse.includes(theme.id) ? (
                     <FontAwesomeIcon icon="check" />
                   ) : (
                     <FontAwesomeIcon icon="plus" />
@@ -98,6 +120,7 @@ const AllThemes = () => {
             </ThemePosition>
           ))}
       </ThemesContent>
+      {pageState.isOpenModalDeleteTheme && <ModalDeleteTheme />}
     </ThemesContainer>
   );
 };

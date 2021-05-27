@@ -3,9 +3,14 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { ChildIndex } from '../../../../../enums/ChildIndex';
+import { Material } from '../../../../../interfaces/Materials';
 import SearchComponent from '../../../../../shared/components/search-component/SearchComponent';
 import { RoundButton } from '../../../../../shared/styled-components/buttonStyledComponent';
 import { IRootState } from '../../../../../store';
+import {
+  setIsOpenModalDeleteMaterial,
+  setSelectedMaterial,
+} from '../../../../../store/course-edition/action-creators';
 import { toggleModalWindow } from '../../../../../store/modal-window/action-creators';
 
 import {
@@ -19,6 +24,7 @@ import {
   MaterialsContent,
   TextForHeaders,
 } from './AllMaterialsStyled';
+import ModalDeleteMaterial from './ModalDeleteMaterial';
 
 const AllMaterials = () => {
   const dispatch = useDispatch();
@@ -32,6 +38,14 @@ const AllMaterials = () => {
 
   const openUpModalCreateMaterial = () => {
     dispatch(toggleModalWindow(ChildIndex.NewMaterial));
+  };
+
+  const openModalDeleteMaterial = () => {
+    dispatch(setIsOpenModalDeleteMaterial());
+  };
+
+  const rememberMaterial = (material: Material) => {
+    dispatch(setSelectedMaterial(material));
   };
 
   /* const addNewThemeInProgramCourse = (theme: Themes) => {
@@ -49,11 +63,15 @@ const AllMaterials = () => {
       <AllMaterialsHeader>
         <TextForHeaders>Материалы</TextForHeaders>
         <ButtonGroup>
+          {pageState.currentMaterial.id > 0 ? (
+            <RoundButton onClick={openModalDeleteMaterial}>
+              <FontAwesomeIcon icon="trash" />
+            </RoundButton>
+          ) : (
+            <div />
+          )}
           <RoundButton onClick={openUpModalCreateMaterial}>
             <FontAwesomeIcon icon="plus" />
-          </RoundButton>
-          <RoundButton>
-            <FontAwesomeIcon icon="trash" />
           </RoundButton>
         </ButtonGroup>
       </AllMaterialsHeader>
@@ -67,7 +85,13 @@ const AllMaterials = () => {
           )
 
           .map((material) => (
-            <MaterialPosition key={material.id} title={material.description}>
+            <MaterialPosition
+              onClick={() => {
+                rememberMaterial(material);
+              }}
+              tabIndex={0}
+              key={material.id}
+              title={material.description}>
               <MaterialPositionName>
                 {material.description.length > 25
                   ? `${material.description.substr(0, 25)}...`
@@ -87,6 +111,7 @@ const AllMaterials = () => {
             </MaterialPosition>
           ))}
       </MaterialsContent>
+      {pageState.isOpenModalDeleteMaterial && <ModalDeleteMaterial />}
     </AllMaterialsContainer>
   );
 };

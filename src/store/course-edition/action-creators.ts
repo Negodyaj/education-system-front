@@ -18,6 +18,12 @@ import {
   COURSE_EDITION_ALL_MATERIALS,
   CREATE_THEME,
   CREATE_MATERIAL,
+  SELECTED_MATERIAL,
+  SELECTED_THEME,
+  TOGGLE_MODAL_DELETE_THEME,
+  TOGGLE_MODAL_DELETE_MATERIAL,
+  DELETE_THEME,
+  DELETE_MATERIAL,
 } from '../actionTypes';
 
 export type CourseEditionActions =
@@ -29,12 +35,18 @@ export type CourseEditionActions =
   | ReturnType<typeof setAllThemesInCourse>
   | ReturnType<typeof setChangeDisplayingButtonOpenProgramCourse>
   | ReturnType<typeof setChangeDisplayingButtonOpenMaterialsCourse>
+  | ReturnType<typeof setIsOpenModalDeleteTheme>
+  | ReturnType<typeof setIsOpenModalDeleteMaterial>
+  | ReturnType<typeof setSelectedTheme>
+  | ReturnType<typeof setSelectedMaterial>
   | ReturnType<typeof setIdCourse>
   | ReturnType<typeof getCourseById>
   | ReturnType<typeof getThemes>
   | ReturnType<typeof createTheme>
+  | ReturnType<typeof deleteTheme>
+  | ReturnType<typeof getMaterials>
   | ReturnType<typeof createMaterial>
-  | ReturnType<typeof getMaterials>;
+  | ReturnType<typeof deleteMaterial>;
 
 export const setCourseEditionIsLoadingAction = () =>
   ({
@@ -108,14 +120,50 @@ export const createTheme = (newTheme: ThemeInput) =>
     payload: newTheme,
   } as const);
 
-export const createMaterial = (newMaterial: MaterialInput) =>
+export const deleteTheme = () =>
   ({
-    type: CREATE_MATERIAL,
-    payload: newMaterial,
+    type: DELETE_THEME,
+    payload: undefined,
   } as const);
 
 export const getMaterials = () =>
   ({
     type: COURSE_EDITION_ALL_MATERIALS,
     payload: undefined,
+  } as const);
+
+export const createMaterial = (newMaterial: MaterialInput) =>
+  ({
+    type: CREATE_MATERIAL,
+    payload: newMaterial,
+  } as const);
+
+export const deleteMaterial = () =>
+  ({
+    type: DELETE_MATERIAL,
+    payload: undefined,
+  } as const);
+
+export const setIsOpenModalDeleteTheme = () =>
+  ({
+    type: TOGGLE_MODAL_DELETE_THEME,
+    payload: undefined,
+  } as const);
+
+export const setIsOpenModalDeleteMaterial = () =>
+  ({
+    type: TOGGLE_MODAL_DELETE_MATERIAL,
+    payload: undefined,
+  } as const);
+
+export const setSelectedMaterial = (material: Material) =>
+  ({
+    type: SELECTED_MATERIAL,
+    payload: material,
+  } as const);
+
+export const setSelectedTheme = (theme: Themes) =>
+  ({
+    type: SELECTED_THEME,
+    payload: theme,
   } as const);

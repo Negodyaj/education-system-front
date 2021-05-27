@@ -12,7 +12,11 @@ import { MaterialInput } from '../../interfaces/MaterialInput';
 import { Material } from '../../interfaces/Materials';
 import { ThemeInput } from '../../interfaces/ThemeInput';
 import { Themes } from '../../interfaces/Themes';
-import { sendGetRequest, sendPostRequest } from '../../services/http.service';
+import {
+  sendDeleteRequest,
+  sendGetRequest,
+  sendPostRequest,
+} from '../../services/http.service';
 import { isCourse } from '../../services/type-guards/course';
 import { isMaterial } from '../../services/type-guards/material';
 import { isMaterialArr } from '../../services/type-guards/materialArr';
@@ -26,6 +30,8 @@ import {
   COURSE_EDITION_COURSE_BY_ID,
   CREATE_MATERIAL,
   CREATE_THEME,
+  DELETE_MATERIAL,
+  DELETE_THEME,
 } from '../actionTypes';
 import { setIsLoaded, setIsLoading } from '../app/action-creators';
 import { constructNotificationError } from '../core/error-notification-constructor';
@@ -38,16 +44,27 @@ import {
   getCourseById,
   getCourseByIdLoaded,
   setCourseEditionFailAction,
+  setIsOpenModalDeleteMaterial,
+  setIsOpenModalDeleteTheme,
+  setSelectedMaterial,
+  setSelectedTheme,
 } from './action-creators';
-import { materialToCreateSelector, themeToCreateSelector } from './selector';
+import {
+  materialToCreateSelector,
+  materialToSelectSelector,
+  themeToCreateSelector,
+  themeToSelectSelector,
+} from './selector';
 
 function* courseByIdPageRootSaga() {
   yield all([
     getCourseByIdSagaWatcher(),
     getThemesSagaWatcher(),
     createThemeSagaWatcher(),
+    deleteThemeSagaWatcher(),
     getMaterialsSagaWatcher(),
     createMaterialSagaWatcher(),
+    deleteMaterialSagaWatcher(),
   ]);
 }
 function* getCourseByIdSagaWatcher() {
@@ -62,12 +79,20 @@ function* createThemeSagaWatcher() {
   yield takeLatest(CREATE_THEME, createThemeSagaWorker);
 }
 
+function* deleteThemeSagaWatcher() {
+  yield takeLatest(DELETE_THEME, deleteThemeSagaWorker);
+}
+
 function* getMaterialsSagaWatcher() {
   yield takeLatest(COURSE_EDITION_ALL_MATERIALS, getMaterialsSagaWorker);
 }
 
 function* createMaterialSagaWatcher() {
   yield takeLatest(CREATE_MATERIAL, createMaterialSagaWorker);
+}
+
+function* deleteMaterialSagaWatcher() {
+  yield takeLatest(DELETE_MATERIAL, deleteMaterialSagaWorker);
 }
 
 function* getCourseByIdSagaWorker({
@@ -135,6 +160,33 @@ function* createThemeSagaWorker() {
   }
 }
 
+function* deleteThemeSagaWorker() {
+  try {
+    const id: number = yield select(themeToSelectSelector);
+    const deleteRequestResponse: Themes = yield call(async () =>
+      sendDeleteRequest<Themes>(`${themesUrl}/${id}`, isTheme).then(
+        (response) => response
+      )
+    );
+    const error = tryGetErrorFromResponse(deleteRequestResponse);
+
+    if (error) {
+      yield put(constructNotificationError(error));
+    } else {
+      yield put(setIsOpenModalDeleteTheme());
+      yield put(setSelectedTheme({} as Themes));
+      yield getThemesSagaWorker();
+      yield put(
+        constructSuccessNotification(
+          `Тема ${deleteRequestResponse.name} успешно удалена`
+        )
+      );
+    }
+  } catch (error) {
+    yield put(setCourseEditionFailAction(error));
+  }
+}
+
 function* getMaterialsSagaWorker() {
   yield put(setIsLoading());
 
@@ -169,6 +221,31 @@ function* createMaterialSagaWorker() {
     } else {
       yield put(constructSuccessNotification(`Материал успешно добавлен`));
       yield getMaterialsSagaWorker();
+    }
+  } catch (error) {
+    yield put(setCourseEditionFailAction(error));
+  }
+}
+
+function* deleteMaterialSagaWorker() {
+  try {
+    const id: number = yield select(materialToSelectSelector);
+    console.log(id);
+    const deleteRequestResponse: Material = yield call(async () =>
+      sendDeleteRequest<Material>(`${materialsUrl}/${id}`, isMaterial).then(
+        (response) => response
+      )
+    );
+    console.log(deleteRequestResponse);
+    const error = tryGetErrorFromResponse(deleteRequestResponse);
+
+    if (error) {
+      yield put(constructNotificationError(error));
+    } else {
+      yield put(setIsOpenModalDeleteMaterial());
+      yield put(setSelectedMaterial({} as Material));
+      yield getMaterialsSagaWorker();
+      yield put(constructSuccessNotification(`Материал успешно удален`));
     }
   } catch (error) {
     yield put(setCourseEditionFailAction(error));
