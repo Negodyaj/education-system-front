@@ -56,7 +56,7 @@ function CoursesPage() {
       </CourseCreate>
       <CoursesList>
         {pageState.isDataLoading ? (
-          <Loading>Loading...</Loading>
+          <Loading />
         ) : (
           pageState.courseList.map((item) => (
             <CourseStyled>
