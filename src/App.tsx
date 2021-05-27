@@ -124,7 +124,6 @@ function App() {
               </Route>
               {[Role.Teacher, Role.Tutor].includes(currentUserRoleId) && (
                 <Route path="/Homework/:hwId/attempts/:attemptId?">
-                  <HomeworkAttempt />
                   <Helmet>
                     <title>Домашки</title>
                   </Helmet>
@@ -144,14 +143,6 @@ function App() {
               <Route path="/course/:id">
                 <CoursePage />
               </Route>
-              {currentUserRoleId === Role.Teacher && (
-                <Route path="/lessons">
-                  <LessonsByGroup />
-                  <Helmet>
-                    <title>Занятия</title>
-                  </Helmet>
-                </Route>
-              )}
               {currentUserRoleId !== Role.Student && (
                 <Route path="/tags-page">
                   <TagsPage />
@@ -182,25 +173,8 @@ function App() {
                   <Route path="/group/journal">
                     <Attendance />
                   </Route>
-                  <Route path="/group/statistics">
-                    <div>statistics</div>
-                  </Route>
                 </>
               )}
-              <Route exact path="/group">
-                <Redirect to="/group/1/info" />
-              </Route>
-              <Route path="/group/:id/info">
-                <Helmet>
-                  <title>Группы</title>
-                </Helmet>
-              </Route>
-              <Route path="/attendance">
-                <Attendance />
-                <Helmet>
-                  <title>Журнал в разработке</title>
-                </Helmet>
-              </Route>
               <Route path="/personal-page">
                 <PersonalPage />
                 <Helmet>

@@ -1,43 +1,35 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Route, Switch, useParams } from 'react-router-dom';
+
 import './GroupNavMenu.css';
+
+interface ParamTypes {
+  id: string;
+}
 
 function GroupNavMenu() {
   const [toggleState, setToggleState] = useState('info');
 
+  const id = useParams<ParamTypes>();
+  console.log(id.id);
   const toggleTab = (displayName: string) => {
     setToggleState(displayName);
   };
 
   return (
-    <div className="group-menu-container">
-      <div className="bloc-tabs">
-        <Link
-          to="/group/info"
-          className={toggleState === 'info' ? 'tabs active-tabs' : 'tabs'}
-          onClick={() => toggleTab('info')}>
-          Общее
-        </Link>
-        <Link
-          to="/group/lesson"
-          className={toggleState === 'lessons' ? 'tabs active-tabs' : 'tabs'}
-          onClick={() => toggleTab('lessons')}>
-          {' '}
-          Lesson
-        </Link>
-        <Link
-          to="/group/journal"
-          className={toggleState === 'journal' ? 'tabs active-tabs' : 'tabs'}
-          onClick={() => toggleTab('journal')}>
-          Журнал
-        </Link>
-        <Link
-          to="/group/statistics"
-          className={toggleState === 'statistics' ? 'tabs active-tabs' : 'tabs'}
-          onClick={() => toggleTab('statistics')}>
-          Статистика
-        </Link>
-      </div>
+    <div className="bloc-tabs">
+      <Link
+        to={`/group/${toggleState}`}
+        className={toggleState === 'info' ? 'tabs active-tabs' : 'tabs'}
+        onClick={() => toggleTab('info')}>
+        Общее
+      </Link>
+      <Link
+        to={`/group/${toggleState}`}
+        className={toggleState === 'lesson' ? 'tabs active-tabs' : 'tabs'}
+        onClick={() => toggleTab('lesson')}>
+        Занятия
+      </Link>
     </div>
   );
 }
