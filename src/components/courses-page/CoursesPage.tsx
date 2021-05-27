@@ -53,7 +53,7 @@ function CoursesPage() {
       <CourseCreate>
         <EmptyDiv />
         {currentRole === 5 && (
-        <CommonButton onClick={openModalAdd}>Добавить курс</CommonButton>
+          <CommonButton onClick={openModalAdd}>Добавить курс</CommonButton>
         )}
       </CourseCreate>
       <CoursesList>
@@ -70,15 +70,15 @@ function CoursesPage() {
               <CourseUpdateDelete>
                 <Link to={`/course/${item.id}/edition`}>
                   {currentRole === 5 && (
-                  <RoundButton>
-                    <FontAwesomeIcon icon="edit" />
-                  </RoundButton>
+                    <RoundButton>
+                      <FontAwesomeIcon icon="edit" />
+                    </RoundButton>
                   )}
                 </Link>
                 {currentRole === 5 && (
-                <RoundButton onClick={() => openModalDelete(item.id)}>
-                  <FontAwesomeIcon icon="trash" />
-                </RoundButton>
+                  <RoundButton onClick={() => openModalDelete(item.id)}>
+                    <FontAwesomeIcon icon="trash" />
+                  </RoundButton>
                 )}
               </CourseUpdateDelete>
             </CourseStyled>
