@@ -27,7 +27,7 @@ export const MultiSelect = (
     value={value}
     className="basic-multi-select"
     classNamePrefix="select"
-    styles={customStyles}
+    styles={{ ...customStyles }}
     placeholder="Выберите опцию"
     noOptionsMessage={() => 'Опций больше нет'}
     onChange={onChange}
@@ -128,6 +128,8 @@ function CustomMultiSelect(props: SelectProps) {
               value !== undefined
                 ? (() => {
                     if (value?.label) return value;
+
+                    console.log(value);
 
                     return convertIdToSelectItem(
                       value,

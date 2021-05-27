@@ -11,7 +11,7 @@ export const LinkDetector = (props: { stringForDetecting: string }) => {
     <>
       {stringForDetectingSplit.map((splitPart, index) =>
         index === linkPartIndex ? (
-          <a href={splitPart} target="blank">
+          <a href={splitPart} target="blank" key={index}>
             {` ${splitPart}`}
           </a>
         ) : (
