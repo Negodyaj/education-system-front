@@ -27,6 +27,9 @@ import {
 function CoursesPage() {
   const dispatch = useDispatch();
   const pageState = useSelector((state: IRootState) => state.coursePage);
+  const currentRole = useSelector(
+    (state: IRootState) => state.roleSelector.currentUserRoleId
+  );
 
   useEffect(() => {
     dispatch(getCourses());
@@ -45,9 +48,11 @@ function CoursesPage() {
     <CourseContainer>
       <CourseCreate>
         <EmptyDiv />
-        <button onClick={openModalAdd} className="common-button">
-          Добавить курс
-        </button>
+        {currentRole === 5 && (
+          <button onClick={openModalAdd} className="common-button">
+            Добавить курс
+          </button>
+        )}
       </CourseCreate>
       <CoursesList>
         {pageState.isDataLoading ? (
@@ -62,15 +67,19 @@ function CoursesPage() {
               </LinkStyledRegularFont>
               <CourseUpdateDelete>
                 <Link to={`/course/${item.id}/edition`}>
-                  <button className="round-button">
-                    <FontAwesomeIcon icon="edit" />
-                  </button>
+                  {currentRole === 5 && (
+                    <button className="round-button">
+                      <FontAwesomeIcon icon="edit" />
+                    </button>
+                  )}
                 </Link>
-                <button
-                  onClick={() => openModalDelete(item.id)}
-                  className="round-button">
-                  <FontAwesomeIcon icon="trash" />
-                </button>
+                {currentRole === 5 && (
+                  <button
+                    onClick={() => openModalDelete(item.id)}
+                    className="round-button">
+                    <FontAwesomeIcon icon="trash" />
+                  </button>
+                )}
               </CourseUpdateDelete>
             </CourseStyled>
           ))
