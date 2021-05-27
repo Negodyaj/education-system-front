@@ -107,14 +107,12 @@ function App() {
             <Switch>
               {(currentUserRoleId === Role.Manager ||
                 currentUserRoleId === Role.Admin) && <UserRoute />}
-              {currentUserRoleId === Role.Teacher && (
-                <Route path="/courses-page">
-                  <CoursesPage />
-                  <Helmet>
-                    <title>Курсы</title>
-                  </Helmet>
-                </Route>
-              )}
+              <Route path="/courses-page">
+                <CoursesPage />
+                <Helmet>
+                  <title>Курсы</title>
+                </Helmet>
+              </Route>
               <Route exact path="/Homework">
                 <HomeworkPage />
                 <Helmet>

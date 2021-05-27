@@ -32,6 +32,10 @@ const initialState: ModalWindowState = {
       headerName: 'Добавить домашнюю работу',
       defaultValues: defaultAddHomeworkValues,
     },
+    [ChildIndex.EditHomework]: {
+      headerName: 'Редактировать домашнюю работу',
+      defaultValues: defaultAddHomeworkValues,
+    },
     [ChildIndex.NewLesson]: {
       headerName: 'Запланировать занятие',
       defaultValues: INIT_LESSON_TO_CREATE,
