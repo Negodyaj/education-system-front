@@ -3,7 +3,7 @@ import { Link, useRouteMatch } from 'react-router-dom';
 import './GroupNavMenu.css';
 
 function GroupNavMenu() {
-  let { url } = useRouteMatch();
+  const { url } = useRouteMatch();
   const [toggleState, setToggleState] = useState('info');
 
   const toggleTab = (displayName: string) => {

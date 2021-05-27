@@ -11,7 +11,7 @@ import GroupNavMenu from './group-nav-menu/GroupNavMenu';
 import LessonsByGroup from './lesson-list-component/LessonsByGroup';
 
 function GroupPage() {
-  let { path } = useRouteMatch();
+  const { path } = useRouteMatch();
   const dispatch = useDispatch();
   const appState = useSelector((state: IRootState) => state);
 
