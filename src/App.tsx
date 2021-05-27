@@ -157,35 +157,14 @@ function App() {
                   <title>Домашки</title>
                 </Helmet>
               </Route>
-              {currentUserRoleId !== Role.Methodist && (
-                <>
-                  <Route path="/group">
-                    <GroupNavMenu />
-                    <Helmet>
-                      <title>Группы</title>
-                    </Helmet>
-                  </Route>
-                  <Route path="/group/info">
-                    <GroupInfoComponent />
-                  </Route>
-                  <Route path="/group/lesson">
-                    <LessonsByGroup />
-                  </Route>
-                  <Route path="/group/journal">
-                    <Attendance />
-                  </Route>
-                  <Route path="/group/statistics">
-                    <div>statistics</div>
-                  </Route>
-                </>
-              )}
               <Route exact path="/group">
-                <Redirect to="/group/1/info" />
+                <Redirect to="/group/14" />
               </Route>
-              <Route path="/group/:id/info">
+              <Route path="/group/:id">
                 <Helmet>
                   <title>Группы</title>
                 </Helmet>
+                <GroupPage />
               </Route>
               <Route path="/attendance">
                 <Attendance />

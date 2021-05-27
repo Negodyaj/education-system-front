@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useRouteMatch } from 'react-router-dom';
 import './GroupNavMenu.css';
 
 function GroupNavMenu() {
+  const { url } = useRouteMatch();
   const [toggleState, setToggleState] = useState('info');
 
   const toggleTab = (displayName: string) => {
@@ -13,26 +14,26 @@ function GroupNavMenu() {
     <div className="group-menu-container">
       <div className="bloc-tabs">
         <Link
-          to="/group/info"
+          to={`${url}/info`}
           className={toggleState === 'info' ? 'tabs active-tabs' : 'tabs'}
           onClick={() => toggleTab('info')}>
           Общее
         </Link>
         <Link
-          to="/group/lesson"
+          to={`${url}/lesson`}
           className={toggleState === 'lessons' ? 'tabs active-tabs' : 'tabs'}
           onClick={() => toggleTab('lessons')}>
           {' '}
           Lesson
         </Link>
         <Link
-          to="/group/journal"
+          to={`${url}/journal`}
           className={toggleState === 'journal' ? 'tabs active-tabs' : 'tabs'}
           onClick={() => toggleTab('journal')}>
           Журнал
         </Link>
         <Link
-          to="/group/statistics"
+          to={`${url}/statistics`}
           className={toggleState === 'statistics' ? 'tabs active-tabs' : 'tabs'}
           onClick={() => toggleTab('statistics')}>
           Статистика
