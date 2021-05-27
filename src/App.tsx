@@ -7,7 +7,6 @@ import React, { useState } from 'react';
 import NavMenu from './components/nav-menu/NavMenu';
 import NotificationContainer from './shared/components/notification/NotificationContainer';
 import CoursesPage from './components/courses-page/CoursesPage';
-import CoursePage from './components/courses-page/course-page/CoursePage';
 import CourseEdition from './components/courses-page/course-edition/CourseEdition';
 import './shared/fontawesome/FontawesomeIcons';
 import { Role } from './enums/role';
@@ -138,9 +137,6 @@ function App() {
               )}
               <Route path="/course/:id/edition">
                 <CourseEdition />
-              </Route>
-              <Route path="/course/:id">
-                <CoursePage />
               </Route>
               {currentUserRoleId !== Role.Student && (
                 <Route path="/tags-page">

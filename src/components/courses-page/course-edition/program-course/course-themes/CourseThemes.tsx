@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { Role } from '../../../../../enums/role';
 import { ThemeInCourse } from '../../../../../interfaces/ThemeInCourse';
 import { RoundButton } from '../../../../../shared/styled-components/buttonStyledComponent';
 import { IRootState } from '../../../../../store';
@@ -23,6 +24,9 @@ import {
 const CourseThemes = () => {
   const dispatch = useDispatch();
   const pageState = useSelector((state: IRootState) => state.courseEditionPage);
+  const role = useSelector(
+    (state: IRootState) => state.roleSelector.currentUserRoleId
+  );
 
   const arrIdThemesInCourse: number[] = pageState.idThemesCourse;
 
@@ -73,29 +77,33 @@ const CourseThemes = () => {
           tabIndex={0}
           key={theme.id}>
           <CourseThemeName>{theme.name}</CourseThemeName>
-          <CourseThemeDelete>
-            <ButtonDeleteThemeFromCourse
-              onClick={() => deleteThemeFromCourse(theme.id)}>
-              <FontAwesomeIcon icon="minus" />
-            </ButtonDeleteThemeFromCourse>
-          </CourseThemeDelete>
-          {pageState.isDisplayingButtonsToChangeThemePosition ? (
-            <CourseThemeChangePosition>
-              <RoundButton
-                onClick={() => {
-                  changePositionUp(theme.id);
-                }}>
-                <FontAwesomeIcon icon="arrow-up" />
-              </RoundButton>
-              <RoundButton
-                onClick={() => {
-                  changePositionDown(theme.id);
-                }}>
-                <FontAwesomeIcon icon="arrow-down" />
-              </RoundButton>
-            </CourseThemeChangePosition>
-          ) : (
-            <div />
+          {role !== Role.Student && (
+            <>
+              <CourseThemeDelete>
+                <ButtonDeleteThemeFromCourse
+                  onClick={() => deleteThemeFromCourse(theme.id)}>
+                  <FontAwesomeIcon icon="minus" />
+                </ButtonDeleteThemeFromCourse>
+              </CourseThemeDelete>
+              {pageState.isDisplayingButtonsToChangeThemePosition ? (
+                <CourseThemeChangePosition>
+                  <RoundButton
+                    onClick={() => {
+                      changePositionUp(theme.id);
+                    }}>
+                    <FontAwesomeIcon icon="arrow-up" />
+                  </RoundButton>
+                  <RoundButton
+                    onClick={() => {
+                      changePositionDown(theme.id);
+                    }}>
+                    <FontAwesomeIcon icon="arrow-down" />
+                  </RoundButton>
+                </CourseThemeChangePosition>
+              ) : (
+                <div />
+              )}
+            </>
           )}
         </CourseThemePosition>
       ))}

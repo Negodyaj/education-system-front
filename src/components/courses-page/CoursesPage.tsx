@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useDispatch, useSelector } from 'react-redux';
@@ -12,6 +12,10 @@ import {
 import { LinkStyledRegularFont } from '../../shared/styled-components/globalStyledConsts';
 import { toggleModalWindow } from '../../store/modal-window/action-creators';
 import { ChildIndex } from '../../enums/ChildIndex';
+import {
+  CommonButton,
+  RoundButton,
+} from '../../shared/styled-components/buttonStyledComponent';
 
 import ModalWindowDelete from './modal-window/ModalWindowDelete';
 import {
@@ -49,9 +53,7 @@ function CoursesPage() {
       <CourseCreate>
         <EmptyDiv />
         {currentRole === 5 && (
-          <button onClick={openModalAdd} className="common-button">
-            Добавить курс
-          </button>
+          <CommonButton onClick={openModalAdd}>Добавить курс</CommonButton>
         )}
       </CourseCreate>
       <CoursesList>
@@ -62,23 +64,21 @@ function CoursesPage() {
             <CourseStyled>
               <LinkStyledRegularFont
                 className="current-course-name"
-                to={`/course/${item.id}`}>
+                to={`/course/${item.id}/edition`}>
                 <EmptyDiv>{item.name}</EmptyDiv>
               </LinkStyledRegularFont>
               <CourseUpdateDelete>
                 <Link to={`/course/${item.id}/edition`}>
                   {currentRole === 5 && (
-                    <button className="round-button">
+                    <RoundButton>
                       <FontAwesomeIcon icon="edit" />
-                    </button>
+                    </RoundButton>
                   )}
                 </Link>
                 {currentRole === 5 && (
-                  <button
-                    onClick={() => openModalDelete(item.id)}
-                    className="round-button">
+                  <RoundButton onClick={() => openModalDelete(item.id)}>
                     <FontAwesomeIcon icon="trash" />
-                  </button>
+                  </RoundButton>
                 )}
               </CourseUpdateDelete>
             </CourseStyled>
