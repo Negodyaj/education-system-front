@@ -1,10 +1,13 @@
 import { DictionaryEntity } from '../../../interfaces/DictionaryEntity';
 import { HomeworkInput } from '../../../interfaces/HomeworkInput';
+import { homeworkToHomeworkInput } from '../../../shared/converters/homeworkToHomeworkInput';
+import { INIT_HOMEWORK } from '../../../shared/tmp-mock-data/hw/initHomewwork';
 import {
   COURSES_LOAD_FOR_HW_MODAL_SUCCESS,
   GET_TAGS_FOR_HW_MODAL,
   GET_THEMES_FOR_HW_MODAL,
   HOMEWORK_LOAD_FOR_MODAL_SUCCESS,
+  REMEMBER_HOMEWORK_FOR_MODAL,
 } from '../../actionTypes';
 import { IAddHomeworkModal } from '../../state';
 
@@ -25,6 +28,7 @@ const initialState: IAddHomeworkModal = {
   coursesEntities: [],
   tagsForHomeworkEntities: [],
   themesForHomeworkEntities: [],
+  homeworkForUpdate: defaultAddHomeworkValues,
 };
 let localCoursesEntitites: DictionaryEntity[] = [];
 let localTagsEntitites: DictionaryEntity[] = [];
@@ -57,6 +61,13 @@ export function addHomeworkModalReducer(
       }));
 
       return { ...state, themesForHomeworkEntities: localThemeEntitites };
+    case REMEMBER_HOMEWORK_FOR_MODAL:
+      console.log(homeworkToHomeworkInput(action.payload));
+
+      return {
+        ...state,
+        homeworkForUpdate: homeworkToHomeworkInput(action.payload),
+      };
     default:
       return state;
   }

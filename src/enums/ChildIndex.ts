@@ -7,5 +7,7 @@ export enum ChildIndex {
   Payment = 'payment',
   AppointHomework = 'appoint-homework',
   AddHomework = 'add-homework',
+  EditHomework = 'edit-homework',
+  CloneHomework = 'clone-homework',
   Closed = 'closed',
 }
