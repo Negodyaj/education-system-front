@@ -6,6 +6,7 @@ import { HomeworkInput } from '../../../interfaces/HomeworkInput';
 import {
   sendGetRequest,
   sendPostRequest,
+  sendPutRequest,
 } from '../../../services/http.service';
 import { isHomework } from '../../../services/type-guards/homework';
 import { isHomeworkArr } from '../../../services/type-guards/homeworkArr';
@@ -22,6 +23,7 @@ import {
   GET_COURSES_FOR_HW_MODAL,
   GET_HOMEWORKS_FOR_MODAL,
   GET_TAGS_FOR_HW_MODAL,
+  UPDATE_HOMEWORK_FOR_EDIT_MODAL,
 } from '../../actionTypes';
 import { setIsLoaded, setIsLoading } from '../../app/action-creators';
 import { constructNotificationError } from '../../core/error-notification-constructor';
@@ -42,10 +44,15 @@ import {
   loadHomeworkForModalSuccess,
   loadTagsForHWModalWatcherAction,
   loadThemesForHWModalWatcherAction,
+  updateHWForEditModalWatcherAction,
 } from './action-creators';
 
 export function* addHWModalRootSaga() {
-  yield all([getHWForModalSagaWatcher(), addHWForModalWatcher()]);
+  yield all([
+    getHWForModalSagaWatcher(),
+    addHWForModalWatcher(),
+    updateHWForEditModalWatcher(),
+  ]);
 }
 export function* getHWForModalSagaWatcher() {
   yield takeLatest(GET_HOMEWORKS_FOR_MODAL, loadHMListForModalSagaWorker);
@@ -87,6 +94,7 @@ export function* addHWForModalSagaWorker({
         (homework) => homework
       )
     );
+
     const error = tryGetErrorFromResponse(newHomework);
 
     if (!error) {
@@ -151,4 +159,42 @@ export function* loadThemesForAddModalSagaWorker() {
   } catch {
     console.log('error loadThemesForAddModalSagaWorker');
   }
+}
+
+export function* updateHWForEditModalWatcher() {
+  yield takeLatest(
+    UPDATE_HOMEWORK_FOR_EDIT_MODAL,
+    updateHWForEditModalSagaWorker
+  );
+}
+
+export function* updateHWForEditModalSagaWorker({
+  payload,
+}: ReturnType<typeof updateHWForEditModalWatcherAction>) {
+  yield put(setIsLoading());
+  try {
+    const newHomework: HomeworkInput = yield call(async () =>
+      sendPutRequest<Homework>(`${homeworkUrl}/id`, isHomework, payload).then(
+        (homework) => homework
+      )
+    );
+
+    const error = tryGetErrorFromResponse(newHomework);
+
+    if (!error) {
+      yield put(
+        pushNotification(
+          makeNotification(
+            'success',
+            `Домашняя работа ${newHomework.description} успешно изменена`
+          )
+        )
+      );
+      const roleId: number = yield select(currentUserRoleIdSelector);
+      yield put(getHomeworks(roleId));
+    } else yield put(constructNotificationError(error));
+  } catch {
+    console.log('error updateHWForEditModalSagaWorker');
+  }
+  yield put(setIsLoaded());
 }

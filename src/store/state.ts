@@ -29,6 +29,10 @@ import { PaymentInput } from '../components/interfaces/PaymentInput';
 import { HomeworkInput } from '../interfaces/HomeworkInput';
 import { LessonUpdate } from '../interfaces/LessonUpdate';
 import { AttemptPut } from '../interfaces/AttemptPut';
+import { ThemeInput } from '../interfaces/ThemeInput';
+import { MaterialInput } from '../interfaces/MaterialInput';
+import { CourseMaterial } from '../components/courses-page/course-edition/materials-course/MaterialsCourse';
+import { ThemeInCourse } from '../interfaces/ThemeInCourse';
 
 import { DEFAULT_ATTEMPT } from './homework-attempt/reducer';
 
@@ -46,10 +50,21 @@ export interface ICourseEditionState {
   themes: Themes[];
   materials: Material[];
   idThemesCourse: number[];
+  idMaterialsCourse: number[];
   isDataLoading: boolean;
   isDisplayingButtonOpenProgramCourse: boolean;
   isDisplayingButtonOpenMaterialsCourse: boolean;
+  isDisplayingButtonsToChangeThemePosition: boolean;
+  isOpenModalDeleteTheme: boolean;
+  isOpenModalDeleteMaterial: boolean;
   idCourse: number;
+  currentTheme: Themes;
+  currentMaterial: Material;
+  createThemeInputModel: ThemeInput;
+  createMaterialInputModel: MaterialInput;
+  dataForAddMaterialInCourse: CourseMaterial;
+  dataForDeleteMaterialFromCourse: CourseMaterial;
+  dataForChangeArrThemesInCourse: ThemeInCourse[];
 }
 export interface IUserListPage {
   userList: User[];
@@ -102,6 +117,7 @@ export interface IAddHomeworkModal {
   coursesEntities: DictionaryEntity[];
   tagsForHomeworkEntities: DictionaryEntity[];
   themesForHomeworkEntities: DictionaryEntity[];
+  homeworkForUpdate: HomeworkInput;
 }
 export interface INotificationContainerState {
   notifications: {

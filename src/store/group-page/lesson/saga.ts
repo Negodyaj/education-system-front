@@ -148,7 +148,6 @@ function* updateLessonSagaWorker() {
     const dataForUpdateLesson: LessonUpdate = yield select(
       lessonToUpdateSelector
     );
-    console.log(dataForUpdateLesson);
     const lessonUpdate: DataUpdateLesson = {
       groupId: 14,
       description: dataForUpdateLesson.description,
@@ -156,7 +155,6 @@ function* updateLessonSagaWorker() {
       themesId: dataForUpdateLesson.themesId,
       recordLink: dataForUpdateLesson.recordLink,
     };
-    console.log(lessonUpdate);
     const updateLessonRequestResponse: Lesson = yield call(async () =>
       sendPutRequest<Lesson>(
         `${lessonsUrl}/${id}`,
@@ -169,6 +167,7 @@ function* updateLessonSagaWorker() {
     if (errorResponse) {
       yield constructNotificationError(errorResponse);
     } else {
+      yield put(setSelectedLesson({} as CurrentLesson));
       yield put(
         constructSuccessNotification(
           `Занятие, запланированное на ${updateLessonRequestResponse.lessonDate}, успешно изменено`

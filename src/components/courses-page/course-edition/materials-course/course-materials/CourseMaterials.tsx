@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { Material } from '../../../../../interfaces/Materials';
 import { IRootState } from '../../../../../store';
+import { deleteMaterialFromCourse } from '../../../../../store/course-edition/action-creators';
 import { deleteMaterialCourse } from '../../../../../store/course-edition/thunk';
 import { CourseMaterial } from '../MaterialsCourse';
 
@@ -21,12 +22,12 @@ const CourseMaterials = () => {
   const dispatch = useDispatch();
   const pageState = useSelector((state: IRootState) => state.courseEditionPage);
 
-  const deleteMaterialFromCourse = (material: Material) => {
+  const deleteCurrentMaterialFromCourse = (id: number) => {
     const courseMaterial: CourseMaterial = {
       idCourse: pageState.idCourse,
-      idMaterial: material.id,
+      idMaterial: id,
     };
-    dispatch(deleteMaterialCourse(courseMaterial));
+    dispatch(deleteMaterialFromCourse(courseMaterial));
   };
 
   return (
@@ -45,7 +46,7 @@ const CourseMaterials = () => {
           </ContentCurrentMaterial>
           <CourseMaterialDelete>
             <ButtonDeleteMaterialFromCourse
-              onClick={() => deleteMaterialFromCourse(material)}>
+              onClick={() => deleteCurrentMaterialFromCourse(material.id)}>
               <FontAwesomeIcon icon="minus" />
             </ButtonDeleteMaterialFromCourse>
           </CourseMaterialDelete>

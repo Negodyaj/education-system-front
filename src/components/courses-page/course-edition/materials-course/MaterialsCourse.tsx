@@ -23,8 +23,6 @@ const MaterialsCourse = () => {
   const dispatch = useDispatch();
   const pageState = useSelector((state: IRootState) => state.courseEditionPage);
 
-  const materialsInCourse: number[] = [];
-
   const openMaterialsCourse = () => {
     dispatch(setChangeDisplayingButtonOpenMaterialsCourse());
   };

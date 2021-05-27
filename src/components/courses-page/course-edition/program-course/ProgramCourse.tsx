@@ -23,8 +23,6 @@ const ProgramCourse = () => {
   const dispatch = useDispatch();
   const pageState = useSelector((state: IRootState) => state.courseEditionPage);
 
-  const themesInCourse: number[] = [];
-
   const openProgramCourse = () => {
     dispatch(setChangeDisplayingButtonOpenProgramCourse());
   };
