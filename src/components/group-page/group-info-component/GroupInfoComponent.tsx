@@ -8,6 +8,7 @@ import './GroupInfoComponent.css';
 
 import BaseGroupInfoComponent from './base-group-info-component/BaseGroupInfoComponent';
 import GroupMembersList from './group-members-list/GroupMembersList';
+import { GroupBody, GroupInfoContainer } from './GroupInfoComponentStyled';
 
 function GroupInfoComponent(props: { id: number }) {
   const { id } = props;
@@ -23,23 +24,23 @@ function GroupInfoComponent(props: { id: number }) {
 
   return (
     <div>
-      <div className="group-body">
-        <div>
+      <GroupBody>
+        <GroupInfoContainer>
           <BaseGroupInfoComponent
             courseName={groupState.groupToView.course.name}
             startDate={groupState.groupToView.startDate}
             duration={groupState.groupToView.course.duration}
             id={id}
           />
-        </div>
-        <div>
+        </GroupInfoContainer>
+        <GroupInfoContainer>
           <GroupMembersList
             students={groupState.groupToView.students}
             teachers={groupState.groupToView.teachers}
             tutors={groupState.groupToView.tutors}
           />
-        </div>
-      </div>
+        </GroupInfoContainer>
+      </GroupBody>
     </div>
   );
 }

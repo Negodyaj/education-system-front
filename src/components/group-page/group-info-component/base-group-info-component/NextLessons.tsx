@@ -1,12 +1,11 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-
-import './BaseGroupInfo.css';
 
 import { Lesson } from '../../../../interfaces/Lesson';
 import { IRootState } from '../../../../store';
 import { getLessonsByGroup } from '../../../../store/group-page/lesson/action-creators';
 import { convertStringToDate } from '../../../../shared/converters/stringToDateConverter';
+import { Content, Title } from '../GroupInfoComponentStyled';
 
 interface NextLessonsProps {
   id: number;
@@ -47,12 +46,12 @@ export function NextLessons(props: NextLessonsProps) {
   };
 
   return (
-    <div>
-      <div className="title">Ближайшие занятия:</div>
+    <>
+      <Title>Ближайшие занятия:</Title>
       {getNextDate().map((l) => (
-        <div className="info">{l.lessonDate}</div>
+        <Content>{l.lessonDate}</Content>
       ))}
-    </div>
+    </>
   );
 }
 export default NextLessons;
