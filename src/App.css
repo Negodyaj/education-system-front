@@ -99,7 +99,7 @@ aside.hide .text-container{
 .main-content {
     display: flex;
     flex-direction: column;
-    height: calc(100vh - 100px);
+    height: 100vh;
     flex-grow: 1;
     overflow: auto;
 }

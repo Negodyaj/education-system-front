@@ -3,21 +3,18 @@ import { Link, Route, Switch, useParams } from 'react-router-dom';
 
 import './GroupNavMenu.css';
 
-interface ParamTypes {
-  id: string;
-}
-
 function GroupNavMenu() {
   const [toggleState, setToggleState] = useState('info');
 
-  const id = useParams<ParamTypes>();
-  console.log(id.id);
   const toggleTab = (displayName: string) => {
     setToggleState(displayName);
   };
+  const key = () => {
+    console.log('ura');
+  };
 
   return (
-    <div className="bloc-tabs">
+    <div className="bloc-tabs" role='button' onClick= {() => toggleTab('info')} onKeyPress={key}>
       <Link
         to={`/group/${toggleState}`}
         className={toggleState === 'info' ? 'tabs active-tabs' : 'tabs'}

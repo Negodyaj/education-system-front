@@ -1,13 +1,10 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router';
 
 import { IRootState } from '../../../store';
 import { getGroup } from '../../../store/group-page/group-info-component/action-creaters';
 import '../../../App.css';
 import './GroupInfoComponent.css';
-import Loader from '../../../shared/components/loader/Loader';
-import { getLessonsByGroup } from '../../../store/group-page/lesson/action-creators';
 
 import BaseGroupInfoComponent from './base-group-info-component/BaseGroupInfoComponent';
 import GroupMembersList from './group-members-list/GroupMembersList';
