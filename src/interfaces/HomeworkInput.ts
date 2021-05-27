@@ -8,5 +8,5 @@ export interface HomeworkInput {
   isOptional: boolean;
   courseId: number;
   tags: Tag[];
-  themes: Themes[];
+  themeIds: number[];
 }
