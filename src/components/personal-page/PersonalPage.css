@@ -82,9 +82,9 @@ img{
   display:all;
 }
 
-.closeedit-user{
+/*.closeedit-user{
   display:none;
-}
+}*/
 
 .user-name{
   font-size: 30px;
@@ -110,8 +110,11 @@ float: left;
   justify-content: space-around;
 }
 
-.edit-user input[name="email"],
-.edit-user .basic-multi-select {
+.user-edit-form  input[name="email"] {
   pointer-events: none;
-  opacity:0.9;
+  opacity:0.5;
+}
+
+.user-edit-form .basic-multi-select {
+  display: none;
 }

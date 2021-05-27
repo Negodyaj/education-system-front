@@ -34,6 +34,7 @@ import GroupInfoComponent from './components/group-page/group-info-component/Gro
 import LoginRoleSelector from './components/role-selector/LoginRoleSelector';
 import PersonalPage from './components/personal-page/PersonalPage';
 import ModalWindow from './shared/components/modal-window/ModalWindow';
+import PersonalPageEdit from './components/personal-page/PersonalPageEdit';
 
 function App() {
   const dispatch = useDispatch();
@@ -111,6 +112,9 @@ function App() {
                 <Helmet>
                   <title>ЛК</title>
                 </Helmet>
+              </Route>
+              <Route path="/personal-page/edition">
+                <PersonalPageEdit />
               </Route>
               <Switch>
                 {(currentUserRoleId === Role.Manager ||
