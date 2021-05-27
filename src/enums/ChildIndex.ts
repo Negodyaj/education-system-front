@@ -6,5 +6,6 @@ export enum ChildIndex {
   AppointHomework = 'appoint-homework',
   AddHomework = 'add-homework',
   EditHomework = 'edit-homework',
+  CloneHomework = 'clone-homework',
   Closed = 'closed',
 }

@@ -8,6 +8,7 @@ import {
 } from '../../../../helpers/lessonFormRegisterSettingByKey';
 import { getPaymentFormElementSettings } from '../../../../helpers/paymentFormRegisterSettingByKey';
 import { getHomeworkAddForm } from '../../../../helpers/addHomeworkForm';
+import { cloneHomeworkForm } from '../../../../helpers/cloneHomeworkForm';
 
 export const selectFormSetting = (index: ChildIndex, key: InputNames) => {
   switch (index) {
@@ -21,6 +22,8 @@ export const selectFormSetting = (index: ChildIndex, key: InputNames) => {
       return getHomeworkAddForm(key);
     case ChildIndex.AddHomework:
       return getHomeworkAddForm(key);
+    case ChildIndex.CloneHomework:
+      return cloneHomeworkForm(key);
     case ChildIndex.NewLesson:
       return getLessonFormElementSettings(key);
     case ChildIndex.UpdateLesson:
