@@ -18,7 +18,7 @@ const NavPanelComponent = (props: { attemptList: Attempt[] | undefined }) => {
   const history = useHistory();
   const authorOnClick = (currentAttemptArg: Attempt) => {
     dispatch(setCurrentAttempt(currentAttemptArg));
-    history.replace(`/${homeworkUrl}/${hwId}/attempts/${currentAttemptArg.id}`);
+    history.replace(`/${homeworkUrl}/${hwId}/attempt/${currentAttemptArg.id}`);
   };
 
   return (

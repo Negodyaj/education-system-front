@@ -7,12 +7,12 @@ export const ThemesContainer = styled.div`
 
 export const AllThemesHeader = styled.div`
   display: grid;
-  grid-template-columns: 1fr 100px;
+  grid-template-columns: 1fr 90px;
 `;
 
 export const ButtonGroup = styled.div`
-  display: flex;
-  justify-content: flex-start;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
 `;
 
 export const TextForHeaders = styled.div`
@@ -47,7 +47,12 @@ export const ThemePosition = styled.div`
   font-weight: 400;
   font-size: 16px;
   border-bottom: 1px solid rgba(39, 45, 59, 0.15);
+  cursor: pointer;
   &:hover {
+    background-color: rgba(0, 211, 248, 0.15);
+    border-radius: 5px;
+  }
+  &:focus {
     background-color: rgba(0, 211, 248, 0.15);
     border-radius: 5px;
   }

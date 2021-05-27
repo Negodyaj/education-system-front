@@ -1,5 +1,6 @@
 import { Group } from '../../../interfaces/Group';
 import {
+  GET_GROUP,
   GROUP_TO_VIEW_WRETCH_FAIL,
   GROUP_TO_VIEW_WRETCH_LOADED,
   GROUP_TO_VIEW_WRETCH_LOADING,
@@ -8,7 +9,8 @@ import {
 export type GroupInfoComponentActions =
   | ReturnType<typeof setGroupToViewIsLoading>
   | ReturnType<typeof setGroupToViewWasLoaded>
-  | ReturnType<typeof setGroupToViewFailed>;
+  | ReturnType<typeof setGroupToViewFailed>
+  | ReturnType<typeof getGroup>;
 
 export const setGroupToViewIsLoading = () =>
   ({
@@ -24,4 +26,9 @@ export const setGroupToViewFailed = (error: string) =>
   ({
     type: GROUP_TO_VIEW_WRETCH_FAIL,
     payload: error,
+  } as const);
+export const getGroup = (id: number) =>
+  ({
+    type: GET_GROUP,
+    payload: id,
   } as const);

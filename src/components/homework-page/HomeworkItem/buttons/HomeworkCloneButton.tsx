@@ -1,11 +1,14 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { useDispatch } from 'react-redux';
+
 import { ChildIndex } from '../../../../enums/ChildIndex';
 import { Homework } from '../../../../interfaces/Homework';
-
 import { RoundButton } from '../../../../shared/styled-components/buttonStyledComponent';
-import { loadHomeworkForModalWatcherAction, rememberHomeworkForModal } from '../../../../store/homework-page/add-homework-modal/action-creators';
+import {
+  loadHomeworkForModalWatcherAction,
+  rememberHomeworkForModal,
+} from '../../../../store/homework-page/add-homework-modal/action-creators';
 import { toggleModalWindow } from '../../../../store/modal-window/action-creators';
 
 function HomeworkConeButton(props: { hw: Homework }) {
@@ -15,7 +18,7 @@ function HomeworkConeButton(props: { hw: Homework }) {
     dispatch(toggleModalWindow(ChildIndex.CloneHomework));
     // dispatch();
     dispatch(rememberHomeworkForModal(hw));
-  }
+  };
 
   return (
     <RoundButton title="клонировать">

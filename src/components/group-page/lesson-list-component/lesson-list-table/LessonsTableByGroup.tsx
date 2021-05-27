@@ -12,6 +12,7 @@ import { Lesson } from '../../../../interfaces/Lesson';
 import ModalLessonDelete from '../modal-lesson-delete/ModalLessonDelete';
 import { ChildIndex } from '../../../../enums/ChildIndex';
 import { toggleModalWindow } from '../../../../store/modal-window/action-creators';
+import { Themes } from '../../../../interfaces/Themes';
 
 import {
   ButtonActions,
@@ -25,8 +26,10 @@ import {
 
 export interface CurrentLesson {
   lessonId: number;
-  lessonDate: string;
   description: string;
+  lessonDate: string;
+  /* themesId: Themes[]; */
+  recordLink: string;
 }
 
 function LessonsTableByGroup() {
@@ -50,8 +53,10 @@ function LessonsTableByGroup() {
   const rememberLesson = (lesson: Lesson) => {
     const dataCurrentLesson: CurrentLesson = {
       lessonId: lesson.id,
-      lessonDate: lesson.lessonDate,
       description: lesson.description,
+      lessonDate: lesson.lessonDate,
+      /* themesId: lesson.themes, */
+      recordLink: lesson.recordLink,
     };
     dispatch(setSelectedLesson(dataCurrentLesson));
   };

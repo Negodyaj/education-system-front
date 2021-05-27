@@ -1,5 +1,9 @@
 import { ChildIndex } from '../../enums/ChildIndex';
 import { TOGGLE_MODAL_WINDOW } from '../actionTypes';
+import {
+  INIT_MATERIAL_TO_CREATE,
+  INIT_THEME_TO_CREATE,
+} from '../course-edition/reducer';
 import { INIT_COURSE_TO_REGISTER } from '../courses-page/reducer';
 import { defaultAddHomeworkValues } from '../homework-page/add-homework-modal/reducer';
 import {
@@ -39,6 +43,14 @@ const initialState: ModalWindowState = {
     [ChildIndex.UpdateLesson]: {
       headerName: 'Внести изменения в занятие',
       defaultValues: INIT_LESSON_TO_UPDATE,
+    },
+    [ChildIndex.NewTheme]: {
+      headerName: 'Добавить тему',
+      defaultValues: INIT_THEME_TO_CREATE,
+    },
+    [ChildIndex.NewMaterial]: {
+      headerName: 'Добавить материал',
+      defaultValues: INIT_MATERIAL_TO_CREATE,
     },
     [ChildIndex.Payment]: {
       headerName: 'Назначить оплату',

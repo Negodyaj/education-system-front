@@ -6,7 +6,7 @@ export const CourseThemesContainer = styled.div`
 
 export const CourseThemePosition = styled.div`
   display: grid;
-  grid-template-columns: 90% 10%;
+  grid-template-columns: 460px 50px 90px;
   width: inherit;
   height: 50px;
   border-bottom: 1px solid rgba(39, 45, 59, 0.15);
@@ -14,6 +14,10 @@ export const CourseThemePosition = styled.div`
   font-weight: 400;
   font-size: 16px;
   &:hover {
+    background-color: rgba(0, 211, 248, 0.15);
+    border-radius: 5px;
+  }
+  &:focus {
     background-color: rgba(0, 211, 248, 0.15);
     border-radius: 5px;
   }
@@ -32,7 +36,16 @@ export const CourseThemeDelete = styled.div`
   align-items: center;
 `;
 
+export const CourseThemeChangePosition = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
 export const ButtonDeleteThemeFromCourse = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background-color: rgba(255, 255, 255, 0);
   background-size: contain;
   width: 40px;

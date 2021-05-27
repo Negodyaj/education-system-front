@@ -32,7 +32,7 @@ function HomeworkButtonsCell(props: {
 
   return (
     <ButtonsCell onClick={(e) => e.stopPropagation()}>
-      {buttons.cloneButton && <HomeworkCloneButton />}
+      {buttons.cloneButton && <HomeworkCloneButton hw={hw} />}
       {buttons.editButton && <HomeworkEditButton hw={hw} />}
       {buttons.deleteButton && <HomeworkDeleteButton homeworkId={hw.id} />}
       {buttons.checkButton && <HomeworkCheckButton hw={hw} />}

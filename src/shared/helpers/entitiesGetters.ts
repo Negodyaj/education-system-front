@@ -30,3 +30,6 @@ export const useContractNumberForUser = () =>
   useSelector(
     (state: IRootState) => state.payment.userForPayment?.contractNumber
   );
+
+export const useGetTagsEntities = () =>
+  useSelector((state: IRootState) => state.tagsPage.tagList);

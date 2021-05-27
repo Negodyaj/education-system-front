@@ -25,6 +25,19 @@
             "homeworkAttemptStatus": "ожидает проверки",
             "comments": [],
             "attachments": []
+        },
+        {
+            "id": 12,
+            "comment": "Я ничего не понял. Помогите!",
+            "author": {
+                "id": 1185,
+                "firstName": "Donald",
+                "lastName": "Duck",
+                "userPic": "https://www.swiminn.com/f/13640/136409795/jibbitz-donald-duck-ss17.jpg"
+            },
+            "homeworkAttemptStatus": "ожидает проверки",
+            "comments": [],
+            "attachments": []
         }
     ]
 }
