@@ -3,23 +3,29 @@ import {
   call,
   put,
   select,
+  takeEvery,
   takeLatest,
   takeLeading,
 } from 'redux-saga/effects';
 
 import { Homework } from '../../interfaces/Homework';
 import { SendAttemptResponse } from '../../interfaces/SendAttemptResponse';
-import { sendGetRequest, sendPostRequest } from '../../services/http.service';
+import {
+  sendGetRequest,
+  sendPostRequest,
+  sendPutRequest,
+} from '../../services/http.service';
 import { homeworkUrl } from '../../shared/consts';
 import {
   ALL_ACTIVE_GROUPS_LOADING,
   ATTEMPT_LIST_LOADING,
   LOAD_CURRENT_HOMEWORK,
   SEND_ATTEMPT,
+  UPDATE_ATTEMPT,
 } from '../actionTypes';
 import { isSendAttemptResponse } from '../../services/type-guards/sendAttemptResponse';
 import { AttemptPost } from '../../interfaces/AttemptPost';
-import { currentUserRoleIdSelector } from '../role-selector/selectors';
+import { currentUserSelector } from '../role-selector/selectors';
 import { HWAttemptStatuses } from '../../enums/hwAttemptStatuses';
 import { tryGetErrorFromResponse } from '../../shared/helpers/http-response.helper';
 import { constructNotificationError } from '../core/error-notification-constructor';
@@ -30,6 +36,8 @@ import { AllGroupsInCollege } from '../../interfaces/AllGroupsInCollege';
 import { isAllGroupsInCollegeArr } from '../../services/type-guards/allGroupsIncollegeArr';
 import { Attempt } from '../../interfaces/Attempt';
 import { isAttemptArr } from '../../services/type-guards/attemptsArr';
+import { User } from '../../interfaces/User';
+import { isAttempt } from '../../services/type-guards/attempt';
 
 import { currentHomeworkSelector } from './selector';
 import {
@@ -41,6 +49,7 @@ import {
   setCurrentAttempt,
   setCurrentGroup,
   setCurrentHomework,
+  updateAttempt,
 } from './action-creators';
 
 function* attemptRootSaga() {
@@ -49,6 +58,7 @@ function* attemptRootSaga() {
     loadCurrentHomeworkWatcher(),
     getAllActiveGroupsInCollegeWatcher(),
     getAttemptListToCheckWatcher(),
+    updateAttemptWatcher(),
   ]);
 }
 
@@ -84,9 +94,9 @@ function* sendAttemptWatcher() {
 function* sendAttemptWorker({ payload }: ReturnType<typeof sendAttempt>) {
   try {
     yield put(setIsLoading());
-    const currentUserRoleId: number = yield select(currentUserRoleIdSelector);
+    const currentUser: User = yield select(currentUserSelector);
     const newAttempt: AttemptPost = {
-      authorId: currentUserRoleId,
+      authorId: currentUser.id,
       homeworkAttemptStatusId: HWAttemptStatuses.Await,
       comment: payload.comment,
     };
@@ -146,7 +156,7 @@ function* getAttemptListToCheckWorker({
 }: ReturnType<typeof getAttemptListToCheck>) {
   const attempts: Attempt[] = yield call(async () =>
     sendGetRequest<Attempt[]>(
-      `${homeworkUrl}/${payload.hwId}/attempts`,
+      `${homeworkUrl}/${payload.hwId}/attempt`,
       isAttemptArr
     ).then((response) => response)
   );
@@ -172,6 +182,31 @@ function* getAttemptListToCheckWorker({
 
     yield getAllActiveGroupsInCollegeWorker();
   }
+}
+
+function* updateAttemptWatcher() {
+  console.log('updateAttemptWatcher');
+  yield takeEvery(UPDATE_ATTEMPT, updateAttemptWorker);
+}
+
+function* updateAttemptWorker({ payload }: ReturnType<typeof updateAttempt>) {
+  yield put(setIsLoading());
+  console.log(payload);
+  const updAttemptResponse: Attempt = yield call(async () =>
+    sendPutRequest<Attempt>(
+      `${homeworkUrl}/${payload.hwId}/attempt/${payload.attemptId}`,
+      isAttempt,
+      payload.attempt
+    ).then((response) => response)
+  );
+  console.log('updateAttemptWorker');
+
+  const error = tryGetErrorFromResponse(updAttemptResponse);
+
+  if (error) yield put(constructNotificationError(error));
+  else yield put(constructSuccessNotification(`статус ответа изменён`));
+
+  yield put(setIsLoaded());
 }
 
 export default attemptRootSaga;

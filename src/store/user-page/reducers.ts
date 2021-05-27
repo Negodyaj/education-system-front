@@ -19,7 +19,7 @@ export const INIT_USER: User = {
   id: 0,
   firstName: '',
   lastName: '',
-  birthDate: '',
+  birthDate: new Date().toLocaleDateString(),
   login: '',
   password: '',
   phone: '',

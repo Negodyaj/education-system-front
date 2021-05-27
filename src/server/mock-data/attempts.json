@@ -9,7 +9,7 @@
                 "lastName": "Попугай",
                 "userPic": "https://i.pinimg.com/originals/ee/fa/54/eefa54fbe930758a9e6139416e5001b3.png"
             },
-            "homeworkAttemptStatus": "Ждет проверки",
+            "homeworkAttemptStatus": "ожидает проверки",
             "comments": [],
             "attachments": []
         },
@@ -22,7 +22,20 @@
                 "lastName": "Filimonov",
                 "userPic": "https://pbs.twimg.com/profile_images/910180358737424384/THenAPB7_400x400.jpg"
             },
-            "homeworkAttemptStatus": "Ждет проверки",
+            "homeworkAttemptStatus": "ожидает проверки",
+            "comments": [],
+            "attachments": []
+        },
+        {
+            "id": 12,
+            "comment": "Я ничего не понял. Помогите!",
+            "author": {
+                "id": 1185,
+                "firstName": "Donald",
+                "lastName": "Duck",
+                "userPic": "https://www.swiminn.com/f/13640/136409795/jibbitz-donald-duck-ss17.jpg"
+            },
+            "homeworkAttemptStatus": "ожидает проверки",
             "comments": [],
             "attachments": []
         }

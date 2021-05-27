@@ -14,7 +14,6 @@ const AttemptCreator = () => {
   const { homeworkAttempt } = useSelector((state: IRootState) => state);
   const dispatch = useDispatch();
   const onSubmit = (data: AttemptInput) => {
-    console.log(data);
     dispatch(sendAttempt(data));
   };
 

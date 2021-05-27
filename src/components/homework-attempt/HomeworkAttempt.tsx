@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom';
 import { getAttemptListToCheck } from '../../store/homework-attempt/action-creators';
 import { IRootState } from '../../store';
 import { Role } from '../../enums/role';
+import { LinkDetector } from '../../shared/components/link-detector/LinkDetector';
 
 import NavPanelComponent from './nav-panel/NavPanelComponent';
 import {
@@ -16,18 +17,13 @@ import {
 } from './styledComponents';
 import { HeaderComponent } from './header-component/HeaderComponent';
 import AttemptCreator from './attempt-creator/AttemptCreator';
+import AttemptChecker from './attempt-checker/AttemptChecker';
 
 function HomeworkAttempt() {
   const { homeworkAttempt, roleSelector } = useSelector(
     (state: IRootState) => state
   );
-  const {
-    attemptList,
-    currentAttempt,
-    currentGroup,
-    currentHomework,
-    allGroupsInCollege,
-  } = homeworkAttempt;
+  const { attemptList, currentHomework } = homeworkAttempt;
   const { currentUserRoleId } = roleSelector;
   const dispatch = useDispatch();
   const { hwId } = useParams<{ hwId?: string }>();
@@ -42,17 +38,16 @@ function HomeworkAttempt() {
       <HeaderComponent />
       <Description>
         <Title>Домашняя работа:</Title>
-        <Data>{currentHomework?.description}</Data>
+        <Data>
+          <LinkDetector
+            stringForDetecting={currentHomework?.description || ''}
+          />
+        </Data>
       </Description>
       {currentUserRoleId === Role.Student ? (
         <AttemptCreator />
       ) : (
-        <AttemptCheckingContainer>
-          <NavPanelComponent attemptList={attemptList} />
-          <Content>
-            {attemptList?.length ? currentAttempt?.comment : 'нет ответов'}
-          </Content>
-        </AttemptCheckingContainer>
+        <AttemptChecker />
       )}
     </>
   );

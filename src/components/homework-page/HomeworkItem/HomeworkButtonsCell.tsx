@@ -8,7 +8,9 @@ import HomeworkDeleteButton from './buttons/homework-delete-button/HomeworkDelet
 import HomeworkAttemptButton from './buttons/HomeworkAttemptButton';
 import HomeworkCheckButton from './buttons/HomeworkCheckButton';
 import HomeworkCloneButton from './buttons/HomeworkCloneButton';
+import HomeworkEditAttemptButton from './buttons/HomeworkEditAttemptButton';
 import HomeworkEditButton from './buttons/HomeworkEditButton';
+import HomeworkViewButton from './buttons/HomeworkViewButton';
 
 export interface HomeworkButtonsCellOptions {
   readonly appointButton?: boolean;
@@ -18,6 +20,8 @@ export interface HomeworkButtonsCellOptions {
   readonly editButton?: boolean;
   readonly checkButton?: boolean;
   attemptButton?: boolean;
+  readonly viewButton?: boolean;
+  readonly editAttemptButton?: boolean;
 }
 
 function HomeworkButtonsCell(props: {
@@ -28,14 +32,16 @@ function HomeworkButtonsCell(props: {
 
   return (
     <ButtonsCell onClick={(e) => e.stopPropagation()}>
-      {buttons.cloneButton && <HomeworkCloneButton />}
-      {buttons.editButton && <HomeworkEditButton />}
+      {buttons.cloneButton && <HomeworkCloneButton hw={hw} />}
+      {buttons.editButton && <HomeworkEditButton hw={hw} />}
       {buttons.deleteButton && <HomeworkDeleteButton homeworkId={hw.id} />}
       {buttons.checkButton && <HomeworkCheckButton hw={hw} />}
       {buttons.appointButton && <HomeworkAppointButton hw={hw} />}
       {buttons.attemptButton && !hw.isOptional && (
         <HomeworkAttemptButton hw={hw} />
       )}
+      {buttons.viewButton && <HomeworkViewButton hw={hw} />}
+      {buttons.editAttemptButton && <HomeworkEditAttemptButton />}
     </ButtonsCell>
   );
 }

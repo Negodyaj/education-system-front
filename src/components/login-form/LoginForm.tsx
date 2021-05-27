@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -8,6 +8,7 @@ import '../../App.css';
 
 function LoginForm() {
   const [login, setLogin] = useState('');
+  const [passwordHS, setPasswordHS] = useState(true);
   const [password, setPassword] = useState('');
   const dispatch = useDispatch();
 
@@ -40,8 +41,10 @@ function LoginForm() {
 
     if (passwordSH !== null && passwordSH.getAttribute('type') === 'password') {
       passwordSH.setAttribute('type', 'text');
+      setPasswordHS(false);
     } else {
       passwordSH?.setAttribute('type', 'password');
+      setPasswordHS(true);
     }
   };
 
@@ -79,7 +82,7 @@ function LoginForm() {
             }}
           />
           <button
-            className="round-button"
+            className={passwordHS ? 'round-button close' : 'round-button open'}
             type="button"
             onClick={showHidePassword}
             id="eye">

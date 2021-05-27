@@ -99,7 +99,7 @@ aside.hide .text-container{
 .main-content {
     display: flex;
     flex-direction: column;
-    height: calc(100vh - 100px);
+    height: 100vh;
     flex-grow: 1;
     overflow: auto;
 }
@@ -151,7 +151,8 @@ aside.hide .text-container{
 }
 
 .form-label {
-    font-size: 12px;
+    font-size: 16px;
+    font-weight: 500;
     margin-bottom: 7px;
     display: inline-block;
     height: 16px;
@@ -220,4 +221,8 @@ aside.hide .text-container{
 
 aside.hide .logo-container svg {
     transform: scale(0.75);
+}
+
+.select__control {
+    height: auto !important;
 }

@@ -7,7 +7,6 @@ import React, { useState } from 'react';
 import NavMenu from './components/nav-menu/NavMenu';
 import NotificationContainer from './shared/components/notification/NotificationContainer';
 import CoursesPage from './components/courses-page/CoursesPage';
-import CoursePage from './components/courses-page/course-page/CoursePage';
 import CourseEdition from './components/courses-page/course-edition/CourseEdition';
 import './shared/fontawesome/FontawesomeIcons';
 import { Role } from './enums/role';
@@ -106,29 +105,24 @@ function App() {
         </div>
         <main className="main-content">
           {getToken() ? (
-            <>
-              <Route path="/personal-page">
-                <PersonalPage />
+            <Switch>
+              {(currentUserRoleId === Role.Manager ||
+                currentUserRoleId === Role.Admin) && <UserRoute />}
+              <Route path="/courses-page">
+                <CoursesPage />
+                <Helmet>
+                  <title>Курсы</title>
+                </Helmet>
+              </Route>
+              <Route exact path="/Homework">
+                <HomeworkPage />
                 <Helmet>
                   <title>ЛК</title>
                 </Helmet>
               </Route>
-              <Route path="/personal-page/edition">
-                <PersonalPageEdit />
-              </Route>
-              <Switch>
-                {(currentUserRoleId === Role.Manager ||
-                  currentUserRoleId === Role.Admin) && <UserRoute />}
-                {currentUserRoleId === Role.Teacher && (
-                  <Route path="/courses-page">
-                    <CoursesPage />
-                    <Helmet>
-                      <title>Курсы</title>
-                    </Helmet>
-                  </Route>
-                )}
-                <Route exact path="/Homework">
-                  <HomeworkPage />
+              {[Role.Teacher, Role.Tutor].includes(currentUserRoleId) && (
+                <Route path="/Homework/:hwId/attempt/:attemptId?">
+                  <HomeworkAttempt />
                   <Helmet>
                     <title>Домашки</title>
                   </Helmet>
@@ -176,44 +170,45 @@ function App() {
                     <title>Домашки</title>
                   </Helmet>
                 </Route>
-                {currentUserRoleId !== Role.Methodist && (
-                  <>
-                    <Route path="/group">
-                      <GroupNavMenu />
-                      <Helmet>
-                        <title>Группы</title>
-                      </Helmet>
-                    </Route>
-                    <Route path="/group/info">
-                      <GroupInfoComponent />
-                    </Route>
-                    <Route path="/group/lesson">
-                      <LessonsByGroup />
-                    </Route>
-                    <Route path="/group/journal">
-                      <Attendance />
-                    </Route>
-                    <Route path="/group/statistics">
-                      <div>statistics</div>
-                    </Route>
-                  </>
-                )}
-                <Route exact path="/group">
-                  <Redirect to="/group/1/info" />
-                </Route>
-                <Route path="/group/:id/info">
-                  <Helmet>
-                    <title>Группы</title>
-                  </Helmet>
-                </Route>
-                <Route path="/attendance">
-                  <Attendance />
+              )}
+              <Route path="/course/:id/edition">
+                <CourseEdition />
+              </Route>
+              {currentUserRoleId !== Role.Student && (
+                <Route path="/tags-page">
+                  <TagsPage />
                   <Helmet>
                     <title>Журнал в разработке</title>
                   </Helmet>
                 </Route>
-              </Switch>
-            </>
+              )}
+              <Route path="/homework">
+                <Helmet>
+                  <title>Домашки</title>
+                </Helmet>
+              </Route>
+              <Route exact path="/group">
+                <Redirect to="/group/14" />
+              </Route>
+              <Route path="/group/:id">
+                <Helmet>
+                  <title>Группы</title>
+                </Helmet>
+                <GroupPage />
+              </Route>
+              <Route path="/attendance">
+                <Attendance />
+                <Helmet>
+                  <title>Журнал в разработке</title>
+                </Helmet>
+              </Route>
+              <Route path="/personal-page">
+                <PersonalPage />
+                <Helmet>
+                  <title>ЛК</title>
+                </Helmet>
+              </Route>
+            </Switch>
           ) : (
             <Switch>
               <Route exact path="/">

@@ -16,8 +16,8 @@ import { Lesson } from '../interfaces/Lesson';
 import { CourseInput } from '../interfaces/CourseInput';
 import { INIT_HOMEWORK } from '../shared/tmp-mock-data/hw/initHomewwork';
 import { LessonInput } from '../interfaces/LessonInput';
-import { IUserAttendance } from '../components/group-page/lesson-list-component/ModalAttendance';
-import { CurrentLesson } from '../components/group-page/lesson-list-component/LessonsTableByGroup';
+import { IUserAttendance } from '../components/group-page/lesson-list-component/modal-attendance/ModalAttendance';
+import { CurrentLesson } from '../components/group-page/lesson-list-component/lesson-list-table/LessonsTableByGroup';
 import { IndexedObj } from '../interfaces/IndexedObj';
 import { UserPageOptions } from '../components/user-page/UserPage';
 import { Material } from '../interfaces/Materials';
@@ -25,14 +25,17 @@ import { AllGroupsInCollege } from '../interfaces/AllGroupsInCollege';
 import { AttemptInput } from '../interfaces/AttemptInput';
 import { ChildIndex } from '../enums/ChildIndex';
 import { ModalWindowSettings } from '../shared/components/modal-window/ModalWindow';
+import { PaymentInput } from '../components/interfaces/PaymentInput';
 import { HomeworkInput } from '../interfaces/HomeworkInput';
+import { LessonUpdate } from '../interfaces/LessonUpdate';
+import { AttemptPut } from '../interfaces/AttemptPut';
+import { ThemeInput } from '../interfaces/ThemeInput';
+import { MaterialInput } from '../interfaces/MaterialInput';
+import { CourseMaterial } from '../components/courses-page/course-edition/materials-course/MaterialsCourse';
+import { ThemeInCourse } from '../interfaces/ThemeInCourse';
 
 import { DEFAULT_ATTEMPT } from './homework-attempt/reducer';
 
-export interface IAppState {
-  isLoggedIn: boolean;
-  loadersCount: number;
-}
 export interface ICoursePageState {
   courseList: Course[];
   isOpenModalCreateCourse: boolean;
@@ -47,10 +50,21 @@ export interface ICourseEditionState {
   themes: Themes[];
   materials: Material[];
   idThemesCourse: number[];
+  idMaterialsCourse: number[];
   isDataLoading: boolean;
   isDisplayingButtonOpenProgramCourse: boolean;
   isDisplayingButtonOpenMaterialsCourse: boolean;
+  isDisplayingButtonsToChangeThemePosition: boolean;
+  isOpenModalDeleteTheme: boolean;
+  isOpenModalDeleteMaterial: boolean;
   idCourse: number;
+  currentTheme: Themes;
+  currentMaterial: Material;
+  createThemeInputModel: ThemeInput;
+  createMaterialInputModel: MaterialInput;
+  dataForAddMaterialInCourse: CourseMaterial;
+  dataForDeleteMaterialFromCourse: CourseMaterial;
+  dataForChangeArrThemesInCourse: ThemeInCourse[];
 }
 export interface IUserListPage {
   userList: User[];
@@ -91,14 +105,19 @@ export interface IHomeworkAttemptState {
   currentHomework?: Homework;
   currentGroup?: typeof INIT_HOMEWORK.groupsIds;
   currentAttempt?: Attempt;
+  currentAuthorId: number;
   allGroupsInCollege: AllGroupsInCollege[];
   defaultAttempt: AttemptInput;
+  attemptUpdate: AttemptPut;
 }
 export interface IAddHomeworkModal {
   isDataLoading: boolean;
   defaultFormValue: HomeworkInput;
   isModalHidden: boolean;
-  coursesForCloneEntities: DictionaryEntity[];
+  coursesEntities: DictionaryEntity[];
+  tagsForHomeworkEntities: DictionaryEntity[];
+  themesForHomeworkEntities: DictionaryEntity[];
+  homeworkForUpdate: HomeworkInput;
 }
 export interface INotificationContainerState {
   notifications: {
@@ -119,10 +138,10 @@ export interface IModalDeleteCourse {
 }
 
 export interface IPaymentFormState {
-  formVisibility: string;
   userForPayment: User | undefined;
   paymentList: PaymentResponse[];
   isDataLoading: boolean;
+  newPaymentInput: PaymentInput;
 }
 
 export interface ILesson {
@@ -134,6 +153,7 @@ export interface ILesson {
   currentLesson: CurrentLesson;
   arrDataToCreateAttendances: IUserAttendance[];
   createLessonInputModel: LessonInput;
+  updateLessonInputModel: LessonUpdate;
 }
 
 export interface IGroupInfoComponent {

@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,8 +11,11 @@ import {
 } from '../../store/courses-page/action-creators';
 import { LinkStyledRegularFont } from '../../shared/styled-components/globalStyledConsts';
 import { toggleModalWindow } from '../../store/modal-window/action-creators';
-import NewCourse from '../../shared/components/modal-window/children/new-course/NewCourse';
 import { ChildIndex } from '../../enums/ChildIndex';
+import {
+  CommonButton,
+  RoundButton,
+} from '../../shared/styled-components/buttonStyledComponent';
 
 import ModalWindowDelete from './modal-window/ModalWindowDelete';
 import {
@@ -28,6 +31,9 @@ import {
 function CoursesPage() {
   const dispatch = useDispatch();
   const pageState = useSelector((state: IRootState) => state.coursePage);
+  const currentRole = useSelector(
+    (state: IRootState) => state.roleSelector.currentUserRoleId
+  );
 
   useEffect(() => {
     dispatch(getCourses());
@@ -46,32 +52,34 @@ function CoursesPage() {
     <CourseContainer>
       <CourseCreate>
         <EmptyDiv />
-        <button onClick={openModalAdd} className="common-button">
-          Добавить курс
-        </button>
+        {currentRole === 5 && (
+          <CommonButton onClick={openModalAdd}>Добавить курс</CommonButton>
+        )}
       </CourseCreate>
       <CoursesList>
         {pageState.isDataLoading ? (
-          <Loading>Loading...</Loading>
+          <Loading />
         ) : (
           pageState.courseList.map((item) => (
             <CourseStyled>
               <LinkStyledRegularFont
                 className="current-course-name"
-                to={`/course/${item.id}`}>
+                to={`/course/${item.id}/edition`}>
                 <EmptyDiv>{item.name}</EmptyDiv>
               </LinkStyledRegularFont>
               <CourseUpdateDelete>
                 <Link to={`/course/${item.id}/edition`}>
-                  <button className="round-button">
-                    <FontAwesomeIcon icon="edit" />
-                  </button>
+                  {currentRole === 5 && (
+                    <RoundButton>
+                      <FontAwesomeIcon icon="edit" />
+                    </RoundButton>
+                  )}
                 </Link>
-                <button
-                  onClick={() => openModalDelete(item.id)}
-                  className="round-button">
-                  <FontAwesomeIcon icon="trash" />
-                </button>
+                {currentRole === 5 && (
+                  <RoundButton onClick={() => openModalDelete(item.id)}>
+                    <FontAwesomeIcon icon="trash" />
+                  </RoundButton>
+                )}
               </CourseUpdateDelete>
             </CourseStyled>
           ))

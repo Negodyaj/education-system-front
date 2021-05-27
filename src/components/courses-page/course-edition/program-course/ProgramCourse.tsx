@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { Role } from '../../../../enums/role';
 import { RoundButton } from '../../../../shared/styled-components/buttonStyledComponent';
 import { IRootState } from '../../../../store';
 import { setChangeDisplayingButtonOpenProgramCourse } from '../../../../store/course-edition/action-creators';
@@ -22,8 +23,9 @@ export interface CourseTheme {
 const ProgramCourse = () => {
   const dispatch = useDispatch();
   const pageState = useSelector((state: IRootState) => state.courseEditionPage);
-
-  const themesInCourse: number[] = [];
+  const role = useSelector(
+    (state: IRootState) => state.roleSelector.currentUserRoleId
+  );
 
   const openProgramCourse = () => {
     dispatch(setChangeDisplayingButtonOpenProgramCourse());
@@ -43,7 +45,7 @@ const ProgramCourse = () => {
       </ProgramCourseHeader>
       {pageState.isDisplayingButtonOpenProgramCourse && (
         <ProgramCourseContent>
-          <AllThemes />
+          {role !== Role.Student && <AllThemes />}
           <CourseThemes />
         </ProgramCourseContent>
       )}

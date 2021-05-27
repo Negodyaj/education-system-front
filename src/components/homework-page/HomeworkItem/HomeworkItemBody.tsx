@@ -5,49 +5,43 @@ import {
   HomeworkDescription,
   HomeworkItem,
   HomeworkItemHeader,
-  HomeworkName,
-  HomeworkProp,
   HomeworkThemeName,
 } from '../styled-components/consts';
+import { LinkDetector } from '../../../shared/components/link-detector/LinkDetector';
 
 import HomeworkButtonsCell, {
   HomeworkButtonsCellOptions,
 } from './HomeworkButtonsCell';
+import HomeworkItemName from './HomeworkItemName';
+import IsOptional from './IsOptional';
 
-function HomeworkItemBody(props: {
+const HomeworkItemBody = (props: {
   hw: Homework;
   buttons: HomeworkButtonsCellOptions;
-}) {
+}) => {
   const { hw, buttons } = props;
   const [descriptionVisibility, setDescriptionVisibility] = useState(false);
+  const stringForDetecting = hw.description ? hw.description : 'нет описания';
   const toggleDescriptionVisibility = () => {
     setDescriptionVisibility(!descriptionVisibility);
   };
+  console.log(hw);
 
   return (
     <HomeworkItem>
       <HomeworkItemHeader
         elementVisibility={descriptionVisibility}
         onClick={toggleDescriptionVisibility}>
-        <HomeworkName>
-          {hw.themes?.length ? hw.themes[0].name : 'без названия'}
-        </HomeworkName>
-        <HomeworkThemeName>
-          {hw.themes &&
-            hw.themes.map((theme) => (
-              <HomeworkProp key={theme.id}>{theme.name}</HomeworkProp>
-            ))}
-        </HomeworkThemeName>
-        <HomeworkProp>
-          {hw.isOptional ? 'без проверки' : 'с проверкой'}
-        </HomeworkProp>
+        <HomeworkItemName hw={hw} />
+        <HomeworkThemeName />
+        <IsOptional hw={hw} />
         <HomeworkButtonsCell hw={hw} buttons={buttons} />
       </HomeworkItemHeader>
       <HomeworkDescription>
-        {hw.description ? hw.description : 'нет описания'}
+        <LinkDetector stringForDetecting={stringForDetecting} />
       </HomeworkDescription>
     </HomeworkItem>
   );
-}
+};
 
-export default HomeworkItemBody;
+export default React.memo(HomeworkItemBody);

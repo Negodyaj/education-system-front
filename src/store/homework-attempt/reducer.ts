@@ -1,5 +1,6 @@
 import { Attempt } from '../../interfaces/Attempt';
 import { AttemptInput } from '../../interfaces/AttemptInput';
+import { AttemptPut } from '../../interfaces/AttemptPut';
 import {
   ALL_ACTIVE_GROUPS,
   ATTEMPTS_LOADING_SUCCESS,
@@ -15,13 +16,21 @@ export const DEFAULT_ATTEMPT: AttemptInput = {
   comment: '',
 };
 
+export const ATTEMPT_UPDATE: AttemptPut = {
+  comment: '',
+  authorId: 0,
+  homeworkAttemptStatusId: 0,
+};
+
 const initialState: IHomeworkAttemptState = {
   attemptList: undefined,
   currentGroup: undefined,
   currentAttempt: undefined,
+  currentAuthorId: -1,
   currentHomework: undefined,
   allGroupsInCollege: [],
   defaultAttempt: DEFAULT_ATTEMPT,
+  attemptUpdate: ATTEMPT_UPDATE,
 };
 export function homeworkAttemptReducer(
   state: IHomeworkAttemptState = initialState,
@@ -33,7 +42,11 @@ export function homeworkAttemptReducer(
     case SET_CURRENT_GROUP:
       return { ...state, currentGroup: action.payload };
     case SET_CURRENT_ATTEMPT:
-      return { ...state, currentAttempt: action.payload };
+      return {
+        ...state,
+        currentAttempt: action.payload,
+        currentAuthorId: action.payload.author.id,
+      };
     case SET_CURRENT_HOMEWORK:
       return { ...state, currentHomework: action.payload };
     case ALL_ACTIVE_GROUPS:

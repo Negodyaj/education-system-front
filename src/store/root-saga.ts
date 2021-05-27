@@ -10,6 +10,9 @@ import userListPageRootSaga from './user-list-page/saga';
 import { userPageRootSaga } from './user-page/saga';
 import { tagsPageRootSaga } from './tags-page/saga';
 import { coursePageRootSaga } from './courses-page/saga';
+import groupRootSaga from './group-page/group-info-component/saga';
+import { paymentRootSaga } from './payment/saga';
+import { addHWModalRootSaga } from './homework-page/add-homework-modal/saga';
 
 export function* rootSaga() {
   yield all([
@@ -23,5 +26,8 @@ export function* rootSaga() {
     tagsPageRootSaga(),
     coursePageRootSaga(),
     lessonByGroupListPageRootSaga(),
+    paymentRootSaga(),
+    addHWModalRootSaga(),
+    groupRootSaga(),
   ]);
 }

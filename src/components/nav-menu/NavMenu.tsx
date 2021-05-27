@@ -8,6 +8,7 @@ import NavMenuDropdownLink, {
   DropdownLinkParams,
 } from './components/NavMenuDropdownLink';
 import NavMenuSimpleLink from './components/NavMenuSimpleLink';
+import { groupsForNavMenu } from './data/groups-mock';
 import './NavMenu.css';
 
 interface NavMenuProps {
@@ -32,7 +33,11 @@ function NavMenu(props: NavMenuProps) {
   };
 
   const defaultShowFilter = (link: DropdownLinkParams) => {
-    if (link.routeParam === '1' || link.routeParam === '2') return true;
+    const groupInfo = groupsForNavMenu.find(
+      (group) => group.id.toString() === link.routeParam
+    );
+
+    if (groupInfo?.showByDefault) return true;
 
     return false;
   };
@@ -48,34 +53,20 @@ function NavMenu(props: NavMenuProps) {
             label="Пользователи"
           />
         )}
-        {(roleId === Role.Teacher || roleId === Role.Methodist) && (
+        {[Role.Teacher, Role.Methodist, Role.Tutor, Role.Student].includes(
+          roleId
+        ) && (
           <NavMenuSimpleLink
             route="homework"
             faIcon="book-reader"
             label="Домашки"
           />
         )}
-        {(roleId === Role.Teacher || roleId === Role.Methodist) && (
-          <NavMenuSimpleLink
-            route="courses-page"
-            faIcon="university"
-            label="Курсы"
-          />
-        )}
-        {(roleId === Role.Teacher || roleId === Role.Methodist) && (
-          <NavMenuSimpleLink
-            route="attendance"
-            faIcon="university"
-            label="Журнал в разработке"
-          />
-        )}
-        {(roleId === Role.Teacher || roleId === Role.Methodist) && (
-          <NavMenuSimpleLink
-            route="lessons"
-            faIcon="university"
-            label="Занятия"
-          />
-        )}
+        <NavMenuSimpleLink
+          route="courses-page"
+          faIcon="university"
+          label="Курсы"
+        />
         {roleId !== Role.Student && (
           <NavMenuSimpleLink route="tags-page" faIcon="tag" label="Тэги" />
         )}
@@ -84,12 +75,10 @@ function NavMenu(props: NavMenuProps) {
             route="group"
             faIcon="user"
             label="Группы"
-            dropdownLinks={[
-              { label: 'one', routeParam: '1' },
-              { label: 'two', routeParam: '2' },
-              { label: 'three', routeParam: '3' },
-              { label: 'four', routeParam: '4' },
-            ]}
+            dropdownLinks={groupsForNavMenu.map((group) => ({
+              label: group.name,
+              routeParam: group.id.toString(),
+            }))}
             alwaysShowAll={false}
             defaultShowFilter={defaultShowFilter}
           />
