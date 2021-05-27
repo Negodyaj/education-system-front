@@ -17,7 +17,7 @@ export function NextLessons(props: NextLessonsProps) {
   const dispatch = useDispatch();
 
   const lessonsState = useSelector((state: IRootState) => state.lessonByGroup);
-  const lessons = [...lessonsState.lessonList];
+  const lessons = lessonsState.lessonList;
 
   useEffect(() => {
     dispatch(getLessonsByGroup());
