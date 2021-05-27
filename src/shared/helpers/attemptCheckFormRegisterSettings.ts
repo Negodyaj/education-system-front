@@ -13,7 +13,7 @@ export const getAttemptCheckFormElementSettings = (
   switch (key) {
     case InputNames.HomeworkAttemptStatusId:
       return {
-        label: '',
+        label: 'изменить статус ответа на:',
         width: 150,
         inputSettings: {
           name: key,

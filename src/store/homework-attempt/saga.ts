@@ -3,6 +3,7 @@ import {
   call,
   put,
   select,
+  takeEvery,
   takeLatest,
   takeLeading,
 } from 'redux-saga/effects';
@@ -184,10 +185,13 @@ function* getAttemptListToCheckWorker({
 }
 
 function* updateAttemptWatcher() {
-  yield takeLeading(UPDATE_ATTEMPT, updateAttemptWorker);
+  console.log('updateAttemptWatcher');
+  yield takeEvery(UPDATE_ATTEMPT, updateAttemptWorker);
 }
 
 function* updateAttemptWorker({ payload }: ReturnType<typeof updateAttempt>) {
+  yield put(setIsLoading());
+  console.log(payload);
   const updAttemptResponse: Attempt = yield call(async () =>
     sendPutRequest<Attempt>(
       `${homeworkUrl}/${payload.hwId}/attempt/${payload.attemptId}`,
@@ -195,12 +199,14 @@ function* updateAttemptWorker({ payload }: ReturnType<typeof updateAttempt>) {
       payload.attempt
     ).then((response) => response)
   );
-  console.log(updAttemptResponse);
+  console.log('updateAttemptWorker');
 
   const error = tryGetErrorFromResponse(updAttemptResponse);
 
   if (error) yield put(constructNotificationError(error));
   else yield put(constructSuccessNotification(`статус ответа изменён`));
+
+  yield put(setIsLoaded());
 }
 
 export default attemptRootSaga;

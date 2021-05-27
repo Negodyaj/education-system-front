@@ -129,6 +129,8 @@ function CustomMultiSelect(props: SelectProps) {
                 ? (() => {
                     if (value?.label) return value;
 
+                    console.log(value);
+
                     return convertIdToSelectItem(
                       value,
                       convertEntitiesToSelectItems(

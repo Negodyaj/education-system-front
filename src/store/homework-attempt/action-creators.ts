@@ -64,11 +64,14 @@ export const updateAttempt = (
   hwId: number,
   attempt: AttemptPut,
   attemptId: number
-) =>
-  ({
+) => {
+  console.log({ hwId, attempt, attemptId });
+
+  return {
     type: UPDATE_ATTEMPT,
     payload: { hwId, attempt, attemptId },
-  } as const);
+  } as const;
+};
 export const loadCurrentHomework = (hwId: string) =>
   ({
     type: LOAD_CURRENT_HOMEWORK,
