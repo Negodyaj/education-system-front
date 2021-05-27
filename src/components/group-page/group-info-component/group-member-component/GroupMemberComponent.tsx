@@ -17,7 +17,7 @@ function GroupMemberComponent(props: GroupMemberComponentProps) {
         <img className="user-photo" src={userPic} alt="userpic" />
       </div>
       <div className="column">
-        {firstName} {lastName}( {login})
+        {firstName} {lastName} ({login})
       </div>
     </div>
   );
