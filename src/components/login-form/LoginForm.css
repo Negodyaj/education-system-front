@@ -25,3 +25,10 @@
     margin-right: auto;
 }
 
+.login-form .form-control .round-button{
+    position: absolute;
+    right: 20px;
+    bottom: 70px;
+    width:30px;
+    height:30px;
+}
