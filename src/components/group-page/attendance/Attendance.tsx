@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { isTypeNode } from 'typescript';
 
 import { IRootState } from '../../../store';
-import { getGroupToViewById } from '../../../store/group-page/group-info-component/thunk';
 import { getAttendanceByLessonId } from '../../../store/group-page/attendance/thunk';
+import { getGroup } from '../../../store/group-page/group-info-component/action-creaters';
 import { getLessonsByGroup } from '../../../store/group-page/lesson/action-creators';
 
 import {
@@ -31,7 +31,7 @@ const Attandance = () => {
   );
 
   useEffect(() => {
-    dispatch(getGroupToViewById(14));
+    dispatch(getGroup(14));
     dispatch(getLessonsByGroup());
     // dispatch(getAttendanceByLessons(attendance.lessonList))
     lessonDataForColumnName.forEach((item) => {

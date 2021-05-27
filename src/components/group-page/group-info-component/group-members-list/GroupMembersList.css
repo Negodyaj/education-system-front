@@ -1,6 +1,6 @@
 .list-group{
     display: grid;
-    grid-template-columns: 300px 300px;
+    grid-template-columns: 200px 200px;
     padding: 10px;
 }
 
@@ -11,4 +11,11 @@
     border-radius: 20px;
     box-shadow: 0 3px 6px #272d3b36;
     padding: 10px;
+}
+
+@media screen and (max-width: 600px){
+    .list-group{
+        display: flex;
+        flex-direction: column;
+    }
 }
