@@ -30,6 +30,7 @@ import {
   DELETE_MATERIAL_FROM_COURSE,
   COURSE_EDITION_ALL_MATERIALS_IN_COURSE,
   CHANGE_ARR_THEMES_IN_COURSE,
+  CHANGE_DISPLAYING_BUTTONS_TO_CHANGE_THEME_POSITION,
 } from '../actionTypes';
 
 export type CourseEditionActions =
@@ -42,6 +43,7 @@ export type CourseEditionActions =
   | ReturnType<typeof setAllMaterialsInCourse>
   | ReturnType<typeof setChangeDisplayingButtonOpenProgramCourse>
   | ReturnType<typeof setChangeDisplayingButtonOpenMaterialsCourse>
+  | ReturnType<typeof setChangeDisplayingButtonsToChangeThemePosition>
   | ReturnType<typeof setIsOpenModalDeleteTheme>
   | ReturnType<typeof setIsOpenModalDeleteMaterial>
   | ReturnType<typeof setSelectedTheme>
@@ -109,6 +111,12 @@ export const setChangeDisplayingButtonOpenProgramCourse = () =>
 export const setChangeDisplayingButtonOpenMaterialsCourse = () =>
   ({
     type: COURSE_EDITION_CHANGE_DISPLAYING_BUTTON_OPEN_MATERIALS_COURSE,
+    payload: undefined,
+  } as const);
+
+export const setChangeDisplayingButtonsToChangeThemePosition = () =>
+  ({
+    type: CHANGE_DISPLAYING_BUTTONS_TO_CHANGE_THEME_POSITION,
     payload: undefined,
   } as const);
 

@@ -24,6 +24,7 @@ import {
   DELETE_MATERIAL_FROM_COURSE,
   COURSE_EDITION_ALL_MATERIALS_IN_COURSE,
   CHANGE_ARR_THEMES_IN_COURSE,
+  CHANGE_DISPLAYING_BUTTONS_TO_CHANGE_THEME_POSITION,
 } from '../actionTypes';
 import { ICourseEditionState } from '../state';
 
@@ -48,6 +49,7 @@ const initialState: ICourseEditionState = {
   isDataLoading: false,
   isDisplayingButtonOpenProgramCourse: false,
   isDisplayingButtonOpenMaterialsCourse: false,
+  isDisplayingButtonsToChangeThemePosition: false,
   isOpenModalDeleteTheme: false,
   isOpenModalDeleteMaterial: false,
   idCourse: 0,
@@ -98,6 +100,11 @@ export function courseEditionPageReducer(
       return {
         ...state,
         isDisplayingButtonOpenMaterialsCourse: !state.isDisplayingButtonOpenMaterialsCourse,
+      };
+    case CHANGE_DISPLAYING_BUTTONS_TO_CHANGE_THEME_POSITION:
+      return {
+        ...state,
+        isDisplayingButtonsToChangeThemePosition: !state.isDisplayingButtonsToChangeThemePosition,
       };
     case TOGGLE_MODAL_DELETE_THEME:
       return {

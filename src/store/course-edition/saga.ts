@@ -245,7 +245,7 @@ function* changeArrThemesInCourseSagaWorker() {
   if (errorResponse) {
     yield constructNotificationError(errorResponse);
   } else {
-    yield put(constructSuccessNotification(`Тема в курс успешно добавлена`));
+    yield put(constructSuccessNotification(`Список тем курса успешно изменен`));
     yield put(getCourseById(currentCourse.id));
   }
 }

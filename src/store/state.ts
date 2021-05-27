@@ -53,6 +53,7 @@ export interface ICourseEditionState {
   isDataLoading: boolean;
   isDisplayingButtonOpenProgramCourse: boolean;
   isDisplayingButtonOpenMaterialsCourse: boolean;
+  isDisplayingButtonsToChangeThemePosition: boolean;
   isOpenModalDeleteTheme: boolean;
   isOpenModalDeleteMaterial: boolean;
   idCourse: number;
