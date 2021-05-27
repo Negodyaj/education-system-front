@@ -1,17 +1,19 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { ChildIndex } from '../../../../../enums/ChildIndex';
+import { ThemeInCourse } from '../../../../../interfaces/ThemeInCourse';
 import { Themes } from '../../../../../interfaces/Themes';
 import SearchComponent from '../../../../../shared/components/search-component/SearchComponent';
 import { RoundButton } from '../../../../../shared/styled-components/buttonStyledComponent';
 import { IRootState } from '../../../../../store';
 import {
+  changeArrThemesInCourse,
+  setAllThemesInCourse,
   setIsOpenModalDeleteTheme,
   setSelectedTheme,
 } from '../../../../../store/course-edition/action-creators';
-import { addThemeInCourse } from '../../../../../store/course-edition/thunk';
 import { toggleModalWindow } from '../../../../../store/modal-window/action-creators';
 import { CourseTheme } from '../ProgramCourse';
 
@@ -32,19 +34,27 @@ const AllThemes = () => {
   const dispatch = useDispatch();
   const pageState = useSelector((state: IRootState) => state.courseEditionPage);
 
-  /* useEffect(() => {
+  useEffect(() => {
     checkThemes();
-  }, [pageState.course.themes]); */
+  }, [pageState.course.themes]);
 
   const [searchWord, setSearchWord] = useState('');
+  const themesInCourse: number[] = [];
 
-  const addNewThemeInProgramCourse = (theme: Themes) => {
-    if (checkTheThemeInTheCourse(theme.id)) {
-      const courseTheme: CourseTheme = {
-        idCourse: pageState.idCourse,
-        idTheme: theme.id,
-      };
-      dispatch(addThemeInCourse(courseTheme));
+  const addNewThemeInProgramCourse = (idTheme: number) => {
+    if (checkTheThemeInTheCourse(idTheme)) {
+      const arrThemesInCourse: ThemeInCourse[] = [];
+      for (let i = 0; i < pageState.course.themes.length; i++) {
+        arrThemesInCourse.push({
+          id: pageState.course.themes[i].id,
+          order: i + 1,
+        });
+      }
+      arrThemesInCourse.push({
+        id: idTheme,
+        order: pageState.course.themes.length + 1,
+      });
+      dispatch(changeArrThemesInCourse(arrThemesInCourse));
     }
   };
 
@@ -54,10 +64,10 @@ const AllThemes = () => {
     return theme === undefined;
   };
 
-  /* const checkThemes = () => {
-        pageState.course.themes.map((theme) => themesInCourse.push(theme.id));
-        dispatch(setAllThemesInCourse(themesInCourse));
-      }; */
+  const checkThemes = () => {
+    pageState.course.themes.map((theme) => themesInCourse.push(theme.id));
+    dispatch(setAllThemesInCourse(themesInCourse));
+  };
 
   const searchInThemes = (str: string) => {
     setSearchWord(str);
@@ -109,7 +119,7 @@ const AllThemes = () => {
               <ThemePositionName>{theme.name}</ThemePositionName>
               <AddingNewThemeInCourse>
                 <ButtonAddingNewThemeInCourse
-                  onClick={() => addNewThemeInProgramCourse(theme)}>
+                  onClick={() => addNewThemeInProgramCourse(theme.id)}>
                   {pageState.idThemesCourse.includes(theme.id) ? (
                     <FontAwesomeIcon icon="check" />
                   ) : (

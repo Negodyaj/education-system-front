@@ -2,8 +2,10 @@ import { all, call, put, select, takeLatest } from 'redux-saga/effects';
 
 import { CourseMaterial } from '../../components/courses-page/course-edition/materials-course/MaterialsCourse';
 import { Course } from '../../interfaces/Courses';
+import { CourseUpdate } from '../../interfaces/CourseUpdate';
 import { MaterialInput } from '../../interfaces/MaterialInput';
 import { Material } from '../../interfaces/Materials';
+import { ThemeInCourse } from '../../interfaces/ThemeInCourse';
 import { ThemeInput } from '../../interfaces/ThemeInput';
 import { Themes } from '../../interfaces/Themes';
 import {
@@ -12,6 +14,7 @@ import {
   sendGetRequest,
   sendPostRequest,
   sendPostRequestNoResponse,
+  sendPutRequest,
 } from '../../services/http.service';
 import { isCourse } from '../../services/type-guards/course';
 import { isMaterial } from '../../services/type-guards/material';
@@ -27,6 +30,7 @@ import {
   COURSE_EDITION_COURSE_BY_ID,
   CREATE_MATERIAL,
   CREATE_THEME,
+  CHANGE_ARR_THEMES_IN_COURSE,
   DELETE_MATERIAL,
   DELETE_MATERIAL_FROM_COURSE,
   DELETE_THEME,
@@ -49,8 +53,11 @@ import {
   setSelectedTheme,
 } from './action-creators';
 import {
+  currentCourseSelector,
   dataForAddMaterialInCourseToSelectSelector,
+  dataForChangeArrThemesInCourseSelector,
   dataForDeleteMaterialFromCourseToSelectSelector,
+  idMaterialsInCourseSelector,
   materialToCreateSelector,
   materialToSelectSelector,
   themeToCreateSelector,
@@ -63,6 +70,7 @@ function* courseByIdPageRootSaga() {
     getThemesSagaWatcher(),
     createThemeSagaWatcher(),
     deleteThemeSagaWatcher(),
+    changeArrThemesInCourseSagaWatcher(),
     getMaterialsSagaWatcher(),
     createMaterialSagaWatcher(),
     deleteMaterialSagaWatcher(),
@@ -84,6 +92,13 @@ function* createThemeSagaWatcher() {
 
 function* deleteThemeSagaWatcher() {
   yield takeLatest(DELETE_THEME, deleteThemeSagaWorker);
+}
+
+function* changeArrThemesInCourseSagaWatcher() {
+  yield takeLatest(
+    CHANGE_ARR_THEMES_IN_COURSE,
+    changeArrThemesInCourseSagaWorker
+  );
 }
 
 function* getMaterialsSagaWatcher() {
@@ -198,6 +213,40 @@ function* deleteThemeSagaWorker() {
     }
   } catch (error) {
     yield put(setCourseEditionFailAction(error));
+  }
+}
+
+function* changeArrThemesInCourseSagaWorker() {
+  const currentCourse: Course = yield select(currentCourseSelector);
+  const arrThemesInCourse: ThemeInCourse[] = yield select(
+    dataForChangeArrThemesInCourseSelector
+  );
+  const arrIdMaterialsInCourse: number[] = yield select(
+    idMaterialsInCourseSelector
+  );
+  const courseUpdate: CourseUpdate = {
+    name: currentCourse.name,
+    description: currentCourse.description,
+    duration: currentCourse.duration,
+    materialIds: arrIdMaterialsInCourse,
+    themes: arrThemesInCourse,
+  };
+  const addThemeInCourseRequestResponse: Course = yield call(async () =>
+    sendPutRequest<Course>(
+      `${coursesUrl}/${currentCourse.id}`,
+      isCourse,
+      courseUpdate
+    ).then((response) => response)
+  );
+  const errorResponse = tryGetErrorFromResponse(
+    addThemeInCourseRequestResponse
+  );
+
+  if (errorResponse) {
+    yield constructNotificationError(errorResponse);
+  } else {
+    yield put(constructSuccessNotification(`Тема в курс успешно добавлена`));
+    yield put(getCourseById(currentCourse.id));
   }
 }
 

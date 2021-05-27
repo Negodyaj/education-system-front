@@ -23,6 +23,7 @@ import {
   ADD_MATERIAL_IN_COURSE,
   DELETE_MATERIAL_FROM_COURSE,
   COURSE_EDITION_ALL_MATERIALS_IN_COURSE,
+  CHANGE_ARR_THEMES_IN_COURSE,
 } from '../actionTypes';
 import { ICourseEditionState } from '../state';
 
@@ -56,6 +57,7 @@ const initialState: ICourseEditionState = {
   createMaterialInputModel: INIT_MATERIAL_TO_CREATE,
   dataForAddMaterialInCourse: {} as CourseMaterial,
   dataForDeleteMaterialFromCourse: {} as CourseMaterial,
+  dataForChangeArrThemesInCourse: [],
 };
 
 export function courseEditionPageReducer(
@@ -79,6 +81,8 @@ export function courseEditionPageReducer(
       return { ...state, idMaterialsCourse: action.payload };
     case CREATE_THEME:
       return { ...state, createThemeInputModel: action.payload };
+    case CHANGE_ARR_THEMES_IN_COURSE:
+      return { ...state, dataForChangeArrThemesInCourse: action.payload };
     case CREATE_MATERIAL:
       return { ...state, createMaterialInputModel: action.payload };
     case ADD_MATERIAL_IN_COURSE:

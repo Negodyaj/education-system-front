@@ -1,7 +1,16 @@
 import { IRootState } from '..';
 
+export const currentCourseSelector = (state: IRootState) =>
+  state.courseEditionPage.course;
+
 export const themeToCreateSelector = (state: IRootState) =>
   state.courseEditionPage.createThemeInputModel;
+
+export const dataForChangeArrThemesInCourseSelector = (state: IRootState) =>
+  state.courseEditionPage.dataForChangeArrThemesInCourse;
+
+export const idMaterialsInCourseSelector = (state: IRootState) =>
+  state.courseEditionPage.idMaterialsCourse;
 
 export const materialToCreateSelector = (state: IRootState) =>
   state.courseEditionPage.createMaterialInputModel;

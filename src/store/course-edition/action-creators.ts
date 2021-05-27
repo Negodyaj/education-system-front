@@ -2,6 +2,7 @@ import { CourseMaterial } from '../../components/courses-page/course-edition/mat
 import { Course } from '../../interfaces/Courses';
 import { MaterialInput } from '../../interfaces/MaterialInput';
 import { Material } from '../../interfaces/Materials';
+import { ThemeInCourse } from '../../interfaces/ThemeInCourse';
 import { ThemeInput } from '../../interfaces/ThemeInput';
 import { Themes } from '../../interfaces/Themes';
 import {
@@ -28,6 +29,7 @@ import {
   ADD_MATERIAL_IN_COURSE,
   DELETE_MATERIAL_FROM_COURSE,
   COURSE_EDITION_ALL_MATERIALS_IN_COURSE,
+  CHANGE_ARR_THEMES_IN_COURSE,
 } from '../actionTypes';
 
 export type CourseEditionActions =
@@ -49,6 +51,7 @@ export type CourseEditionActions =
   | ReturnType<typeof getThemes>
   | ReturnType<typeof createTheme>
   | ReturnType<typeof deleteTheme>
+  | ReturnType<typeof changeArrThemesInCourse>
   | ReturnType<typeof getMaterials>
   | ReturnType<typeof createMaterial>
   | ReturnType<typeof deleteMaterial>
@@ -137,6 +140,12 @@ export const deleteTheme = () =>
   ({
     type: DELETE_THEME,
     payload: undefined,
+  } as const);
+
+export const changeArrThemesInCourse = (arrThemesInCourse: ThemeInCourse[]) =>
+  ({
+    type: CHANGE_ARR_THEMES_IN_COURSE,
+    payload: arrThemesInCourse,
   } as const);
 
 export const getMaterials = () =>

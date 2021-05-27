@@ -31,6 +31,7 @@ import { LessonUpdate } from '../interfaces/LessonUpdate';
 import { ThemeInput } from '../interfaces/ThemeInput';
 import { MaterialInput } from '../interfaces/MaterialInput';
 import { CourseMaterial } from '../components/courses-page/course-edition/materials-course/MaterialsCourse';
+import { ThemeInCourse } from '../interfaces/ThemeInCourse';
 
 import { DEFAULT_ATTEMPT } from './homework-attempt/reducer';
 
@@ -61,6 +62,7 @@ export interface ICourseEditionState {
   createMaterialInputModel: MaterialInput;
   dataForAddMaterialInCourse: CourseMaterial;
   dataForDeleteMaterialFromCourse: CourseMaterial;
+  dataForChangeArrThemesInCourse: ThemeInCourse[];
 }
 export interface IUserListPage {
   userList: User[];
