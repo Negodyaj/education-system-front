@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { Role } from '../../../../../enums/role';
 import { Material } from '../../../../../interfaces/Materials';
 import { IRootState } from '../../../../../store';
 import { deleteMaterialFromCourse } from '../../../../../store/course-edition/action-creators';
@@ -21,6 +22,9 @@ import {
 const CourseMaterials = () => {
   const dispatch = useDispatch();
   const pageState = useSelector((state: IRootState) => state.courseEditionPage);
+  const role = useSelector(
+    (state: IRootState) => state.roleSelector.currentUserRoleId
+  );
 
   const deleteCurrentMaterialFromCourse = (id: number) => {
     const courseMaterial: CourseMaterial = {
@@ -44,12 +48,14 @@ const CourseMaterials = () => {
               {material.description}
             </LinkOnMaterial>
           </ContentCurrentMaterial>
-          <CourseMaterialDelete>
-            <ButtonDeleteMaterialFromCourse
-              onClick={() => deleteCurrentMaterialFromCourse(material.id)}>
-              <FontAwesomeIcon icon="minus" />
-            </ButtonDeleteMaterialFromCourse>
-          </CourseMaterialDelete>
+          {role !== Role.Student && (
+            <CourseMaterialDelete>
+              <ButtonDeleteMaterialFromCourse
+                onClick={() => deleteCurrentMaterialFromCourse(material.id)}>
+                <FontAwesomeIcon icon="minus" />
+              </ButtonDeleteMaterialFromCourse>
+            </CourseMaterialDelete>
+          )}
         </CourseMaterialPosition>
       ))}
     </CourseMaterialsContainer>
