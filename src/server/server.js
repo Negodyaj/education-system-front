@@ -6,6 +6,7 @@ import * as themes from './mock-data/themes.json';
 import * as attempts from './mock-data/attempts.json';
 import convertHomeworkPostToHomework from './converters/homeworkPostToHomework';
 import { convertAttemptPostToResponse } from './converters/attemptPostToResponse';
+import { convertAttemptPutToResponse } from './converters/attemptPutToResponse';
 
 function* idGenerator() {
   let n = 10000;
@@ -33,6 +34,7 @@ const runMock = () => {
       this.passthrough('https://80.78.240.16:7070/api/User/:id');
       // this.passthrough('https://80.78.240.16:7070/api/User/current');
       this.passthrough('https://80.78.240.16:7070/api/User/:id/payment');
+      this.passthrough('https://80.78.240.16:7070/api/Course');
       this.get(
         'https://80.78.240.16:7070/api/User/current',
         import('./mock-data/current-user.json')
@@ -40,6 +42,10 @@ const runMock = () => {
       this.get(
         'https://80.78.240.16:7070/api/Homework',
         (schema) => schema.db.homeworksTable
+      );
+      this.get(
+        'https://80.78.240.16:7070/api/Course/theme',
+        (schema) => schema.db.themesTable
       );
       this.get(
         'https://80.78.240.16:7070/api/Homework/:id',
@@ -50,7 +56,7 @@ const runMock = () => {
         }
       );
       this.get(
-        'https://80.78.240.16:7070/api/Homework/:hId/attempts',
+        'https://80.78.240.16:7070/api/Homework/:hId/attempt',
         (schema, request) => {
           let { hId } = request.params;
           let response = schema.db.attemptsTable.find(hId).attempts;
@@ -81,6 +87,22 @@ const runMock = () => {
           );
           let { id } = request.params;
           schema.db.attemptsTable.find(id).attempts.push(newRecord);
+          schema.db.homeworksTable.find(id).homeworkAttempts.push(newRecord);
+
+          return newRecord;
+        }
+      );
+      this.put(
+        'https://80.78.240.16:7070/api/Homework/:hid/attempt/:aid',
+        (schema, request) => {
+          let newRecord = convertAttemptPutToResponse(
+            JSON.parse(request.requestBody)
+          );
+          let { hid, aid } = request.params;
+          schema.db.attemptsTable
+            .find(hid)
+            .attempts.find(aid)
+            .replace(newRecord);
 
           return newRecord;
         }

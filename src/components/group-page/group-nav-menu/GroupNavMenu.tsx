@@ -23,20 +23,13 @@ function GroupNavMenu() {
           to={`${url}/lesson`}
           className={toggleState === 'lessons' ? 'tabs active-tabs' : 'tabs'}
           onClick={() => toggleTab('lessons')}>
-          {' '}
-          Lesson
+          Занятия
         </Link>
         <Link
           to={`${url}/journal`}
           className={toggleState === 'journal' ? 'tabs active-tabs' : 'tabs'}
           onClick={() => toggleTab('journal')}>
           Журнал
-        </Link>
-        <Link
-          to={`${url}/statistics`}
-          className={toggleState === 'statistics' ? 'tabs active-tabs' : 'tabs'}
-          onClick={() => toggleTab('statistics')}>
-          Статистика
         </Link>
       </div>
     </div>

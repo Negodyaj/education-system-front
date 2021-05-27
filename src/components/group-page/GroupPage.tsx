@@ -12,14 +12,8 @@ import LessonsByGroup from './lesson-list-component/LessonsByGroup';
 
 function GroupPage() {
   const { path } = useRouteMatch();
-  const dispatch = useDispatch();
-  const appState = useSelector((state: IRootState) => state);
 
   const { id } = useParams<{ id: string }>();
-
-  useEffect(() => {
-    // dispatch(getGroupToViewById(15))
-  }, []);
 
   const { currentUserRoleId } = useSelector(
     (state: IRootState) => state.roleSelector
@@ -38,9 +32,6 @@ function GroupPage() {
           </Route>
           <Route path={`${path}/journal`}>
             <Attendance />
-          </Route>
-          <Route path={`${path}/statistics`}>
-            <div>statistics</div>
           </Route>
         </>
       )}
