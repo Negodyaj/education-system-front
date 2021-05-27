@@ -123,7 +123,7 @@ function App() {
                 </Helmet>
               </Route>
               {[Role.Teacher, Role.Tutor].includes(currentUserRoleId) && (
-                <Route path="/Homework/:hwId/attempts/:attemptId?">
+                <Route path="/Homework/:hwId/attempt/:attemptId?">
                   <HomeworkAttempt />
                   <Helmet>
                     <title>Домашки</title>

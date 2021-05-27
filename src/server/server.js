@@ -55,7 +55,7 @@ const runMock = () => {
         }
       );
       this.get(
-        'https://80.78.240.16:7070/api/Homework/:hId/attempts',
+        'https://80.78.240.16:7070/api/Homework/:hId/attempt',
         (schema, request) => {
           let { hId } = request.params;
           let response = schema.db.attemptsTable.find(hId).attempts;

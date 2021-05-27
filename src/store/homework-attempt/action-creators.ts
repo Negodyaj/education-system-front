@@ -1,6 +1,7 @@
 import { AllGroupsInCollege } from '../../interfaces/AllGroupsInCollege';
 import { Attempt } from '../../interfaces/Attempt';
 import { AttemptInput } from '../../interfaces/AttemptInput';
+import { AttemptPut } from '../../interfaces/AttemptPut';
 import { Homework } from '../../interfaces/Homework';
 import { INIT_HOMEWORK } from '../../shared/tmp-mock-data/hw/initHomewwork';
 import {
@@ -13,6 +14,7 @@ import {
   SET_CURRENT_ATTEMPT,
   SET_CURRENT_GROUP,
   SET_CURRENT_HOMEWORK,
+  UPDATE_ATTEMPT,
 } from '../actionTypes';
 
 export type HomeworkAttemptActions =
@@ -24,7 +26,8 @@ export type HomeworkAttemptActions =
   | ReturnType<typeof sendAttempt>
   | ReturnType<typeof loadCurrentHomework>
   | ReturnType<typeof getAllActiveGroupsInCollege>
-  | ReturnType<typeof getAttemptListToCheck>;
+  | ReturnType<typeof getAttemptListToCheck>
+  | ReturnType<typeof updateAttempt>;
 
 export const attemptListLoadingSuccess = (attempts: Attempt[]) =>
   ({
@@ -56,6 +59,15 @@ export const sendAttempt = (attempt: AttemptInput) =>
   ({
     type: SEND_ATTEMPT,
     payload: attempt,
+  } as const);
+export const updateAttempt = (
+  hwId: number,
+  attempt: AttemptPut,
+  attemptId: number
+) =>
+  ({
+    type: UPDATE_ATTEMPT,
+    payload: { hwId, attempt, attemptId },
   } as const);
 export const loadCurrentHomework = (hwId: string) =>
   ({
