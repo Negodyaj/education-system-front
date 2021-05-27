@@ -4,7 +4,7 @@ import { PageTitle } from '../../shared/styled-components/consts';
 import { Homework } from '../../interfaces/Homework';
 import { IndexedObj } from '../../interfaces/IndexedObj';
 
-import AddButton from './buttons/AddButton';
+import AddButton from './buttons/HomeworkAddButton';
 import { HomeworkButtonsCellOptions } from './HomeworkItem/HomeworkButtonsCell';
 import HomeworkSelector from './homework-selector/HomeworkSelector';
 import {

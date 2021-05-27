@@ -12,6 +12,8 @@ import {
   GET_THEMES_FOR_HW_MODAL,
   HOMEWORK_ADDED_SUCCESS,
   HOMEWORK_LOAD_FOR_MODAL_SUCCESS,
+  REMEMBER_HOMEWORK_FOR_MODAL,
+  UPDATE_HOMEWORK_FOR_EDIT_MODAL,
 } from '../../actionTypes';
 
 export type AddHomeworkModalActions =
@@ -20,6 +22,8 @@ export type AddHomeworkModalActions =
   | ReturnType<typeof loadCourseForHWModalSuccess>
   | ReturnType<typeof loadTagsForHWModalWatcherAction>
   | ReturnType<typeof loadThemesForHWModalWatcherAction>
+  | ReturnType<typeof updateHWForEditModalWatcherAction>
+  | ReturnType<typeof rememberHomeworkForModal>
   | ReturnType<typeof addHomeworkForModalWatcherAction>;
 
 export const loadHomeworkForModalSuccess = (homeworkList: Homework[]) =>
@@ -63,4 +67,14 @@ export const loadThemesForHWModalWatcherAction = (themeList: Themes[]) =>
   ({
     type: GET_THEMES_FOR_HW_MODAL,
     payload: themeList,
+  } as const);
+export const updateHWForEditModalWatcherAction = (newHomework: HomeworkInput) =>
+  ({
+    type: UPDATE_HOMEWORK_FOR_EDIT_MODAL,
+    payload: newHomework,
+  } as const);
+export const rememberHomeworkForModal = (homework: Homework) =>
+  ({
+    type: REMEMBER_HOMEWORK_FOR_MODAL,
+    payload: homework,
   } as const);
