@@ -15,7 +15,7 @@ import {
 import LessonsTableByGroup from './lesson-list-table/LessonsTableByGroup';
 import ModalAttendance from './modal-attendance/ModalAttendance';
 
-const LessonsByGroup = () => {
+const LessonsByGroup = (props: { id: number }) => {
   const dispatch = useDispatch();
   const pageState = useSelector((state: IRootState) => state.lessonByGroup);
 

@@ -10,13 +10,15 @@ import Loader from '../../../shared/components/loader/Loader';
 import BaseGroupInfoComponent from './base-group-info-component/BaseGroupInfoComponent';
 import GroupMembersList from './group-members-list/GroupMembersList';
 
-function GroupInfoComponent() {
+function GroupInfoComponent(props: { id: number }) {
+  const { id } = props;
+
   const dispatch = useDispatch();
   const { groupToView, isDataLoading } = useSelector(
     (state: IRootState) => state.groupInfoComponent
   );
   useEffect(() => {
-    dispatch(getGroupToViewById(14));
+    dispatch(getGroupToViewById(id));
   }, []);
 
   return (
