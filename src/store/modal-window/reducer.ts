@@ -13,6 +13,7 @@ import {
 import { APPOINT_FORM_DEFAULTS } from '../homework-page/homework-appoint-modal/reducer';
 import { INIT_PAYMENT } from '../payment/reducer';
 import { ModalWindowState } from '../state';
+import { defaultCloneHomeworkValues } from '../homework-page/clone-homework-modal/reducer';
 
 import { ModalWindowActions } from './action-creators';
 
@@ -35,6 +36,10 @@ const initialState: ModalWindowState = {
     [ChildIndex.EditHomework]: {
       headerName: 'Редактировать домашнюю работу',
       defaultValues: defaultAddHomeworkValues,
+    },
+    [ChildIndex.CloneHomework]: {
+      headerName: 'Копировать домашнюю работу',
+      defaultValues: defaultCloneHomeworkValues,
     },
     [ChildIndex.NewLesson]: {
       headerName: 'Запланировать занятие',

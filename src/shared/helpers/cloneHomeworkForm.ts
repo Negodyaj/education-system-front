@@ -5,9 +5,9 @@ import { FormElementSettings } from './userFormRegisterSettingByKey';
 
 export const cloneHomeworkForm = (key: InputNames): FormElementSettings => {
   switch (key) {
-    case InputNames.CourseName:
+    case InputNames.HomeworkCourseId:
       return {
-        label: 'Для какого курса скопировать домашнюю работу',
+        label: 'для курса:',
         inputSettings: {
           name: key,
           inputType: 'singleSelect',

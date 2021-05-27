@@ -7,6 +7,7 @@ import {
   homeworkAddDefaultValueSelector,
   homeworkForUpdateSelector,
 } from '../../../../../store/homework-page/add-homework-modal/selector';
+import { homeworkCloneDefaultValueSelector } from '../../../../../store/homework-page/clone-homework-modal/selector';
 
 export type Selectors = CurrentLesson | Homework | {};
 
@@ -20,6 +21,8 @@ export function getCurrentSelector(
       return homeworkForUpdateSelector;
     case ChildIndex.AddHomework:
       return homeworkAddDefaultValueSelector;
+    case ChildIndex.CloneHomework:
+      return homeworkCloneDefaultValueSelector;
 
     default:
       return (state: IRootState) => ({});

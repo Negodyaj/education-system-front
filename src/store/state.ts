@@ -33,6 +33,7 @@ import { ThemeInput } from '../interfaces/ThemeInput';
 import { MaterialInput } from '../interfaces/MaterialInput';
 import { CourseMaterial } from '../components/courses-page/course-edition/materials-course/MaterialsCourse';
 import { ThemeInCourse } from '../interfaces/ThemeInCourse';
+import { CourseIdForCloneHW } from '../interfaces/CourseIdForCloneHW';
 
 import { DEFAULT_ATTEMPT } from './homework-attempt/reducer';
 
@@ -119,6 +120,15 @@ export interface IAddHomeworkModal {
   themesForHomeworkEntities: DictionaryEntity[];
   homeworkForUpdate: HomeworkInput;
 }
+
+export interface ICloneHomeworkModal {
+  isDataLoading: boolean;
+  defaultFormValue: CourseIdForCloneHW;
+  isModalHidden: boolean;
+  coursesEntities: DictionaryEntity[];
+  homeworkForUpdate: HomeworkInput;
+}
+
 export interface INotificationContainerState {
   notifications: {
     dismissible: NotificationData[];

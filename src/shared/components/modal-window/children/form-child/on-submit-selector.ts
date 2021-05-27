@@ -50,6 +50,8 @@ export function selectOnSubmit(index: ChildIndex, dispatch: Dispatch<any>) {
         dispatch(updateHWForEditModalWatcherAction(dataHomework));
         dispatch(toggleModalWindow(ChildIndex.Closed));
       };
+    // case ChildIndex.CloneHomework:
+    //   return;
     case ChildIndex.NewLesson:
       return (dataLesson: LessonInput) => {
         dispatch(createLesson(dataLesson));
