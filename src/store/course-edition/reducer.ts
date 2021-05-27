@@ -1,3 +1,4 @@
+import { CourseMaterial } from '../../components/courses-page/course-edition/materials-course/MaterialsCourse';
 import { Course } from '../../interfaces/Courses';
 import { MaterialInput } from '../../interfaces/MaterialInput';
 import { Material } from '../../interfaces/Materials';
@@ -19,6 +20,9 @@ import {
   SELECTED_THEME,
   TOGGLE_MODAL_DELETE_THEME,
   TOGGLE_MODAL_DELETE_MATERIAL,
+  ADD_MATERIAL_IN_COURSE,
+  DELETE_MATERIAL_FROM_COURSE,
+  COURSE_EDITION_ALL_MATERIALS_IN_COURSE,
 } from '../actionTypes';
 import { ICourseEditionState } from '../state';
 
@@ -39,6 +43,7 @@ const initialState: ICourseEditionState = {
   themes: [],
   materials: [],
   idThemesCourse: [],
+  idMaterialsCourse: [],
   isDataLoading: false,
   isDisplayingButtonOpenProgramCourse: false,
   isDisplayingButtonOpenMaterialsCourse: false,
@@ -49,6 +54,8 @@ const initialState: ICourseEditionState = {
   currentMaterial: {} as Material,
   createThemeInputModel: INIT_THEME_TO_CREATE,
   createMaterialInputModel: INIT_MATERIAL_TO_CREATE,
+  dataForAddMaterialInCourse: {} as CourseMaterial,
+  dataForDeleteMaterialFromCourse: {} as CourseMaterial,
 };
 
 export function courseEditionPageReducer(
@@ -68,10 +75,16 @@ export function courseEditionPageReducer(
       return { ...state, course: action.payload };
     case COURSE_EDITION_ALL_THEMES_IN_COURSE:
       return { ...state, idThemesCourse: action.payload };
+    case COURSE_EDITION_ALL_MATERIALS_IN_COURSE:
+      return { ...state, idMaterialsCourse: action.payload };
     case CREATE_THEME:
       return { ...state, createThemeInputModel: action.payload };
     case CREATE_MATERIAL:
       return { ...state, createMaterialInputModel: action.payload };
+    case ADD_MATERIAL_IN_COURSE:
+      return { ...state, dataForAddMaterialInCourse: action.payload };
+    case DELETE_MATERIAL_FROM_COURSE:
+      return { ...state, dataForDeleteMaterialFromCourse: action.payload };
     case COURSE_EDITION_CHANGE_DISPLAYING_BUTTON_OPEN_PROGRAM_COURSE:
       return {
         ...state,

@@ -30,6 +30,7 @@ import { HomeworkInput } from '../interfaces/HomeworkInput';
 import { LessonUpdate } from '../interfaces/LessonUpdate';
 import { ThemeInput } from '../interfaces/ThemeInput';
 import { MaterialInput } from '../interfaces/MaterialInput';
+import { CourseMaterial } from '../components/courses-page/course-edition/materials-course/MaterialsCourse';
 
 import { DEFAULT_ATTEMPT } from './homework-attempt/reducer';
 
@@ -47,6 +48,7 @@ export interface ICourseEditionState {
   themes: Themes[];
   materials: Material[];
   idThemesCourse: number[];
+  idMaterialsCourse: number[];
   isDataLoading: boolean;
   isDisplayingButtonOpenProgramCourse: boolean;
   isDisplayingButtonOpenMaterialsCourse: boolean;
@@ -57,6 +59,8 @@ export interface ICourseEditionState {
   currentMaterial: Material;
   createThemeInputModel: ThemeInput;
   createMaterialInputModel: MaterialInput;
+  dataForAddMaterialInCourse: CourseMaterial;
+  dataForDeleteMaterialFromCourse: CourseMaterial;
 }
 export interface IUserListPage {
   userList: User[];

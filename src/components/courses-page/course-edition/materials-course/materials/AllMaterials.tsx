@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { ChildIndex } from '../../../../../enums/ChildIndex';
@@ -8,10 +8,13 @@ import SearchComponent from '../../../../../shared/components/search-component/S
 import { RoundButton } from '../../../../../shared/styled-components/buttonStyledComponent';
 import { IRootState } from '../../../../../store';
 import {
+  addMaterialInCourse,
+  setAllMaterialsInCourse,
   setIsOpenModalDeleteMaterial,
   setSelectedMaterial,
 } from '../../../../../store/course-edition/action-creators';
 import { toggleModalWindow } from '../../../../../store/modal-window/action-creators';
+import { CourseMaterial } from '../MaterialsCourse';
 
 import {
   AddingNewMaterialInCourse,
@@ -31,6 +34,11 @@ const AllMaterials = () => {
   const pageState = useSelector((state: IRootState) => state.courseEditionPage);
 
   const [searchWord, setSearchWord] = useState('');
+  const materialsInCourse: number[] = [];
+
+  useEffect(() => {
+    checkMaterials();
+  }, [pageState.course.materials]);
 
   const searchInThemes = (str: string) => {
     setSearchWord(str);
@@ -48,15 +56,30 @@ const AllMaterials = () => {
     dispatch(setSelectedMaterial(material));
   };
 
-  /* const addNewThemeInProgramCourse = (theme: Themes) => {
-          if (checkTheThemeInTheCourse(theme.id)) {
-              const courseTheme: CourseTheme = {
-                  idCourse: pageState.idCourse,
-                  idTheme: theme.id,
-              };
-              dispatch(addThemeInCourse(courseTheme));
-          }
-      }; */
+  const addNewMaterialInCourse = (id: number) => {
+    if (checkTheMaterialInTheCourse(id)) {
+      const courseMaterial: CourseMaterial = {
+        idCourse: pageState.idCourse,
+        idMaterial: id,
+      };
+      dispatch(addMaterialInCourse(courseMaterial));
+    }
+  };
+
+  const checkTheMaterialInTheCourse = (materialId: number): boolean => {
+    const material = pageState.course.materials.find(
+      (t) => t.id === materialId
+    );
+
+    return material === undefined;
+  };
+
+  const checkMaterials = () => {
+    pageState.course.materials.map((material) =>
+      materialsInCourse.push(material.id)
+    );
+    dispatch(setAllMaterialsInCourse(materialsInCourse));
+  };
 
   return (
     <AllMaterialsContainer>
@@ -99,9 +122,8 @@ const AllMaterials = () => {
               </MaterialPositionName>
               <AddingNewMaterialInCourse>
                 <ButtonAddingNewMaterialInCourse
-                /* onClick={() => addNewThemeInProgramCourse(item)} */
-                >
-                  {pageState.idThemesCourse.includes(material.id) ? (
+                  onClick={() => addNewMaterialInCourse(material.id)}>
+                  {pageState.idMaterialsCourse.includes(material.id) ? (
                     <FontAwesomeIcon icon="check" />
                   ) : (
                     <FontAwesomeIcon icon="plus" />

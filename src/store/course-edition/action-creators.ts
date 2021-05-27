@@ -1,3 +1,4 @@
+import { CourseMaterial } from '../../components/courses-page/course-edition/materials-course/MaterialsCourse';
 import { Course } from '../../interfaces/Courses';
 import { MaterialInput } from '../../interfaces/MaterialInput';
 import { Material } from '../../interfaces/Materials';
@@ -24,6 +25,9 @@ import {
   TOGGLE_MODAL_DELETE_MATERIAL,
   DELETE_THEME,
   DELETE_MATERIAL,
+  ADD_MATERIAL_IN_COURSE,
+  DELETE_MATERIAL_FROM_COURSE,
+  COURSE_EDITION_ALL_MATERIALS_IN_COURSE,
 } from '../actionTypes';
 
 export type CourseEditionActions =
@@ -33,6 +37,7 @@ export type CourseEditionActions =
   | ReturnType<typeof setCourseEditionFailAction>
   | ReturnType<typeof getCourseByIdLoaded>
   | ReturnType<typeof setAllThemesInCourse>
+  | ReturnType<typeof setAllMaterialsInCourse>
   | ReturnType<typeof setChangeDisplayingButtonOpenProgramCourse>
   | ReturnType<typeof setChangeDisplayingButtonOpenMaterialsCourse>
   | ReturnType<typeof setIsOpenModalDeleteTheme>
@@ -46,7 +51,9 @@ export type CourseEditionActions =
   | ReturnType<typeof deleteTheme>
   | ReturnType<typeof getMaterials>
   | ReturnType<typeof createMaterial>
-  | ReturnType<typeof deleteMaterial>;
+  | ReturnType<typeof deleteMaterial>
+  | ReturnType<typeof addMaterialInCourse>
+  | ReturnType<typeof deleteMaterialFromCourse>;
 
 export const setCourseEditionIsLoadingAction = () =>
   ({
@@ -82,6 +89,12 @@ export const setAllThemesInCourse = (idThemesCourse: number[]) =>
   ({
     type: COURSE_EDITION_ALL_THEMES_IN_COURSE,
     payload: idThemesCourse,
+  } as const);
+
+export const setAllMaterialsInCourse = (idMaterialsCourse: number[]) =>
+  ({
+    type: COURSE_EDITION_ALL_MATERIALS_IN_COURSE,
+    payload: idMaterialsCourse,
   } as const);
 
 export const setChangeDisplayingButtonOpenProgramCourse = () =>
@@ -142,6 +155,18 @@ export const deleteMaterial = () =>
   ({
     type: DELETE_MATERIAL,
     payload: undefined,
+  } as const);
+
+export const addMaterialInCourse = (data: CourseMaterial) =>
+  ({
+    type: ADD_MATERIAL_IN_COURSE,
+    payload: data,
+  } as const);
+
+export const deleteMaterialFromCourse = (data: CourseMaterial) =>
+  ({
+    type: DELETE_MATERIAL_FROM_COURSE,
+    payload: data,
   } as const);
 
 export const setIsOpenModalDeleteTheme = () =>

@@ -11,3 +11,10 @@ export const themeToSelectSelector = (state: IRootState) =>
 
 export const materialToSelectSelector = (state: IRootState) =>
   state.courseEditionPage.currentMaterial.id;
+
+export const dataForAddMaterialInCourseToSelectSelector = (state: IRootState) =>
+  state.courseEditionPage.dataForAddMaterialInCourse;
+
+export const dataForDeleteMaterialFromCourseToSelectSelector = (
+  state: IRootState
+) => state.courseEditionPage.dataForDeleteMaterialFromCourse;

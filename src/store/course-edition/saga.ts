@@ -1,12 +1,6 @@
-import {
-  all,
-  call,
-  put,
-  select,
-  takeEvery,
-  takeLatest,
-} from 'redux-saga/effects';
+import { all, call, put, select, takeLatest } from 'redux-saga/effects';
 
+import { CourseMaterial } from '../../components/courses-page/course-edition/materials-course/MaterialsCourse';
 import { Course } from '../../interfaces/Courses';
 import { MaterialInput } from '../../interfaces/MaterialInput';
 import { Material } from '../../interfaces/Materials';
@@ -14,8 +8,10 @@ import { ThemeInput } from '../../interfaces/ThemeInput';
 import { Themes } from '../../interfaces/Themes';
 import {
   sendDeleteRequest,
+  sendDeleteRequestNoResponse,
   sendGetRequest,
   sendPostRequest,
+  sendPostRequestNoResponse,
 } from '../../services/http.service';
 import { isCourse } from '../../services/type-guards/course';
 import { isMaterial } from '../../services/type-guards/material';
@@ -25,12 +21,14 @@ import { isThemesArr } from '../../services/type-guards/themesArr';
 import { coursesUrl, materialsUrl, themesUrl } from '../../shared/consts';
 import { tryGetErrorFromResponse } from '../../shared/helpers/http-response.helper';
 import {
+  ADD_MATERIAL_IN_COURSE,
   COURSE_EDITION_ALL_MATERIALS,
   COURSE_EDITION_ALL_THEMES,
   COURSE_EDITION_COURSE_BY_ID,
   CREATE_MATERIAL,
   CREATE_THEME,
   DELETE_MATERIAL,
+  DELETE_MATERIAL_FROM_COURSE,
   DELETE_THEME,
 } from '../actionTypes';
 import { setIsLoaded, setIsLoading } from '../app/action-creators';
@@ -39,6 +37,7 @@ import { constructSuccessNotification } from '../core/sucess-notification-constr
 import { loadTagsListWatcherAction } from '../tags-page/action-creators';
 
 import {
+  addMaterialInCourse,
   getAllMaterials,
   getAllThemes,
   getCourseById,
@@ -50,6 +49,8 @@ import {
   setSelectedTheme,
 } from './action-creators';
 import {
+  dataForAddMaterialInCourseToSelectSelector,
+  dataForDeleteMaterialFromCourseToSelectSelector,
   materialToCreateSelector,
   materialToSelectSelector,
   themeToCreateSelector,
@@ -65,6 +66,8 @@ function* courseByIdPageRootSaga() {
     getMaterialsSagaWatcher(),
     createMaterialSagaWatcher(),
     deleteMaterialSagaWatcher(),
+    addMaterialInCourseSagaWatcher(),
+    deleteMaterialFromCourseSagaWatcher(),
   ]);
 }
 function* getCourseByIdSagaWatcher() {
@@ -93,6 +96,17 @@ function* createMaterialSagaWatcher() {
 
 function* deleteMaterialSagaWatcher() {
   yield takeLatest(DELETE_MATERIAL, deleteMaterialSagaWorker);
+}
+
+function* addMaterialInCourseSagaWatcher() {
+  yield takeLatest(ADD_MATERIAL_IN_COURSE, addMaterialInCourseSagaWorker);
+}
+
+function* deleteMaterialFromCourseSagaWatcher() {
+  yield takeLatest(
+    DELETE_MATERIAL_FROM_COURSE,
+    deleteMaterialFromCourseSagaWorker
+  );
 }
 
 function* getCourseByIdSagaWorker({
@@ -250,6 +264,32 @@ function* deleteMaterialSagaWorker() {
   } catch (error) {
     yield put(setCourseEditionFailAction(error));
   }
+}
+
+function* addMaterialInCourseSagaWorker() {
+  const dataMaterial: CourseMaterial = yield select(
+    dataForAddMaterialInCourseToSelectSelector
+  );
+  yield call(async () =>
+    sendPostRequestNoResponse(
+      `${coursesUrl}/${dataMaterial.idCourse}/${materialsUrl}/${dataMaterial.idMaterial}`
+    ).then((response) => response)
+  );
+  yield put(constructSuccessNotification(`Материал успешно добавлен в курс`));
+  yield put(getCourseById(dataMaterial.idCourse));
+}
+
+function* deleteMaterialFromCourseSagaWorker() {
+  const dataMaterial: CourseMaterial = yield select(
+    dataForDeleteMaterialFromCourseToSelectSelector
+  );
+  yield call(async () =>
+    sendDeleteRequestNoResponse(
+      `${coursesUrl}/${dataMaterial.idCourse}/${materialsUrl}/${dataMaterial.idMaterial}`
+    ).then((response) => response)
+  );
+  yield put(constructSuccessNotification(`Материал успешно удален из курса`));
+  yield put(getCourseById(dataMaterial.idCourse));
 }
 
 export default courseByIdPageRootSaga;
