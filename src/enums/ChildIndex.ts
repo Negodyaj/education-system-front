@@ -4,5 +4,6 @@ export enum ChildIndex {
   UpdateLesson = 'update-lesson',
   Payment = 'payment',
   AppointHomework = 'appoint-homework',
+  AddHomework = 'add-homework',
   Closed = 'closed',
 }

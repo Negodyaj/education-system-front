@@ -1,13 +1,13 @@
 import { newId } from '../server';
 import * as users from '../mock-data/users.json';
-export function convertAttemptPostToResponse(attemptPost) {
+export function convertAttemptPutToResponse(attemptPut) {
   let authorFromDB = users.default.filter(
-    (user) => user.id === attemptPost.authorId
+    (user) => user.id === attemptPut.authorId
   )[0];
 
   return {
-    id: newId.next().value || -1,
-    comment: attemptPost.comment,
+    id: attemptPut.id,
+    comment: attemptPut.comment,
     author: authorFromDB,
     homeworkAttemptStatus: 'ожидает проверки',
     // comments: [
