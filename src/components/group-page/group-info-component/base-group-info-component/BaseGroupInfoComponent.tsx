@@ -7,10 +7,11 @@ interface BaseGroupInfoProps {
   courseName?: string;
   startDate?: string;
   duration?: number;
+  id: number;
 }
 
 function BaseGroupInfoComponent(props: BaseGroupInfoProps) {
-  const { courseName, startDate, duration } = props;
+  const { courseName, startDate, duration, id } = props;
 
   return (
     <>
@@ -25,7 +26,7 @@ function BaseGroupInfoComponent(props: BaseGroupInfoProps) {
         <div>Mn Th Fr 9:00</div>
       </div>
       <div className="base-info">
-        <NextLessons />
+        <NextLessons id={id} />
       </div>
     </>
   );

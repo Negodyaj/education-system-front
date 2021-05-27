@@ -18,7 +18,7 @@ function GroupInfoComponent(props: { id: number }) {
   );
 
   useEffect(() => {
-    dispatch(getGroupToViewById(id));
+    dispatch(getGroup(id));
   }, []);
 
   return (
@@ -29,6 +29,7 @@ function GroupInfoComponent(props: { id: number }) {
             courseName={groupState.groupToView.course.name}
             startDate={groupState.groupToView.startDate}
             duration={groupState.groupToView.course.duration}
+            id={id}
           />
         </div>
         <div>

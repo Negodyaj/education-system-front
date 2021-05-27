@@ -8,10 +8,16 @@ import { IRootState } from '../../../../store';
 import { getLessonsByGroup } from '../../../../store/group-page/lesson/action-creators';
 import { convertStringToDate } from '../../../../shared/converters/stringToDateConverter';
 
-export function NextLessons() {
+interface NextLessonsProps {
+  id: number;
+}
+
+export function NextLessons(props: NextLessonsProps) {
+  const { id } = props;
   const dispatch = useDispatch();
 
   const lessonsState = useSelector((state: IRootState) => state.lessonByGroup);
+  const lessons = [...lessonsState.lessonList];
 
   useEffect(() => {
     dispatch(getLessonsByGroup());
@@ -26,9 +32,7 @@ export function NextLessons() {
   };
 
   const getNextDate = (): Lesson[] => {
-    const newArr = lessonsState.lessonList.filter((l) =>
-      isNextDate(l.lessonDate)
-    );
+    const newArr = lessons.filter((l) => isNextDate(l.lessonDate));
     newArr.sort((a, b) => {
       if (convertStringToDate(b.lessonDate) > convertStringToDate(a.lessonDate))
         return -1;
