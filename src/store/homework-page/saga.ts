@@ -78,6 +78,7 @@ export function* appointHomeworkPageSagaWorker({
       themeIds: homeworkForAppointment.themes?.map((theme) => theme.id) || [],
       isOptional: homeworkForAppointment.isOptional,
     };
+    console.log(appointedHomework);
     const homeworkAppointmentResponse: Homework = yield call(async () =>
       sendPostRequest<Homework>(
         `${homeworkUrl}`,

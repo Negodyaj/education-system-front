@@ -1,11 +1,12 @@
 .base-info{
     display: flex;
     flex-direction: column;
-    width: 350px;
+    width: 250px;
     text-align: left;
     border-radius: 20px;
     box-shadow: 0 3px 6px #272d3b36;
     padding: 10px;
+    margin-bottom: 15px;
 }
 
 .base-info .title{

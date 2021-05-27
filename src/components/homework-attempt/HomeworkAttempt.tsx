@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom';
 import { getAttemptListToCheck } from '../../store/homework-attempt/action-creators';
 import { IRootState } from '../../store';
 import { Role } from '../../enums/role';
+import { LinkDetector } from '../../shared/components/link-detector/LinkDetector';
 
 import NavPanelComponent from './nav-panel/NavPanelComponent';
 import {
@@ -42,7 +43,11 @@ function HomeworkAttempt() {
       <HeaderComponent />
       <Description>
         <Title>Домашняя работа:</Title>
-        <Data>{currentHomework?.description}</Data>
+        <Data>
+          <LinkDetector
+            stringForDetecting={currentHomework?.description || ''}
+          />
+        </Data>
       </Description>
       {currentUserRoleId === Role.Student ? (
         <AttemptCreator />
@@ -50,7 +55,13 @@ function HomeworkAttempt() {
         <AttemptCheckingContainer>
           <NavPanelComponent attemptList={attemptList} />
           <Content>
-            {attemptList?.length ? currentAttempt?.comment : 'нет ответов'}
+            {currentAttempt?.comment && (
+              <LinkDetector
+                stringForDetecting={
+                  attemptList?.length ? currentAttempt.comment : 'нет ответов'
+                }
+              />
+            )}
           </Content>
         </AttemptCheckingContainer>
       )}
