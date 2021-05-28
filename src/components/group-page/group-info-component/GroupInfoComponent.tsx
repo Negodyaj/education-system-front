@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { IRootState } from '../../../store';
 import { getGroup } from '../../../store/group-page/group-info-component/action-creaters';
 import '../../../App.css';
-import './GroupInfoComponent.css';
 
 import BaseGroupInfoComponent from './base-group-info-component/BaseGroupInfoComponent';
 import GroupMembersList from './group-members-list/GroupMembersList';
