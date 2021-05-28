@@ -1,9 +1,8 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 
+import { Role } from '../../../enums/role';
 import { LinkDetector } from '../../../shared/components/link-detector/LinkDetector';
-import { CommonButton } from '../../../shared/styled-components/buttonStyledComponent';
-import { ButtonsCell } from '../../../shared/styled-components/consts';
 import { IRootState } from '../../../store';
 import NavPanelComponent from '../nav-panel/NavPanelComponent';
 import {
@@ -15,7 +14,10 @@ import {
 import AttemptStatusChanger from './AttemptStatusChanger';
 
 const AttemptChecker = () => {
-  const { homeworkAttempt } = useSelector((state: IRootState) => state);
+  const { homeworkAttempt, roleSelector } = useSelector(
+    (state: IRootState) => state
+  );
+  const { currentUserRoleId } = roleSelector;
   const { attemptList, currentAttempt } = homeworkAttempt;
 
   return (
@@ -33,7 +35,7 @@ const AttemptChecker = () => {
         </Content>
       </AttemptCheckingRow>
       <AttemptCheckingRow right>
-        <AttemptStatusChanger />
+        {currentUserRoleId === Role.Teacher && <AttemptStatusChanger />}
       </AttemptCheckingRow>
     </AttemptCheckingContainer>
   );
