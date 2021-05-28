@@ -177,12 +177,6 @@ function App() {
                     <title>Журнал в разработке</title>
                   </Helmet>
                 </Route>
-                <Route path="/personal-page">
-                  <PersonalPage />
-                  <Helmet>
-                    <title>ЛК</title>
-                  </Helmet>
-                </Route>
               </Switch>
             </>
           ) : (
