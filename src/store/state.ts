@@ -120,6 +120,7 @@ export interface IAddHomeworkModal {
   tagsForHomeworkEntities: DictionaryEntity[];
   themesForHomeworkEntities: DictionaryEntity[];
   homeworkForUpdate: HomeworkInput;
+  homeworkForUpdateDefault: Homework;
 }
 
 export interface ICloneHomeworkModal {

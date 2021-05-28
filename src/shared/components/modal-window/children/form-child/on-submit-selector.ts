@@ -27,6 +27,7 @@ import {
   addHomeworkForModalWatcherAction,
   updateHWForEditModalWatcherAction,
 } from '../../../../../store/homework-page/add-homework-modal/action-creators';
+import { cloneHomeworkWatcherAction } from '../../../../../store/homework-page/clone-homework-modal/action-creators';
 import { toggleModalWindow } from '../../../../../store/modal-window/action-creators';
 import { createPaymentWatcher } from '../../../../../store/payment/action-creators';
 import { addTagWatcherAction } from '../../../../../store/tags-page/action-creators';
@@ -60,7 +61,7 @@ export function selectOnSubmit(index: ChildIndex, dispatch: Dispatch<any>) {
       };
     case ChildIndex.CloneHomework:
       return (data: CourseIdForCloneHW) => {
-        // dispatch(updateHWForEditModalWatcherAction(data));
+        dispatch(cloneHomeworkWatcherAction(data));
         dispatch(toggleModalWindow(ChildIndex.Closed));
       };
     case ChildIndex.NewLesson:
