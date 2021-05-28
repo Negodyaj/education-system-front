@@ -31,6 +31,7 @@ import {
   faSun,
   faArrowUp,
   faArrowDown,
+  faEye,
 } from '@fortawesome/free-solid-svg-icons';
 
 /* library.add(
@@ -90,5 +91,6 @@ library.add(
   faSun,
   faMoon,
   faArrowUp,
-  faArrowDown
+  faArrowDown,
+  faEye
 );

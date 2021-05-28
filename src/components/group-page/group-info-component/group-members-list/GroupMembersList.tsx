@@ -1,9 +1,9 @@
-import '../../../../App.css';
-import './GroupMembersList.css';
 import React from 'react';
 
-import GroupMemberComponent from '../group-member-component/GroupMemberComponent';
 import { User } from '../../../../interfaces/User';
+import { useWindowSize } from '../../../../shared/hooks/useWindowSize';
+import GroupMemberComponent from '../group-member-component/GroupMemberComponent';
+import { GroupList, GroupMemberList, Title } from '../GroupInfoComponentStyled';
 
 interface GroupMembersListProps {
   students: User[];
@@ -15,9 +15,9 @@ function GroupMembersList(props: GroupMembersListProps) {
   const { students, teachers, tutors } = props;
 
   return (
-    <div className="group-members-list">
-      <div className="list-header"> Учителя:</div>
-      <div className="list-group">
+    <GroupList>
+      <Title> Учителя:</Title>
+      <GroupMemberList>
         {teachers.map((t) => (
           <GroupMemberComponent
             userPic={t.userPic}
@@ -26,9 +26,9 @@ function GroupMembersList(props: GroupMembersListProps) {
             login={t.login}
           />
         ))}
-      </div>
-      <div className="list-header"> Тьюторы:</div>
-      <div className="list-group">
+      </GroupMemberList>
+      <Title> Тьюторы:</Title>
+      <GroupMemberList>
         {tutors.map((t) => (
           <GroupMemberComponent
             userPic={t.userPic}
@@ -37,9 +37,9 @@ function GroupMembersList(props: GroupMembersListProps) {
             login={t.login}
           />
         ))}
-      </div>
-      <div className="list-header"> Студенты:</div>
-      <div className="list-group">
+      </GroupMemberList>
+      <Title> Студенты:</Title>
+      <GroupMemberList>
         {students.map((s) => (
           <GroupMemberComponent
             userPic={s.userPic}
@@ -48,8 +48,8 @@ function GroupMembersList(props: GroupMembersListProps) {
             login={s.login}
           />
         ))}
-      </div>
-    </div>
+      </GroupMemberList>
+    </GroupList>
   );
 }
 

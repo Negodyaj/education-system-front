@@ -58,6 +58,10 @@ export const Button = styled.button`
   text-align: center;
   outline: none;
   cursor: pointer;
+  &:hover {
+    transition: 0.32s;
+    background-color: #2d62ed;
+  }
 `;
 
 export const RoundButton = styled(Button)`
