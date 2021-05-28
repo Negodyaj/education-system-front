@@ -14,6 +14,7 @@ import {
 } from '../../store/user-page/action-creators';
 import { getUserFormElementSettings } from '../../shared/helpers/userFormRegisterSettingByKey';
 import { InputNames } from '../../enums/inputNames';
+import { getCurrentUserFromStorage } from '../../services/auth.service';
 
 const PersonalPageEdit = () => {
   const dispatch = useDispatch();
@@ -21,8 +22,9 @@ const PersonalPageEdit = () => {
   const appState = useSelector((state: IRootState) => state);
   const user = appState.userPage.userForUserPage;
   const history = useHistory();
+  const currentUserId = getCurrentUserFromStorage().id;
   useEffect(() => {
-    dispatch(getUserToEdit('1'));
+    dispatch(getUserToEdit(`${currentUserId}`));
   }, []);
   const { ...methods } = useForm<UserInput>();
   useEffect(() => {

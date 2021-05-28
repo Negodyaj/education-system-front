@@ -8,12 +8,15 @@ import { IRootState } from '../../store';
 import { getUserToEdit } from '../../store/user-page/action-creators';
 import { getEnToRuTranslation } from '../../shared/converters/enumToDictionaryEntity';
 import { Role } from '../../enums/role';
+import { getFromStorage } from '../../services/local-storage.service';
+import { getCurrentUserFromStorage } from '../../services/auth.service';
 
 const PersonalPage = () => {
   const dispatch = useDispatch();
   const appState = useSelector((state: IRootState) => state);
+  const currentUserId = getCurrentUserFromStorage().id;
   useEffect(() => {
-    dispatch(getUserToEdit('1'));
+    dispatch(getUserToEdit(`${currentUserId}`));
   }, []);
 
   return (
