@@ -215,6 +215,8 @@ function* createAttendancesSagaWorker() {
       if (errorResponse) {
         yield constructNotificationError(errorResponse);
       } else {
+        yield put(setIsOpenModalAttendance());
+        yield put(setSelectedLesson({} as CurrentLesson));
         yield put(
           constructSuccessNotification(
             `${createAttendanceRequestResponse.user.lastName} ${createAttendanceRequestResponse.user.firstName} присутствует на занятии`
@@ -225,8 +227,6 @@ function* createAttendancesSagaWorker() {
   } catch (error) {
     yield put(setLessonListFail(error));
   }
-  setIsOpenModalAttendance();
-  setSelectedLesson({} as CurrentLesson);
 }
 
 export default lessonByGroupListPageRootSaga;

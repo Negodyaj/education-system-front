@@ -79,7 +79,7 @@ export const getLessonUpdateFormElementSettings = (
           inputType: 'textarea',
           registerOptions: {
             required: 'Введите описание занятия',
-            min: {
+            minLength: {
               value: 2,
               message: 'Минимальное колличество символов 2',
             },
