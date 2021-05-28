@@ -1,5 +1,7 @@
-import './GroupMemberComponent.css';
+import React from 'react';
+
 import '../../../../App.css';
+import { Column, Member } from '../GroupInfoComponentStyled';
 
 interface GroupMemberComponentProps {
   userPic: string;
@@ -12,14 +14,14 @@ function GroupMemberComponent(props: GroupMemberComponentProps) {
   const { userPic, firstName, lastName, login } = props;
 
   return (
-    <div className="list-member">
-      <div className="column">
+    <Member>
+      <Column>
         <img className="user-photo" src={userPic} alt="userpic" />
-      </div>
-      <div className="column">
+      </Column>
+      <Column>
         {firstName} {lastName} ({login})
-      </div>
-    </div>
+      </Column>
+    </Member>
   );
 }
 
