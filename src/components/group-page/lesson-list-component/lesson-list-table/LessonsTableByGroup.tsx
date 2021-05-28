@@ -13,6 +13,7 @@ import ModalLessonDelete from '../modal-lesson-delete/ModalLessonDelete';
 import { ChildIndex } from '../../../../enums/ChildIndex';
 import { toggleModalWindow } from '../../../../store/modal-window/action-creators';
 import { Themes } from '../../../../interfaces/Themes';
+import { Role } from '../../../../enums/role';
 
 import {
   ButtonActions,
@@ -36,6 +37,9 @@ function LessonsTableByGroup() {
   const currentDate = new Date();
   const dispatch = useDispatch();
   const pageState = useSelector((state: IRootState) => state.lessonByGroup);
+  const role = useSelector(
+    (state: IRootState) => state.roleSelector.currentUserRoleId
+  );
 
   useEffect(() => {
     dispatch(getLessonsByGroup());
@@ -88,23 +92,28 @@ function LessonsTableByGroup() {
             <ColumnLessonsTable>{lesson.themes}</ColumnLessonsTable>
             <ColumnLessonsTable>{lesson.recordLink}</ColumnLessonsTable>
             <ColumnLessonsTable>
-              <ButtonActions>
-                {new Date(
-                  `${lesson.lessonDate.substr(6, 4)}-${lesson.lessonDate.substr(
-                    3,
-                    2
-                  )}-${lesson.lessonDate.substr(0, 2)}`
-                ) > currentDate ? (
-                  <RoundButton onClick={openModalDeleteLesson}>
-                    <FontAwesomeIcon icon="trash" />
+              {role === Role.Teacher && (
+                <ButtonActions>
+                  {new Date(
+                    `${lesson.lessonDate.substr(
+                      6,
+                      4
+                    )}-${lesson.lessonDate.substr(
+                      3,
+                      2
+                    )}-${lesson.lessonDate.substr(0, 2)}`
+                  ) > currentDate ? (
+                    <RoundButton onClick={openModalDeleteLesson}>
+                      <FontAwesomeIcon icon="trash" />
+                    </RoundButton>
+                  ) : (
+                    <div />
+                  )}
+                  <RoundButton onClick={openUpModalUpdateLesson}>
+                    <FontAwesomeIcon icon="edit" />
                   </RoundButton>
-                ) : (
-                  <div />
-                )}
-                <RoundButton onClick={openUpModalUpdateLesson}>
-                  <FontAwesomeIcon icon="edit" />
-                </RoundButton>
-              </ButtonActions>
+                </ButtonActions>
+              )}
             </ColumnLessonsTable>
           </ContentColumnLessonsTable>
         ))}

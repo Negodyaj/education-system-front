@@ -3,6 +3,8 @@ import { all, call, put, select, takeLatest } from 'redux-saga/effects';
 import { CurrentLesson } from '../../../components/group-page/lesson-list-component/lesson-list-table/LessonsTableByGroup';
 import { IUserAttendance } from '../../../components/group-page/lesson-list-component/modal-attendance/ModalAttendance';
 import { Attendance } from '../../../interfaces/Attendance';
+import { DataNewLesson } from '../../../interfaces/DataNewLesson';
+import { DataUpdateLesson } from '../../../interfaces/DataUpdateLesson';
 import { Lesson } from '../../../interfaces/Lesson';
 import { LessonInput } from '../../../interfaces/LessonInput';
 import { LessonUpdate } from '../../../interfaces/LessonUpdate';
@@ -42,21 +44,6 @@ import {
   lessonToSelectSelector,
   lessonToUpdateSelector,
 } from './selector';
-
-interface DataNewLesson {
-  groupId: 14;
-  description: string;
-  lessonDate: string;
-  themesId?: number[];
-}
-
-interface DataUpdateLesson {
-  groupId: 14;
-  description: string;
-  lessonDate: string;
-  themesId?: number[];
-  recordLink?: string;
-}
 
 function* lessonByGroupListPageRootSaga() {
   yield all([

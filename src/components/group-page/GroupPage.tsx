@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Route, useParams, useRouteMatch } from 'react-router-dom';
+import { Redirect, Route, useParams, useRouteMatch } from 'react-router-dom';
 
 import { Role } from '../../enums/role';
 import { IRootState } from '../../store';
@@ -24,6 +24,9 @@ function GroupPage() {
       {currentUserRoleId !== Role.Methodist && (
         <>
           <GroupNavMenu />
+          <Route path={`/group/${id}`}>
+            <Redirect to={`/group/${id}/info`} />
+          </Route>
           <Route path={`${path}/info`}>
             <GroupInfoComponent id={+id} />
           </Route>
