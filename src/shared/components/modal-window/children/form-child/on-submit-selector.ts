@@ -4,11 +4,13 @@ import { Dispatch } from 'redux';
 import { PaymentInput } from '../../../../../components/interfaces/PaymentInput';
 import { ChildIndex } from '../../../../../enums/ChildIndex';
 import { AppointInput } from '../../../../../interfaces/AppointInput';
+import { CourseIdForCloneHW } from '../../../../../interfaces/CourseIdForCloneHW';
 import { CourseInput } from '../../../../../interfaces/CourseInput';
 import { HomeworkInput } from '../../../../../interfaces/HomeworkInput';
 import { LessonInput } from '../../../../../interfaces/LessonInput';
 import { LessonUpdate } from '../../../../../interfaces/LessonUpdate';
 import { MaterialInput } from '../../../../../interfaces/MaterialInput';
+import { TagInput } from '../../../../../interfaces/TagInput';
 import { ThemeInput } from '../../../../../interfaces/ThemeInput';
 import { IRootState } from '../../../../../store';
 import {
@@ -25,8 +27,10 @@ import {
   addHomeworkForModalWatcherAction,
   updateHWForEditModalWatcherAction,
 } from '../../../../../store/homework-page/add-homework-modal/action-creators';
+import { cloneHomeworkWatcherAction } from '../../../../../store/homework-page/clone-homework-modal/action-creators';
 import { toggleModalWindow } from '../../../../../store/modal-window/action-creators';
 import { createPaymentWatcher } from '../../../../../store/payment/action-creators';
+import { addTagWatcherAction } from '../../../../../store/tags-page/action-creators';
 
 export function selectOnSubmit(index: ChildIndex, dispatch: Dispatch<any>) {
   switch (index) {
@@ -40,6 +44,11 @@ export function selectOnSubmit(index: ChildIndex, dispatch: Dispatch<any>) {
         dispatch(appointHomework(data));
         dispatch(toggleModalWindow(ChildIndex.Closed));
       };
+    case ChildIndex.AddTag:
+      return (data: TagInput) => {
+        dispatch(addTagWatcherAction(data));
+        dispatch(toggleModalWindow(ChildIndex.Closed));
+      };
     case ChildIndex.AddHomework:
       return (dataHomework: HomeworkInput) => {
         dispatch(addHomeworkForModalWatcherAction(dataHomework));
@@ -48,6 +57,11 @@ export function selectOnSubmit(index: ChildIndex, dispatch: Dispatch<any>) {
     case ChildIndex.EditHomework:
       return (dataHomework: HomeworkInput) => {
         dispatch(updateHWForEditModalWatcherAction(dataHomework));
+        dispatch(toggleModalWindow(ChildIndex.Closed));
+      };
+    case ChildIndex.CloneHomework:
+      return (data: CourseIdForCloneHW) => {
+        dispatch(cloneHomeworkWatcherAction(data));
         dispatch(toggleModalWindow(ChildIndex.Closed));
       };
     case ChildIndex.NewLesson:

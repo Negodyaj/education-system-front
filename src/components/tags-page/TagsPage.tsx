@@ -9,6 +9,8 @@ import {
   toggleModalHidden,
 } from '../../store/tags-page/action-creators';
 import { CommonButton } from '../../shared/styled-components/buttonStyledComponent';
+import { toggleModalWindow } from '../../store/modal-window/action-creators';
+import { ChildIndex } from '../../enums/ChildIndex';
 
 import TagList from './tag-list/TagList';
 import AddTagModal from './add-tag-modal/AddTagModal';
@@ -40,7 +42,7 @@ function TagsPage() {
         <CommonButton
           as="button"
           onClick={() => {
-            dispatch(toggleModalHidden());
+            dispatch(toggleModalWindow(ChildIndex.AddTag));
           }}>
           <FontAwesomeIcon icon="plus" />
           <span> Добавить</span>

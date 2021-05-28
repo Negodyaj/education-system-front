@@ -14,6 +14,15 @@ export const useGroupsWithAttemptsForCurrentTeacher = () =>
 
 export const useCoursesForHomeworkAddModal = () =>
   useSelector((state: IRootState) => state.addHomeWorkModal.coursesEntities);
+export const useCoursesForHomeworkCloneModal = () => {
+  const appState = useSelector((state: IRootState) => state);
+  const tmpCourseId = appState.cloneHomeWorkModal.homeworkForUpdate.courseId;
+  console.log(appState.cloneHomeWorkModal.homeworkForUpdate);
+
+  return appState.addHomeWorkModal.coursesEntities.filter(
+    (course) => course.id !== tmpCourseId
+  );
+};
 export const useTagsForHomeworkAddModal = () =>
   useSelector(
     (state: IRootState) => state.addHomeWorkModal.tagsForHomeworkEntities

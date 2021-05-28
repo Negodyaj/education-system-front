@@ -52,32 +52,26 @@ export function* loadTagsListSaga() {
 }
 
 export function* deleteTagPageSagaWatcher() {
-  yield put(setIsLoading());
-  yield takeLatest(DELETE_TAG, deleteTagSaga);
-  yield put(setIsLoaded());
+  yield takeEvery(DELETE_TAG, deleteTagSaga);
 }
 
 export function* deleteTagSaga({
   payload,
 }: ReturnType<typeof deleteTagWatcherAction>) {
-  try {
-    const error: WretcherError = yield call(
-      sendDeleteRequestNoResponse,
-      `${tagsUrl}/${payload.id}`
+  const error: WretcherError = yield call(
+    sendDeleteRequestNoResponse,
+    `${tagsUrl}/${payload.id}`
+  );
+
+  if (error.status >= 400) yield put(constructNotificationError(error));
+  else {
+    yield put(
+      pushNotification(
+        makeNotification('success', `Тег ${payload.name} успешно удален`)
+      )
     );
 
-    if (error.status >= 400) yield put(constructNotificationError(error));
-    else {
-      yield put(
-        pushNotification(
-          makeNotification('success', `Тег ${payload.name} успешно удален`)
-        )
-      );
-
-      yield loadTagsListSaga();
-    }
-  } catch {
-    console.log('error deleteTagSaga');
+    yield loadTagsListSaga();
   }
 }
 

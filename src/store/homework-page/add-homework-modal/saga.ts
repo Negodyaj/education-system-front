@@ -46,6 +46,10 @@ import {
   loadThemesForHWModalWatcherAction,
   updateHWForEditModalWatcherAction,
 } from './action-creators';
+import {
+  homeworkEditDefaultValueSelector,
+  homeworkForUpdateSelector,
+} from './selector';
 
 export function* addHWModalRootSaga() {
   yield all([
@@ -173,10 +177,13 @@ export function* updateHWForEditModalSagaWorker({
 }: ReturnType<typeof updateHWForEditModalWatcherAction>) {
   yield put(setIsLoading());
   try {
+    const hw: Homework = yield select(homeworkEditDefaultValueSelector);
     const newHomework: HomeworkInput = yield call(async () =>
-      sendPutRequest<Homework>(`${homeworkUrl}/id`, isHomework, payload).then(
-        (homework) => homework
-      )
+      sendPutRequest<Homework>(
+        `${homeworkUrl}/${hw.id}`,
+        isHomework,
+        payload
+      ).then((homework) => homework)
     );
 
     const error = tryGetErrorFromResponse(newHomework);
