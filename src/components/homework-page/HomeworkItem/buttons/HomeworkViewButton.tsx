@@ -9,7 +9,7 @@ function HomeworkViewButton(props: { hw: Homework }) {
   const { hw } = props;
   const history = useHistory();
   const viewOnClick = () => {
-    history.push(`${homeworkUrl}/${hw.id}/attempts`);
+    history.push(`${homeworkUrl}/${hw.id}/attempt`);
   };
 
   return (
