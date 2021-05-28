@@ -19,7 +19,7 @@ export const getThemeFormElementSettings = (
           inputType: 'text',
           registerOptions: {
             required: 'Введите название темы',
-            min: {
+            minLength: {
               value: 2,
               message: 'Минимальное колличество символов 2',
             },

@@ -11,6 +11,7 @@ import { getPaymentFormElementSettings } from '../../../../helpers/paymentFormRe
 import { getHomeworkAddForm } from '../../../../helpers/addHomeworkForm';
 import { getThemeFormElementSettings } from '../../../../helpers/themeFormRegisterSettingByKey';
 import { cloneHomeworkForm } from '../../../../helpers/cloneHomeworkForm';
+import { getTagAddForm } from '../../../../helpers/addTagForm';
 
 export const selectFormSetting = (index: ChildIndex, key: InputNames) => {
   switch (index) {
@@ -34,6 +35,8 @@ export const selectFormSetting = (index: ChildIndex, key: InputNames) => {
       return getThemeFormElementSettings(key);
     case ChildIndex.NewMaterial:
       return getMaterialFormElementSettings(key);
+    case ChildIndex.AddTag:
+      return getTagAddForm(key);
   }
 
   return undefined;

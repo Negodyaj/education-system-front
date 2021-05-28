@@ -29,6 +29,7 @@ const initialState: IAddHomeworkModal = {
   tagsForHomeworkEntities: [],
   themesForHomeworkEntities: [],
   homeworkForUpdate: defaultAddHomeworkValues,
+  homeworkForUpdateDefault: INIT_HOMEWORK,
 };
 let localCoursesEntitites: DictionaryEntity[] = [];
 let localTagsEntitites: DictionaryEntity[] = [];
@@ -67,6 +68,7 @@ export function addHomeworkModalReducer(
       return {
         ...state,
         homeworkForUpdate: homeworkToHomeworkInput(action.payload),
+        homeworkForUpdateDefault: action.payload,
       };
     default:
       return state;

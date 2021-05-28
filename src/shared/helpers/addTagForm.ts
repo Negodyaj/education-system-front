@@ -1,17 +1,15 @@
 import { InputNames } from '../../enums/inputNames';
 
-import { useCoursesForHomeworkCloneModal } from './entitiesGetters';
 import { FormElementSettings } from './userFormRegisterSettingByKey';
 
-export const cloneHomeworkForm = (key: InputNames): FormElementSettings => {
+export const getTagAddForm = (key: InputNames): FormElementSettings => {
   switch (key) {
-    case InputNames.HomeworkCourseId:
+    case InputNames.Tag:
       return {
-        label: 'для курса:',
+        label: '',
         inputSettings: {
           name: key,
-          inputType: 'singleSelect',
-          selectOptions: useCoursesForHomeworkCloneModal,
+          inputType: 'text',
         },
       };
     default:
