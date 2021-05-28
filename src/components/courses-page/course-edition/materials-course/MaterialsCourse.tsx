@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { Role } from '../../../../enums/role';
 import { RoundButton } from '../../../../shared/styled-components/buttonStyledComponent';
 import { IRootState } from '../../../../store';
 import { setChangeDisplayingButtonOpenMaterialsCourse } from '../../../../store/course-edition/action-creators';
@@ -22,8 +23,9 @@ export interface CourseMaterial {
 const MaterialsCourse = () => {
   const dispatch = useDispatch();
   const pageState = useSelector((state: IRootState) => state.courseEditionPage);
-
-  const materialsInCourse: number[] = [];
+  const role = useSelector(
+    (state: IRootState) => state.roleSelector.currentUserRoleId
+  );
 
   const openMaterialsCourse = () => {
     dispatch(setChangeDisplayingButtonOpenMaterialsCourse());
@@ -43,7 +45,7 @@ const MaterialsCourse = () => {
       </MaterialsCourseHeader>
       {pageState.isDisplayingButtonOpenMaterialsCourse && (
         <MaterialsCourseContent>
-          <AllMaterials />
+          {role !== Role.Student && <AllMaterials />}
           <CourseMaterials />
         </MaterialsCourseContent>
       )}

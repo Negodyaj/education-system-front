@@ -16,6 +16,10 @@ export enum InputNames {
   CourseName = 'name',
   CourseDescription = 'description',
   CourseDuration = 'duration',
+  ThemeName = 'name',
+  ThemeTagsId = 'tagIds',
+  MaterialLink = 'link',
+  MaterialDescription = 'description',
   PaymentAmount = 'amount',
   PaymentDate = 'date',
   PaymentPeriod = 'period',
@@ -32,5 +36,6 @@ export enum InputNames {
   HomeworkCourseId = 'courseId',
   HomeworkGroupId = 'groupId',
   HomeworkTags = 'tags',
-  HomeworkThemes = 'themes',
+  HomeworkThemes = 'themeIds',
+  HomeworkAttemptStatusId = 'homeworkAttemptStatusId',
 }

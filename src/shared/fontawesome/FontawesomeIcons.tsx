@@ -29,6 +29,9 @@ import {
   faGraduationCap,
   faMoon,
   faSun,
+  faArrowUp,
+  faArrowDown,
+  faEye,
 } from '@fortawesome/free-solid-svg-icons';
 
 /* library.add(
@@ -86,5 +89,8 @@ library.add(
   faSpellCheck,
   faGraduationCap,
   faSun,
-  faMoon
+  faMoon,
+  faArrowUp,
+  faArrowDown,
+  faEye
 );

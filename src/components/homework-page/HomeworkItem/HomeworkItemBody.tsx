@@ -25,6 +25,7 @@ const HomeworkItemBody = (props: {
   const toggleDescriptionVisibility = () => {
     setDescriptionVisibility(!descriptionVisibility);
   };
+  console.log(hw);
 
   return (
     <HomeworkItem>

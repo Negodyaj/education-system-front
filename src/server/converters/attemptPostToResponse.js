@@ -4,7 +4,6 @@ export function convertAttemptPostToResponse(attemptPost) {
   let authorFromDB = users.default.filter(
     (user) => user.id === attemptPost.authorId
   )[0];
-  console.log(users.default, attemptPost.authorId);
 
   return {
     id: newId.next().value || -1,

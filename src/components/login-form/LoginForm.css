@@ -25,3 +25,18 @@
     margin-right: auto;
 }
 
+.login-form .form-control button{
+    position: absolute;
+    right: 20px;
+    bottom: 70px;
+    width:30px;
+    height:30px;
+}
+
+.close{
+    color: #ffff;
+}
+
+.open{
+    color: #00ccf2;
+}

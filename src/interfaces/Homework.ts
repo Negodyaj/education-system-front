@@ -1,5 +1,5 @@
+import { Attempt } from './Attempt';
 import { Course } from './Courses';
-import { Material } from './Materials';
 import { Tag } from './Tag';
 import { Themes } from './Themes';
 
@@ -12,6 +12,6 @@ export interface Homework {
   isOptional: boolean;
   groupsIds?: number[];
   tags: Tag[];
-  homeworkAttempts?: any[];
+  homeworkAttempts?: Attempt[];
   themes?: Themes[];
 }
