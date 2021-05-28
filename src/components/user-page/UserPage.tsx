@@ -45,7 +45,7 @@ function UserPage() {
   return (
     <FormProvider {...methods}>
       <div className="user-edit-form needs-validation was-validated">
-        <form>
+        <form onSubmit={methods.handleSubmit(onSubmit)}>
           {Object.keys(appState.userPage.userForUserPage).map((key) => (
             <FormElement
               formElementSettings={getUserFormElementSettings(
@@ -61,10 +61,7 @@ function UserPage() {
               onClick={closeUserPage}>
               отмена
             </button>
-            <button
-              className="common-button"
-              type="button"
-              onClick={methods.handleSubmit(onSubmit)}>
+            <button className="common-button" type="submit">
               сохранить
             </button>
           </div>

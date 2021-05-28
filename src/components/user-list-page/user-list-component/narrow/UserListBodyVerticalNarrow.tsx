@@ -49,10 +49,10 @@ function UserListBodyVerticalNarrow() {
             </div>
             <div className="buttons">
               <EditButton user={u} />
-              <DeleteButton user={u} />
               {appState.roleSelector.currentUserRoleId === Role.Manager && (
                 <PaymentButton user={u} />
               )}
+              <DeleteButton user={u} />
             </div>
           </div>
         </div>

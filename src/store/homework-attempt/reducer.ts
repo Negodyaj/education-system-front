@@ -42,10 +42,12 @@ export function homeworkAttemptReducer(
     case SET_CURRENT_GROUP:
       return { ...state, currentGroup: action.payload };
     case SET_CURRENT_ATTEMPT:
+      console.log(action.payload);
+
       return {
         ...state,
         currentAttempt: action.payload,
-        currentAuthorId: action.payload.author.id,
+        currentAuthorId: action.payload?.author.id || 0,
       };
     case SET_CURRENT_HOMEWORK:
       return { ...state, currentHomework: action.payload };

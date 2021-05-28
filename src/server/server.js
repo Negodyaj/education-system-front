@@ -4,6 +4,7 @@ import * as homeworks from '../store/homework-page/mock/homeworks.json';
 
 import * as themes from './mock-data/themes.json';
 import * as attempts from './mock-data/attempts.json';
+import * as groups from './mock-data/groups.json';
 import convertHomeworkPostToHomework from './converters/homeworkPostToHomework';
 import { convertAttemptPostToResponse } from './converters/attemptPostToResponse';
 import { convertAttemptPutToResponse } from './converters/attemptPutToResponse';
@@ -19,22 +20,26 @@ const runMock = () => {
   createServer({
     seeds(server) {
       server.db.loadData({
-        homeworksTable: homeworks.default.map((hw) => hw),
-        themesTable: themes.default.map((theme) => theme),
+        homeworksTable: homeworks.default,
+        themesTable: themes.default,
         attemptsTable: Object.keys(attempts.default).map((homeworkId) => ({
           id: homeworkId,
           attempts: attempts.default[Number.parseInt(homeworkId, 10)],
         })),
+        groupTable: groups.default,
       });
     },
     routes() {
       this.passthrough('https://80.78.240.16:7070/api/authentication');
-      this.passthrough('https://80.78.240.16:7070/api/Group');
       this.passthrough('https://80.78.240.16:7070/api/User');
       this.passthrough('https://80.78.240.16:7070/api/User/:id');
       // this.passthrough('https://80.78.240.16:7070/api/User/current');
       this.passthrough('https://80.78.240.16:7070/api/User/:id/payment');
       this.passthrough('https://80.78.240.16:7070/api/Course');
+      this.get(
+        'https://80.78.240.16:7070/api/Group',
+        (schema) => schema.db.groupTable
+      );
       this.get(
         'https://80.78.240.16:7070/api/User/current',
         import('./mock-data/current-user.json')
@@ -48,11 +53,11 @@ const runMock = () => {
         (schema) => schema.db.themesTable
       );
       this.get(
-        'https://80.78.240.16:7070/api/Homework/:id',
+        'https://80.78.240.16:7070/api/Homework/:myParam',
         (schema, request) => {
-          let { id } = request.params;
+          let { myParam } = request.params;
 
-          return schema.db.homeworksTable.find(id);
+          return schema.db.homeworksTable.find(myParam);
         }
       );
       this.get(

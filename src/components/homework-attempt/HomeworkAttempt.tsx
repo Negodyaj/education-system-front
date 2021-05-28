@@ -23,14 +23,14 @@ function HomeworkAttempt() {
   const { homeworkAttempt, roleSelector } = useSelector(
     (state: IRootState) => state
   );
-  const { attemptList, currentHomework } = homeworkAttempt;
+  const { attemptList, currentHomework } = { ...homeworkAttempt };
   const { currentUserRoleId } = roleSelector;
   const dispatch = useDispatch();
   const { hwId } = useParams<{ hwId?: string }>();
   const { attemptId } = useParams<{ attemptId?: string }>();
   useEffect(() => {
-    !attemptList?.length &&
-      dispatch(getAttemptListToCheck(hwId || '', attemptId));
+    alert();
+    dispatch(getAttemptListToCheck(hwId || '', attemptId));
   }, []);
 
   return (

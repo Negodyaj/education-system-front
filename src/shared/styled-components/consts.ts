@@ -11,8 +11,11 @@ export const ButtonsCell = styled.div`
   width: max-content;
   display: flex;
   flex-direction: row;
-  align-self: center;
+  align-items: center;
   justify-content: flex-end;
+  & button {
+    margin-top: 0px !important;
+  }
 `;
 
 export const CheckBoxWrapper = styled.div`

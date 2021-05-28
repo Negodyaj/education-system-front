@@ -7,13 +7,13 @@ const HomeworkItemName = (props: { hw: Homework }) => {
   const { hw } = props;
 
   return (
-    <HomeworkName>
+    <HomeworkProp>
       {hw.themes &&
         hw.themes.map((theme) => (
-          <HomeworkProp key={theme.id}>{theme.name}</HomeworkProp>
+          <HomeworkName key={theme.id}>{theme.name}</HomeworkName>
         ))}
-      {!hw.themes?.length && 'без названия'}
-    </HomeworkName>
+      <HomeworkName>{!hw.themes?.length && 'без названия'}</HomeworkName>
+    </HomeworkProp>
   );
 };
 

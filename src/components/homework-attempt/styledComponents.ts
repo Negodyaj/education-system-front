@@ -69,5 +69,5 @@ export const UserPic = styled.img`
   margin-top: 8px;
 `;
 export const Content = styled.div`
-  padding: 25px;
+  padding: 0 25px;
 `;

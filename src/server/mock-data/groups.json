@@ -1,0 +1,62 @@
+[
+    {
+        "id": 14,
+        "startDate": "09.04.2021",
+        "course": {
+            "themes": null,
+            "id": 4,
+            "name": "Backend",
+            "description": null,
+            "duration": 0,
+            "isDeleted": null,
+            "materials": null
+        },
+        "groupStatus": "Ведётся набор",
+        "endDate": "09.04.2021"
+    },
+    {
+        "id": 15,
+        "startDate": "09.04.2021",
+        "course": {
+            "themes": null,
+            "id": 5,
+            "name": "Frontend",
+            "description": null,
+            "duration": 0,
+            "isDeleted": null,
+            "materials": null
+        },
+        "groupStatus": "Ждёт начала обучения",
+        "endDate": "28.01.2022"
+    },
+    {
+        "id": 16,
+        "startDate": "09.04.2021",
+        "course": {
+            "themes": null,
+            "id": 5,
+            "name": "Mobile React Native",
+            "description": null,
+            "duration": 0,
+            "isDeleted": null,
+            "materials": null
+        },
+        "groupStatus": "Ждёт начала обучения",
+        "endDate": "09.04.2021"
+    },
+    {
+        "id": 17,
+        "startDate": "22.04.2021",
+        "course": {
+            "themes": null,
+            "id": 1,
+            "name": "C# Base",
+            "description": null,
+            "duration": 0,
+            "isDeleted": null,
+            "materials": null
+        },
+        "groupStatus": "Идёт обучение",
+        "endDate": "10.02.2022"
+    }
+]

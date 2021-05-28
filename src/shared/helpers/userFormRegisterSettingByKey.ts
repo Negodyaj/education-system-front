@@ -44,14 +44,6 @@ export const getUserFormElementSettings = (
   key: InputNames
 ): FormElementSettings => {
   switch (key) {
-    case InputNames.Id:
-      return {
-        label: 'Id',
-        inputSettings: {
-          name: key,
-          inputType: 'text',
-        },
-      };
     case InputNames.FirstName:
       return {
         label: 'Имя',
@@ -142,14 +134,6 @@ export const getUserFormElementSettings = (
           registerOptions: {
             required: 'Выберите роль',
           },
-        },
-      };
-    case InputNames.ContractNumber:
-      return {
-        label: 'номер договора',
-        inputSettings: {
-          name: key,
-          inputType: 'text',
         },
       };
     default:

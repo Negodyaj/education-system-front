@@ -63,7 +63,7 @@ function* attemptRootSaga() {
 }
 
 function* loadCurrentHomeworkWatcher() {
-  yield takeLeading(LOAD_CURRENT_HOMEWORK, loadCurrentHomeworkWorker);
+  yield takeEvery(LOAD_CURRENT_HOMEWORK, loadCurrentHomeworkWorker);
 }
 
 function* loadCurrentHomeworkWorker({
