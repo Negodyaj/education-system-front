@@ -1,3 +1,4 @@
+import { TagInput } from '../../interfaces/TagInput';
 import {
   MODAL_HIDDEN_IS_CHECK,
   TAGS_LIST_FILTERED,
@@ -10,11 +11,16 @@ import * as State from '../state';
 
 import { TagsPageActions } from './action-creators';
 
+export const defaultTagValue: TagInput = {
+  name: '',
+};
+
 const initialState: State.ITagsPageState = {
   tagList: [],
   isDataLoading: false,
   filterTagsList: [],
   isTagsModalHidden: true,
+  defaultFormValue: defaultTagValue,
 };
 
 export function tagsPageReducer(

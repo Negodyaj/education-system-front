@@ -13,6 +13,7 @@ import { coursePageRootSaga } from './courses-page/saga';
 import groupRootSaga from './group-page/group-info-component/saga';
 import { paymentRootSaga } from './payment/saga';
 import { addHWModalRootSaga } from './homework-page/add-homework-modal/saga';
+import { cloneHWModalRootSaga } from './homework-page/clone-homework-modal/saga';
 
 export function* rootSaga() {
   yield all([
@@ -29,5 +30,6 @@ export function* rootSaga() {
     paymentRootSaga(),
     addHWModalRootSaga(),
     groupRootSaga(),
+    cloneHWModalRootSaga(),
   ]);
 }

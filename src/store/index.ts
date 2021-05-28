@@ -18,6 +18,7 @@ import {
   IAddHomeworkModal,
   IAppState,
   IAttendance,
+  ICloneHomeworkModal,
   ICourseEditionState,
   ICoursePageState,
   IGroupInfoComponent,
@@ -39,6 +40,7 @@ import { attendanceReducer } from './group-page/attendance/reducer';
 import { addHomeworkModalReducer } from './homework-page/add-homework-modal/reducer';
 import { rootSaga } from './root-saga';
 import { modalWindowReducer } from './modal-window/reducer';
+import { cloneHomeworkModalReducer } from './homework-page/clone-homework-modal/reducer';
 
 export interface IRootState {
   tagsPage: ITagsPageState;
@@ -58,6 +60,7 @@ export interface IRootState {
   lessonByGroup: ILesson;
   modalWindow: ModalWindowState;
   addHomeWorkModal: IAddHomeworkModal;
+  cloneHomeWorkModal: ICloneHomeworkModal;
 }
 
 const sagaMiddleware = createSagaMiddleware();
@@ -82,6 +85,7 @@ const store = createStore<IRootState, any, any, any>(
     homeworkAppointModal: homeworkAppointModalReducer,
     homeworkAttempt: homeworkAttemptReducer,
     modalWindow: modalWindowReducer,
+    cloneHomeWorkModal: cloneHomeworkModalReducer,
   }),
   undefined,
   applyMiddleware(...middlewares)
