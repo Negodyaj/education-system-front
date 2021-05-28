@@ -16,9 +16,9 @@ function HomeworkConeButton(props: { hw: Homework }) {
   const { hw } = props;
   const dispatch = useDispatch();
   const cloneHomework = () => {
+    dispatch(rememberHomeworkForModal(hw));
     dispatch(toggleModalWindow(ChildIndex.CloneHomework));
     dispatch(loadCourseForCloneHWModalWatcherAction());
-    dispatch(rememberHomeworkForModal(hw));
   };
 
   return (

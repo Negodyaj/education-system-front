@@ -10,4 +10,5 @@ export enum ChildIndex {
   EditHomework = 'edit-homework',
   CloneHomework = 'clone-homework',
   Closed = 'closed',
+  AddTag = 'add-tag',
 }

@@ -34,6 +34,7 @@ import { MaterialInput } from '../interfaces/MaterialInput';
 import { CourseMaterial } from '../components/courses-page/course-edition/materials-course/MaterialsCourse';
 import { ThemeInCourse } from '../interfaces/ThemeInCourse';
 import { CourseIdForCloneHW } from '../interfaces/CourseIdForCloneHW';
+import { TagInput } from '../interfaces/TagInput';
 
 import { DEFAULT_ATTEMPT } from './homework-attempt/reducer';
 
@@ -141,6 +142,7 @@ export interface ITagsPageState {
   filterTagsList: Tag[];
   isTagsModalHidden: boolean;
   isDataLoading: boolean;
+  defaultFormValue: TagInput;
 }
 
 export interface IModalDeleteCourse {
