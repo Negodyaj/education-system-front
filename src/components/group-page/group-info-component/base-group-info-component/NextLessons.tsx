@@ -44,11 +44,12 @@ export function NextLessons(props: NextLessonsProps) {
 
     return newArr.slice(0, 3);
   };
+  const nextLessonDates = getNextDate();
 
   return (
     <>
       <Title>Ближайшие занятия:</Title>
-      {getNextDate().map((l) => (
+      {nextLessonDates.map((l) => (
         <Content>{l.lessonDate}</Content>
       ))}
     </>
