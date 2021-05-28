@@ -4,7 +4,7 @@ import * as themes from '../mock-data/themes.json';
 import { newId } from '../server';
 
 const convertHomeworkPostToHomework = (hw) => {
-  console.log(hw.themeIds);
+  console.log();
 
   return {
     id: newId.next().value || -1,

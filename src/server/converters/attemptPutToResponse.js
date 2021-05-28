@@ -1,15 +1,17 @@
 import { newId } from '../server';
 import * as users from '../mock-data/users.json';
 export function convertAttemptPutToResponse(attemptPut) {
+  console.log(attemptPut);
   let authorFromDB = users.default.filter(
     (user) => user.id === attemptPut.authorId
   )[0];
 
   return {
-    id: attemptPut.id,
+    id: 0,
     comment: attemptPut.comment,
     author: authorFromDB,
-    homeworkAttemptStatus: 'ожидает проверки',
+    homeworkAttemptStatus:
+      attemptPut.homeworkAttemptStatusId === 2 ? 'Сдано' : 'Ожидает проверки',
     // comments: [
     //     {
     //         id: 0,

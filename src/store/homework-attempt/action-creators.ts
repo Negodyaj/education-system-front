@@ -65,7 +65,7 @@ export const updateAttempt = (
   attempt: AttemptPut,
   attemptId: number
 ) => {
-  console.log({ hwId, attempt, attemptId });
+  console.log();
 
   return {
     type: UPDATE_ATTEMPT,

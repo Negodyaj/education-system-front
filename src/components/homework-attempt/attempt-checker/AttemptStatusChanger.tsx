@@ -18,7 +18,6 @@ const AttemptStatusChanger = () => {
   const attemptId = currentAttempt?.id || 0;
   const { ...methods } = useForm<{ homeworkAttemptStatusId: number }>();
   const onSubmit = (data: { homeworkAttemptStatusId: number }) => {
-    console.log('onSubmit');
     const updatedAttempt: AttemptPut = {
       authorId: currentAttempt?.author.id || 0,
       comment: currentAttempt?.comment || '',

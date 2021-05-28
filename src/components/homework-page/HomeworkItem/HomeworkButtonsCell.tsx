@@ -30,7 +30,7 @@ function HomeworkButtonsCell(props: {
 }) {
   const { hw, buttons } = props;
 
-  return (
+  return buttons ? (
     <ButtonsCell onClick={(e) => e.stopPropagation()}>
       {buttons.cloneButton && <HomeworkCloneButton hw={hw} />}
       {buttons.editButton && <HomeworkEditButton hw={hw} />}
@@ -43,7 +43,7 @@ function HomeworkButtonsCell(props: {
       {buttons.viewButton && <HomeworkViewButton hw={hw} />}
       {buttons.editAttemptButton && <HomeworkEditAttemptButton />}
     </ButtonsCell>
-  );
+  ) : null;
 }
 
 export default HomeworkButtonsCell;

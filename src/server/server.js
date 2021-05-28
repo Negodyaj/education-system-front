@@ -44,9 +44,11 @@ const runMock = () => {
         'https://80.78.240.16:7070/api/User/current',
         import('./mock-data/current-user.json')
       );
-      this.get(
-        'https://80.78.240.16:7070/api/Homework',
-        (schema) => schema.db.homeworksTable
+      this.get('https://80.78.240.16:7070/api/Homework', (schema) =>
+        schema.db.homeworksTable.map((hw) => ({
+          ...hw,
+          homeworkAttempts: schema.db.attemptsTable.find(hw.id)?.attempts,
+        }))
       );
       this.get(
         'https://80.78.240.16:7070/api/Course/theme',
@@ -104,10 +106,14 @@ const runMock = () => {
             JSON.parse(request.requestBody)
           );
           let { hid, aid } = request.params;
-          schema.db.attemptsTable
-            .find(hid)
-            .attempts.find(aid)
-            .replace(newRecord);
+          aid = +aid;
+          newRecord.id = aid;
+          let att = schema.db.attemptsTable.find(hid).attempts;
+          let i = att.indexOf(att.filter((a) => a.id === aid)[0]);
+          schema.db.attemptsTable.find(hid).attempts[i] = newRecord;
+          schema.db.homeworksTable.find(
+            hid
+          ).homeworkAttempts = schema.db.attemptsTable.find(hid);
 
           return newRecord;
         }

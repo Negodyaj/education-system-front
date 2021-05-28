@@ -6,7 +6,7 @@ import { INIT_HOMEWORK } from '../tmp-mock-data/hw/initHomewwork';
 
 import { getEnToRuTranslation } from './enumToDictionaryEntity';
 
-export const convertHomeworkListToSubmitted = (
+export const convertHomeworkListToPassed = (
   actionPayload: Homework[]
 ): IndexedObj<Homework[]> => {
   const currentUser = getCurrentUserFromStorage();
@@ -21,7 +21,7 @@ export const convertHomeworkListToSubmitted = (
         (attempt) =>
           attempt.author.id === currentUser.id &&
           attempt.homeworkAttemptStatus ===
-            getEnToRuTranslation(HWAttemptStatuses[HWAttemptStatuses.Await])
+            getEnToRuTranslation(HWAttemptStatuses[HWAttemptStatuses.Passed])
       ).length
     ) {
       const index = `${hw.course.name}`;

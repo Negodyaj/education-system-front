@@ -185,13 +185,11 @@ function* getAttemptListToCheckWorker({
 }
 
 function* updateAttemptWatcher() {
-  console.log('updateAttemptWatcher');
   yield takeEvery(UPDATE_ATTEMPT, updateAttemptWorker);
 }
 
 function* updateAttemptWorker({ payload }: ReturnType<typeof updateAttempt>) {
   yield put(setIsLoading());
-  console.log(payload);
   const updAttemptResponse: Attempt = yield call(async () =>
     sendPutRequest<Attempt>(
       `${homeworkUrl}/${payload.hwId}/attempt/${payload.attemptId}`,

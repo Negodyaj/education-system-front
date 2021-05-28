@@ -3,6 +3,8 @@ import { Role } from '../../enums/role';
 import { convertHomeworkListToProposed } from '../../shared/converters/homeworkListToProposed';
 import { convertHomeworkListToAppointedForStudent } from '../../shared/converters/homeworkListToToAppointedForStudent';
 import { convertHomeworkListToAppointed } from '../../shared/converters/homeworkListToAppointed';
+import { convertHomeworkListToPassed } from '../../shared/converters/homeworkListToPassed';
+import { HWListTypes } from '../../enums/HWListTypes';
 import {
   HOMEWORK_DELETE_PENDING,
   HOMEWORK_LOAD_SUCCESS,
@@ -12,12 +14,6 @@ import { IHomeworkPageState } from '../state';
 import { convertHomeworkListToSubmitted } from '../../shared/converters/homeworkListToSubmitted';
 
 import { HomeworkPageActions } from './action-creators';
-
-export enum HWListTypes {
-  Proposed = 'proposed',
-  Appointed = 'appointed',
-  Submitted = 'submitted',
-}
 
 const METHODIST_VIEW: HomeworkPageOptions = {
   addButton: true,
@@ -116,6 +112,9 @@ export function homeworkPageReducer(
         };
         STUDENT_VIEW.homeworkList[HWListTypes.Submitted] = {
           ...convertHomeworkListToSubmitted(action.payload.homeworks),
+        };
+        STUDENT_VIEW.homeworkList[HWListTypes.Passed] = {
+          ...convertHomeworkListToPassed(action.payload.homeworks),
         };
 
         return { ...state };

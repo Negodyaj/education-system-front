@@ -9,7 +9,7 @@ export function convertAttemptPostToResponse(attemptPost) {
     id: newId.next().value || -1,
     comment: attemptPost.comment,
     author: authorFromDB,
-    homeworkAttemptStatus: 'ожидает проверки',
+    homeworkAttemptStatus: 'Ожидает проверки',
     // comments: [
     //     {
     //         id: 0,

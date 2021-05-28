@@ -7,14 +7,7 @@ import { IRootState } from '../../store';
 import { Role } from '../../enums/role';
 import { LinkDetector } from '../../shared/components/link-detector/LinkDetector';
 
-import NavPanelComponent from './nav-panel/NavPanelComponent';
-import {
-  AttemptCheckingContainer,
-  Content,
-  Data,
-  Description,
-  Title,
-} from './styledComponents';
+import { Data, Description, Title } from './styledComponents';
 import { HeaderComponent } from './header-component/HeaderComponent';
 import AttemptCreator from './attempt-creator/AttemptCreator';
 import AttemptChecker from './attempt-checker/AttemptChecker';
