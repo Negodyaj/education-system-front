@@ -1,6 +1,8 @@
 import React from 'react';
 
 import '../../../../App.css';
+import { BaseInfo, Content, Title } from '../GroupInfoComponentStyled';
+
 import { NextLessons } from './NextLessons';
 
 interface BaseGroupInfoProps {
@@ -15,19 +17,19 @@ function BaseGroupInfoComponent(props: BaseGroupInfoProps) {
 
   return (
     <>
-      <div className="base-info">
-        <div className="title">Курс:</div>
-        <div className="info">{courseName}</div>
-        <div className="title">Дата начала: </div>
-        <div className="info">{startDate}</div>
-        <div className="title">Длительность: </div>
-        <div className="info">{duration}</div>
-        <div className="title"> Расписание:</div>
-        <div>Mn Th Fr 9:00</div>
-      </div>
-      <div className="base-info">
+      <BaseInfo>
+        <Title>Курс:</Title>
+        <Content>{courseName}</Content>
+        <Title>Дата начала: </Title>
+        <Content>{startDate}</Content>
+        <Title>Длительность: </Title>
+        <Content>{duration}</Content>
+        <Title> Расписание:</Title>
+        <Content>Mn Th Fr 9:00</Content>
+      </BaseInfo>
+      <BaseInfo>
         <NextLessons id={id} />
-      </div>
+      </BaseInfo>
     </>
   );
 }
