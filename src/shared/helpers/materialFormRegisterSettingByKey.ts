@@ -18,7 +18,7 @@ export const getMaterialFormElementSettings = (
           inputType: 'textarea',
           registerOptions: {
             required: 'Введите описание материала',
-            min: {
+            minLength: {
               value: 2,
               message: 'Минимальное колличество символов 2',
             },
@@ -35,7 +35,7 @@ export const getMaterialFormElementSettings = (
           inputType: 'text',
           registerOptions: {
             required: 'Укажите ссылку на материал',
-            min: {
+            minLength: {
               value: 2,
               message: 'Минимальное колличество символов 2',
             },
