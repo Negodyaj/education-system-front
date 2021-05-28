@@ -9,6 +9,7 @@ import {
   USER_TO_EDIT_LOADED,
   USER_TO_EDIT_LOADING,
   USER_TO_EDIT_LOADING_WATCHER,
+  SEND_USER_TO_EDIT,
 } from '../actionTypes';
 
 export type UserPageActions =
@@ -19,7 +20,8 @@ export type UserPageActions =
   | ReturnType<typeof setUserToEditFail>
   | ReturnType<typeof setUserIsSending>
   | ReturnType<typeof setUserSendingFail>
-  | ReturnType<typeof sendUser>;
+  | ReturnType<typeof sendUser>
+  | ReturnType<typeof sendUserToEdit>;
 
 export const setUserForUserPageId = (userId: number) =>
   ({
@@ -59,5 +61,11 @@ export const setUserSendingFail = () =>
 export const sendUser = (user: UserInput, userId: number, history: any) =>
   ({
     type: SEND_USER,
+    payload: { user, userId, history },
+  } as const);
+
+export const sendUserToEdit = (user: UserInput, userId: number, history: any) =>
+  ({
+    type: SEND_USER_TO_EDIT,
     payload: { user, userId, history },
   } as const);

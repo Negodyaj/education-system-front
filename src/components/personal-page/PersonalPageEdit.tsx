@@ -1,30 +1,25 @@
 import React, { useEffect, useState } from 'react';
-import { Dispatch, createStore, applyMiddleware } from 'redux';
 import { useDispatch, useSelector } from 'react-redux';
 import { FormProvider, useForm } from 'react-hook-form';
 import './PersonalPage.css';
-import { Link, Route, useHistory, useParams } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import createSagaMiddleware from 'redux-saga';
-import { Helmet } from 'react-helmet';
 
 import { IRootState } from '../../store';
 import { UserInput } from '../../interfaces/UserInput';
 import FormElement from '../../shared/components/form-elements/FormElement';
-import { getUserToEdit, sendUser } from '../../store/user-page/action-creators';
+import {
+  getUserToEdit,
+  sendUserToEdit,
+} from '../../store/user-page/action-creators';
 import { getUserFormElementSettings } from '../../shared/helpers/userFormRegisterSettingByKey';
 import { InputNames } from '../../enums/inputNames';
-import { getEnToRuTranslation } from '../../shared/converters/enumToDictionaryEntity';
-import { Role } from '../../enums/role';
-
-import PersonalPage from './PersonalPage';
 
 const PersonalPageEdit = () => {
   const dispatch = useDispatch();
   const { register, handleSubmit } = useForm();
   const appState = useSelector((state: IRootState) => state);
   const user = appState.userPage.userForUserPage;
-  const { idToEdit } = useParams<{ idToEdit?: string }>();
   const history = useHistory();
   useEffect(() => {
     dispatch(getUserToEdit('1'));
@@ -42,9 +37,8 @@ const PersonalPageEdit = () => {
   }, [appState.userPage.userForUserPage]);
   const onSubmit = (data: UserInput) => {
     dispatch(
-      sendUser(data, appState.userPage.userForUserPageId, 'personal-page')
+      sendUserToEdit(data, appState.userPage.userForUserPageId, history)
     );
-    // history.push('personal-page');
   };
 
   return (
