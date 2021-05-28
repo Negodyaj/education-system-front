@@ -29,7 +29,6 @@ function HomeworkAttempt() {
   const { hwId } = useParams<{ hwId?: string }>();
   const { attemptId } = useParams<{ attemptId?: string }>();
   useEffect(() => {
-    alert();
     dispatch(getAttemptListToCheck(hwId || '', attemptId));
   }, []);
 

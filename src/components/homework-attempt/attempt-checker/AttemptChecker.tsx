@@ -1,7 +1,9 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
 
 import { LinkDetector } from '../../../shared/components/link-detector/LinkDetector';
+import { CommonButton } from '../../../shared/styled-components/buttonStyledComponent';
+import { ButtonsCell } from '../../../shared/styled-components/consts';
 import { IRootState } from '../../../store';
 import NavPanelComponent from '../nav-panel/NavPanelComponent';
 import {
@@ -12,23 +14,19 @@ import {
 
 import AttemptStatusChanger from './AttemptStatusChanger';
 
-function AttemptChecker() {
+const AttemptChecker = () => {
   const { homeworkAttempt } = useSelector((state: IRootState) => state);
   const { attemptList, currentAttempt } = homeworkAttempt;
-  let attempt = { ...currentAttempt };
-  useEffect(() => {
-    attempt = { ...currentAttempt };
-  }, [attemptList]);
 
   return (
     <AttemptCheckingContainer>
       <AttemptCheckingRow>
         <NavPanelComponent attemptList={attemptList} />
         <Content>
-          {attempt?.comment && (
+          {currentAttempt?.comment && (
             <LinkDetector
               stringForDetecting={
-                attemptList?.length ? attempt?.comment : 'нет ответов'
+                attemptList?.length ? currentAttempt.comment : 'нет ответов'
               }
             />
           )}
@@ -39,6 +37,6 @@ function AttemptChecker() {
       </AttemptCheckingRow>
     </AttemptCheckingContainer>
   );
-}
+};
 
 export default AttemptChecker;
